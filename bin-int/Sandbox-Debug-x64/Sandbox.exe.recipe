@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\dev\JZEngine\bin\JZEngine-Debug-x64\JZEngine.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>C:\dev\JZEngine\bin\Sandbox-Debug-x64\Sandbox.exe</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>
