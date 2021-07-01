@@ -4,6 +4,8 @@ class Sandbox : public JZEngine::Application
 {
 public:
 	Sandbox()
+		:
+		Application()
 	{
 
 	}

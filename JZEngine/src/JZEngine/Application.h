@@ -9,12 +9,16 @@
 
 #include "BuildDefinitions.h"
 
+#include "ImGui/JZ_ImGui.h"
+#include "JZGL/JZ_GL.h"
+
 namespace JZEngine
 {	
 	/*!
-	 * @brief JZEngine::Application ~
+	 * @brief ___JZEngine::Application___
+	 * 
 	 * Application class to be exported. When inherited from and created in
-	 * a project, it calls the run function from the main entry point
+	 * a client project, it calls the run function from the main entry point
 	 * of the engine defined in EntryPoint.h.
 	*/
 	class JZENGINE_API Application
@@ -23,23 +27,27 @@ namespace JZEngine
 		Application();
 
 		/*!
-		 * @brief JZEngine::Application::Run() ~
+		 * @brief ___JZEngine::Application::Run()___
+		 * 
 		 * Is called in the main entry point of the engine
 		 * defined in EntryPoint.h.
 		*/
 		void Run();
 
+	private:
+		JZEngine::GLFW_Instance		gl_instance_;	/*!< glfw instance, abstracts creation of opengl instance using glfw */
+		JZEngine::ToolsGUI			tools_gui_;		/*!< handles rendering and updating of engine tools gui */
 	};
 
 	/*!
-	 * @brief JZEngine::CreateApplication()
-	 * Just the declaration of the function exists in the engine.
+	 * @brief ___JZEngine::CreateApplication()___
+	 * 
+	 * Just the declaration of the function that exists in the engine.
 	 * The definition is left up to the client software to define.
 	 * When defined, it should create a child of JZEngine::Application
 	 * in the main entry point of the engine defined in EntryPoint.h.
 	 * 
-	 * @return 
-	 * Pointer to the application created.
+	 * @return Application* : pointer to the application created
 	*/
 	Application* CreateApplication();
 }

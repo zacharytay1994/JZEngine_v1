@@ -11,18 +11,28 @@
 
 #include <iostream>
 
+#define UNREFERENCED_PARAMETER(P)(P)
+
 namespace JZEngine
 {
 	Application::Application()
+		:
+		gl_instance_(800,600),
+		tools_gui_(gl_instance_.window_)
 	{
-
 	}
 
 	void Application::Run()
 	{
 		std::cout << "ENGINE UP AND RUNNING!" << std::endl;
-		while (true)
+
+		while (gl_instance_.Active())
 		{
+			gl_instance_.FrameStart();
+
+			tools_gui_.Update();
+
+			gl_instance_.FrameEnd();
 		}
 	}
 }

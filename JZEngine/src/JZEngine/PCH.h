@@ -1,5 +1,7 @@
 #pragma once
 
+#define UNREFERENCED_PARAMETER(P)(P)
+
 // containers
 #include <string>
 #include <array>
