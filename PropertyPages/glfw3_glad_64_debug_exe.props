@@ -3,8 +3,8 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)JZEngine\src;$(SolutionDir)OpenGL\include;$(SolutionDir)$(ProjectName)\src;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)OpenGL\lib\lib64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)JZEngine\src;$(SolutionDir)OpenGL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)OpenGL\lib\lib32;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(ProjectName)-$(Configuration)-$(Platform)\</IntDir>
     <TargetExt>.exe</TargetExt>
@@ -14,7 +14,7 @@
       <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)OpenGL\lib\lib64\glfw3.dll" "$(TargetDir)glfw3.dll" /Y</Command>
+      <Command>copy "$(SolutionDir)bin\JZEngine-$(Configuration)-$(Platform)\JZEngine.dll" "$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\JZEngine.dll" /Y</Command>
     </PostBuildEvent>
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
@@ -22,6 +22,8 @@
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>JZENGINE_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />

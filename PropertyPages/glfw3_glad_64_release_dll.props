@@ -3,7 +3,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)OpenGL\include;$(SolutionDir)$(ProjectName)\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)OpenGL\include;$(SolutionDir)$(ProjectName)\src\JZEngine;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)OpenGL\lib\lib64;$(LibraryPath)</LibraryPath>
     <_PropertySheetDisplayName>glfw3_glad_64_release</_PropertySheetDisplayName>
     <OutDir>$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\</OutDir>
@@ -16,14 +16,14 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)JZEngine\libs\imgui;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)OpenGL\lib\lib64\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
-copy "$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\JZEngine.dll" "$(SolutionDir)bin\Sandbox-$(Configuration)-$(Platform)\JZEngine.dll" /Y</Command>
+      <Command>copy "$(SolutionDir)OpenGL\lib\lib64\glfw3.dll" "$(TargetDir)glfw3.dll" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup />

@@ -14,7 +14,7 @@
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)OpenGL\lib\lib32\glfw3.dll" "$(TargetDir)glfw3.dll" /Y</Command>
+      <Command>copy "$(SolutionDir)bin\JZEngine-$(Configuration)-$(Platform)\JZEngine.dll" "$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\JZEngine.dll" /Y</Command>
     </PostBuildEvent>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -22,6 +22,7 @@
     <ClCompile>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>JZENGINE_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)JZEngine\libs\imgui;</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
