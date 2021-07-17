@@ -10,12 +10,16 @@
 #include "Application.h"
 
 #ifdef JZENGINE_PLATFORM_WINDOWS
-	extern JZEngine::Application* JZEngine::CreateApplication();
+extern JZEngine::Application* JZEngine::CreateApplication ();
 
-	int main(int argc, char** argv)
-	{
-		auto app = JZEngine::CreateApplication();
-		app->Run();
-		delete app;
-	}
+int main ( int argc , char** argv )
+{
+	JZEngine::Log::Init ();
+	//HZ_CORE_WARN ( "Initialized Log!" );
+	//HZ_INFO ( "Hello!" );
+
+	auto app = JZEngine::CreateApplication ();
+	app->Run ();
+	delete app;
+}
 #endif // !ENGINE_PLATFORM_WINDOWS

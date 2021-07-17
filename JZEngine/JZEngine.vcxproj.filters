@@ -27,6 +27,9 @@
     <ClCompile Include="src\JZEngine\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\JZEngine\Log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\JZEngine.h">
@@ -43,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="src\JZEngine\PCH.h">
       <Filter>Header Files\JZEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\Log.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
