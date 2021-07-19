@@ -54,6 +54,9 @@
     <ClCompile Include="src\JZEngine\JZGL\JZ_GL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\JZEngine\Math\Vec2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\JZEngine.h">
@@ -100,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="src\JZEngine\ImGui\imconfig.h">
       <Filter>Header Files\JZEngine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\Math\Vec2.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
