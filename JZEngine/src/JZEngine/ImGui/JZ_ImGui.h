@@ -15,6 +15,6 @@ namespace JZEngine
 
 		void Update();
 	private:
-		void InitializeGLFW(GLFWwindow*& glfwwindow);
+		void InitializeWithGLFW(GLFWwindow*& glfwwindow);
 	};
 }

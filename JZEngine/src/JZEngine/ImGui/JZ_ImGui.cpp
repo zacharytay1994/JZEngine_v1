@@ -5,7 +5,7 @@ namespace JZEngine
 {
 	ToolsGUI::ToolsGUI(GLFWwindow*& glfwwindow)
 	{
-		InitializeGLFW(glfwwindow);
+		InitializeWithGLFW(glfwwindow);
 	}
 
 	ToolsGUI::~ToolsGUI()
@@ -34,7 +34,7 @@ namespace JZEngine
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 
-	void ToolsGUI::InitializeGLFW(GLFWwindow*& glfwwindow)
+	void ToolsGUI::InitializeWithGLFW(GLFWwindow*& glfwwindow)
 	{
 		// initialize imgui
 		IMGUI_CHECKVERSION();
