@@ -21,24 +21,41 @@ namespace JZEngine
 		gl_instance_(800,600),
 		tools_gui_(gl_instance_.window_)
 	{
-		ECS::Entity entity;
-		entity.AddComponent<ECS::TestData2>();
-		//entity.AddComponent<ECS::TestData2>();
-		//entity.GetComponent<ECS::TestData>().x = 1;
-		//TestSystem ts;
-		/*TestSystem ts2;
-		TestSystem2 ts3;*/
-		ECS::Entity entity2;
-		entity2.AddComponent<TestComponent, ECS::TestData2>();
-		//entity2.GetComponent<ECS::TestData>().x = 2;
-		entity.GetComponent<ECS::TestData2>().c = 'p';
-		//std::cout << entity.GetComponent<ECS::TestData>().x << std::endl;
-		std::cout << entity.GetComponent<ECS::TestData2>().c << std::endl;
-		std::cout << entity2.GetComponent<TestComponent>().x << std::endl;
-		std::cout << entity2.GetComponent<ECS::TestData2>().c << std::endl;
+		ECS::ECSInstance::Instance().RegisterSystem<TestSystem>();
 
-		ECS::ECSInstance::Instance().RegisterSystem<TestSystem>();
-		ECS::ECSInstance::Instance().RegisterSystem<TestSystem>();
+		ECS::Entity entity;
+		//entity.AddComponent<ECS::TestData>();
+		//entity.AddComponent(TestSystem::components_);
+		entity.AddComponent<TestComponent, TestComponent2>();
+		//entity.AddComponent<ECS::TestData>();
+		//entity.AddComponent<TestComponent, TestComponent2>();
+		entity.GetComponent<TestComponent>().x = 45;
+
+		ECS::Entity entity2;
+		//entity2.AddComponent(TestSystem::components_);
+		entity2.AddComponent<TestComponent, TestComponent2>();
+		entity2.GetComponent<TestComponent2>().d = 87;
+		//entity2.AddComponent<ECS::TestData>();
+		//entity2.AddComponent<TestComponent, TestComponent2>();
+		//entity.AddComponent<ECS::TestData2>();
+		////entity.AddComponent<ECS::TestData2>();
+		////entity.GetComponent<ECS::TestData>().x = 1;
+		////TestSystem ts;
+		///*TestSystem ts2;
+		//TestSystem2 ts3;*/
+		//ECS::Entity entity2;
+		//entity2.AddComponent<TestComponent, ECS::TestData2>();
+		////entity2.GetComponent<ECS::TestData>().x = 2;
+		//entity.GetComponent<ECS::TestData2>().c = 'p';
+		////std::cout << entity.GetComponent<ECS::TestData>().x << std::endl;
+		//std::cout << entity.GetComponent<ECS::TestData2>().c << std::endl;
+		//std::cout << entity2.GetComponent<TestComponent>().x << std::endl;
+		//std::cout << entity2.GetComponent<ECS::TestData2>().c << std::endl;
+
+		//ECS::ECSInstance::Instance().RegisterSystem<TestSystem<TestComponent>>();
+		//ECS::ECSInstance::Instance().RegisterSystem<TestSystem>();
+
+		//ECS::ECSInstance::Instance().RegisterComponent<TestComponent>();
 	}
 
 	void Application::Run()

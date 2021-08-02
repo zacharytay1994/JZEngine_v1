@@ -54,7 +54,7 @@ namespace JZEngine
 		/* ECS MACROS */
 		constexpr ui32 MAX_COMPONENTS			{ 256 };			/*!< arbitrary number */
 		constexpr ui32 MAX_ARCHETYPES			{ 128 };			/*!< arbitrary number */
-		constexpr ui32 CHUNKS_PER_ARCHETYPE		{ 256 };
+		constexpr ui32 CHUNKS_PER_ARCHETYPE		{ 256 };			/*!< arbitrary number */
 		constexpr ui32 ENTITIES_PER_CHUNK		{ 256 };			/*!< arbitrary number */
 
 		/* ____________________________________________________________________________________________________
@@ -73,9 +73,9 @@ namespace JZEngine
 		{
 			ComponentDescription(ui32 size, ui32 bit, std::string name);
 
-			ui32		size_;	/*!< size in bytes of the component */
-			ui32		bit_;	/*!< unique bit number assigned to this component, i.e. id */
-			std::string	name_;	/*!< string name of the component */
+			ui32		size_	{ 0 };			/*!< size in bytes of the component */
+			ui32		bit_	{ 0 };			/*!< unique bit number assigned to this component, i.e. id */
+			std::string	name_;					/*!< string name of the component */
 		};
 
 		/* ____________________________________________________________________________________________________
@@ -92,8 +92,8 @@ namespace JZEngine
 		struct ComponentManager
 		{
 			template <typename COMPONENT>
-			static ComponentDescription		component_descriptions_;	/*!< template variable holding all the different component descriptions registered */
-			std::unordered_map<std::string, bool> component_registered_;
+			static ComponentDescription			component_descriptions_;	/*!< template variable holding all the different component descriptions registered */
+			std::array<ui32, MAX_COMPONENTS>	component_sizes_{ 0 };		/*!< a way to access component sizes through their id */
 
 			ComponentManager();
 			~ComponentManager();
@@ -112,53 +112,30 @@ namespace JZEngine
 			template <typename COMPONENT>
 			void RegisterComponent()
 			{
-				if (component_registered_.find(typeid(COMPONENT).name()) == component_registered_.end())
+				// check if component has been registered before
+				if (component_descriptions_<COMPONENT>.size_ == 0)
 				{
+					component_sizes_[bit_generator_] = sizeof(COMPONENT);
 					component_descriptions_<COMPONENT> = ComponentDescription(sizeof(COMPONENT), bit_generator_++, typeid(COMPONENT).name());
-					component_registered_[typeid(COMPONENT).name()] = 1;
 					std::cout << "Registered Component: " << typeid(COMPONENT).name() << ", Bit: " << component_descriptions_<COMPONENT>.bit_ << std::endl;
 				}
 				else
 				{
-					std::cout << "WARNING! ComponentManager tried to re-register an existing component: " << typeid(COMPONENT).name() 
+					std::cout << "WARNING! ComponentManager tried to re-register an existing component: " << typeid(COMPONENT).name()
 						<< ", Bit: " << component_descriptions_<COMPONENT>.bit_ << std::endl;
 				}
 			}
 
-			///*!
-			// * @brief ___JZEngine::ECS::ComponentManager::GetComponentDescription()___
-			// * ****************************************************************************************************
-			// * Gets a constant reference of a component description registers in the component database.
-			// * ****************************************************************************************************
-			// * @tparam COMPONENT 
-			// * : The struct/class type to get the description of.
-			// * @return ComponentDescription
-			// * : A constant reference to the ComponentDescription.
-			// * ****************************************************************************************************
-			//*/
-			//template <typename COMPONENT>
-			//const ComponentDescription& GetComponentDescription() const
-			//{
-			//	return component_descriptions_<COMPONENT>;
-			//}
 		private:
-			ui32							bit_generator_{0};			/*!< unique bit id to be assigned to newly registered components */
+			ui32								bit_generator_{0};			/*!< unique bit id to be assigned to newly registered components */
 		};
 
-		struct TestData
-		{
-			int x{10};
-			int y{20};
-		};
-
-		struct TestData2
-		{
-			float z{3.0f};
-			char c{'v'};
-		};
-
-		/* Forward declare Chunk for Archetype to get a handle to. */
+		/* Forward declare Archetype for Chunk to get a handle to. */
 		struct Archetype;
+
+		/* ____________________________________________________________________________________________________
+		*																					CHUNK DECLARATION
+		   ____________________________________________________________________________________________________*/
 
 		/*!
 		 * @brief ___JZEngine::ECS::Chunk___
@@ -179,20 +156,29 @@ namespace JZEngine
 		*/
 		struct Chunk
 		{
-			Archetype*								owning_archetype_{nullptr};
-			char*									data_{nullptr};
-			ubyte									number_of_entities_{ 0 };
-			ubyte									free_ids_count_{ 0 };
-			std::array<ubyte, ENTITIES_PER_CHUNK>	free_ids_{ 0 };
-			std::bitset<ENTITIES_PER_CHUNK>			active_flags_{ 0 };
+			Archetype*								owning_archetype_{nullptr};		/*!< the archetype object storing this chunk */
+			char*									data_{nullptr};					/*!< component data stored in bytes */
+			ubyte									number_of_entities_{ 0 };		/*!< number of entities stored in this chunk */
+			ubyte									free_ids_count_{ 0 };			/*!< number of free ids, i.e. previouly deleted entity spots */
+			std::array<ubyte, ENTITIES_PER_CHUNK>	free_ids_{ 0 };					/*!< the free id spots */
+			std::bitset<ENTITIES_PER_CHUNK>			active_flags_{ 0 };				/*!< represents which entities by id are active */
 
 			Chunk();
 			~Chunk();
 
+			/*!
+			 * @brief ___JZEngine::ECS::Chunk::Initialize()___
+			 * ****************************************************************************************************
+			 * Sets the owning archetype of the chunk and allocates data_ bytes.
+			 * ****************************************************************************************************
+			 * @param owner
+			 * : Pointer to the owning archetype object.
+			 * ****************************************************************************************************
+			*/
 			void Initialize(Archetype* owner);
 
 			/*!
-			 * @brief ____JZEngine::ECS::Chunk::GetComponent()___
+			 * @brief ___JZEngine::ECS::Chunk::GetComponent()___
 			 * ****************************************************************************************************
 			 * Gets a component of a specific entity id. Navigates to where it is
 			 * stored in data_ and casts it to the type then returning a reference.
@@ -286,8 +272,18 @@ namespace JZEngine
 			*/
 			bool IsFull();
 
+			/*!
+			 * @brief ___JZEngine::ECS::Chunk::GetDataBegin()___
+			 * ****************************************************************************************************
+			 * Gets the start of memory of an entity.
+			 * ****************************************************************************************************
+			*/
 			char* GetDataBegin(ubyte id);
 		};
+
+		/* ____________________________________________________________________________________________________
+		*																				ARCHETYPE DECLARATION
+		   ____________________________________________________________________________________________________*/
 
 		/*!
 		 * @brief ___JZEngine::ECS::Archetype___
@@ -302,22 +298,38 @@ namespace JZEngine
 		*/
 		struct Archetype
 		{
-			ui32										id_{ MAX_ARCHETYPES };
-			ui32										entity_stride_{ 0 };
-			ui32										number_of_chunks_{ 0 };
-			std::bitset<MAX_COMPONENTS>					mask_;
-			std::array<Chunk, CHUNKS_PER_ARCHETYPE>		chunk_database_;
+			ui32										id_{ MAX_ARCHETYPES };	/*!< unique id of the archetype */
+			ui32										entity_stride_{ 0 };	/*!< size in bytes of each entity, i.e. combination of components */
+			ui32										number_of_chunks_{ 0 };	/*!< current number of chunks in this archetype */
+			std::bitset<MAX_COMPONENTS>					mask_;					/*!< unique component combination representing this archetype */
+			std::array<Chunk, CHUNKS_PER_ARCHETYPE>		chunk_database_;		/*!< storage chunk objects */
 			std::array<ui16, MAX_COMPONENTS>			component_stride_{ 0 };	/*!< cumulative stride of each component,
 																				assumes that cumulative stride will not
 																				exceed 65'535 bytes. I.e. no combination
 																				of components will exceed 65'535 bytes.*/
 
 			Archetype();
-			//Archetype(const Archetype& archetype);
 			~Archetype();
 
+			/*!
+			 * @brief ___JZEngine::ECS::Archetype::operator=()___
+			 * ****************************************************************************************************
+			 * Only copies entity_stride_, mask_, and component_stride_.
+			 * Mainly used to create a new archetype that this archetype's
+			 * description if a subset of.
+			 * ****************************************************************************************************
+			*/
 			Archetype& operator=(const Archetype& archetype);
 
+			/*!
+			 * @brief ___JZEngine::ECS::Archetype::Initialize()___
+			 * ****************************************************************************************************
+			 * Sets the unique id of this archetype.
+			 * ****************************************************************************************************
+			 * @param id
+			 * : Unique id to set.
+			 * ****************************************************************************************************
+			*/
 			void Initialize(ui32 id);
 
 			/*!
@@ -341,6 +353,20 @@ namespace JZEngine
 			}
 
 			/*!
+			 * @brief ___JZEngine::ECS::Archetype::RegisterComponent()___
+			 * ****************************************************************************************************
+			 * Assigns the component stride to the component and appends
+			 * the size to the total chunk stride. This will allow iteration
+			 * over the components stored as bytes in dynamically allocated
+			 * memory.
+			 * ****************************************************************************************************
+			 * @param bit
+			 * : The unique component bit from the component manager to register.
+			 * ****************************************************************************************************
+			*/
+			void RegisterComponent(ui32 bit);
+
+			/*!
 			 * @brief ___JZEngine::ECS::Archetype::AddEntity()___
 			 * ****************************************************************************************************
 			 * Adds an entity into one of the chunks stored in this archetype. If
@@ -350,13 +376,38 @@ namespace JZEngine
 			Chunk& AddEntity(ubyte& id);
 		};
 
+		/* ____________________________________________________________________________________________________
+		*																		ARCHETYPE MANAGER DECLARATION
+		   ____________________________________________________________________________________________________*/
+
+		/*!
+		 * @brief ___JZEngine::ECS::ArchetypeManager___
+		 * ****************************************************************************************************
+		 * Holds all unique archetypes, i.e. unique combination of components.
+		 * Makes sure there can only be one instance of each unique archetype exists.
+		 * ****************************************************************************************************
+		*/
 		struct ArchetypeManager
 		{
-			std::unordered_map<std::bitset<MAX_COMPONENTS>, ui32>			archetype_exist_tracker_;
+			std::unordered_map<std::bitset<MAX_COMPONENTS>, ui32>			archetype_exist_tracker_;	/*!< used to check if an archetype already exists,
+																											 mainly to prevent iteration over fixed size array
+																											 of archetype database. */
 
 			ArchetypeManager();
 			~ArchetypeManager();
 
+			/*!
+			 * @brief ___JZEngine::ECS::GetArchetype()___
+			 * ****************************************************************************************************
+			 * Returns an archetype of the component combination provided. If non exists,
+			 * creates it and returns.
+			 * ****************************************************************************************************
+			 * @tparam ...COMPONENTS 
+			 * : Component combination.
+			 * @return Archetype&
+			 * : The archetype of the component combination.
+			 * ****************************************************************************************************
+			*/
 			template <typename...COMPONENTS>
 			Archetype& GetArchetype()
 			{
@@ -386,6 +437,34 @@ namespace JZEngine
 				return archetype_database_[number_of_archetypes_++];
 			}
 
+			/*!
+			 * @brief ___JZEngine::ECS::GetArchetype()___
+			 * ****************************************************************************************************
+			 * Returns an archetype of the component combination provided as an array
+			 * of bits. If non exists, creates it and returns.
+			 * ****************************************************************************************************
+			 * @param bits
+			 * : Component combination.
+			 * @return Archetype&
+			 * : The archetype of the component combination.
+			 * ****************************************************************************************************
+			*/
+			Archetype& GetArchetype(const std::array<ui32, MAX_COMPONENTS>& bits, ui32 count);
+
+			/*!
+			 * @brief ___JZEngine::ECS::GetArchetype()___
+			 * ****************************************************************************************************
+			 * Returns an archetype of the component combination combined with
+			 * current component combination. Returns existing or creates a new archetype.
+			 * ****************************************************************************************************
+			 * @tparam ...COMPONENTS 
+			 * : Additional component combination.
+			 * @param currentmask 
+			 * : Current component combination.
+			 * @return 
+			 * : The archetype of the combined component combination.
+			 * ****************************************************************************************************
+			*/
 			template <typename...COMPONENTS>
 			Archetype& GetArchetype(const std::bitset<MAX_COMPONENTS>& currentmask)
 			{
@@ -393,6 +472,15 @@ namespace JZEngine
 				if (currentmask.none())
 				{
 					return GetArchetype<COMPONENTS...>();
+				}
+				// build new mask
+				std::bitset<MAX_COMPONENTS> new_mask = currentmask;
+				((new_mask[ComponentManager::component_descriptions_<COMPONENTS>.bit_] = 1), ...);
+				// check if new archetype exists
+				if (archetype_exist_tracker_.find(new_mask) != archetype_exist_tracker_.end())
+				{
+					// return this archetype
+					return archetype_database_[archetype_exist_tracker_[new_mask]];
 				}
 				// else copy archetype and add components
 				archetype_database_[number_of_archetypes_] = archetype_database_[archetype_exist_tracker_[currentmask]];
@@ -404,16 +492,55 @@ namespace JZEngine
 				return new_archetype;
 			}
 
-			ui32															number_of_archetypes_{ 0 };
-			std::array<Archetype, MAX_ARCHETYPES>							archetype_database_;
+			/*!
+			 * @brief ___JZEngine::ECS::GetArchetype()___
+			 * ****************************************************************************************************
+			 * Returns an archetype of the component combination combined with
+			 * current component combination. Returns existing or creates a new archetype.
+			 * ****************************************************************************************************
+			 * @param currentmask
+			 * : Current component combination.
+			 * @param bits
+			 * : Additional component combination.
+			 * @return
+			 * : The archetype of the combined component combination.
+			 * ****************************************************************************************************
+			*/
+			Archetype& GetArchetype(const std::bitset<MAX_COMPONENTS>& currentmask, const std::array<ui32, MAX_COMPONENTS>& bits, ui32 count);
+
+			ui32															number_of_archetypes_{ 0 };	/*!< number of unique archetypes created */
+			std::array<Archetype, MAX_ARCHETYPES>							archetype_database_;		/*!< storage of all unique archetype objects */
 		};
 
+		/* Forward declare System for SystemManager to get a handle to. */
 		struct System;
+
+		/* ____________________________________________________________________________________________________
+		*																			SYSTEM MANAGER DECLARATION
+		   ____________________________________________________________________________________________________*/
+
+		/*!
+		 * @brief ___JZEngine::ECS::SystemManager___
+		 * ****************************************************************************************************
+		 * Holds all registered systems, and updates them per frame with matching
+		 * archetypes with the same component combination signature.
+		 * ****************************************************************************************************
+		*/
 		struct SystemManager
 		{
-			std::vector<std::unique_ptr<System>> system_database_;
-			std::unordered_map<std::string, bool> system_registered_;
+			std::vector<std::unique_ptr<System>>	system_database_;	/*!< storage for all the polymorphic systems */
+			std::unordered_map<std::string, bool>	system_registered_;	/*!< account for which systems are registered */
 
+			/*!
+			 * @brief ___JZEngine::ECS::RegisterSystem()___
+			 * ****************************************************************************************************
+			 * Registers a derived class from System as a system to be processed
+			 * by the ECSInstance.
+			 * ****************************************************************************************************
+			 * @tparam SYSTEM
+			 * : The class derived from System to register.
+			 * ****************************************************************************************************
+			*/
 			template <typename SYSTEM>
 			void RegisterSystem()
 			{
@@ -428,33 +555,109 @@ namespace JZEngine
 				}
 			}
 
+			/*!
+			 * @brief ___JZEngine::ECS::Update()___
+			 * ****************************************************************************************************
+			 * Updates all registered systems with entities that meet
+			 * the component signature every frame.
+			 * ****************************************************************************************************
+			*/
 			void Update();
 		};
 
+		/* Forward declare Entity for ECSIntance to get a handle to. */
 		struct Entity;
+		
+		/* ____________________________________________________________________________________________________
+		*																				ECSINSTANCE DECLARATION
+		   ____________________________________________________________________________________________________*/
+
+		/*!
+		 * @brief ___JZEngine::ECS::ECSInstance___
+		 * ****************************************************************************************************
+		 * Encapsulates the entire ECS, holding one of each
+		 * manager. Main interface to the ECS.
+		 * ****************************************************************************************************
+		*/
 		struct ECSInstance // destructor still missing
 		{
-			static ECSInstance& Instance();
-			ComponentManager component_manager_;
-			ArchetypeManager archetype_manager_;
-			SystemManager system_manager_;
-			int i = 0;
+			ComponentManager	component_manager_;		/*!< holds all registered components  */
+			ArchetypeManager	archetype_manager_;		/*!< holds all unique archetypes, i.e. component combinations */
+			SystemManager		system_manager_;		/*!< holds all registered systems */
 
+			/*!
+			 * @brief ___JZEngine::ECS::ECSInstance::Instance()___
+			 * ****************************************************************************************************
+			 * Singleton interface.
+			 * ****************************************************************************************************
+			 * @return ECSInstance&
+			 * : A reference to the static ECSInstance.
+			 * ****************************************************************************************************
+			*/
+			static ECSInstance& Instance();
+
+			/*!
+			 * @brief ___JZEngine::ECS::ECSInstance::Update()___
+			 * ****************************************************************************************************
+			 * Calls system manager update which in turns updates
+			 * all systems with matching archetypes, i.e. entities.
+			 * ****************************************************************************************************
+			*/
 			void Update();
 
+			/*!
+			 * @brief ___JZEngine::ECS::ECSInstance::RegisterComponent()___
+			 * ****************************************************************************************************
+			 * Registers a struct/class as a component.
+			 * ****************************************************************************************************
+			 * @tparam COMPONENT
+			 * : The struct/class to register as the component.
+			 * ****************************************************************************************************
+			*/
+			template <typename COMPONENT>
+			void RegisterComponent()
+			{
+				component_manager_.RegisterComponent<COMPONENT>();
+			}
+
+			/*!
+			 * @brief ___JZEngine::ECS::ECSInstance::RegisterSystem()___
+			 * ****************************************************************************************************
+			 * Registers a derived struct/class from System as an ECS system.
+			 * ****************************************************************************************************
+			 * @tparam SYSTEM
+			 * : The struct/class to register as the system.
+			 * ****************************************************************************************************
+			*/
 			template <typename SYSTEM>
 			void RegisterSystem()
 			{
 				system_manager_.RegisterSystem<SYSTEM>();
 			}
 
-			/*template <typename...SYSTEMS>
-			int CreateEntity();*/
 		private:
+			/*!
+			 * @brief ___JZEngine::ECS::ECSInstance::ECSInstance()___
+			 * ****************************************************************************************************
+			 * Private constructor to singleton.
+			 * ****************************************************************************************************
+			*/
 			ECSInstance();
+
 			std::vector<Entity> entities_;
 		};
 
+		/*!
+		 * @brief ___JZEngine::ECS::Chunk::GetComponent()___
+		 * ****************************************************************************************************
+		 * Get component from a chunk with an entity id.
+		 * ****************************************************************************************************
+		 * @tparam COMPONENT
+		 * : Component to get.
+		 * @param id
+		 * : id of entity in the chunk.
+		 * ****************************************************************************************************
+		*/
 		template<typename COMPONENT>
 		COMPONENT& Chunk::GetComponent(ui32 id)
 		{
@@ -469,10 +672,22 @@ namespace JZEngine
 			return *(reinterpret_cast<COMPONENT*>(data));
 		}
 
+		/* ____________________________________________________________________________________________________
+		*																					ENTITY DECLARATION
+		   ____________________________________________________________________________________________________*/
+
+		/*!
+		 * @brief ___JZEngine::ECS::Entity___
+		 * ****************************************************************************************************
+		 * Entity belonging to a chunk with a unique id.
+		 * Associated with a combination of components stored
+		 * in a chunk.
+		 * ****************************************************************************************************
+		*/
 		struct Entity
 		{
-			Chunk*								owning_chunk_{ nullptr };
-			ubyte								id_{ 255 };
+			Chunk*								owning_chunk_{ nullptr };	/*!< chunk that holds the components for this entity */
+			ubyte								id_{ 255 };					/*!< unique id corresponding to its chunk, i.e. only unique per chunk */
 
 			Entity();
 			~Entity();
@@ -519,10 +734,24 @@ namespace JZEngine
 				return owning_chunk_->GetComponent<COMPONENT>(id_);
 			}
 
+			/*!
+			 * @brief ___JZEngine::ECS::Entity::AddComponent()___
+			 * ****************************************************************************************************
+			 * Adds a component to the entity. Changes the component
+			 * combination signature, and assigns it a new chunk and
+			 * archetype (creating one if need be).
+			 * ****************************************************************************************************
+			 * @tparam ...COMPONENTS 
+			 * : Components to add.
+			 * @return Entity&
+			 * : This entity.
+			 * ****************************************************************************************************
+			*/
 			template <typename...COMPONENTS>
 			Entity& AddComponent()
 			{
 				((ECSInstance::Instance().component_manager_.RegisterComponent<COMPONENTS>()), ...);
+
 				// check if this entity had a chunk before
 				if (owning_chunk_)
 				{
@@ -556,25 +785,116 @@ namespace JZEngine
 				((owning_chunk_->GetComponent<COMPONENTS>(id_) = COMPONENTS()), ...);
 				return *this;
 			}
+
+			/*!
+			 * @brief ___JZEngine::ECS::AddComponent()___
+			 * ****************************************************************************************************
+			 * Adds components to an entity based on the bit id
+			 * of the components. Assumes that the used bits are
+			 * already registered components.
+			 * 
+			 * Warning: Does not call the constructors
+			 * of the components being added to the entity,
+			 * unlike the templated AddComponent().
+			 * (will probably change)
+			 * ****************************************************************************************************
+			 * @param bits 
+			 * : bits of the components to add.
+			 * @return Entity&
+			 * : This entity.
+			 * ****************************************************************************************************
+			*/
+			Entity& AddComponent(const std::array<ui32, MAX_COMPONENTS>& bits, ui32 count)
+			{
+				// check if this entity had a chunk before
+				if (owning_chunk_)
+				{
+					// get the archetype of the new combination
+					Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(owning_chunk_->owning_archetype_->mask_, bits, count);
+
+					// perform copy of entity over to the new archetype
+					ubyte temp_id{ 0 };
+					Chunk& temp_chunk = new_archetype.AddEntity(temp_id);
+
+					// shallow copy
+					memcpy(temp_chunk.GetDataBegin(temp_id), owning_chunk_->GetDataBegin(id_), owning_chunk_->owning_archetype_->entity_stride_);
+
+					// tell old chunk to remove entity
+					owning_chunk_->RemoveEntity(id_);
+
+					// update owning_chunk and id
+					owning_chunk_ = &temp_chunk;
+					id_ = temp_id;
+				}
+				else
+				{
+					// get the new archetype based on this entities component combination
+					Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(bits, count);
+
+					// add this new entity to the archetype
+					owning_chunk_ = &new_archetype.AddEntity(id_);
+				}
+
+				return *this;
+			}
 		};
 
+		/* ____________________________________________________________________________________________________
+		*																					SYSTEM DECLARATION
+		   ____________________________________________________________________________________________________*/
+
+		/*!
+		 * @brief ___JZEngine::ECS::System___
+		 * ****************************************************************************************************
+		 * Holds the logic to update entities with required
+		 * components. E.g. A Movement System might require
+		 * an entity having a Position component, all entities
+		 * with a position component will be updated by such a system.
+		 * ****************************************************************************************************
+		*/
 		struct System
 		{
-			ubyte current_id_{ 0 };
-			Chunk* current_chunk_{ nullptr };
-			std::bitset<MAX_COMPONENTS> mask_;
-			System()
-			{
-			}
+			ubyte							current_id_{ 0 };			/*!< current entity id of the component being updated */
+			Chunk*							current_chunk_{ nullptr };	/*!< current chunk the entity being updated belongs to */
+			std::bitset<MAX_COMPONENTS>		mask_;						/*!< component mask of the system, to decide which entities to update */
+			ui32							number_of_components_{ 0 };	/*!< number of components*/
 
+			System() {}
+			virtual ~System() = default;
+
+			/*!
+			 * @brief ___JZEngine::ECS::System::RegisterComponents()___
+			 * ****************************************************************************************************
+			 * Registers all components as a precautionary measure.
+			 * Sets the mask and component signature for the derived system.
+			 * Component signature in the derived is needed to support
+			 * adding of components based on systems to the entities.
+			 * ****************************************************************************************************
+			 * @tparam COMPONENTS
+			 * : Components to add.
+			 * @param components
+			 * : Component signature container passed in from the derived.
+			 * ****************************************************************************************************
+			*/
 			template <typename...COMPONENTS>
-			void RegisterComponents()
+			void RegisterComponents(std::array<ui32, MAX_COMPONENTS>& components)
 			{
 				((ECSInstance::Instance().component_manager_.RegisterComponent<COMPONENTS>()), ...);
 				((mask_[ComponentManager::component_descriptions_<COMPONENTS>.bit_] = 1), ...);
-				int i = ComponentManager::component_descriptions_<TestData>.bit_;
+				((components[number_of_components_++] = ComponentManager::component_descriptions_<COMPONENTS>.bit_), ...);
 			}
 
+			/*!
+			 * @brief ___JZEngine::ECS::System::GetComponent()___
+			 * ****************************************************************************************************
+			 * Gets a component from the current entity being processed.
+			 * ****************************************************************************************************
+			 * @tparam COMPONENT
+			 * : Component to get.
+			 * @return Component&
+			 * : Reference to the component.
+			 * ****************************************************************************************************
+			*/
 			template <typename COMPONENT>
 			COMPONENT& GetComponent()
 			{
@@ -582,10 +902,21 @@ namespace JZEngine
 				return current_chunk_->GetComponent<COMPONENT>(current_id_);
 			}
 
-			virtual ~System() = default;
-			/*virtual void PerFrame();
-			virtual void Update();*/
-			virtual void FrameBegin() { std::cout << "test" << std::endl; };
+			/*!
+			 * @brief ___JZEngine::ECS::System::FrameBegin()___
+			 * ****************************************************************************************************
+			 * Virtual function, called only once per frame
+			 * for each system.
+			 * ****************************************************************************************************
+			*/
+			virtual void FrameBegin() { };
+
+			/*!
+			 * @brief ___JZEngine::ECS::System::Update()___
+			 * ****************************************************************************************************
+			 * Virtual function, called once for each entity per frame.
+			 * ****************************************************************************************************
+			*/
 			virtual void Update(const float& dt) = 0;
 		};
 	}

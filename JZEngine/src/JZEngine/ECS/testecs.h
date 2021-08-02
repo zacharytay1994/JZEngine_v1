@@ -4,7 +4,7 @@
 
 struct TestComponent
 {
-	int x{-90}, y{0};
+	int x{-90}, y{-5};
 };
 
 struct TestComponent2
@@ -16,9 +16,11 @@ struct TestSystem : public JZEngine::ECS::System
 {
 	int z{ 0 };
 
+	static std::array<JZEngine::ECS::ui32, JZEngine::ECS::MAX_COMPONENTS> components_;
+
 	TestSystem()
 	{
-		RegisterComponents<JZEngine::ECS::TestData>();
+		RegisterComponents<TestComponent, TestComponent2>(components_);
 	}
 
 	virtual void FrameBegin() override 
@@ -28,6 +30,8 @@ struct TestSystem : public JZEngine::ECS::System
 
 	virtual void Update(const float& dt) override
 	{
-		std::cout << "override update (" << GetComponent<JZEngine::ECS::TestData>().x << ")" << std::endl;
+		std::cout << "override update " << (int)current_id_ << " (" << GetComponent<TestComponent>().x << ")" << std::endl;
+		std::cout << "override update " << (int)current_id_ << " (" << GetComponent<TestComponent>().y << ")" << std::endl;
+		std::cout << "override update " << (int)current_id_ << " (" << GetComponent<TestComponent2>().d << ")" << std::endl;
 	}
 };
