@@ -22,40 +22,22 @@ namespace JZEngine
 		tools_gui_(gl_instance_.window_)
 	{
 		ECS::ECSInstance::Instance().RegisterSystem<TestSystem>();
+		ECS::ECSInstance::Instance().RegisterSystem<TestSystem2>();
 
 		ECS::Entity entity;
-		//entity.AddComponent<ECS::TestData>();
-		//entity.AddComponent(TestSystem::components_);
-		entity.AddComponent<TestComponent, TestComponent2>();
-		//entity.AddComponent<ECS::TestData>();
-		//entity.AddComponent<TestComponent, TestComponent2>();
+		entity.AddSystems<TestSystem2>();
 		entity.GetComponent<TestComponent>().x = 45;
 
 		ECS::Entity entity2;
-		//entity2.AddComponent(TestSystem::components_);
-		entity2.AddComponent<TestComponent, TestComponent2>();
-		entity2.GetComponent<TestComponent2>().d = 87;
-		//entity2.AddComponent<ECS::TestData>();
-		//entity2.AddComponent<TestComponent, TestComponent2>();
-		//entity.AddComponent<ECS::TestData2>();
-		////entity.AddComponent<ECS::TestData2>();
-		////entity.GetComponent<ECS::TestData>().x = 1;
-		////TestSystem ts;
-		///*TestSystem ts2;
-		//TestSystem2 ts3;*/
-		//ECS::Entity entity2;
-		//entity2.AddComponent<TestComponent, ECS::TestData2>();
-		////entity2.GetComponent<ECS::TestData>().x = 2;
-		//entity.GetComponent<ECS::TestData2>().c = 'p';
-		////std::cout << entity.GetComponent<ECS::TestData>().x << std::endl;
-		//std::cout << entity.GetComponent<ECS::TestData2>().c << std::endl;
-		//std::cout << entity2.GetComponent<TestComponent>().x << std::endl;
-		//std::cout << entity2.GetComponent<ECS::TestData2>().c << std::endl;
+		entity2.AddSystems<TestSystem2>();
+		entity2.AddSystem<TestSystem>();
 
-		//ECS::ECSInstance::Instance().RegisterSystem<TestSystem<TestComponent>>();
-		//ECS::ECSInstance::Instance().RegisterSystem<TestSystem>();
+		ECS::Entity entity3;
+		entity3.AddSystems<TestSystem, TestSystem2>();
 
-		//ECS::ECSInstance::Instance().RegisterComponent<TestComponent>();
+		entity.AddComponent<TestComponent2>();
+
+		ECS::ECSInstance::Instance().Print();
 	}
 
 	void Application::Run()

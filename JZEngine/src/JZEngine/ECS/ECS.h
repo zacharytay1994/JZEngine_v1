@@ -57,6 +57,8 @@ namespace JZEngine
 		constexpr ui32 CHUNKS_PER_ARCHETYPE		{ 256 };			/*!< arbitrary number */
 		constexpr ui32 ENTITIES_PER_CHUNK		{ 256 };			/*!< arbitrary number */
 
+		using SystemComponents = std::array<ui32, MAX_COMPONENTS>;
+
 		/* ____________________________________________________________________________________________________
 		*																	COMPONENT DESCRIPTION DECLARATION
 		   ____________________________________________________________________________________________________*/
@@ -157,7 +159,8 @@ namespace JZEngine
 		struct Chunk
 		{
 			Archetype*								owning_archetype_{nullptr};		/*!< the archetype object storing this chunk */
-			char*									data_{nullptr};					/*!< component data stored in bytes */
+			std::unique_ptr<char[]>					data_{nullptr};					/*!< component data stored in bytes */
+			//char* data_{ nullptr };
 			ubyte									number_of_entities_{ 0 };		/*!< number of entities stored in this chunk */
 			ubyte									free_ids_count_{ 0 };			/*!< number of free ids, i.e. previouly deleted entity spots */
 			std::array<ubyte, ENTITIES_PER_CHUNK>	free_ids_{ 0 };					/*!< the free id spots */
@@ -279,6 +282,8 @@ namespace JZEngine
 			 * ****************************************************************************************************
 			*/
 			char* GetDataBegin(ubyte id);
+
+			void Print();
 		};
 
 		/* ____________________________________________________________________________________________________
@@ -374,6 +379,8 @@ namespace JZEngine
 			 * ****************************************************************************************************
 			*/
 			Chunk& AddEntity(ubyte& id);
+
+			void Print();
 		};
 
 		/* ____________________________________________________________________________________________________
@@ -449,7 +456,7 @@ namespace JZEngine
 			 * : The archetype of the component combination.
 			 * ****************************************************************************************************
 			*/
-			Archetype& GetArchetype(const std::array<ui32, MAX_COMPONENTS>& bits, ui32 count);
+			Archetype& GetArchetype(const std::array<ui32, MAX_COMPONENTS>& bits);
 
 			/*!
 			 * @brief ___JZEngine::ECS::GetArchetype()___
@@ -506,7 +513,9 @@ namespace JZEngine
 			 * : The archetype of the combined component combination.
 			 * ****************************************************************************************************
 			*/
-			Archetype& GetArchetype(const std::bitset<MAX_COMPONENTS>& currentmask, const std::array<ui32, MAX_COMPONENTS>& bits, ui32 count);
+			Archetype& GetArchetype(const std::bitset<MAX_COMPONENTS>& currentmask, const std::array<ui32, MAX_COMPONENTS>& bits);
+
+			void Print();
 
 			ui32															number_of_archetypes_{ 0 };	/*!< number of unique archetypes created */
 			std::array<Archetype, MAX_ARCHETYPES>							archetype_database_;		/*!< storage of all unique archetype objects */
@@ -635,6 +644,8 @@ namespace JZEngine
 				system_manager_.RegisterSystem<SYSTEM>();
 			}
 
+			void Print();
+
 		private:
 			/*!
 			 * @brief ___JZEngine::ECS::ECSInstance::ECSInstance()___
@@ -665,7 +676,7 @@ namespace JZEngine
 				owning_archetype_->mask_[ECSInstance::Instance().component_manager_.component_descriptions_<COMPONENT>.bit_] == 1));
 
 			// navigates to location of data
-			char* data = data_ + (size_t)id * (size_t)owning_archetype_->entity_stride_ +
+			char* data = data_.get() + (size_t)id * (size_t)owning_archetype_->entity_stride_ +
 				(size_t)owning_archetype_->component_stride_[ComponentManager::component_descriptions_<COMPONENT>.bit_];
 
 			// cast to type and return reference
@@ -755,6 +766,14 @@ namespace JZEngine
 				// check if this entity had a chunk before
 				if (owning_chunk_)
 				{
+					// check if components are already there, if so don't do anything
+					bool there = true;
+					((there = owning_chunk_->owning_archetype_->mask_[ComponentManager::component_descriptions_<COMPONENTS>.bit_] && there ? true : false), ...);
+					if (there)
+					{
+						return *this;
+					}
+
 					// get the archetype of the new combination
 					Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype<COMPONENTS...>(owning_chunk_->owning_archetype_->mask_);
 
@@ -804,13 +823,34 @@ namespace JZEngine
 			 * : This entity.
 			 * ****************************************************************************************************
 			*/
-			Entity& AddComponent(const std::array<ui32, MAX_COMPONENTS>& bits, ui32 count)
+			template <typename SYSTEM>
+			Entity& AddSystem()
 			{
 				// check if this entity had a chunk before
 				if (owning_chunk_)
 				{
+					// check if system components are already there, if so don't do anything
+					bool there = true;
+					for (auto& c : SYSTEM::components_)
+					{
+						if (c == -1)
+						{
+							break;
+						}
+						if (owning_chunk_->owning_archetype_->mask_[c] != 1)
+						{
+							there = false;
+							break;
+						}
+					}
+					if (there)
+					{
+						std::cout << typeid(SYSTEM).name() << " already there." << std::endl;
+						return *this;
+					}
+
 					// get the archetype of the new combination
-					Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(owning_chunk_->owning_archetype_->mask_, bits, count);
+					Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(owning_chunk_->owning_archetype_->mask_, SYSTEM::components_);
 
 					// perform copy of entity over to the new archetype
 					ubyte temp_id{ 0 };
@@ -829,13 +869,20 @@ namespace JZEngine
 				else
 				{
 					// get the new archetype based on this entities component combination
-					Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(bits, count);
+					Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(SYSTEM::components_);
 
 					// add this new entity to the archetype
 					owning_chunk_ = &new_archetype.AddEntity(id_);
 				}
 
 				return *this;
+			}
+
+			template <typename...SYSTEMS>
+			Entity& AddSystems()
+			{
+				((AddSystem<SYSTEMS>()), ...);
+				return  *this;
 			}
 		};
 
@@ -879,8 +926,12 @@ namespace JZEngine
 			template <typename...COMPONENTS>
 			void RegisterComponents(std::array<ui32, MAX_COMPONENTS>& components)
 			{
+				// register all components
 				((ECSInstance::Instance().component_manager_.RegisterComponent<COMPONENTS>()), ...);
+				// create mask
 				((mask_[ComponentManager::component_descriptions_<COMPONENTS>.bit_] = 1), ...);
+				// fill components with max value
+				components.fill(-1);
 				((components[number_of_components_++] = ComponentManager::component_descriptions_<COMPONENTS>.bit_), ...);
 			}
 

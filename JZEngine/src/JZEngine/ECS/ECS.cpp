@@ -63,10 +63,10 @@ namespace JZEngine
 
 		Chunk::~Chunk()
 		{
-			if (data_)
+			/*if (data_)
 			{
 				delete[] data_;
-			}
+			}*/
 		}
 
 		/*!
@@ -83,7 +83,8 @@ namespace JZEngine
 			// set owner
 			owning_archetype_ = owner;
 			// initializes data
-			data_ = new char[owning_archetype_->entity_stride_ * ENTITIES_PER_CHUNK];
+			//data_ = new char[owning_archetype_->entity_stride_ * ENTITIES_PER_CHUNK];
+			data_ = std::make_unique<char[]>(owning_archetype_->entity_stride_ * ENTITIES_PER_CHUNK);
 		}
 
 		/*!
@@ -157,7 +158,7 @@ namespace JZEngine
 		void Chunk::ZeroEntityData(ubyte id)
 		{
 			// get location of entity data
-			char* entity_data = data_ + (size_t)id * (size_t)owning_archetype_->entity_stride_;
+			char* entity_data = data_.get() + (size_t)id * (size_t)owning_archetype_->entity_stride_;
 			// sets to 0
 			memset(entity_data, 0, (size_t)owning_archetype_->entity_stride_);
 		}
@@ -181,7 +182,7 @@ namespace JZEngine
 		*/
 		void Chunk::ZeroAllData()
 		{
-			memset(data_, 0, (size_t)owning_archetype_->entity_stride_ * (size_t)ENTITIES_PER_CHUNK);
+			memset(data_.get(), 0, (size_t)owning_archetype_->entity_stride_ * (size_t)ENTITIES_PER_CHUNK);
 		}
 
 		/*!
@@ -204,7 +205,34 @@ namespace JZEngine
 		*/
 		char* Chunk::GetDataBegin(ubyte id)
 		{
-			return data_ + (size_t)id * (size_t)owning_archetype_->entity_stride_;
+			return data_.get() + (size_t)id * (size_t)owning_archetype_->entity_stride_;
+		}
+
+		void Chunk::Print()
+		{
+			// print visual description of chunk
+			std::cout << "Chunk Entities: ";
+			for (int i = 0; i < number_of_entities_; ++i)
+			{
+				if (active_flags_[i])
+				{
+					std::cout << "o";
+				}
+				else
+				{
+					std::cout << "x";
+				}
+			}
+			std::cout << std::endl << "Free IDS: ";
+			for (int i = 0; i < free_ids_count_; ++i)
+			{
+				std::cout << i << ",";
+			}
+			std::cout << std::endl << "Entity Addresses: " << std::endl;
+			for (int i = 0; i < number_of_entities_; ++i)
+			{
+				std::cout << "Entity " << i << ". " << static_cast<void*>(GetDataBegin(i)) << std::endl;
+			}
 		}
 
 		/* ____________________________________________________________________________________________________
@@ -281,7 +309,7 @@ namespace JZEngine
 			// check if there are any empty chunks
 			for (ui32 i = 0; i < number_of_chunks_; ++i)
 			{
-				if (chunk_database_[i].number_of_entities_ < ENTITIES_PER_CHUNK)
+				if (chunk_database_[i].number_of_entities_ < ENTITIES_PER_CHUNK || chunk_database_[i].free_ids_count_ > 0)
 				{
 					id = chunk_database_[i].AddEntity();
 					return chunk_database_[i];
@@ -291,9 +319,42 @@ namespace JZEngine
 			if (number_of_chunks_ < chunk_database_.max_size())
 			{
 				chunk_database_[number_of_chunks_].Initialize(this);
+				id = chunk_database_[number_of_chunks_].AddEntity();
+				return chunk_database_[number_of_chunks_++];
 			}
-			id = chunk_database_[number_of_chunks_].AddEntity();
-			return chunk_database_[number_of_chunks_++];
+			// else game breaking error
+			std::cout << "ERROR! Not enough chunks to support entities of type!" << std::endl;
+			return chunk_database_[0];
+		}
+
+		void Archetype::Print()
+		{
+			// print information
+			std::cout << "ARCHETYPE " << id_ << std::endl;
+			std::cout << "__________________________________________" << std::endl;
+			std::cout << "Mask: " << mask_.to_string() << std::endl;
+			std::cout << "Entity Stride: " << entity_stride_ << std::endl;
+			std::cout << "------Strides: ";
+			for (int i = MAX_COMPONENTS-1; i >= 0; --i)
+			{
+				if (component_stride_[i] > 0)
+				{
+					std::cout << component_stride_[i] << ",";
+				}
+			}
+			std::cout << "0";
+			std::cout << std::endl << std::endl;
+
+			for (ui32 i = 0; i < number_of_chunks_; ++i)
+			{
+				std::cout << "CHUNK " << i << std::endl;
+				std::cout << "____________________" << std::endl;
+				chunk_database_[i].Print();
+				std::cout << "____________________" << std::endl;
+				std::cout << std::endl;
+			}
+
+			std::cout << "__________________________________________" << std::endl;
 		}
 
 		/* ____________________________________________________________________________________________________
@@ -322,14 +383,18 @@ namespace JZEngine
 		 * : The archetype of the component combination.
 		 * ****************************************************************************************************
 		*/
-		Archetype& ArchetypeManager::GetArchetype(const std::array<ui32, MAX_COMPONENTS>& bits, ui32 count)
+		Archetype& ArchetypeManager::GetArchetype(const std::array<ui32, MAX_COMPONENTS>& bits)
 		{
 			// create mask
 			std::bitset<MAX_COMPONENTS> mask;
 
-			for (int i = 0; i < count; ++i)
+			for (auto& b : bits)
 			{
-				mask[bits[i]] = 1;
+				if (b == -1)
+				{
+					break;
+				}
+				mask[b] = 1;
 			}
 
 			// check if the mask already exist, if it does return the archetype
@@ -349,9 +414,13 @@ namespace JZEngine
 			archetype_exist_tracker_[mask] = number_of_archetypes_;
 
 			// register all components into it
-			for (int i = 0; i < count; ++i)
+			for (auto& b : bits)
 			{
-				archetype_database_[number_of_archetypes_].RegisterComponent(bits[i]);
+				if (b == -1)
+				{
+					break;
+				}
+				archetype_database_[number_of_archetypes_].RegisterComponent(b);
 			}
 
 			return archetype_database_[number_of_archetypes_++];
@@ -371,18 +440,22 @@ namespace JZEngine
 		 * : The archetype of the combined component combination.
 		 * ****************************************************************************************************
 		*/
-		Archetype& ArchetypeManager::GetArchetype(const std::bitset<MAX_COMPONENTS>& currentmask, const std::array<ui32, MAX_COMPONENTS>& bits, ui32 count)
+		Archetype& ArchetypeManager::GetArchetype(const std::bitset<MAX_COMPONENTS>& currentmask, const std::array<ui32, MAX_COMPONENTS>& bits)
 		{
 			// if currentmask is empty, create new archetype from new components
 			if (currentmask.none())
 			{
-				return GetArchetype(bits, count);
+				return GetArchetype(bits);
 			}
 			// build new mask
 			std::bitset<MAX_COMPONENTS> new_mask = currentmask;
-			for (int i = 0; i < count; ++i)
+			for (auto& b : bits)
 			{
-				new_mask[bits[i]] = 1;
+				if (b == -1)
+				{
+					break;
+				}
+				new_mask[b] = 1;
 			}
 			// check if archetype already exists
 			if (archetype_exist_tracker_.find(new_mask) != archetype_exist_tracker_.end())
@@ -392,14 +465,29 @@ namespace JZEngine
 			// else copy archetype and add components
 			archetype_database_[number_of_archetypes_] = archetype_database_[archetype_exist_tracker_[currentmask]];
 			Archetype& new_archetype = archetype_database_[number_of_archetypes_];
-			for (int i = 0; i < count; ++i)
+			for (auto& b : bits)
 			{
-				new_archetype.RegisterComponent(bits[i]);
+				if (b == -1)
+				{
+					break;
+				}
+				if (new_archetype.mask_[b] != 1)
+				{
+					new_archetype.RegisterComponent(b);
+				}
 			}
 			new_archetype.id_ = number_of_archetypes_;
 			archetype_exist_tracker_[new_archetype.mask_] = number_of_archetypes_;
 			++number_of_archetypes_;
 			return new_archetype;
+		}
+
+		void ArchetypeManager::Print()
+		{
+			for (ui32 i = 0; i < number_of_archetypes_; ++i)
+			{
+				archetype_database_[i].Print();
+			}
 		}
 
 		/* ____________________________________________________________________________________________________
@@ -478,6 +566,14 @@ namespace JZEngine
 		void ECSInstance::Update()
 		{
 			system_manager_.Update();
+		}
+
+		void ECSInstance::Print()
+		{
+			std::cout << "______________________________________________________________________" << std::endl;
+			std::cout << "PRINTING ECS" << std::endl << std::endl;
+			archetype_manager_.Print();
+			std::cout << "______________________________________________________________________" << std::endl;
 		}
 
 		Entity::Entity()

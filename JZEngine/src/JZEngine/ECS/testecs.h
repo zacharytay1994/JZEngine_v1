@@ -16,7 +16,7 @@ struct TestSystem : public JZEngine::ECS::System
 {
 	int z{ 0 };
 
-	static std::array<JZEngine::ECS::ui32, JZEngine::ECS::MAX_COMPONENTS> components_;
+	static JZEngine::ECS::SystemComponents components_;
 
 	TestSystem()
 	{
@@ -30,8 +30,37 @@ struct TestSystem : public JZEngine::ECS::System
 
 	virtual void Update(const float& dt) override
 	{
-		std::cout << "override update " << (int)current_id_ << " (" << GetComponent<TestComponent>().x << ")" << std::endl;
+		/*std::cout << "override update " << (int)current_id_ << " (" << GetComponent<TestComponent>().x << ")" << std::endl;
 		std::cout << "override update " << (int)current_id_ << " (" << GetComponent<TestComponent>().y << ")" << std::endl;
-		std::cout << "override update " << (int)current_id_ << " (" << GetComponent<TestComponent2>().d << ")" << std::endl;
+		std::cout << "override update " << (int)current_id_ << " (" << GetComponent<TestComponent2>().d << ")" << std::endl;*/
+	}
+};
+
+struct TestComponent3
+{
+	int x{ -90 }, y{ -5 };
+};
+
+struct TestSystem2 : public JZEngine::ECS::System
+{
+	int z{ 0 };
+
+	static JZEngine::ECS::SystemComponents components_;
+
+	TestSystem2()
+	{
+		RegisterComponents<TestComponent, TestComponent3>(components_);
+	}
+
+	virtual void FrameBegin() override
+	{
+		//std::cout << "override test" << std::endl; 
+	}
+
+	virtual void Update(const float& dt) override
+	{
+		/*std::cout << "override update " << (int)current_id_ << " (" << GetComponent<TestComponent>().x << ")" << std::endl;
+		std::cout << "override update " << (int)current_id_ << " (" << GetComponent<TestComponent>().y << ")" << std::endl;
+		std::cout << "system2: " << (int)current_id_ << std::endl;*/
 	}
 };
