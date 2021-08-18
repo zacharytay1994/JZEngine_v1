@@ -9,7 +9,7 @@ struct TestComponent
 
 struct TestComponent2
 {
-	int d{1};
+	int x{0}, d{1};
 };
 
 struct TestSystem : public JZEngine::ECS::System
@@ -20,7 +20,7 @@ struct TestSystem : public JZEngine::ECS::System
 
 	TestSystem()
 	{
-		RegisterComponents<TestComponent, TestComponent2>(components_);
+		//RegisterComponents<TestComponent, TestComponent2>(components_);
 	}
 
 	virtual void FrameBegin() override 
@@ -38,7 +38,7 @@ struct TestSystem : public JZEngine::ECS::System
 
 struct TestComponent3
 {
-	int x{ -90 }, y{ -5 };
+	int x{ -90 }, y{ -3 };
 };
 
 struct TestSystem2 : public JZEngine::ECS::System
@@ -49,7 +49,7 @@ struct TestSystem2 : public JZEngine::ECS::System
 
 	TestSystem2()
 	{
-		RegisterComponents<TestComponent, TestComponent3>(components_);
+		//RegisterComponents<TestComponent, TestComponent3>(components_);
 	}
 
 	virtual void FrameBegin() override
@@ -63,4 +63,12 @@ struct TestSystem2 : public JZEngine::ECS::System
 		std::cout << "override update " << (int)current_id_ << " (" << GetComponent<TestComponent>().y << ")" << std::endl;
 		std::cout << "system2: " << (int)current_id_ << std::endl;*/
 	}
+};
+
+template <typename...COMPONENTS>
+struct TestSystem3
+{
+	using type = std::tuple<COMPONENTS...>;
+
+	void Update() {}
 };

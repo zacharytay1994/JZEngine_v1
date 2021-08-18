@@ -1,4 +1,5 @@
 #include "ECS.h"
+#include "ECSconfig.h"
 
 #include <iostream>
 
@@ -9,7 +10,6 @@ namespace JZEngine
 		/* ____________________________________________________________________________________________________
 		*																	COMPONENT DESCRIPTION DEFINITION
 		   ____________________________________________________________________________________________________*/
-
 		/*!
 		* @brief ___JZEngine::ECS::ComponentDescription___
 		* ****************************************************************************************************
@@ -41,7 +41,7 @@ namespace JZEngine
 		*/
 		ComponentManager::ComponentManager()
 		{
-
+			RegisterConfigComponents();
 		}
 
 		ComponentManager::~ComponentManager()
@@ -52,6 +52,11 @@ namespace JZEngine
 		template <typename COMPONENT>
 		ComponentDescription ComponentManager::component_descriptions_ =
 			ComponentDescription( sizeof(COMPONENT), -1, typeid(COMPONENT).name());
+
+		void ComponentManager::RegisterConfigComponents()
+		{
+			RegisterTuple(ECSConfig::Component());
+		}
 
 		/* ____________________________________________________________________________________________________
 		*																					CHUNK DEFINITION
@@ -78,8 +83,9 @@ namespace JZEngine
 		 * : Pointer to the owning archetype object.
 		 * ****************************************************************************************************
 		*/
-		void Chunk::Initialize(Archetype* owner)
+		void Chunk::Initialize(Archetype* owner, ui32 id)
 		{
+			id_ = id;
 			// set owner
 			owning_archetype_ = owner;
 			// initializes data
@@ -318,7 +324,7 @@ namespace JZEngine
 			// add new chunk
 			if (number_of_chunks_ < chunk_database_.max_size())
 			{
-				chunk_database_[number_of_chunks_].Initialize(this);
+				chunk_database_[number_of_chunks_].Initialize(this, number_of_chunks_);
 				id = chunk_database_[number_of_chunks_].AddEntity();
 				return chunk_database_[number_of_chunks_++];
 			}
@@ -584,6 +590,11 @@ namespace JZEngine
 		Entity::~Entity()
 		{
 
+		}
+
+		ui32 Entity::ID()
+		{
+			return ecs_id_;
 		}
 	}
 }

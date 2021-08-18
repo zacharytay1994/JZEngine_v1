@@ -119,5 +119,11 @@
     <ClInclude Include="src\JZEngine\ECS\testecs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\JZEngine\ECS\ECSConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\STL\Tuple.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

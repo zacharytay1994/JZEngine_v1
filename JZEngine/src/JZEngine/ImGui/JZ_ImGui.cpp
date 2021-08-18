@@ -1,6 +1,9 @@
 #include "PCH.h"
 #include "JZ_ImGui.h"
 
+#include "../ECS/ECSConfig.h"
+#include "../STL/Tuple.h"
+
 namespace JZEngine
 {
 	ToolsGUI::ToolsGUI(GLFWwindow*& glfwwindow)
@@ -16,15 +19,13 @@ namespace JZEngine
 		ImGui::DestroyContext();
 	}
 
-	void ToolsGUI::Update()
+	void ToolsGUI::Update(ECS::Entity& entity)
 	{
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		ImGui::Begin("Demo window");
-		ImGui::Button("Hello!");
-		ImGui::End();
+		RenderInspector(entity);
 
 		ImGui::Begin("Demo window 2");
 		ImGui::Button("Hello!");
@@ -43,5 +44,19 @@ namespace JZEngine
 		ImGui_ImplGlfw_InitForOpenGL(glfwwindow, true);
 		ImGui_ImplOpenGL3_Init("#version 330");
 		ImGui::StyleColorsDark();
+	}
+
+	void ToolsGUI::RenderInspector(ECS::Entity& entity)
+	{
+		ImGui::Begin("Inspector");
+		for (int i = 0; i < ECS::MAX_COMPONENTS; ++i)
+		{
+			if (entity.owning_chunk_->owning_archetype_->mask_[i])
+			{
+				LoopTuple(ECS::ECSConfig::Component(), i, entity);
+			}
+		}
+		//RenderComponent<TestComponent>(entity.GetComponent<TestComponent>());
+		ImGui::End();
 	}
 }
