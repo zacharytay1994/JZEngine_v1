@@ -98,7 +98,13 @@ namespace JZEngine
 			template <typename COMPONENT>
 			static ComponentDescription				component_descriptions_;	/*!< template variable holding all the different component descriptions registered */
 			std::array<ui32, MAX_COMPONENTS>		component_sizes_{ 0 };		/*!< a way to access component sizes through their id */
-			//std::array<std::string, MAX_COMPONENTS>	component_names_{ 0 };		/*!< to access component names */
+
+			struct ComponentNameID
+			{
+				std::string		name_;
+				unsigned int	bit_;
+			};
+			std::vector<ComponentNameID> registered_components_;
 
 			ComponentManager();
 			~ComponentManager();
@@ -136,6 +142,7 @@ namespace JZEngine
 					component_descriptions_<COMPONENT> = ComponentDescription(sizeof(COMPONENT), bit_generator_++, typeid(COMPONENT).name());
 					std::cout << "Registered Component: " << typeid(COMPONENT).name() << ", Bit: " << component_descriptions_<COMPONENT>.bit_ << std::endl;
 					component_descriptions_<COMPONENT>.registered_ = 1;
+					registered_components_.push_back({ typeid(COMPONENT).name(), component_descriptions_<COMPONENT>.bit_ });
 				}
 			}
 
@@ -410,6 +417,7 @@ namespace JZEngine
 			*/
 			Chunk& AddEntity(ubyte& id);
 
+			// for debugging purposes
 			void Print();
 		};
 
@@ -545,6 +553,7 @@ namespace JZEngine
 			*/
 			Archetype& GetArchetype(const std::bitset<MAX_COMPONENTS>& currentmask, const std::array<ui32, MAX_COMPONENTS>& bits);
 
+			// for debugging purposes
 			void Print();
 
 			ui32															number_of_archetypes_{ 0 };	/*!< number of unique archetypes created */
@@ -570,6 +579,9 @@ namespace JZEngine
 			std::vector<std::unique_ptr<System>>	system_database_;	/*!< storage for all the polymorphic systems */
 			std::unordered_map<std::string, bool>	system_registered_;	/*!< account for which systems are registered */
 
+			std::vector<std::string> registered_systems_;
+
+			SystemManager();
 			/*!
 			 * @brief ___JZEngine::ECS::RegisterSystem()___
 			 * ****************************************************************************************************
@@ -609,6 +621,25 @@ namespace JZEngine
 				using specialtype =  std::tuple_element_t<0, SYSTEM::type>;
 				std::cout << typeid(specialtype).name() << std::endl;
 			}*/
+
+			template <size_t I = 0, typename...TUPLE>
+			typename std::enable_if<I == sizeof...(TUPLE), void>::type
+				RegisterTuple(std::tuple<TUPLE...> t)
+			{
+				// no more tuples to iterate over, return void
+				return;
+			}
+
+			template <size_t I = 0, typename...TUPLE>
+			typename std::enable_if < I < sizeof...(TUPLE), void>::type
+				RegisterTuple(std::tuple<TUPLE...> t)
+			{
+				RegisterSystem<std::tuple_element_t<I, std::tuple<TUPLE...>>>();
+				registered_systems_.push_back(typeid(std::tuple_element_t<I, std::tuple<TUPLE...>>).name());
+				RegisterTuple<I + 1>(t);
+			}
+
+			void RegisterConfigSystems();
 		};
 
 		/* Forward declare Entity for ECSIntance to get a handle to. */
@@ -681,6 +712,7 @@ namespace JZEngine
 				system_manager_.RegisterSystem<SYSTEM>();
 			}
 
+			// for debugging purposes
 			void Print();
 
 		private:
@@ -786,6 +818,19 @@ namespace JZEngine
 				return owning_chunk_->GetComponent<COMPONENT>(id_);
 			}
 
+			/*!
+			 * @brief ___JZEngine::ECS::Entity::HasComponent()___
+			 * ****************************************************************************************************
+			 * If the entity has this component. Checked by
+			 * the component's unique bit.
+			 * ****************************************************************************************************
+			 * @param bit
+			 * : The bit.
+			 * @return 
+			 * ****************************************************************************************************
+			*/
+			bool HasComponent(int bit);
+
 			template <typename COMPONENT>
 			bool ComponentRegistered()
 			{
@@ -867,6 +912,8 @@ namespace JZEngine
 
 				return *this;
 			}
+
+			//Entity& AddComponent(const ECS::SystemComponents& components);
 
 			/*!
 			 * @brief ___JZEngine::ECS::AddComponent()___
@@ -950,8 +997,6 @@ namespace JZEngine
 				((AddSystem<SYSTEMS>()), ...);
 				return  *this;
 			}
-
-			ui32 ID();
 		};
 
 		/* ____________________________________________________________________________________________________
@@ -995,7 +1040,7 @@ namespace JZEngine
 			void RegisterComponents(std::array<ui32, MAX_COMPONENTS>& components)
 			{
 				// register all components
-				((ECSInstance::Instance().component_manager_.RegisterComponent<COMPONENTS>()), ...);
+				//((ECSInstance::Instance().component_manager_.RegisterComponent<COMPONENTS>()), ...);
 				// create mask
 				((mask_[ComponentManager::component_descriptions_<COMPONENTS>.bit_] = 1), ...);
 				// fill components with max value

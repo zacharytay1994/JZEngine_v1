@@ -12,6 +12,11 @@ struct TestComponent2
 	int x{0}, d{1};
 };
 
+struct TestComponent3
+{
+	float x{ -90.0f }, y{ -3.0f };
+};
+
 struct TestSystem : public JZEngine::ECS::System
 {
 	int z{ 0 };
@@ -20,7 +25,7 @@ struct TestSystem : public JZEngine::ECS::System
 
 	TestSystem()
 	{
-		//RegisterComponents<TestComponent, TestComponent2>(components_);
+		RegisterComponents<TestComponent3, TestComponent2>(components_);
 	}
 
 	virtual void FrameBegin() override 
@@ -36,11 +41,6 @@ struct TestSystem : public JZEngine::ECS::System
 	}
 };
 
-struct TestComponent3
-{
-	int x{ -90 }, y{ -3 };
-};
-
 struct TestSystem2 : public JZEngine::ECS::System
 {
 	int z{ 0 };
@@ -49,7 +49,7 @@ struct TestSystem2 : public JZEngine::ECS::System
 
 	TestSystem2()
 	{
-		//RegisterComponents<TestComponent, TestComponent3>(components_);
+		RegisterComponents<TestComponent, TestComponent3>(components_);
 	}
 
 	virtual void FrameBegin() override

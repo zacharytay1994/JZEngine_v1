@@ -51,7 +51,7 @@
     <ClCompile Include="src\JZEngine\ImGui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\JZEngine\ImGui\JZ_ImGui.cpp">
+    <ClCompile Include="src\JZEngine\EngineGUI\EngineGUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\JZEngine\JZGL\JZ_GL.cpp">
@@ -61,6 +61,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\JZEngine\ECS\testecs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\EngineGUI\Inspector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\EngineGUI\Console.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -101,7 +107,7 @@
     <ClInclude Include="src\JZEngine\ImGui\imstb_truetype.h">
       <Filter>Header Files\JZEngine\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\JZEngine\ImGui\JZ_ImGui.h">
+    <ClInclude Include="src\JZEngine\EngineGUI\EngineGUI.h">
       <Filter>Header Files\JZEngine\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\JZEngine\ImGui\imconfig.h">
@@ -123,6 +129,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\JZEngine\STL\Tuple.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\EngineConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\EngineGUI\Inspector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\EngineGUI\Console.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -247,6 +247,7 @@ namespace JZEngine
 
 		Archetype::Archetype()
 		{
+			component_stride_.fill(static_cast<ui16>(-1));
 		}
 
 		Archetype::~Archetype()
@@ -343,12 +344,11 @@ namespace JZEngine
 			std::cout << "------Strides: ";
 			for (int i = MAX_COMPONENTS-1; i >= 0; --i)
 			{
-				if (component_stride_[i] > 0)
+				if (component_stride_[i] < static_cast<ui16>(-1))
 				{
 					std::cout << component_stride_[i] << ",";
 				}
 			}
-			std::cout << "0";
 			std::cout << std::endl << std::endl;
 
 			for (ui32 i = 0; i < number_of_chunks_; ++i)
@@ -500,6 +500,11 @@ namespace JZEngine
 		*																					SYSTEM DEFINITION
 		   ____________________________________________________________________________________________________*/
 
+		SystemManager::SystemManager()
+		{
+			RegisterConfigSystems();
+		}
+
 		/*!
 		* @brief ___JZEngine::ECS::Update()___
 		* ****************************************************************************************************
@@ -537,6 +542,11 @@ namespace JZEngine
 					}
 				}
 			}
+		}
+
+		void SystemManager::RegisterConfigSystems()
+		{
+			RegisterTuple(ECSConfig::System());
 		}
 
 		/* ____________________________________________________________________________________________________
@@ -583,6 +593,8 @@ namespace JZEngine
 		}
 
 		Entity::Entity()
+			:
+			ecs_id_(static_cast<ui32>(-1))
 		{
 
 		}
@@ -592,9 +604,70 @@ namespace JZEngine
 
 		}
 
-		ui32 Entity::ID()
+		bool Entity::HasComponent(int bit)
 		{
-			return ecs_id_;
+			if (owning_chunk_)
+			{
+				return owning_chunk_->owning_archetype_->mask_[bit] == 1;
+			}
+			return false;
 		}
+
+		//Entity& Entity::AddComponent(const ECS::SystemComponents& components)
+		//{
+		//	// check if this entity had a chunk before
+		//	if (owning_chunk_)
+		//	{
+		//		// check if system components are already there, if so don't do anything
+		//		bool there = true;
+		//		for (auto& c : components)
+		//		{
+		//			if (c == -1)
+		//			{
+		//				break;
+		//			}
+		//			if (owning_chunk_->owning_archetype_->mask_[c] != 1)
+		//			{
+		//				there = false;
+		//				break;
+		//			}
+		//		}
+		//		if (there)
+		//		{
+		//			std::cout << "system components are already there." << std::endl;
+		//			return *this;
+		//		}
+
+		//		// get the archetype of the new combination
+		//		Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(owning_chunk_->owning_archetype_->mask_, components);
+
+		//		// perform copy of entity over to the new archetype
+		//		ubyte temp_id{ 0 };
+		//		Chunk& temp_chunk = new_archetype.AddEntity(temp_id);
+
+		//		// shallow copy
+		//		memcpy(temp_chunk.GetDataBegin(temp_id), owning_chunk_->GetDataBegin(id_), owning_chunk_->owning_archetype_->entity_stride_);
+
+		//		// tell old chunk to remove entity
+		//		owning_chunk_->RemoveEntity(id_);
+
+		//		// update owning_chunk and id
+		//		owning_chunk_ = &temp_chunk;
+		//		id_ = temp_id;
+		//	}
+		//	else
+		//	{
+		//		// get the new archetype based on this entities component combination
+		//		Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(components);
+
+		//		// add this new entity to the archetype
+		//		owning_chunk_ = &new_archetype.AddEntity(id_);
+		//	}
+
+		//	// change unique ecs_id_
+		//	ecs_id_ = owning_chunk_->owning_archetype_->id_ * 1000000 + owning_chunk_->id_ * 1000 + id_;
+
+		//	return *this;
+		//}
 	}
 }
