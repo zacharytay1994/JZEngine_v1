@@ -24,13 +24,15 @@ namespace JZEngine
 
 	Application::Application()
 		:
-		gl_instance_(window_width,window_height),
+		gl_instance_(Settings::window_width, Settings::window_height),
 		engine_gui_(gl_instance_.window_)
 	{
-		//entity.AddSystem<TestSystem>();
-		//entity.AddSystem<TestSystem>();
+		std::stringstream ss;
+		ss << "[" << Settings::engine_name << "] Up and Running! v%.1f";
+		Console::Log(ss.str().c_str(), 1.0f);
 
-		//ECS::ECSInstance::Instance().Print();
+		entity.AddComponent<TestComponent>();
+		ECS::ECSInstance::Instance().Print();
 	}
 
 	void Application::Run()

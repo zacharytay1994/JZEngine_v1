@@ -10,6 +10,8 @@
 #include <iostream>
 #include <unordered_map>
 
+//#include "ECSConfig.h"
+
 namespace JZEngine
 {
 	/*!
@@ -58,6 +60,8 @@ namespace JZEngine
 		constexpr ui32 ENTITIES_PER_CHUNK		{ 256 };			/*!< arbitrary number */
 
 		using SystemComponents = std::array<ui32, MAX_COMPONENTS>;
+
+		using ComponentMask = std::bitset<MAX_COMPONENTS>;
 
 		/* ____________________________________________________________________________________________________
 		*																	COMPONENT DESCRIPTION DECLARATION
@@ -913,6 +917,38 @@ namespace JZEngine
 				return *this;
 			}
 
+			template <size_t I = 0, typename...TUPLE>
+			typename std::enable_if<I == sizeof...(TUPLE), void>::type
+				LoopTupleInitializeComponent(std::tuple<TUPLE...> t, size_t i, Chunk* newchunk, int newid, Chunk* oldchunk = nullptr, int oldid = -1)
+			{
+				std::cout << "LoopTupleRender::tuple size exceeded." << std::endl;
+				return;
+			}
+
+			template <size_t I = 0, typename...TUPLE>
+			typename std::enable_if < I < sizeof...(TUPLE), void>::type
+				LoopTupleInitializeComponent(std::tuple<TUPLE...> t, size_t i, Chunk* newchunk, int newid, Chunk* oldchunk = nullptr, int oldid = -1)
+			{
+				if (I == i)
+				{
+					using COMPONENT = decltype(std::get<I>(t));
+					// if there is a previous chunk data to copy
+					if (oldchunk)
+					{
+						newchunk->GetComponent<std::remove_reference_t<COMPONENT>>(newid) = oldchunk->GetComponent<std::remove_reference_t<COMPONENT>>(oldid);
+					}
+					// else default initialize
+					else
+					{
+						newchunk->GetComponent<std::remove_reference_t<COMPONENT>>(newid) = std::remove_reference_t<COMPONENT>();
+					}
+					return;
+				}
+				LoopTupleInitializeComponent<I + 1>(t, i, newchunk, newid, oldchunk, oldid);
+			}
+
+			Entity& RemoveComponent(int i);
+
 			//Entity& AddComponent(const ECS::SystemComponents& components);
 
 			/*!
@@ -969,6 +1005,16 @@ namespace JZEngine
 					// shallow copy
 					memcpy(temp_chunk.GetDataBegin(temp_id), owning_chunk_->GetDataBegin(id_), owning_chunk_->owning_archetype_->entity_stride_);
 
+					//// initialize all components in new chunk
+					//for (auto& c : SYSTEM::components_)
+					//{
+					//	// if old chunk did not have system component, initialize it
+					//	if (owning_chunk_->owning_archetype_->mask_[c] != 1)
+					//	{
+					//		LoopTupleInitializeComponent(ECSConfig::Component(), c, temp_chunk, temp_id);
+					//	}
+					//}
+
 					// tell old chunk to remove entity
 					owning_chunk_->RemoveEntity(id_);
 
@@ -983,6 +1029,15 @@ namespace JZEngine
 
 					// add this new entity to the archetype
 					owning_chunk_ = &new_archetype.AddEntity(id_);
+
+					//// initialize all components in new chunk
+					//for (int i = 0; i < MAX_COMPONENTS; ++i)
+					//{
+					//	if (owning_chunk_->owning_archetype_->mask_[i] == 1)
+					//	{
+					//		LoopTupleInitializeComponent(ECSConfig::Component(), i, owning_chunk_, id_);
+					//	}
+					//}
 				}
 
 				// change unique ecs_id_

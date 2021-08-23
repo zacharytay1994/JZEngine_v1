@@ -613,6 +613,59 @@ namespace JZEngine
 			return false;
 		}
 
+		Entity& Entity::RemoveComponent(int bit)
+		{
+			// if no entities
+			if (!owning_chunk_)
+			{
+				std::cout << "JZEngine::Entity::Trying to remove component from entity that does not have components." << std::endl;
+				return *this;
+			}
+			// if entity does not have this component
+			if (owning_chunk_->owning_archetype_->mask_[bit] != 1)
+			{
+				std::cout << "JZEngine::Entity::Trying to remove unexisting component from entity." << std::endl;
+				return *this;
+			}
+
+			SystemComponents components;
+			components.fill(-1);
+			int count{ 0 };
+			for (int i = 0; i < MAX_COMPONENTS; ++i)
+			{
+				if (owning_chunk_->owning_archetype_->mask_[i] == 1 && i != bit)
+				{
+					components[count++] = i;
+				}
+			}
+
+			// get the new archetype based on this entities component combination
+			Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(components);
+			ubyte temp_id;
+			Chunk* temp_chunk = &new_archetype.AddEntity(temp_id);
+
+			// copy old data from old chunk into new chunk
+			for (int i = 0; i < MAX_COMPONENTS; ++i)
+			{
+				if (temp_chunk->owning_archetype_->mask_[i] == 1)
+				{
+					LoopTupleInitializeComponent(ECSConfig::Component(), i, temp_chunk, temp_id, owning_chunk_, id_);
+				}
+			}
+
+			// tell old chunk to remove entity
+			owning_chunk_->RemoveEntity(id_);
+
+			// update owning_chunk and id
+			owning_chunk_ = temp_chunk;
+			id_ = temp_id;
+
+			// change unique ecs_id_
+			ecs_id_ = owning_chunk_->owning_archetype_->id_ * 1000000 + owning_chunk_->id_ * 1000 + id_;
+
+			return *this;
+		}
+
 		//Entity& Entity::AddComponent(const ECS::SystemComponents& components)
 		//{
 		//	// check if this entity had a chunk before

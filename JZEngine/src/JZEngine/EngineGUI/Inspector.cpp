@@ -26,8 +26,8 @@ namespace JZEngine
 	void Inspector::Render(ECS::Entity& entity)
 	{
 		ImGui::SetNextWindowBgAlpha(0.8f);
-		ImGui::SetNextWindowPos({ static_cast<float>(window_width) * x_, static_cast<float>(window_height) * y_ }, ImGuiCond_Once);
-		ImGui::SetNextWindowSize({ static_cast<float>(window_width) * sx_, static_cast<float>(window_height) * sy_ }, ImGuiCond_Once);
+		ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x_, static_cast<float>(Settings::window_height) * y_ }, ImGuiCond_Once);
+		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx_, static_cast<float>(Settings::window_height) * sy_ }, ImGuiCond_Once);
 		ImGui::Begin("Inspector");
 		TreeNodeComponentsAndSystems(entity);
 		ImGui::Text("______________________________");
@@ -44,16 +44,6 @@ namespace JZEngine
 				}
 			}
 		}
-		/*std::vector<std::string> names = { "name1", "name2", "name3", "name4" };
-		ImGui::BeginListBox("", {0.0f, 50.0f});
-		for (auto& i : names)
-		{
-			if (ImGui::Selectable(i.c_str(), true))
-			{
-				Console::Log(i.c_str());
-			}
-		}*/
-		//ImGui::EndListBox();
 		ImGui::End();
 	}
 
@@ -89,6 +79,7 @@ namespace JZEngine
 						std::stringstream ss;
 						ss << "Added component [" << c.name_ << "]";
 						Console::Log(ss.str().c_str());
+						ECS::ECSInstance::Instance().Print();
 					}
 					else
 					{

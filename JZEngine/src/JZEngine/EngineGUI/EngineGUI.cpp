@@ -72,8 +72,8 @@ namespace JZEngine
 
 	void EngineGUI::SetWindowPositionScale(float x, float y, float sx, float sy)
 	{
-		ImGui::SetNextWindowPos({ static_cast<float>(window_width) * x, static_cast<float>(window_height) * y }, ImGuiCond_Once);
-		ImGui::SetNextWindowSize({ static_cast<float>(window_width) * sx, static_cast<float>(window_height) * sy }, ImGuiCond_Once);
+		ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x, static_cast<float>(Settings::window_height) * y }, ImGuiCond_Once);
+		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx, static_cast<float>(Settings::window_height) * sy }, ImGuiCond_Once);
 	}
 
 	void EngineGUI::RenderSceneTree()

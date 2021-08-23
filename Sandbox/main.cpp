@@ -7,8 +7,6 @@ public:
 		:
 		Application()
 	{
-		JZEngine::Console::Log("Engine Up and Running!");
-		JZEngine::Console::Log("Engine Up and Running!%f", 1.02f);
 	}
 };
 
