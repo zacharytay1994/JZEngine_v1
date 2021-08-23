@@ -613,6 +613,11 @@ namespace JZEngine
 			return false;
 		}
 
+		void Entity::LoopTupleInitializeComponent(size_t i, Chunk* newchunk, int newid, Chunk* oldchunk, int oldid)
+		{
+			LoopTupleInitializeComponent(ECSConfig::Component(), i, newchunk, newid, oldchunk, oldid);
+		}
+
 		Entity& Entity::RemoveComponent(int bit)
 		{
 			// if no entities
@@ -659,6 +664,94 @@ namespace JZEngine
 			// update owning_chunk and id
 			owning_chunk_ = temp_chunk;
 			id_ = temp_id;
+
+			// change unique ecs_id_
+			ecs_id_ = owning_chunk_->owning_archetype_->id_ * 1000000 + owning_chunk_->id_ * 1000 + id_;
+
+			return *this;
+		}
+
+		Entity& Entity::AddSystem(int systemid)
+		{
+			const SystemComponents& components = ECS::ECSInstance::Instance().system_manager_.system_database_[systemid]->components_;
+			// check if this entity had a chunk before
+			if (owning_chunk_)
+			{
+				// check if system components are already there, if so don't do anything
+				bool there = true;
+				for (auto& c : components)
+				{
+					if (c == -1)
+					{
+						break;
+					}
+					if (owning_chunk_->owning_archetype_->mask_[c] != 1)
+					{
+						there = false;
+						break;
+					}
+				}
+				if (there)
+				{
+					//std::cout << typeid(SYSTEM).name() << " already there." << std::endl;
+					return *this;
+				}
+
+				// get the archetype of the new combination
+				Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(owning_chunk_->owning_archetype_->mask_, components);
+
+				// perform copy of entity over to the new archetype
+				ubyte temp_id{ 0 };
+				Chunk& temp_chunk = new_archetype.AddEntity(temp_id);
+
+				// deep copy
+				//memcpy(temp_chunk.GetDataBegin(temp_id), owning_chunk_->GetDataBegin(id_), owning_chunk_->owning_archetype_->entity_stride_);
+				for (int i = 0; i < MAX_COMPONENTS; ++i)
+				{
+					if (owning_chunk_->owning_archetype_->mask_[i] == 1)
+					{
+						LoopTupleInitializeComponent(i, &temp_chunk, temp_id, owning_chunk_, id_);
+					}
+				}
+
+				// initialize all components in new chunk
+				for (auto& c : components)
+				{
+					if (c == -1)
+					{
+						break;
+					}
+					// if old chunk did not have system component, initialize it
+					if (owning_chunk_->owning_archetype_->mask_[c] != 1)
+					{
+						LoopTupleInitializeComponent(ECSConfig::Component(), c, &temp_chunk, temp_id);
+					}
+				}
+
+				// tell old chunk to remove entity
+				owning_chunk_->RemoveEntity(id_);
+
+				// update owning_chunk and id
+				owning_chunk_ = &temp_chunk;
+				id_ = temp_id;
+			}
+			else
+			{
+				// get the new archetype based on this entities component combination
+				Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(components);
+
+				// add this new entity to the archetype
+				owning_chunk_ = &new_archetype.AddEntity(id_);
+
+				// initialize all components in new chunk
+				for (int i = 0; i < MAX_COMPONENTS; ++i)
+				{
+					if (owning_chunk_->owning_archetype_->mask_[i] == 1)
+					{
+						LoopTupleInitializeComponent(ECSConfig::Component(), i, owning_chunk_, id_);
+					}
+				}
+			}
 
 			// change unique ecs_id_
 			ecs_id_ = owning_chunk_->owning_archetype_->id_ * 1000000 + owning_chunk_->id_ * 1000 + id_;

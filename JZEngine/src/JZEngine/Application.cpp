@@ -31,7 +31,7 @@ namespace JZEngine
 		ss << "[" << Settings::engine_name << "] Up and Running! v%.1f";
 		Console::Log(ss.str().c_str(), 1.0f);
 
-		entity.AddComponent<TestComponent>();
+		//entity.AddSystem(0);
 		ECS::ECSInstance::Instance().Print();
 	}
 

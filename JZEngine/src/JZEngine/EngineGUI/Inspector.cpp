@@ -71,7 +71,7 @@ namespace JZEngine
 					has_component_ = true;
 					ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f,1.0f,0.0f,1.0f });
 				}
-				if (ImGui::Selectable(c.name_.c_str(), true) && !has_component_)
+				if (ImGui::Selectable(c.name_.c_str(), true))
 				{
 					if (!has_component_)
 					{
@@ -83,7 +83,11 @@ namespace JZEngine
 					}
 					else
 					{
-
+						entity.RemoveComponent(c.bit_);
+						std::stringstream ss;
+						ss << "Removed component [" << c.name_ << "]";
+						Console::Log(ss.str().c_str());
+						ECS::ECSInstance::Instance().Print();
 					}
 				}
 				if (has_component_)
@@ -99,9 +103,34 @@ namespace JZEngine
 			ImGui::BeginListBox("[Sys]", { 0.0f, 100.0f });
 			for (auto& s : ECS::ECSInstance::Instance().system_manager_.registered_systems_)
 			{
-				if (ImGui::Selectable(s.c_str(), true))
+				bool has_system_ = true;
+				for (auto& c : ECS::ECSInstance::Instance().system_manager_.system_database_[s.id_]->components_)
 				{
-					Console::Log(s.c_str());
+					if (c != -1)
+					{
+						has_system_ = has_system_ ? entity.HasComponent(c) : false;
+					}
+					else
+					{
+						break;
+					}
+				}
+				if (has_system_)
+				{
+					ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f,1.0f,0.0f,1.0f });
+				}
+				if (ImGui::Selectable(s.name_.c_str(), true))
+				{
+					if (!has_system_)
+					{
+						entity.AddSystem(s.id_);
+						ECS::ECSInstance::Instance().Print();
+					}
+				}
+				if (has_system_)
+				{
+					has_system_ = false;
+					ImGui::PopStyleColor(1);
 				}
 			}
 			ImGui::EndListBox();

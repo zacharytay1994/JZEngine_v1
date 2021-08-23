@@ -10,7 +10,10 @@
 #include <iostream>
 #include <unordered_map>
 
-//#include "ECSConfig.h"
+struct TestComponent
+{
+	int x{ -90 }, y{ -5 };
+};
 
 namespace JZEngine
 {
@@ -582,8 +585,14 @@ namespace JZEngine
 		{
 			std::vector<std::unique_ptr<System>>	system_database_;	/*!< storage for all the polymorphic systems */
 			std::unordered_map<std::string, bool>	system_registered_;	/*!< account for which systems are registered */
-
-			std::vector<std::string> registered_systems_;
+			
+			unsigned int							number_of_systems_{ 0 };
+			struct SystemNameID
+			{
+				std::string		name_;
+				unsigned int	id_;
+			};
+			std::vector<SystemNameID>				registered_systems_;
 
 			SystemManager();
 			/*!
@@ -603,6 +612,7 @@ namespace JZEngine
 				{
 					system_database_.emplace_back(std::make_unique<SYSTEM>());
 					system_registered_[typeid(SYSTEM).name()] = 1;
+					registered_systems_.push_back({ typeid(SYSTEM).name(), number_of_systems_++ });
 				}
 				else
 				{
@@ -639,7 +649,6 @@ namespace JZEngine
 				RegisterTuple(std::tuple<TUPLE...> t)
 			{
 				RegisterSystem<std::tuple_element_t<I, std::tuple<TUPLE...>>>();
-				registered_systems_.push_back(typeid(std::tuple_element_t<I, std::tuple<TUPLE...>>).name());
 				RegisterTuple<I + 1>(t);
 			}
 
@@ -889,8 +898,23 @@ namespace JZEngine
 					ubyte temp_id{ 0 };
 					Chunk& temp_chunk = new_archetype.AddEntity(temp_id);
 
-					// shallow copy
-					memcpy(temp_chunk.GetDataBegin(temp_id), owning_chunk_->GetDataBegin(id_), owning_chunk_->owning_archetype_->entity_stride_);
+					// deep copy
+					//memcpy(temp_chunk.GetDataBegin(temp_id), owning_chunk_->GetDataBegin(id_), owning_chunk_->owning_archetype_->entity_stride_);
+					for (int i = 0; i < MAX_COMPONENTS; ++i)
+					{
+						if (owning_chunk_->owning_archetype_->mask_[i] == 1)
+						{
+							LoopTupleInitializeComponent(i, &temp_chunk, temp_id, owning_chunk_, id_);
+						}
+					}
+
+					if (HasComponent(1))
+					{
+						int ox = owning_chunk_->GetComponent<TestComponent>(id_).x;
+						int oy = owning_chunk_->GetComponent<TestComponent>(id_).x;
+						int nx = temp_chunk.GetComponent<TestComponent>(temp_id).x;
+						int ny = temp_chunk.GetComponent<TestComponent>(temp_id).y;
+					}
 
 					// tell old chunk to remove entity
 					owning_chunk_->RemoveEntity(id_);
@@ -947,6 +971,8 @@ namespace JZEngine
 				LoopTupleInitializeComponent<I + 1>(t, i, newchunk, newid, oldchunk, oldid);
 			}
 
+			void LoopTupleInitializeComponent(size_t i, Chunk* newchunk, int newid, Chunk* oldchunk = nullptr, int oldid = -1);
+
 			Entity& RemoveComponent(int i);
 
 			//Entity& AddComponent(const ECS::SystemComponents& components);
@@ -969,89 +995,91 @@ namespace JZEngine
 			 * : This entity.
 			 * ****************************************************************************************************
 			*/
-			template <typename SYSTEM>
-			Entity& AddSystem()
-			{
-				// check if this entity had a chunk before
-				if (owning_chunk_)
-				{
-					// check if system components are already there, if so don't do anything
-					bool there = true;
-					for (auto& c : SYSTEM::components_)
-					{
-						if (c == -1)
-						{
-							break;
-						}
-						if (owning_chunk_->owning_archetype_->mask_[c] != 1)
-						{
-							there = false;
-							break;
-						}
-					}
-					if (there)
-					{
-						std::cout << typeid(SYSTEM).name() << " already there." << std::endl;
-						return *this;
-					}
+			//template <typename SYSTEM>
+			//Entity& AddSystem()
+			//{
+			//	// check if this entity had a chunk before
+			//	if (owning_chunk_)
+			//	{
+			//		// check if system components are already there, if so don't do anything
+			//		bool there = true;
+			//		for (auto& c : SYSTEM::components_)
+			//		{
+			//			if (c == -1)
+			//			{
+			//				break;
+			//			}
+			//			if (owning_chunk_->owning_archetype_->mask_[c] != 1)
+			//			{
+			//				there = false;
+			//				break;
+			//			}
+			//		}
+			//		if (there)
+			//		{
+			//			std::cout << typeid(SYSTEM).name() << " already there." << std::endl;
+			//			return *this;
+			//		}
 
-					// get the archetype of the new combination
-					Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(owning_chunk_->owning_archetype_->mask_, SYSTEM::components_);
+			//		// get the archetype of the new combination
+			//		Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(owning_chunk_->owning_archetype_->mask_, SYSTEM::components_);
 
-					// perform copy of entity over to the new archetype
-					ubyte temp_id{ 0 };
-					Chunk& temp_chunk = new_archetype.AddEntity(temp_id);
+			//		// perform copy of entity over to the new archetype
+			//		ubyte temp_id{ 0 };
+			//		Chunk& temp_chunk = new_archetype.AddEntity(temp_id);
 
-					// shallow copy
-					memcpy(temp_chunk.GetDataBegin(temp_id), owning_chunk_->GetDataBegin(id_), owning_chunk_->owning_archetype_->entity_stride_);
+			//		// shallow copy
+			//		memcpy(temp_chunk.GetDataBegin(temp_id), owning_chunk_->GetDataBegin(id_), owning_chunk_->owning_archetype_->entity_stride_);
 
-					//// initialize all components in new chunk
-					//for (auto& c : SYSTEM::components_)
-					//{
-					//	// if old chunk did not have system component, initialize it
-					//	if (owning_chunk_->owning_archetype_->mask_[c] != 1)
-					//	{
-					//		LoopTupleInitializeComponent(ECSConfig::Component(), c, temp_chunk, temp_id);
-					//	}
-					//}
+			//		//// initialize all components in new chunk
+			//		//for (auto& c : SYSTEM::components_)
+			//		//{
+			//		//	// if old chunk did not have system component, initialize it
+			//		//	if (owning_chunk_->owning_archetype_->mask_[c] != 1)
+			//		//	{
+			//		//		LoopTupleInitializeComponent(ECSConfig::Component(), c, temp_chunk, temp_id);
+			//		//	}
+			//		//}
 
-					// tell old chunk to remove entity
-					owning_chunk_->RemoveEntity(id_);
+			//		// tell old chunk to remove entity
+			//		owning_chunk_->RemoveEntity(id_);
 
-					// update owning_chunk and id
-					owning_chunk_ = &temp_chunk;
-					id_ = temp_id;
-				}
-				else
-				{
-					// get the new archetype based on this entities component combination
-					Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(SYSTEM::components_);
+			//		// update owning_chunk and id
+			//		owning_chunk_ = &temp_chunk;
+			//		id_ = temp_id;
+			//	}
+			//	else
+			//	{
+			//		// get the new archetype based on this entities component combination
+			//		Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(SYSTEM::components_);
 
-					// add this new entity to the archetype
-					owning_chunk_ = &new_archetype.AddEntity(id_);
+			//		// add this new entity to the archetype
+			//		owning_chunk_ = &new_archetype.AddEntity(id_);
 
-					//// initialize all components in new chunk
-					//for (int i = 0; i < MAX_COMPONENTS; ++i)
-					//{
-					//	if (owning_chunk_->owning_archetype_->mask_[i] == 1)
-					//	{
-					//		LoopTupleInitializeComponent(ECSConfig::Component(), i, owning_chunk_, id_);
-					//	}
-					//}
-				}
+			//		// initialize all components in new chunk
+			//		for (int i = 0; i < MAX_COMPONENTS; ++i)
+			//		{
+			//			if (owning_chunk_->owning_archetype_->mask_[i] == 1)
+			//			{
+			//				LoopTupleInitializeComponent(ECSConfig::Component(), i, owning_chunk_, id_);
+			//			}
+			//		}
+			//	}
 
-				// change unique ecs_id_
-				ecs_id_ = owning_chunk_->owning_archetype_->id_ * 1000000 + owning_chunk_->id_ * 1000 + id_;
+			//	// change unique ecs_id_
+			//	ecs_id_ = owning_chunk_->owning_archetype_->id_ * 1000000 + owning_chunk_->id_ * 1000 + id_;
 
-				return *this;
-			}
+			//	return *this;
+			//}
 
-			template <typename...SYSTEMS>
+			Entity& AddSystem(int systemid);
+
+			/*template <typename...SYSTEMS>
 			Entity& AddSystems()
 			{
 				((AddSystem<SYSTEMS>()), ...);
 				return  *this;
-			}
+			}*/
 		};
 
 		/* ____________________________________________________________________________________________________
@@ -1074,6 +1102,8 @@ namespace JZEngine
 			std::bitset<MAX_COMPONENTS>		mask_;						/*!< component mask of the system, to decide which entities to update */
 			ui32							number_of_components_{ 0 };	/*!< number of components*/
 
+			JZEngine::ECS::SystemComponents components_;
+
 			System() {}
 			virtual ~System() = default;
 
@@ -1092,15 +1122,15 @@ namespace JZEngine
 			 * ****************************************************************************************************
 			*/
 			template <typename...COMPONENTS>
-			void RegisterComponents(std::array<ui32, MAX_COMPONENTS>& components)
+			void RegisterComponents()
 			{
 				// register all components
 				//((ECSInstance::Instance().component_manager_.RegisterComponent<COMPONENTS>()), ...);
 				// create mask
 				((mask_[ComponentManager::component_descriptions_<COMPONENTS>.bit_] = 1), ...);
 				// fill components with max value
-				components.fill(-1);
-				((components[number_of_components_++] = ComponentManager::component_descriptions_<COMPONENTS>.bit_), ...);
+				components_.fill(-1);
+				((components_[number_of_components_++] = ComponentManager::component_descriptions_<COMPONENTS>.bit_), ...);
 			}
 
 			/*!

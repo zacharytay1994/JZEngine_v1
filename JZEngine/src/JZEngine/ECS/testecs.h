@@ -2,11 +2,6 @@
 
 #include "ECS.h"
 
-struct TestComponent
-{
-	int x{-90}, y{-5};
-};
-
 struct TestComponent2
 {
 	int x{0}, d{1};
@@ -21,11 +16,9 @@ struct TestSystem : public JZEngine::ECS::System
 {
 	int z{ 0 };
 
-	static JZEngine::ECS::SystemComponents components_;
-
 	TestSystem()
 	{
-		RegisterComponents<TestComponent3, TestComponent2>(components_);
+		RegisterComponents<TestComponent3, TestComponent2>();
 	}
 
 	virtual void FrameBegin() override 
@@ -45,11 +38,9 @@ struct TestSystem2 : public JZEngine::ECS::System
 {
 	int z{ 0 };
 
-	static JZEngine::ECS::SystemComponents components_;
-
 	TestSystem2()
 	{
-		RegisterComponents<TestComponent, TestComponent3>(components_);
+		RegisterComponents<TestComponent, TestComponent3>();
 	}
 
 	virtual void FrameBegin() override
