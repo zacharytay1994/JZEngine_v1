@@ -30,6 +30,10 @@ namespace JZEngine
 		std::stringstream ss;
 		ss << "[" << Settings::engine_name << "] Up and Running! v%.1f";
 		Console::Log(ss.str().c_str(), 1.0f);
+		entity = ECS::ECSInstance::Instance().CreateEntity();
+
+		ECS::Entity& e0 = ECS::ECSInstance::Instance().CreateEntity();
+		ECS::ECSInstance::Instance().CreateEntity(e0.entity_id_);
 
 		//entity.AddSystem(0);
 		ECS::ECSInstance::Instance().Print();

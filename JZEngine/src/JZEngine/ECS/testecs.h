@@ -12,6 +12,13 @@ struct TestComponent3
 	float x{ -90.0f }, y{ -3.0f };
 };
 
+struct Transform
+{
+	float x, y;
+	float theta;
+	float sx, sy;
+};
+
 struct TestSystem : public JZEngine::ECS::System
 {
 	int z{ 0 };

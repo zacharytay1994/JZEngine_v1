@@ -61,6 +61,8 @@ namespace JZEngine
 		constexpr ui32 MAX_ARCHETYPES			{ 128 };			/*!< arbitrary number */
 		constexpr ui32 CHUNKS_PER_ARCHETYPE		{ 256 };			/*!< arbitrary number */
 		constexpr ui32 ENTITIES_PER_CHUNK		{ 256 };			/*!< arbitrary number */
+		constexpr ui32 ENTITIES_RESERVE			{ 256 };			/*!< arbitrary number*/
+		constexpr ui32 ENTITY_MAX_CHILDREN		{ 20 };
 
 		using SystemComponents = std::array<ui32, MAX_COMPONENTS>;
 
@@ -658,6 +660,23 @@ namespace JZEngine
 		/* Forward declare Entity for ECSIntance to get a handle to. */
 		struct Entity;
 		
+		struct EntityManager
+		{
+			ui32					root_count_ = 0;
+			std::vector<Entity*>	roots_;
+			std::vector<Entity>		entities_;
+			ui32					entity_count_ = 0;
+			std::stack<ui32>		free_entity_slots_;
+			std::stack<ui32>		free_root_slots_;
+
+			EntityManager();
+
+			Entity& CreateEntity(ui32 parent = -1);
+
+			void RemoveEntity(ui32 entity);
+
+		};
+
 		/* ____________________________________________________________________________________________________
 		*																				ECSINSTANCE DECLARATION
 		   ____________________________________________________________________________________________________*/
@@ -674,6 +693,7 @@ namespace JZEngine
 			ComponentManager	component_manager_;		/*!< holds all registered components  */
 			ArchetypeManager	archetype_manager_;		/*!< holds all unique archetypes, i.e. component combinations */
 			SystemManager		system_manager_;		/*!< holds all registered systems */
+			EntityManager		entity_manager_;
 
 			/*!
 			 * @brief ___JZEngine::ECS::ECSInstance::Instance()___
@@ -724,6 +744,10 @@ namespace JZEngine
 			{
 				system_manager_.RegisterSystem<SYSTEM>();
 			}
+
+			Entity& CreateEntity(ui32 parent = -1);
+
+			void RemoveEntity(ui32 entity);
 
 			// for debugging purposes
 			void Print();
@@ -779,11 +803,18 @@ namespace JZEngine
 		*/
 		struct Entity
 		{
+			ui32								root_id_ = -1;
+			ui32								entity_id_;
+			ui32								parent_;
 			Chunk*								owning_chunk_{ nullptr };	/*!< chunk that holds the components for this entity */
 			ubyte								id_{ 255 };					/*!< unique id corresponding to its chunk, i.e. only unique per chunk */
 			ui32								ecs_id_;
 
+			ui32										children_count_{ 0 };
+			std::array<Entity*, ENTITY_MAX_CHILDREN>	children_{ nullptr };
+
 			Entity();
+			Entity(ui32 entityid, ui32 parent=-1);
 			~Entity();
 
 			/*!
@@ -799,19 +830,24 @@ namespace JZEngine
 			 * : The archetype database that stores all archetypes.
 			 * ****************************************************************************************************
 			*/
-			template <typename...COMPONENTS>
-			void Initialize(ArchetypeManager& archetypeManager)
-			{
-				// get the new archetype based on this entities component combination
-				Archetype& archetype = archetypeManager.GetArchetype<COMPONENTS...>();
-				// add this new entity to the archetype
-				owning_chunk_ = &archetype.AddEntity(id_);
-				// initialize each component
-				((owning_chunk_->GetComponent<COMPONENTS>(id_) = COMPONENTS()), ...);
-				// calculate ecs_id
-				std::cout << owning_chunk_->owning_archetype_->id_ << "," << owning_chunk_->id_ << "," << id_ << std::endl;
-				ecs_id_ = owning_chunk_->owning_archetype_->id_ * 1000000 + owning_chunk_->id_ * 1000 + id_;
-			}
+			//template <typename...COMPONENTS>
+			//void Initialize(ArchetypeManager& archetypeManager)
+			//{
+			//	// get the new archetype based on this entities component combination
+			//	Archetype& archetype = archetypeManager.GetArchetype<COMPONENTS...>();
+			//	// add this new entity to the archetype
+			//	owning_chunk_ = &archetype.AddEntity(id_);
+			//	// initialize each component
+			//	((owning_chunk_->GetComponent<COMPONENTS>(id_) = COMPONENTS()), ...);
+			//	// calculate ecs_id
+			//	std::cout << owning_chunk_->owning_archetype_->id_ << "," << owning_chunk_->id_ << "," << id_ << std::endl;
+			//	ecs_id_ = owning_chunk_->owning_archetype_->id_ * 1000000 + owning_chunk_->id_ * 1000 + id_;
+			//}
+			void ResetEntity();
+
+			bool AddChild(Entity* child);
+
+			void RemoveChild(Entity* child);
 
 			/*!
 			 * @brief ___JZEngine:ECS::Entity::GetComponent()___

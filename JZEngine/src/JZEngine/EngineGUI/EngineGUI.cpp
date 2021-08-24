@@ -10,7 +10,8 @@ namespace JZEngine
 	EngineGUI::EngineGUI(GLFWwindow*& glfwwindow)
 		:
 		inspector_(5.0f/6.0f, 0.0f, 1.0f/6.0f, 1.0f),
-		console_(1.0f/6.0f, 5.0f/6.0f, 4.0f/6.0f, 1.0f/6.0f)
+		console_(1.0f/6.0f, 5.0f/6.0f, 4.0f/6.0f, 1.0f/6.0f),
+		scene_tree_(0.0f, 0.0f, 1.0f / 6.0f, 1.0f)
 	{
 		InitializeWithGLFW(glfwwindow);
 	}
@@ -41,7 +42,7 @@ namespace JZEngine
 
 		// render all imgui stuff
 		console_.Render();
-		RenderSceneTree();
+		scene_tree_.Render();
 		inspector_.Render(entity);
 
 		ImGui::EndFrame();
@@ -68,21 +69,5 @@ namespace JZEngine
 		ImGui_ImplGlfw_InitForOpenGL(glfwwindow, true);
 		ImGui_ImplOpenGL3_Init("#version 330");
 		ImGui::StyleColorsDark();
-	}
-
-	void EngineGUI::SetWindowPositionScale(float x, float y, float sx, float sy)
-	{
-		ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x, static_cast<float>(Settings::window_height) * y }, ImGuiCond_Once);
-		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx, static_cast<float>(Settings::window_height) * sy }, ImGuiCond_Once);
-	}
-
-	void EngineGUI::RenderSceneTree()
-	{
-		ImGui::SetNextWindowBgAlpha(0.8f);
-		SetWindowPositionScale(0.0f, 0.0f, 1.0f / 6.0f, 1.0f);
-		ImGui::Begin("Scene");
-		ImGui::Text("Current Scene");
-		ImGui::Text("______________________________");
-		ImGui::End();
 	}
 }

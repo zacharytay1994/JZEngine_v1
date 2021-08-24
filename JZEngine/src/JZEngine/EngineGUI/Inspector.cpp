@@ -124,6 +124,9 @@ namespace JZEngine
 					if (!has_system_)
 					{
 						entity.AddSystem(s.id_);
+						std::stringstream ss;
+						ss << "Added system [" << s.name_ << "]";
+						Console::Log(ss.str().c_str());
 						ECS::ECSInstance::Instance().Print();
 					}
 				}

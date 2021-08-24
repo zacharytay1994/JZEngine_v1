@@ -549,6 +549,53 @@ namespace JZEngine
 			RegisterTuple(ECSConfig::System());
 		}
 
+		EntityManager::EntityManager()
+		{
+			entities_.reserve(ENTITIES_RESERVE);
+		}
+
+		Entity& EntityManager::CreateEntity(ui32 parent)
+		{
+			ui32 id{ 0 };
+			if (free_entity_slots_.empty())
+			{
+				id = entity_count_;
+				entities_.push_back(Entity(entity_count_++, parent));
+			}
+			else
+			{
+				id = free_entity_slots_.top();
+				entities_[free_entity_slots_.top()] = Entity(free_entity_slots_.top(), parent);
+				free_entity_slots_.pop();
+			}
+			if (parent != -1)
+			{
+				// add this newly created entity as child to parent
+				entities_[parent].AddChild(&entities_[id]);
+			}
+			else
+			{
+				if (free_root_slots_.empty())
+				{
+					roots_.push_back(&entities_[id]);
+					entities_[id].root_id_ = root_count_++;
+				}
+				else
+				{
+					roots_[free_root_slots_.top()] = &entities_[id];
+					entities_[id].root_id_ = free_root_slots_.top();
+					free_root_slots_.pop();
+				}
+			}
+			return entities_[id];
+		}
+
+		void EntityManager::RemoveEntity(ui32 entity)
+		{
+			entities_[entity].ResetEntity();
+			//free_entity_slots_.push(entity);
+		}
+
 		/* ____________________________________________________________________________________________________
 		*																				ECSINSTANCE DEFINITION
 		   ____________________________________________________________________________________________________*/
@@ -584,6 +631,16 @@ namespace JZEngine
 			system_manager_.Update();
 		}
 
+		Entity& ECSInstance::CreateEntity(ui32 parent)
+		{
+			return entity_manager_.CreateEntity(parent);
+		}
+
+		void ECSInstance::RemoveEntity(ui32 entity)
+		{
+			entity_manager_.RemoveEntity(entity);
+		}
+
 		void ECSInstance::Print()
 		{
 			std::cout << "______________________________________________________________________" << std::endl;
@@ -593,15 +650,85 @@ namespace JZEngine
 		}
 
 		Entity::Entity()
+		{
+			children_.fill(nullptr);
+		}
+
+		Entity::Entity(ui32 entityid, ui32 parent)
 			:
+			entity_id_(entityid),
+			parent_(parent),
 			ecs_id_(static_cast<ui32>(-1))
 		{
-
+			children_.fill(nullptr);
 		}
 
 		Entity::~Entity()
 		{
 
+		}
+
+		void Entity::ResetEntity()
+		{
+			// Reset all children entities
+			for (auto& child : children_)
+			{
+				if (child)
+				{
+					child->ResetEntity();
+				}
+			}
+			// remove entity from chunk
+			if (owning_chunk_)
+			{
+				owning_chunk_->RemoveEntity(id_);
+				owning_chunk_ = nullptr;
+			}
+			// remove self from parent entity
+			if (parent_ != -1)
+			{
+				ECSInstance::Instance().entity_manager_.entities_[parent_].RemoveChild(this);
+			}
+			// if entity was a root, remove from root
+			if (root_id_ != -1)
+			{
+				ECSInstance::Instance().entity_manager_.roots_[root_id_] = nullptr;
+				ECSInstance::Instance().entity_manager_.free_root_slots_.push(root_id_);
+			}
+			// set id to be used again by entity manager
+			ECSInstance::Instance().entity_manager_.free_entity_slots_.push(entity_id_);
+			// reset member variables
+			root_id_	= static_cast<ui32>(-1);
+			entity_id_	= static_cast<ui32>(-1);
+			parent_		= static_cast<ui32>(-1);
+			id_			= static_cast<ubyte>(255);
+			ecs_id_		= static_cast<ui32>(-1);;
+			children_count_ = 0;
+			children_.fill(nullptr);
+		}
+		
+		bool Entity::AddChild(Entity* child)
+		{
+			if (children_count_ < ENTITY_MAX_CHILDREN)
+			{
+				children_[children_count_++] = child;
+				return true;
+			}
+			return false;
+		}
+
+		void Entity::RemoveChild(Entity* child)
+		{
+			for (auto& c : children_)
+			{
+				if (c)
+				{
+					if (c->entity_id_ == child->entity_id_)
+					{
+						c = nullptr;
+					}
+				}
+			}
 		}
 
 		bool Entity::HasComponent(int bit)

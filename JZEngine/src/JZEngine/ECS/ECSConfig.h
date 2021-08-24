@@ -15,7 +15,8 @@ namespace JZEngine
 				// ECS components
 				TestComponent2,
 				TestComponent,
-				TestComponent3
+				TestComponent3,
+				Transform
 
 				>;
 

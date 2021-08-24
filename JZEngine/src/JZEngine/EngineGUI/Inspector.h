@@ -42,7 +42,20 @@ namespace JZEngine
 		   ____________________________________________________________________________________________________*/
 
 		template <typename COMPONENT>
-		void RenderComponent(COMPONENT& component);
+		void RenderComponent(COMPONENT& component)
+		{
+			ImGui::Text("Oops nothing here...");
+		}
+
+		template <>
+		void RenderComponent(Transform& component)
+		{
+			ImGui::SliderFloat("x", &component.x, 0, 1000);
+			ImGui::SliderFloat("y", &component.y, 0, 1000);
+			ImGui::SliderFloat("theta", &component.theta, -360.0f, 360.0f);
+			ImGui::SliderFloat("sx", &component.sx, 0, 1000);
+			ImGui::SliderFloat("sy", &component.sy, 0, 1000);
+		}
 
 		template <>
 		void RenderComponent(TestComponent& component)

@@ -8,6 +8,7 @@
 
 #include "Inspector.h"
 #include "Console.h"
+#include "SceneTree.h"
 
 namespace JZEngine
 {
@@ -30,6 +31,7 @@ namespace JZEngine
 	private:
 		Inspector	inspector_;
 		Console		console_;
+		SceneTree	scene_tree_;
 
 		/*!
 		 * @brief ___JZEngine::ToolsGUI::IntiializeWithGLFW()___
@@ -41,9 +43,5 @@ namespace JZEngine
 		 * ****************************************************************************************************
 		*/
 		void InitializeWithGLFW(GLFWwindow*& glfwwindow);
-
-		void SetWindowPositionScale(float x, float y, float sx, float sy);
-
-		void RenderSceneTree();
 	};
 }
