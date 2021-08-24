@@ -1,10 +1,7 @@
 #pragma once
 
 #include "../BuildDefinitions.h"
-
 #include <iostream>
-#include <type_traits>
-#include <typeinfo>
 
 namespace JZEngine
 {
@@ -17,7 +14,6 @@ namespace JZEngine
 	template < typename T>
 	struct Vec2
 	{
-
 		T x{ 0 };
 		T y{ 0 };
 
@@ -49,9 +45,9 @@ namespace JZEngine
 
 		Vec2& Normalize ()
 		{
-			const auto length = Len ();
-			x /= length;
-			y /= length;
+			auto length = Len ();
+			x /= ( T ) length;
+			y /= ( T ) length;
 			return *this;
 		}
 
@@ -68,6 +64,7 @@ namespace JZEngine
 			typedef std::conditional < ( std::is_integral<T>::value ) , T1 , T >::type T2;
 			return Vec2<T2> ( x + rhs.x , y + rhs.y );
 		}
+
 		template <typename T1>
 		auto operator - ( const Vec2<T1>& rhs ) const
 		{
@@ -145,10 +142,6 @@ namespace JZEngine
 		{
 			return !( *this == rhs );
 		}
-
-		/*	Vec2 operator < ( const Vec2& rhs );
-			Vec2 operator > ( const Vec2& rhs );*/
-
 	};
 
 	template<typename T>
@@ -157,6 +150,5 @@ namespace JZEngine
 		os << arg.x << "," << arg.y << " ";
 		return os;
 	}
-
 
 }

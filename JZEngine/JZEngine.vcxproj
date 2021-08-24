@@ -197,9 +197,10 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="src\JZEngine\JZGL\JZ_GL.cpp" />
-    <ClCompile Include="src\JZEngine\Math\Vec2.cpp">
+    <ClCompile Include="src\JZEngine\Math\Math.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\JZEngine\Math\Timer.cpp" />
     <ClCompile Include="src\JZEngine\PCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -221,7 +222,9 @@
     <ClInclude Include="src\JZEngine\ImGui\imstb_truetype.h" />
     <ClInclude Include="src\JZEngine\ImGui\JZ_ImGui.h" />
     <ClInclude Include="src\JZEngine\JZGL\JZ_GL.h" />
+    <ClInclude Include="src\JZEngine\Math\Timer.h" />
     <ClInclude Include="src\JZEngine\Math\Vec2.h" />
+    <ClInclude Include="src\JZEngine\Math\Vec3.h" />
     <ClInclude Include="src\JZEngine\PCH.h" />
     <ClInclude Include="src\JZEngine\BuildDefinitions.h" />
   </ItemGroup>
