@@ -1,3 +1,15 @@
+/*	__FILE HEADER__
+*	File:	ECS.h
+	Author: JZ
+	Date:	26/08/21
+	Brief:	Contains all ECS logic:
+			Entity, EntityManager, Component, ComponentManager,
+			Archetype, ArchetypeManager, System, SystemManager,
+			ECSInstance Singleton.
+
+			Exposes the ECS through an ECSInstance singleton.
+*/
+
 #pragma once
 
 #include <memory>
@@ -1136,6 +1148,41 @@ namespace JZEngine
 
 				return *this;
 			}
+
+			/*!
+			 * @brief ___JZEngine::ECS::LoopTupleAddComponent()___
+			 * ****************************************************************************************************
+			 * Loops through a ECS::ECSConfig::Component to add a
+			 * Component type to the selected entity.
+			 * ****************************************************************************************************
+			 * @param i
+			 * : The index of the Component type into the tuple.
+			 * @param entity
+			 * : The entity to add the component to.
+			 * ****************************************************************************************************
+			*/
+			template <size_t I = 0, typename...TUPLE>
+			typename std::enable_if<I == sizeof...(TUPLE), void>::type
+				LoopTupleAddComponent(std::tuple<TUPLE...> t, size_t i)
+			{
+				std::cout << "LoopTupleAddComponent::tuple size exceeded." << std::endl;
+				return;
+			}
+
+			template <size_t I = 0, typename...TUPLE>
+			typename std::enable_if < I < sizeof...(TUPLE), void>::type
+				LoopTupleAddComponent(std::tuple<TUPLE...> t, size_t i)
+			{
+				if (I == i)
+				{
+					using COMPONENT = decltype(std::get<I>(t));
+					AddComponent<std::remove_reference_t<COMPONENT>>();
+					return;
+				}
+				LoopTupleAddComponent<I + 1>(t, i);
+			}
+
+			Entity& AddComponent(ui32 bit);
 
 			/*!
 			 * @brief ___JZEngine::ECS::SystemManager::RegisterTuple()___

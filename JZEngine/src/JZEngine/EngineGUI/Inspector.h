@@ -1,3 +1,11 @@
+/*	__FILE HEADER__
+*	File:	Inspector.h
+	Author: JZ
+	Date:	26/08/21
+	Brief:	Renders all components of a selected entity
+			in the engine GUI with ImGui.
+*/
+
 #pragma once
 
 #include <tuple>
@@ -9,9 +17,16 @@
 
 namespace JZEngine
 {
+	/*!
+	 * @brief ___JZEngine::Inspector___
+	 * ****************************************************************************************************
+	 * Renders the components of a selected entity.
+	 * Able to add and remove entities from the selected entity.
+	 * ****************************************************************************************************
+	*/
 	struct Inspector
 	{
-		float x_, y_, sx_, sy_;
+		float x_, y_, sx_, sy_;		/*!< position and scale of the ImGui window */
 
 		Inspector(float x, float y, float sx, float sy);
 
@@ -41,6 +56,17 @@ namespace JZEngine
 		*	CUSTOM COMPONENT IMGUI LAYOUTS
 		   ____________________________________________________________________________________________________*/
 
+		/*!
+		 * @brief ___JZEngine::Inspector::RenderComponent()___
+		 * ****************************************************************************************************
+		 * Default template for a component to be rendered using ImGui.
+		 * ****************************************************************************************************
+		 * @tparam COMPONENT 
+		 * : Specialization to choose a function.
+		 * @param component 
+		 * : The component reference to inspect component values from.
+		 * ****************************************************************************************************
+		*/
 		template <typename COMPONENT>
 		void RenderComponent(COMPONENT& component)
 		{
@@ -74,6 +100,19 @@ namespace JZEngine
 		{
 		}
 
+		/*!
+		 * @brief ___JZEngine::LoopTupleRender___
+		 * ****************************************************************************************************
+		 * Loops through a ECS::ECSConfig::Component to get a 
+		 * Component type to call the template specialization
+		 * defined above.
+		 * ****************************************************************************************************
+		 * @param i 
+		 * : The index of the Component type into the tuple.
+		 * @param entity 
+		 * : The entity to get the component from.
+		 * ****************************************************************************************************
+		*/
 		template <size_t I = 0, typename...TUPLE>
 		typename std::enable_if<I == sizeof...(TUPLE), void>::type
 			LoopTupleRender(std::tuple<TUPLE...> t, size_t i, ECS::Entity& entity)
@@ -98,47 +137,5 @@ namespace JZEngine
 			}
 			LoopTupleRender<I + 1>(t, i, entity);
 		}
-
-		template <size_t I = 0, typename...TUPLE>
-		typename std::enable_if<I == sizeof...(TUPLE), void>::type
-			LoopTupleAddComponent(std::tuple<TUPLE...> t, size_t i, ECS::Entity& entity)
-		{
-			std::cout << "LoopTupleAddComponent::tuple size exceeded." << std::endl;
-			return;
-		}
-
-		template <size_t I = 0, typename...TUPLE>
-		typename std::enable_if < I < sizeof...(TUPLE), void>::type
-			LoopTupleAddComponent(std::tuple<TUPLE...> t, size_t i, ECS::Entity& entity)
-		{
-			if (I == i)
-			{
-				using COMPONENT = decltype(std::get<I>(t));
-				entity.AddComponent<std::remove_reference_t<COMPONENT>>();
-				return;
-			}
-			LoopTupleAddComponent<I + 1>(t, i, entity);
-		}
-
-		/*template <size_t I = 0, typename...TUPLE>
-		typename std::enable_if<I == sizeof...(TUPLE), void>::type
-			LoopTupleRemoveComponent(std::tuple<TUPLE...> t, size_t i, ECS::Entity& entity)
-		{
-			std::cout << "LoopTupleAddComponent::tuple size exceeded." << std::endl;
-			return;
-		}
-
-		template <size_t I = 0, typename...TUPLE>
-		typename std::enable_if < I < sizeof...(TUPLE), void>::type
-			LoopTupleRemoveComponent(std::tuple<TUPLE...> t, size_t i, ECS::Entity& entity)
-		{
-			if (I == i)
-			{
-				using COMPONENT = decltype(std::get<I>(t));
-				entity.ReComponent<std::remove_reference_t<COMPONENT>>();
-				return;
-			}
-			LoopTupleAddComponent<I + 1>(t, i, entity);
-		}*/
 	};
 }

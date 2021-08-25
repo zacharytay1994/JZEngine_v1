@@ -1,3 +1,11 @@
+/*	__FILE HEADER__
+*	File:	Inspector.cpp
+	Author: JZ
+	Date:	26/08/21
+	Brief:	Renders all components of a selected entity
+			in the engine GUI with ImGui.
+*/
+
 #include "PCH.h"
 #include "Inspector.h"
 
@@ -28,9 +36,15 @@ namespace JZEngine
 		ImGui::SetNextWindowBgAlpha(0.8f);
 		ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x_, static_cast<float>(Settings::window_height) * y_ }, ImGuiCond_Once);
 		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx_, static_cast<float>(Settings::window_height) * sy_ }, ImGuiCond_Once);
+
+		// start rendering the inspector
 		ImGui::Begin("Inspector");
+
+		// renders all registered components and systems 
 		TreeNodeComponentsAndSystems(entity);
 		ImGui::Text("______________________________");
+
+		// if there is selected entity
 		if (entity)
 		{
 			std::stringstream ss;
@@ -38,6 +52,8 @@ namespace JZEngine
 			ImGui::Text(ss.str().c_str());
 			ImGui::Text("Entity ID: %d", entity->entity_id_);
 			ImGui::Text("______________________________");
+			
+			// if entity has a chunk, i.e. has component before
 			if (entity->owning_chunk_)
 			{
 				bool has_component_ = false;
@@ -47,6 +63,8 @@ namespace JZEngine
 					{
 						has_component_ = true;
 						ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+						
+						// renders all components using their specialization
 						LoopTupleRender(ECS::ECSConfig::Component(), i, *entity);
 					}
 				}
@@ -88,24 +106,33 @@ namespace JZEngine
 				ImGui::Text("______________________________");
 				ImGui::Text("Components:");
 				ImGui::BeginListBox("[Com]", { 0.0f, 100.0f });
+
+				// renders all registered components in a listbox
 				for (auto& c : ECS::ECSInstance::Instance().component_manager_.registered_components_)
 				{
 					bool has_component_ = false;
+					
+					// if the selected entity has the component, color it green
 					if (entity->HasComponent(c.bit_))
 					{
 						has_component_ = true;
 						ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f,1.0f,0.0f,1.0f });
 					}
+
+					// if component is selected
 					if (ImGui::Selectable(c.name_.c_str(), true))
 					{
+
+						// if selected entity does not have component, add it in
 						if (!has_component_)
 						{
-							LoopTupleAddComponent(ECS::ECSConfig::Component(), c.bit_, *entity);
+							entity->AddComponent(c.bit_);
 							std::stringstream ss;
 							ss << "Added component [" << c.name_ << "] to entity" << " [" << entity->name_ << "].";
 							Console::Log(ss.str().c_str());
 							ECS::ECSInstance::Instance().Print();
 						}
+						// else remove it
 						else
 						{
 							entity->RemoveComponent(c.bit_);
@@ -126,9 +153,13 @@ namespace JZEngine
 				ImGui::Text("______________________________");
 				ImGui::Text("Systems:");
 				ImGui::BeginListBox("[Sys]", { 0.0f, 100.0f });
+
+				// render all registered systems in a listbox
 				for (auto& s : ECS::ECSInstance::Instance().system_manager_.registered_systems_)
 				{
 					bool has_system_ = true;
+					
+					// check if the selected entity has the components of the system already added, if so mark green
 					for (auto& c : ECS::ECSInstance::Instance().system_manager_.system_database_[s.id_]->components_)
 					{
 						if (c != -1)
@@ -144,8 +175,11 @@ namespace JZEngine
 					{
 						ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f,1.0f,0.0f,1.0f });
 					}
+					
+					// if system selected
 					if (ImGui::Selectable(s.name_.c_str(), true))
 					{
+						// add the system components to the selected entity is any are missing
 						if (!has_system_)
 						{
 							entity->AddSystem(s.id_);
@@ -163,6 +197,7 @@ namespace JZEngine
 				}
 				ImGui::EndListBox();
 			}
+			// if no selected entity case, print default messages
 			else
 			{
 				ImGui::Text("______________________________");

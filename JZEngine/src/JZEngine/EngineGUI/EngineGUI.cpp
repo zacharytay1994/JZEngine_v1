@@ -1,3 +1,11 @@
+/*	__FILE HEADER__
+*	File:	EngineGUI.cpp
+	Author: JZ
+	Date:	26/08/21
+	Brief:	Handles the rendering of the Engine GUI,
+			e.g. Inspector, Console, etc.
+*/
+
 #include "PCH.h"
 #include "EngineGUI.h"
 
@@ -40,7 +48,7 @@ namespace JZEngine
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		// render all imgui stuff
+		// render all engine gui parts
 		console_.Render();
 		scene_tree_.Render();
 		inspector_.Render(scene_tree_.selected_entity_);

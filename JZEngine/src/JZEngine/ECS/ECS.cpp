@@ -1,3 +1,15 @@
+/*	__FILE HEADER__
+*	File:	ECS.cpp
+	Author: JZ
+	Date:	26/08/21
+	Brief:	Contains all ECS logic:
+			Entity, EntityManager, Component, ComponentManager,
+			Archetype, ArchetypeManager, System, SystemManager,
+			ECSInstance Singleton.
+
+			Exposes the ECS through an ECSInstance singleton.
+*/
+
 #include "ECS.h"
 #include "ECSconfig.h"
 
@@ -789,6 +801,12 @@ namespace JZEngine
 				return owning_chunk_->owning_archetype_->mask_[bit] == 1;
 			}
 			return false;
+		}
+
+		Entity& Entity::AddComponent(ui32 bit)
+		{
+			LoopTupleAddComponent(ECSConfig::Component(), bit);
+			return *this;
 		}
 
 		void Entity::LoopTupleInitializeComponent(size_t i, Chunk* newchunk, int newid, Chunk* oldchunk, int oldid)

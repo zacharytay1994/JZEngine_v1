@@ -1,3 +1,11 @@
+/*	__FILE HEADER__
+*	File:	SceneTree.cpp
+	Author: JZ
+	Date:	26/08/21
+	Brief:	Renders all entities in the scene tree on the
+			GUI using ImGui.
+*/
+
 #include "PCH.h"
 #include "SceneTree.h"
 
@@ -14,6 +22,12 @@ namespace JZEngine
 		new_entity_name_[0] = '\0';
 	}
 
+	/*!
+	 * @brief ___JZEngine::SceneTree::Render()___
+	 * ****************************************************************************************************
+	 * Renders the ImGui window.
+	 * ****************************************************************************************************
+	*/
 	void SceneTree::Render()
 	{
 		ImGui::SetNextWindowBgAlpha(0.8f);
@@ -26,25 +40,41 @@ namespace JZEngine
 
 		if (ImGui::Button("Add Default Entity"))
 		{
+			// create a new entity, pushed into EntityManager
 			unsigned int id = ECS::ECSInstance::Instance().CreateEntity();
+
+			// if successful
 			if (id != -1)
 			{
-				ECS::Entity& created_entity = ECS::ECSInstance::Instance().GetEntity(id);
-				created_entity.name_ = GetName();
+				// rename it
+				ECS::ECSInstance::Instance().GetEntity(id).name_ = GetName();
 			}
 		}
 		ImGui::Text("\nCurrent Scene");
 		ImGui::Text("______________________________");
+
+		// render all root entities in EntityManager
 		for (auto& id : ECS::ECSInstance::Instance().entity_manager_.root_ids_)
 		{
 			if (id != -1)
 			{
+				// recursively render all children of a root entity
 				RenderAllChildObjects(&ECS::ECSInstance::Instance().entity_manager_.GetEntity(id));
 			}
 		}
 		ImGui::End();
 	}
 
+	/*!
+	 * @brief ___JZEngine::SceneTree::RenderAllChildObjects()___
+	 * ****************************************************************************************************
+	 * Recursive function that renders the entity in the tree,
+	 * and also all of its children under it.
+	 * ****************************************************************************************************
+	 * @param entity
+	 * : The entity to render. Should be a root entity in EntityManager.
+	 * ****************************************************************************************************
+	*/
 	void SceneTree::RenderAllChildObjects(ECS::Entity* entity)
 	{
 		std::stringstream ss;
@@ -61,13 +91,17 @@ namespace JZEngine
 				ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f,1.0f,0.0f,1.0f });
 			}
 		}
+
 		bool open = ImGui::TreeNodeEx(ss.str().c_str(), ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick);
+
+		// if a treenode is clicked, make that entity the selected_entity_
 		if (ImGui::IsItemClicked())
 		{
 			selected_entity_ = entity;
 		}
 		if (ImGui::BeginPopupContextItem(ss.str().c_str()))
 		{
+			// adds an entity as a child of this entity on right click
 			if (ImGui::Selectable("Add Entity"))
 			{
 				int id = ECS::ECSInstance::Instance().CreateEntity(entity->entity_id_);
@@ -83,6 +117,7 @@ namespace JZEngine
 					created_entity.name_ = GetName();
 				}
 			}
+			// removes an entity from the tree
 			if (ImGui::Selectable("Remove Entity"))
 			{
 				ECS::ECSInstance::Instance().RemoveEntity(entity->entity_id_);
@@ -110,12 +145,25 @@ namespace JZEngine
 		}
 	}
 
+	/*!
+	 * @brief ___JZEngine::SceneTree::GetName()___
+	 * ****************************************************************************************************
+	 * Gets a unique name in the scene. If a name
+	 * is repeated, pad it with an index.
+	 * ****************************************************************************************************
+	 * @return std::string
+	 * : The name padded with the index.
+	 * ****************************************************************************************************
+	*/
 	std::string SceneTree::GetName()
 	{
+		// if a custom name is typed
 		if (new_entity_name_[0] == '\0')
 		{
 			std::stringstream ss;
 			ss << default_entity_name_;
+			
+			// pad identical names with an index
 			if (names_.find(default_entity_name_) == names_.end())
 			{
 				names_[default_entity_name_] = 1;
@@ -127,6 +175,7 @@ namespace JZEngine
 				return ss.str();
 			}
 		}
+		// else use the default name padded with index
 		else
 		{
 			std::stringstream ss;
