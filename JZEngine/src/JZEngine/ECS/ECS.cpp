@@ -554,8 +554,15 @@ namespace JZEngine
 			entities_.reserve(ENTITIES_RESERVE);
 		}
 
-		Entity& EntityManager::CreateEntity(ui32 parent)
+		ui32 EntityManager::CreateEntity(ui32 parent)
 		{
+			if (parent != -1)
+			{
+				if (!entities_[parent].HasChildSpace())
+				{
+					return -1;
+				}
+			}
 			ui32 id{ 0 };
 			if (free_entity_slots_.empty())
 			{
@@ -571,29 +578,38 @@ namespace JZEngine
 			if (parent != -1)
 			{
 				// add this newly created entity as child to parent
-				entities_[parent].AddChild(&entities_[id]);
+				if (!entities_[parent].AddChild(&entities_[id]))
+				{
+					std::cout << "ECS::ENTITYMANAGER::entity of entity_id_ " << parent << " cannot accept any more children." << std::endl;
+				}
 			}
 			else
 			{
 				if (free_root_slots_.empty())
 				{
-					roots_.push_back(&entities_[id]);
+					root_ids_.push_back(id);
 					entities_[id].root_id_ = root_count_++;
 				}
 				else
 				{
-					roots_[free_root_slots_.top()] = &entities_[id];
+					root_ids_[free_root_slots_.top()] = id;
 					entities_[id].root_id_ = free_root_slots_.top();
 					free_root_slots_.pop();
 				}
 			}
-			return entities_[id];
+			return id;
 		}
 
 		void EntityManager::RemoveEntity(ui32 entity)
 		{
 			entities_[entity].ResetEntity();
 			//free_entity_slots_.push(entity);
+		}
+
+		Entity& EntityManager::GetEntity(ui32 id)
+		{
+			assert(id < entities_.size());
+			return entities_[id];
 		}
 
 		/* ____________________________________________________________________________________________________
@@ -631,7 +647,7 @@ namespace JZEngine
 			system_manager_.Update();
 		}
 
-		Entity& ECSInstance::CreateEntity(ui32 parent)
+		ui32 ECSInstance::CreateEntity(ui32 parent)
 		{
 			return entity_manager_.CreateEntity(parent);
 		}
@@ -639,6 +655,11 @@ namespace JZEngine
 		void ECSInstance::RemoveEntity(ui32 entity)
 		{
 			entity_manager_.RemoveEntity(entity);
+		}
+
+		Entity& ECSInstance::GetEntity(ui32 id)
+		{
+			return entity_manager_.GetEntity(id);
 		}
 
 		void ECSInstance::Print()
@@ -692,7 +713,7 @@ namespace JZEngine
 			// if entity was a root, remove from root
 			if (root_id_ != -1)
 			{
-				ECSInstance::Instance().entity_manager_.roots_[root_id_] = nullptr;
+				ECSInstance::Instance().entity_manager_.root_ids_[root_id_] = -1;
 				ECSInstance::Instance().entity_manager_.free_root_slots_.push(root_id_);
 			}
 			// set id to be used again by entity manager
@@ -714,6 +735,17 @@ namespace JZEngine
 				children_[children_count_++] = child;
 				return true;
 			}
+			else
+			{
+				for (auto& c : children_)
+				{
+					if (!c)
+					{
+						c = child;
+						return true;
+					}
+				}
+			}
 			return false;
 		}
 
@@ -729,6 +761,25 @@ namespace JZEngine
 					}
 				}
 			}
+		}
+
+		bool Entity::HasChildSpace()
+		{
+			if (children_count_ < ENTITY_MAX_CHILDREN)
+			{
+				return true;
+			}
+			else
+			{
+				for (auto& child : children_)
+				{
+					if (!child)
+					{
+						return true;
+					}
+				}
+			}
+			return false;
 		}
 
 		bool Entity::HasComponent(int bit)

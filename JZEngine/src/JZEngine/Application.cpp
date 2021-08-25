@@ -20,7 +20,7 @@
 
 namespace JZEngine
 {
-	ECS::Entity entity;
+	//ECS::Entity entity;
 
 	Application::Application()
 		:
@@ -30,10 +30,10 @@ namespace JZEngine
 		std::stringstream ss;
 		ss << "[" << Settings::engine_name << "] Up and Running! v%.1f";
 		Console::Log(ss.str().c_str(), 1.0f);
-		entity = ECS::ECSInstance::Instance().CreateEntity();
+		/*entity = ECS::ECSInstance::Instance().CreateEntity();
 
-		ECS::Entity& e0 = ECS::ECSInstance::Instance().CreateEntity();
-		ECS::ECSInstance::Instance().CreateEntity(e0.entity_id_);
+		ECS::Entity& e0 = ECS::ECSInstance::Instance().entity_manager_.GetEntity(ECS::ECSInstance::Instance().CreateEntity());
+		ECS::ECSInstance::Instance().CreateEntity(e0.entity_id_);*/
 
 		//entity.AddSystem(0);
 		ECS::ECSInstance::Instance().Print();
@@ -45,7 +45,7 @@ namespace JZEngine
 		{
 			gl_instance_.FrameStart();
 
-			engine_gui_.Update(entity);
+			engine_gui_.Update();
 			ECS::ECSInstance::Instance().Update();
 
 			gl_instance_.FrameEnd();

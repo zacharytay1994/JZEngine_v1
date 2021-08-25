@@ -26,7 +26,7 @@ namespace JZEngine
 		 * : Entity for Inspector gui to use.
 		 * ****************************************************************************************************
 		*/
-		void Update(ECS::Entity& entity);
+		void Update();
 
 	private:
 		Inspector	inspector_;

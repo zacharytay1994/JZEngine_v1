@@ -33,7 +33,7 @@ namespace JZEngine
 	 * : Entity for Inspector gui to use.
 	 * ****************************************************************************************************
 	*/
-	void EngineGUI::Update(ECS::Entity& entity)
+	void EngineGUI::Update()
 	{
 		// start imgui frame
 		ImGui_ImplOpenGL3_NewFrame();
@@ -43,7 +43,7 @@ namespace JZEngine
 		// render all imgui stuff
 		console_.Render();
 		scene_tree_.Render();
-		inspector_.Render(entity);
+		inspector_.Render(scene_tree_.selected_entity_);
 
 		ImGui::EndFrame();
 

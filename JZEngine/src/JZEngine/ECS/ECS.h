@@ -62,7 +62,7 @@ namespace JZEngine
 		constexpr ui32 CHUNKS_PER_ARCHETYPE		{ 256 };			/*!< arbitrary number */
 		constexpr ui32 ENTITIES_PER_CHUNK		{ 256 };			/*!< arbitrary number */
 		constexpr ui32 ENTITIES_RESERVE			{ 256 };			/*!< arbitrary number*/
-		constexpr ui32 ENTITY_MAX_CHILDREN		{ 20 };
+		constexpr ui32 ENTITY_MAX_CHILDREN		{ 10 };
 
 		using SystemComponents = std::array<ui32, MAX_COMPONENTS>;
 
@@ -663,7 +663,7 @@ namespace JZEngine
 		struct EntityManager
 		{
 			ui32					root_count_ = 0;
-			std::vector<Entity*>	roots_;
+			std::vector<ui32>		root_ids_;
 			std::vector<Entity>		entities_;
 			ui32					entity_count_ = 0;
 			std::stack<ui32>		free_entity_slots_;
@@ -671,10 +671,11 @@ namespace JZEngine
 
 			EntityManager();
 
-			Entity& CreateEntity(ui32 parent = -1);
+			ui32 CreateEntity(ui32 parent = -1);
 
 			void RemoveEntity(ui32 entity);
 
+			Entity& GetEntity(ui32 id);
 		};
 
 		/* ____________________________________________________________________________________________________
@@ -745,9 +746,11 @@ namespace JZEngine
 				system_manager_.RegisterSystem<SYSTEM>();
 			}
 
-			Entity& CreateEntity(ui32 parent = -1);
+			ui32 CreateEntity(ui32 parent = -1);
 
 			void RemoveEntity(ui32 entity);
+
+			Entity& GetEntity(ui32 id);
 
 			// for debugging purposes
 			void Print();
@@ -803,6 +806,7 @@ namespace JZEngine
 		*/
 		struct Entity
 		{
+			std::string							name_{ "Object" };
 			ui32								root_id_ = -1;
 			ui32								entity_id_;
 			ui32								parent_;
@@ -814,7 +818,7 @@ namespace JZEngine
 			std::array<Entity*, ENTITY_MAX_CHILDREN>	children_{ nullptr };
 
 			Entity();
-			Entity(ui32 entityid, ui32 parent=-1);
+			Entity(ui32 entityid, ui32 parent = -1);
 			~Entity();
 
 			/*!
@@ -848,6 +852,8 @@ namespace JZEngine
 			bool AddChild(Entity* child);
 
 			void RemoveChild(Entity* child);
+
+			bool HasChildSpace();
 
 			/*!
 			 * @brief ___JZEngine:ECS::Entity::GetComponent()___

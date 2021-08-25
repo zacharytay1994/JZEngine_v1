@@ -23,7 +23,7 @@ namespace JZEngine
 	 * : The entity of which to display the details.
 	 * ****************************************************************************************************
 	*/
-	void Inspector::Render(ECS::Entity& entity)
+	void Inspector::Render(ECS::Entity* const entity)
 	{
 		ImGui::SetNextWindowBgAlpha(0.8f);
 		ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x_, static_cast<float>(Settings::window_height) * y_ }, ImGuiCond_Once);
@@ -31,18 +31,40 @@ namespace JZEngine
 		ImGui::Begin("Inspector");
 		TreeNodeComponentsAndSystems(entity);
 		ImGui::Text("______________________________");
-		ImGui::Text("Entity (ID: %d) Components:", entity.ecs_id_);
-		ImGui::Text(" ");
-		if (entity.owning_chunk_)
+		if (entity)
 		{
-			for (int i = 0; i < ECS::MAX_COMPONENTS; ++i)
+			std::stringstream ss;
+			ss << "Components of [" << entity->name_ << "]";
+			ImGui::Text(ss.str().c_str());
+			ImGui::Text("Entity ID: %d", entity->entity_id_);
+			ImGui::Text("______________________________");
+			if (entity->owning_chunk_)
 			{
-				if (entity.owning_chunk_->owning_archetype_->mask_[i])
+				bool has_component_ = false;
+				for (int i = 0; i < ECS::MAX_COMPONENTS; ++i)
 				{
-					ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-					LoopTupleRender(ECS::ECSConfig::Component(), i, entity);
+					if (entity->owning_chunk_->owning_archetype_->mask_[i])
+					{
+						has_component_ = true;
+						ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+						LoopTupleRender(ECS::ECSConfig::Component(), i, *entity);
+					}
+				}
+				if (!has_component_)
+				{
+					ImGui::Text("Oops entity has no components...");
+					ImGui::Text("Try adding some at the top...");
 				}
 			}
+			else
+			{
+				ImGui::Text("Oops entity is new...");
+				ImGui::Text("Try adding some at the top...");
+			}
+		}
+		else
+		{
+			ImGui::Text("Oops no entity selected...");
 		}
 		ImGui::End();
 	}
@@ -56,87 +78,117 @@ namespace JZEngine
 	 * display.
 	 * ****************************************************************************************************
 	*/
-	void Inspector::TreeNodeComponentsAndSystems(ECS::Entity& entity)
+	void Inspector::TreeNodeComponentsAndSystems(ECS::Entity* const entity)
 	{
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		if (ImGui::TreeNode("Engine Components and Systems"))
 		{
-			ImGui::Text("______________________________");
-			ImGui::Text("Components:");
-			ImGui::BeginListBox("[Com]", { 0.0f, 100.0f });
-			bool has_component_ = false;
-			for (auto& c : ECS::ECSInstance::Instance().component_manager_.registered_components_)
+			if (entity)
 			{
-				if (entity.HasComponent(c.bit_))
+				ImGui::Text("______________________________");
+				ImGui::Text("Components:");
+				ImGui::BeginListBox("[Com]", { 0.0f, 100.0f });
+				for (auto& c : ECS::ECSInstance::Instance().component_manager_.registered_components_)
 				{
-					has_component_ = true;
-					ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f,1.0f,0.0f,1.0f });
-				}
-				if (ImGui::Selectable(c.name_.c_str(), true))
-				{
-					if (!has_component_)
+					bool has_component_ = false;
+					if (entity->HasComponent(c.bit_))
 					{
-						LoopTupleAddComponent(ECS::ECSConfig::Component(), c.bit_, entity);
-						std::stringstream ss;
-						ss << "Added component [" << c.name_ << "]";
-						Console::Log(ss.str().c_str());
-						ECS::ECSInstance::Instance().Print();
+						has_component_ = true;
+						ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f,1.0f,0.0f,1.0f });
 					}
-					else
+					if (ImGui::Selectable(c.name_.c_str(), true))
 					{
-						entity.RemoveComponent(c.bit_);
-						std::stringstream ss;
-						ss << "Removed component [" << c.name_ << "]";
-						Console::Log(ss.str().c_str());
-						ECS::ECSInstance::Instance().Print();
+						if (!has_component_)
+						{
+							LoopTupleAddComponent(ECS::ECSConfig::Component(), c.bit_, *entity);
+							std::stringstream ss;
+							ss << "Added component [" << c.name_ << "] to entity" << " [" << entity->name_ << "].";
+							Console::Log(ss.str().c_str());
+							ECS::ECSInstance::Instance().Print();
+						}
+						else
+						{
+							entity->RemoveComponent(c.bit_);
+							std::stringstream ss;
+							ss << "Removed component [" << c.name_ << "] from entity" << " [" << entity->name_ << "].";
+							Console::Log(ss.str().c_str());
+							ECS::ECSInstance::Instance().Print();
+						}
+					}
+					if (has_component_)
+					{
+						has_component_ = false;
+						ImGui::PopStyleColor(1);
 					}
 				}
-				if (has_component_)
-				{
-					has_component_ = false;
-					ImGui::PopStyleColor(1);
-				}
-			}
-			ImGui::EndListBox();
+				ImGui::EndListBox();
 
-			ImGui::Text("______________________________");
-			ImGui::Text("Systems:");
-			ImGui::BeginListBox("[Sys]", { 0.0f, 100.0f });
-			for (auto& s : ECS::ECSInstance::Instance().system_manager_.registered_systems_)
-			{
-				bool has_system_ = true;
-				for (auto& c : ECS::ECSInstance::Instance().system_manager_.system_database_[s.id_]->components_)
+				ImGui::Text("______________________________");
+				ImGui::Text("Systems:");
+				ImGui::BeginListBox("[Sys]", { 0.0f, 100.0f });
+				for (auto& s : ECS::ECSInstance::Instance().system_manager_.registered_systems_)
 				{
-					if (c != -1)
+					bool has_system_ = true;
+					for (auto& c : ECS::ECSInstance::Instance().system_manager_.system_database_[s.id_]->components_)
 					{
-						has_system_ = has_system_ ? entity.HasComponent(c) : false;
+						if (c != -1)
+						{
+							has_system_ = has_system_ ? entity->HasComponent(c) : false;
+						}
+						else
+						{
+							break;
+						}
 					}
-					else
+					if (has_system_)
 					{
-						break;
+						ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f,1.0f,0.0f,1.0f });
 					}
-				}
-				if (has_system_)
-				{
-					ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f,1.0f,0.0f,1.0f });
-				}
-				if (ImGui::Selectable(s.name_.c_str(), true))
-				{
-					if (!has_system_)
+					if (ImGui::Selectable(s.name_.c_str(), true))
 					{
-						entity.AddSystem(s.id_);
-						std::stringstream ss;
-						ss << "Added system [" << s.name_ << "]";
-						Console::Log(ss.str().c_str());
-						ECS::ECSInstance::Instance().Print();
+						if (!has_system_)
+						{
+							entity->AddSystem(s.id_);
+							std::stringstream ss;
+							ss << "Added system [" << s.name_ << "]'s components to entity" << " [" << entity->name_ << "].";
+							Console::Log(ss.str().c_str());
+							ECS::ECSInstance::Instance().Print();
+						}
+					}
+					if (has_system_)
+					{
+						has_system_ = false;
+						ImGui::PopStyleColor(1);
 					}
 				}
-				if (has_system_)
-				{
-					has_system_ = false;
-					ImGui::PopStyleColor(1);
-				}
+				ImGui::EndListBox();
 			}
-			ImGui::EndListBox();
+			else
+			{
+				ImGui::Text("______________________________");
+				ImGui::Text("Components:");
+				ImGui::BeginListBox("[Com]", { 0.0f, 100.0f });
+				for (auto& c : ECS::ECSInstance::Instance().component_manager_.registered_components_)
+				{
+					if (ImGui::Selectable(c.name_.c_str(), true))
+					{
+						Console::Log("Oops please select an entity before adding...");
+					}
+				}
+				ImGui::EndListBox();
+
+				ImGui::Text("______________________________");
+				ImGui::Text("Systems:");
+				ImGui::BeginListBox("[Sys]", { 0.0f, 100.0f });
+				for (auto& s : ECS::ECSInstance::Instance().system_manager_.registered_systems_)
+				{
+					if (ImGui::Selectable(s.name_.c_str(), true))
+					{
+						Console::Log("Oops please select an entity before adding...");
+					}
+				}
+				ImGui::EndListBox();
+			}
 			ImGui::TreePop();
 		}
 	}

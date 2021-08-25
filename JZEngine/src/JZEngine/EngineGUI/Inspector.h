@@ -24,7 +24,7 @@ namespace JZEngine
 		 * : The entity of which to display the details.
 		 * ****************************************************************************************************
 		*/
-		void Render(ECS::Entity& entity);
+		void Render(ECS::Entity* const entity = nullptr);
 
 		/*!
 		 * @brief ___JZEngine::ToolsGUI::TreeNodeComponentAndSystems()___
@@ -35,7 +35,7 @@ namespace JZEngine
 		 * display.
 		 * ****************************************************************************************************
 		*/
-		void TreeNodeComponentsAndSystems(ECS::Entity& entity);
+		void TreeNodeComponentsAndSystems(ECS::Entity* const entity);
 
 		/* ____________________________________________________________________________________________________
 		*	CUSTOM COMPONENT IMGUI LAYOUTS
@@ -89,7 +89,7 @@ namespace JZEngine
 			if (I == i)
 			{
 				using COMPONENT = decltype(std::get<I>(t));
-				if (ImGui::TreeNode(typeid(COMPONENT).name()))
+				if (ImGui::TreeNodeEx(typeid(COMPONENT).name(), ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick))
 				{
 					RenderComponent(entity.GetComponent<std::remove_reference_t<COMPONENT>>());
 					ImGui::TreePop();
