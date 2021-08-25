@@ -578,7 +578,7 @@ namespace JZEngine
 			if (parent != -1)
 			{
 				// add this newly created entity as child to parent
-				if (!entities_[parent].AddChild(&entities_[id]))
+				if (!entities_[parent].AddChild(id))
 				{
 					std::cout << "ECS::ENTITYMANAGER::entity of entity_id_ " << parent << " cannot accept any more children." << std::endl;
 				}
@@ -672,7 +672,7 @@ namespace JZEngine
 
 		Entity::Entity()
 		{
-			children_.fill(nullptr);
+			children_.fill(-1);
 		}
 
 		Entity::Entity(ui32 entityid, ui32 parent)
@@ -681,7 +681,7 @@ namespace JZEngine
 			parent_(parent),
 			ecs_id_(static_cast<ui32>(-1))
 		{
-			children_.fill(nullptr);
+			children_.fill(-1);
 		}
 
 		Entity::~Entity()
@@ -694,9 +694,9 @@ namespace JZEngine
 			// Reset all children entities
 			for (auto& child : children_)
 			{
-				if (child)
+				if (child != -1)
 				{
-					child->ResetEntity();
+					ECSInstance::Instance().GetEntity(child).ResetEntity();
 				}
 			}
 			// remove entity from chunk
@@ -708,7 +708,7 @@ namespace JZEngine
 			// remove self from parent entity
 			if (parent_ != -1)
 			{
-				ECSInstance::Instance().entity_manager_.entities_[parent_].RemoveChild(this);
+				ECSInstance::Instance().entity_manager_.entities_[parent_].RemoveChild(entity_id_);
 			}
 			// if entity was a root, remove from root
 			if (root_id_ != -1)
@@ -725,23 +725,23 @@ namespace JZEngine
 			id_			= static_cast<ubyte>(255);
 			ecs_id_		= static_cast<ui32>(-1);;
 			children_count_ = 0;
-			children_.fill(nullptr);
+			children_.fill(-1);
 		}
 		
-		bool Entity::AddChild(Entity* child)
+		bool Entity::AddChild(ui32 childId)
 		{
 			if (children_count_ < ENTITY_MAX_CHILDREN)
 			{
-				children_[children_count_++] = child;
+				children_[children_count_++] = childId;
 				return true;
 			}
 			else
 			{
 				for (auto& c : children_)
 				{
-					if (!c)
+					if (c == -1)
 					{
-						c = child;
+						c = childId;
 						return true;
 					}
 				}
@@ -749,15 +749,15 @@ namespace JZEngine
 			return false;
 		}
 
-		void Entity::RemoveChild(Entity* child)
+		void Entity::RemoveChild(ui32 childId)
 		{
 			for (auto& c : children_)
 			{
-				if (c)
+				if (c != -1)
 				{
-					if (c->entity_id_ == child->entity_id_)
+					if (c == childId)
 					{
-						c = nullptr;
+						c = -1;
 					}
 				}
 			}
@@ -773,7 +773,7 @@ namespace JZEngine
 			{
 				for (auto& child : children_)
 				{
-					if (!child)
+					if (child == -1)
 					{
 						return true;
 					}

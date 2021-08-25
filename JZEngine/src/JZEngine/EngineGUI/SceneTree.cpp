@@ -101,9 +101,9 @@ namespace JZEngine
 			// add all child tree nodes
 			for (auto& c : entity->children_)
 			{
-				if (c)
+				if (c != -1)
 				{
-					RenderAllChildObjects(c);
+					RenderAllChildObjects(&ECS::ECSInstance::Instance().entity_manager_.GetEntity(c));
 				}
 			}
 			ImGui::TreePop();
