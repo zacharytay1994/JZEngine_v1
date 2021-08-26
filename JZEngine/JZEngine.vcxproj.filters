@@ -60,9 +60,6 @@
     <ClCompile Include="src\JZEngine\ECS\ECS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\JZEngine\ECS\testecs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\JZEngine\EngineGUI\Inspector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -70,6 +67,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\JZEngine\EngineGUI\SceneTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,7 +125,7 @@
     <ClInclude Include="src\JZEngine\ECS\ECS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\JZEngine\ECS\testecs.h">
+    <ClInclude Include="src\JZEngine\ECSSystems\ExampleSingleHeader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\JZEngine\ECS\ECSConfig.h">
@@ -144,6 +144,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\JZEngine\EngineGUI\SceneTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

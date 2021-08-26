@@ -42,16 +42,16 @@ namespace JZEngine
 
 		// renders all registered components and systems 
 		TreeNodeComponentsAndSystems(entity);
-		ImGui::Text("______________________________");
+		ImGui::PushStyleColor(ImGuiCol_Separator, { 0.8f,0.8f,0.8f,1.0f });
+		ImGui::Separator();
+		ImGui::PopStyleColor();
 
 		// if there is selected entity
 		if (entity)
 		{
 			std::stringstream ss;
-			ss << "Components of [" << entity->name_ << "]";
+			ss << "Components of [" << entity->name_ << "] [ID: " << entity->entity_id_ << "]";
 			ImGui::Text(ss.str().c_str());
-			ImGui::Text("Entity ID: %d", entity->entity_id_);
-			ImGui::Text("______________________________");
 			
 			// if entity has a chunk, i.e. has component before
 			if (entity->owning_chunk_)
@@ -66,22 +66,27 @@ namespace JZEngine
 						
 						// renders all components using their specialization
 						LoopTupleRender(ECS::ECSConfig::Component(), i, *entity);
+						ImGui::Separator();
 					}
 				}
 				if (!has_component_)
 				{
+					ImGui::Separator();
 					ImGui::Text("Oops entity has no components...");
 					ImGui::Text("Try adding some at the top...");
 				}
 			}
 			else
 			{
+				ImGui::Separator();
 				ImGui::Text("Oops entity is new...");
 				ImGui::Text("Try adding some at the top...");
 			}
 		}
 		else
 		{
+			ImGui::Text("Components of [] [ID: ]\n");
+			ImGui::Separator();
 			ImGui::Text("Oops no entity selected...");
 		}
 		ImGui::End();
@@ -98,12 +103,12 @@ namespace JZEngine
 	*/
 	void Inspector::TreeNodeComponentsAndSystems(ECS::Entity* const entity)
 	{
+		//ImGui::PushStyleColor(ImGuiCol_Separator, { 1.0f,1.0f,1.0f,1.0f });
 		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-		if (ImGui::TreeNode("Engine Components and Systems"))
+		if (ImGui::TreeNodeEx("Engine Components and Systems", ImGuiTreeNodeFlags_Framed))
 		{
 			if (entity)
 			{
-				ImGui::Text("______________________________");
 				ImGui::Text("Components:");
 				ImGui::BeginListBox("[Com]", { 0.0f, 100.0f });
 
@@ -150,7 +155,7 @@ namespace JZEngine
 				}
 				ImGui::EndListBox();
 
-				ImGui::Text("______________________________");
+				ImGui::Separator();
 				ImGui::Text("Systems:");
 				ImGui::BeginListBox("[Sys]", { 0.0f, 100.0f });
 
@@ -200,7 +205,7 @@ namespace JZEngine
 			// if no selected entity case, print default messages
 			else
 			{
-				ImGui::Text("______________________________");
+				ImGui::Separator();
 				ImGui::Text("Components:");
 				ImGui::BeginListBox("[Com]", { 0.0f, 100.0f });
 				for (auto& c : ECS::ECSInstance::Instance().component_manager_.registered_components_)
@@ -212,7 +217,7 @@ namespace JZEngine
 				}
 				ImGui::EndListBox();
 
-				ImGui::Text("______________________________");
+				ImGui::Separator();
 				ImGui::Text("Systems:");
 				ImGui::BeginListBox("[Sys]", { 0.0f, 100.0f });
 				for (auto& s : ECS::ECSInstance::Instance().system_manager_.registered_systems_)
@@ -226,5 +231,6 @@ namespace JZEngine
 			}
 			ImGui::TreePop();
 		}
+		//ImGui::PopStyleColor();
 	}
 }

@@ -1,7 +1,8 @@
 #pragma once
 #include <tuple>
 
-#include "testecs.h"
+#include "../ECSSystems/ExampleSingleHeader.h"
+#include "../ECSSystems/ExampleSplitHeaderSource.h"
 
 namespace JZEngine
 {
@@ -9,22 +10,25 @@ namespace JZEngine
 	{
 		struct ECSConfig
 		{
+			// add your structs/classes here that you want to be treated as Components
 			using Component =
 				std::tuple<
-
-				// ECS components
-				TestComponent2,
+				
 				TestComponent,
+				TestComponent2,
 				TestComponent3,
-				Transform
+				Transform,
+				MyNewComponent
 
 				>;
 
+			// add your structs/classes here that you want to be treated as Systems
 			using System =
 				std::tuple<
 				
 				TestSystem,
-				TestSystem2
+				TestSystem2,
+				MyNewSystem
 				
 				>;
 		};

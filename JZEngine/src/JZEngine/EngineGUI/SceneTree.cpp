@@ -19,7 +19,16 @@ namespace JZEngine
 		:
 		x_(x), y_(y), sx_(sx), sy_(sy)
 	{
+		default_entity_name_ = new std::string("Entity");
+		//*default_entity_name_ = "Entity";
+		names_ = new std::unordered_map<std::string, unsigned int>();
 		new_entity_name_[0] = '\0';
+	}
+
+	SceneTree::~SceneTree()
+	{
+		delete default_entity_name_;
+		delete names_;
 	}
 
 	/*!
@@ -36,7 +45,7 @@ namespace JZEngine
 		ImGui::Begin("Scene Heirarchy");
 
 		// render text box for input name
-		ImGui::InputText("Name", new_entity_name_, MAX_NAME_SIZE);
+		ImGui::InputText(": Name", new_entity_name_, MAX_NAME_SIZE);
 
 		if (ImGui::Button("Add Default Entity"))
 		{
@@ -51,7 +60,9 @@ namespace JZEngine
 			}
 		}
 		ImGui::Text("\nCurrent Scene");
-		ImGui::Text("______________________________");
+		ImGui::PushStyleColor(ImGuiCol_Separator, { 0.8f,0.8f,0.8f,1.0f });
+		ImGui::Separator();
+		ImGui::PopStyleColor();
 
 		// render all root entities in EntityManager
 		for (auto& id : ECS::ECSInstance::Instance().entity_manager_.root_ids_)
@@ -161,17 +172,17 @@ namespace JZEngine
 		if (new_entity_name_[0] == '\0')
 		{
 			std::stringstream ss;
-			ss << default_entity_name_;
+			ss << *default_entity_name_;
 			
 			// pad identical names with an index
-			if (names_.find(default_entity_name_) == names_.end())
+			if (names_->find(*default_entity_name_) == names_->end())
 			{
-				names_[default_entity_name_] = 1;
-				return default_entity_name_;
+				(*names_)[*default_entity_name_] = 1;
+				return *default_entity_name_;
 			}
 			else
 			{
-				ss << "(" << names_[default_entity_name_]++ << ")";
+				ss << "(" << (*names_)[*default_entity_name_]++ << ")";
 				return ss.str();
 			}
 		}
@@ -180,14 +191,14 @@ namespace JZEngine
 		{
 			std::stringstream ss;
 			ss << new_entity_name_;
-			if (names_.find(new_entity_name_) == names_.end())
+			if (names_->find(new_entity_name_) == names_->end())
 			{
-				names_[new_entity_name_] = 1;
+				(*names_)[new_entity_name_] = 1;
 				return ss.str();
 			}
 			else
 			{
-				ss << "(" << names_[new_entity_name_]++ << ")";
+				ss << "(" << (*names_)[new_entity_name_]++ << ")";
 				return ss.str();
 			}
 		}

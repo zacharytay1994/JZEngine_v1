@@ -45,9 +45,9 @@ namespace JZEngine
 		template <typename...T>
 		static void Log(const char* string, T... args)
 		{
-			char buffer[100];
+			/*char buffer[100];
 			sprintf_s(buffer, string, args...);
-			console_stream_ << "\n" << std::setw(4) << console_line_number_++ << ": " << buffer;
+			console_stream_ << "\n" << std::setw(4) << console_line_number_++ << ": " << buffer;*/
 		}
 
 		/*!
@@ -60,6 +60,6 @@ namespace JZEngine
 
 	private:
 		static unsigned int console_line_number_;	/*!< the amount of lines currently in the console */
-		static std::stringstream console_stream_;	/*!< the stringstream storing all console text */
+		//static std::stringstream* console_stream_;	/*!< the stringstream storing all console text */
 	};
 }

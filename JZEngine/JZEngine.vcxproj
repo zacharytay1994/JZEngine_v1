@@ -148,17 +148,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\Application.cpp" />
+    <ClCompile Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.cpp" />
     <ClCompile Include="src\JZEngine\ECS\ECS.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\ECS\testecs.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../PCH.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../PCH.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../PCH.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../PCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="src\JZEngine\EngineGUI\Console.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\Inspector.cpp" />
@@ -223,9 +218,10 @@
     <ClInclude Include="src\JZEngine.h" />
     <ClInclude Include="src\JZEngine\Application.h" />
     <ClInclude Include="src\JZEngine\Components\TestComponent.h" />
+    <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h" />
     <ClInclude Include="src\JZEngine\ECS\ECS.h" />
     <ClInclude Include="src\JZEngine\ECS\ECSConfig.h" />
-    <ClInclude Include="src\JZEngine\ECS\testecs.h" />
+    <ClInclude Include="src\JZEngine\ECSSystems\ExampleSingleHeader.h" />
     <ClInclude Include="src\JZEngine\EngineConfig.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\Console.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\Inspector.h" />

@@ -10,6 +10,7 @@
 
 #include <unordered_map>
 
+#include "../BuildDefinitions.h"
 #include "../ImGui/imgui.h"
 
 namespace JZEngine
@@ -26,18 +27,19 @@ namespace JZEngine
 	 * Able to add and remove entities from the scene.
 	 * ****************************************************************************************************
 	*/
-	struct SceneTree
+	struct JZENGINE_API SceneTree
 	{
 		float x_, y_, sx_, sy_;		/*!< position and scale of ImGui window */
 
 		static constexpr unsigned int					MAX_NAME_SIZE = 50;					/*!< maximum length a custom name can be */
 
 		ECS::Entity*									selected_entity_{ nullptr };		/*!< the currently selected entity */
-		std::string										default_entity_name_{ "Entity" };	/*!< the default entity name if no name is specified */
+		std::string*									default_entity_name_{ nullptr };	/*!< the default entity name if no name is specified */
 		char											new_entity_name_[MAX_NAME_SIZE];	/*!< buffer for custom name when creating new entities */
-		std::unordered_map<std::string, unsigned int>	names_;								/*!< for repeated names to add an index behind */
+		std::unordered_map<std::string, unsigned int>*	names_;								/*!< for repeated names to add an index behind */
 
 		SceneTree(float x, float y, float sx, float sy);
+		~SceneTree();
 
 		/*!
 		 * @brief ___JZEngine::SceneTree::Render()___

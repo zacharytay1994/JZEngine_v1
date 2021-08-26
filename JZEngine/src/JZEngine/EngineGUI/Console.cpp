@@ -16,7 +16,7 @@
 namespace JZEngine
 {
 	unsigned int Console::console_line_number_{ 0 };
-	std::stringstream Console::console_stream_;
+	//std::stringstream Console::console_stream_;
 
 	Console::Console(float x, float y, float sx, float sy)
 		:
@@ -37,7 +37,7 @@ namespace JZEngine
 		ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x_, static_cast<float>(Settings::window_height) * y_ }, ImGuiCond_Once);
 		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx_, static_cast<float>(Settings::window_height) * sy_ }, ImGuiCond_Once);
 		ImGui::Begin("Console");
-		ImGui::Text(console_stream_.str().c_str());
+		//ImGui::Text(console_stream_.str().c_str());
 		ImGui::End();
 	}
 }

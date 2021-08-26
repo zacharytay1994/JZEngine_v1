@@ -22,11 +22,6 @@
 #include <iostream>
 #include <unordered_map>
 
-struct TestComponent
-{
-	int x{ -90 }, y{ -5 };
-};
-
 namespace JZEngine
 {
 	/*!
@@ -1335,7 +1330,7 @@ namespace JZEngine
 			 * for each system.
 			 * ****************************************************************************************************
 			*/
-			virtual void FrameBegin() { };
+			virtual void FrameBegin(const float& dt) { };
 
 			/*!
 			 * @brief ___JZEngine::ECS::System::Update()___

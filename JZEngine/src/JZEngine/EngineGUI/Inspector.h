@@ -10,10 +10,11 @@
 
 #include <tuple>
 
+#include "../BuildDefinitions.h"
 #include "../ImGui/imgui.h"
 
 #include "../ECS/ECS.h"
-#include "../ECS/testecs.h"
+#include "../ECS/ECSConfig.h"
 
 namespace JZEngine
 {
@@ -24,7 +25,7 @@ namespace JZEngine
 	 * Able to add and remove entities from the selected entity.
 	 * ****************************************************************************************************
 	*/
-	struct Inspector
+	struct JZENGINE_API Inspector
 	{
 		float x_, y_, sx_, sy_;		/*!< position and scale of the ImGui window */
 
@@ -74,6 +75,13 @@ namespace JZEngine
 		}
 
 		template <>
+		void RenderComponent(TestComponent& component)
+		{
+			ImGui::SliderInt("x", &component.x, -180, 180);
+			ImGui::SliderInt("y", &component.y, -180, 180);
+		}
+
+		template <>
 		void RenderComponent(Transform& component)
 		{
 			ImGui::SliderFloat("x", &component.x, 0, 1000);
@@ -84,20 +92,12 @@ namespace JZEngine
 		}
 
 		template <>
-		void RenderComponent(TestComponent& component)
+		void RenderComponent(MyNewComponent& component)
 		{
-			ImGui::SliderInt("x", &component.x, -180, 180);
-			ImGui::SliderInt("y", &component.y, -180, 180);
-		}
-
-		template <>
-		void RenderComponent(TestComponent2& component)
-		{
-		}
-
-		template <>
-		void RenderComponent(TestComponent3& component)
-		{
+			ImGui::SliderInt("x", &component.not_a_component.im_another_component_.x, -3000, 1000);
+			ImGui::SliderInt("y", &component.not_a_component.im_another_component_.y, -2000, 1000);
+			ImGui::SliderFloat("a float", &component.not_a_component.im_a_float_, -300, 300);
+			ImGui::Text("this is a %c", component.nomal_data_);
 		}
 
 		/*!
@@ -128,7 +128,7 @@ namespace JZEngine
 			if (I == i)
 			{
 				using COMPONENT = decltype(std::get<I>(t));
-				if (ImGui::TreeNodeEx(typeid(COMPONENT).name(), ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick))
+				if (ImGui::TreeNodeEx(typeid(COMPONENT).name(), ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick |ImGuiTreeNodeFlags_Framed))
 				{
 					RenderComponent(entity.GetComponent<std::remove_reference_t<COMPONENT>>());
 					ImGui::TreePop();
