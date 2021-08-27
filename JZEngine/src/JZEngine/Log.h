@@ -32,18 +32,3 @@ namespace JZEngine
 	};
 }
 
-
-//// Core log macros
-//#define HZ_CORE_TRACE	(...) ::JZEngine::Log::GetCoreLogger()->trace(__VA_ARGS__)
-//#define HZ_CORE_INFO	(...) ::JZEngine::Log::GetCoreLogger()->info(__VA_ARGS__)
-//#define HZ_CORE_WARN	(...) ::JZEngine::Log::GetCoreLogger()->warn(__VA_ARGS__)
-//#define HZ_CORE_ERROR	(...) ::JZEngine::Log::GetCoreLogger()->error(__VA_ARGS__)
-//#define HZ_CORE_CRITICAL(...) ::JZEngine::Log::GetCoreLogger()->critical(__VA_ARGS__)
-//
-//
-//// Client log macros
-//#define HZ_TRACE		(...) ::JZEngine::Log::GetClientLogger()->trace(__VA_ARGS__)
-//#define HZ_INFO			(...) ::JZEngine::Log::GetClientLogger()->info(__VA_ARGS__)
-//#define HZ_WARN			(...) ::JZEngine::Log::GetClientLogger()->warn(__VA_ARGS__)
-//#define HZ_ERROR		(...) ::JZEngine::Log::GetClientLogger()->error(__VA_ARGS__)
-//#define HZ_CRITICAL		(...) ::JZEngine::Log::GetClientLogger()->critical(__VA_ARGS__)
