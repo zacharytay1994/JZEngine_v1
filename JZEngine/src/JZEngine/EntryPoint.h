@@ -3,7 +3,8 @@
 	Author: JZ
 	Date:	19/06/21
 	Brief:	Defines the entry point if the current project
-			has preprocessor definition JZENGINE_PLATFORM_WINDOWS defined.	*/
+			has preprocessor definition JZENGINE_PLATFORM_WINDOWS defined.	
+*/
 
 #pragma once
 

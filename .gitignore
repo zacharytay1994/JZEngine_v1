@@ -30,8 +30,9 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
-bin
-bin-int
+bin/
+bin-int/
+>>>>>>> main
 **/OutputFiles
 
 # Visual Studio 2015/2017 cache/options directory
