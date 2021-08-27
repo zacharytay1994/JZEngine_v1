@@ -22,12 +22,7 @@
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>JZENGINE_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-<<<<<<< HEAD
       <AdditionalIncludeDirectories>$(SolutionDir)JZEngine\vendor\spdlog\include;</AdditionalIncludeDirectories>
-=======
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
->>>>>>> main
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
