@@ -3,6 +3,8 @@
 
 
 using namespace std::chrono;
+std::chrono::steady_clock::time_point last_{};
+std::vector <std::string> past_time_data_{};
 
 JZEngine::Timer::Timer () noexcept
 {
@@ -66,19 +68,19 @@ void JZEngine::Timer::LastDuration ( float last_timer , const std::string& filen
 		outstream << last_timer << "\n";
 		for( int i = 0 ; i < add_data_in_file.size () ; i++ )
 		{
-			past_time_data_.push ( add_data_in_file[ i ] );
+			past_time_data_.push_back ( add_data_in_file[ i ] );
 		}
-		past_time_data_.push ( sstream.str () );
+		past_time_data_.push_back ( sstream.str () );
 	}
 	else
 	{
 		for( int i = 1 ; i < add_data_in_file.size () ; i++ )
 		{
 			outstream << add_data_in_file[ i ] << "\n";
-			past_time_data_.push ( add_data_in_file[ i ] );
+			past_time_data_.push_back ( add_data_in_file[ i ] );
 		}
 		outstream << last_timer << "\n";
-		past_time_data_.push ( sstream.str () );
+		past_time_data_.push_back ( sstream.str () );
 	}
 
 	outstream.close ();
@@ -93,16 +95,16 @@ float JZEngine::Timer::Peek ( const std::string& filename ) noexcept
 
 void JZEngine::Timer::TimerHistory () const noexcept
 {
-	std::queue< std::string > temp = past_time_data_;
 	bool check = true ;
-	for( int i = 0 ; i < past_time_data_.size () ; i++ )
+	int i = 0;
+	for( auto data : past_time_data_ )
 	{
 		if( check )
 		{
 			std::cout << "Processing data timer history : " << std::endl;
 			check = false;
 		}
-		std::cout << "#" << i << ". " << temp.front () << std::endl;
-		temp.pop ();
+		std::cout << "#" << i << ". " << data << std::endl;
+		i++;
 	}
 }

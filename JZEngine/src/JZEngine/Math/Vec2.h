@@ -30,7 +30,7 @@ namespace JZEngine
 		template <typename T1 >
 		operator Vec2<T1> () const
 		{
-			return Vec2<T1> ( x , y );
+			return Vec2<T1> ( ( T1 ) x , ( T1 ) y );
 		}
 
 		auto LenSq () const

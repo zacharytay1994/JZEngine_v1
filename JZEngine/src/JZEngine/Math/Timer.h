@@ -1,8 +1,7 @@
 #pragma once
 
 #include "../BuildDefinitions.h"
-#include <chrono>
-#include <queue>
+
 
 namespace JZEngine
 {
@@ -31,9 +30,6 @@ namespace JZEngine
 		* Class std::chrono::steady_clock::time_point
 		* - represents a point in time , stores value of type : Duration
 		*/
-		std::chrono::steady_clock::time_point last_{};
-		std::queue <std::string> past_time_data_ ;
-
 		void LastDuration ( float last_timer , const std::string& filename );
 	};
 }
