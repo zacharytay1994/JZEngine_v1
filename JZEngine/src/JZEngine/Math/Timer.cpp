@@ -106,7 +106,3 @@ void JZEngine::Timer::TimerHistory () const noexcept
 		temp.pop ();
 	}
 }
-
-
-
-
