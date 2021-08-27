@@ -17,6 +17,7 @@ namespace JZEngine
 		T x{ 0 };
 		T y{ 0 };
 
+
 		Vec2 ()
 			: x{ 0 } , y{ 0 }
 		{}
@@ -98,35 +99,48 @@ namespace JZEngine
 			return Vec2<T2> ( x / arg , y / arg );
 		}
 
-		Vec2& operator = ( const Vec2& rhs )
+		template <typename T1>
+		Vec2& operator = ( const Vec2<T1>& rhs )
 		{
 			x = rhs.x ;
 			y = rhs.y ;
 			return *this ;
 		}
 
-		Vec2& operator += ( const Vec2& rhs )
+		template <typename T1>
+		Vec2& operator += ( const Vec2<T1>& rhs )
 		{
 			x += rhs.x ;
 			y += rhs.y ;
 			return *this ;
 		}
 
-		Vec2& operator -= ( const Vec2& rhs )
+		template <typename T1>
+		Vec2& operator += ( const T1& arg )
+		{
+			x += arg;
+			y += arg;
+			return *this ;
+		}
+
+		template <typename T1>
+		Vec2& operator -= ( const Vec2<T1>& rhs )
 		{
 			x -= rhs.x ;
 			y -= rhs.y ;
 			return *this ;
 		}
 
-		Vec2& operator *= ( const T& arg )
+		template <typename T1>
+		Vec2& operator *= ( const T1 & arg )
 		{
-			x *= arg ;
-			y *= arg ;
+			x *= arg;
+			y *= arg;
 			return *this ;
 		}
 
-		Vec2& operator /= ( const T& arg )
+		template <typename T1>
+		Vec2& operator /= ( const T1& arg )
 		{
 			x /= arg ;
 			y /= arg ;
