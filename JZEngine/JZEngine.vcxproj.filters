@@ -19,6 +19,9 @@
     <Filter Include="Header Files\JZEngine\ImGui">
       <UniqueIdentifier>{e183a51d-bbee-47ae-9222-345b86745382}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\JZEngine\JZGL">
+      <UniqueIdentifier>{eb00cee1-4362-439d-94a0-5718f4418a75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
@@ -48,7 +51,7 @@
     <ClCompile Include="src\JZEngine\ImGui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\JZEngine\ImGui\JZ_ImGui.cpp">
+    <ClCompile Include="src\JZEngine\EngineGUI\EngineGUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\JZEngine\JZGL\JZ_GL.cpp">
@@ -58,6 +61,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\JZEngine\Math\Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\ECS\ECS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\EngineGUI\Inspector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\EngineGUI\Console.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\EngineGUI\SceneTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -98,14 +116,44 @@
     <ClInclude Include="src\JZEngine\ImGui\imstb_truetype.h">
       <Filter>Header Files\JZEngine\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\JZEngine\ImGui\JZ_ImGui.h">
+    <ClInclude Include="src\JZEngine\EngineGUI\EngineGUI.h">
       <Filter>Header Files\JZEngine\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\JZGL\JZ_GL.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\JZEngine\ImGui\imconfig.h">
       <Filter>Header Files\JZEngine\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\JZGL\JZ_GL.h">
+      <Filter>Header Files\JZEngine\JZGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\Components\TestComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\ECS\ECS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\ECSSystems\ExampleSingleHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\ECS\ECSConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\STL\Tuple.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\EngineConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\EngineGUI\Inspector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\EngineGUI\Console.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\EngineGUI\SceneTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\JZEngine\Math\Vec2.h">
       <Filter>Header Files</Filter>

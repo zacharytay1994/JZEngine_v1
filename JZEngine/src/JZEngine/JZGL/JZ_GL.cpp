@@ -8,6 +8,7 @@
 
 #include <PCH.h>
 #include "JZ_GL.h"
+#include "../EngineConfig.h"
 
 namespace JZEngine
 {
@@ -48,7 +49,7 @@ namespace JZEngine
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		// create glfw window
-		window_ = glfwCreateWindow(window_width_, window_height_, "LearnOpenGL", NULL, NULL);
+		window_ = glfwCreateWindow(window_width_, window_height_, JZEngine::Settings::engine_name, NULL, NULL);
 		if (window_ == NULL)
 		{
 			std::cout << "Failed to create GLFW window" << std::endl;

@@ -16,15 +16,15 @@
 namespace JZEngine
 {
 	/*!
-	 * @brief ___JZEngine::GLFW_Instance___ :
+	 * @brief ___JZEngine::GLFW_Instance___
 	 * 
 	 * An OpenGL instance created using GLFW and glad.
 	*/
 	struct JZENGINE_API GLFW_Instance
 	{
-		GLFWwindow* window_			{ nullptr };	/*!< handle to the window created using GLFW */
-		int			window_width_	{ 0 };			/*!< width of the GLFWwindow created and updated from resizing */
-		int			window_height_	{ 0 };			/*!< height of the GLFWwindow created and updated from resizing */
+		GLFWwindow*		window_			{ nullptr };	/*!< handle to the window created using GLFW */
+		int				window_width_	{ 0 };			/*!< width of the GLFWwindow created and updated from resizing */
+		int				window_height_	{ 0 };			/*!< height of the GLFWwindow created and updated from resizing */
 
 		GLFW_Instance(int width, int height);
 		~GLFW_Instance();
