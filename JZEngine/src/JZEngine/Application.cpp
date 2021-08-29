@@ -11,6 +11,7 @@
 #include "Application.h"
 #include "ECS/ECSconfig.h"
 #include "STL/Tuple.h"
+#include "DebugTools/Log.h"
 
 #include <iostream>
 #include <tuple>
@@ -28,7 +29,10 @@ namespace JZEngine
 		ss << "[" << Settings::engine_name << "] Up and Running! v%.1f";
 		Console::Log(ss.str().c_str(), 1.0f);
 
-		ECS::ECSInstance::Instance().Print();
+		Log::Instance().OSLog("Console")->info("test logging");
+		std::cout << Log::Instance().GetOSLogger("Console").oss.str() << std::endl;
+
+		//ECS::ECSInstance::Instance().Print();
 	}
 
 	void Application::Run()

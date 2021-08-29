@@ -6,6 +6,7 @@
 #include <string>
 #include <array>
 #include <vector>
+#include <queue>
 
 // streams
 #include <fstream>
@@ -13,3 +14,7 @@
 #include <iostream>
 
 #include <memory.h>
+#include <type_traits>
+#include <typeinfo>
+#include <math.h>
+#include <chrono>

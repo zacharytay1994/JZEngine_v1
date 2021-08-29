@@ -33,9 +33,6 @@
     <ClCompile Include="src\JZEngine\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\JZEngine\Log.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\JZEngine\ImGui\imgui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -60,6 +57,12 @@
     <ClCompile Include="src\JZEngine\JZGL\JZ_GL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\JZEngine\Math\Math.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\Math\Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\JZEngine\ECS\ECS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -73,6 +76,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\DebugTools\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -91,9 +97,6 @@
     </ClInclude>
     <ClInclude Include="src\JZEngine\PCH.h">
       <Filter>Header Files\JZEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\Log.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\JZEngine\ImGui\imgui.h">
       <Filter>Header Files\JZEngine\ImGui</Filter>
@@ -153,6 +156,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\Math\Vec2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\Math\Vec3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\Math\Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\DebugTools\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

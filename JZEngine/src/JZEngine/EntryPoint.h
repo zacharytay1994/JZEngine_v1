@@ -15,7 +15,6 @@ extern JZEngine::Application* JZEngine::CreateApplication ();
 
 int main ( int argc , char** argv )
 {
-	JZEngine::Log::Init ();
 	//HZ_CORE_WARN ( "Initialized Log!" );
 	//HZ_INFO ( "Hello!" );
 
