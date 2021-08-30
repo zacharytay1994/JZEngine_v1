@@ -15,8 +15,10 @@
 	project */
 	#ifdef JZENGINE_BUILD_DLL
 		#define JZENGINE_API __declspec(dllexport)
+		#define JZENGINE_EXTERN
 	#else
 		#define JZENGINE_API __declspec(dllimport)
+		#define JZENGINE_EXTERN extern
 	#endif
 #else
 	#error PLATFORM IS NOT WINDOWS!

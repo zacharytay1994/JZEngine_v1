@@ -1,16 +1,19 @@
 #include <JZEngine.h>
 
+#include <iostream>
+
+
 class Sandbox : public JZEngine::Application
 {
 public:
-	Sandbox()
+	Sandbox ()
 		:
-		Application()
+		Application ()
 	{
 	}
 };
 
-JZEngine::Application* JZEngine::CreateApplication()
+JZEngine::Application* JZEngine::CreateApplication ()
 {
-	return new Sandbox();
+	return new Sandbox ();
 }
