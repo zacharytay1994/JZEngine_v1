@@ -37,10 +37,15 @@ namespace JZEngine
 		{
 			gl_instance_.FrameStart();
 
+			gl_instance_.Draw ();
+
 			engine_gui_.Update();
+
 			ECS::ECSInstance::Instance().Update();
+			
 
 			gl_instance_.FrameEnd();
+
 		}
 	}
 }
