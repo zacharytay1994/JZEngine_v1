@@ -12,6 +12,7 @@
 
 #include <sstream>
 #include <iomanip>
+#include <unordered_map>
 
 namespace JZEngine
 {
@@ -23,11 +24,13 @@ namespace JZEngine
 	 * Keeps tracks of console line numbers.
 	 * ****************************************************************************************************
 	*/
+	struct ConsoleLog;
 	struct JZENGINE_API Console
 	{
 		float x_, y_, sx_, sy_;		/*! position and scale */
 
 		Console(float x, float y, float sx, float sy);
+		~Console();
 
 		/*!
 		 * @brief ___JZEngine::Console::Log()___
@@ -57,6 +60,16 @@ namespace JZEngine
 		 * ****************************************************************************************************
 		*/
 		void Render();
+
+		static void ExistConsoleLog(const std::string& name);
+
+		static void SetConsole(const std::string& name);
+
+		static std::string* currently_selected_console_;
+		static std::unordered_map<std::string, unsigned char>* console_log_names_;
+		ConsoleLog* console_log_{ nullptr };
+		//static std::unordered_map<std::string, ConsoleLog>* console_logs_;
+		static bool more_info_;
 
 	private:
 		static unsigned int console_line_number_;	/*!< the amount of lines currently in the console */

@@ -41,9 +41,15 @@ namespace JZEngine
 			OSLogger(const OSLogger& logger);
 			OSLogger& operator=(const OSLogger& logger);
 			std::string name_;
-			std::shared_ptr<spdlog::sinks::ostream_sink_mt> os_sink_{ nullptr };	/*!< initialized before logger */
+			unsigned int line_count_{ 0 };
+
+			std::shared_ptr<spdlog::sinks::ostream_sink_mt> os_sink_{ nullptr };			/*!< initialized before logger */
 			std::shared_ptr<spdlog::logger> logger_{ nullptr };
-			std::ostringstream oss;
+			std::ostringstream oss_;
+
+			std::shared_ptr<spdlog::sinks::ostream_sink_mt> stripped_os_sink_{ nullptr };	/*!< initialized before logger */
+			std::shared_ptr<spdlog::logger> stripped_logger_{ nullptr };
+			std::ostringstream stripped_oss_;
 		};
 
 		std::unordered_map<std::string, OSLogger>* osloggers_;
@@ -52,6 +58,39 @@ namespace JZEngine
 		static Log& Instance();
 
 		OSLogger& GetOSLogger(const std::string& name);
-		std::shared_ptr<spdlog::logger>& OSLog(const std::string& name);
+		std::shared_ptr<spdlog::logger> OSLog(const std::string& name);
+		unsigned int GetLogLineCount(const std::string& name);
+
+		template<typename...ARGS>
+		static void Info(const std::string& name, const std::string& msg, ARGS&&... args)
+		{
+			std::string i = std::to_string(Instance().GetLogLineCount(name));
+			Instance().GetOSLogger(name).logger_->info(i + ". " + msg, args...);
+			Instance().GetOSLogger(name).stripped_logger_->info(i + ". " + msg, args...);
+		}
+
+		template<typename...ARGS>
+		static void Warning(const std::string& name, const std::string& msg, ARGS&&... args)
+		{
+			std::string i = std::to_string(Instance().GetLogLineCount(name));
+			Instance().GetOSLogger(name).logger_->warn(i + ". " + msg, args...);
+			Instance().GetOSLogger(name).stripped_logger_->warn(i + ". " + msg, args...);
+		}
+
+		template<typename...ARGS>
+		static void Error(const std::string& name, const std::string& msg, ARGS&&... args)
+		{
+			std::string i = std::to_string(Instance().GetLogLineCount(name));
+			Instance().GetOSLogger(name).logger_->error(i + ". " + msg, args...);
+			Instance().GetOSLogger(name).stripped_logger_->error(i + ". " + msg, args...);
+		}
+
+		template<typename...ARGS>
+		static void Critical(const std::string& name, const std::string& msg, ARGS&&... args)
+		{
+			std::string i = std::to_string(Instance().GetLogLineCount(name));
+			Instance().GetOSLogger(name).logger_->critical(i + ". " + msg, args...);
+			Instance().GetOSLogger(name).stripped_logger_->critical(i + ". " + msg, args...);
+		}
 	};
 }

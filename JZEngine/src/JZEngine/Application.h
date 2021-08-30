@@ -9,8 +9,8 @@
 
 #include "BuildDefinitions.h"
 
-#include "EngineGUI/EngineGUI.h"
 #include "JZGL/JZ_GL.h"
+#include "EngineGUI/EngineGUI.h"
 #include "ECS/ECS.h"
 
 namespace JZEngine

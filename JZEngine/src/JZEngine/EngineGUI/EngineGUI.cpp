@@ -18,7 +18,7 @@ namespace JZEngine
 	EngineGUI::EngineGUI(GLFWwindow*& glfwwindow)
 		:
 		inspector_(5.0f/6.0f, 0.0f, 1.0f/6.0f, 1.0f),
-		console_(1.0f/6.0f, 5.0f/6.0f, 4.0f/6.0f, 1.0f/6.0f),
+		console_(1.0f/6.0f, 5.0f/7.0f, 4.0f/6.0f, 2.0f/7.0f),
 		scene_tree_(0.0f, 0.0f, 1.0f / 6.0f, 1.0f)
 	{
 		InitializeWithGLFW(glfwwindow);

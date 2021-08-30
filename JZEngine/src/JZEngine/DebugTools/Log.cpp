@@ -8,7 +8,6 @@
 
 namespace JZEngine
 {
-		
 	//void Log::Init ()
 	//{
 
@@ -37,7 +36,7 @@ namespace JZEngine
         spdlog::debug("This message should be displayed..");
 
         // change log pattern
-        spdlog::set_pattern("[%H:%M:%S %z] [%n] [%^---%L---%$] [thread %t] %v");
+        //spdlog::set_pattern("[%H:%M:%S %z] [%n] [%^---%L---%$] [thread %t] %v");
 
         /*try
         {
@@ -52,10 +51,10 @@ namespace JZEngine
         auto logger = std::make_shared<spdlog::logger>("my_logger", ostream_sink);
         logger->info("test ostream logger");
         std::cout << oss.str() << std::endl;*/
-        for (int i = 0; i < 200; ++i)
+       /* for (int i = 0; i < 200; ++i)
         {
             OSLog("Console")->info("test os logger {}", i);
-        }
+        }*/
 
         // Compile time log levels
         // define SPDLOG_ACTIVE_LEVEL to desired level
@@ -71,26 +70,36 @@ namespace JZEngine
     Log::OSLogger::OSLogger(const std::string& name)
         :
         name_(name),
-        os_sink_(std::make_shared<spdlog::sinks::ostream_sink_mt>(oss)),
-        logger_(std::make_shared<spdlog::logger>(name_, os_sink_))
+        os_sink_(std::make_shared<spdlog::sinks::ostream_sink_mt>(oss_)),
+        logger_(std::make_shared<spdlog::logger>(name_, os_sink_)),
+        stripped_os_sink_(std::make_shared<spdlog::sinks::ostream_sink_mt>(stripped_oss_)),
+        stripped_logger_(std::make_shared<spdlog::logger>(name_, stripped_os_sink_))
     {
-
+        logger_->set_pattern("[ %-8l ] %-64v [ Time Elapsed: %-3i]");
+        stripped_logger_->set_pattern("%v");
     }
 
     Log::OSLogger::OSLogger(const OSLogger& logger)
         :
         name_(logger.name_),
-        os_sink_(std::make_shared<spdlog::sinks::ostream_sink_mt>(oss)),
-        logger_(std::make_shared<spdlog::logger>(name_, os_sink_))
+        os_sink_(std::make_shared<spdlog::sinks::ostream_sink_mt>(oss_)),
+        logger_(std::make_shared<spdlog::logger>(name_, os_sink_)),
+        stripped_os_sink_(std::make_shared<spdlog::sinks::ostream_sink_mt>(stripped_oss_)),
+        stripped_logger_(std::make_shared<spdlog::logger>(name_, stripped_os_sink_))
     {
-
+        logger_->set_pattern("[ %-8l ] %-64v [ Time Elapsed: %-3i]");
+        stripped_logger_->set_pattern("%v");
     }
 
     Log::OSLogger& Log::OSLogger::operator=(const OSLogger& logger)
     {
         name_ = logger.name_;
-        os_sink_ = std::make_shared<spdlog::sinks::ostream_sink_mt>(oss);
+        os_sink_ = std::make_shared<spdlog::sinks::ostream_sink_mt>(oss_);
         logger_ = std::make_shared<spdlog::logger>(name_, os_sink_);
+        stripped_os_sink_ = std::make_shared<spdlog::sinks::ostream_sink_mt>(stripped_oss_);
+        stripped_logger_ = std::make_shared<spdlog::logger>(name_, stripped_os_sink_);
+        logger_->set_pattern("[ %-8l ] %-64v [ Time Elapsed: %-3i]");
+        stripped_logger_->set_pattern("%v");
         return *this;
     }
 
@@ -102,15 +111,22 @@ namespace JZEngine
 
     Log::OSLogger& Log::GetOSLogger(const std::string& name)
     {
-        if (osloggers_->find(name) == osloggers_->end())
+        Console::ExistConsoleLog(name);
+        auto iterator = osloggers_->find(name);
+        if (iterator != osloggers_->end())
         {
-            (*osloggers_)[name] = OSLogger(name);
+            return iterator->second;
         }
-        return (*osloggers_)[name];
+        return (*osloggers_)[name] = OSLogger(name);
     }
 
-    std::shared_ptr<spdlog::logger>& Log::OSLog(const std::string& name)
+    std::shared_ptr<spdlog::logger> Log::OSLog(const std::string& name)
     {
         return GetOSLogger(name).logger_;
+    }
+
+    unsigned int Log::GetLogLineCount(const std::string& name)
+    {
+        return ++GetOSLogger(name).line_count_;
     }
 }
