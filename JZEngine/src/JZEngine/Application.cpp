@@ -25,14 +25,7 @@ namespace JZEngine
 		gl_instance_(Settings::window_width, Settings::window_height),
 		engine_gui_(gl_instance_.window_)
 	{
-		/*std::stringstream ss;
-		ss << "[" << Settings::engine_name << "] Up and Running! v%.1f";
-		Console::Log(ss.str().c_str(), 1.0f);
-
-		Log::Instance().OSLog("Console")->info("test logging");
-		std::cout << Log::Instance().GetOSLogger("Console").oss_.str() << std::endl;*/
-
-		//ECS::ECSInstance::Instance().Print();
+		JZEngine::Log::Info("Main", "[{}] Up and Running! v{}", Settings::engine_name, Settings::version);
 	}
 
 	void Application::Run()

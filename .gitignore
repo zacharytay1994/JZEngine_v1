@@ -32,6 +32,7 @@ bld/
 [Ll]ogs/
 bin/
 bin-int/
+Sandbox/Logs/
 >>>>>>> main
 **/OutputFiles
 

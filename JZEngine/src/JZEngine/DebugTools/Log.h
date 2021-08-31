@@ -14,24 +14,8 @@
 
 namespace JZEngine
 {
-	class JZENGINE_API Log
+	struct JZENGINE_API Log
 	{
-	/*public:
-		static void Init () ;
-		inline static std::shared_ptr <spdlog::logger>& GetCoreLogger ()
-		{
-			return s_CoreLogger;
-		}
-		inline static std::shared_ptr <spdlog::logger>& GetClientLogger ()
-		{
-			return s_ClientLogger;
-		}
-
-	private :
-		static std::shared_ptr<spdlog::logger> s_CoreLogger;
-		static std::shared_ptr<spdlog::logger> s_ClientLogger;*/
-
-		Log();
 		~Log();
 
 		struct OSLogger
@@ -42,6 +26,10 @@ namespace JZEngine
 			OSLogger& operator=(const OSLogger& logger);
 			std::string name_;
 			unsigned int line_count_{ 0 };
+			std::vector<unsigned int> lineoffset_;
+			std::vector<unsigned int> stripped_lineoffset_;
+
+			std::shared_ptr<spdlog::logger> file_logger_{ nullptr };
 
 			std::shared_ptr<spdlog::sinks::ostream_sink_mt> os_sink_{ nullptr };			/*!< initialized before logger */
 			std::shared_ptr<spdlog::logger> logger_{ nullptr };
@@ -52,9 +40,6 @@ namespace JZEngine
 			std::ostringstream stripped_oss_;
 		};
 
-		std::unordered_map<std::string, OSLogger>* osloggers_;
-
-	public:
 		static Log& Instance();
 
 		OSLogger& GetOSLogger(const std::string& name);
@@ -64,33 +49,73 @@ namespace JZEngine
 		template<typename...ARGS>
 		static void Info(const std::string& name, const std::string& msg, ARGS&&... args)
 		{
-			std::string i = std::to_string(Instance().GetLogLineCount(name));
-			Instance().GetOSLogger(name).logger_->info(i + ". " + msg, args...);
-			Instance().GetOSLogger(name).stripped_logger_->info(i + ". " + msg, args...);
+			std::string s = std::to_string(Instance().GetLogLineCount(name)) + ". " + msg;
+			OSLogger& logger = Instance().GetOSLogger(name);
+
+			logger.file_logger_->info(msg);
+
+			auto initial_pos = logger.oss_.tellp();
+			logger.logger_->info(s, args...);
+			logger.lineoffset_.push_back(logger.lineoffset_.back() + static_cast<unsigned int>(logger.oss_.tellp() - initial_pos));
+
+			initial_pos = logger.stripped_oss_.tellp();
+			logger.stripped_logger_->info(s, args...);
+			logger.stripped_lineoffset_.push_back(logger.stripped_lineoffset_.back() + static_cast<unsigned int>(logger.stripped_oss_.tellp() - initial_pos));
 		}
 
 		template<typename...ARGS>
 		static void Warning(const std::string& name, const std::string& msg, ARGS&&... args)
 		{
-			std::string i = std::to_string(Instance().GetLogLineCount(name));
-			Instance().GetOSLogger(name).logger_->warn(i + ". " + msg, args...);
-			Instance().GetOSLogger(name).stripped_logger_->warn(i + ". " + msg, args...);
+			std::string s = std::to_string(Instance().GetLogLineCount(name)) + ". " + msg;
+			OSLogger& logger = Instance().GetOSLogger(name);
+
+			logger.file_logger_->warn(msg);
+
+			auto initial_pos = logger.oss_.tellp();
+			logger.logger_->warn(s, args...);
+			logger.lineoffset_.push_back(logger.lineoffset_.back() + static_cast<unsigned int>(logger.oss_.tellp() - initial_pos));
+
+			initial_pos = logger.stripped_oss_.tellp();
+			logger.stripped_logger_->warn(s, args...);
+			logger.stripped_lineoffset_.push_back(logger.stripped_lineoffset_.back() + static_cast<unsigned int>(logger.stripped_oss_.tellp() - initial_pos));
 		}
 
 		template<typename...ARGS>
 		static void Error(const std::string& name, const std::string& msg, ARGS&&... args)
 		{
-			std::string i = std::to_string(Instance().GetLogLineCount(name));
-			Instance().GetOSLogger(name).logger_->error(i + ". " + msg, args...);
-			Instance().GetOSLogger(name).stripped_logger_->error(i + ". " + msg, args...);
+			std::string s = std::to_string(Instance().GetLogLineCount(name)) + ". " + msg;
+			OSLogger& logger = Instance().GetOSLogger(name);
+
+			logger.file_logger_->error(msg);
+
+			auto initial_pos = logger.oss_.tellp();
+			logger.logger_->error(s, args...);
+			logger.lineoffset_.push_back(logger.lineoffset_.back() + static_cast<unsigned int>(logger.oss_.tellp() - initial_pos));
+
+			initial_pos = logger.stripped_oss_.tellp();
+			logger.stripped_logger_->error(s, args...);
+			logger.stripped_lineoffset_.push_back(logger.stripped_lineoffset_.back() + static_cast<unsigned int>(logger.stripped_oss_.tellp() - initial_pos));
 		}
 
 		template<typename...ARGS>
 		static void Critical(const std::string& name, const std::string& msg, ARGS&&... args)
 		{
-			std::string i = std::to_string(Instance().GetLogLineCount(name));
-			Instance().GetOSLogger(name).logger_->critical(i + ". " + msg, args...);
-			Instance().GetOSLogger(name).stripped_logger_->critical(i + ". " + msg, args...);
+			std::string s = std::to_string(Instance().GetLogLineCount(name)) + ". " + msg;
+			OSLogger& logger = Instance().GetOSLogger(name);
+
+			logger.file_logger_->critical(msg);
+
+			auto initial_pos = logger.oss_.tellp();
+			logger.logger_->critical(s, args...);
+			logger.lineoffset_.push_back(logger.lineoffset_.back() + static_cast<unsigned int>(logger.oss_.tellp() - initial_pos));
+
+			initial_pos = logger.stripped_oss_.tellp();
+			logger.stripped_logger_->critical(s, args...);
+			logger.stripped_lineoffset_.push_back(logger.stripped_lineoffset_.back() + static_cast<unsigned int>(logger.stripped_oss_.tellp() - initial_pos));
 		}
+
+	private:
+		std::unordered_map<std::string, OSLogger>* osloggers_;
+		Log();
 	};
 }

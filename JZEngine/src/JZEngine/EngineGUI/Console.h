@@ -68,11 +68,9 @@ namespace JZEngine
 		static std::string* currently_selected_console_;
 		static std::unordered_map<std::string, unsigned char>* console_log_names_;
 		ConsoleLog* console_log_{ nullptr };
-		//static std::unordered_map<std::string, ConsoleLog>* console_logs_;
 		static bool more_info_;
 
 	private:
 		static unsigned int console_line_number_;	/*!< the amount of lines currently in the console */
-		//static std::stringstream* console_stream_;	/*!< the stringstream storing all console text */
 	};
 }
