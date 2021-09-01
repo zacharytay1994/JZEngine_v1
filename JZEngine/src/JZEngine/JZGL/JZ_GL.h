@@ -9,6 +9,7 @@
 #pragma once
 
 #include "../BuildDefinitions.h"
+#include "../GraphicRendering/Renderer.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -28,6 +29,8 @@ namespace JZEngine
 
 		GLFW_Instance(int width, int height);
 		~GLFW_Instance();
+
+		Renderer render_data_ ;
 
 		/*!
 		 * @brief ___JZEngine::GLFW_Instance::FrameStart()___
@@ -52,6 +55,8 @@ namespace JZEngine
 		 * Application.cpp should continue.
 		*/
 		bool Active();
+
+		void Draw ();
 
 	private:
 		/*!

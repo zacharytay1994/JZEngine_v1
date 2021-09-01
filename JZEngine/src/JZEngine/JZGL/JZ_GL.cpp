@@ -42,6 +42,11 @@ namespace JZEngine
 		return !glfwWindowShouldClose(window_);
 	}
 
+	void GLFW_Instance::Draw ()
+	{
+		render_data_.Draw ();
+	}
+
 	void GLFW_Instance::Initialize()
 	{
 		glfwInit();
@@ -68,6 +73,8 @@ namespace JZEngine
 
 		// set resize window callback function
 		glfwSetFramebufferSizeCallback(window_, FramebufferSizeCallback);
+
+		render_data_.SetupVao ();
 	}
 
 	void JZEngine::FramebufferSizeCallback(GLFWwindow* window, int width, int height)
