@@ -2,10 +2,17 @@
 
 #include "../ECS/ECS.h"
 #include "../EngineGUI/Console.h"
+#include "../DebugTools/Log.h"
 
 struct TestComponent
 {
 	int x{ -90 }, y{ -5 };
+
+	template <typename OStream>
+	friend OStream& operator<<(OStream& os, const TestComponent& component)
+	{
+		return os << "(" << component.x << "," << component.y << ")";
+	}
 };
 
 struct TestComponent2
@@ -73,7 +80,7 @@ struct TestSystem2 : public JZEngine::ECS::System
 		}
 		if (write)
 		{
-			JZEngine::Console::Log("TestSystem Updated FrameBegin");
+			//JZEngine::Console::Log("TestSystem Updated FrameBegin");
 		}
 	}
 
@@ -83,7 +90,7 @@ struct TestSystem2 : public JZEngine::ECS::System
 	{
 		if (write)
 		{
-			JZEngine::Console::Log("TestSystem Updated Entity");
+			JZEngine::Log::Info("TestSystem2", "This is an example {}", GetComponent<TestComponent>());
 		}
 	}
 };

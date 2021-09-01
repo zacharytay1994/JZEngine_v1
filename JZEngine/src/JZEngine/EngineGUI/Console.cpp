@@ -16,13 +16,18 @@
 
 namespace JZEngine
 {
-    std::string* Console::currently_selected_console_{ nullptr };
-    std::unordered_map<std::string, unsigned char>* Console::console_log_names_{ nullptr };
-    bool Console::more_info_{ false };
+    std::string*                                    Console::currently_selected_console_{ nullptr };    /*!< the currently displayed console */
+    std::unordered_map<std::string, unsigned char>* Console::console_log_names_{ nullptr };             /*!< all consoles */
+    bool                                            Console::more_info_{ false };                       /*!< if log information is more/less */
 
+    /*!
+     * @brief ___JZEngine::ConsoleLog___
+	 * ****************************************************************************************************
+     * The ImGui console log.
+	 * ****************************************************************************************************
+    */
     struct ConsoleLog
     {
-        ImGuiTextBuffer     Buf;
         ImGuiTextFilter     Filter;
         bool                AutoScroll;    // Keep scrolling if already at the bottom.
 
@@ -32,6 +37,13 @@ namespace JZEngine
             ResetLineOffsets();
         }
 
+        /*!
+         * @brief ___JZEngine::ConsoleLog::ResetLineOffsets()___
+		 * ****************************************************************************************************
+         * @param name
+         * : Reset console lineoffsets.
+		 * ****************************************************************************************************
+        */
         void ResetLineOffsets(const std::string& name = "")
         {
             if (!name.empty())
@@ -44,6 +56,15 @@ namespace JZEngine
             }
         }
 
+        /*!
+         * @brief ___JZEngine::ConsoleLog::Clear()___
+		 * ****************************************************************************************************
+         * Clears the console.
+		 * ****************************************************************************************************
+         * @param name 
+         * : The console to clear.
+		 * ****************************************************************************************************
+        */
         void Clear(const std::string& name)
         {
             Log::Instance().GetOSLogger(name).oss_.str("");
@@ -51,6 +72,17 @@ namespace JZEngine
             ResetLineOffsets(name);
         }
 
+        /*!
+         * @brief ___JZEngine::ConsoleLog::Draw()___
+		 * ****************************************************************************************************
+         * Renders the ImGui console.
+		 * ****************************************************************************************************
+         * @param title 
+         * : ImGui console title.
+         * @param name 
+         * : Console to render.
+		 * ****************************************************************************************************
+        */
         void Draw(const char* title, const std::string& name, bool* p_open = NULL)
         {
             if (!ImGui::Begin(title, p_open))
@@ -59,7 +91,7 @@ namespace JZEngine
                 return;
             }
 
-            // Options menu
+            // display selection for all the consoles
             if (ImGui::BeginPopup("Consoles"))
             {
                 if (Console::console_log_names_)
@@ -72,14 +104,15 @@ namespace JZEngine
                         }
                     }
                 }
-
                 ImGui::EndPopup();
             }
 
-            // Main window
+            // button event to display all console options
             if (ImGui::Button((*Console::currently_selected_console_).c_str()))
                 ImGui::OpenPopup("Consoles");
             ImGui::SameLine();
+
+            // switch between 2 logging modes, more/less info
             if (Console::more_info_)
             {
                 if (ImGui::Button("More"))
@@ -95,9 +128,9 @@ namespace JZEngine
                 }
             }
             ImGui::SameLine();
+
+            // to clear the console
             bool clear = ImGui::Button("Clear");
-            ImGui::SameLine();
-            bool copy = ImGui::Button("Copy");
             ImGui::SameLine();
             Filter.Draw("Filter", -100.0f);
 
@@ -107,12 +140,13 @@ namespace JZEngine
 
             if (clear)
                 Clear(name);
-            if (copy)
-                ImGui::LogToClipboard();
 
+            // draws the text part
             ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
 
             std::string str;
+
+            // get text data based on more/less info
             if (Console::more_info_)
             {
                 str = Log::Instance().GetOSLogger(name).oss_.str();
@@ -127,10 +161,7 @@ namespace JZEngine
                 Log::Instance().GetOSLogger(name).lineoffset_ : Log::Instance().GetOSLogger(name).stripped_lineoffset_;
             if (Filter.IsActive())
             {
-                // In this example we don't use the clipper when Filter is enabled.
-                // This is because we don't have a random access on the result on our filter.
-                // A real application processing logs with ten of thousands of entries may want to store the result of
-                // search/filter.. especially if the filtering function is not trivial (e.g. reg-exp).
+                // renders the text for each line with filter
                 for (int line_no = 0; line_no < LineOffsets.size(); line_no++)
                 {
                     const char* line_start = buf + LineOffsets[line_no];
@@ -141,6 +172,7 @@ namespace JZEngine
             }
             else
             {
+                // renders the text for each line no filter
                 for (int line_no = 0; line_no < LineOffsets.size(); line_no++)
                 {
                     const char* line_start = buf + LineOffsets[line_no];
@@ -157,13 +189,12 @@ namespace JZEngine
             ImGui::End();
         }
 
+        // renders the console log with ImGui widget attributes
         void RenderConsoleLog(bool* p_open, float x, float y, float sx, float sy)
         {
             ImGui::SetNextWindowBgAlpha(0.8f);
             ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x, static_cast<float>(Settings::window_height) * y }, ImGuiCond_Once);
             ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx, static_cast<float>(Settings::window_height) * sy }, ImGuiCond_Once);
-
-            // Actually call in the regular Log helper (which will Begin() into the same window as we just did)
             Draw("Console", *Console::currently_selected_console_, p_open);
         }
     };
@@ -197,12 +228,30 @@ namespace JZEngine
         console_log_->RenderConsoleLog(&open, x_, y_, sx_, sy_);
 	}
 
-
+    /*!
+     * @brief ___JZEngine::Console::ExistConsoleLog()___
+     * ****************************************************************************************************
+     * Checks if the console log already exist in the
+     * map, else creates it.
+     * ****************************************************************************************************
+     * @param name
+     * : The name of the console log.
+     * ****************************************************************************************************
+    */
     void Console::ExistConsoleLog(const std::string& name)
     {
         (*console_log_names_)[name];
     }
 
+    /*!
+     * @brief ___JZEngine::Console::SetConsole()___
+     * ****************************************************************************************************
+     * Sets the currently displayed console.
+     * ****************************************************************************************************
+     * @param name
+     * : The console to display.
+     * ****************************************************************************************************
+    */
     void Console::SetConsole(const std::string& name)
     {
         *currently_selected_console_ = name;

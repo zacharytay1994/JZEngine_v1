@@ -120,7 +120,7 @@ namespace JZEngine
 				{
 					std::stringstream ss;
 					ss << "Entity " << entity->name_ << " (ID: " << entity->entity_id_ << ") has maximum number of children!";
-					Console::Log(ss.str().c_str());
+					//Console::Log(ss.str().c_str());
 				}
 				else
 				{

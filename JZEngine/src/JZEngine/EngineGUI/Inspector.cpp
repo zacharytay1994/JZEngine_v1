@@ -134,7 +134,7 @@ namespace JZEngine
 							entity->AddComponent(c.bit_);
 							std::stringstream ss;
 							ss << "Added component [" << c.name_ << "] to entity" << " [" << entity->name_ << "].";
-							Console::Log(ss.str().c_str());
+							//Console::Log(ss.str().c_str());
 							ECS::ECSInstance::Instance().Print();
 						}
 						// else remove it
@@ -143,7 +143,7 @@ namespace JZEngine
 							entity->RemoveComponent(c.bit_);
 							std::stringstream ss;
 							ss << "Removed component [" << c.name_ << "] from entity" << " [" << entity->name_ << "].";
-							Console::Log(ss.str().c_str());
+							//Console::Log(ss.str().c_str());
 							ECS::ECSInstance::Instance().Print();
 						}
 					}
@@ -190,7 +190,7 @@ namespace JZEngine
 							entity->AddSystem(s.id_);
 							std::stringstream ss;
 							ss << "Added system [" << s.name_ << "]'s components to entity" << " [" << entity->name_ << "].";
-							Console::Log(ss.str().c_str());
+							//Console::Log(ss.str().c_str());
 							ECS::ECSInstance::Instance().Print();
 						}
 					}
@@ -212,7 +212,7 @@ namespace JZEngine
 				{
 					if (ImGui::Selectable(c.name_.c_str(), true))
 					{
-						Console::Log("Oops please select an entity before adding...");
+						//Console::Log("Oops please select an entity before adding...");
 					}
 				}
 				ImGui::EndListBox();
@@ -224,7 +224,7 @@ namespace JZEngine
 				{
 					if (ImGui::Selectable(s.name_.c_str(), true))
 					{
-						Console::Log("Oops please select an entity before adding...");
+						//Console::Log("Oops please select an entity before adding...");
 					}
 				}
 				ImGui::EndListBox();
