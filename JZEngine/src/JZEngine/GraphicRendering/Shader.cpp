@@ -139,7 +139,7 @@ namespace JZEngine
 		return is_linked;
 	}
 
-	void Shader::Use ()
+	void Shader::Bind () const
 	{
 		if( pgm_handle > 0 && is_linked == GL_TRUE )
 		{
@@ -147,7 +147,7 @@ namespace JZEngine
 		}
 	}
 
-	void Shader::UnUse ()
+	void Shader::Unbind () const
 	{
 		glUseProgram ( 0 );
 	}

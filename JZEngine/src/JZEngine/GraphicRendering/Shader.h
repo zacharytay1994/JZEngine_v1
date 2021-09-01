@@ -9,16 +9,15 @@ namespace JZEngine
 	class Shader
 	{
 	public:
-		//static Shader& GetInstance ();
 
 		Shader ();
 		GLboolean CompileShaderFromFile ( GLenum shader_type , std::string const& file_name );
 		GLboolean CompileShaderFromString ( GLenum shader_type , std::string const& shader_src );
 		GLboolean Link ();
 		GLboolean IsLinked () const;
-		void Use ();
-		void UnUse ();
 		std::string GetLog () const;
+		void Bind () const;
+		void Unbind () const;
 	
 
 
