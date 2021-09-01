@@ -21,6 +21,7 @@ namespace JZEngine
 	void VertexArray::Unbind () const
 	{
 		glBindVertexArray ( 0 ) ;
+		
 	}
 
 	void VertexArray::AddBuffer ( const VertexBuffer& vb , const VertexBufferLayout& layout )

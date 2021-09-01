@@ -10,13 +10,26 @@
 
 #include "Application.h"
 
+// Memory leak detection
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 #ifdef JZENGINE_PLATFORM_WINDOWS
 	extern JZEngine::Application* JZEngine::CreateApplication();
 
 	int main(int argc, char** argv)
 	{
+		// Enable run-time memory check for debug builds.
+#if defined(DEBUG) | defined(_DEBUG)
+		_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+		_CrtSetReportMode ( _CRT_WARN , _CRTDBG_MODE_DEBUG );
+#endif
 		auto app = JZEngine::CreateApplication();
 		app->Run();
 		delete app;
+
+		// Call before an app exit point to display a memory-leak report when the app exits.
+		_CrtDumpMemoryLeaks ();
 	}
 #endif // !ENGINE_PLATFORM_WINDOWS
