@@ -12,6 +12,7 @@
 #include "ECS/ECSconfig.h"
 #include "STL/Tuple.h"
 #include "DebugTools/Log.h"
+#include "Scripting/MonoCSharp.h"
 
 #include <iostream>
 #include <tuple>
@@ -26,6 +27,7 @@ namespace JZEngine
 		engine_gui_(gl_instance_.window_)
 	{
 		JZEngine::Log::Info("Main", "[{}] Up and Running! v{}", Settings::engine_name, Settings::version);
+		MonoCSharp();
 	}
 
 	void Application::Run()

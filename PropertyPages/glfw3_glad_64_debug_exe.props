@@ -14,7 +14,8 @@
       <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)bin\JZEngine-$(Configuration)-$(Platform)\JZEngine.dll" "$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\JZEngine.dll" /Y</Command>
+      <Command>copy "$(SolutionDir)bin\JZEngine-$(Configuration)-$(Platform)\JZEngine.dll" "$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\JZEngine.dll" /Y
+copy "$(SolutionDir)vendors\mono\lib\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y</Command>
     </PostBuildEvent>
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
@@ -22,7 +23,7 @@
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>JZENGINE_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)JZEngine\vendor\spdlog\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)JZEngine\vendor\spdlog\include;$(SolutionDir)JZEngine\vendor\mono\include\mono-2.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />

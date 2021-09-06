@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../ECS/ECS.h"
-#include "ExampleSplitHeaderSource.h"
+//#include "ExampleSplitHeaderSource.h"
 #include "ExampleSingleHeader.h"
 
 // some random custom struct

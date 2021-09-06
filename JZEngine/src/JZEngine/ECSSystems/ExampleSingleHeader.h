@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../ECS/ECS.h"
-#include "../EngineGUI/Console.h"
+//#include "../EngineGUI/Console.h"
 #include "../DebugTools/Log.h"
 
 struct TestComponent

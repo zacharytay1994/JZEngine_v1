@@ -1,9 +1,4 @@
-#pragma once
 
-#include "../BuildDefinitions.h"
-
-#include "../ImGui/imgui.h"
-#include "../ImGui/imgui_impl_glfw.h"
 /*	__FILE HEADER__
 *	File:	EngineGUI.h
 	Author: JZ
@@ -14,6 +9,10 @@
 
 #pragma once
 
+#include "../BuildDefinitions.h"
+
+#include "../ImGui/imgui.h"
+#include "../ImGui/imgui_impl_glfw.h"
 #include "../ImGui/imgui_impl_opengl3.h"
 
 #include "Inspector.h"

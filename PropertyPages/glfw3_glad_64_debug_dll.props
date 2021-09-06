@@ -4,17 +4,18 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <IncludePath>$(SolutionDir)OpenGL\include;$(SolutionDir)$(ProjectName)\src\JZEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)OpenGL\lib\lib64;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)OpenGL\lib\lib64;$(SolutionDir)vendors\mono\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(ProjectName)-$(Configuration)-$(Platform)\</IntDir>
     <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)OpenGL\lib\lib64\glfw3.dll" "$(TargetDir)glfw3.dll" /Y</Command>
+      <Command>copy "$(SolutionDir)OpenGL\lib\lib64\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
+copy "$(SolutionDir)vendors\mono\lib\mono-2.0-sgen.dll" "$(TargetDir)mono-2.0-sgen.dll" /Y</Command>
     </PostBuildEvent>
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
@@ -22,7 +23,7 @@
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>JZENGINE_PLATFORM_WINDOWS;JZENGINE_BUILD_DLL;GLFW_INCLUDE_NONE;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)JZEngine\vendor\spdlog\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)JZEngine\vendor\spdlog\include;$(SolutionDir)vendors\mono\include\mono-2.0</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />

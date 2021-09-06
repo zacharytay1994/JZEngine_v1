@@ -7,6 +7,10 @@
 
 #pragma once
 
+#include <unordered_map>
+#include <string>
+#include <sstream>
+
 #include "../BuildDefinitions.h"
 
 #include "spdlog/spdlog.h"
@@ -15,10 +19,6 @@
 
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/sinks/ostream_sink.h"
-
-#include <unordered_map>
-#include <string>
-#include <sstream>
 
 namespace JZEngine
 {
