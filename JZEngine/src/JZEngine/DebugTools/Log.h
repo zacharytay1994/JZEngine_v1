@@ -71,7 +71,9 @@ namespace JZEngine
 		 * @return 
 		 * : Singleton instance.
 		*/
-		static Log& Instance();		
+		static Log& Instance();
+
+		void Free();
 
 		/*!
 		 * @brief ___JZEngine::Log::GetOSLogger()___

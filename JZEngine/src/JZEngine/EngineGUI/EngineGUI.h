@@ -47,7 +47,7 @@ namespace JZEngine
 
 	private:
 		Inspector	inspector_;		/*!< engine inspector */
-		Console		console_;		/*!< engine console */
+		//Console		console_;		/*!< engine console */
 		SceneTree	scene_tree_;	/*!< engine console */
 
 		/*!

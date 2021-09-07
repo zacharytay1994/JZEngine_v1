@@ -28,6 +28,11 @@ namespace JZEngine
 
     Log::~Log()
     {
+    }
+
+    void Log::Free()
+    {
+        osloggers_->clear();
         delete osloggers_;
     }
 

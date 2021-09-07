@@ -16,9 +16,9 @@
 
 namespace JZEngine
 {
-    std::string*                                    Console::currently_selected_console_{ nullptr };    /*!< the currently displayed console */
-    std::unordered_map<std::string, unsigned char>* Console::console_log_names_{ nullptr };             /*!< all consoles */
-    bool                                            Console::more_info_{ false };                       /*!< if log information is more/less */
+    //std::string*                                    Console::currently_selected_console_{ nullptr };    /*!< the currently displayed console */
+    //std::unordered_map<std::string, unsigned char>* Console::console_log_names_{ nullptr };             /*!< all consoles */
+    //bool                                            Console::more_info_{ false };                       /*!< if log information is more/less */
 
     /*!
      * @brief ___JZEngine::ConsoleLog___
@@ -28,10 +28,13 @@ namespace JZEngine
     */
     struct ConsoleLog
     {
+        Console&            console_;
         ImGuiTextFilter     Filter;
         bool                AutoScroll;    // Keep scrolling if already at the bottom.
 
-        ConsoleLog()
+        ConsoleLog(Console& console)
+            :
+            console_(console)
         {
             AutoScroll = true;
             ResetLineOffsets();
@@ -205,7 +208,7 @@ namespace JZEngine
 	{
         currently_selected_console_ = new std::string;
         console_log_names_ = new std::unordered_map<std::string, unsigned char>();
-        console_log_ = new ConsoleLog();
+        console_log_ = new ConsoleLog(*this);
         SetConsole("Main");
 	}
 

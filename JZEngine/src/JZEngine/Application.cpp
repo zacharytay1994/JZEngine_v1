@@ -25,7 +25,7 @@ namespace JZEngine
 		gl_instance_(Settings::window_width, Settings::window_height),
 		engine_gui_(gl_instance_.window_, &ecs_instance_)
 	{
-		JZEngine::Log::Info("Main", "[{}] Up and Running! v{}", Settings::engine_name, Settings::version);
+		//JZEngine::Log::Info("Main", "[{}] Up and Running! v{}", Settings::engine_name, Settings::version);
 	}
 
 	void Application::Run()
@@ -43,5 +43,7 @@ namespace JZEngine
 			gl_instance_.FrameEnd();
 
 		}
+
+		Log::Instance().Free();
 	}
 }
