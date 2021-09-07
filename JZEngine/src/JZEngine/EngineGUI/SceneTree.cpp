@@ -15,8 +15,9 @@
 
 namespace JZEngine
 {
-	SceneTree::SceneTree(float x, float y, float sx, float sy)
+	SceneTree::SceneTree(float x, float y, float sx, float sy, ECS::ECSInstance* ecs)
 		:
+		ecs_instance_(ecs),
 		x_(x), y_(y), sx_(sx), sy_(sy)
 	{
 		default_entity_name_ = new std::string("Entity");
@@ -50,13 +51,13 @@ namespace JZEngine
 		if (ImGui::Button("Add Default Entity"))
 		{
 			// create a new entity, pushed into EntityManager
-			unsigned int id = ECS::ECSInstance::Instance().CreateEntity();
+			unsigned int id = ecs_instance_->CreateEntity();
 
 			// if successful
 			if (id != -1)
 			{
 				// rename it
-				ECS::ECSInstance::Instance().GetEntity(id).name_ = GetName();
+				ecs_instance_->GetEntity(id).name_ = GetName();
 			}
 		}
 		ImGui::Text("\nCurrent Scene");
@@ -65,12 +66,12 @@ namespace JZEngine
 		ImGui::PopStyleColor();
 
 		// render all root entities in EntityManager
-		for (auto& id : ECS::ECSInstance::Instance().entity_manager_.root_ids_)
+		for (auto& id : ecs_instance_->entity_manager_.root_ids_)
 		{
 			if (id != -1)
 			{
 				// recursively render all children of a root entity
-				RenderAllChildObjects(&ECS::ECSInstance::Instance().entity_manager_.GetEntity(id));
+				RenderAllChildObjects(&ecs_instance_->entity_manager_.GetEntity(id));
 			}
 		}
 		ImGui::End();
@@ -115,7 +116,7 @@ namespace JZEngine
 			// adds an entity as a child of this entity on right click
 			if (ImGui::Selectable("Add Entity"))
 			{
-				int id = ECS::ECSInstance::Instance().CreateEntity(entity->entity_id_);
+				int id = ecs_instance_->CreateEntity(entity->entity_id_);
 				if (id == -1)
 				{
 					std::stringstream ss;
@@ -124,14 +125,14 @@ namespace JZEngine
 				}
 				else
 				{
-					ECS::Entity& created_entity = ECS::ECSInstance::Instance().GetEntity(id);
+					ECS::Entity& created_entity = ecs_instance_->GetEntity(id);
 					created_entity.name_ = GetName();
 				}
 			}
 			// removes an entity from the tree
 			if (ImGui::Selectable("Remove Entity"))
 			{
-				ECS::ECSInstance::Instance().RemoveEntity(entity->entity_id_);
+				ecs_instance_->RemoveEntity(entity->entity_id_);
 				selected_entity_ = nullptr;
 			}
 			ImGui::EndPopup();
@@ -149,7 +150,7 @@ namespace JZEngine
 			{
 				if (c != -1)
 				{
-					RenderAllChildObjects(&ECS::ECSInstance::Instance().entity_manager_.GetEntity(c));
+					RenderAllChildObjects(&ecs_instance_->entity_manager_.GetEntity(c));
 				}
 			}
 			ImGui::TreePop();

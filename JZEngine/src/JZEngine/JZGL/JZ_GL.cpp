@@ -22,7 +22,7 @@ namespace JZEngine
 
 	GLFW_Instance::~GLFW_Instance()
 	{
-
+		glfwTerminate();
 	}
 
 	void GLFW_Instance::FrameStart()

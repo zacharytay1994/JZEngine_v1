@@ -15,11 +15,11 @@
 namespace JZEngine
 {
 
-	EngineGUI::EngineGUI(GLFWwindow*& glfwwindow)
+	EngineGUI::EngineGUI(GLFWwindow*& glfwwindow, ECS::ECSInstance* ecs)
 		:
-		inspector_(5.0f/6.0f, 0.0f, 1.0f/6.0f, 1.0f),
+		inspector_(5.0f/6.0f, 0.0f, 1.0f/6.0f, 1.0f, ecs),
 		console_(1.0f/6.0f, 5.0f/6.0f, 4.0f/6.0f, 1.0f/6.0f),
-		scene_tree_(0.0f, 0.0f, 1.0f / 6.0f, 1.0f)
+		scene_tree_(0.0f, 0.0f, 1.0f / 6.0f, 1.0f, ecs)
 	{
 		InitializeWithGLFW(glfwwindow);
 	}

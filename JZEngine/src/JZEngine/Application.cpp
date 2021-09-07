@@ -22,13 +22,13 @@ namespace JZEngine
 	Application::Application()
 		:
 		gl_instance_(Settings::window_width, Settings::window_height),
-		engine_gui_(gl_instance_.window_)
+		engine_gui_(gl_instance_.window_, &ecs_instance_)
 	{
 		std::stringstream ss;
 		ss << "[" << Settings::engine_name << "] Up and Running! v%.1f";
 		Console::Log(ss.str().c_str(), 1.0f);
 
-		ECS::ECSInstance::Instance().Print();
+		ecs_instance_.Print();
 	}
 
 	void Application::Run()
@@ -38,7 +38,7 @@ namespace JZEngine
 			gl_instance_.FrameStart();
 
 			engine_gui_.Update();
-			ECS::ECSInstance::Instance().Update();
+			ecs_instance_.Update();
 
 			gl_instance_.FrameEnd();
 		}
