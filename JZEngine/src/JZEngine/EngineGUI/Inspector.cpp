@@ -15,8 +15,9 @@
 
 namespace JZEngine
 {
-	Inspector::Inspector(float x, float y, float sx, float sy)
+	Inspector::Inspector(float x, float y, float sx, float sy, ECS::ECSInstance* ecs)
 		:
+		ecs_instance_(ecs),
 		x_(x), y_(y), sx_(sx), sy_(sy)
 	{
 
@@ -113,7 +114,7 @@ namespace JZEngine
 				ImGui::BeginListBox("[Com]", { 0.0f, 100.0f });
 
 				// renders all registered components in a listbox
-				for (auto& c : ECS::ECSInstance::Instance().component_manager_.registered_components_)
+				for (auto& c : ecs_instance_->component_manager_.registered_components_)
 				{
 					bool has_component_ = false;
 					
@@ -134,8 +135,8 @@ namespace JZEngine
 							entity->AddComponent(c.bit_);
 							std::stringstream ss;
 							ss << "Added component [" << c.name_ << "] to entity" << " [" << entity->name_ << "].";
-							//Console::Log(ss.str().c_str());
-							ECS::ECSInstance::Instance().Print();
+							Console::Log(ss.str().c_str());
+							ecs_instance_->Print();
 						}
 						// else remove it
 						else
@@ -143,8 +144,8 @@ namespace JZEngine
 							entity->RemoveComponent(c.bit_);
 							std::stringstream ss;
 							ss << "Removed component [" << c.name_ << "] from entity" << " [" << entity->name_ << "].";
-							//Console::Log(ss.str().c_str());
-							ECS::ECSInstance::Instance().Print();
+							Console::Log(ss.str().c_str());
+							ecs_instance_->Print();
 						}
 					}
 					if (has_component_)
@@ -160,12 +161,12 @@ namespace JZEngine
 				ImGui::BeginListBox("[Sys]", { 0.0f, 100.0f });
 
 				// render all registered systems in a listbox
-				for (auto& s : ECS::ECSInstance::Instance().system_manager_.registered_systems_)
+				for (auto& s : ecs_instance_->system_manager_.registered_systems_)
 				{
 					bool has_system_ = true;
 					
 					// check if the selected entity has the components of the system already added, if so mark green
-					for (auto& c : ECS::ECSInstance::Instance().system_manager_.system_database_[s.id_]->components_)
+					for (auto& c : ecs_instance_->system_manager_.system_database_[s.id_]->components_)
 					{
 						if (c != -1)
 						{
@@ -190,8 +191,8 @@ namespace JZEngine
 							entity->AddSystem(s.id_);
 							std::stringstream ss;
 							ss << "Added system [" << s.name_ << "]'s components to entity" << " [" << entity->name_ << "].";
-							//Console::Log(ss.str().c_str());
-							ECS::ECSInstance::Instance().Print();
+							Console::Log(ss.str().c_str());
+							ecs_instance_->Print();
 						}
 					}
 					if (has_system_)
@@ -208,7 +209,7 @@ namespace JZEngine
 				ImGui::Separator();
 				ImGui::Text("Components:");
 				ImGui::BeginListBox("[Com]", { 0.0f, 100.0f });
-				for (auto& c : ECS::ECSInstance::Instance().component_manager_.registered_components_)
+				for (auto& c : ecs_instance_->component_manager_.registered_components_)
 				{
 					if (ImGui::Selectable(c.name_.c_str(), true))
 					{
@@ -220,7 +221,7 @@ namespace JZEngine
 				ImGui::Separator();
 				ImGui::Text("Systems:");
 				ImGui::BeginListBox("[Sys]", { 0.0f, 100.0f });
-				for (auto& s : ECS::ECSInstance::Instance().system_manager_.registered_systems_)
+				for (auto& s : ecs_instance_->system_manager_.registered_systems_)
 				{
 					if (ImGui::Selectable(s.name_.c_str(), true))
 					{

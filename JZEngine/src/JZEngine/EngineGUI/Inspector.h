@@ -27,9 +27,10 @@ namespace JZEngine
 	*/
 	struct JZENGINE_API Inspector
 	{
+		ECS::ECSInstance* const ecs_instance_;
 		float x_, y_, sx_, sy_;		/*!< position and scale of the ImGui window */
 
-		Inspector(float x, float y, float sx, float sy);
+		Inspector(float x, float y, float sx, float sy, ECS::ECSInstance* ecs);
 
 		/*!
 		 * @brief ___JZEngine::ToolsGUI::RenderInspector()___

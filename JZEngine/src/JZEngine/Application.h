@@ -38,9 +38,9 @@ namespace JZEngine
 		void Run();
 
 	private:
-		JZEngine::GLFW_Instance		gl_instance_;	/*!< glfw instance, abstracts creation of opengl instance using glfw */
+		JZEngine::GLFW_Instance		gl_instance_;		/*!< glfw instance, abstracts creation of opengl instance using glfw */
+		JZEngine::ECS::ECSInstance	ecs_instance_;		/*!< ecs_instance handling all ecs stuffs */
 		JZEngine::EngineGUI			engine_gui_;		/*!< handles rendering and updating of engine tools gui */
-		//JZEngine::ECS::ECS_Instance ecs_instance_;	/*!< ecs_instance handling all ecs stuffs */
 	};
 
 	/*!
