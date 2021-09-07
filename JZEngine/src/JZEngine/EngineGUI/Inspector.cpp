@@ -133,18 +133,12 @@ namespace JZEngine
 						if (!has_component_)
 						{
 							entity->AddComponent(c.bit_);
-							std::stringstream ss;
-							ss << "Added component [" << c.name_ << "] to entity" << " [" << entity->name_ << "].";
-							Console::Log(ss.str().c_str());
 							ecs_instance_->Print();
 						}
 						// else remove it
 						else
 						{
 							entity->RemoveComponent(c.bit_);
-							std::stringstream ss;
-							ss << "Removed component [" << c.name_ << "] from entity" << " [" << entity->name_ << "].";
-							Console::Log(ss.str().c_str());
 							ecs_instance_->Print();
 						}
 					}
@@ -189,9 +183,6 @@ namespace JZEngine
 						if (!has_system_)
 						{
 							entity->AddSystem(s.id_);
-							std::stringstream ss;
-							ss << "Added system [" << s.name_ << "]'s components to entity" << " [" << entity->name_ << "].";
-							Console::Log(ss.str().c_str());
 							ecs_instance_->Print();
 						}
 					}
