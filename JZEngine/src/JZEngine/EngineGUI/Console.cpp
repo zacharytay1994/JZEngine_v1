@@ -97,13 +97,13 @@ namespace JZEngine
             // display selection for all the consoles
             if (ImGui::BeginPopup("Consoles"))
             {
-                if (Console::console_log_names_)
+                if (console_.console_log_names_)
                 {
-                    for (auto& cl : *Console::console_log_names_)
+                    for (auto& cl : *console_.console_log_names_)
                     {
                         if (ImGui::Selectable(cl.first.c_str()))
                         {
-                            Console::SetConsole(cl.first);
+                            console_.SetConsole(cl.first);
                         }
                     }
                 }
@@ -111,23 +111,23 @@ namespace JZEngine
             }
 
             // button event to display all console options
-            if (ImGui::Button((*Console::currently_selected_console_).c_str()))
+            if (ImGui::Button((*console_.currently_selected_console_).c_str()))
                 ImGui::OpenPopup("Consoles");
             ImGui::SameLine();
 
             // switch between 2 logging modes, more/less info
-            if (Console::more_info_)
+            if (console_.more_info_)
             {
                 if (ImGui::Button("More"))
                 {
-                    Console::more_info_ = !Console::more_info_;
+                    console_.more_info_ = !console_.more_info_;
                 }
             }
             else
             {
                 if (ImGui::Button("Less"))
                 {
-                    Console::more_info_ = !Console::more_info_;
+                    console_.more_info_ = !console_.more_info_;
                 }
             }
             ImGui::SameLine();
@@ -150,7 +150,7 @@ namespace JZEngine
             std::string str;
 
             // get text data based on more/less info
-            if (Console::more_info_)
+            if (console_.more_info_)
             {
                 str = Log::Instance().GetOSLogger(name).oss_.str();
             }
@@ -160,7 +160,7 @@ namespace JZEngine
             }
             const char* buf = str.begin()._Ptr;
             const char* buf_end = str.end()._Ptr;
-            std::vector<unsigned int>& LineOffsets = Console::more_info_ ? 
+            std::vector<unsigned int>& LineOffsets = console_.more_info_ ?
                 Log::Instance().GetOSLogger(name).lineoffset_ : Log::Instance().GetOSLogger(name).stripped_lineoffset_;
             if (Filter.IsActive())
             {
@@ -198,7 +198,7 @@ namespace JZEngine
             ImGui::SetNextWindowBgAlpha(0.8f);
             ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x, static_cast<float>(Settings::window_height) * y }, ImGuiCond_Once);
             ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx, static_cast<float>(Settings::window_height) * sy }, ImGuiCond_Once);
-            Draw("Console", *Console::currently_selected_console_, p_open);
+            Draw("Console", *console_.currently_selected_console_, p_open);
         }
     };
 

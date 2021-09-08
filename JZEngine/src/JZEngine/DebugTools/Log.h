@@ -22,6 +22,7 @@
 
 namespace JZEngine
 {
+	struct Console;
 	/*!
 	 * @brief ___JZEngine::Log___
 	 * ****************************************************************************************************
@@ -42,17 +43,17 @@ namespace JZEngine
 		*/
 		struct OSLogger
 		{
-			OSLogger() = default;
-			OSLogger(const std::string& name);
-			OSLogger(const OSLogger& logger);
-			OSLogger& operator=(const OSLogger& logger);
+			OSLogger(const std::string& name = "");
+			//OSLogger& operator=(const OSLogger& logger);
+
+			void Initialize(const std::string& name);
 
 			std::string					name_;												/*!< name of the console/file to log to */
 			unsigned int				line_count_{ 0 };									/*!< line count */
 			std::vector<unsigned int>	lineoffset_;										/*!< size per line, for ImGui console filter */
 			std::vector<unsigned int>	stripped_lineoffset_;								/*!< size per line, for ImGui console filter */
 
-			std::shared_ptr<spdlog::logger>					file_logger_{ nullptr };		/*!< logger used to log to file */
+			//std::shared_ptr<spdlog::logger>					file_logger_{ nullptr };		/*!< logger used to log to file */
 
 			std::shared_ptr<spdlog::sinks::ostream_sink_mt> os_sink_{ nullptr };			/*!< initialized before logger */
 			std::shared_ptr<spdlog::logger>					logger_{ nullptr };				/*!< logger to log info packed text to oss */
@@ -72,6 +73,8 @@ namespace JZEngine
 		 * : Singleton instance.
 		*/
 		static Log& Instance();
+
+		void Initialize(Console* console);
 
 		void Free();
 
@@ -135,12 +138,17 @@ namespace JZEngine
 		template<typename...ARGS>
 		static void Info(const std::string& name, const std::string& msg, ARGS&&... args)
 		{
+			if (!initialized_)
+			{
+				return;
+			}
+
 			// for the msg with the line number
 			std::string s = std::to_string(Instance().GetLogLineCount(name)) + ". " + msg;
 			OSLogger& logger = Instance().GetOSLogger(name);
 
 			// logs to file
-			logger.file_logger_->info(msg, args...);
+			//logger.file_logger_->info(msg, args...);
 
 			// calculate line size and log to stream
 			auto initial_pos = logger.oss_.tellp();
@@ -174,10 +182,15 @@ namespace JZEngine
 		template<typename...ARGS>
 		static void Warning(const std::string& name, const std::string& msg, ARGS&&... args)
 		{
+			if (!initialized_)
+			{
+				return;
+			}
+
 			std::string s = std::to_string(Instance().GetLogLineCount(name)) + ". " + msg;
 			OSLogger& logger = Instance().GetOSLogger(name);
 
-			logger.file_logger_->warn(msg, args...);
+			//logger.file_logger_->warn(msg, args...);
 
 			auto initial_pos = logger.oss_.tellp();
 			logger.logger_->warn(s, args...);
@@ -209,10 +222,15 @@ namespace JZEngine
 		template<typename...ARGS>
 		static void Error(const std::string& name, const std::string& msg, ARGS&&... args)
 		{
+			if (!initialized_)
+			{
+				return;
+			}
+
 			std::string s = std::to_string(Instance().GetLogLineCount(name)) + ". " + msg;
 			OSLogger& logger = Instance().GetOSLogger(name);
 
-			logger.file_logger_->error(msg, args...);
+			//logger.file_logger_->error(msg, args...);
 
 			auto initial_pos = logger.oss_.tellp();
 			logger.logger_->error(s, args...);
@@ -244,10 +262,15 @@ namespace JZEngine
 		template<typename...ARGS>
 		static void Critical(const std::string& name, const std::string& msg, ARGS&&... args)
 		{
+			if (!initialized_)
+			{
+				return;
+			}
+
 			std::string s = std::to_string(Instance().GetLogLineCount(name)) + ". " + msg;
 			OSLogger& logger = Instance().GetOSLogger(name);
 
-			logger.file_logger_->critical(msg, args...);
+			//logger.file_logger_->critical(msg, args...);
 
 			auto initial_pos = logger.oss_.tellp();
 			logger.logger_->critical(s, args...);
@@ -259,6 +282,8 @@ namespace JZEngine
 		}
 
 	private:
+		static bool initialized_;
+		Console* console_{ nullptr };
 		std::unordered_map<std::string, OSLogger>* osloggers_;	/*!< all the OSLogger instances mapped by name */
 		Log();
 	};
