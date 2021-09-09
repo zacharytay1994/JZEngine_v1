@@ -9,9 +9,12 @@
 
 #include "BuildDefinitions.h"
 
-#include "JZGL/JZ_GL.h"
 #include "EngineGUI/EngineGUI.h"
 #include "ECS/ECS.h"
+
+// jzgl should be included last as glad.h should be included after
+// any library/file that includes windows.h 
+#include "JZGL/JZ_GL.h"
 
 namespace JZEngine
 {	
@@ -45,9 +48,9 @@ namespace JZEngine
 		void Run();
 
 	private:
-		JZEngine::GLFW_Instance		gl_instance_;		/*!< glfw instance, abstracts creation of opengl instance using glfw */
-		JZEngine::ECS::ECSInstance	ecs_instance_;		/*!< ecs_instance handling all ecs stuffs */
-		JZEngine::EngineGUI			engine_gui_;		/*!< handles rendering and updating of engine tools gui */
+		JZEngine::GLFW_Instance				gl_instance_;		/*!< glfw instance, abstracts creation of opengl instance using glfw */
+		JZEngine::ECS::ECSInstance*	const	ecs_instance_;		/*!< ecs_instance handling all ecs stuffs */
+		JZEngine::EngineGUI					engine_gui_;		/*!< handles rendering and updating of engine tools gui */
 	};
 
 	/*!

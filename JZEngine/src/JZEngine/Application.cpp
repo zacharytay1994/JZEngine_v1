@@ -6,11 +6,10 @@
 			See Application.h for more information on the class.	
 */
 
-#include "PCH.h"
-#include "EngineConfig.h"
+#include <PCH.h>
 #include "Application.h"
+#include "EngineConfig.h"
 #include "ECS/ECSconfig.h"
-#include "STL/Tuple.h"
 #include "DebugTools/Log.h"
 
 #include <iostream>
@@ -27,7 +26,8 @@ namespace JZEngine
 	Application::Application()
 		:
 		gl_instance_(Settings::window_width, Settings::window_height),
-		engine_gui_(gl_instance_.window_, &ecs_instance_)
+		ecs_instance_(new ECS::ECSInstance),
+		engine_gui_(gl_instance_.window_, ecs_instance_)
 	{
 		Log::Instance().Initialize(engine_gui_.GetConsole());
 		JZEngine::Log::Info("Main", "[{}] Up and Running! v{} [MEM LEAKS BEGONE]", Settings::engine_name, Settings::version);
@@ -36,6 +36,7 @@ namespace JZEngine
 	void Application::Free()
 	{
 		Log::Instance().Free();
+		delete ecs_instance_;
 	}
 
 	void Application::Run()
@@ -48,7 +49,7 @@ namespace JZEngine
 
 			engine_gui_.Update();
 			
-			ecs_instance_.Update();
+			ecs_instance_->Update();
 
 			gl_instance_.FrameEnd();
 		}
