@@ -27,9 +27,10 @@ namespace JZEngine
 	 * In charge of rendering the Engine graphical user interface with ImGui.
 	 * ****************************************************************************************************
 	*/
+	namespace ECS { struct ECSInstance; }
 	struct JZENGINE_API EngineGUI
 	{
-		EngineGUI(GLFWwindow*& glfwwindow);
+		EngineGUI(GLFWwindow*& glfwwindow, ECS::ECSInstance* ecs);
 		~EngineGUI();
 
 		/*!
@@ -43,6 +44,7 @@ namespace JZEngine
 		*/
 		void Update();
 
+		Console* GetConsole();
 	private:
 		Inspector	inspector_;		/*!< engine inspector */
 		Console		console_;		/*!< engine console */

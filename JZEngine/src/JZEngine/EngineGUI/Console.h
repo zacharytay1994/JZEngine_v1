@@ -50,7 +50,7 @@ namespace JZEngine
 		 * : The name of the console log.
 		 * ****************************************************************************************************
 		*/
-		static void ExistConsoleLog(const std::string& name);
+		void ExistConsoleLog(const std::string& name);
 
 		/*!
 		 * @brief ___JZEngine::Console::SetConsole()___
@@ -61,14 +61,14 @@ namespace JZEngine
 		 * : The console to display.
 		 * ****************************************************************************************************
 		*/
-		static void SetConsole(const std::string& name);
+		void SetConsole(const std::string& name);
 
 		friend struct ConsoleLog;
 	private:
 
-		static std::string*										currently_selected_console_;	/*!< the currently displayed console */
-		static std::unordered_map<std::string, unsigned char>*	console_log_names_;				/*!< all consoles */
-		ConsoleLog*												console_log_{ nullptr };		/*!< console log object, imgui stuff */
-		static bool												more_info_;						/*!< if log information is more/less */
+		std::string*									currently_selected_console_;	/*!< the currently displayed console */
+		std::unordered_map<std::string, unsigned char>*	console_log_names_;				/*!< all consoles */
+		ConsoleLog*										console_log_{ nullptr };		/*!< console log object, imgui stuff */
+		bool											more_info_;						/*!< if log information is more/less */
 	};
 }
