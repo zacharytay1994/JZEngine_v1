@@ -38,9 +38,10 @@ namespace JZEngine
 		JZEngine::Log::Info("Main", "[{}] Up and Running! v{} [MEM LEAKS BEGONE]", Settings::engine_name, Settings::version);
 	
 		testsystem.initialize();
-		testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
-		testsystem.playSound("testsound", true, 0.4f);
-		testsystem.setChannelGroupVolume(0.4f,"main");
+		//testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
+		//testsystem.playSound("testsound", true, 0.4f);
+		//testsystem.setChannelGroupVolume(1.0f,"main");
+		
 	}
 
 	void Application::Free()
@@ -57,7 +58,7 @@ namespace JZEngine
 	{
 		while (gl_instance_.Active())
 		{
-		
+			 
 			gl_instance_.FrameStart();
 
 			gl_instance_.Draw ();
