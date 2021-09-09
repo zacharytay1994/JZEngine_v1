@@ -51,9 +51,9 @@ namespace JZEngine
 		Vec3& Normalize ()
 		{
 			auto length = Len ();
-			this->x /= length;
-			this->y /= length;
-			z /= length;
+			this->x = static_cast<T>(this->x / length);
+			this->y = static_cast<T>(this->y / length);
+			z = static_cast<T>(z / length);
 			return *this;
 		}
 
