@@ -7,12 +7,6 @@ namespace JZEngine
 		: pgm_handle ( 0 ) , is_linked ( GL_FALSE )
 	{}
 
-	//Shader& Shader::GetInstance ()
-	//{
-	//	static Shader instance ;
-	//	return instance ;
-	//}
-
 	GLboolean Shader::CompileShaderFromFile ( GLenum shader_type , const std::string& file_name )
 	{
 		if( GL_FALSE == FileExists ( file_name ) )

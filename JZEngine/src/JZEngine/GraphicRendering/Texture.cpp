@@ -1,8 +1,8 @@
 #include <PCH.h>
+#include <glad/glad.h>
 #include "stb_image.h"
 #include "Texture.h"
 
-#include <glad/glad.h>
 
 namespace JZEngine
 {

@@ -51,9 +51,9 @@ namespace JZEngine
 		Vec3& Normalize ()
 		{
 			auto length = Len ();
-			this->x /= length;
-			this->y /= length;
-			z /= length;
+			//this->x /= length;
+			//this->y /= length;
+			//z /= length;
 			return *this;
 		}
 

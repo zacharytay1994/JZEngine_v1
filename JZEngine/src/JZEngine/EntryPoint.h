@@ -29,7 +29,5 @@
 		app->Run();
 		delete app;
 
-		// Call before an app exit point to display a memory-leak report when the app exits.
-		_CrtDumpMemoryLeaks ();
 	}
 #endif // !ENGINE_PLATFORM_WINDOWS

@@ -1,6 +1,7 @@
 #include <PCH.h>
 #include "Buffer.h"
 
+
 namespace JZEngine
 {
 	/////////////////////////////////////////////////////////////////////////////
@@ -47,7 +48,7 @@ namespace JZEngine
 
 	/////////////////////////////////////////////////////////////////////////////
 	// [START] Index Buffer
-	IndexBuffer::IndexBuffer ( unsigned int* indices , unsigned int count )
+	IndexBuffer::IndexBuffer ( unsigned int* indices , unsigned int count ) 
 		:
 		data_ ( indices ) ,
 		count_ ( count )

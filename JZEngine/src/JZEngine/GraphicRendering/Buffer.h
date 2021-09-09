@@ -1,15 +1,17 @@
 #pragma once
 
-#include "VertexBufferLayout.h"
+#include <glad/glad.h>
 #include <string>
 #include <vector>
 
+#include "VertexBufferLayout.h"
+
 namespace JZEngine
 {
-
 	class VertexBuffer
 	{
 	public:
+
 		VertexBuffer ( unsigned int size );
 		VertexBuffer ( float* vertices , unsigned int size );
 		~VertexBuffer ();
@@ -36,8 +38,13 @@ namespace JZEngine
 
 	class IndexBuffer
 	{
+	private:
+		unsigned int renderer_id_{};
+		unsigned int count_{};
+		const unsigned int* data_{ nullptr };
+
 	public:
-		IndexBuffer ( unsigned int* indices , unsigned int count );
+		IndexBuffer ( unsigned int* indices , unsigned int count ) ;
 		~IndexBuffer ();
 
 		void Bind () const;
@@ -53,10 +60,6 @@ namespace JZEngine
 			return count_;
 		}
 
-	private:
-		unsigned int renderer_id_{};
-		unsigned int count_{};
-		const unsigned int* data_{ nullptr };
 	};
 
 }
