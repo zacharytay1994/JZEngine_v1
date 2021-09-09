@@ -1,4 +1,5 @@
 #include <PCH.h>
+#include <gl/GL.h>
 #include "Shader.h"
 
 namespace JZEngine
@@ -133,6 +134,11 @@ namespace JZEngine
 		return is_linked;
 	}
 
+	std::string Shader::GetLog () const
+	{
+		return log_string;
+	}
+
 	void Shader::Bind () const
 	{
 		if( pgm_handle > 0 && is_linked == GL_TRUE )
@@ -146,14 +152,91 @@ namespace JZEngine
 		glUseProgram ( 0 );
 	}
 
-	std::string Shader::GetLog () const
+	void Shader::SetUniform ( GLchar const* name , GLboolean val )
 	{
-		return log_string;
+		GLint loc = glGetUniformLocation ( pgm_handle , name );
+		if( loc >= 0 )
+		{
+			glUniform1i ( loc , val );
+		}
+		else
+		{
+			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
+		}
 	}
+
+	void Shader::SetUniform ( GLchar const* name , GLint val )
+	{
+		GLint loc = glGetUniformLocation ( pgm_handle , name );
+		if( loc >= 0 )
+		{
+			glUniform1i ( loc , val );
+		}
+		else
+		{
+			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
+		}
+	}
+
+	void Shader::SetUniform ( GLchar const* name , GLfloat val )
+	{
+		GLint loc = glGetUniformLocation ( pgm_handle , name );
+		if( loc >= 0 )
+		{
+			glUniform1f ( loc , val );
+		}
+		else
+		{
+			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
+		}
+	}
+
+	void Shader::SetUniform ( GLchar const* name , GLfloat x , GLfloat y )
+	{
+		GLint loc = glGetUniformLocation ( pgm_handle , name );
+		if( loc >= 0 )
+		{
+			glUniform2f ( loc , x , y );
+		}
+		else
+		{
+			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
+		}
+	}
+
+	void Shader::SetUniform ( GLchar const* name , GLfloat x , GLfloat y , GLfloat z )
+	{
+		GLint loc = glGetUniformLocation ( pgm_handle , name );
+		if( loc >= 0 )
+		{
+			glUniform3f ( loc , x , y , z );
+		}
+		else
+		{
+			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
+		}
+	}
+
+	void Shader::SetUniform ( GLchar const* name , GLfloat x , GLfloat y , GLfloat z , GLfloat w )
+	{
+		GLint loc = glGetUniformLocation ( pgm_handle , name );
+		if( loc >= 0 )
+		{
+			glUniform4f ( loc , x , y , z , w );
+		}
+		else
+		{
+			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
+		}
+	}
+
 
 	GLboolean Shader::FileExists ( std::string const& file_name )
 	{
 		std::ifstream infile ( file_name );
 		return infile.good ();
 	}
+
+
+
 }
