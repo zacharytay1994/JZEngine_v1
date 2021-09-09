@@ -82,6 +82,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\JZEngine\GraphicRendering\Renderer.cpp">
+    <ClCompile Include="src\JZEngine\Sound\Sound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -174,6 +175,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\JZEngine\DebugTools\Log.h">
+    <ClInclude Include="src\JZEngine\Sound\Sound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

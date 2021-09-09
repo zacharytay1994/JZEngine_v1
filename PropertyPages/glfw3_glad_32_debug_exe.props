@@ -3,8 +3,8 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)JZEngine\src;$(SolutionDir)OpenGL\include;$(SolutionDir)$(ProjectName)\src;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)OpenGL\lib\lib32;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)FMOD core\inc;$(SolutionDir)JZEngine\src;$(SolutionDir)OpenGL\include;$(SolutionDir)$(ProjectName)\src;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)FMOD core\lib\x86;$(SolutionDir)OpenGL\lib\lib32;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(ProjectName)-$(Configuration)-$(Platform)\</IntDir>
   </PropertyGroup>
@@ -18,7 +18,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)JZEngine\libs\imgui;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>fmodL_vc.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
     <PostBuildEvent>

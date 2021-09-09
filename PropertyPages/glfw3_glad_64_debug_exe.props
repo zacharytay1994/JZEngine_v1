@@ -3,15 +3,15 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)JZEngine\src;$(SolutionDir)OpenGL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)OpenGL\lib\lib32;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)FMOD core\inc;$(SolutionDir)JZEngine\src;$(SolutionDir)OpenGL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)FMOD core\lib\x64;$(SolutionDir)OpenGL\lib\lib32;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(ProjectName)-$(Configuration)-$(Platform)\</IntDir>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>fmodL_vc.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)bin\JZEngine-$(Configuration)-$(Platform)\JZEngine.dll" "$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\JZEngine.dll" /Y</Command>
