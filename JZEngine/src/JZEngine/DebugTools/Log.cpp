@@ -25,7 +25,7 @@ namespace JZEngine
         if (std::filesystem::is_directory(Settings::logs_directory))
         {
             std::filesystem::create_directory(Settings::logs_directory);
-        }
+        }   
 	}
 
     Log::~Log()
@@ -34,8 +34,8 @@ namespace JZEngine
 
     void Log::Free()
     {
-        osloggers_->clear();
         delete osloggers_;
+        spdlog::shutdown();
     }
 
     Log::OSLogger::OSLogger(const std::string& name)
@@ -43,7 +43,7 @@ namespace JZEngine
         if (!name.empty())
         {
             name_ = name;
-            //file_logger_ = spdlog::basic_logger_mt(name, "Logs/" + name + ".txt");
+            file_logger_ = spdlog::basic_logger_mt(name, "Logs/" + name + ".txt");
             os_sink_ = std::make_shared<spdlog::sinks::ostream_sink_mt>(oss_);
             logger_ = std::make_shared<spdlog::logger>(name_, os_sink_);
             stripped_os_sink_ = std::make_shared<spdlog::sinks::ostream_sink_mt>(stripped_oss_);
@@ -60,38 +60,17 @@ namespace JZEngine
             stripped_lineoffset_.push_back(0);
 
             // Set the logging pattern to default for file logger
-            /*file_logger_->flush_on(spdlog::level::debug);
+            file_logger_->flush_on(spdlog::level::debug);
             file_logger_->set_pattern("%v");
             file_logger_->info("___________________________________________________________________________________________________");
-            file_logger_->set_pattern("%+");*/
+            file_logger_->set_pattern("%+");
         }
     }
-
-    //Log::OSLogger& Log::OSLogger::operator=(const OSLogger& logger)
-    //{
-    //    name_ = logger.name_;
-    //    file_logger_ = logger.file_logger_;
-    //    os_sink_ = std::make_shared<spdlog::sinks::ostream_sink_mt>(oss_);
-    //    logger_ = std::make_shared<spdlog::logger>(name_, os_sink_);
-    //    stripped_os_sink_ = std::make_shared<spdlog::sinks::ostream_sink_mt>(stripped_oss_);
-    //    stripped_logger_ = std::make_shared<spdlog::logger>(name_, stripped_os_sink_);
-
-    //    // Sets the logging pattern for informative text
-    //    logger_->set_pattern("[ %-8l ] %-64v [ Time Elapsed: %-3i]");
-
-    //    // Sets the logging pattern for raw text
-    //    stripped_logger_->set_pattern("%v");
-
-    //    // ImGui filter
-    //    lineoffset_.push_back(0);
-    //    stripped_lineoffset_.push_back(0);
-    //    return *this;
-    //}
 
     void Log::OSLogger::Initialize(const std::string& name)
     {
         name_ = name;
-        //file_logger_ = spdlog::basic_logger_mt(name, "Logs/" + name + ".txt");
+        file_logger_ = spdlog::basic_logger_mt(name, "Logs/" + name + ".txt");
         os_sink_ = std::make_shared<spdlog::sinks::ostream_sink_mt>(oss_);
         logger_ = std::make_shared<spdlog::logger>(name_, os_sink_);
         stripped_os_sink_ = std::make_shared<spdlog::sinks::ostream_sink_mt>(stripped_oss_);
@@ -108,10 +87,10 @@ namespace JZEngine
         stripped_lineoffset_.push_back(0);
 
         // Set the logging pattern to default for file logger
-        /*file_logger_->flush_on(spdlog::level::debug);
+        file_logger_->flush_on(spdlog::level::debug);
         file_logger_->set_pattern("%v");
         file_logger_->info("___________________________________________________________________________________________________");
-        file_logger_->set_pattern("%+");*/
+        file_logger_->set_pattern("%+");
     }
 
     Log& Log::Instance()
@@ -155,22 +134,6 @@ namespace JZEngine
         // else create it and return it
         (*osloggers_)[name].Initialize(name);
         return (*osloggers_)[name];
-    }
-
-    /*!
-     * @brief ___JZEngine::Log::OSLog()___
-     * ****************************************************************************************************
-     * Gets the spdlog logger to write to using ->info/warn/error/critical.
-     * ****************************************************************************************************
-     * @param name
-     * : The name of the OSLogger holding the spdlog logger.
-     * @return
-     * : Pointer to the spdlog logger instance.
-     * ****************************************************************************************************
-    */
-    std::shared_ptr<spdlog::logger> Log::OSLog(const std::string& name)
-    {
-        return GetOSLogger(name).logger_;
     }
 
     /*!

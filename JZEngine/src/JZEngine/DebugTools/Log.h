@@ -53,7 +53,7 @@ namespace JZEngine
 			std::vector<unsigned int>	lineoffset_;										/*!< size per line, for ImGui console filter */
 			std::vector<unsigned int>	stripped_lineoffset_;								/*!< size per line, for ImGui console filter */
 
-			//std::shared_ptr<spdlog::logger>					file_logger_{ nullptr };		/*!< logger used to log to file */
+			std::shared_ptr<spdlog::logger>					file_logger_{ nullptr };		/*!< logger used to log to file */
 
 			std::shared_ptr<spdlog::sinks::ostream_sink_mt> os_sink_{ nullptr };			/*!< initialized before logger */
 			std::shared_ptr<spdlog::logger>					logger_{ nullptr };				/*!< logger to log info packed text to oss */
@@ -90,19 +90,6 @@ namespace JZEngine
 		 * ****************************************************************************************************
 		*/
 		OSLogger& GetOSLogger(const std::string& name);
-
-		/*!
-		 * @brief ___JZEngine::Log::OSLog()___
-		 * ****************************************************************************************************
-		 * Gets the spdlog logger to write to using ->info/warn/error/critical.
-		 * ****************************************************************************************************
-		 * @param name 
-		 * : The name of the OSLogger holding the spdlog logger.
-		 * @return 
-		 * : Pointer to the spdlog logger instance.
-		 * ****************************************************************************************************
-		*/
-		std::shared_ptr<spdlog::logger> OSLog(const std::string& name);
 
 		/*!
 		 * @brief ___JZEngine::Log::GetLogLineCount()___
@@ -148,7 +135,7 @@ namespace JZEngine
 			OSLogger& logger = Instance().GetOSLogger(name);
 
 			// logs to file
-			//logger.file_logger_->info(msg, args...);
+			logger.file_logger_->info(msg, args...);
 
 			// calculate line size and log to stream
 			auto initial_pos = logger.oss_.tellp();
@@ -190,7 +177,7 @@ namespace JZEngine
 			std::string s = std::to_string(Instance().GetLogLineCount(name)) + ". " + msg;
 			OSLogger& logger = Instance().GetOSLogger(name);
 
-			//logger.file_logger_->warn(msg, args...);
+			logger.file_logger_->warn(msg, args...);
 
 			auto initial_pos = logger.oss_.tellp();
 			logger.logger_->warn(s, args...);
@@ -230,7 +217,7 @@ namespace JZEngine
 			std::string s = std::to_string(Instance().GetLogLineCount(name)) + ". " + msg;
 			OSLogger& logger = Instance().GetOSLogger(name);
 
-			//logger.file_logger_->error(msg, args...);
+			logger.file_logger_->error(msg, args...);
 
 			auto initial_pos = logger.oss_.tellp();
 			logger.logger_->error(s, args...);
@@ -270,7 +257,7 @@ namespace JZEngine
 			std::string s = std::to_string(Instance().GetLogLineCount(name)) + ". " + msg;
 			OSLogger& logger = Instance().GetOSLogger(name);
 
-			//logger.file_logger_->critical(msg, args...);
+			logger.file_logger_->critical(msg, args...);
 
 			auto initial_pos = logger.oss_.tellp();
 			logger.logger_->critical(s, args...);

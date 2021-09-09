@@ -37,7 +37,6 @@ namespace JZEngine
             console_(console)
         {
             AutoScroll = true;
-            ResetLineOffsets();
         }
 
         /*!

@@ -28,8 +28,7 @@ extern JZEngine::Application* JZEngine::CreateApplication ();
 
 		auto app = JZEngine::CreateApplication();
 		app->Run();
+		app->Free();
 		delete app;
-
-		_CrtDumpMemoryLeaks();
 	}
 #endif // !ENGINE_PLATFORM_WINDOWS

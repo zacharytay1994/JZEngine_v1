@@ -30,6 +30,13 @@ namespace JZEngine
 		Application();
 
 		/*!
+		 * @brief ___JZEngine::Application::Free()___
+		 * 
+		 * Is called after the game loop
+		*/
+		void Free();
+
+		/*!
 		 * @brief ___JZEngine::Application::Run()___
 		 * 
 		 * Is called in the main entry point of the engine

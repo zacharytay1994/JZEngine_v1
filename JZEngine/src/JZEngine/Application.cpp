@@ -30,33 +30,13 @@ namespace JZEngine
 		engine_gui_(gl_instance_.window_, &ecs_instance_)
 	{
 		Log::Instance().Initialize(engine_gui_.GetConsole());
-		JZEngine::Log::Info("Main", "[{}] Up and Running! v{}", Settings::engine_name, Settings::version);
-		JZEngine::Log::Info("Main2", "[{}] Up and Running! v{}", Settings::engine_name, Settings::version);
-		JZEngine::Log::Info("Main1", "[{}] Up and Running! v{}", Settings::engine_name, Settings::version);
-		JZEngine::Log::Info("Main21", "[{}] Up and Running! v{}", Settings::engine_name, Settings::version);
-		JZEngine::Log::Info("Main11", "[{}] Up and Running! v{}", Settings::engine_name, Settings::version);
-		JZEngine::Log::Info("Main211", "[{}] Up and Running! v{}", Settings::engine_name, Settings::version);
-		JZEngine::Log::Info("Main111", "[{}] Up and Running! v{}", Settings::engine_name, Settings::version);
-		JZEngine::Log::Info("Main2111", "[{}] Up and Running! v{}", Settings::engine_name, Settings::version);
+		JZEngine::Log::Info("Main", "[{}] Up and Running! v{} [MEM LEAKS BEGONE]", Settings::engine_name, Settings::version);
 	}
 
-	/*struct test
+	void Application::Free()
 	{
-		test()
-			:
-			data(std::make_shared<char[]>(1000))
-		{
-
-		}
-
-		test& operator=(const test& rhs)
-		{
-			data = rhs.data;
-			return *this;
-		}
-
-		std::shared_ptr<char[]> data{nullptr};
-	};*/
+		Log::Instance().Free();
+	}
 
 	void Application::Run()
 	{
@@ -71,13 +51,6 @@ namespace JZEngine
 			ecs_instance_.Update();
 
 			gl_instance_.FrameEnd();
-
 		}
-
-		//std::unordered_map<std::string, test>* testmap = new std::unordered_map<std::string, test>();
-		////(*testmap)["name"] = test();
-		//delete testmap;
-
-		Log::Instance().Free();
 	}
 }
