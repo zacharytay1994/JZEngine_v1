@@ -4,7 +4,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <IncludePath>$(SolutionDir)vendors\fmod\inc;$(SolutionDir)OpenGL\include;$(SolutionDir)$(ProjectName)\src\JZEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)vendors\fmod\fmodlib\x64;$(SolutionDir)OpenGL\lib\lib64;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)vendors\fmod\lib\fmodx64;$(SolutionDir)OpenGL\lib\lib64;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(ProjectName)-$(Configuration)-$(Platform)\</IntDir>
     <TargetExt>.dll</TargetExt>
