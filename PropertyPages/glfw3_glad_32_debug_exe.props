@@ -16,6 +16,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)JZEngine\libs\imgui;</AdditionalIncludeDirectories>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
       <AdditionalDependencies>fmodL_vc.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>

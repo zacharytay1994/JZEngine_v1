@@ -159,7 +159,12 @@
     <ClCompile Include="src\JZEngine\EngineGUI\Console.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\Inspector.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\SceneTree.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Buffer.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\OpenGLDebug.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Renderer.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Shader.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Texture.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\VertexArray.cpp" />
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -221,6 +226,7 @@
       <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Release|x64'">EditAndContinue</DebugInformationFormat>
       <SuppressStartupBanner Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SuppressStartupBanner>
     </ClCompile>
+    <ClCompile Include="vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\JZEngine\Sound\Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -237,7 +243,13 @@
     <ClInclude Include="src\JZEngine\EngineGUI\Inspector.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\SceneTree.h" />
     <ClInclude Include="src\JZEngine\EntryPoint.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Buffer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\OpenGLDebug.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Renderer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Shader.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Texture.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\VertexArray.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\VertexBufferLayout.h" />
     <ClInclude Include="src\JZEngine\ImGui\imconfig.h" />
     <ClInclude Include="src\JZEngine\ImGui\imgui.h" />
     <ClInclude Include="src\JZEngine\ImGui\imgui_impl_glfw.h" />
@@ -256,6 +268,7 @@
     <ClInclude Include="src\JZEngine\BuildDefinitions.h" />
     <ClInclude Include="src\JZEngine\Sound\Sound.h" />
     <ClInclude Include="src\JZEngine\STL\Tuple.h" />
+    <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

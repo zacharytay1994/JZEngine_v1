@@ -24,6 +24,7 @@
       <PreprocessorDefinitions>JZENGINE_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)JZEngine\libs\imgui;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />

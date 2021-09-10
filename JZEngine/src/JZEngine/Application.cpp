@@ -11,11 +11,11 @@
 #include "EngineConfig.h"
 #include "ECS/ECSconfig.h"
 #include "DebugTools/Log.h"
+#include "Sound/Sound.h"
 
 #include "STL/Tuple.h"
 #include <iostream>
 #include <tuple>
-#include "Sound/Sound.h"
 
 
 #define UNREFERENCED_PARAMETER(P)(P)
@@ -38,12 +38,11 @@ namespace JZEngine
 	{
 		Log::Instance().Initialize(engine_gui_.GetConsole());
 		JZEngine::Log::Info("Main", "[{}] Up and Running! v{} [MEM LEAKS BEGONE]", Settings::engine_name, Settings::version);
-		Matrix<float, 3, 3> test;
-		Log::Info("Math", "{}", test);
-		
-		//testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
-		//testsystem.playSound("testsound", true, 0.4f);
-		//testsystem.setChannelGroupVolume(1.0f,"main");
+	
+		testsystem.initialize();
+		testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
+		testsystem.playSound("testsound", true, 0.4f);
+		testsystem.setChannelGroupVolume(1.0f,"main");
 		
 	}
 

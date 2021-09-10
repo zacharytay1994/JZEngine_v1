@@ -85,6 +85,24 @@
     <ClCompile Include="src\JZEngine\Sound\Sound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\JZEngine\GraphicRendering\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\stb_image\stb_image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\GraphicRendering\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\GraphicRendering\Buffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\GraphicRendering\VertexArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\GraphicRendering\OpenGLDebug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\JZEngine.h">
@@ -174,7 +192,30 @@
     <ClInclude Include="src\JZEngine\Math\Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\JZEngine\GraphicRendering\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\stb_image\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\GraphicRendering\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\GraphicRendering\Buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\GraphicRendering\VertexArray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\GraphicRendering\VertexBufferLayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\GraphicRendering\OpenGLDebug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\JZEngine\DebugTools\Log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\JZEngine\Sound\Sound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
