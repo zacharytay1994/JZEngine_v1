@@ -110,7 +110,7 @@ namespace JZEngine
                 return i;
             }
         }
-
+        return 0;
     }
     /**
      * Releases a sound specified by name.

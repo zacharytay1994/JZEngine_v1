@@ -3,8 +3,8 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)FMOD core\inc;$(SolutionDir)OpenGL\include;$(SolutionDir)$(ProjectName)\src\JZEngine;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)FMOD core\lib\x64;$(SolutionDir)OpenGL\lib\lib64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)vendors\FMOD core\inc;$(SolutionDir)OpenGL\include;$(SolutionDir)$(ProjectName)\src\JZEngine;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)vendors\FMOD core\lib\x64;$(SolutionDir)OpenGL\lib\lib64;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(ProjectName)-$(Configuration)-$(Platform)\</IntDir>
     <TargetExt>.dll</TargetExt>
