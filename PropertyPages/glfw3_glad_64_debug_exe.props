@@ -12,10 +12,12 @@
   <ItemDefinitionGroup>
     <Link>
       <AdditionalDependencies>fmodL_vc.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)bin\JZEngine-$(Configuration)-$(Platform)\JZEngine.dll" "$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\JZEngine.dll" /Y
-copy "$(SolutionDir)vendors\fmod\lib\fmodx64\fmodL.dll" "$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\fmodL.dll" /Y</Command>
+copy "$(SolutionDir)vendors\fmod\lib\fmodx64\fmodL.dll" "$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\fmodL.dll" /Y
+copy "$(SolutionDir)OpenGL\lib\lib64\glfw3.dll" "$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\glfw3.dll" /Y</Command>
     </PostBuildEvent>
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
@@ -24,7 +26,7 @@ copy "$(SolutionDir)vendors\fmod\lib\fmodx64\fmodL.dll" "$(SolutionDir)bin\$(Pro
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>JZENGINE_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)JZEngine\vendor\spdlog\include;</AdditionalIncludeDirectories>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
