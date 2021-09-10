@@ -1,5 +1,5 @@
 #include <PCH.h>
-#include <gl/GL.h>
+//#include <gl/GL.h>
 #include "Shader.h"
 
 namespace JZEngine

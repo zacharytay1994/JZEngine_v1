@@ -23,6 +23,7 @@
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>JZENGINE_PLATFORM_WINDOWS;JZENGINE_BUILD_DLL;GLFW_INCLUDE_NONE;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)JZEngine\libs\imgui;</AdditionalIncludeDirectories>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
