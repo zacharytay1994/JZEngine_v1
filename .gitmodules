@@ -1,3 +1,3 @@
-[submodule "JZEngine/libs/imgui"]
-	path = JZEngine/libs/imgui
-	url = https://github.com/ocornut/imgui
+[submodule "JZEngine/vendor/spdlog"]
+	path = JZEngine/vendor/spdlog
+	url = https://github.com/gabime/spdlog

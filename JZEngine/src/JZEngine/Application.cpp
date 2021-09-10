@@ -6,46 +6,71 @@
 			See Application.h for more information on the class.	
 */
 
-#include "PCH.h"
-#include "EngineConfig.h"
+#include <PCH.h>
 #include "Application.h"
+#include "EngineConfig.h"
 #include "ECS/ECSconfig.h"
-#include "STL/Tuple.h"
+#include "DebugTools/Log.h"
 
+#include "STL/Tuple.h"
 #include <iostream>
 #include <tuple>
+#include "Sound/Sound.h"
+
 
 #define UNREFERENCED_PARAMETER(P)(P)
 
+#include <memory>
+#include <unordered_map>
+#include <string>
+
 namespace JZEngine
 {
+	SoundSystem testsystem;
+
 	Application::Application()
 		:
 		gl_instance_(Settings::window_width, Settings::window_height),
-		engine_gui_(gl_instance_.window_)
+		ecs_instance_(new ECS::ECSInstance),
+		engine_gui_(gl_instance_.window_, ecs_instance_)
 	{
-		std::stringstream ss;
-		ss << "[" << Settings::engine_name << "] Up and Running! v%.1f";
-		Console::Log(ss.str().c_str(), 1.0f);
+		Log::Instance().Initialize(engine_gui_.GetConsole());
+		JZEngine::Log::Info("Main", "[{}] Up and Running! v{} [MEM LEAKS BEGONE]", Settings::engine_name, Settings::version);
+	
+		testsystem.initialize();
+		//testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
+		//testsystem.playSound("testsound", true, 0.4f);
+		//testsystem.setChannelGroupVolume(1.0f,"main");
+		
+	}
 
-		ECS::ECSInstance::Instance().Print();
+	void Application::Free()
+	{
+		Log::Instance().Free();
+		delete ecs_instance_;
+
+		
+	
+
 	}
 
 	void Application::Run()
 	{
 		while (gl_instance_.Active())
 		{
+			 
 			gl_instance_.FrameStart();
 
 			gl_instance_.Draw ();
 
 			engine_gui_.Update();
 
-			ECS::ECSInstance::Instance().Update();
+			testsystem.updateSoundSystem();
 			
+			ecs_instance_->Update();
 
 			gl_instance_.FrameEnd();
-
 		}
+	
 	}
 }

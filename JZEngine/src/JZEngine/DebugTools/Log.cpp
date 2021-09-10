@@ -1,97 +1,96 @@
+/*	__FILE HEADER__
+*	File:	Log.cpp
+    Author: JZ
+    Date:	01/09/21
+    Brief:	Logging functionality. Uses spdlog.
+*/
 
 #include "PCH.h"
 #include "Log.h" 
 
-//std::shared_ptr <spdlog::logger> JZEngine::Log::s_ClientLogger;
-//std::shared_ptr<spdlog::logger> JZEngine::Log::s_CoreLogger;
+#include <filesystem>
+
+#include "../EngineConfig.h"
 #include "../EngineGUI/Console.h"
 
 namespace JZEngine
 {
-		
-	//void Log::Init ()
-	//{
+    bool Log::initialized_{ false };
 
-	//	// change log pattern
-	//	spdlog::set_pattern ( "%^[%T] %n: %v%$" );
-
-	//	s_CoreLogger = spdlog::stdout_color_mt ( "JZEngine" );
-	//	s_CoreLogger->set_level ( spdlog::level::trace );
-
-	//	s_ClientLogger = spdlog::stdout_color_mt ( "App" );
-	//	s_ClientLogger->set_level ( spdlog::level::trace );
-	//}
 	Log::Log()
 	{
         osloggers_ = new std::unordered_map<std::string, OSLogger>();
-        spdlog::info("Welcome to spdlog!");
-        spdlog::error("Some error message with arg: {}", 1);
 
-        spdlog::warn("Easy padding in numbers like {:08d}", 12);
-        spdlog::critical("Support for int: {0:d};  hex: {0:x};  oct: {0:o}; bin: {0:b}", 42);
-        spdlog::info("Support for floats {:03.2f}", 1.23456);
-        spdlog::info("Positional args are {1} {0}..", "too", "supported");
-        spdlog::info("{:<30}", "left aligned");
-
-        spdlog::set_level(spdlog::level::debug); // Set global log level to debug
-        spdlog::debug("This message should be displayed..");
-
-        // change log pattern
-        spdlog::set_pattern("[%H:%M:%S %z] [%n] [%^---%L---%$] [thread %t] %v");
-
-        /*try
+        // create the log directory if it isn't there
+        if (std::filesystem::is_directory(Settings::logs_directory))
         {
-            auto my_logger = spdlog::basic_logger_mt("basic_logger", "logs/basic.txt");
-            my_logger->critical("something");
-        }
-        catch (const spdlog::spdlog_ex& ex) {
-            std::cout << "log failed" << ex.what() << std::endl;
-        }*/
-        /*std::ostringstream oss;
-        auto ostream_sink = std::make_shared<spdlog::sinks::ostream_sink_mt>(oss);
-        auto logger = std::make_shared<spdlog::logger>("my_logger", ostream_sink);
-        logger->info("test ostream logger");
-        std::cout << oss.str() << std::endl;*/
-        for (int i = 0; i < 200; ++i)
-        {
-            OSLog("Console")->info("test os logger {}", i);
-        }
-
-        // Compile time log levels
-        // define SPDLOG_ACTIVE_LEVEL to desired level
-        SPDLOG_TRACE("Some trace message with param {}", 42);
-        SPDLOG_DEBUG("Some debug message");
+            std::filesystem::create_directory(Settings::logs_directory);
+        }   
 	}
 
     Log::~Log()
     {
+    }
+
+    void Log::Free()
+    {
         delete osloggers_;
+        spdlog::shutdown();
     }
 
     Log::OSLogger::OSLogger(const std::string& name)
-        :
-        name_(name),
-        os_sink_(std::make_shared<spdlog::sinks::ostream_sink_mt>(oss)),
-        logger_(std::make_shared<spdlog::logger>(name_, os_sink_))
     {
+        if (!name.empty())
+        {
+            name_ = name;
+            file_logger_ = spdlog::basic_logger_mt(name, "Logs/" + name + ".txt");
+            os_sink_ = std::make_shared<spdlog::sinks::ostream_sink_mt>(oss_);
+            logger_ = std::make_shared<spdlog::logger>(name_, os_sink_);
+            stripped_os_sink_ = std::make_shared<spdlog::sinks::ostream_sink_mt>(stripped_oss_);
+            stripped_logger_ = std::make_shared<spdlog::logger>(name_, stripped_os_sink_);
 
+            // Sets the logging pattern for informative text
+            logger_->set_pattern("[ %-8l ] %-64v [ Time Elapsed: %-3i]");
+
+            // Sets the logging pattern for raw text
+            stripped_logger_->set_pattern("%v");
+
+            // ImGui filter
+            lineoffset_.push_back(0);
+            stripped_lineoffset_.push_back(0);
+
+            // Set the logging pattern to default for file logger
+            file_logger_->flush_on(spdlog::level::debug);
+            file_logger_->set_pattern("%v");
+            file_logger_->info("___________________________________________________________________________________________________");
+            file_logger_->set_pattern("%+");
+        }
     }
 
-    Log::OSLogger::OSLogger(const OSLogger& logger)
-        :
-        name_(logger.name_),
-        os_sink_(std::make_shared<spdlog::sinks::ostream_sink_mt>(oss)),
-        logger_(std::make_shared<spdlog::logger>(name_, os_sink_))
+    void Log::OSLogger::Initialize(const std::string& name)
     {
-
-    }
-
-    Log::OSLogger& Log::OSLogger::operator=(const OSLogger& logger)
-    {
-        name_ = logger.name_;
-        os_sink_ = std::make_shared<spdlog::sinks::ostream_sink_mt>(oss);
+        name_ = name;
+        file_logger_ = spdlog::basic_logger_mt(name, "Logs/" + name + ".txt");
+        os_sink_ = std::make_shared<spdlog::sinks::ostream_sink_mt>(oss_);
         logger_ = std::make_shared<spdlog::logger>(name_, os_sink_);
-        return *this;
+        stripped_os_sink_ = std::make_shared<spdlog::sinks::ostream_sink_mt>(stripped_oss_);
+        stripped_logger_ = std::make_shared<spdlog::logger>(name_, stripped_os_sink_);
+
+        // Sets the logging pattern for informative text
+        logger_->set_pattern("[ %-8l ] %-64v [ Time Elapsed: %-3i]");
+
+        // Sets the logging pattern for raw text
+        stripped_logger_->set_pattern("%v");
+
+        // ImGui filter
+        lineoffset_.push_back(0);
+        stripped_lineoffset_.push_back(0);
+
+        // Set the logging pattern to default for file logger
+        file_logger_->flush_on(spdlog::level::debug);
+        file_logger_->set_pattern("%v");
+        file_logger_->info("___________________________________________________________________________________________________");
+        file_logger_->set_pattern("%+");
     }
 
     Log& Log::Instance()
@@ -100,17 +99,57 @@ namespace JZEngine
         return instance;
     }
 
+    void Log::Initialize(Console* console)
+    {
+        console_ = console;
+        initialized_ = true;
+    }
+
+    /*!
+     * @brief ___JZEngine::Log::GetOSLogger()___
+     * ****************************************************************************************************
+     * Gets the OSLogger instance specified by name.
+     * ****************************************************************************************************
+     * @param name
+     * : Name of the OSLogger.
+     * @return OSLogger&
+     * : Reference to the OSLogger.
+     * ****************************************************************************************************
+    */
     Log::OSLogger& Log::GetOSLogger(const std::string& name)
     {
-        if (osloggers_->find(name) == osloggers_->end())
+        if (console_)
         {
-            (*osloggers_)[name] = OSLogger(name);
+            // if ImGui console exists, else creates it
+            console_->ExistConsoleLog(name);
         }
+
+        // return OSLogger if it exists
+        auto iterator = osloggers_->find(name);
+        if (iterator != osloggers_->end())
+        {
+            return iterator->second;
+        }
+
+        // else create it and return it
+        (*osloggers_)[name].Initialize(name);
         return (*osloggers_)[name];
     }
 
-    std::shared_ptr<spdlog::logger>& Log::OSLog(const std::string& name)
+    /*!
+     * @brief ___JZEngine::Log::GetLogLineCount()___
+     * ****************************************************************************************************
+     * Increments the line count of the OSLogger and returns the count.
+     * For appending line numbers in front of the log msg.
+     * ****************************************************************************************************
+     * @param name
+     * : The name of the OSLogger.
+     * @return
+     * : Line count.
+     * ****************************************************************************************************
+    */
+    unsigned int Log::GetLogLineCount(const std::string& name)
     {
-        return GetOSLogger(name).logger_;
+        return ++GetOSLogger(name).line_count_;
     }
 }

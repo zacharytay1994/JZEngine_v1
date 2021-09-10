@@ -15,11 +15,11 @@
 namespace JZEngine
 {
 
-	EngineGUI::EngineGUI(GLFWwindow*& glfwwindow)
+	EngineGUI::EngineGUI(GLFWwindow*& glfwwindow, ECS::ECSInstance* ecs)
 		:
-		inspector_(5.0f/6.0f, 0.0f, 1.0f/6.0f, 1.0f),
+		inspector_(5.0f/6.0f, 0.0f, 1.0f/6.0f, 1.0f, ecs),
 		console_(1.0f/6.0f, 5.0f/6.0f, 4.0f/6.0f, 1.0f/6.0f),
-		scene_tree_(0.0f, 0.0f, 1.0f / 6.0f, 1.0f)
+		scene_tree_(0.0f, 0.0f, 1.0f / 6.0f, 1.0f, ecs)
 	{
 		InitializeWithGLFW(glfwwindow);
 	}
@@ -77,5 +77,10 @@ namespace JZEngine
 		ImGui_ImplGlfw_InitForOpenGL(glfwwindow, true);
 		ImGui_ImplOpenGL3_Init("#version 330");
 		ImGui::StyleColorsDark();
+	}
+
+	Console* EngineGUI::GetConsole()
+	{
+		return &console_;
 	}
 }

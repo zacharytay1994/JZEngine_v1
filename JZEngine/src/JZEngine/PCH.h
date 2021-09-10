@@ -13,6 +13,7 @@
 #include <sstream>
 #include <iostream>
 
+#include <memory.h>
 #include <type_traits>
 #include <typeinfo>
 #include <math.h>

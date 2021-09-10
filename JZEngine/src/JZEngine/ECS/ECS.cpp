@@ -51,15 +51,15 @@ namespace JZEngine
 		* upon.
 		* ****************************************************************************************************
 		*/
-		ComponentManager::ComponentManager()
+		ComponentManager::ComponentManager(ECSInstance* ecs)
+			:
+			ecs_instance_(ecs)
 		{
 			RegisterConfigComponents();
 		}
 
 		ComponentManager::~ComponentManager()
-		{
-
-		}
+		{}
 
 		template <typename COMPONENT>
 		ComponentDescription ComponentManager::component_descriptions_ =
@@ -100,6 +100,8 @@ namespace JZEngine
 			id_ = id;
 			// set owner
 			owning_archetype_ = owner;
+			// get handle to ecs instance
+			ecs_instance_ = owning_archetype_->ecs_instance_;
 			// initializes data
 			//data_ = new char[owning_archetype_->entity_stride_ * ENTITIES_PER_CHUNK];
 			data_ = std::make_unique<char[]>(owning_archetype_->entity_stride_ * ENTITIES_PER_CHUNK);
@@ -257,7 +259,9 @@ namespace JZEngine
 		*																				ARCHETYPE DEFINITION
 		   ____________________________________________________________________________________________________*/
 
-		Archetype::Archetype()
+		Archetype::Archetype(ECSInstance* ecs)
+			:
+			ecs_instance_(ecs)
 		{
 			component_stride_.fill(static_cast<ui16>(-1));
 		}
@@ -277,6 +281,7 @@ namespace JZEngine
 		*/
 		Archetype& Archetype::operator=(const Archetype& archetype)
 		{
+			ecs_instance_ = archetype.ecs_instance_;
 			entity_stride_ = archetype.entity_stride_;
 			mask_ = archetype.mask_;
 			component_stride_ = archetype.component_stride_;
@@ -292,8 +297,9 @@ namespace JZEngine
 		 * : Unique id to set.
 		 * ****************************************************************************************************
 		*/
-		void Archetype::Initialize(ui32 id)
+		void Archetype::Initialize(ui32 id, ECSInstance* ecs)
 		{
+			ecs_instance_ = ecs;
 			id_ = id;
 		}
 
@@ -313,7 +319,7 @@ namespace JZEngine
 		{
 			mask_[bit] = 1;
 			component_stride_[bit] = entity_stride_;
-			entity_stride_ += ECSInstance::Instance().component_manager_.component_sizes_[bit];
+			entity_stride_ += ecs_instance_->component_manager_.component_sizes_[bit];
 		}
 
 		/*!
@@ -379,7 +385,9 @@ namespace JZEngine
 		*																		ARCHETYPE MANAGER DEFINITION
 		   ____________________________________________________________________________________________________*/
 
-		ArchetypeManager::ArchetypeManager()
+		ArchetypeManager::ArchetypeManager(ECSInstance* ecs)
+			:
+			ecs_instance_(ecs)
 		{
 
 		}
@@ -428,7 +436,7 @@ namespace JZEngine
 			}
 
 			// create it if does not exist
-			archetype_database_[number_of_archetypes_].Initialize(number_of_archetypes_);
+			archetype_database_[number_of_archetypes_].Initialize(number_of_archetypes_, ecs_instance_);
 			archetype_exist_tracker_[mask] = number_of_archetypes_;
 
 			// register all components into it
@@ -512,9 +520,16 @@ namespace JZEngine
 		*																					SYSTEM DEFINITION
 		   ____________________________________________________________________________________________________*/
 
-		SystemManager::SystemManager()
+		SystemManager::SystemManager(ECSInstance* ecs)
+			:
+			ecs_instance_(ecs)
 		{
 			RegisterConfigSystems();
+		}
+
+		SystemManager::~SystemManager()
+		{
+
 		}
 
 		/*!
@@ -527,7 +542,7 @@ namespace JZEngine
 		void SystemManager::Update()
 		{
 			const float dt = 1.0f;
-			ArchetypeManager& am = ECSInstance::Instance().archetype_manager_;
+			ArchetypeManager& am = ecs_instance_->archetype_manager_;
 			for (auto& system : system_database_)
 			{
 				for (ui32 j = 0; j < am.number_of_archetypes_; ++j)
@@ -561,9 +576,16 @@ namespace JZEngine
 			RegisterTuple(ECSConfig::System());
 		}
 
-		EntityManager::EntityManager()
+		EntityManager::EntityManager(ECSInstance* ecs)
+			:
+			ecs_instance_(ecs)
 		{
 			entities_.reserve(ENTITIES_RESERVE);
+		}
+
+		EntityManager::~EntityManager()
+		{
+
 		}
 
 		ui32 EntityManager::CreateEntity(ui32 parent)
@@ -579,12 +601,12 @@ namespace JZEngine
 			if (free_entity_slots_.empty())
 			{
 				id = entity_count_;
-				entities_.push_back(Entity(entity_count_++, parent));
+				entities_.push_back(Entity(ecs_instance_, entity_count_++, parent));
 			}
 			else
 			{
 				id = free_entity_slots_.top();
-				entities_[free_entity_slots_.top()] = Entity(free_entity_slots_.top(), parent);
+				entities_[free_entity_slots_.top()] = Entity(ecs_instance_, free_entity_slots_.top(), parent);
 				free_entity_slots_.pop();
 			}
 			if (parent != -1)
@@ -629,22 +651,12 @@ namespace JZEngine
 		   ____________________________________________________________________________________________________*/
 
 		ECSInstance::ECSInstance()
+			:
+			component_manager_(this),
+			archetype_manager_(this),
+			system_manager_(this),
+			entity_manager_(this)
 		{
-		}
-
-		/*!
-		 * @brief ___JZEngine::ECS::ECSInstance::Instance()___
-		 * ****************************************************************************************************
-		 * Singleton interface.
-		 * ****************************************************************************************************
-		 * @return ECSInstance&
-		 * : A reference to the static ECSInstance.
-		 * ****************************************************************************************************
-		*/
-		ECSInstance& ECSInstance::Instance()
-		{
-			static ECSInstance instance;
-			return instance;
 		}
 
 		/*!
@@ -682,13 +694,16 @@ namespace JZEngine
 			std::cout << "______________________________________________________________________" << std::endl;
 		}
 
-		Entity::Entity()
+		Entity::Entity(ECSInstance* ecs)
+			:
+			ecs_instance_(ecs)
 		{
 			children_.fill(-1);
 		}
 
-		Entity::Entity(ui32 entityid, ui32 parent)
+		Entity::Entity(ECSInstance* ecs, ui32 entityid, ui32 parent)
 			:
+			ecs_instance_(ecs),
 			entity_id_(entityid),
 			parent_(parent),
 			ecs_id_(static_cast<ui32>(-1))
@@ -708,7 +723,7 @@ namespace JZEngine
 			{
 				if (child != -1)
 				{
-					ECSInstance::Instance().GetEntity(child).ResetEntity();
+					ecs_instance_->GetEntity(child).ResetEntity();
 				}
 			}
 			// remove entity from chunk
@@ -720,16 +735,16 @@ namespace JZEngine
 			// remove self from parent entity
 			if (parent_ != -1)
 			{
-				ECSInstance::Instance().entity_manager_.entities_[parent_].RemoveChild(entity_id_);
+				ecs_instance_->entity_manager_.entities_[parent_].RemoveChild(entity_id_);
 			}
 			// if entity was a root, remove from root
 			if (root_id_ != -1)
 			{
-				ECSInstance::Instance().entity_manager_.root_ids_[root_id_] = -1;
-				ECSInstance::Instance().entity_manager_.free_root_slots_.push(root_id_);
+				ecs_instance_->entity_manager_.root_ids_[root_id_] = -1;
+				ecs_instance_->entity_manager_.free_root_slots_.push(root_id_);
 			}
 			// set id to be used again by entity manager
-			ECSInstance::Instance().entity_manager_.free_entity_slots_.push(entity_id_);
+			ecs_instance_->entity_manager_.free_entity_slots_.push(entity_id_);
 			// reset member variables
 			root_id_	= static_cast<ui32>(-1);
 			entity_id_	= static_cast<ui32>(-1);
@@ -841,7 +856,7 @@ namespace JZEngine
 			}
 
 			// get the new archetype based on this entities component combination
-			Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(components);
+			Archetype& new_archetype = ecs_instance_->archetype_manager_.GetArchetype(components);
 			ubyte temp_id;
 			Chunk* temp_chunk = &new_archetype.AddEntity(temp_id);
 
@@ -869,7 +884,7 @@ namespace JZEngine
 
 		Entity& Entity::AddSystem(int systemid)
 		{
-			const SystemComponents& components = ECS::ECSInstance::Instance().system_manager_.system_database_[systemid]->components_;
+			const SystemComponents& components = ecs_instance_->system_manager_.system_database_[systemid]->components_;
 			// check if this entity had a chunk before
 			if (owning_chunk_)
 			{
@@ -894,7 +909,7 @@ namespace JZEngine
 				}
 
 				// get the archetype of the new combination
-				Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(owning_chunk_->owning_archetype_->mask_, components);
+				Archetype& new_archetype = ecs_instance_->archetype_manager_.GetArchetype(owning_chunk_->owning_archetype_->mask_, components);
 
 				// perform copy of entity over to the new archetype
 				ubyte temp_id{ 0 };
@@ -934,7 +949,7 @@ namespace JZEngine
 			else
 			{
 				// get the new archetype based on this entities component combination
-				Archetype& new_archetype = ECSInstance::Instance().archetype_manager_.GetArchetype(components);
+				Archetype& new_archetype = ecs_instance_->archetype_manager_.GetArchetype(components);
 
 				// add this new entity to the archetype
 				owning_chunk_ = &new_archetype.AddEntity(id_);

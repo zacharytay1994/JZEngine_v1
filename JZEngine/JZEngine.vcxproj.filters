@@ -78,7 +78,11 @@
     <ClCompile Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\JZEngine\DebugTools\Log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\JZEngine\GraphicRendering\Renderer.cpp">
+    <ClCompile Include="src\JZEngine\Sound\Sound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\JZEngine\GraphicRendering\Shader.cpp">
@@ -207,6 +211,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\JZEngine\GraphicRendering\OpenGLDebug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\DebugTools\Log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\JZEngine\Sound\Sound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

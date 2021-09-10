@@ -10,45 +10,27 @@
 
 #include "../BuildDefinitions.h"
 
-#include <sstream>
-#include <iomanip>
+#include <string>
+#include <unordered_map>
 
 namespace JZEngine
 {
 	/*!
 	 * @brief ___JZEngine::Console___
 	 * ****************************************************************************************************
-	 * The engine GUI console. Exposes a static function
-	 * Console::Log(const char*) that writes to the console.
+	 * The engine GUI console. Exposes static functions
+	 * Log::Info/Warning/Error/Critical that writes to the 
+	 * specified ImGui console.
 	 * Keeps tracks of console line numbers.
 	 * ****************************************************************************************************
 	*/
+	struct ConsoleLog;
 	struct JZENGINE_API Console
 	{
 		float x_, y_, sx_, sy_;		/*! position and scale */
 
 		Console(float x, float y, float sx, float sy);
-
-		/*!
-		 * @brief ___JZEngine::Console::Log()___
-		 * ****************************************************************************************************
-		 * Logs a c string into the engine console.
-		 * ****************************************************************************************************
-		 * @tparam ...T 
-		 * : Formatted arguments to fill in the c string.
-		 * @param string 
-		 * : The c string.
-		 * @param ...args 
-		 * : Formatted arguments to fill in the c string.
-		 * ****************************************************************************************************
-		*/
-		template <typename...T>
-		static void Log(const char* string, T... args)
-		{
-			/*char buffer[100];
-			sprintf_s(buffer, string, args...);
-			console_stream_ << "\n" << std::setw(4) << console_line_number_++ << ": " << buffer;*/
-		}
+		~Console();
 
 		/*!
 		 * @brief ___JZEngine::Console::Render()___
@@ -58,8 +40,35 @@ namespace JZEngine
 		*/
 		void Render();
 
+		/*!
+		 * @brief ___JZEngine::Console::ExistConsoleLog()___
+		 * ****************************************************************************************************
+		 * Checks if the console log already exist in the 
+		 * map, else creates it.
+		 * ****************************************************************************************************
+		 * @param name 
+		 * : The name of the console log.
+		 * ****************************************************************************************************
+		*/
+		void ExistConsoleLog(const std::string& name);
+
+		/*!
+		 * @brief ___JZEngine::Console::SetConsole()___
+		 * ****************************************************************************************************
+		 * Sets the currently displayed console.
+		 * ****************************************************************************************************
+		 * @param name 
+		 * : The console to display.
+		 * ****************************************************************************************************
+		*/
+		void SetConsole(const std::string& name);
+
+		friend struct ConsoleLog;
 	private:
-		static unsigned int console_line_number_;	/*!< the amount of lines currently in the console */
-		//static std::stringstream* console_stream_;	/*!< the stringstream storing all console text */
+
+		std::string*									currently_selected_console_;	/*!< the currently displayed console */
+		std::unordered_map<std::string, unsigned char>*	console_log_names_;				/*!< all consoles */
+		ConsoleLog*										console_log_{ nullptr };		/*!< console log object, imgui stuff */
+		bool											more_info_;						/*!< if log information is more/less */
 	};
 }
