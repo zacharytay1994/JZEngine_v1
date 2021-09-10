@@ -176,5 +176,8 @@
     <ClInclude Include="src\JZEngine\DebugTools\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\JZEngine\Math\JZMatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -21,6 +21,8 @@
 #include <unordered_map>
 #include <string>
 
+#include "Math/JZMatrix.h"
+
 namespace JZEngine
 {
 	Application::Application()
@@ -31,6 +33,8 @@ namespace JZEngine
 	{
 		Log::Instance().Initialize(engine_gui_.GetConsole());
 		JZEngine::Log::Info("Main", "[{}] Up and Running! v{} [MEM LEAKS BEGONE]", Settings::engine_name, Settings::version);
+		Matrix<float, 3, 3> test;
+		Log::Info("Math", "{}", test);
 	}
 
 	void Application::Free()
