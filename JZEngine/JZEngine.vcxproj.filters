@@ -68,5 +68,7 @@
     <ClInclude Include="src\JZEngine\Sound\Sound.h" />
     <ClInclude Include="src\JZEngine\STL\Tuple.h" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />
+    <ClInclude Include="src\JZEngine\Math\JZMatrix.h" />
+    <ClInclude Include="src\JZEngine\Math\JZMath.h" />
   </ItemGroup>
 </Project>

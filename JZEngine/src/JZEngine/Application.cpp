@@ -24,7 +24,7 @@
 #include <unordered_map>
 #include <string>
 
-#include "Math/JZMatrix.h"
+#include "Math/JZMath.h"
 
 namespace JZEngine
 {
@@ -40,19 +40,15 @@ namespace JZEngine
 		JZEngine::Log::Info("Main", "[{}] Up and Running! v{} [MEM LEAKS BEGONE]", Settings::engine_name, Settings::version);
 	
 		testsystem.initialize();
-		testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
+		/*testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
 		testsystem.playSound("testsound", true, 0.4f);
-		testsystem.setChannelGroupVolume(1.0f,"main");
+		testsystem.setChannelGroupVolume(1.0f,"main");*/
 	}
 
 	void Application::Free()
 	{
 		Log::Instance().Free();
 		delete ecs_instance_;
-
-		
-	
-
 	}
 
 	void Application::Run()
