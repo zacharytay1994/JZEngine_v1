@@ -72,5 +72,6 @@
     <ClInclude Include="src\JZEngine\Math\JZMatrix.h" />
     <ClInclude Include="src\JZEngine\Math\JZMath.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\SpriteRenderer.h" />
+    <ClInclude Include="src\JZEngine\Math\Vec4.h" />
   </ItemGroup>
 </Project>

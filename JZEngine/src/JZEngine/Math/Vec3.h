@@ -170,7 +170,11 @@ namespace JZEngine
 	template<typename T>
 	std::ostream& operator<<( std::ostream& os , const Vec3<T>& arg )
 	{
-		os << arg.x << "," << arg.y << "," << arg.z << " ";
+		os << "[" << arg.x << "," << arg.y << "," << arg.z << "]";
 		return os;
 	}
+
+	typedef Vec3<int> Vec3i;
+	typedef Vec3<float> Vec3f;
+	typedef Vec3<double> Vec3d;
 }

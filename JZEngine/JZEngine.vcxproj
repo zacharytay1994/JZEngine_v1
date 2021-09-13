@@ -270,6 +270,7 @@
     <ClInclude Include="src\JZEngine\Math\Timer.h" />
     <ClInclude Include="src\JZEngine\Math\Vec2.h" />
     <ClInclude Include="src\JZEngine\Math\Vec3.h" />
+    <ClInclude Include="src\JZEngine\Math\Vec4.h" />
     <ClInclude Include="src\JZEngine\PCH.h" />
     <ClInclude Include="src\JZEngine\BuildDefinitions.h" />
     <ClInclude Include="src\JZEngine\Sound\Sound.h" />

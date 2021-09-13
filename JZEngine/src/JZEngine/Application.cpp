@@ -46,6 +46,7 @@ namespace JZEngine
 		testsystem.playSound("testsound", true, 0.4f);
 		testsystem.setChannelGroupVolume(1.0f,"main");*/
 
+		//Math::AllMatrixTestCases();
 	}
 
 	void Application::Free()
