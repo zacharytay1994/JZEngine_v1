@@ -29,6 +29,7 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\JZEngine\Sound\Sound.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\SpriteRenderer.cpp" />
+    <ClCompile Include="src\JZEngine\Math\JZMath.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\JZEngine.h" />
