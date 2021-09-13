@@ -263,6 +263,8 @@
     <ClInclude Include="src\JZEngine\ImGui\imstb_truetype.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\EngineGUI.h" />
     <ClInclude Include="src\JZEngine\JZGL\JZ_GL.h" />
+    <ClInclude Include="src\JZEngine\Math\JZMath.h" />
+    <ClInclude Include="src\JZEngine\Math\JZMatrix.h" />
     <ClInclude Include="src\JZEngine\Math\Timer.h" />
     <ClInclude Include="src\JZEngine\Math\Vec2.h" />
     <ClInclude Include="src\JZEngine\Math\Vec3.h" />
