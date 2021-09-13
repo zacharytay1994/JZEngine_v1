@@ -39,6 +39,18 @@ namespace JZEngine
 			return { {1.0,0.0},{0.0,1.0} };
 		}
 
+		static Mat2 Scale(const double x, const double y)
+		{
+			return { {x, 0.0},
+					 {0.0, y} };
+		}
+
+		static Mat2 Rotate(const double radian)
+		{
+			return { {std::cos(radian), -std::sin(radian)},
+					 {std::sin(radian), std::cos(radian)} };
+		}
+
 		explicit operator Mat3<TYPE>() const
 		{
 			return { {data_[0][0],data_[0][1],0}, {data_[1][0],data_[1][1],0}, {0,0,1} };
@@ -211,6 +223,41 @@ namespace JZEngine
 		static Mat3 Identity()
 		{
 			return { {1.0,0.0,0.0}, {0.0,1.0,0.0}, {0.0,0.0,1.0} };
+		}
+
+		static Mat3 Scale(const double x, const double y, const double z)
+		{
+			return { {x,0.0,0.0},
+					 {0.0,y,0.0},
+					 {0.0,0.0,z} };
+		}
+
+		static Mat3 RotateZ(const double radian)
+		{
+			return { {std::cos(radian), -std::sin(radian), 0.0},
+					 {std::sin(radian), std::cos(radian), 0.0},
+					 {0.0,0.0,1.0} };
+		}
+
+		static Mat3 RotateX(const double radian)
+		{
+			return { {1.0,0.0,0.0},
+					 {0.0, std::cos(radian), -std::sin(radian)},
+					 {0.0, std::sin(radian), std::cos(radian)} };
+		}
+
+		static Mat3 RotateY(const double radian)
+		{
+			return { {std::cos(radian), 0.0, std::sin(radian)},
+					 {0.0, 1.0, 0.0},
+					 {-std::sin(radian), 0.0, std::cos(radian)} };
+		}
+
+		static Mat3 Translate(const double x, const double y)
+		{
+			return { {1.0,0.0,x},
+					 {0.0,1.0,y},
+					 {0.0,0.0,1.0} };
 		}
 
 		explicit operator Mat2<TYPE>() const
@@ -656,7 +703,7 @@ namespace JZEngine
 			{
 				Mat4 adjugate { {a(2,2,3,3,4,4)+a(2,3,3,4,4,2)+a(2,4,3,2,4,3)-a(2,4,3,3,4,2)-a(2,3,3,2,4,4)-a(2,2,3,4,4,3)},
 					{-a(1,2,3,3,4,4)-a(1,3,3,4,4,2)-a(1,4,3,2,4,3)+a(1,4,3,3,4,2)+a(1,3,3,2,4,4)+a(1,2,3,4,4,3)},
-					{a(1,2,2,3,4,4)+a(1,3,2,4,4,2)},
+					{a(1,2,2,3,4,4)+a(1,3,2,4,4,2)+a(1,4,2,2,4,3)-a(1,4,2,3,4,2)-},
 					{}, }
 				return Identity();
 			}
