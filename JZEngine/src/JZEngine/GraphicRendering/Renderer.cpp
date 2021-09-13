@@ -15,7 +15,7 @@ namespace JZEngine
 
 	void Renderer::Init()
 	{
-		VertexBuffer vb( vertices.data(), vertices.size() * sizeof( unsigned int ) );
+		VertexBuffer vb( vertices.data(), vertices.size() * sizeof( float) );
 		VertexBufferLayout layout;
 		layout.Push<float>( 3 );
 		va.AddBuffer( vb, layout );

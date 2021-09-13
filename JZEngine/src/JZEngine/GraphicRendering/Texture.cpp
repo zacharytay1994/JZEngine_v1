@@ -1,5 +1,5 @@
 #include <PCH.h>
-#include <glad/glad.h>
+
 #include "stb_image.h"
 #include "Texture.h"
 
@@ -79,8 +79,14 @@ namespace JZEngine
 	void Texture2D::SetData ( void* data , unsigned int size )
 	{}
 
+	/**
+	 * @brief 
+	 * Binds an existing texture object to the texture unit numbered unit.
+	 * @param slot
+	 * Specifies the texture unit, to which the texture object should be bound to.
+	*/
 	void Texture2D::Bind ( unsigned int slot  )
-	{
+	{	
 		glBindTextureUnit ( slot , renderer_id_ );
 	}
 }

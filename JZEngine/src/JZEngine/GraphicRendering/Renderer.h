@@ -8,24 +8,30 @@
 
 namespace JZEngine
 {
-	enum RenderingMode
-	{
-		Instancing,
-	};
-
 	class Renderer
 	{
-	private :
+	private:
 
 		/*set up vertex data ( and buffer ( s ) ) and configure vertex attributes
 			------------------------------------------------------------------*/
+		//std::array < float, 24 > vertices
+		//{
+		//	 0.5f,  0.5f, 0.5f,  0.5f,   // top right
+		//	 0.5f, -0.5f, 0.5f, -0.5f,   // bottom right
+		//	-0.5f, -0.5f,-0.5f, -0.5f,   // bottom left
+		//	-0.5f,  0.5f,-0.5f,  0.5f,   // top left 
+		//};
 
-		std::array < float, 12 > vertices
+		std::array < float, 24 > vertices
 		{
-			 0.5f,  0.5f, 0.0f,  // top right
-			 0.5f, -0.5f, 0.0f,  // bottom right
-			-0.5f, -0.5f, 0.0f,  // bottom left
-			-0.5f,  0.5f, 0.0f   // top left 
+			// pos      // tex
+			0.0f, 1.0f, 0.0f, 1.0f,
+			1.0f, 0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 0.0f,
+
+			0.0f, 1.0f, 0.0f, 1.0f,
+			1.0f, 1.0f, 1.0f, 1.0f,
+			1.0f, 0.0f, 1.0f, 0.0f
 		};
 
 		std::array < unsigned int, 6 > indices
@@ -37,9 +43,8 @@ namespace JZEngine
 		Shader shader_program;
 		VertexArray va;
 		IndexBuffer ib;
-	
-		Renderer();
 
+		Renderer();
 
 	public:
 		static Renderer& Instance()

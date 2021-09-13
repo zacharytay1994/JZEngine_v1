@@ -26,6 +26,7 @@ namespace JZEngine
 	 * Application class to be exported. When inherited from and created in
 	 * a client project, it calls the run function from the main entry point
 	 * of the engine defined in EntryPoint.h.
+	 
 	*/
 	class JZENGINE_API Application
 	{

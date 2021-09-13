@@ -10,18 +10,16 @@
 #include "JZ_GL.h"
 #include "../EngineConfig.h"
 #include "../GraphicRendering/OpenGLDebug.h"
-#include "../GraphicRendering/Renderer.h"
 
 namespace JZEngine
 {
 
-	GLFW_Instance::GLFW_Instance ( int width , int height )
+	GLFW_Instance::GLFW_Instance( int width, int height )
 		:
-		window_width_ ( width ) ,
-		window_height_ ( height )
+		window_width_( width ),
+		window_height_( height )
 	{
-		Initialize ();
-		Renderer::Instance ().Init ();
+		Initialize();
 	}
 
 	GLFW_Instance::~GLFW_Instance ()
@@ -47,10 +45,7 @@ namespace JZEngine
 	}
 
 	void GLFW_Instance::Draw ()
-	{
-		Renderer::Instance ().Draw ();
-
-	}
+	{}
 
 	void GLFW_Instance::Initialize ()
 	{
