@@ -22,6 +22,14 @@ namespace JZEngine
 		glBufferData ( GL_ARRAY_BUFFER , size , vertices , GL_STATIC_DRAW );
 	}
 
+	VertexBuffer::VertexBuffer( const void* vertices, unsigned int size )
+		: size_( size )
+	{
+		glGenBuffers( 1, &renderer_id_ );
+		glBindBuffer( GL_ARRAY_BUFFER, renderer_id_ );
+		glBufferData( GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW );
+	}
+
 	VertexBuffer::~VertexBuffer ()
 	{
 		glDeleteBuffers ( 1 , &renderer_id_ );

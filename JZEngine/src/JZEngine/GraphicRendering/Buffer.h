@@ -14,6 +14,8 @@ namespace JZEngine
 
 		VertexBuffer ( unsigned int size );
 		VertexBuffer ( float* vertices , unsigned int size );
+		VertexBuffer( const void * vertices, unsigned int size );
+
 		~VertexBuffer ();
 
 		void Bind () const ;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include "Buffer.h"
 #include "Shader.h"
 #include "VertexArray.h"
@@ -7,11 +8,19 @@
 
 namespace JZEngine
 {
+	enum RenderingMode
+	{
+		Instancing,
+	};
+
 	class Renderer
 	{
+	private :
+
 		/*set up vertex data ( and buffer ( s ) ) and configure vertex attributes
 			------------------------------------------------------------------*/
-		float vertices [12] 
+
+		std::array < float, 12 > vertices
 		{
 			 0.5f,  0.5f, 0.0f,  // top right
 			 0.5f, -0.5f, 0.0f,  // bottom right
@@ -19,30 +28,29 @@ namespace JZEngine
 			-0.5f,  0.5f, 0.0f   // top left 
 		};
 
-		unsigned int indices [6] 
+		std::array < unsigned int, 6 > indices
 		{  // note that we start from 0!
 			0, 1, 3,  // first Triangle
 			1, 2, 3   // second Triangle
 		};
 
-		Shader shader_program ;
-		VertexArray va ;
-		IndexBuffer ib ;
-		VertexBuffer vb ;
+		Shader shader_program;
+		VertexArray va;
+		IndexBuffer ib;
+	
+		Renderer();
 
-
-		Renderer ();
 
 	public:
-		static Renderer& Instance ()
+		static Renderer& Instance()
 		{
-			static Renderer Instance ;
+			static Renderer Instance;
 			return Instance;
 		};
-		void Init ();
-		void Draw ();
-		void Clear ();
-		void Bind ( const VertexArray& va , const IndexBuffer& ib , const Shader& shader ) const ;
+		void Init();
+		void Draw();
+		void Clear();
+		void Bind( const VertexArray& va, const IndexBuffer& ib, const Shader& shader ) const;
 	};
 
 

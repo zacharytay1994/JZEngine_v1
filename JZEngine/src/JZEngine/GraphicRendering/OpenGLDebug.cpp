@@ -36,7 +36,7 @@ namespace JZEngine
 			}
 
 			std::cout
-				<< "[OpenGL Error] ( " << error_ << " )" << std::endl
+				<< "[OpenGL Error] " << error_ << std::endl
 				<< " Function : " << function << std::endl
 				<< " Line : " << line << std::endl;
 		}
@@ -48,6 +48,8 @@ namespace JZEngine
 	// APIENTRY is an alias for WINAPI.
 	void APIENTRY glDebugOutput ( GLenum source , GLenum type , unsigned int id , GLenum severity , GLsizei length , const char* message , const void* userParam )
 	{
+		glCheckError();
+
 		// ignore these non-significant error codes
 		if( id == 131169 || id == 131185 || id == 131218 || id == 131204 ) return;
 
