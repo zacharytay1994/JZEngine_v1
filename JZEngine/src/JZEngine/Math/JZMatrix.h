@@ -51,14 +51,14 @@ namespace JZEngine
 
 		static Mat2 Scale(const double x, const double y)
 		{
-			return { {x, 0},
-					 {0, y} };
+			return { {static_cast<TYPE>(x), 0},
+					 {0, static_cast<TYPE>(y)} };
 		}
 
 		static Mat2 Rotate(const double radian)
 		{
-			return { {std::cos(radian), -std::sin(radian)},
-					 {std::sin(radian), std::cos(radian)} };
+			return { {static_cast<TYPE>(std::cos(radian)), static_cast<TYPE>(-std::sin(radian))},
+					 {static_cast<TYPE>(std::sin(radian)), static_cast<TYPE>(std::cos(radian))} };
 		}
 
 		explicit operator Mat3<TYPE>() const
@@ -250,36 +250,36 @@ namespace JZEngine
 
 		static Mat3 Scale(const double x, const double y, const double z)
 		{
-			return { {x,0,0},
-					 {0,y,0},
-					 {0,0,z} };
+			return { {static_cast<TYPE>(x),0,0},
+					 {0,static_cast<TYPE>(y),0},
+					 {0,0,static_cast<TYPE>(z)} };
 		}
 
 		static Mat3 RotateZ(const double radian)
 		{
-			return { {std::cos(radian), -std::sin(radian), 0},
-					 {std::sin(radian), std::cos(radian), 0},
+			return { {static_cast<TYPE>(std::cos(radian)), static_cast<TYPE>(-std::sin(radian)), 0},
+					 {static_cast<TYPE>(std::sin(radian)), static_cast<TYPE>(std::cos(radian)), 0},
 					 {0,0,1} };
 		}
 
 		static Mat3 RotateX(const double radian)
 		{
 			return { {1,0,0},
-					 {0, std::cos(radian), -std::sin(radian)},
-					 {0, std::sin(radian), std::cos(radian)} };
+					 {0, static_cast<TYPE>(std::cos(radian)), static_cast<TYPE>(-std::sin(radian))},
+					 {0, static_cast<TYPE>(std::sin(radian)), static_cast<TYPE>(std::cos(radian))} };
 		}
 
 		static Mat3 RotateY(const double radian)
 		{
-			return { {std::cos(radian), 0, std::sin(radian)},
+			return { {static_cast<TYPE>(std::cos(radian)), 0, static_cast<TYPE>(std::sin(radian))},
 					 {0, 1, 0},
-					 {-std::sin(radian), 0, std::cos(radian)} };
+					 {static_cast<TYPE>(-std::sin(radian)), 0, static_cast<TYPE>(std::cos(radian))} };
 		}
 
 		static Mat3 Translate(const double x, const double y)
 		{
-			return { {1,0,x},
-					 {0,1,y},
+			return { {1,0,static_cast<TYPE>(x)},
+					 {0,1,static_cast<TYPE>(y)},
 					 {0,0,1} };
 		}
 
