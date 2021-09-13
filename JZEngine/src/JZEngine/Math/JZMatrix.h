@@ -8,6 +8,8 @@
 #include "Vec3.h"
 #include "Vec4.h"
 
+#include "../DebugTools/Log.h"
+
 namespace JZEngine
 {
 	template <typename TYPE> struct Mat3;
@@ -15,7 +17,7 @@ namespace JZEngine
 	template <typename TYPE>
 	struct Mat2
 	{
-		TYPE data_[2][2] = { {1.0,0.0},{0.0,1.0} };
+		TYPE data_[2][2] = { {0,0},{0,0} };
 
 		#define UNCONST_MAT2(m) const_cast<Mat2<TYPE>&>(m)
 
@@ -32,6 +34,14 @@ namespace JZEngine
 		Mat2(const Mat2& mat2)
 		{
 			std::memcpy(data_, mat2.data_, static_cast<size_t>(4 * sizeof(TYPE)));
+		}
+		template <typename INCOMING_TYPE>
+		Mat2(const Mat2<INCOMING_TYPE>& mat2)
+		{
+			data_[0][0] = static_cast<TYPE>(mat2.data_[0][0]);
+			data_[0][1] = static_cast<TYPE>(mat2.data_[0][1]);
+			data_[1][0] = static_cast<TYPE>(mat2.data_[1][0]);
+			data_[1][1] = static_cast<TYPE>(mat2.data_[1][1]);
 		}
 
 		static Mat2 Identity()
@@ -201,7 +211,7 @@ namespace JZEngine
 	template <typename TYPE>
 	struct Mat3
 	{
-		TYPE data_[3][3] = { {1.0,0.0,0.0}, {0.0,1.0,0.0}, {0.0,0.0,1.0} };
+		TYPE data_[3][3] = { {1,0,0}, {0,1,0}, {0,0,1} };
 
 		#define UNCONST_MAT3(m) const_cast<Mat3<TYPE>&>(m)
 
@@ -215,9 +225,22 @@ namespace JZEngine
 				std::copy(col.begin(), col.end(), data_[cols++]);
 			}
 		}
-		Mat3(const Mat3& mat2)
+		Mat3(const Mat3& mat3)
 		{
-			std::memcpy(data_, mat2.data_, static_cast<size_t>(9 * sizeof(TYPE)));
+			std::memcpy(data_, mat3.data_, static_cast<size_t>(9 * sizeof(TYPE)));
+		}
+		template <typename INCOMING_TYPE>
+		Mat3(const Mat3<INCOMING_TYPE>& mat3)
+		{
+			data_[0][0] = static_cast<TYPE>(mat3.data_[0][0]);
+			data_[0][1] = static_cast<TYPE>(mat3.data_[0][1]);
+			data_[0][2] = static_cast<TYPE>(mat3.data_[0][2]);
+			data_[1][0] = static_cast<TYPE>(mat3.data_[1][0]);
+			data_[1][1] = static_cast<TYPE>(mat3.data_[1][1]);
+			data_[1][2] = static_cast<TYPE>(mat3.data_[1][2]);
+			data_[2][0] = static_cast<TYPE>(mat3.data_[2][0]);
+			data_[2][1] = static_cast<TYPE>(mat3.data_[2][1]);
+			data_[2][2] = static_cast<TYPE>(mat3.data_[2][2]);
 		}
 
 		static Mat3 Identity()
@@ -442,7 +465,7 @@ namespace JZEngine
 	template <typename TYPE>
 	struct Mat4
 	{
-		TYPE data_[4][4] = { { 1.0,0.0,0.0,0.0},{0.0,1.0,0.0,0.0},{0.0,0.0,1.0,0.0},{0.0,0.0,0.0,1.0} };
+		TYPE data_[4][4] = { { 1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1} };
 
 		#define UNCONST_MAT4(m) const_cast<Mat4<TYPE>&>(m)
 
@@ -459,6 +482,26 @@ namespace JZEngine
 		Mat4(const Mat4& mat4)
 		{
 			std::memcpy(data_, mat4.data_, static_cast<size_t>(16 * sizeof(TYPE)));
+		}
+		template <typename INCOMING_TYPE>
+		Mat4(const Mat4<INCOMING_TYPE>& mat4)
+		{
+			data_[0][0] = static_cast<TYPE>(mat4.data_[0][0]);
+			data_[0][1] = static_cast<TYPE>(mat4.data_[0][1]);
+			data_[0][2] = static_cast<TYPE>(mat4.data_[0][2]);
+			data_[0][3] = static_cast<TYPE>(mat4.data_[0][3]);
+			data_[1][0] = static_cast<TYPE>(mat4.data_[1][0]);
+			data_[1][1] = static_cast<TYPE>(mat4.data_[1][1]);
+			data_[1][2] = static_cast<TYPE>(mat4.data_[1][2]);
+			data_[1][3] = static_cast<TYPE>(mat4.data_[1][3]);
+			data_[2][0] = static_cast<TYPE>(mat4.data_[2][0]);
+			data_[2][1] = static_cast<TYPE>(mat4.data_[2][1]);
+			data_[2][2] = static_cast<TYPE>(mat4.data_[2][2]);
+			data_[2][3] = static_cast<TYPE>(mat4.data_[2][3]);
+			data_[3][0] = static_cast<TYPE>(mat4.data_[3][0]);
+			data_[3][1] = static_cast<TYPE>(mat4.data_[3][1]);
+			data_[3][2] = static_cast<TYPE>(mat4.data_[3][2]);
+			data_[3][3] = static_cast<TYPE>(mat4.data_[3][3]);
 		}
 
 		static Mat4 Identity()
@@ -696,115 +739,53 @@ namespace JZEngine
 
 		#define a(a,b,c,d,e,f) data_[a][b]*data_[c][d]*data_[e][f]
 
-		/*Mat4 GetInverse() const
+		Mat4 GetInverse() const
 		{
 			double determinant = Determinant();
 			if (determinant != 0)
 			{
-				Mat4 adjugate { {a(2,2,3,3,4,4)+a(2,3,3,4,4,2)+a(2,4,3,2,4,3)-a(2,4,3,3,4,2)-a(2,3,3,2,4,4)-a(2,2,3,4,4,3)},
-					{-a(1,2,3,3,4,4)-a(1,3,3,4,4,2)-a(1,4,3,2,4,3)+a(1,4,3,3,4,2)+a(1,3,3,2,4,4)+a(1,2,3,4,4,3)},
-					{a(1,2,2,3,4,4)+a(1,3,2,4,4,2)+a(1,4,2,2,4,3)-a(1,4,2,3,4,2)-},
-					{}, }
-				return Identity();
+				Mat4 adjugate{  { {a(1,1,2,2,3,3) + a(1,2,2,3,3,1) + a(1,3,2,1,3,2) - a(1,3,2,2,3,1) - a(1,2,2,1,3,3) - a(1,1,2,3,3,2)},
+								{-a(0,1,2,2,3,3) - a(0,2,2,3,3,1) - a(0,3,2,1,3,2) + a(0,3,2,2,3,1) + a(0,2,2,1,3,3) + a(0,1,2,3,3,2)},
+								{a(0,1,1,2,3,3) + a(0,2,1,3,3,1) + a(0,3,1,1,3,2) - a(0,3,1,2,3,1) - a(0,2,1,1,3,3) - a(0,1,1,3,3,2)},
+								{-a(0,1,1,2,2,3) - a(0,2,1,3,2,1) - a(0,3,1,1,2,2) + a(0,3,1,2,2,1) + a(0,2,1,1,2,3) + a(0,1,1,3,2,2)} },
+
+								{ {-a(1,0,2,2,3,3) - a(1,2,2,3,3,0) - a(1,3,2,0,3,2) + a(1,3,2,2,3,0) + a(1,2,2,0,3,3) + a(1,0,2,3,3,2)},
+								{a(0,0,2,2,3,3) + a(0,2,2,3,3,0) + a(0,3,2,0,3,2) - a(0,3,2,2,3,0) - a(0,2,2,0,3,3) - a(0,0,2,3,3,2)},
+								{-a(0,0,1,2,3,3) - a(0,2,1,3,3,0) - a(0,3,1,0,3,2) + a(0,3,1,2,3,0) + a(0,2,1,0,3,3) + a(0,0,1,3,3,2)},
+								{a(0,0,1,2,2,3) + a(0,2,1,3,2,0) + a(0,3,1,0,2,2) - a(0,3,1,2,2,0) - a(0,2,1,0,2,3) - a(0,0,1,3,2,2)} },
+
+								{ {a(1,0,2,1,3,3) + a(1,1,2,3,3,0) + a(1,3,2,0,3,1) - a(1,3,2,1,3,0) - a(1,1,2,0,3,3) - a(1,0,2,3,3,1)},
+								{-a(0,0,2,1,3,3) - a(0,1,2,3,3,0) - a(0,3,2,0,3,1) + a(0,3,2,1,3,0) + a(0,1,2,0,3,3) + a(0,0,2,3,3,1)},
+								{a(0,0,1,1,3,3) + a(0,1,1,3,3,0) + a(0,3,1,0,3,1) - a(0,3,1,1,3,0) - a(0,1,1,0,3,3) - a(0,0,1,3,3,1)},
+								{-a(0,0,1,1,2,3) - a(0,1,1,3,2,0) - a(0,3,1,0,2,1) + a(0,3,1,1,2,0) + a(0,1,1,0,2,3) + a(0,0,1,3,2,1)} },
+
+								{ {-a(1,0,2,1,3,2) - a(1,1,2,2,3,0) - a(1,2,2,0,3,1) + a(1,2,2,1,3,0) + a(1,1,2,0,3,2) + a(1,0,2,2,3,1)},
+								{a(0,0,2,1,3,2) + a(0,1,2,2,3,0) + a(0,2,2,0,3,1) - a(0,2,2,1,3,0) - a(0,1,2,0,3,2) - a(0,0,2,2,3,1)},
+								{-a(0,0,1,1,3,2) - a(0,1,1,2,3,0) - a(0,2,1,0,3,1) + a(0,2,1,1,3,0) + a(0,1,1,0,3,2) + a(0,0,1,2,3,1)},
+								{a(0,0,1,1,2,2) + a(0,1,1,2,2,0) + a(0,2,1,0,2,1) - a(0,2,1,1,2,0) - a(0,1,1,0,2,2) - a(0,0,1,2,2,1)} }};
+				return adjugate * (1.0 / determinant);
 			}
 			Log::Warning("Math", "Attempting to calculate inverse of singular 4x4 matrix. [DNE] Returning identity.");
 			return Identity();
-		}*/
+		}
+
+		Mat4& Inverse()
+		{
+			return (*this = GetInverse());
+		}
 	};
+
+	typedef Mat2<int> Mat2i;
+	typedef Mat3<int> Mat3i;
+	typedef Mat4<int> Mat4i;
+
+	typedef Mat2<float> Mat2f;
+	typedef Mat3<float> Mat3f;
+	typedef Mat4<float> Mat4f;
 
 	typedef Mat2<double> Mat2d;
 	typedef Mat3<double> Mat3d;
 	typedef Mat4<double> Mat4d;
-
-	namespace Math
-	{
-		void Mat2TestCases(const Mat2d& check = { { 1.0f,2.5f }, { 3.0f,4.0f } })
-		{
-			double	val{ 2.0 };
-			Vec2i	vec2{ 3,2 };
-			Mat2d	mat2_0	{ check };
-			Mat2d	mat2_1	{ { 2.0f,1.0f }, { 4.0f,3.0f } };
-			Mat2d	mat2_identity;
-
-			Log::Info("Math", "Mat2 Test Cases__________________________________________________");
-			Log::Info("Math", "Mat2_0: {}", mat2_0);
-			Log::Info("Math", "Mat2_1: {}", mat2_1);
-			Log::Info("Math", "Vec2:   {}", vec2);
-			Log::Info("Math", "Val:    {}", val);
-
-			Log::Info("Math", "Mat2 Identity:	 {}",	mat2_identity);			/*!< result [1.0,0.0], [0.0,1.0] */
-			Log::Info("Math", "Mat2_0 +  Mat2_1: {}",	mat2_0 +  mat2_1);		/*!< result [3.0,3.5], [7.0,7.0] */
-			Log::Info("Math", "Mat2_0 -  Mat2_1: {}",	mat2_0 -  mat2_1);		/*!< result [-1.0,1.5], [-1.0,1.0] */
-			Log::Info("Math", "Mat2_0 *  Val:	 {}",	mat2_0 *  val);			/*!< result [2.0,5.0], [6.0,8.0] */
-			Log::Info("Math", "Mat2_0 *  Mat2_1: {}",	mat2_0 *  mat2_1);		/*!< result [12.0,8.5], [22.0,15.0] */
-			Log::Info("Math", "Mat2_0 *  Vec2:   {}",	mat2_0 *  vec2);		/*!< result [8.0,17.0] */
-
-			Log::Info("Math", "Cast Mat2 to Mat3: {}", static_cast<Mat3d>(mat2_0));
-			Log::Info("Math", "Cast Mat2 to Mat4: {}", static_cast<Mat4d>(mat2_0));
-
-			Log::Info("Math", "Mat2_0 Transpose:	{}", mat2_0.GetTranspose());
-			Log::Info("Math", "Mat2_0 Determinant:  {}", mat2_0.Determinant());
-			Log::Info("Math", "Mat2_0 Inverse:		{}", mat2_0.GetInverse());
-		}
-
-		void Mat3TestCases()
-		{
-			double val{ 2.0 };
-			Vec3i vec3{ 3,2,1 };
-			Mat3d mat3_0{ { 1.0,2.0,3.0 }, { 3.0,1.0,5.0 }, { 10.0,20.0,1.0 } };
-			Mat3d mat3_1{ { 2.0f,1.0f,0.0f }, { 4.0f,3.0f,2.0f }, { 40.0f,50.0f,60.0f } };
-			Mat3d mat3_identity;
-
-			Log::Info("Math", "Mat3 Test Cases__________________________________________________");
-			Log::Info("Math", "Mat3_0: {}", mat3_0);
-			Log::Info("Math", "Mat3_1: {}", mat3_1);
-			Log::Info("Math", "Vec3:   {}", vec3);
-			Log::Info("Math", "Val:    {}", val);
-
-			Log::Info("Math", "Mat3 Identity: {}",	mat3_identity);
-			Log::Info("Math", "Mat3 +  Mat3: {}",	mat3_0 +  mat3_1);
-			Log::Info("Math", "Mat3 -  Mat3: {}",	mat3_0 -  mat3_1);
-			Log::Info("Math", "Mat3 *  Val: {}",	mat3_0 *  val);
-			Log::Info("Math", "Mat3 *  Mat3: {}",	mat3_0 *  mat3_1);
-			Log::Info("Math", "Mat3 *  Vec3: {}",	mat3_0 *  vec3);
-
-			Log::Info("Math", "Cast Mat3 to Mat2: {}", static_cast<Mat2d>(mat3_0));
-			Log::Info("Math", "Cast Mat3 to Mat4: {}", static_cast<Mat4d>(mat3_0));
-
-			Log::Info("Math", "Mat3_0 Transpose:	{}", mat3_0.GetTranspose());
-			Log::Info("Math", "Mat3_0 Determinant:  {}", mat3_0.Determinant());
-			Log::Info("Math", "Mat3_0 Inverse:		{}", mat3_0.GetInverse());
-		}
-
-		void Mat4TestCases()
-		{
-			Mat4d mat4_0{ { 1.1,2.0,3.0,4.0 }, { 3.0,4.0,5.2,6.0 }, { 10.0,20.5,30.0,60.0 }, { 0.1,0.23,0.3,0.5 } };
-			Mat4d mat4_1{ { 2.0f,1.0f,0.0f,-1.0f }, { 4.0f,3.0f,2.0f,1.0f }, { 40.0f,50.0f,60.0f,70.0f }, { 0.2f,0.3f,0.4f,0.5f } };
-			Mat4d mat4_identity;
-			Vec4i vec4{ 4,3,2,1 };
-			Log::Info("Math", "Mat4 Identity: {}",	mat4_identity);
-			Log::Info("Math", "Mat4 += Mat4: {}", mat4_0 += mat4_1);
-			Log::Info("Math", "Mat4 -= Mat4: {}", mat4_0 -= mat4_1);
-			Log::Info("Math", "Mat4 +  Mat4: {}", mat4_0 +  mat4_1);
-			Log::Info("Math", "Mat4 -  Mat4: {}", mat4_0 -  mat4_1);
-			Log::Info("Math", "Mat4 *  Mat4: {}", mat4_0 *  mat4_1);
-			Log::Info("Math", "Mat4 *  Vec4: {}", mat4_0 *  vec4);
-
-			Log::Info("Math", "Cast Mat4 to Mat2: {}", static_cast<Mat2d>(mat4_0));
-			Log::Info("Math", "Cast Mat4 to Mat3: {}", static_cast<Mat3d>(mat4_0));
-
-
-			Log::Info("Math", "Mat4_0 Determinant:  {}", mat4_0.Determinant());
-			//mat4_0.GetInverse();
-		}
-
-		void AllMatrixTestCases()
-		{
-			Mat2TestCases();
-			Mat3TestCases();
-			Mat4TestCases();
-		}
-	}
 
 	//template <typename TYPE, size_t ROW, size_t COLUMN>
 	//struct Matrix
