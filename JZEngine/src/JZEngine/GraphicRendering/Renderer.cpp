@@ -2,7 +2,7 @@
 #include <glad/glad.h>
 
 #include "Renderer.h"
-#include "OpenGLDebug.h"
+//#include "OpenGLDebug.h"
 
 namespace JZEngine
 {
@@ -17,7 +17,7 @@ namespace JZEngine
 	{
 		VertexBuffer vb( vertices.data(), vertices.size() * sizeof( float) );
 		VertexBufferLayout layout;
-		layout.Push<float>( 3 );
+		layout.Push<float>( 4 );
 		va.AddBuffer( vb, layout );
 		va.Unbind();
 		vb.Unbind();

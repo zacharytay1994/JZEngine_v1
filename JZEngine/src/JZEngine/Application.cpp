@@ -25,11 +25,10 @@
 #include <unordered_map>
 #include <string>
 
-#include "Math/JZMath.h"
-
 namespace JZEngine
 {
 	SoundSystem testsystem;
+
 	SpriteRenderer sprite;
 
 	Application::Application()
@@ -47,6 +46,7 @@ namespace JZEngine
 		testsystem.setChannelGroupVolume(1.0f,"main");*/
 
 		//Math::AllMatrixTestCases();
+		sprite.Init();
 	}
 
 	void Application::Free()
@@ -57,18 +57,20 @@ namespace JZEngine
 
 	void Application::Run()
 	{
-		while (gl_instance_.Active())
+		while ( gl_instance_.Active() )
 		{
-			 
+
 			gl_instance_.FrameStart();
 
-			gl_instance_.Draw ();
+			gl_instance_.Draw();
 
 			engine_gui_.Update();
 
 			testsystem.updateSoundSystem();
-			
+
 			ecs_instance_->Update();
+
+			sprite.DrawSprite( "Assets/Textures/Square.jpg", { 200.0f, 200.0f }, { 300.0f,300.0f }, 45.0f, {1.0f, 1.0f, 0.40f} );
 
 			gl_instance_.FrameEnd();
 		}

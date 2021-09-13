@@ -3,6 +3,7 @@
 #include <initializer_list>
 #include <assert.h>
 #include <iomanip>
+#include "../DebugTools/Log.h"
 
 #include "Vec2.h"
 #include "Vec3.h"
@@ -716,94 +717,98 @@ namespace JZEngine
 	typedef Mat3<double> Mat3d;
 	typedef Mat4<double> Mat4d;
 
+	typedef Mat2<float> Mat2f;
+	typedef Mat3<float> Mat3f;
+	typedef Mat4<float> Mat4f;
+
 	namespace Math
 	{
-		void Mat2TestCases(const Mat2d& check = { { 1.0f,2.5f }, { 3.0f,4.0f } })
-		{
-			double	val{ 2.0 };
-			Vec2i	vec2{ 3,2 };
-			Mat2d	mat2_0	{ check };
-			Mat2d	mat2_1	{ { 2.0f,1.0f }, { 4.0f,3.0f } };
-			Mat2d	mat2_identity;
+		//void Mat2TestCases(const Mat2d& check = { { 1.0f,2.5f }, { 3.0f,4.0f } })
+		//{
+		//	double	val{ 2.0 };
+		//	Vec2i	vec2{ 3,2 };
+		//	Mat2d	mat2_0	{ check };
+		//	Mat2d	mat2_1	{ { 2.0f,1.0f }, { 4.0f,3.0f } };
+		//	Mat2d	mat2_identity;
 
-			Log::Info("Math", "Mat2 Test Cases__________________________________________________");
-			Log::Info("Math", "Mat2_0: {}", mat2_0);
-			Log::Info("Math", "Mat2_1: {}", mat2_1);
-			Log::Info("Math", "Vec2:   {}", vec2);
-			Log::Info("Math", "Val:    {}", val);
+		//	Log::Info("Math", "Mat2 Test Cases__________________________________________________");
+		//	Log::Info("Math", "Mat2_0: {}", mat2_0);
+		//	Log::Info("Math", "Mat2_1: {}", mat2_1);
+		//	Log::Info("Math", "Vec2:   {}", vec2);
+		//	Log::Info("Math", "Val:    {}", val);
 
-			Log::Info("Math", "Mat2 Identity:	 {}",	mat2_identity);			/*!< result [1.0,0.0], [0.0,1.0] */
-			Log::Info("Math", "Mat2_0 +  Mat2_1: {}",	mat2_0 +  mat2_1);		/*!< result [3.0,3.5], [7.0,7.0] */
-			Log::Info("Math", "Mat2_0 -  Mat2_1: {}",	mat2_0 -  mat2_1);		/*!< result [-1.0,1.5], [-1.0,1.0] */
-			Log::Info("Math", "Mat2_0 *  Val:	 {}",	mat2_0 *  val);			/*!< result [2.0,5.0], [6.0,8.0] */
-			Log::Info("Math", "Mat2_0 *  Mat2_1: {}",	mat2_0 *  mat2_1);		/*!< result [12.0,8.5], [22.0,15.0] */
-			Log::Info("Math", "Mat2_0 *  Vec2:   {}",	mat2_0 *  vec2);		/*!< result [8.0,17.0] */
+		//	Log::Info("Math", "Mat2 Identity:	 {}",	mat2_identity);			/*!< result [1.0,0.0], [0.0,1.0] */
+		//	Log::Info("Math", "Mat2_0 +  Mat2_1: {}",	mat2_0 +  mat2_1);		/*!< result [3.0,3.5], [7.0,7.0] */
+		//	Log::Info("Math", "Mat2_0 -  Mat2_1: {}",	mat2_0 -  mat2_1);		/*!< result [-1.0,1.5], [-1.0,1.0] */
+		//	Log::Info("Math", "Mat2_0 *  Val:	 {}",	mat2_0 *  val);			/*!< result [2.0,5.0], [6.0,8.0] */
+		//	Log::Info("Math", "Mat2_0 *  Mat2_1: {}",	mat2_0 *  mat2_1);		/*!< result [12.0,8.5], [22.0,15.0] */
+		//	Log::Info("Math", "Mat2_0 *  Vec2:   {}",	mat2_0 *  vec2);		/*!< result [8.0,17.0] */
 
-			Log::Info("Math", "Cast Mat2 to Mat3: {}", static_cast<Mat3d>(mat2_0));
-			Log::Info("Math", "Cast Mat2 to Mat4: {}", static_cast<Mat4d>(mat2_0));
+		//	Log::Info("Math", "Cast Mat2 to Mat3: {}", static_cast<Mat3d>(mat2_0));
+		//	Log::Info("Math", "Cast Mat2 to Mat4: {}", static_cast<Mat4d>(mat2_0));
 
-			Log::Info("Math", "Mat2_0 Transpose:	{}", mat2_0.GetTranspose());
-			Log::Info("Math", "Mat2_0 Determinant:  {}", mat2_0.Determinant());
-			Log::Info("Math", "Mat2_0 Inverse:		{}", mat2_0.GetInverse());
-		}
+		//	Log::Info("Math", "Mat2_0 Transpose:	{}", mat2_0.GetTranspose());
+		//	Log::Info("Math", "Mat2_0 Determinant:  {}", mat2_0.Determinant());
+		//	Log::Info("Math", "Mat2_0 Inverse:		{}", mat2_0.GetInverse());
+		//}
 
-		void Mat3TestCases()
-		{
-			double val{ 2.0 };
-			Vec3i vec3{ 3,2,1 };
-			Mat3d mat3_0{ { 1.0,2.0,3.0 }, { 3.0,1.0,5.0 }, { 10.0,20.0,1.0 } };
-			Mat3d mat3_1{ { 2.0f,1.0f,0.0f }, { 4.0f,3.0f,2.0f }, { 40.0f,50.0f,60.0f } };
-			Mat3d mat3_identity;
+		//void Mat3TestCases()
+		//{
+		//	double val{ 2.0 };
+		//	Vec3i vec3{ 3,2,1 };
+		//	Mat3d mat3_0{ { 1.0,2.0,3.0 }, { 3.0,1.0,5.0 }, { 10.0,20.0,1.0 } };
+		//	Mat3d mat3_1{ { 2.0f,1.0f,0.0f }, { 4.0f,3.0f,2.0f }, { 40.0f,50.0f,60.0f } };
+		//	Mat3d mat3_identity;
 
-			Log::Info("Math", "Mat3 Test Cases__________________________________________________");
-			Log::Info("Math", "Mat3_0: {}", mat3_0);
-			Log::Info("Math", "Mat3_1: {}", mat3_1);
-			Log::Info("Math", "Vec3:   {}", vec3);
-			Log::Info("Math", "Val:    {}", val);
+		//	Log::Info("Math", "Mat3 Test Cases__________________________________________________");
+		//	Log::Info("Math", "Mat3_0: {}", mat3_0);
+		//	Log::Info("Math", "Mat3_1: {}", mat3_1);
+		//	Log::Info("Math", "Vec3:   {}", vec3);
+		//	Log::Info("Math", "Val:    {}", val);
 
-			Log::Info("Math", "Mat3 Identity: {}",	mat3_identity);
-			Log::Info("Math", "Mat3 +  Mat3: {}",	mat3_0 +  mat3_1);
-			Log::Info("Math", "Mat3 -  Mat3: {}",	mat3_0 -  mat3_1);
-			Log::Info("Math", "Mat3 *  Val: {}",	mat3_0 *  val);
-			Log::Info("Math", "Mat3 *  Mat3: {}",	mat3_0 *  mat3_1);
-			Log::Info("Math", "Mat3 *  Vec3: {}",	mat3_0 *  vec3);
+		//	Log::Info("Math", "Mat3 Identity: {}",	mat3_identity);
+		//	Log::Info("Math", "Mat3 +  Mat3: {}",	mat3_0 +  mat3_1);
+		//	Log::Info("Math", "Mat3 -  Mat3: {}",	mat3_0 -  mat3_1);
+		//	Log::Info("Math", "Mat3 *  Val: {}",	mat3_0 *  val);
+		//	Log::Info("Math", "Mat3 *  Mat3: {}",	mat3_0 *  mat3_1);
+		//	Log::Info("Math", "Mat3 *  Vec3: {}",	mat3_0 *  vec3);
 
-			Log::Info("Math", "Cast Mat3 to Mat2: {}", static_cast<Mat2d>(mat3_0));
-			Log::Info("Math", "Cast Mat3 to Mat4: {}", static_cast<Mat4d>(mat3_0));
+		//	Log::Info("Math", "Cast Mat3 to Mat2: {}", static_cast<Mat2d>(mat3_0));
+		//	Log::Info("Math", "Cast Mat3 to Mat4: {}", static_cast<Mat4d>(mat3_0));
 
-			Log::Info("Math", "Mat3_0 Transpose:	{}", mat3_0.GetTranspose());
-			Log::Info("Math", "Mat3_0 Determinant:  {}", mat3_0.Determinant());
-			Log::Info("Math", "Mat3_0 Inverse:		{}", mat3_0.GetInverse());
-		}
+		//	Log::Info("Math", "Mat3_0 Transpose:	{}", mat3_0.GetTranspose());
+		//	Log::Info("Math", "Mat3_0 Determinant:  {}", mat3_0.Determinant());
+		//	Log::Info("Math", "Mat3_0 Inverse:		{}", mat3_0.GetInverse());
+		//}
 
-		void Mat4TestCases()
-		{
-			Mat4d mat4_0{ { 1.1,2.0,3.0,4.0 }, { 3.0,4.0,5.2,6.0 }, { 10.0,20.5,30.0,60.0 }, { 0.1,0.23,0.3,0.5 } };
-			Mat4d mat4_1{ { 2.0f,1.0f,0.0f,-1.0f }, { 4.0f,3.0f,2.0f,1.0f }, { 40.0f,50.0f,60.0f,70.0f }, { 0.2f,0.3f,0.4f,0.5f } };
-			Mat4d mat4_identity;
-			Vec4i vec4{ 4,3,2,1 };
-			Log::Info("Math", "Mat4 Identity: {}",	mat4_identity);
-			Log::Info("Math", "Mat4 += Mat4: {}", mat4_0 += mat4_1);
-			Log::Info("Math", "Mat4 -= Mat4: {}", mat4_0 -= mat4_1);
-			Log::Info("Math", "Mat4 +  Mat4: {}", mat4_0 +  mat4_1);
-			Log::Info("Math", "Mat4 -  Mat4: {}", mat4_0 -  mat4_1);
-			Log::Info("Math", "Mat4 *  Mat4: {}", mat4_0 *  mat4_1);
-			Log::Info("Math", "Mat4 *  Vec4: {}", mat4_0 *  vec4);
+		//void Mat4TestCases()
+		//{
+		//	Mat4d mat4_0{ { 1.1,2.0,3.0,4.0 }, { 3.0,4.0,5.2,6.0 }, { 10.0,20.5,30.0,60.0 }, { 0.1,0.23,0.3,0.5 } };
+		//	Mat4d mat4_1{ { 2.0f,1.0f,0.0f,-1.0f }, { 4.0f,3.0f,2.0f,1.0f }, { 40.0f,50.0f,60.0f,70.0f }, { 0.2f,0.3f,0.4f,0.5f } };
+		//	Mat4d mat4_identity;
+		//	Vec4i vec4{ 4,3,2,1 };
+		//	Log::Info("Math", "Mat4 Identity: {}",	mat4_identity);
+		//	Log::Info("Math", "Mat4 += Mat4: {}", mat4_0 += mat4_1);
+		//	Log::Info("Math", "Mat4 -= Mat4: {}", mat4_0 -= mat4_1);
+		//	Log::Info("Math", "Mat4 +  Mat4: {}", mat4_0 +  mat4_1);
+		//	Log::Info("Math", "Mat4 -  Mat4: {}", mat4_0 -  mat4_1);
+		//	Log::Info("Math", "Mat4 *  Mat4: {}", mat4_0 *  mat4_1);
+		//	Log::Info("Math", "Mat4 *  Vec4: {}", mat4_0 *  vec4);
 
-			Log::Info("Math", "Cast Mat4 to Mat2: {}", static_cast<Mat2d>(mat4_0));
-			Log::Info("Math", "Cast Mat4 to Mat3: {}", static_cast<Mat3d>(mat4_0));
+		//	Log::Info("Math", "Cast Mat4 to Mat2: {}", static_cast<Mat2d>(mat4_0));
+		//	Log::Info("Math", "Cast Mat4 to Mat3: {}", static_cast<Mat3d>(mat4_0));
 
 
-			Log::Info("Math", "Mat4_0 Determinant:  {}", mat4_0.Determinant());
-			//mat4_0.GetInverse();
-		}
+		//	Log::Info("Math", "Mat4_0 Determinant:  {}", mat4_0.Determinant());
+		//	//mat4_0.GetInverse();
+		//}
 
-		void AllMatrixTestCases()
-		{
-			Mat2TestCases();
-			Mat3TestCases();
-			Mat4TestCases();
-		}
+		//void AllMatrixTestCases()
+		//{
+		//	Mat2TestCases();
+		//	Mat3TestCases();
+		//	Mat4TestCases();
+		//}
 	}
 
 	//template <typename TYPE, size_t ROW, size_t COLUMN>

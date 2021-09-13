@@ -8,7 +8,6 @@
 #pragma once
 
 #include "BuildDefinitions.h"
-
 #include "EngineGUI/EngineGUI.h"
 #include "ECS/ECS.h"
 
@@ -47,6 +46,7 @@ namespace JZEngine
 		 * defined in EntryPoint.h.
 		*/
 		void Run();
+
 
 	private:
 		JZEngine::GLFW_Instance				gl_instance_;		/*!< glfw instance, abstracts creation of opengl instance using glfw */

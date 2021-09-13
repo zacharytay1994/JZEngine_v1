@@ -230,6 +230,58 @@ namespace JZEngine
 		}
 	}
 
+	void Shader::SetUniform( GLchar const* name, JZEngine::Vec2f const& val )
+	{
+		GLint loc = glGetUniformLocation( pgm_handle, name );
+		if ( loc >= 0 )
+		{
+			glUniform2f( loc, val.x, val.y );
+		}
+		else
+		{
+			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
+		}
+	}
+
+	void Shader::SetUniform( GLchar const* name, JZEngine::Vec3f const& val )
+	{
+		GLint loc = glGetUniformLocation( pgm_handle, name );
+		if ( loc >= 0 )
+		{
+			glUniform3f( loc, val.x, val.y, val.z );
+		}
+		else
+		{
+			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
+		}
+	}
+
+	void Shader::SetUniform( GLchar const* name, JZEngine::Mat3f const& val )
+	{
+		GLint loc = glGetUniformLocation( pgm_handle, name );
+		if ( loc >= 0 )
+		{
+			glUniformMatrix3fv( loc, 1, GL_FALSE, val.data_[0]);
+		}
+		else
+		{
+			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
+		}
+	}
+
+	void Shader::SetUniform( GLchar const* name, JZEngine::Mat4f const& val )
+	{	
+		GLint loc = glGetUniformLocation( pgm_handle, name );
+		if ( loc >= 0 )
+		{
+			glUniformMatrix4fv( loc, 1, GL_FALSE, val.data_[0] );
+		}
+		else
+		{
+			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
+		}
+	}
+
 
 	GLboolean Shader::FileExists ( std::string const& file_name )
 	{
