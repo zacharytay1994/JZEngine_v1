@@ -30,5 +30,6 @@ extern JZEngine::Application* JZEngine::CreateApplication ();
 		app->Run();
 		app->Free();
 		delete app;
+
 	}
 #endif // !ENGINE_PLATFORM_WINDOWS
