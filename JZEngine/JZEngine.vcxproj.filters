@@ -1,223 +1,72 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Header Files\JZEngine">
-      <UniqueIdentifier>{549aa263-3ed4-437a-b5a2-75f5e92fc642}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\JZEngine\ImGui">
-      <UniqueIdentifier>{e183a51d-bbee-47ae-9222-345b86745382}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\JZEngine\JZGL">
-      <UniqueIdentifier>{eb00cee1-4362-439d-94a0-5718f4418a75}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="src\JZEngine\Application.cpp" />
+    <ClCompile Include="src\JZEngine\DebugTools\Log.cpp" />
+    <ClCompile Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.cpp" />
+    <ClCompile Include="src\JZEngine\ECS\ECS.cpp" />
+    <ClCompile Include="src\JZEngine\EngineGUI\Console.cpp" />
+    <ClCompile Include="src\JZEngine\EngineGUI\Inspector.cpp" />
+    <ClCompile Include="src\JZEngine\EngineGUI\SceneTree.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Buffer.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\OpenGLDebug.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Renderer.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Shader.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Texture.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\VertexArray.cpp" />
+    <ClCompile Include="src\JZEngine\JZGL\glad.c" />
+    <ClCompile Include="src\JZEngine\ImGui\imgui.cpp" />
+    <ClCompile Include="src\JZEngine\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="src\JZEngine\ImGui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="src\JZEngine\ImGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="src\JZEngine\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="src\JZEngine\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="src\JZEngine\EngineGUI\EngineGUI.cpp" />
+    <ClCompile Include="src\JZEngine\JZGL\JZ_GL.cpp" />
+    <ClCompile Include="src\JZEngine\Math\Math.cpp" />
+    <ClCompile Include="src\JZEngine\Math\Timer.cpp" />
+    <ClCompile Include="src\JZEngine\PCH.cpp" />
+    <ClCompile Include="vendor\stb_image\stb_image.cpp" />
+    <ClCompile Include="src\JZEngine\Sound\Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\JZEngine\JZGL\glad.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\PCH.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\ImGui\imgui.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\ImGui\imgui_impl_glfw.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\ImGui\imgui_impl_opengl3.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\ImGui\imgui_draw.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\ImGui\imgui_tables.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\ImGui\imgui_widgets.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\EngineGUI\EngineGUI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\JZGL\JZ_GL.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\Math\Math.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\Math\Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\ECS\ECS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\EngineGUI\Inspector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\EngineGUI\Console.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\EngineGUI\SceneTree.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\DebugTools\Log.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\GraphicRendering\Renderer.cpp">
-    <ClCompile Include="src\JZEngine\Sound\Sound.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\GraphicRendering\Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\stb_image\stb_image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\GraphicRendering\Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\GraphicRendering\Buffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\GraphicRendering\VertexArray.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\JZEngine\GraphicRendering\OpenGLDebug.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\JZEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\Application.h">
-      <Filter>Header Files\JZEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\BuildDefinitions.h">
-      <Filter>Header Files\JZEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\EntryPoint.h">
-      <Filter>Header Files\JZEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\PCH.h">
-      <Filter>Header Files\JZEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\ImGui\imgui.h">
-      <Filter>Header Files\JZEngine\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\ImGui\imgui_impl_opengl3.h">
-      <Filter>Header Files\JZEngine\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\ImGui\imgui_impl_glfw.h">
-      <Filter>Header Files\JZEngine\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\ImGui\imgui_internal.h">
-      <Filter>Header Files\JZEngine\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\ImGui\imstb_rectpack.h">
-      <Filter>Header Files\JZEngine\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\ImGui\imstb_textedit.h">
-      <Filter>Header Files\JZEngine\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\ImGui\imstb_truetype.h">
-      <Filter>Header Files\JZEngine\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\EngineGUI\EngineGUI.h">
-      <Filter>Header Files\JZEngine\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\ImGui\imconfig.h">
-      <Filter>Header Files\JZEngine\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\JZGL\JZ_GL.h">
-      <Filter>Header Files\JZEngine\JZGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\Components\TestComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\ECS\ECS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\ECSSystems\ExampleSingleHeader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\ECS\ECSConfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\STL\Tuple.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\EngineConfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\EngineGUI\Inspector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\EngineGUI\Console.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\EngineGUI\SceneTree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\GraphicRendering\Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\Math\Vec2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\Math\Vec3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\Math\Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\GraphicRendering\Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\stb_image\stb_image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\GraphicRendering\Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\GraphicRendering\Buffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\GraphicRendering\VertexArray.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\GraphicRendering\VertexBufferLayout.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\GraphicRendering\OpenGLDebug.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\DebugTools\Log.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\JZEngine\Sound\Sound.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="src\JZEngine.h" />
+    <ClInclude Include="src\JZEngine\Application.h" />
+    <ClInclude Include="src\JZEngine\Components\TestComponent.h" />
+    <ClInclude Include="src\JZEngine\DebugTools\Log.h" />
+    <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h" />
+    <ClInclude Include="src\JZEngine\ECS\ECS.h" />
+    <ClInclude Include="src\JZEngine\ECS\ECSConfig.h" />
+    <ClInclude Include="src\JZEngine\ECSSystems\ExampleSingleHeader.h" />
+    <ClInclude Include="src\JZEngine\EngineConfig.h" />
+    <ClInclude Include="src\JZEngine\EngineGUI\Console.h" />
+    <ClInclude Include="src\JZEngine\EngineGUI\Inspector.h" />
+    <ClInclude Include="src\JZEngine\EngineGUI\SceneTree.h" />
+    <ClInclude Include="src\JZEngine\EntryPoint.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Buffer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\OpenGLDebug.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Renderer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Shader.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Texture.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\VertexArray.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\VertexBufferLayout.h" />
+    <ClInclude Include="src\JZEngine\ImGui\imconfig.h" />
+    <ClInclude Include="src\JZEngine\ImGui\imgui.h" />
+    <ClInclude Include="src\JZEngine\ImGui\imgui_impl_glfw.h" />
+    <ClInclude Include="src\JZEngine\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\JZEngine\ImGui\imgui_internal.h" />
+    <ClInclude Include="src\JZEngine\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="src\JZEngine\ImGui\imstb_textedit.h" />
+    <ClInclude Include="src\JZEngine\ImGui\imstb_truetype.h" />
+    <ClInclude Include="src\JZEngine\EngineGUI\EngineGUI.h" />
+    <ClInclude Include="src\JZEngine\JZGL\JZ_GL.h" />
+    <ClInclude Include="src\JZEngine\Math\Timer.h" />
+    <ClInclude Include="src\JZEngine\Math\Vec2.h" />
+    <ClInclude Include="src\JZEngine\Math\Vec3.h" />
+    <ClInclude Include="src\JZEngine\PCH.h" />
+    <ClInclude Include="src\JZEngine\BuildDefinitions.h" />
+    <ClInclude Include="src\JZEngine\Sound\Sound.h" />
+    <ClInclude Include="src\JZEngine\STL\Tuple.h" />
+    <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
 </Project>
