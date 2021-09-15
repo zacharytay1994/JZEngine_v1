@@ -120,7 +120,7 @@ namespace JZEngine
 		
 
 		template <typename T1>
-		auto operator / ( const T1& arg )
+		auto operator / ( const T1& arg ) const
 		{
 			typedef std::conditional < ( std::is_integral<T>::value ) , T1 , T >::type T2;
 			return Vec2<T2> ( x / arg , y / arg );
@@ -188,13 +188,11 @@ namespace JZEngine
 	template<typename T>
 	std::ostream& operator<<( std::ostream& os , const Vec2<T>& arg )
 	{
-		os << arg.x << "," << arg.y << " ";
+		os << "[" << arg.x << "," << arg.y << "]";
 		return os;
 	}
 
-	template<typename T>
-	Vec2<T> operator*(T lhs, const Vec2<T>& rhs)
-	{
-		return Vec2<T>(lhs * rhs.x, lhs * rhs.y);
-	}
+	typedef Vec2<int> Vec2i;
+	typedef Vec2<float> Vec2f;
+	typedef Vec2<double> Vec2d;
 }

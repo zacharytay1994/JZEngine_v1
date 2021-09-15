@@ -2,15 +2,22 @@
 
 #include <initializer_list>
 #include <assert.h>
+#include <iomanip>
 
 #include "Vec2.h"
+#include "Vec3.h"
+#include "Vec4.h"
+
+#include "../DebugTools/Log.h"
 
 namespace JZEngine
 {
+	template <typename TYPE> struct Mat3;
+	template <typename TYPE> struct Mat4;
 	template <typename TYPE>
 	struct Mat2
 	{
-		TYPE data_[2][2] = { {1.0,0.0},{0.0,1.0} };
+		TYPE data_[2][2] = { {0,0},{0,0} };
 
 		#define UNCONST_MAT2(m) const_cast<Mat2<TYPE>&>(m)
 
@@ -27,6 +34,41 @@ namespace JZEngine
 		Mat2(const Mat2& mat2)
 		{
 			std::memcpy(data_, mat2.data_, static_cast<size_t>(4 * sizeof(TYPE)));
+		}
+		template <typename INCOMING_TYPE>
+		Mat2(const Mat2<INCOMING_TYPE>& mat2)
+		{
+			data_[0][0] = static_cast<TYPE>(mat2.data_[0][0]);
+			data_[0][1] = static_cast<TYPE>(mat2.data_[0][1]);
+			data_[1][0] = static_cast<TYPE>(mat2.data_[1][0]);
+			data_[1][1] = static_cast<TYPE>(mat2.data_[1][1]);
+		}
+
+		static Mat2 Identity()
+		{
+			return { {1,0},{0,1} };
+		}
+
+		static Mat2 Scale(const double x, const double y)
+		{
+			return { {static_cast<TYPE>(x), 0},
+					 {0, static_cast<TYPE>(y)} };
+		}
+
+		static Mat2 Rotate(const double radian)
+		{
+			return { {static_cast<TYPE>(std::cos(radian)), static_cast<TYPE>(-std::sin(radian))},
+					 {static_cast<TYPE>(std::sin(radian)), static_cast<TYPE>(std::cos(radian))} };
+		}
+
+		explicit operator Mat3<TYPE>() const
+		{
+			return { {data_[0][0],data_[0][1],0}, {data_[1][0],data_[1][1],0}, {0,0,1} };
+		}
+
+		explicit operator Mat4<TYPE>() const
+		{
+			return { {data_[0][0],data_[0][1],0,0}, {data_[1][0],data_[1][1],0,0}, {0,0,1,0}, {0,0,0,1} };
 		}
 
 		Mat2& operator=(const Mat2& mat2)
@@ -64,6 +106,22 @@ namespace JZEngine
 		{
 			Mat2 out(*this);
 			out -= rhs;
+			return out;
+		}
+
+		Mat2& operator*=(const double& val)
+		{
+			data_[0][0] *= val;
+			data_[0][1] *= val;
+			data_[1][0] *= val;
+			data_[1][1] *= val;
+			return *this;
+		}
+
+		Mat2 operator*(const double& val)
+		{
+			Mat2 out(*this);
+			out *= val;
 			return out;
 		}
 
@@ -108,19 +166,52 @@ namespace JZEngine
 				os << "\n[ ";
 				for (int c = 0; c < 2; ++c)
 				{
-					os << UNCONST_MAT2(matrix)[r][c] << " ";
+					os << std::setw(10) << std::fixed << std::setprecision(5) << UNCONST_MAT2(matrix)[r][c] << ", ";
 				}
 				os << "]";
 			}
 			os << "\n:";
 			return os;
 		}
+
+		TYPE Determinant() const
+		{
+			return data_[0][0] * data_[1][1] - data_[1][0] * data_[0][1];
+		}
+
+		Mat2 GetTranspose() const
+		{
+			return { {data_[0][0], data_[1][0]},
+					 {data_[0][1], data_[1][1]} };
+		}
+
+		Mat2& Transpose()
+		{
+			return (*this = GetTranspose());
+		}
+
+		Mat2 GetInverse() const
+		{
+			// check if determinant != 0
+			TYPE determinant = Determinant();
+			if (determinant != 0)
+			{
+				Mat2 temp{ {data_[1][1], -data_[0][1]}, {-data_[1][0], data_[0][0]} };
+				return temp * (1.0 / determinant);
+			}
+			return Identity();
+		}
+
+		Mat2& Inverse()
+		{
+			return (*this = GetInverse());
+		}
 	};
 
 	template <typename TYPE>
 	struct Mat3
 	{
-		TYPE data_[3][3] = { {1.0,0.0,0.0}, {0.0,1.0,0.0}, {0.0,0.0,1.0} };
+		TYPE data_[3][3] = { {1,0,0}, {0,1,0}, {0,0,1} };
 
 		#define UNCONST_MAT3(m) const_cast<Mat3<TYPE>&>(m)
 
@@ -134,9 +225,72 @@ namespace JZEngine
 				std::copy(col.begin(), col.end(), data_[cols++]);
 			}
 		}
-		Mat3(const Mat3& mat2)
+		Mat3(const Mat3& mat3)
 		{
-			std::memcpy(data_, mat2.data_, static_cast<size_t>(9 * sizeof(TYPE)));
+			std::memcpy(data_, mat3.data_, static_cast<size_t>(9 * sizeof(TYPE)));
+		}
+		template <typename INCOMING_TYPE>
+		Mat3(const Mat3<INCOMING_TYPE>& mat3)
+		{
+			data_[0][0] = static_cast<TYPE>(mat3.data_[0][0]);
+			data_[0][1] = static_cast<TYPE>(mat3.data_[0][1]);
+			data_[0][2] = static_cast<TYPE>(mat3.data_[0][2]);
+			data_[1][0] = static_cast<TYPE>(mat3.data_[1][0]);
+			data_[1][1] = static_cast<TYPE>(mat3.data_[1][1]);
+			data_[1][2] = static_cast<TYPE>(mat3.data_[1][2]);
+			data_[2][0] = static_cast<TYPE>(mat3.data_[2][0]);
+			data_[2][1] = static_cast<TYPE>(mat3.data_[2][1]);
+			data_[2][2] = static_cast<TYPE>(mat3.data_[2][2]);
+		}
+
+		static Mat3 Identity()
+		{
+			return { {1.0,0.0,0.0}, {0.0,1.0,0.0}, {0.0,0.0,1.0} };
+		}
+
+		static Mat3 Scale(const double x, const double y, const double z)
+		{
+			return { {static_cast<TYPE>(x),0,0},
+					 {0,static_cast<TYPE>(y),0},
+					 {0,0,static_cast<TYPE>(z)} };
+		}
+
+		static Mat3 RotateZ(const double radian)
+		{
+			return { {static_cast<TYPE>(std::cos(radian)), static_cast<TYPE>(-std::sin(radian)), 0},
+					 {static_cast<TYPE>(std::sin(radian)), static_cast<TYPE>(std::cos(radian)), 0},
+					 {0,0,1} };
+		}
+
+		static Mat3 RotateX(const double radian)
+		{
+			return { {1,0,0},
+					 {0, static_cast<TYPE>(std::cos(radian)), static_cast<TYPE>(-std::sin(radian))},
+					 {0, static_cast<TYPE>(std::sin(radian)), static_cast<TYPE>(std::cos(radian))} };
+		}
+
+		static Mat3 RotateY(const double radian)
+		{
+			return { {static_cast<TYPE>(std::cos(radian)), 0, static_cast<TYPE>(std::sin(radian))},
+					 {0, 1, 0},
+					 {static_cast<TYPE>(-std::sin(radian)), 0, static_cast<TYPE>(std::cos(radian))} };
+		}
+
+		static Mat3 Translate(const double x, const double y)
+		{
+			return { {1,0,static_cast<TYPE>(x)},
+					 {0,1,static_cast<TYPE>(y)},
+					 {0,0,1} };
+		}
+
+		explicit operator Mat2<TYPE>() const
+		{
+			return { {data_[0][0],data_[0][1]}, {data_[1][0],data_[1][1]} };
+		}
+
+		explicit operator Mat4<TYPE>() const
+		{
+			return { {data_[0][0],data_[0][1],data_[0][2],0}, {data_[1][0],data_[1][1],data_[1][2],0}, {data_[2][0],data_[2][1],data_[2][2],0}, {0,0,0,1} };
 		}
 
 		Mat3& operator=(const Mat3& mat2)
@@ -184,6 +338,27 @@ namespace JZEngine
 		{
 			Mat3 out(*this);
 			out -= rhs;
+			return out;
+		}
+
+		Mat3& operator*=(const double val)
+		{
+			data_[0][0] *= val;
+			data_[0][1] *= val;
+			data_[0][2] *= val;
+			data_[1][0] *= val;
+			data_[1][1] *= val;
+			data_[1][2] *= val;
+			data_[2][0] *= val;
+			data_[2][1] *= val;
+			data_[2][2] *= val;
+			return *this;
+		}
+
+		Mat3 operator*(const double val)
+		{
+			Mat3 out(*this);
+			out *= val;
 			return out;
 		}
 
@@ -245,19 +420,52 @@ namespace JZEngine
 				os << "\n[ ";
 				for (int c = 0; c < 3; ++c)
 				{
-					os << UNCONST_MAT3(matrix)[r][c] << " ";
+					os << std::setw(10) << std::fixed << std::setprecision(5) << UNCONST_MAT3(matrix)[r][c] << ", ";
 				}
 				os << "]";
 			}
 			os << "\n:";
 			return os;
 		}
+
+		TYPE Determinant() const
+		{
+			return  data_[0][0] * (data_[1][1] * data_[2][2] - data_[1][2] * data_[2][1]) -
+					data_[0][1] * (data_[1][0] * data_[2][2] - data_[1][2] * data_[2][0]) +
+					data_[0][2] * (data_[1][0] * data_[2][1] - data_[1][1] * data_[2][0]);
+		}
+
+		Mat3 GetTranspose() const
+		{
+			return { {data_[0][0], data_[1][0], data_[2][0]},
+					 {data_[0][1], data_[1][1], data_[2][1]},
+					 {data_[0][2], data_[1][2], data_[2][2]} };
+		}
+
+		Mat3& Transpose()
+		{
+			return (*this = GetTranspose());
+		}
+
+		Mat3 GetInverse() const
+		{
+			double determinant = Determinant();
+			if (determinant != 0)
+			{
+				Mat3 adjugate{ {(data_[1][1] * data_[2][2] - data_[1][2] * data_[2][1]), -(data_[0][1] * data_[2][2] - data_[0][2] * data_[2][1]), (data_[0][1] * data_[1][2] - data_[0][2] * data_[1][1])},
+								{-(data_[1][0] * data_[2][2] - data_[1][2] * data_[2][0]), (data_[0][0] * data_[2][2] - data_[0][2] * data_[2][0]), -(data_[0][0] * data_[1][2] - data_[0][2] * data_[1][0])},
+								{(data_[1][0] * data_[2][1] - data_[1][1] * data_[2][0]), -(data_[0][0] * data_[2][1] - data_[0][1] * data_[2][0]), (data_[0][0] * data_[1][1] - data_[0][1] * data_[1][0])} };
+				return adjugate * (1.0 / determinant);
+			}
+			Log::Warning("Math", "Attempting to calculate inverse of singular 3x3 matrix. [DNE] Returning identity.");
+			return Identity();
+		}
 	};
 
 	template <typename TYPE>
 	struct Mat4
 	{
-		TYPE data_[4][4] = { { 1.0,0.0,0.0,0.0},{0.0,1.0,0.0,0.0},{0.0,0.0,1.0,0.0},{0.0,0.0,0.0,1.0} };
+		TYPE data_[4][4] = { { 1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1} };
 
 		#define UNCONST_MAT4(m) const_cast<Mat4<TYPE>&>(m)
 
@@ -274,6 +482,41 @@ namespace JZEngine
 		Mat4(const Mat4& mat4)
 		{
 			std::memcpy(data_, mat4.data_, static_cast<size_t>(16 * sizeof(TYPE)));
+		}
+		template <typename INCOMING_TYPE>
+		Mat4(const Mat4<INCOMING_TYPE>& mat4)
+		{
+			data_[0][0] = static_cast<TYPE>(mat4.data_[0][0]);
+			data_[0][1] = static_cast<TYPE>(mat4.data_[0][1]);
+			data_[0][2] = static_cast<TYPE>(mat4.data_[0][2]);
+			data_[0][3] = static_cast<TYPE>(mat4.data_[0][3]);
+			data_[1][0] = static_cast<TYPE>(mat4.data_[1][0]);
+			data_[1][1] = static_cast<TYPE>(mat4.data_[1][1]);
+			data_[1][2] = static_cast<TYPE>(mat4.data_[1][2]);
+			data_[1][3] = static_cast<TYPE>(mat4.data_[1][3]);
+			data_[2][0] = static_cast<TYPE>(mat4.data_[2][0]);
+			data_[2][1] = static_cast<TYPE>(mat4.data_[2][1]);
+			data_[2][2] = static_cast<TYPE>(mat4.data_[2][2]);
+			data_[2][3] = static_cast<TYPE>(mat4.data_[2][3]);
+			data_[3][0] = static_cast<TYPE>(mat4.data_[3][0]);
+			data_[3][1] = static_cast<TYPE>(mat4.data_[3][1]);
+			data_[3][2] = static_cast<TYPE>(mat4.data_[3][2]);
+			data_[3][3] = static_cast<TYPE>(mat4.data_[3][3]);
+		}
+
+		static Mat4 Identity()
+		{
+			return { { 1.0,0.0,0.0,0.0},{0.0,1.0,0.0,0.0},{0.0,0.0,1.0,0.0},{0.0,0.0,0.0,1.0} };
+		}
+
+		explicit operator Mat2<TYPE>() const
+		{
+			return { {data_[0][0],data_[0][1]}, {data_[1][0],data_[1][1]} };
+		}
+
+		explicit operator Mat3<TYPE>() const
+		{
+			return { {data_[0][0],data_[0][1],data_[0][2]}, {data_[1][0],data_[1][1],data_[1][2]}, {data_[2][0],data_[2][1],data_[2][2]} };
 		}
 
 		Mat4& operator=(const Mat4& mat4)
@@ -346,6 +589,34 @@ namespace JZEngine
 			return out;
 		}
 
+		Mat4& operator*=(const double val)
+		{
+			data_[0][0] *= val;
+			data_[0][1] *= val;
+			data_[0][2] *= val;
+			data_[0][3] *= val;
+			data_[1][0] *= val;
+			data_[1][1] *= val;
+			data_[1][2] *= val;
+			data_[1][3] *= val;
+			data_[2][0] *= val;
+			data_[2][1] *= val;
+			data_[2][2] *= val;
+			data_[2][3] *= val;
+			data_[3][0] *= val;
+			data_[3][1] *= val;
+			data_[3][2] *= val;
+			data_[3][3] *= val;
+			return *this;
+		}
+
+		Mat4 operator*(const double val) const
+		{
+			Mat4 out(*this);
+			out *= val;
+			return out;
+		}
+
 		Mat4& operator*=(const Mat4& rhs)
 		{
 			TYPE d00 = data_[0][0] * UNCONST_MAT4(rhs)[0][0] + data_[0][1] * UNCONST_MAT4(rhs)[1][0] + data_[0][2] * UNCONST_MAT4(rhs)[2][0] + data_[0][3] * UNCONST_MAT4(rhs)[3][0];
@@ -398,13 +669,14 @@ namespace JZEngine
 			return out;
 		}
 
-		/*template <typename VEC_TYPE>
-		Vec3<TYPE> operator*(const Vec3<VEC_TYPE>& rhs) const
+		template <typename VEC_TYPE>
+		Vec4<TYPE> operator*(const Vec4<VEC_TYPE>& rhs) const
 		{
-			return { data_[0][0] * static_cast<TYPE>(rhs.x) + data_[0][1] * static_cast<TYPE>(rhs.y) + +data_[0][2] * static_cast<TYPE>(rhs.z),
-					data_[1][0] * static_cast<TYPE>(rhs.x) + data_[1][1] * static_cast<TYPE>(rhs.y) + data_[1][2] * static_cast<TYPE>(rhs.z),
-					data_[2][0] * static_cast<TYPE>(rhs.x) + data_[2][1] * static_cast<TYPE>(rhs.y) + data_[2][2] * static_cast<TYPE>(rhs.z) };
-		}*/
+			return { data_[0][0] * static_cast<TYPE>(rhs.x) + data_[0][1] * static_cast<TYPE>(rhs.y) + data_[0][2] * static_cast<TYPE>(rhs.z) + data_[0][3] * static_cast<TYPE>(rhs.w),
+					 data_[1][0] * static_cast<TYPE>(rhs.x) + data_[1][1] * static_cast<TYPE>(rhs.y) + data_[1][2] * static_cast<TYPE>(rhs.z) + data_[1][3] * static_cast<TYPE>(rhs.w),
+					 data_[2][0] * static_cast<TYPE>(rhs.x) + data_[2][1] * static_cast<TYPE>(rhs.y) + data_[2][2] * static_cast<TYPE>(rhs.z) + data_[2][3] * static_cast<TYPE>(rhs.w),
+					 data_[3][0] * static_cast<TYPE>(rhs.x) + data_[3][1] * static_cast<TYPE>(rhs.y) + data_[3][2] * static_cast<TYPE>(rhs.z) + data_[3][3] * static_cast<TYPE>(rhs.w) };
+		}
 
 		TYPE* operator[](unsigned int row)
 		{
@@ -420,65 +692,100 @@ namespace JZEngine
 				os << "\n[ ";
 				for (int c = 0; c < 4; ++c)
 				{
-					os << UNCONST_MAT4(matrix)[r][c] << " ";
+					os << std::setw(10) << std::fixed << std::setprecision(5) << UNCONST_MAT4(matrix)[r][c] << ", ";
 				}
 				os << "]";
 			}
 			os << "\n:";
 			return os;
 		}
+
+		TYPE Determinant() const
+		{
+			Mat3 minor_0 {  {data_[1][1], data_[1][2], data_[1][3]},
+							{data_[2][1], data_[2][2], data_[2][3]},
+							{data_[3][1], data_[3][2], data_[3][3]} };
+
+			Mat3 minor_1 {  {data_[1][0], data_[1][2], data_[1][3]},
+							{data_[2][0], data_[2][2], data_[2][3]},
+							{data_[3][0], data_[3][2], data_[3][3]} };
+
+			Mat3 minor_2 {  {data_[1][0], data_[1][1], data_[1][3]},
+							{data_[2][0], data_[2][1], data_[2][3]},
+							{data_[3][0], data_[3][1], data_[3][3]} };
+
+			Mat3 minor_3 {  {data_[1][0], data_[1][1], data_[1][2]},
+							{data_[2][0], data_[2][1], data_[2][2]},
+							{data_[3][0], data_[3][1], data_[3][2]} };
+
+			return  data_[0][0] * minor_0.Determinant() -
+					data_[0][1] * minor_1.Determinant() +
+					data_[0][2] * minor_2.Determinant() -
+					data_[0][3] * minor_3.Determinant();
+		}
+
+		Mat4 GetTranspose() const
+		{
+			return { {data_[0][0], data_[1][0], data_[2][0], data_[3][0]},
+					 {data_[0][1], data_[1][1], data_[2][1], data_[3][1]},
+					 {data_[0][2], data_[1][2], data_[2][2], data_[3][2]},
+					 {data_[0][3], data_[1][3], data_[2][3], data_[3][3]} };
+		}
+
+		Mat4& Transpose()
+		{
+			return (*this = GetTranspose());
+		}
+
+		#define a(a,b,c,d,e,f) data_[a][b]*data_[c][d]*data_[e][f]
+
+		Mat4 GetInverse() const
+		{
+			double determinant = Determinant();
+			if (determinant != 0)
+			{
+				Mat4 adjugate{  { {a(1,1,2,2,3,3) + a(1,2,2,3,3,1) + a(1,3,2,1,3,2) - a(1,3,2,2,3,1) - a(1,2,2,1,3,3) - a(1,1,2,3,3,2)},
+								{-a(0,1,2,2,3,3) - a(0,2,2,3,3,1) - a(0,3,2,1,3,2) + a(0,3,2,2,3,1) + a(0,2,2,1,3,3) + a(0,1,2,3,3,2)},
+								{a(0,1,1,2,3,3) + a(0,2,1,3,3,1) + a(0,3,1,1,3,2) - a(0,3,1,2,3,1) - a(0,2,1,1,3,3) - a(0,1,1,3,3,2)},
+								{-a(0,1,1,2,2,3) - a(0,2,1,3,2,1) - a(0,3,1,1,2,2) + a(0,3,1,2,2,1) + a(0,2,1,1,2,3) + a(0,1,1,3,2,2)} },
+
+								{ {-a(1,0,2,2,3,3) - a(1,2,2,3,3,0) - a(1,3,2,0,3,2) + a(1,3,2,2,3,0) + a(1,2,2,0,3,3) + a(1,0,2,3,3,2)},
+								{a(0,0,2,2,3,3) + a(0,2,2,3,3,0) + a(0,3,2,0,3,2) - a(0,3,2,2,3,0) - a(0,2,2,0,3,3) - a(0,0,2,3,3,2)},
+								{-a(0,0,1,2,3,3) - a(0,2,1,3,3,0) - a(0,3,1,0,3,2) + a(0,3,1,2,3,0) + a(0,2,1,0,3,3) + a(0,0,1,3,3,2)},
+								{a(0,0,1,2,2,3) + a(0,2,1,3,2,0) + a(0,3,1,0,2,2) - a(0,3,1,2,2,0) - a(0,2,1,0,2,3) - a(0,0,1,3,2,2)} },
+
+								{ {a(1,0,2,1,3,3) + a(1,1,2,3,3,0) + a(1,3,2,0,3,1) - a(1,3,2,1,3,0) - a(1,1,2,0,3,3) - a(1,0,2,3,3,1)},
+								{-a(0,0,2,1,3,3) - a(0,1,2,3,3,0) - a(0,3,2,0,3,1) + a(0,3,2,1,3,0) + a(0,1,2,0,3,3) + a(0,0,2,3,3,1)},
+								{a(0,0,1,1,3,3) + a(0,1,1,3,3,0) + a(0,3,1,0,3,1) - a(0,3,1,1,3,0) - a(0,1,1,0,3,3) - a(0,0,1,3,3,1)},
+								{-a(0,0,1,1,2,3) - a(0,1,1,3,2,0) - a(0,3,1,0,2,1) + a(0,3,1,1,2,0) + a(0,1,1,0,2,3) + a(0,0,1,3,2,1)} },
+
+								{ {-a(1,0,2,1,3,2) - a(1,1,2,2,3,0) - a(1,2,2,0,3,1) + a(1,2,2,1,3,0) + a(1,1,2,0,3,2) + a(1,0,2,2,3,1)},
+								{a(0,0,2,1,3,2) + a(0,1,2,2,3,0) + a(0,2,2,0,3,1) - a(0,2,2,1,3,0) - a(0,1,2,0,3,2) - a(0,0,2,2,3,1)},
+								{-a(0,0,1,1,3,2) - a(0,1,1,2,3,0) - a(0,2,1,0,3,1) + a(0,2,1,1,3,0) + a(0,1,1,0,3,2) + a(0,0,1,2,3,1)},
+								{a(0,0,1,1,2,2) + a(0,1,1,2,2,0) + a(0,2,1,0,2,1) - a(0,2,1,1,2,0) - a(0,1,1,0,2,2) - a(0,0,1,2,2,1)} }};
+				return adjugate * (1.0 / determinant);
+			}
+			Log::Warning("Math", "Attempting to calculate inverse of singular 4x4 matrix. [DNE] Returning identity.");
+			return Identity();
+		}
+
+		Mat4& Inverse()
+		{
+			return (*this = GetInverse());
+		}
 	};
+
+	typedef Mat2<int> Mat2i;
+	typedef Mat3<int> Mat3i;
+	typedef Mat4<int> Mat4i;
+
+	typedef Mat2<float> Mat2f;
+	typedef Mat3<float> Mat3f;
+	typedef Mat4<float> Mat4f;
 
 	typedef Mat2<double> Mat2d;
 	typedef Mat3<double> Mat3d;
 	typedef Mat4<double> Mat4d;
-
-	namespace Math
-	{
-		void Mat2TestCases()
-		{
-			Mat2<float> mat2_0{ { 1.0f,2.5f }, { 3.0f,4.0f } };
-			Mat2<float> mat2_1{ { 2.0f,1.0f }, { 4.0f,3.0f } };
-			Mat2d mat2_2;
-			Vec2<int> vec2{ 3,2 };
-			Log::Info("Math", "Mat2 Identity: {}", mat2_2);
-			//Log::Info("Math", "Mat2 Print: {}", mat2_0);
-			//Log::Info("Math", "Mat2 +=: {}", mat2_0 += mat2_1);
-			//Log::Info("Math", "Mat2 +: {}", mat2_0 + mat2_1);
-			/*Log::Info("Math", "Mat2 -=: {}", mat2_0 -= mat2_1);
-			Log::Info("Math", "Mat2 -: {}", mat2_0 - mat2_1);*/
-			/*Log::Info("Math", "Mat2 *=: {}", mat2_0 *= mat2_1);
-			Log::Info("Math", "Mat2 * Vec2: {}", mat2_0 * mat2_1);*/
-		}
-		void Mat3TestCases()
-		{
-			Mat3<float> mat3_0{ { 1.0f,2.0f,3.0f }, { 3.0f,4.0f,5.0f }, { 10.0f,20.0f,30.0f } };
-			Mat3<float> mat3_1{ { 2.0f,1.0f,0.0f }, { 4.0f,3.0f,2.0f }, { 40.0f,50.0f,60.0f } };
-			Mat3d mat3_2;
-			Vec3<int> vec3{ 3,2,1 };
-			Log::Info("Math", "Mat3 Identity: {}", mat3_2);
-			Log::Info("Math", "Mat3 Print: {}", mat3_0);
-			Log::Info("Math", "Mat3 * Vec3: {}", mat3_0 * vec3);
-		}
-
-		void Mat4TestCases()
-		{
-			Mat4<float> mat4_0{ { 1.0f,2.0f,3.0f,4.0f }, { 3.0f,4.0f,5.0f,6.0f }, { 10.0f,20.0f,30.0f,40.0f }, { 0.1f,0.2f,0.3f,0.4f } };
-			Mat4<float> mat4_1{ { 2.0f,1.0f,0.0f,-1.0f }, { 4.0f,3.0f,2.0f,1.0f }, { 40.0f,50.0f,60.0f,70.0f }, { 0.2f,0.3f,0.4f,0.5f } };
-			Mat4d mat4_2;
-			Log::Info("Math", "Mat4 Identity: {}", mat4_2);
-			Log::Info("Math", "Mat4 Print: {}", mat4_0);
-			Log::Info("Math", "Mat4 + Mat4: {}", mat4_0 + mat4_1);
-			Log::Info("Math", "Mat4 * Mat4: {}", mat4_0 * mat4_1 * mat4_0);
-		}
-
-		void AllMatrixTestCases()
-		{
-			Mat2TestCases();
-			Mat3TestCases();
-			Mat4TestCases();
-		}
-	}
 
 	//template <typename TYPE, size_t ROW, size_t COLUMN>
 	//struct Matrix

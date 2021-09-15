@@ -43,6 +43,8 @@ namespace JZEngine
 		/*testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
 		testsystem.playSound("testsound", true, 0.4f);
 		testsystem.setChannelGroupVolume(1.0f,"main");*/
+
+		Math::AllMatrixTestCases();
 	}
 
 	void Application::Free()

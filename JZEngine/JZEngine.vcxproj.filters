@@ -28,6 +28,7 @@
     <ClCompile Include="src\JZEngine\PCH.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\JZEngine\Sound\Sound.cpp" />
+    <ClCompile Include="src\JZEngine\Math\JZMath.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
