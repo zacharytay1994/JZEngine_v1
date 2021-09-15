@@ -5,15 +5,15 @@
 namespace JZEngine
 {
 	//Dynamic AABB collision
-    bool DynamicCollision_RectRect(const AABB& aabb1, const JZEngine::Vec2<float>& vel1,
-        const AABB& aabb2, const JZEngine::Vec2<float>& vel2)
+    bool DynamicCollision_RectRect(const AABB& aabb1, const JZEngine::Vec2f& vel1,
+        const AABB& aabb2, const JZEngine::Vec2f& vel2)
     {
         if ((aabb1.max.x < aabb2.min.x) || (aabb1.max.y < aabb2.min.y) || (aabb1.min.x > aabb2.max.x) || (aabb1.min.y > aabb2.max.y))
         {
             ////Step 2: Initialize and calculate the new velocity of Vb
             float tFirst = 0.0f;
             float tLast = 0; // g_dt;
-            Vec2<float> RelativeVb;
+            Vec2f RelativeVb;
             RelativeVb = vel2 - vel1;
             if (!RelativeVb.x)
                 if (aabb1.max.x < aabb2.min.x || aabb1.min.x > aabb2.max.x)
@@ -113,7 +113,7 @@ namespace JZEngine
     }
 
 	//Static AABB Collision
-    bool StaticCollision_PointRect(const Vec2<float>& point,
+    bool StaticCollision_PointRect(const Vec2f& point,
         const AABB& aabb2)
     {
         if (point.x < aabb2.max.x && point.x > aabb2.min.x && point.y < aabb2.max.y && point.y > aabb2.min.y)
@@ -134,7 +134,7 @@ namespace JZEngine
 	 */
 	 /******************************************************************************/
 	void BuildLineSegment(LineSegment& lineSegment,
-		const Vec2<float>& pos,
+		const Vec2f& pos,
 		float scale,
 		float dir)
 	{
@@ -162,22 +162,22 @@ namespace JZEngine
 	 */
 	 /******************************************************************************/
 	int DynamicCollision_CircleLineSegment(const Circle& circle,			//Circle data - input
-		const Vec2<float>& circleend,											//End circle position - input
+		const Vec2f& circleend,											//End circle position - input
 		const LineSegment& lineSeg,												//Line segment - input
-		Vec2<float>& interPt,												//Intersection point - output
-		Vec2<float>& normalAtCollision,									//Normal vector at collision time - output
+		Vec2f& interPt,												//Intersection point - output
+		Vec2f& normalAtCollision,									//Normal vector at collision time - output
 		float& interTime)												//Intersection time ti - output
 
 	{
 		// outward normal M to circle velocity
-		Vec2<float> V(circleend.x - circle.m_center.x, circleend.y - circle.m_center.y);
-		Vec2<float> M(circleend.y - circle.m_center.y, -(circleend.x - circle.m_center.x));
+		Vec2f V(circleend.x - circle.m_center.x, circleend.y - circle.m_center.y);
+		Vec2f M(circleend.y - circle.m_center.y, -(circleend.x - circle.m_center.x));
 		float nbsnp0 = lineSeg.m_normal.Dot( circle.m_center) -
 			lineSeg.m_normal.Dot( lineSeg.m_pt0);
 		if (nbsnp0 < -circle.m_radius)
 		{
-			Vec2<float> p0prime = lineSeg.m_pt0 - circle.m_radius * lineSeg.m_normal;
-			Vec2<float> p1prime = lineSeg.m_pt1 - circle.m_radius * lineSeg.m_normal;
+			Vec2f p0prime = lineSeg.m_pt0 - circle.m_radius * lineSeg.m_normal;
+			Vec2f p1prime = lineSeg.m_pt1 - circle.m_radius * lineSeg.m_normal;
 
 			if (M.Dot(p0prime - circle.m_center) * M.Dot( p1prime - circle.m_center) < 0)
 			{
@@ -200,8 +200,8 @@ namespace JZEngine
 		}
 		else if (nbsnp0 > circle.m_radius)
 		{
-			Vec2<float> p0prime = lineSeg.m_pt0 + circle.m_radius * lineSeg.m_normal;
-			Vec2<float> p1prime = lineSeg.m_pt1 + circle.m_radius * lineSeg.m_normal;
+			Vec2f p0prime = lineSeg.m_pt0 + circle.m_radius * lineSeg.m_normal;
+			Vec2f p1prime = lineSeg.m_pt1 + circle.m_radius * lineSeg.m_normal;
 
 			if ((M.Dot( p0prime - circle.m_center) * M.Dot( p1prime - circle.m_center)) < 0)
 			{
@@ -243,14 +243,14 @@ namespace JZEngine
 	 */
 	 /******************************************************************************/
 	int DynamicCollision_CircleCircle(const Circle& circleA,
-		const Vec2<float>& velA,
+		const Vec2f& velA,
 		const Circle& circleB,
-		const Vec2<float>& velB,
-		Vec2<float>& interPtA,
-		Vec2<float>& interPtB,
+		const Vec2f& velB,
+		Vec2f& interPtA,
+		Vec2f& interPtB,
 		float& interTime)
 	{
-		Vec2<float> RV, nRV;
+		Vec2f RV, nRV;
 		RV = velA - velB;
 		float RVlength =RV.Len();
 		nRV = RV.GetNormalized();
@@ -288,10 +288,10 @@ namespace JZEngine
 	 * \param reflected	The reflection vector(normalized)
 	 */
 	 /******************************************************************************/
-	void CollisionResponse_CircleLineSegment(const Vec2<float>& ptInter,
-		const Vec2<float>& normal,
-		Vec2<float>& ptEnd,
-		Vec2<float>& reflected)
+	void CollisionResponse_CircleLineSegment(const Vec2f& ptInter,
+		const Vec2f& normal,
+		Vec2f& ptEnd,
+		Vec2f& reflected)
 	{
 		reflected = (ptEnd - ptInter) - (2.0f * normal.Dot(ptEnd - ptInter) * normal);
 		ptEnd = ptInter + reflected;
@@ -316,21 +316,21 @@ namespace JZEngine
 	 * \param reflectedVectorB
 	 * \param ptEndB
 	 */
-	void CollisionResponse_CircleCircle(Vec2<float>& normal,
+	void CollisionResponse_CircleCircle(Vec2f& normal,
 		const float interTime,
-		Vec2<float>& velA,
+		Vec2f& velA,
 		const float& massA,
-		Vec2<float>& interPtA,
-		Vec2<float>& velB,
+		Vec2f& interPtA,
+		Vec2f& velB,
 		const float& massB,
-		Vec2<float>& interPtB,
-		Vec2<float>& reflectedVectorA,
-		Vec2<float>& ptEndA,
-		Vec2<float>& reflectedVectorB,
-		Vec2<float>& ptEndB)
+		Vec2f& interPtB,
+		Vec2f& reflectedVectorA,
+		Vec2f& ptEndA,
+		Vec2f& reflectedVectorB,
+		Vec2f& ptEndB)
 	{
-		Vec2<float> nnormal;
-		Vec2<float> nreflectedVectorA, nreflectedVectorB;
+		Vec2f nnormal;
+		Vec2f nreflectedVectorA, nreflectedVectorB;
 		//Vector2DNormalize(nnormal, normal);
 		float aA = velA.Dot(normal);
 		float aB = velB.Dot(normal);
