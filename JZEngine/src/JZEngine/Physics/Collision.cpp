@@ -161,13 +161,13 @@ namespace JZEngine
 	 * \return 0 or 1		Returns 1 if collison detected, else 0
 	 */
 	 /******************************************************************************/
-	int CollisionIntersection_CircleLineSegment(const Circle& circle,			//Circle data - input
+	int DynamicCollision_CircleLineSegment(const Circle& circle,			//Circle data - input
 		const Vec2<float>& circleend,											//End circle position - input
 		const LineSegment& lineSeg,												//Line segment - input
 		Vec2<float>& interPt,												//Intersection point - output
 		Vec2<float>& normalAtCollision,									//Normal vector at collision time - output
-		float& interTime,														//Intersection time ti - output
-		bool& checkLineEdges)
+		float& interTime)												//Intersection time ti - output
+
 	{
 		// outward normal M to circle velocity
 		Vec2<float> V(circleend.x - circle.m_center.x, circleend.y - circle.m_center.y);
@@ -242,7 +242,7 @@ namespace JZEngine
 	 * @return int
 	 */
 	 /******************************************************************************/
-	int CollisionIntersection_CircleCircle(const Circle& circleA,
+	int DynamicCollision_CircleCircle(const Circle& circleA,
 		const Vec2<float>& velA,
 		const Circle& circleB,
 		const Vec2<float>& velB,
@@ -300,20 +300,6 @@ namespace JZEngine
 
 
 
-	/******************************************************************************/
-	/*!
-	 * \brief	The function reuses the collision response from circlelinesegment
-	 */
-	 /******************************************************************************/
-	void CollisionResponse_CirclePillar(const Vec2<float>& normal,
-		const float& interTime,
-		const Vec2<float>& ptStart,
-		const Vec2<float>& ptInter,
-		Vec2<float>& ptEnd,
-		Vec2<float>& reflectedVectorNormalized)
-	{
-		CollisionResponse_CircleLineSegment(ptInter, normal, ptEnd, reflectedVectorNormalized);
-	}
 
 	/**
 	 * \brief This function handles the collision response for circle with circle objects

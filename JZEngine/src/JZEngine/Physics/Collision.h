@@ -40,7 +40,7 @@ namespace JZEngine
 	};
 
 	// INTERSECTION FUNCTIONS
-	int CollisionIntersection_CircleLineSegment(const Circle& circle,			//Circle data - input
+	int DynamicCollision_CircleLineSegment(const Circle& circle,			//Circle data - input
 		const Vec2<float>& ptEnd,											//End circle position - input
 		const LineSegment& lineSeg,												//Line segment - input
 		Vec2<float>& interPt,												//Intersection point - output
@@ -49,7 +49,7 @@ namespace JZEngine
 												
 	// circle-circle - same usage for: dynamic circle vs static pillar, and dynamic circle vs dynamic circle
 	// In the case of "dynamic circle vs static pillar", velB will be 0.0f
-	int CollisionIntersection_CircleCircle(const Circle& circleA,				//CircleA data - input
+	int DynamicCollision_CircleCircle(const Circle& circleA,				//CircleA data - input
 		const Vec2<float>& velA,														//CircleA velocity - input
 		const Circle& circleB,													//CircleB data - input
 		const Vec2<float>& velB,														//CircleA velocity - input
@@ -57,12 +57,6 @@ namespace JZEngine
 		Vec2<float>& interPtB,														//Intersection point of CircleB at collision time - output
 		float& interTime);														//intersection time - output
 
-	// circle-circle - same usage for: dynamic circle vs static pillar, and dynamic circle vs dynamic circle
-	// this is a helper function to be used inside "CollisionIntersection_CircleCircle" function
-	// it is checking collision a moving dot vs a static circle
-	int CollisionIntersection_RayCircle(const Ray& ray,							//A ray containing the data of the moving dot - input
-		const Circle& circle,													//Static circle data - input
-		float& interTime);														//Intersection time - output
 
 	// RESPONSE FUNCTIONS In this case the object bounces off the line
 	void CollisionResponse_CircleLineSegment(const Vec2<float>& ptInter,							//Intersection position of the circle - input
@@ -71,14 +65,7 @@ namespace JZEngine
 		Vec2<float>& reflected);							//Normalized reflection vector direction - output
 
 
-	void CollisionResponse_CirclePillar(const Vec2<float>& normal,					//Normal vector of reflection on collision time - input
-		const float& interTime,													//Intersection time - input
-		const Vec2<float>& ptStart,													//Starting position of the circle - input
-		const Vec2<float>& ptInter,													//Intersection position of the circle - input
-		Vec2<float>& ptEnd,															//Final position of the circle after reflection - output
-		Vec2<float>& reflectedVectorNormalized);										//Normalized reflection vector - output
-
-	// Extra credits
+		// Extra credits
 	void CollisionResponse_CircleCircle(Vec2<float>& normal,							//Normal vector of reflection on collision time - input
 		const float interTime,													//Intersection time - input
 		Vec2<float>& velA,															//Velocity of CircleA - input
