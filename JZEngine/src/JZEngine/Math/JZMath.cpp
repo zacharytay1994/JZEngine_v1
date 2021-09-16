@@ -7,6 +7,11 @@ namespace JZEngine
 {
 	namespace Math
 	{
+		bool IsEven(int val)
+		{
+			return val % 2 == 0;
+		}
+
 		void TestMat2(const Mat2d& check, const Mat2d& against)
 		{
 			double	val{ 1.5 };
