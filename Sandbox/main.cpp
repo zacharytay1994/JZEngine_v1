@@ -10,8 +10,7 @@ public:
 	Sandbox ()
 		:
 		Application ()
-	{
-	}
+	{}
 };
 
 JZEngine::Application* JZEngine::CreateApplication ()

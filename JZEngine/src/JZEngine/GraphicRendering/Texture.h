@@ -8,9 +8,11 @@ namespace JZEngine
 	class Texture2D
 	{
 	public:
-		Texture2D( GLuint width, GLuint height );
-		Texture2D( const std::string& path );
+		Texture2D();
 		~Texture2D();
+
+		void Texture2DLoad( GLuint width, GLuint height );
+		void Texture2DLoad( const std::string& path );
 
 		void SetData( void* data, unsigned int size );
 		void Bind( unsigned int slot = 0 );
@@ -33,10 +35,12 @@ namespace JZEngine
 
 	private:
 
+		std::string path_{};
+
 		GLuint renderer_id_{};
 		GLuint width_{};
 		GLuint height_{};
-		std::string path_{};
+
 		GLenum internal_format_{};
 		GLenum data_format_{};
 	};

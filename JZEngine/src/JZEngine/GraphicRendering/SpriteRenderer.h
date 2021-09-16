@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Shader.h"
+#include "Texture.h"
 #include "../Math/JZMath.h"
 
 namespace JZEngine
@@ -10,9 +11,8 @@ namespace JZEngine
 	public:
 		SpriteRenderer();
 		~SpriteRenderer();
-		void Init();
-		void DrawSprite( const std::string& texture,
-						 JZEngine::Vec2f position,
+		void Init( const std::string& texture );
+		void DrawSprite( JZEngine::Vec2f position,
 						 JZEngine::Vec2f size = { 10.0f ,10.0f },
 						 float rotateDegree = 0.0f,
 						 JZEngine::Vec3f color = { 1.0f, 1.0f ,1.0f } );
@@ -25,6 +25,7 @@ namespace JZEngine
 
 		// Render state
 		Shader shader_{};
+		Texture2D texture_{};
 
 
 	private:

@@ -1,8 +1,7 @@
 #include <PCH.h>
-#include <glad/glad.h>
-
 #include "Renderer.h"
-//#include "OpenGLDebug.h"
+
+#include <glad/glad.h>
 
 namespace JZEngine
 {

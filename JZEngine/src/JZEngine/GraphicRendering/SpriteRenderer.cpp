@@ -1,7 +1,6 @@
 #include <PCH.h>
-#include "Renderer.h"
-#include "Texture.h"
 #include "SpriteRenderer.h"
+#include "Renderer.h"
 #include <math.h>
 #include "../Math/JZMatrix.h"
 
@@ -13,13 +12,14 @@ namespace JZEngine
 	{}
 	SpriteRenderer::~SpriteRenderer()
 	{}
-	void SpriteRenderer::Init()
+	void SpriteRenderer::Init( const std::string& texture )
 	{
 		Renderer::Instance().Init();
+		texture_.Texture2DLoad( texture );
 	}
-	void SpriteRenderer::DrawSprite( const std::string& texture, JZEngine::Vec2f position, JZEngine::Vec2f size, float rotateDegree, JZEngine::Vec3f color )
+
+	void SpriteRenderer::DrawSprite( JZEngine::Vec2f position, JZEngine::Vec2f size, float rotateDegree, JZEngine::Vec3f color )
 	{
-		Texture2D texture_( texture );
 
 		JZEngine::Mat3f model;
 		model *= JZEngine::Mat3f::Translate( position.x, position.y );
@@ -28,11 +28,13 @@ namespace JZEngine
 		model *= JZEngine::Mat3f::Translate( -0.5f * size.x, -0.5f * size.y );
 		model *= JZEngine::Mat3f::Scale( size.x, size.y, 1.0f );
 
+
 		shader_.SetUniform( "model", model );
 		shader_.SetUniform( "spriteColor", color );
 		texture_.Bind();
 		Renderer::Instance().Draw();
 	}
+
 	void SpriteRenderer::InitRenderData()
 	{}
 }
