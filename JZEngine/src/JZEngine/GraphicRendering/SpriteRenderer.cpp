@@ -21,36 +21,23 @@ namespace JZEngine
 		shader_ = Renderer::Instance().GetShaderProgram();
 	}
 
-	void SpriteRenderer::DrawSprite( JZEngine::Vec2f position, JZEngine::Vec2f size, float rotateDegree, JZEngine::Vec3f color )
+	void SpriteRenderer::DrawSprite( JZEngine::Vec2f position, JZEngine::Vec2f scale, float rotateDegree, JZEngine::Vec3f color )
 	{
 		UNREFERENCED_PARAMETER( position );
 		UNREFERENCED_PARAMETER( rotateDegree );
-		UNREFERENCED_PARAMETER( rotateDegree );
+		UNREFERENCED_PARAMETER( scale );
 
-
-
-		//JZEngine::Mat3f model3;
-		//std::cout << "-----------------------START-----------------\n";
-		//model3 *= JZEngine::Mat3f::Translate( position.x, position.y );
-		//std::cout << model3;
-		//model3 *= JZEngine::Mat3f::Translate( 0.5f * size.x, 0.5f * size.y );
-		//std::cout << model3;
-		//model3 *= JZEngine::Mat3f::RotateZ( rotateDegree * ( PI / 180.0f ) );
-		//std::cout << model3;
-		//model3 *= JZEngine::Mat3f::Translate( -0.5f * size.x, -0.5f * size.y );
-		//std::cout << model3;
-		//model3 *= JZEngine::Mat3f::Scale( size.x, size.y, 1.0f );
-		//JZEngine::Mat4f model4 =static_cast < JZEngine::Mat4f> (model3);
-		//std::cout << "-----------------------END-------------------\n";
+		JZEngine::Mat3f transform; // make sure to initialize matrix to identity matrix first
+		transform *= JZEngine::Mat3f::RotateZ( ( float )glfwGetTime() * ( PI / 180.0f ) );
+		transform *= JZEngine::Mat3f::Scale( scale.x, scale.y, 1.0f );
+		JZEngine::Mat4f transform4 = static_cast < JZEngine::Mat4f > ( transform );
 
 		Renderer::Instance().Bind();
 		glCheckError();
 		texture_.Bind();
 		glCheckError();
-	/*	shader_.SetUniform( "model", model4 );
+		shader_.SetUniform( "transform", transform4 );
 		glCheckError();
-		shader_.SetUniform( "spriteColor", color );
-		glCheckError();*/
 		Renderer::Instance().Draw();
 		Renderer::Instance().Unbind();
 	}

@@ -64,13 +64,13 @@ namespace JZEngine
 
 			gl_instance_.Draw();
 
+			sprite.DrawSprite({ 200.0f, 200.0f }, { 1.5f,1.5f }, 45.0f, {0.5f, 0.5f, 0.50f} );
+
 			engine_gui_.Update();
 
 			testsystem.updateSoundSystem();
 
 			ecs_instance_->Update();
-
-			sprite.DrawSprite({ 200.0f, 200.0f }, { 1000.0f,1000.0f }, 45.0f, {0.5f, 0.5f, 0.50f} );
 
 			gl_instance_.FrameEnd();
 

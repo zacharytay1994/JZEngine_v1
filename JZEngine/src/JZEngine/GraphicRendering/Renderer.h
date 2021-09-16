@@ -14,25 +14,6 @@ namespace JZEngine
 
 		/*set up vertex data ( and buffer ( s ) ) and configure vertex attributes
 			------------------------------------------------------------------*/
-			//std::array < float, 24 > vertices
-			//{
-			//	 0.5f,  0.5f, 0.5f,  0.5f,   // top right
-			//	 0.5f, -0.5f, 0.5f, -0.5f,   // bottom right
-			//	-0.5f, -0.5f,-0.5f, -0.5f,   // bottom left
-			//	-0.5f,  0.5f,-0.5f,  0.5f,   // top left 
-			//};
-
-		//std::array < float, 24 > vertices
-		//{
-		//	// pos      // tex
-		//	0.0f, 1.0f, 0.0f, 1.0f,
-		//	1.0f, 0.0f, 1.0f, 0.0f,
-		//	0.0f, 0.0f, 0.0f, 0.0f,
-
-		//	0.0f, 1.0f, 0.0f, 1.0f,
-		//	1.0f, 1.0f, 1.0f, 1.0f,
-		//	1.0f, 0.0f, 1.0f, 0.0f
-		//};
 
 		std::array < float, 32 > vertices
 		{
@@ -42,7 +23,6 @@ namespace JZEngine
 			-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
 			-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
 		};
-
 		std::array < unsigned int, 6 > indices
 		{  // note that we start from 0!
 			0, 1, 3,  // first Triangle
