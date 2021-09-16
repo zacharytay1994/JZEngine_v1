@@ -70,9 +70,10 @@ namespace JZEngine
 
 			ecs_instance_->Update();
 
-			sprite.DrawSprite({ 200.0f, 200.0f }, { 300.0f,300.0f }, 45.0f, {1.0f, 1.0f, 0.40f} );
+			sprite.DrawSprite({ 200.0f, 200.0f }, { 1000.0f,1000.0f }, 45.0f, {0.5f, 0.5f, 0.50f} );
 
 			gl_instance_.FrameEnd();
+
 		}
 	
 	}

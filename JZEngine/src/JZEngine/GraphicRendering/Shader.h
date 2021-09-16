@@ -15,10 +15,10 @@ namespace JZEngine
 		GLboolean CompileShaderFromString ( GLenum shader_type , std::string const& shader_src );
 		GLboolean Link ();
 		GLboolean IsLinked () const;
+		GLuint ShaderHandle() const;
 		std::string GetLog () const;
 		void Bind () const;
 		void Unbind () const;
-
 
 		void SetUniform ( GLchar const* name , GLboolean val );
 		void SetUniform ( GLchar const* name , GLint val );
@@ -30,7 +30,6 @@ namespace JZEngine
 		void SetUniform ( GLchar const* name , JZEngine::Vec3f const& val );
 		void SetUniform ( GLchar const* name , JZEngine::Mat3f const& val );
 		void SetUniform ( GLchar const* name , JZEngine::Mat4f const& val );
-
 	
 	private:
 

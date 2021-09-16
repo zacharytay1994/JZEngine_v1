@@ -134,6 +134,11 @@ namespace JZEngine
 		return is_linked;
 	}
 
+	GLuint Shader::ShaderHandle() const
+	{
+		return pgm_handle;
+	}
+
 	std::string Shader::GetLog () const
 	{
 		return log_string;
@@ -274,7 +279,7 @@ namespace JZEngine
 		GLint loc = glGetUniformLocation( pgm_handle, name );
 		if ( loc >= 0 )
 		{
-			glUniformMatrix4fv( loc, 1, GL_FALSE, val.data_[0] );
+			glUniformMatrix4fv( loc, 1, GL_FALSE, &val.data_[0][0] );
 		}
 		else
 		{

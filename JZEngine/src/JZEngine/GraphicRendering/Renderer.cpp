@@ -5,8 +5,6 @@
 
 namespace JZEngine
 {
-
-
 	Renderer::Renderer()
 		:
 		ib( indices.data(), static_cast < unsigned int > ( indices.size() ) )
@@ -14,9 +12,11 @@ namespace JZEngine
 
 	void Renderer::Init()
 	{
-		VertexBuffer vb( vertices.data(), vertices.size() * sizeof( float) );
+		VertexBuffer vb( vertices.data(), vertices.size() * sizeof( float ) );
 		VertexBufferLayout layout;
-		layout.Push<float>( 4 );
+		layout.Push<float>( 3 );
+		layout.Push<float>( 3 );
+		layout.Push<float>( 2 );
 		va.AddBuffer( vb, layout );
 		va.Unbind();
 		vb.Unbind();
@@ -36,7 +36,8 @@ namespace JZEngine
 
 	void Renderer::Draw()
 	{
-		Bind( va, ib, shader_program );
+		glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
+		//glDrawElements( GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, 0 );
 	}
 
 	void Renderer::Clear()
@@ -44,12 +45,22 @@ namespace JZEngine
 		glClear( GL_COLOR_BUFFER_BIT );
 	}
 
-	void Renderer::Bind( const VertexArray& va, const IndexBuffer& ib, const Shader& shader ) const
+	void Renderer::Bind()
 	{
 		va.Bind();
 		ib.Bind();
-		shader.Bind();
-		glDrawElements( GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, 0 );
+		shader_program.Bind();
 	}
 
+	void Renderer::Unbind()
+	{
+		va.Unbind();
+		ib.Unbind();
+		shader_program.Unbind();
+	}
+
+	Shader Renderer::GetShaderProgram()
+	{
+		return shader_program;
+	}
 }

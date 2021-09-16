@@ -14,24 +14,33 @@ namespace JZEngine
 
 		/*set up vertex data ( and buffer ( s ) ) and configure vertex attributes
 			------------------------------------------------------------------*/
+			//std::array < float, 24 > vertices
+			//{
+			//	 0.5f,  0.5f, 0.5f,  0.5f,   // top right
+			//	 0.5f, -0.5f, 0.5f, -0.5f,   // bottom right
+			//	-0.5f, -0.5f,-0.5f, -0.5f,   // bottom left
+			//	-0.5f,  0.5f,-0.5f,  0.5f,   // top left 
+			//};
+
 		//std::array < float, 24 > vertices
 		//{
-		//	 0.5f,  0.5f, 0.5f,  0.5f,   // top right
-		//	 0.5f, -0.5f, 0.5f, -0.5f,   // bottom right
-		//	-0.5f, -0.5f,-0.5f, -0.5f,   // bottom left
-		//	-0.5f,  0.5f,-0.5f,  0.5f,   // top left 
+		//	// pos      // tex
+		//	0.0f, 1.0f, 0.0f, 1.0f,
+		//	1.0f, 0.0f, 1.0f, 0.0f,
+		//	0.0f, 0.0f, 0.0f, 0.0f,
+
+		//	0.0f, 1.0f, 0.0f, 1.0f,
+		//	1.0f, 1.0f, 1.0f, 1.0f,
+		//	1.0f, 0.0f, 1.0f, 0.0f
 		//};
 
-		std::array < float, 24 > vertices
+		std::array < float, 32 > vertices
 		{
-			// pos      // tex
-			0.0f, 1.0f, 0.0f, 1.0f,
-			1.0f, 0.0f, 1.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 0.0f,
-
-			0.0f, 1.0f, 0.0f, 1.0f,
-			1.0f, 1.0f, 1.0f, 1.0f,
-			1.0f, 0.0f, 1.0f, 0.0f
+			// positions          // colors           // texture coords
+			 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+			 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+			-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+			-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
 		};
 
 		std::array < unsigned int, 6 > indices
@@ -47,6 +56,7 @@ namespace JZEngine
 		Renderer();
 
 	public:
+
 		static Renderer& Instance()
 		{
 			static Renderer Instance;
@@ -54,8 +64,11 @@ namespace JZEngine
 		};
 		void Init();
 		void Draw();
+		void Bind();
+		void Unbind();
 		void Clear();
-		void Bind( const VertexArray& va, const IndexBuffer& ib, const Shader& shader ) const;
+
+		Shader GetShaderProgram();
 	};
 
 

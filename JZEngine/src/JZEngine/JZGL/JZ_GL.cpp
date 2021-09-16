@@ -91,6 +91,10 @@ namespace JZEngine
 			EnableOpenGLDebugging ();
 		}
 
+		glEnable( GL_BLEND );
+		glCheckError();
+		glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+		glCheckError();
 	}
 
 	void JZEngine::FramebufferSizeCallback ( GLFWwindow* window , int width , int height )
