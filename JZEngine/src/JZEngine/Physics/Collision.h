@@ -38,6 +38,18 @@ namespace JZEngine
 
 	};
 
+	struct Shape
+	{
+		enum class shapeid{ CIRCLE, LINE } m_tag;
+		union {
+			Circle m_circle;
+			LineSegment m_line;
+		};
+		Shape() : m_tag{ shapeid::CIRCLE }, m_circle{} {}
+		Shape(const Shape& s) { std::memcpy(this, &s, sizeof(s)); }
+		~Shape() {}
+
+	};
 
 	struct AABB
 	{
