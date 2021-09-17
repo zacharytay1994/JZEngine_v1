@@ -1,3 +1,11 @@
+/*	__FILE HEADER__
+*	File:	Texture.h
+	Author: JZ
+	Date:	01/07/21
+	Brief:	Texture2D is able to store and configure a texture in OpenGL.
+			It also hosts utility functions for easy management.
+*/
+
 #pragma once
 
 #include <glad/glad.h>

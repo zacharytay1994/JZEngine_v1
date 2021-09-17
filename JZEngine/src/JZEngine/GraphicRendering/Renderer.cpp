@@ -22,8 +22,8 @@ namespace JZEngine
 		vb.Unbind();
 		ib.Unbind();
 
-		shader_program.CompileShaderFromFile( GL_VERTEX_SHADER, "Assets/Shaders/Vertex/VertexShader_Color_Testing.vs" );
-		shader_program.CompileShaderFromFile( GL_FRAGMENT_SHADER, "Assets/Shaders/Fragment/FragmentShader_Color_Testing.fs" );
+		shader_program.CompileShaderFromFile( GL_VERTEX_SHADER, "Assets/Shaders/Vertex/VertexShader_Tex.vs" );
+		shader_program.CompileShaderFromFile( GL_FRAGMENT_SHADER, "Assets/Shaders/Fragment/FragmentShader_Tex.fs" );
 		shader_program.Link();
 
 		if ( GL_FALSE == shader_program.IsLinked() )

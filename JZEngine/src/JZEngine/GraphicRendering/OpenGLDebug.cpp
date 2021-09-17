@@ -2,7 +2,6 @@
 #include "OpenGLDebug.h"
 #include <assert.h> 
 
-
 namespace JZEngine
 {
 	GLenum glCheckError_( const char* function, int line )
@@ -43,8 +42,6 @@ namespace JZEngine
 		}
 		return error_code_;
 	}
-
-
 
 	// APIENTRY is an alias for WINAPI.
 	void APIENTRY glDebugOutput( GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, const char* message, const void* userParam )

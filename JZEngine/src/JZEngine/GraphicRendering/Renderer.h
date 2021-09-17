@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:	Renderer.h
+	Author: JZ
+	Date:	01/07/21
+	Brief:	Bind VAO , VBO , IBO and Shader .
+*/
+
 #pragma once
 
 #include <array>
@@ -14,7 +21,6 @@ namespace JZEngine
 
 		/*set up vertex data ( and buffer ( s ) ) and configure vertex attributes
 			------------------------------------------------------------------*/
-
 		std::array < float, 32 > vertices
 		{
 			// positions          // colors           // texture coords
@@ -50,6 +56,4 @@ namespace JZEngine
 
 		Shader GetShaderProgram();
 	};
-
-
 }

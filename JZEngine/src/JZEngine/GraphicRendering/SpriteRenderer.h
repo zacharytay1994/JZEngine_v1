@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:	SpriteRenderer.h
+	Author: JZ
+	Date:	01/07/21
+	Brief:	For user to pass in data to render a sprite or picture.
+*/
+
 #pragma once
 
 #include "Shader.h"
@@ -13,6 +20,7 @@ namespace JZEngine
 		~SpriteRenderer();
 		void Init( const std::string& texture );
 		void DrawSprite( JZEngine::Vec2f position,
+						 JZEngine::Vec2f size = { 10.0f , 10.0f },
 						 JZEngine::Vec2f scale = { 1.0f ,1.0f },
 						 float rotateDegree = 0.0f,
 						 JZEngine::Vec3f color = { 1.0f, 1.0f ,1.0f } );
@@ -27,12 +35,10 @@ namespace JZEngine
 		Shader shader_{};
 		Texture2D texture_{};
 
-
 	private:
 
 		// Initializes and configures the quad's buffer and vertex attributes
 		void InitRenderData();
-
 	};
 
 }

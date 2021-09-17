@@ -3,7 +3,7 @@
 	Author: JZ
 	Date:	19/06/21
 	Brief:	Defines an application class that runs the engine editor.
-			See Application.h for more information on the class.	
+			See Application.h for more information on the class.
 */
 
 #include <PCH.h>
@@ -33,20 +33,20 @@ namespace JZEngine
 
 	Application::Application()
 		:
-		gl_instance_(Settings::window_width, Settings::window_height),
-		ecs_instance_(new ECS::ECSInstance),
-		engine_gui_(gl_instance_.window_, ecs_instance_)
+		gl_instance_( Settings::window_width, Settings::window_height ),
+		ecs_instance_( new ECS::ECSInstance ),
+		engine_gui_( gl_instance_.window_, ecs_instance_ )
 	{
-		Log::Instance().Initialize(engine_gui_.GetConsole());
-		JZEngine::Log::Info("Main", "[{}] Up and Running! v{} [MEM LEAKS BEGONE]", Settings::engine_name, Settings::version);
-	
+		Log::Instance().Initialize( engine_gui_.GetConsole() );
+		JZEngine::Log::Info( "Main", "[{}] Up and Running! v{} [MEM LEAKS BEGONE]", Settings::engine_name, Settings::version );
+
 		testsystem.initialize();
 		/*testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
 		testsystem.playSound("testsound", true, 0.4f);
 		testsystem.setChannelGroupVolume(1.0f,"main");*/
 
 		//Math::AllMatrixTestCases();
-		sprite.Init( "Assets/Textures/Square.jpg");
+		sprite.Init( "Assets/Textures/Square.jpg" );
 	}
 
 	void Application::Free()
@@ -59,12 +59,15 @@ namespace JZEngine
 	{
 		while ( gl_instance_.Active() )
 		{
-
 			gl_instance_.FrameStart();
 
 			gl_instance_.Draw();
 
-			sprite.DrawSprite({ 200.0f, 200.0f }, { 1.5f,1.5f }, 45.0f, {0.5f, 0.5f, 0.50f} );
+			sprite.DrawSprite( { 400.0f, 400.0f },
+							   { 200.0f , 100.0f },
+							   { 1.0f, 2.0f },
+							   45.0f,
+							   { 0.5f, 0.5f, 0.50f } );
 
 			engine_gui_.Update();
 
@@ -73,8 +76,6 @@ namespace JZEngine
 			ecs_instance_->Update();
 
 			gl_instance_.FrameEnd();
-
 		}
-	
 	}
 }

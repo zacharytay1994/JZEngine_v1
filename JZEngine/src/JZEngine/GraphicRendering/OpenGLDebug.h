@@ -1,8 +1,14 @@
+/*	__FILE HEADER__
+*	File:	OpenGLDebug.h
+	Author: JZ
+	Date:	01/07/21
+	Brief:	OpenGL feature that makes debugging and optimizing OpenGL applications easier.
+*/
+
 #pragma once
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
-
 
 namespace JZEngine
 {
@@ -11,7 +17,6 @@ namespace JZEngine
 #define glCheckError() glCheckError_(__FILE__, __LINE__)
 
 	void APIENTRY glDebugOutput ( GLenum source , GLenum type , unsigned int id , GLenum severity , GLsizei length , const char* message , const void* userParam ) ;
-
 
 	/**
 	 * @brief 

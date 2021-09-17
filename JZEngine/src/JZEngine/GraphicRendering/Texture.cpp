@@ -3,7 +3,6 @@
 #include "stb_image.h"
 #include "Texture.h"
 
-
 namespace JZEngine
 {
 	Texture2D::Texture2D()
@@ -97,8 +96,8 @@ namespace JZEngine
 	*/
 	void Texture2D::Bind( unsigned int slot )
 	{
-		//glBindTextureUnit( slot, renderer_id_ );
-		 // bind textures on corresponding texture units
+		// glBindTextureUnit( slot, renderer_id_ );
+		// bind textures on corresponding texture units
 		glActiveTexture( GL_TEXTURE0 );
 		glBindTexture( GL_TEXTURE_2D, renderer_id_ );
 	}

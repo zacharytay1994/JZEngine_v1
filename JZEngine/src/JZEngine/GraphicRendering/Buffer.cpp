@@ -53,14 +53,12 @@ namespace JZEngine
 	// [END] VertexBuffer 
 	/////////////////////////////////////////////////////////////////////////////
 
-
 	/////////////////////////////////////////////////////////////////////////////
 	// [START] Index Buffer
 	IndexBuffer::IndexBuffer ( unsigned int* indices , unsigned int count ) 
 		:
 		data_ ( indices ) ,
 		count_ ( count )
-
 	{
 		glGenBuffers ( 1 , &renderer_id_ );
 		// GL_ELEMENT_ARRAY_BUFFER is not valid without an actively bound VAO
@@ -85,5 +83,4 @@ namespace JZEngine
 	}
 	// [END] Index Buffer
 	/////////////////////////////////////////////////////////////////////////////
-
 }

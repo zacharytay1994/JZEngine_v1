@@ -13,7 +13,6 @@
 
 namespace JZEngine
 {
-
 	GLFW_Instance::GLFW_Instance( int width, int height )
 		:
 		window_width_( width ),
@@ -84,7 +83,7 @@ namespace JZEngine
 		int flags;
 		// features of contexts can be detected via context flags
 		glGetIntegerv ( GL_CONTEXT_FLAGS , &flags );
-		// check if the context is a debug context.
+		// check if the context is a debug context
 		if( flags & GL_CONTEXT_FLAG_DEBUG_BIT )
 		{
 			std::cout << "Debug Mode" << std::endl;
