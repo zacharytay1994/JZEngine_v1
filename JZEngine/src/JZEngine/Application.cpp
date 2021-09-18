@@ -46,7 +46,8 @@ namespace JZEngine
 		testsystem.setChannelGroupVolume(1.0f,"main");*/
 
 		//Math::AllMatrixTestCases();
-		sprite.Init( "Assets/Textures/Square.jpg" );
+		//sprite.Init( "Assets/Textures/cute-unicorn.png" );
+		sprite.Init("Assets/Textures/Square.jpg");
 	}
 
 	void Application::Free()
@@ -64,8 +65,8 @@ namespace JZEngine
 			gl_instance_.Draw();
 
 			sprite.DrawSprite( { 400.0f, 400.0f },
-							   { 200.0f , 100.0f },
-							   { 1.0f, 2.0f },
+							   { 50.0f , 50.0f },
+							   { 300.0f, 20.0f },
 							   45.0f,
 							   { 0.5f, 0.5f, 0.50f } );
 
