@@ -8,7 +8,10 @@ namespace JZEngine
 	Renderer::Renderer()
 		:
 		ib( indices.data(), static_cast < unsigned int > ( indices.size() ) )
-	{};
+	{
+		// load all texture images
+		textures_["unicorn"].Texture2DLoad("Assets/Textures/cute-unicorn.png");
+	};
 
 	void Renderer::Init()
 	{
@@ -59,8 +62,18 @@ namespace JZEngine
 		shader_program.Unbind();
 	}
 
-	Shader Renderer::GetShaderProgram()
+	Shader& Renderer::GetShaderProgram()
 	{
 		return shader_program;
+	}
+	
+	void Renderer::BindTexture(const std::string& name)
+	{
+		textures_[name].Bind();
+	}
+
+	std::unordered_map<std::string, Texture2D>* Renderer::GetTextures()
+	{
+		return &textures_;
 	}
 }

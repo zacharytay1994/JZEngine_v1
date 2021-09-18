@@ -9,12 +9,15 @@
 #pragma once
 
 #include <tuple>
+#include <string>
 
 #include "../BuildDefinitions.h"
 #include "../ImGui/imgui.h"
 
 #include "../ECS/ECS.h"
 #include "../ECS/ECSConfig.h"
+
+#include "../GraphicRendering/Renderer.h"
 
 namespace JZEngine
 {
@@ -54,6 +57,8 @@ namespace JZEngine
 		*/
 		void TreeNodeComponentsAndSystems(ECS::Entity* const entity);
 
+		int TrimName(const std::string& name);
+
 		/* ____________________________________________________________________________________________________
 		*	CUSTOM COMPONENT IMGUI LAYOUTS
 		   ____________________________________________________________________________________________________*/
@@ -85,11 +90,56 @@ namespace JZEngine
 		template <>
 		void RenderComponent(Transform& component)
 		{
-			ImGui::SliderFloat("x", &component.x, 0, 1000);
-			ImGui::SliderFloat("y", &component.y, 0, 1000);
-			ImGui::SliderFloat("theta", &component.theta, -360.0f, 360.0f);
-			ImGui::SliderFloat("sx", &component.sx, 0, 1000);
-			ImGui::SliderFloat("sy", &component.sy, 0, 1000);
+			ImGui::PushItemWidth(50.0f);
+			ImGui::InputFloat("X       ", &component.position_.x);
+			ImGui::SameLine();
+			ImGui::InputFloat("Y", &component.position_.y);
+			ImGui::SliderFloat("<-X->   ", &component.position_.x, component.position_.x - 0.5f, component.position_.x + 0.5f);
+			ImGui::SameLine();
+			ImGui::SliderFloat("<-Y->", &component.position_.y, component.position_.y - 0.5f, component.position_.y + 0.5f);
+			ImGui::PopItemWidth();
+			ImGui::PushItemWidth(168.0f);
+			ImGui::SliderFloat("Rotation", &component.rotation_, -360.0f, 360.0f);
+			ImGui::PopItemWidth();
+			ImGui::PushItemWidth(50.0f);
+			ImGui::InputFloat("SX      ", &component.scale_.x);
+			ImGui::SameLine();
+			ImGui::InputFloat("SY", &component.scale_.y);
+			ImGui::InputFloat("Width   ", &component.size_.x);
+			ImGui::SameLine();
+			ImGui::InputFloat("Height", &component.size_.y);
+			ImGui::SliderFloat("<-W->   ", &component.size_.x, component.size_.x - 0.5f, component.size_.x + 0.5f);
+			ImGui::SameLine();
+			ImGui::SliderFloat("<-H->", &component.size_.y, component.size_.y - 0.5f, component.size_.y + 0.5f);
+			ImGui::PopItemWidth();
+		}
+
+		template <>
+		void RenderComponent(Texture& component)
+		{
+			//const char* current_texture_{ nullptr };
+			//// display selection for all the consoles
+			//if (ImGui::BeginPopup("Textures"))
+			//{
+			//	int texture_count_{ 0 };
+			//	for (auto& cl : *Renderer::Instance().GetTextures())
+			//	{
+			//		if (texture_count_ == component.texture_id_)
+			//		{
+			//			current_texture_ = cl.first.c_str();
+			//		}
+			//		if (ImGui::Selectable(cl.first.c_str()))
+			//		{
+			//			component.texture_id_ = texture_count_;
+			//		}
+			//		++texture_count_;
+			//	}
+			//	ImGui::EndPopup();
+			//}
+
+			//// button event to display all console options
+			//if (ImGui::Button())
+			//	ImGui::OpenPopup("Textures");
 		}
 
 		template <>

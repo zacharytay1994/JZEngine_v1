@@ -12,6 +12,7 @@
 #include "ECS/ECSconfig.h"
 #include "DebugTools/Log.h"
 #include "Sound/Sound.h"
+#include "GraphicRendering/Renderer.h"
 #include "GraphicRendering/SpriteRenderer.h"
 
 #include "STL/Tuple.h"
@@ -29,7 +30,8 @@ namespace JZEngine
 {
 	SoundSystem testsystem;
 
-	SpriteRenderer sprite;
+	//SpriteRenderer sprite;//
+	//SpriteRenderer sprite2;
 
 	Application::Application()
 		:
@@ -41,13 +43,14 @@ namespace JZEngine
 		JZEngine::Log::Info( "Main", "[{}] Up and Running! v{} [MEM LEAKS BEGONE]", Settings::engine_name, Settings::version );
 
 		testsystem.initialize();
+		
+		Renderer::Instance().Init();
 		/*testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
 		testsystem.playSound("testsound", true, 0.4f);
 		testsystem.setChannelGroupVolume(1.0f,"main");*/
 
 		//Math::AllMatrixTestCases();
 		//sprite.Init( "Assets/Textures/cute-unicorn.png" );
-		sprite.Init("Assets/Textures/Square.jpg");
 	}
 
 	void Application::Free()
@@ -64,11 +67,17 @@ namespace JZEngine
 
 			gl_instance_.Draw();
 
-			sprite.DrawSprite( { 400.0f, 400.0f },
-							   { 50.0f , 50.0f },
-							   { 300.0f, 20.0f },
-							   45.0f,
-							   { 0.5f, 0.5f, 0.50f } );
+			/*sprite.DrawSprite({ 400.0f, 400.0f },
+				{ 50.0f , 50.0f },
+				{ 1.0f, 1.0f },
+				45.0f,
+				{ 0.5f, 0.5f, 0.50f });
+
+			sprite2.DrawSprite({ -300.0f, 200.0f },
+				{ 50.0f , 50.0f },
+				{ 1.0f, 1.0f },
+					45.0f,
+					{ 0.5f, 0.5f, 0.50f });*/
 
 			engine_gui_.Update();
 

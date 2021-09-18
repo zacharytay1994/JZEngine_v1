@@ -13,6 +13,9 @@
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
 
+#include "Texture.h"
+#include <unordered_map>
+
 namespace JZEngine
 {
 	class Renderer
@@ -38,6 +41,7 @@ namespace JZEngine
 		Shader shader_program;
 		VertexArray va;
 		IndexBuffer ib;
+		std::unordered_map<std::string, Texture2D> textures_;
 
 		Renderer();
 
@@ -54,6 +58,8 @@ namespace JZEngine
 		void Unbind();
 		void Clear();
 
-		Shader GetShaderProgram();
+		Shader& GetShaderProgram();
+		void BindTexture(const std::string& name);
+		std::unordered_map<std::string, Texture2D>* GetTextures();
 	};
 }

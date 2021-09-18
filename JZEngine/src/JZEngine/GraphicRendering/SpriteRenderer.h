@@ -18,7 +18,7 @@ namespace JZEngine
 	public:
 		SpriteRenderer();
 		~SpriteRenderer();
-		void Init( const std::string& texture );
+		//void Init();
 		void DrawSprite( JZEngine::Vec2f position,
 						 JZEngine::Vec2f size = { 10.0f , 10.0f },
 						 JZEngine::Vec2f scale = { 1.0f ,1.0f },
@@ -32,8 +32,8 @@ namespace JZEngine
 		JZEngine::Vec3<float> color_{};
 
 		// Render state
-		Shader shader_{};
-		Texture2D texture_{};
+		//Shader shader_{};
+		//Texture2D texture_{};
 
 	private:
 

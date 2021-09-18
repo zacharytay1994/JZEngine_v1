@@ -9,6 +9,7 @@ namespace JZEngine
 	namespace Math
 	{	
 		constexpr float PI = 3.1415926535897932384626433832795f;
+		constexpr float PIx2 = 3.1415926535897932384626433832795f * 2.0f;
 
 		template <typename T>
 		T RadToDeg(T val)

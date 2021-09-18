@@ -249,6 +249,7 @@
     <ClInclude Include="src\JZEngine\EngineGUI\SceneTree.h" />
     <ClInclude Include="src\JZEngine\EntryPoint.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Buffer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\NonInstanceSpriteRenderer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\OpenGLDebug.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Renderer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Shader.h" />
