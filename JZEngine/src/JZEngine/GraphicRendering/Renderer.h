@@ -7,11 +7,13 @@
 
 #pragma once
 
+#include <memory>
 #include <array>
 #include "Buffer.h"
 #include "Shader.h"
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
+#include "../Resource/ResourceManager.h"
 
 #include "Texture.h"
 #include <unordered_map>
@@ -43,23 +45,27 @@ namespace JZEngine
 		IndexBuffer ib;
 		std::unordered_map<std::string, Texture2D> textures_;
 
-		Renderer();
-
 	public:
 
-		static Renderer& Instance()
+		Renderer(ResourceManager* rm);
+		/*static Renderer& Instance()
 		{
 			static Renderer Instance;
 			return Instance;
-		};
+		};*/
 		void Init();
 		void Draw();
 		void Bind();
 		void Unbind();
 		void Clear();
 
-		Shader& GetShaderProgram();
+		Shader& GetShaderProgram(int shaderid);
 		void BindTexture(const std::string& name);
-		std::unordered_map<std::string, Texture2D>* GetTextures();
+		void BindTexture(int textureid);
+		void BindShader(int shaderid);
+		void UnbindShader(int shaderid);
+		//std::unordered_map<std::string, Texture2D>* GetTextures();
+
+		ResourceManager* const resource_manager_;
 	};
 }

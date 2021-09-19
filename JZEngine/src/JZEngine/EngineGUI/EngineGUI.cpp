@@ -11,13 +11,14 @@
 
 #include "../EngineConfig.h"
 #include "../ECS/ECSConfig.h"
+#include "../Resource/ResourceManager.h"
 
 namespace JZEngine
 {
 
-	EngineGUI::EngineGUI(GLFWwindow*& glfwwindow, ECS::ECSInstance* ecs)
+	EngineGUI::EngineGUI(GLFWwindow*& glfwwindow, ECS::ECSInstance* ecs, ResourceManager* rm)
 		:
-		inspector_(5.0f/6.0f, 0.0f, 1.0f/6.0f, 1.0f, ecs),
+		inspector_(5.0f/6.0f, 0.0f, 1.0f/6.0f, 1.0f, ecs, rm),
 		console_(1.0f/6.0f, 5.0f/6.0f, 4.0f/6.0f, 1.0f/6.0f),
 		scene_tree_(0.0f, 0.0f, 1.0f / 6.0f, 1.0f, ecs)
 	{

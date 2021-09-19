@@ -22,7 +22,7 @@ namespace JZEngine
 	//	//shader_ = Renderer::Instance().GetShaderProgram();
 	//}
 
-	void SpriteRenderer::DrawSprite( JZEngine::Vec2f position, JZEngine::Vec2f size, JZEngine::Vec2f scale, float rotateDegree, JZEngine::Vec3f color )
+	void SpriteRenderer::DrawSprite(int shaderid, int textureid, JZEngine::Vec2f position, JZEngine::Vec2f size, JZEngine::Vec2f scale, float rotateDegree, JZEngine::Vec3f color )
 	{
 		// make sure to initialize matrix to identity matrix first
 		//JZEngine::Mat3f transform;
@@ -44,15 +44,29 @@ namespace JZEngine
 		transform.Transpose();
 		//transform.Transpose();
 
-		Renderer::Instance().Bind();
+		// bind buffer data
+		//Renderer::Instance().Bind();
+		renderer_->Bind();
 		glCheckError();
+		// use shader program
+		renderer_->BindShader(shaderid);
+		glCheckError();
+
+		// bind texture
 		//texture_.Bind();
-		Renderer::Instance().BindTexture("unicorn");
+		//renderer_->BindTexture("unicorn");
+		renderer_->BindTexture(textureid);
 		glCheckError();
-		Renderer::Instance().GetShaderProgram().SetUniform( "transform", transform );
+		//Renderer::Instance().GetShaderProgram().SetUniform( "transform", transform );
+		renderer_->GetShaderProgram(shaderid).SetUniform("transform", transform);
 		glCheckError();
-		Renderer::Instance().Draw();
-		Renderer::Instance().Unbind();
+
+		renderer_->Draw();
+
+		renderer_->Unbind();
+		//renderer_->UnbindShader(shaderid);
+		/*Renderer::Instance().Draw();
+		Renderer::Instance().Unbind();*/
 	}
 
 	void SpriteRenderer::InitRenderData()

@@ -20,7 +20,8 @@ namespace JZEngine
 	// sprite component
 	struct Texture
 	{
-		unsigned int texture_id_{ 0 };
+		int texture_id_{ 0 };
+		int shader_id_{ 0 };
 	};
 
 	// sprite system
@@ -36,7 +37,9 @@ namespace JZEngine
 		virtual void Update(const float& dt) override
 		{
 			Transform& transform = GetComponent<Transform>();
-			sprite_renderer_.DrawSprite(transform.position_, transform.size_, transform.scale_, transform.rotation_, { 1.0f,1.0f,1.0f });
+			Texture& texture = GetComponent<Texture>();
+			sprite_renderer_.DrawSprite(texture.shader_id_, texture.texture_id_, 
+				transform.position_, transform.size_, transform.scale_, transform.rotation_, { 1.0f,1.0f,1.0f });
 		}
 	};
 }
