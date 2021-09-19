@@ -9,6 +9,7 @@
 
 #include "Shader.h"
 #include "Texture.h"
+#include "RendererInstancing.h"
 #include "../Math/JZMath.h"
 
 namespace JZEngine
@@ -25,6 +26,10 @@ namespace JZEngine
 						 float rotateDegree = 0.0f,
 						 JZEngine::Vec3f color = { 1.0f, 1.0f ,1.0f } );
 
+
+		void InitRenderData();
+		void InstancingDraw();
+
 	private:
 		std::string texture_path_{};
 		JZEngine::Vec2<float> position_{};
@@ -34,11 +39,6 @@ namespace JZEngine
 		// Render state
 		Shader shader_{};
 		Texture2D texture_{};
-
-	private:
-
-		// Initializes and configures the quad's buffer and vertex attributes
-		void InitRenderData();
 	};
 
 }

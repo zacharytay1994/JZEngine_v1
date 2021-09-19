@@ -1,7 +1,8 @@
 #include <PCH.h>
+#include <glad/glad.h>
 #include "Renderer.h"
 
-#include <glad/glad.h>
+
 
 namespace JZEngine
 {
@@ -12,7 +13,7 @@ namespace JZEngine
 
 	void Renderer::Init()
 	{
-		VertexBuffer vb( vertices.data(), vertices.size() * sizeof( float ) );
+		VertexBuffer vb( vertices.data(), static_cast< unsigned int >( vertices.size() * sizeof( float ) ) );
 		VertexBufferLayout layout;
 		layout.Push<float>( 3 );
 		layout.Push<float>( 3 );
@@ -37,7 +38,6 @@ namespace JZEngine
 	void Renderer::Draw()
 	{
 		glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
-		//glDrawElements( GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, 0 );
 	}
 
 	void Renderer::Clear()

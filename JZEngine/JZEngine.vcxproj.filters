@@ -30,6 +30,7 @@
     <ClCompile Include="src\JZEngine\Sound\Sound.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\SpriteRenderer.cpp" />
     <ClCompile Include="src\JZEngine\Math\JZMath.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\RendererInstancing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\JZEngine.h" />
@@ -74,5 +75,6 @@
     <ClInclude Include="src\JZEngine\Math\JZMath.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\SpriteRenderer.h" />
     <ClInclude Include="src\JZEngine\Math\Vec4.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\RendererInstancing.h" />
   </ItemGroup>
 </Project>

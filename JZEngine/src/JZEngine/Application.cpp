@@ -13,6 +13,7 @@
 #include "DebugTools/Log.h"
 #include "Sound/Sound.h"
 #include "GraphicRendering/SpriteRenderer.h"
+#include "GraphicRendering/RendererInstancing.h"
 
 #include "STL/Tuple.h"
 #include <iostream>
@@ -28,7 +29,6 @@
 namespace JZEngine
 {
 	SoundSystem testsystem;
-
 	SpriteRenderer sprite;
 
 	Application::Application()
@@ -47,7 +47,9 @@ namespace JZEngine
 
 		//Math::AllMatrixTestCases();
 		//sprite.Init( "Assets/Textures/cute-unicorn.png" );
-		sprite.Init("Assets/Textures/Square.jpg");
+		//sprite.Init("Assets/Textures/Square.jpg");
+
+		RendererInstancing::Instance().Init();
 	}
 
 	void Application::Free()
@@ -64,11 +66,14 @@ namespace JZEngine
 
 			gl_instance_.Draw();
 
-			sprite.DrawSprite( { 400.0f, 400.0f },
-							   { 50.0f , 50.0f },
-							   { 300.0f, 20.0f },
+			/*sprite.DrawSprite( { 400.0f, 400.0f },
+							   { 10.0f , 10.0f },
+							   { 20.0f, 20.0f },
 							   45.0f,
-							   { 0.5f, 0.5f, 0.50f } );
+							   { 0.5f, 0.5f, 0.50f } );*/
+
+			RendererInstancing::Instance().Draw();
+
 
 			engine_gui_.Update();
 
