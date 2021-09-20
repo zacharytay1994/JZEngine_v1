@@ -8,6 +8,7 @@
 
 #include <PCH.h>
 #include "JZ_GL.h"
+#include "../Input/Input.h"
 #include "../EngineConfig.h"
 #include "../GraphicRendering/OpenGLDebug.h"
 
@@ -78,6 +79,14 @@ namespace JZEngine
 
 		// set resize window callback function
 		glfwSetFramebufferSizeCallback ( window_ , FramebufferSizeCallback );
+
+
+		if ( !InputHandler::init(window_))
+		{
+			std::cout << "Failed to initialize input handler" << std::endl;
+		}
+		
+
 
 
 		int flags;

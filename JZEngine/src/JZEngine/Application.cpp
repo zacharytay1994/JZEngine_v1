@@ -14,6 +14,8 @@
 #include "Sound/Sound.h"
 #include "GraphicRendering/Renderer.h"
 #include "GraphicRendering/SpriteRenderer.h"
+#include "Input/Input.h"
+#include "Input/DeltaTime.h"
 
 #include "STL/Tuple.h"
 #include <iostream>
@@ -51,6 +53,8 @@ namespace JZEngine
 		/*testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
 		testsystem.playSound("testsound", true, 0.4f);
 		testsystem.setChannelGroupVolume(1.0f,"main");*/
+		InputHandler::IsMousePressed(MOUSEBUTTON::MOUSE_BUTTON_LEFT);
+
 	}
 
 	void Application::Free()
@@ -87,6 +91,10 @@ namespace JZEngine
 			ecs_instance_->Update();
 
 			gl_instance_.FrameEnd();
+
+			DeltaTime::update_time(1.0);
+
+
 		}
 	}
 }

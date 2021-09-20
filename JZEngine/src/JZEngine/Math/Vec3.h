@@ -173,6 +173,11 @@ namespace JZEngine
 		os << "[" << arg.x << "," << arg.y << "," << arg.z << "]";
 		return os;
 	}
+	template<typename T>
+	Vec3<T> operator*(T lhs, const Vec3<T>& rhs)
+	{
+		return Vec3<T>(lhs * rhs.x, lhs * rhs.y, lhs*rhs.z);
+	}
 
 	typedef Vec3<int> Vec3i;
 	typedef Vec3<float> Vec3f;
