@@ -59,6 +59,11 @@ namespace JZEngine
 			return norm;
 		}
 
+		T Dot(const Vec2<T>& v) const
+		{
+			return x * v.x + y * v.y;
+		}
+
 		template <typename T1>
 		auto operator + ( const Vec2<T1>& rhs )
 		{
@@ -66,6 +71,20 @@ namespace JZEngine
 			return Vec2<T2> ( x + rhs.x , y + rhs.y );
 		}
 
+		template <typename T1>
+		auto operator + (const Vec2<T1>& rhs) const
+		{
+			typedef std::conditional < (std::is_integral<T>::value), T1, T >::type T2;
+			return Vec2<T2>(x + rhs.x, y + rhs.y);
+		}
+
+		/*
+		template <typename T>
+		auto operator + (const Vec2<T>& rhs)
+		{
+			return Vec2<T2>(x + rhs.x, y + rhs.y);
+		}
+		*/
 		template <typename T1>
 		auto operator - ( const Vec2<T1>& rhs ) const
 		{
@@ -78,19 +97,19 @@ namespace JZEngine
 			return { -x, -y };
 		}
 
-		template <typename T1>
-		auto operator * ( const Vec2<T1>& rhs ) const
-		{
-			typedef std::conditional < ( std::is_integral<T>::value ) , T1 , T >::type T2;
-			return ( T2 ) ( x * rhs.x + y * rhs.y );
-		}
-
+		
 		template <typename T1>
 		auto operator * ( const T1& arg ) const
 		{
 			typedef std::conditional < ( std::is_integral<T>::value ) , T1 , T >::type T2;
 			return Vec2<T2> ( x * arg , y * arg ) ;
 		}
+		template <>
+		auto operator * <float> (const float& arg) const
+		{
+			return Vec2<float>(x * arg, y * arg);
+		}
+		
 
 		template <typename T1>
 		auto operator / ( const T1& arg ) const
@@ -163,6 +182,11 @@ namespace JZEngine
 	{
 		os << "[" << arg.x << "," << arg.y << "]";
 		return os;
+	}
+	template<typename T>
+	Vec2<T> operator*(T lhs, const Vec2<T>& rhs)
+	{
+		return Vec2<T>(lhs * rhs.x, lhs * rhs.y);
 	}
 
 	typedef Vec2<int> Vec2i;

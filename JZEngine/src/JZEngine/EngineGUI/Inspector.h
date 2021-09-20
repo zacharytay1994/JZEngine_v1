@@ -9,12 +9,15 @@
 #pragma once
 
 #include <tuple>
+#include <string>
 
 #include "../BuildDefinitions.h"
 #include "../ImGui/imgui.h"
 
 #include "../ECS/ECS.h"
 #include "../ECS/ECSConfig.h"
+
+#include "../Resource/ResourceManager.h"
 
 namespace JZEngine
 {
@@ -28,9 +31,10 @@ namespace JZEngine
 	struct JZENGINE_API Inspector
 	{
 		ECS::ECSInstance* const ecs_instance_;
+		ResourceManager* const resource_manager_;
 		float x_, y_, sx_, sy_;		/*!< position and scale of the ImGui window */
 
-		Inspector(float x, float y, float sx, float sy, ECS::ECSInstance* ecs);
+		Inspector(float x, float y, float sx, float sy, ECS::ECSInstance* ecs, ResourceManager* rm);
 
 		/*!
 		 * @brief ___JZEngine::ToolsGUI::RenderInspector()___
@@ -53,6 +57,8 @@ namespace JZEngine
 		 * ****************************************************************************************************
 		*/
 		void TreeNodeComponentsAndSystems(ECS::Entity* const entity);
+
+		int TrimName(const std::string& name);
 
 		/* ____________________________________________________________________________________________________
 		*	CUSTOM COMPONENT IMGUI LAYOUTS
@@ -85,11 +91,72 @@ namespace JZEngine
 		template <>
 		void RenderComponent(Transform& component)
 		{
-			ImGui::SliderFloat("x", &component.x, 0, 1000);
-			ImGui::SliderFloat("y", &component.y, 0, 1000);
-			ImGui::SliderFloat("theta", &component.theta, -360.0f, 360.0f);
-			ImGui::SliderFloat("sx", &component.sx, 0, 1000);
-			ImGui::SliderFloat("sy", &component.sy, 0, 1000);
+			ImGui::PushItemWidth(50.0f);
+			ImGui::InputFloat("X       ", &component.position_.x);
+			ImGui::SameLine();
+			ImGui::InputFloat("Y", &component.position_.y);
+			ImGui::SliderFloat("<-X->   ", &component.position_.x, component.position_.x - 0.5f, component.position_.x + 0.5f);
+			ImGui::SameLine();
+			ImGui::SliderFloat("<-Y->", &component.position_.y, component.position_.y - 0.5f, component.position_.y + 0.5f);
+			ImGui::PopItemWidth();
+			ImGui::PushItemWidth(168.0f);
+			ImGui::SliderFloat("Rotation", &component.rotation_, -360.0f, 360.0f);
+			ImGui::PopItemWidth();
+			ImGui::PushItemWidth(50.0f);
+			ImGui::InputFloat("SX      ", &component.scale_.x);
+			ImGui::SameLine();
+			ImGui::InputFloat("SY", &component.scale_.y);
+			ImGui::InputFloat("Width   ", &component.size_.x);
+			ImGui::SameLine();
+			ImGui::InputFloat("Height", &component.size_.y);
+			ImGui::SliderFloat("<-W->   ", &component.size_.x, component.size_.x - 0.5f, component.size_.x + 0.5f);
+			ImGui::SameLine();
+			ImGui::SliderFloat("<-H->", &component.size_.y, component.size_.y - 0.5f, component.size_.y + 0.5f);
+			ImGui::PopItemWidth();
+		}
+
+		template <>
+		void RenderComponent(Texture& component)
+		{
+			// display selection for all the textures
+			if (ImGui::BeginPopup("Textures"))
+			{
+				for (auto& texture : resource_manager_->texture2ds_)
+				{
+					if (ImGui::Selectable(texture.name_.c_str()))
+					{
+						component.texture_id_ = texture.id_;
+					}
+				}
+				ImGui::EndPopup();
+			}
+
+			// button event to display all texture options
+			if (ImGui::Button(resource_manager_->texture2ds_[component.texture_id_].name_.c_str(), ImVec2(168.0f,0.0f)))
+				ImGui::OpenPopup("Textures");
+
+			ImGui::SameLine();
+			ImGui::Text("Texture");
+
+			// display selection for all the shaders
+			if (ImGui::BeginPopup("Shaders"))
+			{
+				for (auto& shader : resource_manager_->shader_programs_)
+				{
+					if (ImGui::Selectable(shader.name_.c_str()))
+					{
+						component.shader_id_ = shader.id_;
+					}
+				}
+				ImGui::EndPopup();
+			}
+
+			// button event to display all shaders options
+			if (ImGui::Button(resource_manager_->shader_programs_[component.shader_id_].name_.c_str(), ImVec2(168.0f, 0.0f)))
+				ImGui::OpenPopup("Shaders");
+
+			ImGui::SameLine();
+			ImGui::Text("Shader");
 		}
 
 		template <>

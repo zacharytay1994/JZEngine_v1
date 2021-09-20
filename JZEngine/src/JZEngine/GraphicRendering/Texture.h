@@ -43,7 +43,7 @@ namespace JZEngine
 
 	private:
 
-		std::string path_{};
+		//std::string path_{};
 
 		GLuint renderer_id_{};
 		GLuint width_{};

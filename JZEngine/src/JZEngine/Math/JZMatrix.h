@@ -50,13 +50,13 @@ namespace JZEngine
 			return { {1,0},{0,1} };
 		}
 
-		static Mat2 Scale(const double x, const double y)
+		static Mat2 Scale(TYPE x, TYPE y)
 		{
-			return { {static_cast<TYPE>(x), 0},
-					 {0, static_cast<TYPE>(y)} };
+			return { {x, 0},
+					 {0, y} };
 		}
 
-		static Mat2 Rotate(const double radian)
+		static Mat2 Rotate(double radian)
 		{
 			return { {static_cast<TYPE>(std::cos(radian)), static_cast<TYPE>(-std::sin(radian))},
 					 {static_cast<TYPE>(std::sin(radian)), static_cast<TYPE>(std::cos(radian))} };
@@ -249,38 +249,38 @@ namespace JZEngine
 			return { {1.0,0.0,0.0}, {0.0,1.0,0.0}, {0.0,0.0,1.0} };
 		}
 
-		static Mat3 Scale(const double x, const double y, const double z)
+		static Mat3 Scale(TYPE x, TYPE y, TYPE z)
 		{
-			return { {static_cast<TYPE>(x),0,0},
-					 {0,static_cast<TYPE>(y),0},
-					 {0,0,static_cast<TYPE>(z)} };
+			return { {x,0,0},
+					 {0,y,0},
+					 {0,0,z} };
 		}
 
-		static Mat3 RotateZ(const double radian)
+		static Mat3 RotateZ(double radian)
 		{
 			return { {static_cast<TYPE>(std::cos(radian)), static_cast<TYPE>(-std::sin(radian)), 0},
 					 {static_cast<TYPE>(std::sin(radian)), static_cast<TYPE>(std::cos(radian)), 0},
 					 {0,0,1} };
 		}
 
-		static Mat3 RotateX(const double radian)
+		static Mat3 RotateX(double radian)
 		{
 			return { {1,0,0},
 					 {0, static_cast<TYPE>(std::cos(radian)), static_cast<TYPE>(-std::sin(radian))},
 					 {0, static_cast<TYPE>(std::sin(radian)), static_cast<TYPE>(std::cos(radian))} };
 		}
 
-		static Mat3 RotateY(const double radian)
+		static Mat3 RotateY(double radian)
 		{
 			return { {static_cast<TYPE>(std::cos(radian)), 0, static_cast<TYPE>(std::sin(radian))},
 					 {0, 1, 0},
 					 {static_cast<TYPE>(-std::sin(radian)), 0, static_cast<TYPE>(std::cos(radian))} };
 		}
 
-		static Mat3 Translate(const double x, const double y)
+		static Mat3 Translate(TYPE x, TYPE y)
 		{
-			return { {1,0,static_cast<TYPE>(x)},
-					 {0,1,static_cast<TYPE>(y)},
+			return { {1,0,x},
+					 {0,1,y},
 					 {0,0,1} };
 		}
 
@@ -508,6 +508,31 @@ namespace JZEngine
 		static Mat4 Identity()
 		{
 			return { { 1.0,0.0,0.0,0.0},{0.0,1.0,0.0,0.0},{0.0,0.0,1.0,0.0},{0.0,0.0,0.0,1.0} };
+		}
+
+		static Mat4 Scale(TYPE x, TYPE y, TYPE z)
+		{
+			return static_cast<Mat4>(Mat3<TYPE>::Scale(x, y, z));
+		}
+
+		static Mat4 RotateX(double radian)
+		{
+			return static_cast<Mat4>(Mat3<TYPE>::RotateX(radian));
+		}
+
+		static Mat4 RotateY(double radian)
+		{
+			return static_cast<Mat4>(Mat3<TYPE>::RotateY(radian));
+		}
+
+		static Mat4 RotateZ(double radian)
+		{
+			return static_cast<Mat4>(Mat3<TYPE>::RotateZ(radian));
+		}
+
+		static Mat4 Translate(TYPE x, TYPE y, TYPE z)
+		{
+			return static_cast<Mat4>(Mat3<TYPE>::Translate(x, y, z));
 		}
 
 		explicit operator Mat2<TYPE>() const

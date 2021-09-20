@@ -12,8 +12,11 @@
 #include "ECS/ECSconfig.h"
 #include "DebugTools/Log.h"
 #include "Sound/Sound.h"
+#include "GraphicRendering/Renderer.h"
 #include "GraphicRendering/SpriteRenderer.h"
 #include "GraphicRendering/RendererInstancing.h"
+#include "Input/Input.h"
+#include "Input/DeltaTime.h"
 
 #include "STL/Tuple.h"
 #include <iostream>
@@ -29,33 +32,36 @@
 namespace JZEngine
 {
 	SoundSystem testsystem;
-	SpriteRenderer sprite;
 
 	Application::Application()
 		:
 		gl_instance_( Settings::window_width, Settings::window_height ),
-		ecs_instance_( new ECS::ECSInstance ),
-		engine_gui_( gl_instance_.window_, ecs_instance_ )
+		ecs_instance_( new ECS::ECSInstance() ),
+		engine_gui_( gl_instance_.window_, ecs_instance_, &resource_manager_ ),
+		renderer_( new Renderer(&resource_manager_) )
 	{
 		Log::Instance().Initialize( engine_gui_.GetConsole() );
 		JZEngine::Log::Info( "Main", "[{}] Up and Running! v{} [MEM LEAKS BEGONE]", Settings::engine_name, Settings::version );
 
 		testsystem.initialize();
+
+		renderer_->Init();
+
+		ecs_instance_->GetSystemInefficient<Sprite>()->sprite_renderer_.renderer_ = renderer_;
 		/*testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
 		testsystem.playSound("testsound", true, 0.4f);
 		testsystem.setChannelGroupVolume(1.0f,"main");*/
 
-		//Math::AllMatrixTestCases();
-		//sprite.Init( "Assets/Textures/cute-unicorn.png" );
-		//sprite.Init("Assets/Textures/Square.jpg");
-
+		//Math::AllMatrixTestCases()；
 		RendererInstancing::Instance().Init();
+		InputHandler::IsMousePressed(MOUSEBUTTON::MOUSE_BUTTON_LEFT);
 	}
 
 	void Application::Free()
 	{
 		Log::Instance().Free();
 		delete ecs_instance_;
+		delete renderer_;
 	}
 
 	void Application::Run()
@@ -65,15 +71,8 @@ namespace JZEngine
 			gl_instance_.FrameStart();
 
 			gl_instance_.Draw();
-
-			/*sprite.DrawSprite( { 400.0f, 400.0f },
-							   { 10.0f , 10.0f },
-							   { 20.0f, 20.0f },
-							   45.0f,
-							   { 0.5f, 0.5f, 0.50f } );*/
-
+		
 			RendererInstancing::Instance().Draw();
-
 
 			engine_gui_.Update();
 
@@ -82,6 +81,8 @@ namespace JZEngine
 			ecs_instance_->Update();
 
 			gl_instance_.FrameEnd();
+
+			DeltaTime::update_time(1.0);
 		}
 	}
 }

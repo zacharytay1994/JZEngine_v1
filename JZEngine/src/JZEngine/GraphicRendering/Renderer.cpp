@@ -6,10 +6,14 @@
 
 namespace JZEngine
 {
-	Renderer::Renderer()
+	Renderer::Renderer(ResourceManager* rm)
 		:
-		ib( indices.data(), static_cast < unsigned int > ( indices.size() ) )
-	{};
+		ib(indices.data(), static_cast <unsigned int> (indices.size())),
+		resource_manager_(rm)
+	{
+		// load all texture images
+		textures_["unicorn"].Texture2DLoad("Assets/Textures/cute-unicorn.png");
+	};
 
 	void Renderer::Init()
 	{
@@ -49,18 +53,43 @@ namespace JZEngine
 	{
 		va.Bind();
 		ib.Bind();
-		shader_program.Bind();
+		//shader_program.Bind();
 	}
 
 	void Renderer::Unbind()
 	{
 		va.Unbind();
 		ib.Unbind();
-		shader_program.Unbind();
+		//shader_program.Unbind();
 	}
 
-	Shader Renderer::GetShaderProgram()
+	Shader& Renderer::GetShaderProgram(int shaderid)
 	{
-		return shader_program;
+		return resource_manager_->shader_programs_[shaderid].shader_program_;
 	}
+
+	void Renderer::BindTexture(const std::string& name)
+	{
+		textures_[name].Bind();
+	}
+	
+	void Renderer::BindTexture(int textureid)
+	{
+		resource_manager_->texture2ds_[textureid].texture2d_.Bind();
+	}
+
+	void Renderer::BindShader(int shaderid)
+	{
+		resource_manager_->shader_programs_[shaderid].shader_program_.Bind();
+	}
+
+	void Renderer::UnbindShader(int shaderid)
+	{
+		resource_manager_->shader_programs_[shaderid].shader_program_.Unbind();
+	}
+
+	/*std::unordered_map<std::string, Texture2D>* Renderer::GetTextures()
+	{
+		return &textures_;
+	}*/
 }

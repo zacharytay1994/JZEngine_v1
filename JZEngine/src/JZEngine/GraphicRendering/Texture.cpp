@@ -34,7 +34,7 @@ namespace JZEngine
 
 	void Texture2D::Texture2DLoad( const std::string& path )
 	{
-		path_ = path;
+		//path_ = path;
 
 		glGenTextures( 1, &renderer_id_ );
 		glBindTexture( GL_TEXTURE_2D, renderer_id_ );
