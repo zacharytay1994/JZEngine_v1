@@ -54,7 +54,6 @@ namespace JZEngine
 		testsystem.playSound("testsound", true, 0.4f);
 		testsystem.setChannelGroupVolume(1.0f,"main");*/
 		InputHandler::IsMousePressed(MOUSEBUTTON::MOUSE_BUTTON_LEFT);
-
 	}
 
 	void Application::Free()
