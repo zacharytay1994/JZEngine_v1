@@ -8,6 +8,7 @@
 #pragma once
 
 #include "BuildDefinitions.h"
+#include "GlobalSystems.h"
 #include "EngineGUI/EngineGUI.h"
 #include "ECS/ECS.h"
 #include "Resource/ResourceManager.h"
@@ -49,11 +50,12 @@ namespace JZEngine
 		void Run();
 
 	private:
-		JZEngine::GLFW_Instance				gl_instance_;		/*!< glfw instance, abstracts creation of opengl instance using glfw */
-		JZEngine::ResourceManager			resource_manager_;	/*!< resource manager loads all resources from files */
-		JZEngine::ECS::ECSInstance*	const	ecs_instance_;		/*!< ecs_instance handling all ecs stuffs */
-		JZEngine::EngineGUI					engine_gui_;		/*!< handles rendering and updating of engine tools gui */
-		Renderer* const						renderer_;			/*!< renderer handles all opengl rendering */
+		GlobalSystemsManager*				global_systems_;
+		//JZEngine::GLFW_Instance				gl_instance_;		/*!< glfw instance, abstracts creation of opengl instance using glfw */
+		//JZEngine::ResourceManager			resource_manager_;	/*!< resource manager loads all resources from files */
+		//JZEngine::ECS::ECSInstance*	const	ecs_instance_;		/*!< ecs_instance handling all ecs stuffs */
+		//JZEngine::EngineGUI					engine_gui_;		/*!< handles rendering and updating of engine tools gui */
+		//Renderer* const						renderer_;			/*!< renderer handles all opengl rendering */
 	};
 
 	/*!

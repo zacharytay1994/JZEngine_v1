@@ -18,7 +18,7 @@ namespace JZEngine
         the system.
      *  The max number of channels is set to 36
      */
-    void SoundSystem::initialize()
+    void SoundSystem::Init()
     {
         FMOD_RESULT result = FMOD_OK;
         result = FMOD::System_Create(&fmodsystem);
@@ -47,7 +47,7 @@ namespace JZEngine
     
     }
     // To be called every loop
-    void SoundSystem::updateSoundSystem()
+    void SoundSystem::Update(float dt)
     {
         fmodsystem->update();
     }

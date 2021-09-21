@@ -159,6 +159,7 @@
     <ClCompile Include="src\JZEngine\EngineGUI\Console.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\Inspector.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\SceneTree.cpp" />
+    <ClCompile Include="src\JZEngine\GlobalSystems.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Buffer.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\OpenGLDebug.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Renderer.cpp" />
@@ -260,6 +261,7 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\Texture.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\VertexArray.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\VertexBufferLayout.h" />
+    <ClInclude Include="src\JZEngine\GlobalSystems.h" />
     <ClInclude Include="src\JZEngine\ImGui\imconfig.h" />
     <ClInclude Include="src\JZEngine\ImGui\imgui.h" />
     <ClInclude Include="src\JZEngine\ImGui\imgui_impl_glfw.h" />

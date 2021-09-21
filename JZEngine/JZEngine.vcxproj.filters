@@ -33,6 +33,7 @@
     <ClCompile Include="src\JZEngine\Resource\ResourceManager.cpp" />
     <ClCompile Include="src\JZEngine\Physics\Collision.cpp" />
     <ClCompile Include="src\JZEngine\Input\Input.cpp" />
+    <ClCompile Include="src\JZEngine\GlobalSystems.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\JZEngine.h" />
@@ -86,5 +87,6 @@
     <ClInclude Include="src\JZEngine\Resource\ResourceManager.h" />
     <ClInclude Include="src\JZEngine\Input\Input.h" />
     <ClInclude Include="src\JZEngine\Input\DeltaTime.h" />
+    <ClInclude Include="src\JZEngine\GlobalSystems.h" />
   </ItemGroup>
 </Project>

@@ -9,6 +9,7 @@
 
 #include <memory>
 #include <array>
+#include "../GlobalSystems.h"
 #include "Buffer.h"
 #include "Shader.h"
 #include "VertexArray.h"
@@ -20,7 +21,7 @@
 
 namespace JZEngine
 {
-	class Renderer
+	class Renderer : public GlobalSystem
 	{
 	private:
 
@@ -53,7 +54,7 @@ namespace JZEngine
 			static Renderer Instance;
 			return Instance;
 		};*/
-		void Init();
+		virtual void Init() override;
 		void Draw();
 		void Bind();
 		void Unbind();

@@ -11,7 +11,7 @@ namespace JZEngine
 		resource_manager_(rm)
 	{
 		// load all texture images
-		textures_["unicorn"].Texture2DLoad("Assets/Textures/cute-unicorn.png");
+		//textures_["unicorn"].Texture2DLoad("Assets/Textures/cute-unicorn.png");
 	};
 
 	void Renderer::Init()
@@ -26,7 +26,7 @@ namespace JZEngine
 		vb.Unbind();
 		ib.Unbind();
 
-		shader_program.CompileShaderFromFile( GL_VERTEX_SHADER, "Assets/Shaders/Vertex/VertexShader_Tex.vs" );
+		/*shader_program.CompileShaderFromFile( GL_VERTEX_SHADER, "Assets/Shaders/Vertex/VertexShader_Tex.vs" );
 		shader_program.CompileShaderFromFile( GL_FRAGMENT_SHADER, "Assets/Shaders/Fragment/FragmentShader_Tex.fs" );
 		shader_program.Link();
 
@@ -35,7 +35,7 @@ namespace JZEngine
 			std::cout << "Unable to compile/link/validate shader programs" << "\n";
 			std::cout << shader_program.GetLog() << std::endl;
 			std::exit( EXIT_FAILURE );
-		}
+		}*/
 	}
 
 	void Renderer::Draw()

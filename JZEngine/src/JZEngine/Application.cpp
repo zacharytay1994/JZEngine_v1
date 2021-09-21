@@ -37,63 +37,49 @@ namespace JZEngine
 
 	Application::Application()
 		:
-		gl_instance_( Settings::window_width, Settings::window_height ),
-		ecs_instance_( new ECS::ECSInstance() ),
-		engine_gui_( gl_instance_.window_, ecs_instance_, &resource_manager_ ),
-		renderer_( new Renderer(&resource_manager_) )
+		global_systems_(new GlobalSystemsManager())
 	{
-		Log::Instance().Initialize( engine_gui_.GetConsole() );
+		global_systems_->AddSystem<GLFW_Instance>(Settings::window_width, Settings::window_height);
+		global_systems_->AddSystem<ResourceManager>();
+		global_systems_->AddSystem<ECS::ECSInstance>();
+		global_systems_->AddSystem<Renderer>(global_systems_->GlobalSystem<ResourceManager>());
+		global_systems_->AddSystem<EngineGUI>(global_systems_->GlobalSystem<GLFW_Instance>()->window_,
+			global_systems_->GlobalSystem<ECS::ECSInstance>(),
+			global_systems_->GlobalSystem<ResourceManager>());
+		global_systems_->AddSystem<SoundSystem>();
+
+		Log::Instance().Initialize(global_systems_->GlobalSystem<EngineGUI>()->GetConsole() );
 		JZEngine::Log::Info( "Main", "[{}] Up and Running! v{} [MEM LEAKS BEGONE]", Settings::engine_name, Settings::version );
 
-		testsystem.initialize();
+		//testsystem.initialize();
+		global_systems_->Init();
+		//renderer_->Init();
 
-		renderer_->Init();
-
-		ecs_instance_->GetSystemInefficient<Sprite>()->sprite_renderer_.renderer_ = renderer_;
-		/*testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
-		testsystem.playSound("testsound", true, 0.4f);
-		testsystem.setChannelGroupVolume(1.0f,"main");*/
+		global_systems_->GlobalSystem<ECS::ECSInstance>()->GetSystemInefficient<Sprite>()->sprite_renderer_.renderer_ = global_systems_->GlobalSystem<Renderer>();
+		global_systems_->GlobalSystem<SoundSystem>()->createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
+		global_systems_->GlobalSystem<SoundSystem>()->playSound("testsound", true, 0.4f);
+		global_systems_->GlobalSystem<SoundSystem>()->setChannelGroupVolume(1.0f,"main");
 		InputHandler::IsMousePressed(MOUSEBUTTON::MOUSE_BUTTON_LEFT);
 	}
 
 	void Application::Free()
 	{
 		Log::Instance().Free();
-		delete ecs_instance_;
-		delete renderer_;
+		global_systems_->Free();
+		delete global_systems_;
 	}
 
 	void Application::Run()
 	{
-		while ( gl_instance_.Active() )
+		while ( global_systems_->GlobalSystem<GLFW_Instance>()->Active() )
 		{
-			gl_instance_.FrameStart();
+			global_systems_->FrameStart();
+			global_systems_->Update(1.0);
 
-			gl_instance_.Draw();
-
-			/*sprite.DrawSprite({ 400.0f, 400.0f },
-				{ 50.0f , 50.0f },
-				{ 1.0f, 1.0f },
-				45.0f,
-				{ 0.5f, 0.5f, 0.50f });
-
-			sprite2.DrawSprite({ -300.0f, 200.0f },
-				{ 50.0f , 50.0f },
-				{ 1.0f, 1.0f },
-					45.0f,
-					{ 0.5f, 0.5f, 0.50f });*/
-
-			engine_gui_.Update();
-
-			testsystem.updateSoundSystem();
-
-			ecs_instance_->Update();
-
-			gl_instance_.FrameEnd();
-
+			//testsystem.updateSoundSystem();
 			DeltaTime::update_time(1.0);
 
-
+			global_systems_->FrameEnd();
 		}
 	}
 }

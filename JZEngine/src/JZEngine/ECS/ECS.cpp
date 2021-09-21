@@ -666,7 +666,7 @@ namespace JZEngine
 		 * all systems with matching archetypes, i.e. entities.
 		 * ****************************************************************************************************
 		*/
-		void ECSInstance::Update()
+		void ECSInstance::Update(float dt)
 		{
 			system_manager_.Update();
 		}

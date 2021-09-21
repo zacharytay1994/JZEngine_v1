@@ -22,6 +22,8 @@
 #include <iostream>
 #include <unordered_map>
 
+#include "../GlobalSystems.h"
+
 namespace JZEngine
 {
 	/*!
@@ -820,7 +822,7 @@ namespace JZEngine
 		 * manager. Main interface to the ECS.
 		 * ****************************************************************************************************
 		*/
-		struct ECSInstance // destructor still missing
+		struct ECSInstance : public GlobalSystem // destructor still missing
 		{
 			ComponentManager	component_manager_;		/*!< holds all registered components  */
 			ArchetypeManager	archetype_manager_;		/*!< holds all unique archetypes, i.e. component combinations */
@@ -843,7 +845,7 @@ namespace JZEngine
 			 * all systems with matching archetypes, i.e. entities.
 			 * ****************************************************************************************************
 			*/
-			void Update();
+			virtual void Update(float dt) override;
 
 			/*!
 			 * @brief ___JZEngine::ECS::ECSInstance::RegisterComponent()___

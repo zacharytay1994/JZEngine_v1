@@ -3,12 +3,13 @@
 #include <vector>
 #include <string>
 
+#include "../GlobalSystems.h"
 #include "../GraphicRendering/Shader.h"
 #include "../GraphicRendering/Texture.h"
 
 namespace JZEngine
 {
-	struct ResourceManager
+	struct ResourceManager : public GlobalSystem
 	{
 		struct ShaderID
 		{

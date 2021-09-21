@@ -42,7 +42,7 @@ namespace JZEngine
 	 * : Entity for Inspector gui to use.
 	 * ****************************************************************************************************
 	*/
-	void EngineGUI::Update()
+	void EngineGUI::Update(float dt)
 	{
 		// start imgui frame
 		ImGui_ImplOpenGL3_NewFrame();

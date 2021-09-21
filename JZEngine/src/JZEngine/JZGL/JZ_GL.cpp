@@ -11,6 +11,7 @@
 #include "../Input/Input.h"
 #include "../EngineConfig.h"
 #include "../GraphicRendering/OpenGLDebug.h"
+#include "../DebugTools/Log.h"
 
 namespace JZEngine
 {
@@ -25,6 +26,11 @@ namespace JZEngine
 	GLFW_Instance::~GLFW_Instance ()
 	{
 		glfwTerminate();
+	}
+
+	void GLFW_Instance::Init()
+	{
+		Log::Info("Process", "[Global System] GLFW_Instance intitialized.");
 	}
 
 	void GLFW_Instance::FrameStart ()
@@ -43,9 +49,6 @@ namespace JZEngine
 	{
 		return !glfwWindowShouldClose ( window_ );
 	}
-
-	void GLFW_Instance::Draw ()
-	{}
 
 	void GLFW_Instance::Initialize ()
 	{
