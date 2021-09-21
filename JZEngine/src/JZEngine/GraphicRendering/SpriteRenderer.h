@@ -22,7 +22,6 @@ namespace JZEngine
 	public:
 		SpriteRenderer();
 		~SpriteRenderer();
-		//void Init();
 		void DrawSprite( int shaderid,
 						int textureid,
 						JZEngine::Vec2f position,
@@ -31,22 +30,6 @@ namespace JZEngine
 						float rotateDegree = 0.0f,
 						JZEngine::Vec3f color = { 1.0f, 1.0f ,1.0f } );
 
-
-		void InitRenderData();
-		void InstancingDraw();
-		
 		Renderer* renderer_{ nullptr };
-
-	private:
-		std::string texture_path_{};
-		JZEngine::Vec2<float> position_{};
-		JZEngine::Vec2<float> size_{};
-		JZEngine::Vec3<float> color_{};
-
-	private:
-
-		// Initializes and configures the quad's buffer and vertex attributes
-		void InitRenderData();
 	};
-
 }

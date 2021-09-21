@@ -53,14 +53,12 @@ namespace JZEngine
 	{
 		va.Bind();
 		ib.Bind();
-		//shader_program.Bind();
 	}
 
 	void Renderer::Unbind()
 	{
 		va.Unbind();
 		ib.Unbind();
-		//shader_program.Unbind();
 	}
 
 	Shader& Renderer::GetShaderProgram(int shaderid)
@@ -87,9 +85,4 @@ namespace JZEngine
 	{
 		resource_manager_->shader_programs_[shaderid].shader_program_.Unbind();
 	}
-
-	/*std::unordered_map<std::string, Texture2D>* Renderer::GetTextures()
-	{
-		return &textures_;
-	}*/
 }

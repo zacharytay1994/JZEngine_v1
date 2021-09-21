@@ -34,12 +34,19 @@ namespace JZEngine
 			RegisterComponents<Transform, Texture>();
 		}
 
+		virtual void FrameBegin( const float& dt ) override
+		{
+			//sprite_renderer_.ClearPackets();
+		}
+
 		virtual void Update(const float& dt) override
 		{
 			Transform& transform = GetComponent<Transform>();
 			Texture& texture = GetComponent<Texture>();
-			sprite_renderer_.DrawSprite(texture.shader_id_, texture.texture_id_, 
-				transform.position_, transform.size_, transform.scale_, transform.rotation_, { 1.0f,1.0f,1.0f });
+
+			// else use default render
+			sprite_renderer_.DrawSprite( texture.shader_id_, texture.texture_id_,
+										 transform.position_, transform.size_, transform.scale_, transform.rotation_, { 1.0f,1.0f,1.0f } );
 		}
 	};
 }

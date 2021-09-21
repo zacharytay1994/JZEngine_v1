@@ -9,36 +9,31 @@ namespace JZEngine
 	JZEngine::Vec2f translations[100];
 
 	RendererInstancing::RendererInstancing()
+		:
+		instance_vb( sizeof( JZEngine::Vec2f )* MAX_BUFFER_TRANSFORMS )
 	{}
 
 	void RendererInstancing::Init()
 	{
-		int index = 0;
-		float offset = 0.1f;
-		for ( int y = -10; y < 10; y += 2 )
-		{
-			for ( int x = -10; x < 10; x += 2 )
-			{
-				JZEngine::Vec2f translation;
-				translation.x = ( float )x / 10.0f + offset;
-				translation.y = ( float )y / 10.0f + offset;
-				translations[index++] = translation;
-			}
-		}
-
-		VertexBuffer instance_vb( &translations[0], sizeof( JZEngine::Vec2f ) * 100 );
 		VertexBuffer vb( vertices.data(), static_cast< unsigned int >( vertices.size() * sizeof( float ) ) );
+
 		VertexBufferLayout layout;
 		layout.Push<float>( 2 );
-		layout.Push<float>( 3 );
+		layout.Push<float>( 2 );
 		va.AddBuffer( vb, layout );
 
 		// also set instance data
-		glEnableVertexAttribArray( 2 );
-		glBindBuffer( GL_ARRAY_BUFFER, instance_vb.GetRendererId() ); // this attribute comes from a different vertex buffer
-		glVertexAttribPointer( 2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof( float ), ( void* )0 );
+		VertexBufferLayout instance_layout;
+		// this attribute comes from a different vertex buffer
+		instance_layout.Push<float>( 2 );
+		/*instance_layout.Push<float>( 3 );
+		instance_layout.Push<float>( 3 );*/
+		va.AddBuffer( 2, instance_vb, instance_layout );
 		// what makes this code interesting is the last line where we call glVertexAttribDivisor.
 		glVertexAttribDivisor( 2, 1 ); // tell OpenGL this is an instanced vertex attribute.
+		/*glVertexAttribDivisor( 4, 1 );
+		glVertexAttribDivisor( 5, 1 );*/
+
 		va.Unbind();
 		vb.Unbind();
 		instance_vb.Unbind();
@@ -57,9 +52,28 @@ namespace JZEngine
 
 	void RendererInstancing::Draw()
 	{
+		AddTransform( 0, 0, { 0.5f, 0.0f } );
+		AddTransform( 0, 0, { 0.2f, -0.4f } );
+		translations[0] = { 0.5f, 0.0f };
 		Bind();
-		glDrawArraysInstanced( GL_TRIANGLES, 0, 6, 100 ); // 100 triangles of 6 vertices each
+		for ( auto& gp : geometry_packets_ )
+		{
+			GeometryPacket& geometry = gp.second;
+			// bind transforms MAX_BUFFER_TRANSFORMS at a time
+			for ( int start = 0; start < geometry.transforms_.size(); start += MAX_BUFFER_TRANSFORMS )
+			{
+				assert( start < geometry.transforms_.size() );
+				int size = std::min( MAX_BUFFER_TRANSFORMS, static_cast< unsigned int >( geometry.transforms_.size() - start ) );
+				instance_vb.SetData( geometry.transforms_.data() + start, size * sizeof( JZEngine::Vec2f ) );
+				glDrawArraysInstanced( GL_TRIANGLES, 0, 6, size ); // 100 triangles of 6 vertices each
+			}
+		}
+		instance_vb.Unbind();
 		Unbind();
+		for ( auto& gp : geometry_packets_ )
+		{
+			gp.second.ClearTransforms();
+		}
 	}
 
 	void RendererInstancing::Bind()
@@ -79,4 +93,8 @@ namespace JZEngine
 		return shader_program;
 	}
 
+	void RendererInstancing::AddTransform( int shader, int texture, const JZEngine::Vec2f& transform )
+	{
+		geometry_packets_[{shader, texture}].AddTransform( transform );
+	}
 }

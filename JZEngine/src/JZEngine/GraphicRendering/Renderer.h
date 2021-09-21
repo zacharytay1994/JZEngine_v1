@@ -49,11 +49,7 @@ namespace JZEngine
 	public:
 
 		Renderer(ResourceManager* rm);
-		/*static Renderer& Instance()
-		{
-			static Renderer Instance;
-			return Instance;
-		};*/
+
 		void Init();
 		void Draw();
 		void Bind();
@@ -65,7 +61,6 @@ namespace JZEngine
 		void BindTexture(int textureid);
 		void BindShader(int shaderid);
 		void UnbindShader(int shaderid);
-		//std::unordered_map<std::string, Texture2D>* GetTextures();
 
 		ResourceManager* const resource_manager_;
 	};
