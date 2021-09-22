@@ -15,9 +15,10 @@
 
 namespace JZEngine
 {
-	Inspector::Inspector(float x, float y, float sx, float sy, ECS::ECSInstance* ecs)
+	Inspector::Inspector(float x, float y, float sx, float sy, ECS::ECSInstance* ecs, ResourceManager* rm)
 		:
 		ecs_instance_(ecs),
+		resource_manager_(rm),
 		x_(x), y_(y), sx_(sx), sy_(sy)
 	{
 
@@ -126,7 +127,7 @@ namespace JZEngine
 					}
 
 					// if component is selected
-					if (ImGui::Selectable(c.name_.c_str(), true))
+					if (ImGui::Selectable(c.name_.c_str()+TrimName(c.name_), true))
 					{
 
 						// if selected entity does not have component, add it in
@@ -177,7 +178,7 @@ namespace JZEngine
 					}
 					
 					// if system selected
-					if (ImGui::Selectable(s.name_.c_str(), true))
+					if (ImGui::Selectable(s.name_.c_str()+TrimName(s.name_), true))
 					{
 						// add the system components to the selected entity is any are missing
 						if (!has_system_)
@@ -202,7 +203,7 @@ namespace JZEngine
 				ImGui::BeginListBox("[Com]", { 0.0f, 100.0f });
 				for (auto& c : ecs_instance_->component_manager_.registered_components_)
 				{
-					if (ImGui::Selectable(c.name_.c_str(), true))
+					if (ImGui::Selectable(c.name_.c_str()+TrimName(c.name_), true))
 					{
 						//Console::Log("Oops please select an entity before adding...");
 					}
@@ -214,7 +215,7 @@ namespace JZEngine
 				ImGui::BeginListBox("[Sys]", { 0.0f, 100.0f });
 				for (auto& s : ecs_instance_->system_manager_.registered_systems_)
 				{
-					if (ImGui::Selectable(s.name_.c_str(), true))
+					if (ImGui::Selectable(s.name_.c_str()+TrimName(s.name_), true))
 					{
 						//Console::Log("Oops please select an entity before adding...");
 					}
@@ -224,5 +225,27 @@ namespace JZEngine
 			ImGui::TreePop();
 		}
 		//ImGui::PopStyleColor();
+	}
+
+	int Inspector::TrimName(const std::string& name)
+	{
+		int count{ 0 };
+		bool colon{ false };
+		for (auto& c : name)
+		{
+			if (c == ':')
+			{
+				if (!colon)
+				{
+					colon = true;
+				}
+				else
+				{
+					return ++count;
+				}
+			}
+			++count;
+		}
+		return 0;
 	}
 }

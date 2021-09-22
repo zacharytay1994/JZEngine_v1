@@ -8,20 +8,18 @@
 
 #include <PCH.h>
 #include "JZ_GL.h"
+#include "../Input/Input.h"
 #include "../EngineConfig.h"
 #include "../GraphicRendering/OpenGLDebug.h"
-#include "../GraphicRendering/Renderer.h"
 
 namespace JZEngine
 {
-
-	GLFW_Instance::GLFW_Instance ( int width , int height )
+	GLFW_Instance::GLFW_Instance( int width, int height )
 		:
-		window_width_ ( width ) ,
-		window_height_ ( height )
+		window_width_( width ),
+		window_height_( height )
 	{
-		Initialize ();
-		Renderer::Instance ().Init ();
+		Initialize();
 	}
 
 	GLFW_Instance::~GLFW_Instance ()
@@ -47,16 +45,13 @@ namespace JZEngine
 	}
 
 	void GLFW_Instance::Draw ()
-	{
-		Renderer::Instance ().Draw ();
-
-	}
+	{}
 
 	void GLFW_Instance::Initialize ()
 	{
 		glfwInit ();
 		glfwWindowHint ( GLFW_CONTEXT_VERSION_MAJOR , 4 );
-		glfwWindowHint ( GLFW_CONTEXT_VERSION_MINOR , 5 );
+		glfwWindowHint ( GLFW_CONTEXT_VERSION_MINOR , 3 );
 		glfwWindowHint ( GLFW_OPENGL_PROFILE , GLFW_OPENGL_CORE_PROFILE );
 
 #if defined(DEBUG) | defined(_DEBUG)
@@ -86,16 +81,28 @@ namespace JZEngine
 		glfwSetFramebufferSizeCallback ( window_ , FramebufferSizeCallback );
 
 
+		if ( !InputHandler::init(window_))
+		{
+			std::cout << "Failed to initialize input handler" << std::endl;
+		}
+		
+
+
+
 		int flags;
 		// features of contexts can be detected via context flags
 		glGetIntegerv ( GL_CONTEXT_FLAGS , &flags );
-		// check if the context is a debug context.
+		// check if the context is a debug context
 		if( flags & GL_CONTEXT_FLAG_DEBUG_BIT )
 		{
 			std::cout << "Debug Mode" << std::endl;
 			EnableOpenGLDebugging ();
 		}
 
+		glEnable( GL_BLEND );
+		glCheckError();
+		glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+		glCheckError();
 	}
 
 	void JZEngine::FramebufferSizeCallback ( GLFWwindow* window , int width , int height )

@@ -8,9 +8,9 @@
 #pragma once
 
 #include "BuildDefinitions.h"
-
 #include "EngineGUI/EngineGUI.h"
 #include "ECS/ECS.h"
+#include "Resource/ResourceManager.h"
 
 // jzgl should be included last as glad.h should be included after
 // any library/file that includes windows.h 
@@ -26,6 +26,7 @@ namespace JZEngine
 	 * Application class to be exported. When inherited from and created in
 	 * a client project, it calls the run function from the main entry point
 	 * of the engine defined in EntryPoint.h.
+	 
 	*/
 	class JZENGINE_API Application
 	{
@@ -49,8 +50,10 @@ namespace JZEngine
 
 	private:
 		JZEngine::GLFW_Instance				gl_instance_;		/*!< glfw instance, abstracts creation of opengl instance using glfw */
+		JZEngine::ResourceManager			resource_manager_;	/*!< resource manager loads all resources from files */
 		JZEngine::ECS::ECSInstance*	const	ecs_instance_;		/*!< ecs_instance handling all ecs stuffs */
 		JZEngine::EngineGUI					engine_gui_;		/*!< handles rendering and updating of engine tools gui */
+		Renderer* const						renderer_;			/*!< renderer handles all opengl rendering */
 	};
 
 	/*!

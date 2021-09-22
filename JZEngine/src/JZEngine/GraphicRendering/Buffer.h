@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:	Buffer.h
+	Author: JZ
+	Date:	01/07/21
+	Brief:	Vertex Buffer and Index Buffer are stores here.
+*/
+
 #pragma once
 
 #include <glad/glad.h>
@@ -14,6 +21,8 @@ namespace JZEngine
 
 		VertexBuffer ( unsigned int size );
 		VertexBuffer ( float* vertices , unsigned int size );
+		VertexBuffer( const void * vertices, unsigned int size );
+
 		~VertexBuffer ();
 
 		void Bind () const ;
@@ -59,7 +68,5 @@ namespace JZEngine
 		{
 			return count_;
 		}
-
 	};
-
 }

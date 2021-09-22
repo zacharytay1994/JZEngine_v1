@@ -22,6 +22,14 @@ namespace JZEngine
 		glBufferData ( GL_ARRAY_BUFFER , size , vertices , GL_STATIC_DRAW );
 	}
 
+	VertexBuffer::VertexBuffer( const void* vertices, unsigned int size )
+		: size_( size )
+	{
+		glGenBuffers( 1, &renderer_id_ );
+		glBindBuffer( GL_ARRAY_BUFFER, renderer_id_ );
+		glBufferData( GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW );
+	}
+
 	VertexBuffer::~VertexBuffer ()
 	{
 		glDeleteBuffers ( 1 , &renderer_id_ );
@@ -45,14 +53,12 @@ namespace JZEngine
 	// [END] VertexBuffer 
 	/////////////////////////////////////////////////////////////////////////////
 
-
 	/////////////////////////////////////////////////////////////////////////////
 	// [START] Index Buffer
 	IndexBuffer::IndexBuffer ( unsigned int* indices , unsigned int count ) 
 		:
 		data_ ( indices ) ,
 		count_ ( count )
-
 	{
 		glGenBuffers ( 1 , &renderer_id_ );
 		// GL_ELEMENT_ARRAY_BUFFER is not valid without an actively bound VAO
@@ -77,5 +83,4 @@ namespace JZEngine
 	}
 	// [END] Index Buffer
 	/////////////////////////////////////////////////////////////////////////////
-
 }

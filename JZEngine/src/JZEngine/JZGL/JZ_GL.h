@@ -10,7 +10,6 @@
 
 #include "../BuildDefinitions.h"
 
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -77,6 +76,4 @@ namespace JZEngine
 	 * @param height	: height of the window to resize to
 	*/
 	void FramebufferSizeCallback ( GLFWwindow* window , int width , int height );
-
-
 }

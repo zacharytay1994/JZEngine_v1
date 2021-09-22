@@ -4,6 +4,8 @@
 #include "../ECSSystems/ExampleSingleHeader.h"
 #include "../ECSSystems/ExampleSplitHeaderSource.h"
 
+#include "../GraphicRendering/NonInstanceSpriteRenderer.h"
+
 namespace JZEngine
 {
 	namespace ECS
@@ -14,11 +16,8 @@ namespace JZEngine
 			using Component =
 				std::tuple<
 				
-				TestComponent,
-				TestComponent2,
-				TestComponent3,
 				Transform,
-				MyNewComponent
+				Texture
 
 				>;
 
@@ -26,9 +25,7 @@ namespace JZEngine
 			using System =
 				std::tuple<
 				
-				TestSystem,
-				TestSystem2,
-				MyNewSystem
+				Sprite
 				
 				>;
 		};

@@ -663,7 +663,7 @@ namespace JZEngine
 		struct SystemManager
 		{
 			ECSInstance*							const ecs_instance_;
-			std::vector<std::unique_ptr<System>>	system_database_;			/*!< storage for all the polymorphic systems */
+			std::vector<std::shared_ptr<System>>	system_database_;			/*!< storage for all the polymorphic systems */
 			std::unordered_map<std::string, bool>	system_registered_;			/*!< account for which systems are registered */
 			
 			unsigned int							number_of_systems_{ 0 };	/*!< number of registered systems */
@@ -693,7 +693,7 @@ namespace JZEngine
 				// if struct/class is not yet registered
 				if (system_registered_.find(typeid(SYSTEM).name()) == system_registered_.end())
 				{
-					system_database_.emplace_back(std::make_unique<SYSTEM>());
+					system_database_.emplace_back(std::make_shared<SYSTEM>());
 					system_registered_[typeid(SYSTEM).name()] = 1;
 					registered_systems_.push_back({ typeid(SYSTEM).name(), number_of_systems_++ });
 				}
@@ -911,6 +911,20 @@ namespace JZEngine
 			 * ****************************************************************************************************
 			*/
 			Entity& GetEntity(ui32 id);
+
+			template <typename SYSTEM>
+			std::shared_ptr<SYSTEM> GetSystemInefficient()
+			{
+				std::string system_name = typeid(SYSTEM).name();
+				for (auto& s : system_manager_.registered_systems_)
+				{
+					if (s.name_ == system_name)
+					{
+						return std::dynamic_pointer_cast<SYSTEM>(system_manager_.system_database_[s.id_]);
+					}
+				}
+				return nullptr;
+			}
 
 			/*!
 			 * @brief ___JZEngine::ECS::ECSInstance::Print()___
