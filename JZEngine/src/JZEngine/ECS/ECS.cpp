@@ -601,6 +601,10 @@ namespace JZEngine
 			if (free_entity_slots_.empty())
 			{
 				id = entity_count_;
+				if (entity_count_ > 256)
+				{
+					int i = 0;
+				}
 				entities_.push_back(Entity(ecs_instance_, entity_count_++, parent));
 			}
 			else

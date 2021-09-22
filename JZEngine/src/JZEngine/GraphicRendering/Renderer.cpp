@@ -5,10 +5,9 @@
 
 namespace JZEngine
 {
-	Renderer::Renderer(ResourceManager* rm)
+	Renderer::Renderer()
 		:
-		ib(indices.data(), static_cast <unsigned int> (indices.size())),
-		resource_manager_(rm)
+		ib(indices.data(), static_cast <unsigned int> (indices.size()))
 	{
 		// load all texture images
 		//textures_["unicorn"].Texture2DLoad("Assets/Textures/cute-unicorn.png");
@@ -16,6 +15,7 @@ namespace JZEngine
 
 	void Renderer::Init()
 	{
+		resource_manager_ = GetSystem<ResourceManager>();
 		VertexBuffer vb( vertices.data(), vertices.size() * sizeof( float ) );
 		VertexBufferLayout layout;
 		layout.Push<float>( 3 );

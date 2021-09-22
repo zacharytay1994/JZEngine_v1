@@ -8,6 +8,7 @@
 
 namespace JZEngine
 {
+	struct GlobalSystemsManager;
 	struct GlobalSystem
 	{
 		virtual ~GlobalSystem() {};
@@ -16,6 +17,12 @@ namespace JZEngine
 		virtual void Update(float dt) {};
 		virtual void FrameEnd() {};
 		virtual void Free() {};
+
+		void SetGSM(GlobalSystemsManager* gsm);
+		template <typename SYSTEM>
+		SYSTEM* GetSystem();
+	private:
+		GlobalSystemsManager* global_systems_manager_;
 	};
 
 	struct GlobalSystemsManager
@@ -31,11 +38,12 @@ namespace JZEngine
 		{
 			global_systems_vec_.push_back(new DERIVED(args...));
 			global_systems_map_[typeid(DERIVED).name()] = global_systems_vec_.back();
+			global_systems_vec_.back()->SetGSM(this);
 			global_systems_vec_.back()->Init();
 		}
 
 		template <typename DERIVED>
-		DERIVED* GlobalSystem()
+		DERIVED* GetSystem()
 		{
 			if (global_systems_map_.find(typeid(DERIVED).name()) != global_systems_map_.end())
 			{
@@ -50,4 +58,13 @@ namespace JZEngine
 		void FrameEnd();
 		void Free();
 	};
+
+	template <typename SYSTEM>
+	SYSTEM* GlobalSystem::GetSystem()
+	{
+		if (global_systems_manager_)
+		{
+			return global_systems_manager_->GetSystem<SYSTEM>();
+		}
+	}
 }

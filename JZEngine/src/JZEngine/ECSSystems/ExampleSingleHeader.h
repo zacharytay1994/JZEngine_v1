@@ -17,7 +17,7 @@ struct TestComponent
 
 struct TestComponent2
 {
-	int x{0}, d{1};
+	char test;
 };
 
 struct TestComponent3
@@ -27,63 +27,49 @@ struct TestComponent3
 
 struct TestSystem : public JZEngine::ECS::System
 {
-	int z{ 0 };
-
+	int count{ 0 };
 	TestSystem()
 	{
 		// registers components that this system is going to work on
 		// only entities with at least these components will be processed
 		// by the system.
-		RegisterComponents<TestComponent3, TestComponent2>();
+		RegisterComponents<TestComponent2>();
+	}
+
+	virtual void FrameBegin(const float& dt) override
+	{
+		JZEngine::Log::Info("Main", "Count: {}", count);
+		count = 0;
 	}
 
 	// updates once per entity component per system per frame
 	virtual void Update(const float& dt) override
 	{
+		++count;
 	}
 };
 
 struct TestSystem2 : public JZEngine::ECS::System
 {
-	int z{ 0 };
-	float clock = 0.0f;
-	bool write = false;
+	int count{ 0 };
 
 	TestSystem2()
 	{
-		RegisterComponents<TestComponent, TestComponent3>();
+		RegisterComponents<TestComponent3>();
 	}
 
 	// frame begin is optional and is special as it only updates once per system per frame,
 	// not once per entity component per system per frame
 	virtual void FrameBegin(const float& dt) override
 	{
-		if (write)
-		{
-			clock = 0.0f;
-			write = false;
-		}
-		if (clock < 10.0f)
-		{
-			clock += dt;
-		}
-		else
-		{
-			write = true;
-		}
-		if (write)
-		{
-			//JZEngine::Console::Log("TestSystem Updated FrameBegin");
-		}
+		JZEngine::Log::Info("Main", "Count2: {}", count);
+		count = 0;
 	}
 
 	// take note here if 2 or more entities contain TestComponent and TestComponent3,
 	// this will be run twice, whereas FrameBegin will run once no matter how many entities
 	virtual void Update(const float& dt) override
 	{
-		if (write)
-		{
-			JZEngine::Log::Info("TestSystem2", "This is an example {}", GetComponent<TestComponent>());
-		}
+		++count;
 	}
 };

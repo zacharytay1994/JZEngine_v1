@@ -3,6 +3,11 @@
 
 namespace JZEngine
 {
+	void GlobalSystem::SetGSM(GlobalSystemsManager* gsm)
+	{
+		global_systems_manager_ = gsm;
+	}
+
 	GlobalSystemsManager::GlobalSystemsManager()
 	{
 
