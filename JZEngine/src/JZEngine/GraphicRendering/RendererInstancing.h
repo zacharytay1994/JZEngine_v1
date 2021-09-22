@@ -66,7 +66,6 @@ namespace JZEngine
 		};
 		std::unordered_map<std::pair<int, int>, GeometryPacket, pair_hash> geometry_packets_;
 
-
 		std::array <float, 24>vertices
 		{
 			// positions		// textures
