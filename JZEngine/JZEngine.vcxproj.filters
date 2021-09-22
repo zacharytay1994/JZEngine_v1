@@ -34,7 +34,9 @@
     <ClCompile Include="src\JZEngine\Physics\Collision.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\JZEngine\Sound\Sound.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\InstancedSpriteRenderer.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\ExampleFloatAway.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\JZEngine.h" />
@@ -86,6 +88,8 @@
     <ClInclude Include="src\JZEngine\Sound\Sound.h" />
     <ClInclude Include="src\JZEngine\STL\Tuple.h" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\InstancedSpriteRenderer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\ExampleFloatAway.h" />
   </ItemGroup>
 </Project>

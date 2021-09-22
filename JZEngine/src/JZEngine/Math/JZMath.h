@@ -74,6 +74,8 @@ namespace JZEngine
 			return vec = GetRotatedVectorZ(vec, radian);
 		}
 
+		Mat3f GetTransform( const Vec2f& position, float rotate, const Vec2f& scale, const Vec2f& size );
+
 		//template<class T>
 		//typename std::enable_if<!std::numeric_limits<T>::is_integer, bool>::type
 		//	AlmostEqual(T a, T b, int precision)

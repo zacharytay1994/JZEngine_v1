@@ -20,7 +20,7 @@ namespace JZEngine
 	void SpriteRenderer::DrawSprite( int shaderid, int textureid, JZEngine::Vec2f position, JZEngine::Vec2f size, JZEngine::Vec2f scale, float rotateDegree, JZEngine::Vec3f color )
 	{
 		// calculate transformation
-		JZEngine::Mat3f mat_scale = JZEngine::Mat3f::Scale( size.x * scale.x, size.y * scale.y, 1.0f );
+		/*JZEngine::Mat3f mat_scale = JZEngine::Mat3f::Scale( size.x * scale.x, size.y * scale.y, 1.0f );
 		JZEngine::Mat3f mat_rotate = JZEngine::Mat3f::RotateZ( Math::DegToRad( rotateDegree ) );
 		JZEngine::Mat3f mat_translate = JZEngine::Mat3f::Translate( position.x, position.y );
 
@@ -30,7 +30,7 @@ namespace JZEngine
 
 		JZEngine::Mat3f transform = mat_translate * ( mat_rotate * mat_scale );
 		transform = camwin_to_ndc_xform * transform;
-		transform.Transpose();
+		transform.Transpose();*/
 
 		// bind buffer data
 		renderer_->Bind();
@@ -45,7 +45,7 @@ namespace JZEngine
 		glCheckError();
 
 		// set shader uniforms
-		renderer_->GetShaderProgram( shaderid ).SetUniform( "transform", transform );
+		renderer_->GetShaderProgram( shaderid ).SetUniform( "transform", Math::GetTransform(position, rotateDegree, scale, size) );
 		glCheckError();
 
 		// draw sprite

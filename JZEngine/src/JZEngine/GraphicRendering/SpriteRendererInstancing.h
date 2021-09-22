@@ -6,11 +6,11 @@
 namespace JZEngine
 {
 	class RendererInstancing;
-	class InstancedSpriteRenderer
+	class SpriteRendererInstancing
 	{
 	public:
-		InstancedSpriteRenderer();
-		~InstancedSpriteRenderer();
+		SpriteRendererInstancing();
+		~SpriteRendererInstancing();
 
 		void DrawInstances();
 

@@ -25,6 +25,7 @@
 #include "Buffer.h"
 #include "VertexArray.h"
 #include "../Math/JZMath.h"
+#include "../Resource/ResourceManager.h"
 
 namespace JZEngine
 {
@@ -34,18 +35,16 @@ namespace JZEngine
 		VertexArray va;
 		VertexBuffer instance_vb;
 
-		static constexpr unsigned int MAX_BUFFER_TRANSFORMS = 100;
-		static constexpr unsigned int MAX_INSTANCES = 1000;
+		static constexpr unsigned int MAX_BUFFER_TRANSFORMS = 500;
+		static constexpr unsigned int MAX_INSTANCES = 50000;
 		struct GeometryPacket
 		{
-			int shader_;
-			int texture_;
-			std::vector<JZEngine::Vec2f> transforms_;
+			std::vector<JZEngine::Mat3f> transforms_;
 			void ClearTransforms()
 			{
 				transforms_.clear();
 			}
-			void AddTransform( const JZEngine::Vec2f& transform )
+			void AddTransform( const JZEngine::Mat3f& transform )
 			{
 				transforms_.push_back( transform );
 				assert( transforms_.size() < MAX_INSTANCES );
@@ -67,35 +66,31 @@ namespace JZEngine
 		};
 		std::unordered_map<std::pair<int, int>, GeometryPacket, pair_hash> geometry_packets_;
 
-		RendererInstancing();
 
 		std::array <float, 24>vertices
 		{
 			// positions		// textures
-			-0.05f,  0.05f,		0.0f, 1.0f,
-			 0.05f, -0.05f,		1.0f, 0.0f,
-			-0.05f, -0.05f,		0.0f, 0.0f,
+			-0.5f,  0.5f,		0.0f, 1.0f,
+			 0.5f, -0.5f,		1.0f, 0.0f,
+			-0.5f, -0.5f,		0.0f, 0.0f,
 
-			-0.05f,  0.05f,		0.0f, 1.0f,
-			 0.05f, -0.05f,		1.0f, 0.0f,
-			 0.05f,  0.05f,		1.0f, 1.0f
+			-0.5f,  0.5f,		0.0f, 1.0f,
+			 0.5f, -0.5f,		1.0f, 0.0f,
+			 0.5f,  0.5f,		1.0f, 1.0f
 		};
 
 	public:
-
-		static RendererInstancing& Instance()
-		{
-			static RendererInstancing Instance;
-			return Instance;
-		};
-
+		RendererInstancing( ResourceManager* rm );
+		
 		void Init();
 		void Draw();
 		void Bind();
 		void Unbind();
 
 		Shader GetShaderProgram();
-		void AddTransform( int shader, int texture, const JZEngine::Vec2f& transform );
+		void AddTransform( int shader, int texture, const JZEngine::Mat3f& transform );
+
+		ResourceManager* const resource_manager_;
 	};
 
 }

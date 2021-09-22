@@ -23,7 +23,7 @@ namespace JZEngine
 
 	unsigned int ResourceManager::LoadInstancedShader( const std::string& name, const std::string& vspath, const std::string& fspath )
 	{
-		instanced_shader_programs_.emplace_back( static_cast< unsigned int >( shader_programs_.size() ), name );
+		instanced_shader_programs_.emplace_back( static_cast< unsigned int >( instanced_shader_programs_.size() ), name );
 		Shader& shader = instanced_shader_programs_.back().shader_program_;
 		shader.CompileShaderFromFile( GL_VERTEX_SHADER, vspath );
 		shader.CompileShaderFromFile( GL_FRAGMENT_SHADER, fspath );

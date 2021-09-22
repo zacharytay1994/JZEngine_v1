@@ -38,7 +38,8 @@ namespace JZEngine
 		gl_instance_( Settings::window_width, Settings::window_height ),
 		ecs_instance_( new ECS::ECSInstance() ),
 		engine_gui_( gl_instance_.window_, ecs_instance_, &resource_manager_ ),
-		renderer_( new Renderer(&resource_manager_) )
+		renderer_( new Renderer(&resource_manager_) ),
+		renderer_instancing_(new RendererInstancing( &resource_manager_ ))
 	{
 		Log::Instance().Initialize( engine_gui_.GetConsole() );
 		JZEngine::Log::Info( "Main", "[{}] Up and Running! v{} [MEM LEAKS BEGONE]", Settings::engine_name, Settings::version );
@@ -51,10 +52,33 @@ namespace JZEngine
 		/*testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
 		testsystem.playSound("testsound", true, 0.4f);
 		testsystem.setChannelGroupVolume(1.0f,"main");*/
+		for ( int i = 0; i < 10; ++i )
+		{
+			float x = static_cast < float > ( rand() ) / static_cast < float > ( RAND_MAX );
+			float y = static_cast < float > ( rand() ) / static_cast < float > ( RAND_MAX );
+			int id = ecs_instance_->CreateEntity();
+			ECS::Entity& entity = ecs_instance_->GetEntity( id );
+			entity.AddSystem( 1 );
+			entity.AddComponent<IsUnicorn>();
+			entity.GetComponent<Transform>().position_ = { x * 800, y * 400 };
+		}
+		/*for ( int i = 0; i < 5000; ++i )
+		{
+			float x = static_cast < float > ( rand() ) / static_cast < float > ( RAND_MAX );
+			float y = static_cast < float > ( rand() ) / static_cast < float > ( RAND_MAX );
+			int id = ecs_instance_->CreateEntity();
+			ECS::Entity& entity = ecs_instance_->GetEntity( id );
+			entity.AddSystem( 1 );
+			entity.GetComponent<Texture>().texture_id_ = 1;
+			entity.GetComponent<Transform>().position_ = { x * -800, y * -400 };
+		}*/
+
 
 		//Math::AllMatrixTestCases()；
-		RendererInstancing::Instance().Init();
+		renderer_instancing_->Init();
 		InputHandler::IsMousePressed(MOUSEBUTTON::MOUSE_BUTTON_LEFT);
+
+		ecs_instance_->GetSystemInefficient<InstanceSprite>()->sprite_renderer_instancing_.renderer_ = renderer_instancing_;
 	}
 
 	void Application::Free()
@@ -62,6 +86,7 @@ namespace JZEngine
 		Log::Instance().Free();
 		delete ecs_instance_;
 		delete renderer_;
+		delete renderer_instancing_;
 	}
 
 	void Application::Run()
@@ -71,14 +96,12 @@ namespace JZEngine
 			gl_instance_.FrameStart();
 
 			gl_instance_.Draw();
-		
-			RendererInstancing::Instance().Draw();
-
-			engine_gui_.Update();
 
 			testsystem.updateSoundSystem();
 
 			ecs_instance_->Update();
+
+			engine_gui_.Update();
 
 			gl_instance_.FrameEnd();
 
