@@ -38,7 +38,6 @@
     <ClCompile Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\ExampleFloatAway.cpp" />
-    <ClCompile Include="src\JZEngine\ECSSystems\CollisionDetection.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\PhysicsSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -98,7 +97,6 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\NonInstanceSpriteRenderer.h" />
     <ClInclude Include="src\JZEngine\Resource\ResourceManager.h" />
     <ClInclude Include="src\JZEngine\Input\DeltaTime.h" />
-    <ClInclude Include="src\JZEngine\ECSSystems\CollisionDetection.h" />
     <ClInclude Include="src\JZEngine\GlobalSystems.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.h" />

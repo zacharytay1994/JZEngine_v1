@@ -3,7 +3,7 @@
 
 #include "../ECSSystems/ExampleSingleHeader.h"
 #include "../ECSSystems/ExampleSplitHeaderSource.h"
-#include "../ECSSystems/CollisionDetection.h"
+
 #include "../ECSSystems/PhysicsSystem.h"
 #include "../GraphicRendering/NonInstanceSpriteRenderer.h"
 #include "../GraphicRendering/InstanceSpriteRenderer.h"
@@ -25,8 +25,7 @@ namespace JZEngine
 				InstanceShader,
 				IsUnicorn,
 				IsInputAffected,
-				Shape,
-				PhysicComponent
+				PhysicsComponent
 
 				>;
 
@@ -38,7 +37,6 @@ namespace JZEngine
 				InstanceSprite,
 				FloatAwayAllUnicorn,
 				MakeUnicornAffectedByInput,
-				CollisionDetection,
 				PhysicsSystem
 				
 				>;

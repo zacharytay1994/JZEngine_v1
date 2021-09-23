@@ -195,18 +195,16 @@ namespace JZEngine
 			ImGui::SliderFloat("a float", &component.not_a_component.im_a_float_, -300, 300);
 			ImGui::Text("this is a %c", component.nomal_data_);
 		}
-
-		//template <>
-		//void RenderComponent(Shape& component)
-		//{
-		//	ImGui::SliderInt("Shape", &component.tag_, 0, 1);
-
-		//}
+		template <>
+		void RenderComponent(IsInputAffected& component)
+		{
+			ImGui::SliderFloat("val", &component.val, -2.0f, 2.0f);
+		}
 
 		template <>
-		void RenderComponent( IsInputAffected& component )
+		void RenderComponent(PhysicsComponent& component )
 		{
-			ImGui::SliderFloat( "val", &component.val, -2.0f, 2.0f );
+			ImGui::SliderInt( "Shape", &component.shapeid, 0, 1 );
 		}
 
 		/*!
