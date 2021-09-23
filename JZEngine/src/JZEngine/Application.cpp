@@ -40,11 +40,13 @@ namespace JZEngine
 		global_systems_->AddSystem<ResourceManager>();
 		global_systems_->AddSystem<ECS::ECSInstance>();
 		global_systems_->AddSystem<Renderer>();
+		global_systems_->AddSystem<RendererInstancing>();
 		global_systems_->AddSystem<EngineGUI>();
 		global_systems_->AddSystem<SoundSystem>();
 
 		// give subsystems handle to global systems
 		global_systems_->GetSystem<ECS::ECSInstance>()->GetSystemInefficient<Sprite>()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer>();
+		global_systems_->GetSystem<ECS::ECSInstance>()->GetSystemInefficient<InstanceSprite>()->sprite_renderer_instancing_.renderer_ = global_systems_->GetSystem<RendererInstancing>();
 
 		// give singleton logger handle to the engine console
 		Log::Instance().Initialize(global_systems_->GetSystem<EngineGUI>()->GetConsole());
@@ -55,6 +57,26 @@ namespace JZEngine
 		global_systems_->GetSystem<SoundSystem>()->playSound("testsound", true, 0.4f);
 		global_systems_->GetSystem<SoundSystem>()->setChannelGroupVolume(1.0f, "main");
 		InputHandler::IsMousePressed(MOUSEBUTTON::MOUSE_BUTTON_LEFT);*/
+
+		/*ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
+		for (int i = 0; i < 5000; ++i) {
+			int id = ecs->CreateEntity();
+			ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
+			entity.AddSystem(1);
+			entity.AddComponent<IsUnicorn>();
+			float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+			float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+			entity.GetComponent<Transform>().position_ = { x * 800.0f, y * 800.0f };
+		}
+		for (int i = 0; i < 5000; ++i) {
+			int id = ecs->CreateEntity();
+			ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
+			entity.AddSystem(1);
+			float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+			float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+			entity.GetComponent<Transform>().position_ = { x * -800.0f, y * -800.0f };
+			entity.GetComponent<Texture>().texture_id_ = 1;
+		}*/
 	}
 
 	void Application::Free()

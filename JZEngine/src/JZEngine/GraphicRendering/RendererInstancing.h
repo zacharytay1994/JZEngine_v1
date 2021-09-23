@@ -21,6 +21,7 @@
 #include <assert.h>
 #include <unordered_map>
 
+#include "../GlobalSystems.h"
 #include "Shader.h"
 #include "Buffer.h"
 #include "VertexArray.h"
@@ -29,7 +30,7 @@
 
 namespace JZEngine
 {
-	class RendererInstancing
+	class RendererInstancing : public GlobalSystem
 	{
 		Shader shader_program;
 		VertexArray va;
@@ -46,7 +47,7 @@ namespace JZEngine
 			}
 			void AddTransform( const JZEngine::Mat3f& transform )
 			{
-				transforms_.push_back( transform );
+				transforms_.emplace_back( transform );
 				assert( transforms_.size() < MAX_INSTANCES );
 			}
 		};
@@ -79,9 +80,9 @@ namespace JZEngine
 		};
 
 	public:
-		RendererInstancing( ResourceManager* rm );
+		RendererInstancing();
 		
-		void Init();
+		virtual void Init() override;
 		void Draw();
 		void Bind();
 		void Unbind();
@@ -89,7 +90,7 @@ namespace JZEngine
 		Shader GetShaderProgram();
 		void AddTransform( int shader, int texture, const JZEngine::Mat3f& transform );
 
-		ResourceManager* const resource_manager_;
+		ResourceManager* resource_manager_{ nullptr };
 	};
 
 }

@@ -6,14 +6,14 @@
 
 namespace JZEngine
 {
-	RendererInstancing::RendererInstancing( ResourceManager* rm )
+	RendererInstancing::RendererInstancing()
 		:
-		resource_manager_(rm),
 		instance_vb( sizeof( JZEngine::Mat3f )* MAX_BUFFER_TRANSFORMS )
 	{}
 
 	void RendererInstancing::Init()
 	{
+		resource_manager_ = GetSystem<ResourceManager>();
 		VertexBuffer vb( vertices.data(), static_cast< unsigned int >( vertices.size() * sizeof( float ) ) );
 
 		VertexBufferLayout layout;
