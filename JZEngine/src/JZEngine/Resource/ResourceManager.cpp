@@ -8,6 +8,7 @@ namespace JZEngine
 		// load textures
 		LoadTexture2D("Unicorn", "Assets/Textures/cute-unicorn.png");
 		LoadTexture2D("Square", "Assets/Textures/square.jpg");
+		LoadTexture2D("Bomb", "Assets/Textures/Bomb.png");
 
 		// load shaders
 		LoadShader("Default", 

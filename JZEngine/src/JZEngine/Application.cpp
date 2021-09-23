@@ -53,7 +53,7 @@ namespace JZEngine
 		/*testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
 		testsystem.playSound("testsound", true, 0.4f);
 		testsystem.setChannelGroupVolume(1.0f,"main");*/
-		InputHandler::IsMousePressed(MOUSEBUTTON::MOUSE_BUTTON_LEFT);
+		
 	}
 
 	void Application::Free()
@@ -91,9 +91,9 @@ namespace JZEngine
 
 			gl_instance_.FrameEnd();
 
-			DeltaTime::update_time(1.0);
-
-
+			DeltaTime::update_deltatime(1.0);
+			//std::cout<<DeltaTime::get_FPS()<<std::endl;
+			
 		}
 	}
 }

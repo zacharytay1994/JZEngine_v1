@@ -3,7 +3,7 @@
 
 #include "../ECSSystems/ExampleSingleHeader.h"
 #include "../ECSSystems/ExampleSplitHeaderSource.h"
-
+#include "../ECSSystems/CollisionDetection.h"
 #include "../GraphicRendering/NonInstanceSpriteRenderer.h"
 
 namespace JZEngine
@@ -17,7 +17,8 @@ namespace JZEngine
 				std::tuple<
 				
 				Transform,
-				Texture
+				Texture,
+				Shape
 
 				>;
 
@@ -25,7 +26,8 @@ namespace JZEngine
 			using System =
 				std::tuple<
 				
-				Sprite
+				Sprite,
+				CollisionDetection
 				
 				>;
 		};

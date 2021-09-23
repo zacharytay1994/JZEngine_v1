@@ -168,6 +168,14 @@ namespace JZEngine
 			ImGui::Text("this is a %c", component.nomal_data_);
 		}
 
+		//template <>
+		//void RenderComponent(Shape& component)
+		//{
+		//	ImGui::SliderInt("Shape", &component.tag_, 0, 1);
+
+		//}
+
+
 		/*!
 		 * @brief ___JZEngine::LoopTupleRender___
 		 * ****************************************************************************************************

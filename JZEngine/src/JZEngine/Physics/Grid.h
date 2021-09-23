@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Ball.h"
+
 #include <vector>
 
 struct Cell {
@@ -32,3 +32,5 @@ private:
     int m_numXCells;
     int m_numYCells;
 };
+
+#
