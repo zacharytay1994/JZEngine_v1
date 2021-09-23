@@ -17,17 +17,17 @@
 #include "GraphicRendering/RendererInstancing.h"
 #include "Input/Input.h"
 #include "Input/DeltaTime.h"
-
 #include "STL/Tuple.h"
+
 #include <iostream>
 #include <tuple>
-
-
-#define UNREFERENCED_PARAMETER(P)(P)
-
 #include <memory>
 #include <unordered_map>
 #include <string>
+#include <chrono>
+#include <thread>
+
+#define UNREFERENCED_PARAMETER(P)(P)
 
 namespace JZEngine
 {
@@ -88,14 +88,50 @@ namespace JZEngine
 
 	void Application::Run()
 	{
-		while ( global_systems_->GetSystem<GLFW_Instance>()->Active() )
+		double time = 0.0;
+		double actual_dt{ Settings::min_tpf };
+		double clamped_dt{ Settings::min_tpf };
+		bool limit_frames = false;
+
+		while (global_systems_->GetSystem<GLFW_Instance>()->Active())
 		{
+			if (InputHandler::IsKeyPressed(KEY::KEY_L)) { limit_frames = !limit_frames; }
+
+			auto start_time = std::chrono::high_resolution_clock::now();
+
+			double dt = limit_frames ? clamped_dt : actual_dt;
+
 			global_systems_->FrameStart();
-			global_systems_->Update(1.0);
-
+			global_systems_->Update(dt);
 			DeltaTime::update_time(1.0);
-
 			global_systems_->FrameEnd();
+
+			auto end_time = std::chrono::high_resolution_clock::now();
+
+			std::chrono::duration<double, std::milli> milli_dt = end_time - start_time;
+			actual_dt = milli_dt.count() / 1000.0;
+
+			// sleep
+			if (limit_frames) 
+			{
+				while (milli_dt.count() < Settings::min_tpf) 
+				{
+					end_time = std::chrono::high_resolution_clock::now();
+					milli_dt = end_time - start_time;
+				}
+				clamped_dt = milli_dt.count() / 1000.0;
+				time += clamped_dt;
+			}
+			else 
+			{
+				time += actual_dt;
+			}
+
+			Log::Info("Main", "Time Elapsed: {}", time);
+			Log::Info("Main", "Actual dt: {}", actual_dt);
+			Log::Info("Main", "Clamped dt: {}", clamped_dt);
+			Log::Info("Main", "Actual FPS: {}", 1.0 / actual_dt);
+			Log::Info("Main", "Clamped FPS: {}", 1.0 / clamped_dt);
 		}
 	}
 }

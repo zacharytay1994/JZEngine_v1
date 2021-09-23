@@ -10,6 +10,9 @@ namespace JZEngine
 		constexpr unsigned int		window_height	= 900;
 		constexpr float				aspect_ratio	= static_cast<float>(window_width) / static_cast<float>(window_height);
 
+		constexpr const int			min_fps			= 60;
+		constexpr const double		min_tpf			= 1000.0 / static_cast<double>(min_fps);
+
 		constexpr const char*		logs_directory	= "Log/";
 	}
 }
