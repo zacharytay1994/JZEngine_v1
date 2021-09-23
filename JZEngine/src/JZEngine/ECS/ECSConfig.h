@@ -5,6 +5,8 @@
 #include "../ECSSystems/ExampleSplitHeaderSource.h"
 
 #include "../GraphicRendering/NonInstanceSpriteRenderer.h"
+#include "../GraphicRendering/InstanceSpriteRenderer.h"
+#include "../GraphicRendering/ExampleFloatAway.h"
 
 namespace JZEngine
 {
@@ -17,7 +19,11 @@ namespace JZEngine
 				std::tuple<
 				
 				Transform,
-				Texture
+				Texture,
+				NonInstanceShader,
+				InstanceShader,
+				IsUnicorn,
+				IsInputAffected
 
 				>;
 
@@ -25,7 +31,10 @@ namespace JZEngine
 			using System =
 				std::tuple<
 				
-				Sprite
+				Sprite,
+				InstanceSprite,
+				FloatAwayAllUnicorn,
+				MakeUnicornAffectedByInput
 				
 				>;
 		};

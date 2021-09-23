@@ -19,6 +19,7 @@
 #include "Texture.h"
 #include <unordered_map>
 
+
 namespace JZEngine
 {
 	class Renderer : public GlobalSystem
@@ -65,7 +66,6 @@ namespace JZEngine
 		void BindTexture(int textureid);
 		void BindShader(int shaderid);
 		void UnbindShader(int shaderid);
-		//std::unordered_map<std::string, Texture2D>* GetTextures();
 
 		ResourceManager* resource_manager_;
 	};

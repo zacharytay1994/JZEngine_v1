@@ -14,6 +14,29 @@ namespace JZEngine
 			"Assets/Shaders/Vertex/Sprite2D.vs", "Assets/Shaders/Fragment/TextureDefault.fs");
 		LoadShader("Red Tint",
 			"Assets/Shaders/Vertex/Sprite2D.vs", "Assets/Shaders/Fragment/TextureRedTint.fs");
+
+		// load instanced shaders
+		LoadInstancedShader( "Default",
+					"Assets/Shaders/Vertex/VertexShader_Instancing.vs",
+					"Assets/Shaders/Fragment/FragmentShader_Instancing.fs" );
+	}
+
+	unsigned int ResourceManager::LoadInstancedShader( const std::string& name, const std::string& vspath, const std::string& fspath )
+	{
+		instanced_shader_programs_.emplace_back( static_cast< unsigned int >( instanced_shader_programs_.size() ), name );
+		Shader& shader = instanced_shader_programs_.back().shader_program_;
+		shader.CompileShaderFromFile( GL_VERTEX_SHADER, vspath );
+		shader.CompileShaderFromFile( GL_FRAGMENT_SHADER, fspath );
+		shader.Link();
+
+		if ( GL_FALSE == shader.IsLinked() )
+		{
+			std::cout << "Unable to compile/link/validate shader programs" << "\n";
+			std::cout << shader.GetLog() << std::endl;
+			std::exit( EXIT_FAILURE );
+		}
+
+		return 1;
 	}
 
 	unsigned int ResourceManager::LoadShader(const std::string& name, const std::string& vspath, const std::string& fspath)

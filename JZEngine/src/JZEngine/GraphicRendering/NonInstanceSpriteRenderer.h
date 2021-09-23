@@ -21,6 +21,10 @@ namespace JZEngine
 	struct Texture
 	{
 		int texture_id_{ 0 };
+	};
+
+	struct NonInstanceShader
+	{
 		int shader_id_{ 0 };
 	};
 
@@ -31,7 +35,12 @@ namespace JZEngine
 
 		Sprite()
 		{
-			RegisterComponents<Transform, Texture>();
+			RegisterComponents<Transform, Texture, NonInstanceShader>();
+		}
+
+		virtual void FrameBegin( const float& dt ) override
+		{
+			//sprite_renderer_.ClearPackets();
 		}
 
 		/*virtual void FrameStart(const float& dt)
@@ -43,8 +52,11 @@ namespace JZEngine
 		{
 			Transform& transform = GetComponent<Transform>();
 			Texture& texture = GetComponent<Texture>();
-			sprite_renderer_.DrawSprite(texture.shader_id_, texture.texture_id_,
-				transform.position_, transform.size_, transform.scale_, transform.rotation_, { 1.0f,1.0f,1.0f });
+			NonInstanceShader& shader = GetComponent<NonInstanceShader>();
+
+			// else use default render
+			sprite_renderer_.DrawSprite( shader.shader_id_, texture.texture_id_,
+										 transform.position_, transform.size_, transform.scale_, transform.rotation_, { 1.0f,1.0f,1.0f } );
 		}
 	};
 }

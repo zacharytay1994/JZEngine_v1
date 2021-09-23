@@ -19,28 +19,33 @@ namespace JZEngine
 	{
 	public:
 
-		VertexBuffer ( unsigned int size );
-		VertexBuffer ( float* vertices , unsigned int size );
-		VertexBuffer( const void * vertices, unsigned int size );
+		VertexBuffer( unsigned int size );
+		VertexBuffer( float* vertices, unsigned int size );
+		VertexBuffer( const void* vertices, unsigned int size );
 
-		~VertexBuffer ();
+		~VertexBuffer();
 
-		void Bind () const ;
-		void Unbind () const;
+		void Bind() const;
+		void Unbind() const;
 
-		void SetData ( const void* data , unsigned int size ) ;
+		void SetData( const void* data, unsigned int size );
 
-		const VertexBufferLayout& GetLayout () const
+		const VertexBufferLayout& GetLayout() const
 		{
 			return layout_;
 		}
-		void SetLayout ( const VertexBufferLayout& layout )
+		void SetLayout( const VertexBufferLayout& layout )
 		{
 			layout_ = layout;
 		}
 
+		unsigned int GetRendererId()
+		{
+			return renderer_id_;
+		}
+
 	private:
-		unsigned int renderer_id_{0};
+		unsigned int renderer_id_{ 0 };
 		unsigned int size_{};
 		VertexBufferLayout layout_{};
 	};
@@ -53,18 +58,18 @@ namespace JZEngine
 		const unsigned int* data_{ nullptr };
 
 	public:
-		IndexBuffer ( unsigned int* indices , unsigned int count ) ;
-		~IndexBuffer ();
+		IndexBuffer( unsigned int* indices, unsigned int count );
+		~IndexBuffer();
 
-		void Bind () const;
-		void Unbind () const;
+		void Bind() const;
+		void Unbind() const;
 
-		inline const unsigned int* GetData () const
+		inline const unsigned int* GetData() const
 		{
-			return data_ ;
+			return data_;
 		}
 
-		unsigned int GetCount () const
+		unsigned int GetCount() const
 		{
 			return count_;
 		}

@@ -14,6 +14,7 @@
 #include "Sound/Sound.h"
 #include "GraphicRendering/Renderer.h"
 #include "GraphicRendering/SpriteRenderer.h"
+#include "GraphicRendering/RendererInstancing.h"
 #include "Input/Input.h"
 #include "Input/DeltaTime.h"
 
