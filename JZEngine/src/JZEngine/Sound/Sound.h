@@ -8,19 +8,21 @@
 #include <map>
 #include <vector>
 
+#include "../GlobalSystems.h"
+
 constexpr int MAX_CHANNELS = 36;
 namespace JZEngine
 {
 
 
-	class SoundSystem
+	class SoundSystem : public GlobalSystem
 	{
 	public:
 		SoundSystem();
 		~SoundSystem();
 
-		void initialize();
-		void updateSoundSystem();
+		virtual void Init() override;
+		virtual void Update(float dt);
 
 		void createSound(std::string const& name, const char* pFile);
 		int playSound(std::string const& name, bool bLoop = false, float volume = 1.0f);

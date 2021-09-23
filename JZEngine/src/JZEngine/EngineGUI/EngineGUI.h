@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../BuildDefinitions.h"
+#include "../GlobalSystems.h"
 
 #include "../ImGui/imgui.h"
 #include "../ImGui/imgui_impl_glfw.h"
@@ -11,8 +12,6 @@
 	Brief:	Handles the rendering of the Engine GUI,
 			e.g. Inspector, Console, etc.
 */
-
-#pragma once
 
 #include "../ImGui/imgui_impl_opengl3.h"
 
@@ -30,10 +29,12 @@ namespace JZEngine
 	*/
 	struct ResourceManager;
 	namespace ECS { struct ECSInstance; }
-	struct JZENGINE_API EngineGUI
+	struct EngineGUI : public GlobalSystem
 	{
-		EngineGUI(GLFWwindow*& glfwwindow, ECS::ECSInstance* ecs, ResourceManager* rm);
+		EngineGUI();
 		~EngineGUI();
+
+		virtual void Init() override;
 
 		/*!
 		 * @brief ___JZEngine::ToolsGUI::Update()___
@@ -44,7 +45,7 @@ namespace JZEngine
 		 * : Entity for Inspector gui to use.
 		 * ****************************************************************************************************
 		*/
-		void Update();
+		virtual void Update(float dt) override;
 
 		Console* GetConsole();
 	private:

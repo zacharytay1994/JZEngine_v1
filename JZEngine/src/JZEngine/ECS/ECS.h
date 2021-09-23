@@ -22,6 +22,8 @@
 #include <iostream>
 #include <unordered_map>
 
+#include "../GlobalSystems.h"
+
 namespace JZEngine
 {
 	/*!
@@ -68,9 +70,11 @@ namespace JZEngine
 		constexpr ui32 MAX_COMPONENTS			{ 256 };			/*!< arbitrary number */
 		constexpr ui32 MAX_ARCHETYPES			{ 128 };			/*!< arbitrary number */
 		constexpr ui32 CHUNKS_PER_ARCHETYPE		{ 256 };			/*!< arbitrary number */
-		constexpr ui32 ENTITIES_PER_CHUNK		{ 256 };			/*!< arbitrary number */
 		constexpr ui32 ENTITIES_RESERVE			{ 256 };			/*!< arbitrary number*/
 		constexpr ui32 ENTITY_MAX_CHILDREN		{ 10 };				/*!< arbitrary number*/
+
+		constexpr ui32 ENTITIES_PER_CHUNK		{ 255 };			/*!< not to be changed entity ids only go up to 255
+																		 because the count it stored in a byte */
 
 		using SystemComponents	= std::array<ui32, MAX_COMPONENTS>;
 		using ComponentMask		= std::bitset<MAX_COMPONENTS>;
@@ -820,7 +824,7 @@ namespace JZEngine
 		 * manager. Main interface to the ECS.
 		 * ****************************************************************************************************
 		*/
-		struct ECSInstance // destructor still missing
+		struct ECSInstance : public GlobalSystem // destructor still missing
 		{
 			ComponentManager	component_manager_;		/*!< holds all registered components  */
 			ArchetypeManager	archetype_manager_;		/*!< holds all unique archetypes, i.e. component combinations */
@@ -843,7 +847,7 @@ namespace JZEngine
 			 * all systems with matching archetypes, i.e. entities.
 			 * ****************************************************************************************************
 			*/
-			void Update();
+			virtual void Update(float dt) override;
 
 			/*!
 			 * @brief ___JZEngine::ECS::ECSInstance::RegisterComponent()___

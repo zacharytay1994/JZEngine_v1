@@ -30,11 +30,11 @@ namespace JZEngine
 	*/
 	struct JZENGINE_API Inspector
 	{
-		ECS::ECSInstance* const ecs_instance_;
-		ResourceManager* const resource_manager_;
+		ECS::ECSInstance* ecs_instance_;
+		ResourceManager* resource_manager_;
 		float x_, y_, sx_, sy_;		/*!< position and scale of the ImGui window */
 
-		Inspector(float x, float y, float sx, float sy, ECS::ECSInstance* ecs, ResourceManager* rm);
+		Inspector(float x, float y, float sx, float sy);
 
 		/*!
 		 * @brief ___JZEngine::ToolsGUI::RenderInspector()___
@@ -116,7 +116,7 @@ namespace JZEngine
 		}
 
 		template <>
-		void RenderComponent(Texture& component)
+		void RenderComponent( Texture& component)
 		{
 			// display selection for all the textures
 			if (ImGui::BeginPopup("Textures"))
@@ -137,13 +137,17 @@ namespace JZEngine
 
 			ImGui::SameLine();
 			ImGui::Text("Texture");
+		}
 
+		template <>
+		void RenderComponent( NonInstanceShader& component )
+		{
 			// display selection for all the shaders
-			if (ImGui::BeginPopup("Shaders"))
+			if ( ImGui::BeginPopup( "Shaders" ) )
 			{
-				for (auto& shader : resource_manager_->shader_programs_)
+				for ( auto& shader : resource_manager_->shader_programs_ )
 				{
-					if (ImGui::Selectable(shader.name_.c_str()))
+					if ( ImGui::Selectable( shader.name_.c_str() ) )
 					{
 						component.shader_id_ = shader.id_;
 					}
@@ -152,11 +156,35 @@ namespace JZEngine
 			}
 
 			// button event to display all shaders options
-			if (ImGui::Button(resource_manager_->shader_programs_[component.shader_id_].name_.c_str(), ImVec2(168.0f, 0.0f)))
-				ImGui::OpenPopup("Shaders");
+			if ( ImGui::Button( resource_manager_->shader_programs_[component.shader_id_].name_.c_str(), ImVec2( 168.0f, 0.0f ) ) )
+				ImGui::OpenPopup( "Shaders" );
 
 			ImGui::SameLine();
-			ImGui::Text("Shader");
+			ImGui::Text( "Shader" );
+		}
+
+		template <>
+		void RenderComponent( InstanceShader& component )
+		{
+			// display selection for all the shaders
+			if ( ImGui::BeginPopup( "Shaders" ) )
+			{
+				for ( auto& shader : resource_manager_->instanced_shader_programs_ )
+				{
+					if ( ImGui::Selectable( shader.name_.c_str() ) )
+					{
+						component.shader_id_ = shader.id_;
+					}
+				}
+				ImGui::EndPopup();
+			}
+
+			// button event to display all shaders options
+			if ( ImGui::Button( resource_manager_->instanced_shader_programs_[component.shader_id_].name_.c_str(), ImVec2( 168.0f, 0.0f ) ) )
+				ImGui::OpenPopup( "Shaders" );
+
+			ImGui::SameLine();
+			ImGui::Text( "Shader" );
 		}
 
 		template <>
@@ -175,6 +203,11 @@ namespace JZEngine
 
 		//}
 
+		template <>
+		void RenderComponent( IsInputAffected& component )
+		{
+			ImGui::SliderFloat( "val", &component.val, -2.0f, 2.0f );
+		}
 
 		/*!
 		 * @brief ___JZEngine::LoopTupleRender___

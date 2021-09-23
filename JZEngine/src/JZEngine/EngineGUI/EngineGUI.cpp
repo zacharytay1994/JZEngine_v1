@@ -12,17 +12,18 @@
 #include "../EngineConfig.h"
 #include "../ECS/ECSConfig.h"
 #include "../Resource/ResourceManager.h"
+#include "../JZGL/JZ_GL.h"
 
 namespace JZEngine
 {
 
-	EngineGUI::EngineGUI(GLFWwindow*& glfwwindow, ECS::ECSInstance* ecs, ResourceManager* rm)
+	EngineGUI::EngineGUI()
 		:
-		inspector_(5.0f/6.0f, 0.0f, 1.0f/6.0f, 1.0f, ecs, rm),
+		inspector_(5.0f/6.0f, 0.0f, 1.0f/6.0f, 1.0f),
 		console_(1.0f/6.0f, 5.0f/6.0f, 4.0f/6.0f, 1.0f/6.0f),
-		scene_tree_(0.0f, 0.0f, 1.0f / 6.0f, 1.0f, ecs)
+		scene_tree_(0.0f, 0.0f, 1.0f / 6.0f, 1.0f)
 	{
-		InitializeWithGLFW(glfwwindow);
+		//InitializeWithGLFW();
 	}
 
 	EngineGUI::~EngineGUI()
@@ -31,6 +32,14 @@ namespace JZEngine
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
+	}
+
+	void EngineGUI::Init() 
+	{
+		InitializeWithGLFW(GetSystem<GLFW_Instance>()->window_);
+		inspector_.resource_manager_ = GetSystem<ResourceManager>();
+		inspector_.ecs_instance_ = GetSystem<ECS::ECSInstance>();
+		scene_tree_.ecs_instance_ = GetSystem<ECS::ECSInstance>();
 	}
 
 	/*!
@@ -42,7 +51,7 @@ namespace JZEngine
 	 * : Entity for Inspector gui to use.
 	 * ****************************************************************************************************
 	*/
-	void EngineGUI::Update()
+	void EngineGUI::Update(float dt)
 	{
 		// start imgui frame
 		ImGui_ImplOpenGL3_NewFrame();

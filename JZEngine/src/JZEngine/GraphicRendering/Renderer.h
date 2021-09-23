@@ -9,6 +9,7 @@
 
 #include <memory>
 #include <array>
+#include "../GlobalSystems.h"
 #include "Buffer.h"
 #include "Shader.h"
 #include "VertexArray.h"
@@ -18,9 +19,10 @@
 #include "Texture.h"
 #include <unordered_map>
 
+
 namespace JZEngine
 {
-	class Renderer
+	class Renderer : public GlobalSystem
 	{
 	private:
 
@@ -47,13 +49,13 @@ namespace JZEngine
 
 	public:
 
-		Renderer(ResourceManager* rm);
+		Renderer();
 		/*static Renderer& Instance()
 		{
 			static Renderer Instance;
 			return Instance;
 		};*/
-		void Init();
+		virtual void Init() override;
 		void Draw();
 		void Bind();
 		void Unbind();
@@ -64,8 +66,7 @@ namespace JZEngine
 		void BindTexture(int textureid);
 		void BindShader(int shaderid);
 		void UnbindShader(int shaderid);
-		//std::unordered_map<std::string, Texture2D>* GetTextures();
 
-		ResourceManager* const resource_manager_;
+		ResourceManager* resource_manager_;
 	};
 }

@@ -5,6 +5,8 @@
 #include "../ECSSystems/ExampleSplitHeaderSource.h"
 #include "../ECSSystems/CollisionDetection.h"
 #include "../GraphicRendering/NonInstanceSpriteRenderer.h"
+#include "../GraphicRendering/InstanceSpriteRenderer.h"
+#include "../GraphicRendering/ExampleFloatAway.h"
 
 namespace JZEngine
 {
@@ -18,7 +20,10 @@ namespace JZEngine
 				
 				Transform,
 				Texture,
-				Shape
+				NonInstanceShader,
+				InstanceShader,
+				IsUnicorn,
+				IsInputAffected
 
 				>;
 
@@ -27,7 +32,9 @@ namespace JZEngine
 				std::tuple<
 				
 				Sprite,
-				CollisionDetection
+				InstanceSprite,
+				FloatAwayAllUnicorn,
+				MakeUnicornAffectedByInput
 				
 				>;
 		};
