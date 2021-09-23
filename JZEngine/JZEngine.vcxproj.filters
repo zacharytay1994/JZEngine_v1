@@ -100,5 +100,6 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\ExampleFloatAway.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\TextRenderer.h" />
   </ItemGroup>
 </Project>

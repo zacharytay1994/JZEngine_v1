@@ -266,6 +266,7 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\RendererInstancing.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Shader.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\SpriteRenderer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\TextRenderer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Texture.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\VertexArray.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\VertexBufferLayout.h" />
