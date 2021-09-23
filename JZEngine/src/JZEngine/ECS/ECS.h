@@ -714,7 +714,7 @@ namespace JZEngine
 			 * the component signature every frame.
 			 * ****************************************************************************************************
 			*/
-			void Update();
+			void Update(float dt);
 
 			/*!
 			 * @brief ___JZEngine::ECS::SystemManager::RegisterTuple()___

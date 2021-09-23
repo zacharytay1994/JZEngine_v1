@@ -38,6 +38,7 @@
     <ClCompile Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\ExampleFloatAway.cpp" />
+    <ClCompile Include="src\JZEngine\EngineGUI\DebugInformation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\JZEngine.h" />
@@ -100,5 +101,7 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\ExampleFloatAway.h" />
+    <ClInclude Include="src\JZEngine\EngineGUI\DebugInformation.h" />
+    <ClInclude Include="src\JZEngine\EngineGUI\ImGuiInterface.h" />
   </ItemGroup>
 </Project>

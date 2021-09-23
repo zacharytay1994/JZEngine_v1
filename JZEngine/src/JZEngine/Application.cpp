@@ -102,19 +102,20 @@ namespace JZEngine
 			double dt = limit_frames ? clamped_dt : actual_dt;
 
 			global_systems_->FrameStart();
-			global_systems_->Update(dt);
+			global_systems_->Update(actual_dt);
 			DeltaTime::update_time(1.0);
-			global_systems_->FrameEnd();
 
 			auto end_time = std::chrono::high_resolution_clock::now();
+			global_systems_->FrameEnd();
 
 			std::chrono::duration<double, std::milli> milli_dt = end_time - start_time;
 			actual_dt = milli_dt.count() / 1000.0;
+			double min_tpf_milli = Settings::min_tpf * 1000.0;
 
 			// sleep
 			if (limit_frames) 
 			{
-				while (milli_dt.count() < Settings::min_tpf) 
+				while (milli_dt.count() < min_tpf_milli)
 				{
 					end_time = std::chrono::high_resolution_clock::now();
 					milli_dt = end_time - start_time;
@@ -124,14 +125,15 @@ namespace JZEngine
 			}
 			else 
 			{
+				clamped_dt = std::max(Settings::min_tpf, actual_dt);
 				time += actual_dt;
 			}
 
-			Log::Info("Main", "Time Elapsed: {}", time);
+			/*Log::Info("Main", "Time Elapsed: {}", time);
 			Log::Info("Main", "Actual dt: {}", actual_dt);
 			Log::Info("Main", "Clamped dt: {}", clamped_dt);
 			Log::Info("Main", "Actual FPS: {}", 1.0 / actual_dt);
-			Log::Info("Main", "Clamped FPS: {}", 1.0 / clamped_dt);
+			Log::Info("Main", "Clamped FPS: {}", 1.0 / clamped_dt);*/
 		}
 	}
 }
