@@ -15,10 +15,8 @@
 
 namespace JZEngine
 {
-	Inspector::Inspector(float x, float y, float sx, float sy, ECS::ECSInstance* ecs, ResourceManager* rm)
+	Inspector::Inspector(float x, float y, float sx, float sy)
 		:
-		ecs_instance_(ecs),
-		resource_manager_(rm),
 		x_(x), y_(y), sx_(sx), sy_(sy)
 	{
 

@@ -66,5 +66,6 @@ namespace JZEngine
 		{
 			return global_systems_manager_->GetSystem<SYSTEM>();
 		}
+		return nullptr;
 	}
 }

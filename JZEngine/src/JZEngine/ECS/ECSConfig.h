@@ -17,9 +17,7 @@ namespace JZEngine
 				std::tuple<
 				
 				Transform,
-				Texture,
-				TestComponent2,
-				TestComponent3
+				Texture
 
 				>;
 
@@ -27,9 +25,7 @@ namespace JZEngine
 			using System =
 				std::tuple<
 				
-				Sprite,
-				TestSystem,
-				TestSystem2
+				Sprite
 				
 				>;
 		};

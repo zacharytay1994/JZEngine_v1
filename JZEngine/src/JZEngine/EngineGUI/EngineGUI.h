@@ -31,8 +31,10 @@ namespace JZEngine
 	namespace ECS { struct ECSInstance; }
 	struct EngineGUI : public GlobalSystem
 	{
-		EngineGUI(GLFWwindow*& glfwwindow, ECS::ECSInstance* ecs, ResourceManager* rm);
+		EngineGUI();
 		~EngineGUI();
+
+		virtual void Init() override;
 
 		/*!
 		 * @brief ___JZEngine::ToolsGUI::Update()___

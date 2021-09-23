@@ -15,9 +15,8 @@
 
 namespace JZEngine
 {
-	SceneTree::SceneTree(float x, float y, float sx, float sy, ECS::ECSInstance* ecs)
+	SceneTree::SceneTree(float x, float y, float sx, float sy)
 		:
-		ecs_instance_(ecs),
 		x_(x), y_(y), sx_(sx), sy_(sy)
 	{
 		default_entity_name_ = new std::string("Entity");

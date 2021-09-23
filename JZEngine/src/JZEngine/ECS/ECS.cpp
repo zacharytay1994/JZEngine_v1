@@ -545,12 +545,12 @@ namespace JZEngine
 			ArchetypeManager& am = ecs_instance_->archetype_manager_;
 			for (auto& system : system_database_)
 			{
+				system->FrameBegin(0.02f);
 				for (ui32 j = 0; j < am.number_of_archetypes_; ++j)
 				{
 					// if system mask matches archetype mask, means archetype holds entities of interest
 					if ((system->mask_ & am.archetype_database_[j].mask_) == system->mask_)
 					{
-						system->FrameBegin(0.02f);
 						// loop through archetype chunks
 						for (ui32 h = 0; h < am.archetype_database_[j].number_of_chunks_; ++h)
 						{
