@@ -44,8 +44,8 @@ namespace JZEngine
 	/* ________________________________ COLLISION DETECTION SYSTEMS __________________*/
 	struct CollisionDetection : public JZEngine::ECS::System
 	{
-		std::vector<Circle*> shapes_;
-		std::vector<Line*> shapes_;
+		std::vector<Shape*> shapes_;
+		//std::vector<Line*> shapes_;
 
 		unsigned int j{ 0 };
 

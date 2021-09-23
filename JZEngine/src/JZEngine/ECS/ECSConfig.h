@@ -4,6 +4,7 @@
 #include "../ECSSystems/ExampleSingleHeader.h"
 #include "../ECSSystems/ExampleSplitHeaderSource.h"
 #include "../ECSSystems/CollisionDetection.h"
+#include "../ECSSystems/PhysicsSystem.h"
 #include "../GraphicRendering/NonInstanceSpriteRenderer.h"
 #include "../GraphicRendering/InstanceSpriteRenderer.h"
 #include "../GraphicRendering/ExampleFloatAway.h"
@@ -23,7 +24,9 @@ namespace JZEngine
 				NonInstanceShader,
 				InstanceShader,
 				IsUnicorn,
-				IsInputAffected
+				IsInputAffected,
+				Shape,
+				PhysicComponent
 
 				>;
 
@@ -34,7 +37,9 @@ namespace JZEngine
 				Sprite,
 				InstanceSprite,
 				FloatAwayAllUnicorn,
-				MakeUnicornAffectedByInput
+				MakeUnicornAffectedByInput,
+				CollisionDetection,
+				PhysicsSystem
 				
 				>;
 		};
