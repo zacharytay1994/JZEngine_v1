@@ -16,16 +16,16 @@
 
 #include "MenuBar.h"
 #include "DebugInformation.h"
+#include "../Input/Input.h"
 
 
 namespace JZEngine
 {
-
 	EngineGUI::EngineGUI()
 		:
-		inspector_(5.0f/6.0f, 0.0f, 1.0f/6.0f, 1.0f),
-		console_(1.0f/6.0f, 5.0f/6.0f, 4.0f/6.0f, 1.0f/6.0f),
-		scene_tree_(0.0f, 0.0f, 1.0f / 6.0f, 1.0f)
+		inspector_(5.0f / 6.0f, 1.0f / 46.0f, 1.0f / 6.0f, 45.0f / 46.0f),
+		console_(1.0f / 6.0f, 35.0f / 46.0f, 4.0f / 6.0f, 11.0f / 46.0f),
+		scene_tree_(0.0f, 1.0f / 46.0f, 1.0f / 6.0f, 45.0f / 46.0f)
 	{
 		//InitializeWithGLFW();
 	}
@@ -45,8 +45,8 @@ namespace JZEngine
 		inspector_.ecs_instance_ = GetSystem<ECS::ECSInstance>();
 		scene_tree_.ecs_instance_ = GetSystem<ECS::ECSInstance>();
 
-		AddInterface<DebugInformation>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 5.0f / 6.0f);
-		AddInterface<MenuBar>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 1.0f / 20.0f);
+		AddInterface<DebugInformation>(1.0f / 6.0f, 1.0f / 46.0f, 4.0f / 6.0f, 34.0f / 46.0f);
+		AddInterface<MenuBar>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 1.0f / 18.0f);
 	}
 
 	/*!
@@ -64,6 +64,12 @@ namespace JZEngine
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+
+		// engine gui shortcuts
+		if (InputHandler::IsKeyPressed(KEY::KEY_TAB))
+		{
+			GetInterface<DebugInformation>()->active_ = !GetInterface<DebugInformation>()->active_;
+		}
 
 		// render all engine gui parts
 		console_.Render();

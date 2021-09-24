@@ -13,11 +13,27 @@ namespace JZEngine {
 	}
 
 	void MenuBar::Render() {
-		ImGui::Begin("Menu");
-		if (ImGui::Button("DebugInformation")) {
-			std::shared_ptr<DebugInformation> debug_information = GetInterface<DebugInformation>();
-			debug_information->active_ = !debug_information->active_;
+		if (ImGui::BeginMainMenuBar())
+		{
+			if (ImGui::BeginMenu("File"))
+			{
+				if (ImGui::MenuItem("New"))
+				{
+					//Do something
+				}
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("Settings"))
+			{
+				if (ImGui::MenuItem("DebugInformation", "[TAB]"))
+				{
+					GetInterface<DebugInformation>()->active_ = !GetInterface<DebugInformation>()->active_;
+				}
+				ImGui::EndMenu();
+			}
+
+			ImGui::EndMainMenuBar();
 		}
-		ImGui::End();
 	} 
 }
