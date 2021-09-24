@@ -158,7 +158,9 @@
     </ClCompile>
     <ClCompile Include="src\JZEngine\EngineGUI\Console.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\DebugInformation.cpp" />
+    <ClCompile Include="src\JZEngine\EngineGUI\ImGuiInterface.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\Inspector.cpp" />
+    <ClCompile Include="src\JZEngine\EngineGUI\MenuBar.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\SceneTree.cpp" />
     <ClCompile Include="src\JZEngine\GlobalSystems.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Buffer.cpp" />
@@ -257,6 +259,7 @@
     <ClInclude Include="src\JZEngine\EngineGUI\DebugInformation.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\ImGuiInterface.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\Inspector.h" />
+    <ClInclude Include="src\JZEngine\EngineGUI\MenuBar.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\SceneTree.h" />
     <ClInclude Include="src\JZEngine\EntryPoint.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Buffer.h" />

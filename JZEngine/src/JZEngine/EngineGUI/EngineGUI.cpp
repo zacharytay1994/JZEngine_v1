@@ -14,6 +14,10 @@
 #include "../Resource/ResourceManager.h"
 #include "../JZGL/JZ_GL.h"
 
+#include "MenuBar.h"
+#include "DebugInformation.h"
+
+
 namespace JZEngine
 {
 
@@ -40,6 +44,9 @@ namespace JZEngine
 		inspector_.resource_manager_ = GetSystem<ResourceManager>();
 		inspector_.ecs_instance_ = GetSystem<ECS::ECSInstance>();
 		scene_tree_.ecs_instance_ = GetSystem<ECS::ECSInstance>();
+
+		AddInterface<DebugInformation>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 5.0f / 6.0f);
+		AddInterface<MenuBar>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 1.0f / 20.0f);
 	}
 
 	/*!
@@ -62,6 +69,10 @@ namespace JZEngine
 		console_.Render();
 		scene_tree_.Render();
 		inspector_.Render(scene_tree_.selected_entity_);
+
+		for (auto& interface : imgui_interfaces_) {
+			interface.second->RenderInterface();
+		}
 
 		ImGui::EndFrame();
 

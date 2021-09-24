@@ -39,6 +39,8 @@
     <ClCompile Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\ExampleFloatAway.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\DebugInformation.cpp" />
+    <ClCompile Include="src\JZEngine\EngineGUI\ImGuiInterface.cpp" />
+    <ClCompile Include="src\JZEngine\EngineGUI\MenuBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\JZEngine.h" />
@@ -103,5 +105,6 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\ExampleFloatAway.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\DebugInformation.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\ImGuiInterface.h" />
+    <ClInclude Include="src\JZEngine\EngineGUI\MenuBar.h" />
   </ItemGroup>
 </Project>
