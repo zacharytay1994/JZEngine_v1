@@ -169,6 +169,7 @@
     <ClCompile Include="src\JZEngine\GraphicRendering\RendererInstancing.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Shader.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\SpriteRenderer.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\TextRenderer.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Texture.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\VertexArray.cpp" />
     <ClCompile Include="src\JZEngine\Input\Input.cpp" />

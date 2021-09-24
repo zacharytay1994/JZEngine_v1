@@ -1,4 +1,3 @@
 [submodule "JZEngine/vendor/spdlog"]
 	path = JZEngine/vendor/spdlog
 	url = https://github.com/gabime/spdlog
-	
