@@ -205,6 +205,7 @@ namespace JZEngine
 		void RenderComponent(PhysicsComponent& component )
 		{
 			ImGui::SliderInt( "Shape", &component.shapeid, 0, 1 );
+			ImGui::SliderFloat("velocity of y", &component.velocity.y, component.velocity.y -0.1f, component.velocity.y+ 0.1f);
 		}
 
 		/*!
