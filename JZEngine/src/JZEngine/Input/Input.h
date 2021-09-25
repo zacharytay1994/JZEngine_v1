@@ -14,7 +14,7 @@
 namespace JZEngine
 {
 	//Forward Declaration
-	enum class MOUSEBUTTON;
+	enum class MOUSE;
 	enum class KEY;
 
 	//Input Handler class
@@ -23,7 +23,12 @@ namespace JZEngine
 	public:
 		static bool init(GLFWwindow*);
 		static bool IsKeyPressed(KEY key);
-		static bool IsMousePressed(MOUSEBUTTON key);
+		static bool IsKeyTriggered(KEY key);
+		static bool IsKeyReleased(KEY key);
+
+		//mouse only has triggered n release
+		static bool IsMouseTriggered(MOUSE key);
+		static bool IsMouseReleased(MOUSE key);
 
 	private:
 		// callbacks ...
@@ -35,12 +40,15 @@ namespace JZEngine
 		static void mousescroll_cb(GLFWwindow* pwin, double xoffset, double yoffset);
 		static void mousepos_cb(GLFWwindow* pwin, double xpos, double ypos);
 
-		static  std::unordered_map<int, GLboolean> keystate;
-		static  std::unordered_map<int, GLboolean> mousestate;
+		static  std::unordered_map<int, int> keystate;
+		static  std::unordered_map<int, int> mousestate;
+
+
+
 	};
 
 
-	enum class MOUSEBUTTON
+	enum class MOUSE
 	{
 		MOUSE_BUTTON_1 = 0,
 		MOUSE_BUTTON_2 = 1,

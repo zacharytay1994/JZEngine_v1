@@ -3,6 +3,8 @@
 #include "../ECS/ECSConfig.h"
 
 #define PHYSICSDEBUG
+// #define GRAVITY
+
 namespace JZEngine
 {
 	PhysicsComponent::PhysicsComponent() {}
@@ -23,12 +25,18 @@ namespace JZEngine
 	void PhysicsSystem::Update(const float& dt)
 	{
 		PhysicsComponent& current_component = GetComponent<PhysicsComponent>();
-		//current_component.acceleration.y = 0.0f; //gravity instead of 0
 
-		//current_component.velocity += current_component.acceleration * dt;
+#ifdef GRAVITY
+		if(current_component.shapeid != 1)
+			current_component.acceleration.y = -0.098f; //gravity instead of 0
+		
+#endif
+		//current_component.velocity *= 0.98f;
+
+		current_component.velocity += current_component.acceleration * dt;
 
 		Transform& ptransform = GetComponent<Transform>();
-		Vec2f posnex = ptransform.position_ + current_component.velocity * dt;
+		Vec2f posnex = ptransform.position_ + current_component.velocity * dt ;
 		
 
 		if (current_component.shapeid == 0)
@@ -82,9 +90,9 @@ namespace JZEngine
 							newspeed = reflectedVecB.Len() / dt;//B: new speed
 							reflectedVecB.Normalize();
 							physics_cont[i]->velocity = reflectedVecB * newspeed;
-							#ifdef PHYSICSDEBUG
+#ifdef PHYSICSDEBUG
 							Log::Info("Collision", "is circle-circle colliding!!!");
-							#endif
+#endif
 						}
 
 						break;
@@ -98,9 +106,9 @@ namespace JZEngine
 							
 							if (true == DynamicCollision_CircleLineSegment(current_component.m_circle, posnex, line, interpta, normalatcollision, intertime, checkLineEdges))
 							{
-								#ifdef PHYSICSDEBUG
+#ifdef PHYSICSDEBUG
 								Log::Info("Collision", "circle on right");
-								#endif
+#endif
 								Vec2f reflectedvel{};
 								normalatcollision.Normalize();
 							
@@ -118,9 +126,9 @@ namespace JZEngine
 
 							if (true == DynamicCollision_CircleLineSegment(current_component.m_circle, posnex, line, interpta, normalatcollision, intertime, checkLineEdges))
 							{
-								#ifdef PHYSICSDEBUG
+#ifdef PHYSICSDEBUG
 								Log::Info("Collision", "circle on left");
-								#endif
+#endif
 							
 
 								Vec2f reflectedvel{};
@@ -139,9 +147,9 @@ namespace JZEngine
 							line={ physics_cont[i]->m_AABB.max, tmp_pt };
 							if (true == DynamicCollision_CircleLineSegment(current_component.m_circle, posnex, line, interpta, normalatcollision, intertime, checkLineEdges))
 							{
-								#ifdef PHYSICSDEBUG
+#ifdef PHYSICSDEBUG
 								Log::Info("Collision", "circle on top");
-								#endif
+#endif
 								Vec2f reflectedvel{};
 								normalatcollision.Normalize();
 							
@@ -157,9 +165,9 @@ namespace JZEngine
 							line= { physics_cont[i]->m_AABB.min, tmp_pt };
 							if (true == DynamicCollision_CircleLineSegment(current_component.m_circle, posnex, line, interpta, normalatcollision, intertime,checkLineEdges))
 							{
-								#ifdef PHYSICSDEBUG
+#ifdef PHYSICSDEBUG
 								Log::Info("Collision", "circle below");
-								#endif
+#endif
 								Vec2f reflectedvel{};
 								normalatcollision.Normalize();
 							
@@ -433,7 +441,7 @@ namespace JZEngine
 			}
 
 
-
+			return false;
 		}
 	}
 	/******************************************************************************/
@@ -457,7 +465,7 @@ namespace JZEngine
 		bool checkLineEdges)//Intersection time ti - output												
 	{
 		
-		float a, b, c;
+		
 		// outward normal M to circle velocity
 		Vec2f V(circleend.x - circle.m_center.x, circleend.y - circle.m_center.y);
 		Vec2f M(circleend.y - circle.m_center.y, -(circleend.x - circle.m_center.x));

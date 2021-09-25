@@ -54,7 +54,7 @@ namespace JZEngine
 	{
 		float speed;
 		Vec2f velocity;//vel = speed * dir
-		Vec2f acceleration;
+		Vec2f acceleration{ 0.0f,0.0f };
 		float mass{ 1.0f };//To be added
 		int shapeid{ 0 }; //0 for circle //1 for AABB
 		union {

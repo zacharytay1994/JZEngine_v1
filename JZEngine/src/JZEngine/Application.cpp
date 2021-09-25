@@ -143,7 +143,7 @@ namespace JZEngine
 			 entity2.GetComponent<Transform>().size_.x = 30;
 			 entity2.GetComponent<Transform>().size_.y = 30;
 			 entity2.GetComponent<PhysicsComponent>().speed = speed;
-			 entity2.GetComponent<PhysicsComponent>().velocity = { speed*cosf( random<float>(0.0f, 6.28f) ) , speed * sinf( random<float>(0.0f, 6.28f) ) };//dir
+			 entity2.GetComponent<PhysicsComponent>().velocity = { speed*cosf( random<float>(0.0f, 0.0f) ) , speed * sinf( random<float>(0.0f, 1.28f) ) };//dir
 		}
 
 
@@ -165,8 +165,20 @@ namespace JZEngine
 			global_systems_->Update(1.0);
 
 			DeltaTime::update_deltatime(1.0);
+
+
 			//Test code
 			//std::cout<<DeltaTime::get_FPS()<<std::endl;
+
+			//if (InputHandler::IsKeyPressed(KEY::KEY_W))
+			//	std::cout << "pressedW";
+			//if (InputHandler::IsKeyTriggered(KEY::KEY_W))
+			//	std::cout << "triggerededW";
+			//if (InputHandler::IsKeyReleased(KEY::KEY_W))
+			//	std::cout << "releasedW";
+
+
+
 
 			global_systems_->FrameEnd();
 		}
