@@ -19,7 +19,7 @@
 #include "../ImGui/imgui_impl_opengl3.h"
 
 #include "Inspector.h"
-#include "Console.h"
+//#include "Console.h"
 #include "SceneTree.h"
 
 namespace JZEngine

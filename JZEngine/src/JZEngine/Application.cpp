@@ -18,6 +18,7 @@
 #include "Input/Input.h"
 #include "Input/DeltaTime.h"
 #include "STL/Tuple.h"
+#include "DebugTools/PerformanceData.h"
 
 #include <iostream>
 #include <tuple>
@@ -58,7 +59,7 @@ namespace JZEngine
 		global_systems_->GetSystem<SoundSystem>()->setChannelGroupVolume(1.0f, "main");
 		InputHandler::IsMousePressed(MOUSEBUTTON::MOUSE_BUTTON_LEFT);*/
 
-		/*ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
+		ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
 		for (int i = 0; i < 5000; ++i) {
 			int id = ecs->CreateEntity();
 			ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
@@ -68,7 +69,7 @@ namespace JZEngine
 			float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 			entity.GetComponent<Transform>().position_ = { x * 800.0f, y * 800.0f };
 		}
-		for (int i = 0; i < 5000; ++i) {
+		/*for (int i = 0; i < 5000; ++i) {
 			int id = ecs->CreateEntity();
 			ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
 			entity.AddSystem(1);
@@ -101,12 +102,18 @@ namespace JZEngine
 
 			double dt = limit_frames ? clamped_dt : actual_dt;
 
+			PerformanceData::FrameStart();
+			PerformanceData::StartMark("Main");
+
 			global_systems_->FrameStart();
 			global_systems_->Update(actual_dt);
 			DeltaTime::update_time(1.0);
 
 			auto end_time = std::chrono::high_resolution_clock::now();
 			global_systems_->FrameEnd();
+
+			PerformanceData::EndMark("Main");
+			PerformanceData::FrameEnd();
 
 			std::chrono::duration<double, std::milli> milli_dt = end_time - start_time;
 			actual_dt = milli_dt.count() / 1000.0;
@@ -129,6 +136,8 @@ namespace JZEngine
 				time += actual_dt;
 			}
 
+			PerformanceData::actual_time_per_frame_ = actual_dt;
+			PerformanceData::actual_fps_ = static_cast<unsigned int>(1.0 / actual_dt);
 			/*Log::Info("Main", "Time Elapsed: {}", time);
 			Log::Info("Main", "Actual dt: {}", actual_dt);
 			Log::Info("Main", "Clamped dt: {}", clamped_dt);

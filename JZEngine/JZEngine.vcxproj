@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="src\JZEngine\Application.cpp" />
     <ClCompile Include="src\JZEngine\DebugTools\Log.cpp" />
+    <ClCompile Include="src\JZEngine\DebugTools\PerformanceData.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.cpp" />
     <ClCompile Include="src\JZEngine\ECS\ECS.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -250,6 +251,7 @@
     <ClInclude Include="src\JZEngine\Application.h" />
     <ClInclude Include="src\JZEngine\Components\TestComponent.h" />
     <ClInclude Include="src\JZEngine\DebugTools\Log.h" />
+    <ClInclude Include="src\JZEngine\DebugTools\PerformanceData.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h" />
     <ClInclude Include="src\JZEngine\ECS\ECS.h" />
     <ClInclude Include="src\JZEngine\ECS\ECSConfig.h" />

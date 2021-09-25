@@ -41,6 +41,7 @@
     <ClCompile Include="src\JZEngine\EngineGUI\DebugInformation.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\ImGuiInterface.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\MenuBar.cpp" />
+    <ClCompile Include="src\JZEngine\DebugTools\PerformanceData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\JZEngine.h" />
@@ -106,5 +107,6 @@
     <ClInclude Include="src\JZEngine\EngineGUI\DebugInformation.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\ImGuiInterface.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\MenuBar.h" />
+    <ClInclude Include="src\JZEngine\DebugTools\PerformanceData.h" />
   </ItemGroup>
 </Project>

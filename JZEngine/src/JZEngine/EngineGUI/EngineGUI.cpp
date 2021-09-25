@@ -16,6 +16,7 @@
 
 #include "MenuBar.h"
 #include "DebugInformation.h"
+#include "Console.h"
 #include "../Input/Input.h"
 
 
@@ -72,7 +73,7 @@ namespace JZEngine
 		}
 
 		// render all engine gui parts
-		console_.Render();
+		 console_.Render();
 		scene_tree_.Render();
 		inspector_.Render(scene_tree_.selected_entity_);
 
