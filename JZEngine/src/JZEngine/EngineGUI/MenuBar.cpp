@@ -12,7 +12,7 @@ namespace JZEngine {
 
 	}
 
-	void MenuBar::Render() {
+	void MenuBar::Render(float dt) {
 		if (ImGui::BeginMainMenuBar())
 		{
 			//if (ImGui::BeginMenu("File"))

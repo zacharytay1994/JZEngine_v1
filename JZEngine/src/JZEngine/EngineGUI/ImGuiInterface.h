@@ -16,9 +16,9 @@ namespace JZEngine
 		ImGuiInterface(float x, float y, float sx, float sy);
 		virtual ~ImGuiInterface() = default;
 
-		void RenderInterface();
+		void RenderInterface(float dt);
 
-		virtual void Render() {};
+		virtual void Render(float dt) {};
 
 		void SetEngineGUI(EngineGUI* enginegui);
 

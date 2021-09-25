@@ -37,13 +37,13 @@ namespace JZEngine
 		global_systems_(new GlobalSystemsManager())
 	{
 		// add and initialize global systems
-		global_systems_->AddSystem<GLFW_Instance>(Settings::window_width, Settings::window_height);
-		global_systems_->AddSystem<ResourceManager>();
-		global_systems_->AddSystem<ECS::ECSInstance>();
-		global_systems_->AddSystem<Renderer>();
-		global_systems_->AddSystem<RendererInstancing>();
-		global_systems_->AddSystem<EngineGUI>();
-		global_systems_->AddSystem<SoundSystem>();
+		global_systems_->AddSystem<GLFW_Instance>("GLFW Instance", Settings::window_width, Settings::window_height);
+		global_systems_->AddSystem<ResourceManager>("Resource Manager");
+		global_systems_->AddSystem<ECS::ECSInstance>("ECS Instance");
+		global_systems_->AddSystem<Renderer>("Default Renderer");
+		global_systems_->AddSystem<RendererInstancing>("Instance Renderer");
+		global_systems_->AddSystem<EngineGUI>("Engine GUI");
+		global_systems_->AddSystem<SoundSystem>("Sound System");
 
 		// give subsystems handle to global systems
 		global_systems_->GetSystem<ECS::ECSInstance>()->GetSystemInefficient<Sprite>()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer>();
@@ -53,6 +53,8 @@ namespace JZEngine
 		Log::Instance().Initialize(global_systems_->GetSystem<EngineGUI>()->GetConsole());
 		JZEngine::Log::Info("Main", "[{}] Up and Running! v{}", Settings::engine_name, Settings::version);
 
+		PerformanceData::Init();
+
 		// test code
 		/*global_systems_->GetSystem<SoundSystem>()->createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
 		global_systems_->GetSystem<SoundSystem>()->playSound("testsound", true, 0.4f);
@@ -60,7 +62,7 @@ namespace JZEngine
 		InputHandler::IsMousePressed(MOUSEBUTTON::MOUSE_BUTTON_LEFT);*/
 
 		ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
-		for (int i = 0; i < 5000; ++i) {
+		for (int i = 0; i < 2500; ++i) {
 			int id = ecs->CreateEntity();
 			ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
 			entity.AddSystem(1);
@@ -90,9 +92,10 @@ namespace JZEngine
 	void Application::Run()
 	{
 		double time = 0.0;
+		double dt{ Settings::min_tpf };
 		double actual_dt{ Settings::min_tpf };
 		double clamped_dt{ Settings::min_tpf };
-		bool limit_frames = false;
+		bool limit_frames = true;
 
 		while (global_systems_->GetSystem<GLFW_Instance>()->Active())
 		{
@@ -100,23 +103,23 @@ namespace JZEngine
 
 			auto start_time = std::chrono::high_resolution_clock::now();
 
-			double dt = limit_frames ? clamped_dt : actual_dt;
+			//double dt = limit_frames ? clamped_dt : actual_dt;
 
 			PerformanceData::FrameStart();
-			PerformanceData::StartMark("Main");
+			PerformanceData::StartMark("Overall", PerformanceData::TimerType::GLOBAL_SYSTEMS);
 
 			global_systems_->FrameStart();
-			global_systems_->Update(actual_dt);
+			global_systems_->Update(dt);
 			DeltaTime::update_time(1.0);
 
 			auto end_time = std::chrono::high_resolution_clock::now();
 			global_systems_->FrameEnd();
 
-			PerformanceData::EndMark("Main");
+			PerformanceData::EndMark("Overall", PerformanceData::TimerType::GLOBAL_SYSTEMS);
 			PerformanceData::FrameEnd();
 
 			std::chrono::duration<double, std::milli> milli_dt = end_time - start_time;
-			actual_dt = milli_dt.count() / 1000.0;
+			dt = milli_dt.count() / 1000.0;
 			double min_tpf_milli = Settings::min_tpf * 1000.0;
 
 			// sleep
@@ -127,17 +130,15 @@ namespace JZEngine
 					end_time = std::chrono::high_resolution_clock::now();
 					milli_dt = end_time - start_time;
 				}
-				clamped_dt = milli_dt.count() / 1000.0;
-				time += clamped_dt;
+				dt = milli_dt.count() / 1000.0;
+				time += dt;
 			}
 			else 
 			{
-				clamped_dt = std::max(Settings::min_tpf, actual_dt);
-				time += actual_dt;
+				time += dt;
 			}
 
-			PerformanceData::actual_time_per_frame_ = actual_dt;
-			PerformanceData::actual_fps_ = static_cast<unsigned int>(1.0 / actual_dt);
+			PerformanceData::app_fps_ = static_cast<unsigned int>(1.0 / dt);
 			/*Log::Info("Main", "Time Elapsed: {}", time);
 			Log::Info("Main", "Actual dt: {}", actual_dt);
 			Log::Info("Main", "Clamped dt: {}", clamped_dt);

@@ -12,6 +12,7 @@
 
 #include "ECS.h"
 #include "ECSconfig.h"
+#include "../DebugTools/PerformanceData.h"
 
 #include <iostream>
 
@@ -544,6 +545,7 @@ namespace JZEngine
 			ArchetypeManager& am = ecs_instance_->archetype_manager_;
 			for (auto& system : system_database_)
 			{
+				PerformanceData::StartMark(system->name_, PerformanceData::TimerType::ECS_SYSTEMS);
 				system->FrameBegin(0.02f);
 				for (ui32 j = 0; j < am.number_of_archetypes_; ++j)
 				{
@@ -567,6 +569,7 @@ namespace JZEngine
 						}
 					}
 				}
+				PerformanceData::EndMark(system->name_, PerformanceData::TimerType::ECS_SYSTEMS);
 			}
 		}
 

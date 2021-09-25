@@ -73,12 +73,12 @@ namespace JZEngine
 		}
 
 		// render all engine gui parts
-		 console_.Render();
-		scene_tree_.Render();
+		console_.Render();
+		//scene_tree_.Render();
 		inspector_.Render(scene_tree_.selected_entity_);
 
 		for (auto& interface : imgui_interfaces_) {
-			interface.second->RenderInterface();
+			interface.second->RenderInterface(dt);
 		}
 
 		ImGui::EndFrame();

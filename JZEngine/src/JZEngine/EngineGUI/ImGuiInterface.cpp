@@ -12,7 +12,7 @@ namespace JZEngine
 
 	}
 
-	void ImGuiInterface::RenderInterface() 
+	void ImGuiInterface::RenderInterface(float dt)
 	{
 		if (active_)
 		{
@@ -20,7 +20,7 @@ namespace JZEngine
 			ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x_, static_cast<float>(Settings::window_height) * y_ }, ImGuiCond_Always);
 			ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx_, static_cast<float>(Settings::window_height) * sy_ }, ImGuiCond_Always);
 
-			Render();
+			Render(dt);
 		}
 	}
 
