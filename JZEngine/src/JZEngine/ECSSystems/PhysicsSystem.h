@@ -88,7 +88,9 @@ namespace JZEngine
 			const LineSegment& lineSeg,												//Line segment - input
 			Vec2f& interPt,												//Intersection point - output
 			Vec2f& normalAtCollision,									//Normal vector at collision time - output
-			float& interTime);															//Intersection time ti - output
+			float& interTime,
+			bool checkLineEdges);										//Intersection time ti - output
+					
 
 		// circle-circle - same usage for: dynamic circle vs static pillar, and dynamic circle vs dynamic circle
 		// In the case of "dynamic circle vs static pillar", velB will be 0.0f
@@ -98,7 +100,8 @@ namespace JZEngine
 			const Vec2f& velB,														//CircleA velocity - input
 			Vec2f& interPtA,														//Intersection point of CircleA at collision time - output
 			Vec2f& interPtB,														//Intersection point of CircleB at collision time - output
-			float& interTime);														//intersection time - output
+			float& interTime
+			);														//intersection time - output
 
 
 		// RESPONSE FUNCTIONS In this case the object bounces off the line
@@ -129,5 +132,12 @@ namespace JZEngine
 		bool StaticCollision_PointRect(const Vec2f& point,
 			const AABB& aabb2);
 
+		bool CheckMovingCircleToLineEdge(bool withinBothLines,						//Flag stating that the circle is starting from between 2 imaginary line segments distant +/- Radius respectively - input
+			const Circle& circle,													//Circle data - input
+			const Vec2f& ptEnd,													//End circle position - input
+			const LineSegment& lineSeg,												//Line segment - input
+			Vec2f& interPt,														//Intersection point - output
+			Vec2f& normalAtCollision,												//Normal vector at collision time - output
+			float& interTime);
 	};
 }

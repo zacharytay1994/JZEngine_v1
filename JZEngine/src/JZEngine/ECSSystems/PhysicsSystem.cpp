@@ -89,19 +89,21 @@ namespace JZEngine
 
 						break;
 					case 1:// dynamic circle vs static AABB
-						
+						bool checkLineEdges = false;
 						//circle right of AABB
 						if (current_component.m_circle.m_center.x > physics_cont[i]->m_AABB.max.x)
 						{
 							tmp_pt = { physics_cont[i]->m_AABB.max.x, physics_cont[i]->m_AABB.min.y };
 							line= { physics_cont[i]->m_AABB.max, tmp_pt };
 							
-							if (true == DynamicCollision_CircleLineSegment(current_component.m_circle, posnex, line, interpta, normalatcollision, intertime))
+							if (true == DynamicCollision_CircleLineSegment(current_component.m_circle, posnex, line, interpta, normalatcollision, intertime, checkLineEdges))
 							{
 								#ifdef PHYSICSDEBUG
 								Log::Info("Collision", "circle on right");
 								#endif
 								Vec2f reflectedvel{};
+								normalatcollision.Normalize();
+							
 								CollisionResponse_CircleLineSegment(interpta, normalatcollision, posnex, reflectedvel);
 								current_component.velocity = reflectedvel * current_component.velocity.Len();
 							}
@@ -114,12 +116,16 @@ namespace JZEngine
 
 							line= { physics_cont[i]->m_AABB.min, tmp_pt };
 
-							if (true == DynamicCollision_CircleLineSegment(current_component.m_circle, posnex, line, interpta, normalatcollision, intertime))
+							if (true == DynamicCollision_CircleLineSegment(current_component.m_circle, posnex, line, interpta, normalatcollision, intertime, checkLineEdges))
 							{
 								#ifdef PHYSICSDEBUG
 								Log::Info("Collision", "circle on left");
 								#endif
+							
+
 								Vec2f reflectedvel{};
+								normalatcollision.Normalize();
+							
 								CollisionResponse_CircleLineSegment(interpta, normalatcollision, posnex, reflectedvel);
 								
 								current_component.velocity = reflectedvel * current_component.velocity.Len();
@@ -131,16 +137,17 @@ namespace JZEngine
 						{
 							tmp_pt = { physics_cont[i]->m_AABB.min.x, physics_cont[i]->m_AABB.max.y };
 							line={ physics_cont[i]->m_AABB.max, tmp_pt };
-							if (true == DynamicCollision_CircleLineSegment(current_component.m_circle, posnex, line, interpta, normalatcollision, intertime))
+							if (true == DynamicCollision_CircleLineSegment(current_component.m_circle, posnex, line, interpta, normalatcollision, intertime, checkLineEdges))
 							{
 								#ifdef PHYSICSDEBUG
 								Log::Info("Collision", "circle on top");
 								#endif
 								Vec2f reflectedvel{};
+								normalatcollision.Normalize();
+							
 								CollisionResponse_CircleLineSegment(interpta, normalatcollision, posnex, reflectedvel);
 								current_component.velocity = reflectedvel * current_component.velocity.Len();
-								if (current_component.velocity.y > 10.0f)
-									current_component.velocity.y = 10.0f;
+								
 							}
 						}
 						//circle below 
@@ -148,12 +155,14 @@ namespace JZEngine
 						{
 							tmp_pt = { physics_cont[i]->m_AABB.max.x, physics_cont[i]->m_AABB.min.y };
 							line= { physics_cont[i]->m_AABB.min, tmp_pt };
-							if (true == DynamicCollision_CircleLineSegment(current_component.m_circle, posnex, line, interpta, normalatcollision, intertime))
+							if (true == DynamicCollision_CircleLineSegment(current_component.m_circle, posnex, line, interpta, normalatcollision, intertime,checkLineEdges))
 							{
 								#ifdef PHYSICSDEBUG
 								Log::Info("Collision", "circle below");
 								#endif
 								Vec2f reflectedvel{};
+								normalatcollision.Normalize();
+							
 								CollisionResponse_CircleLineSegment(interpta, normalatcollision, posnex, reflectedvel);
 								current_component.velocity = reflectedvel * current_component.velocity.Len();
 							}
@@ -297,6 +306,136 @@ namespace JZEngine
 		else return 0;
 	}
 
+	bool PhysicsSystem::CheckMovingCircleToLineEdge(bool withinBothLines,						//Flag stating that the circle is starting from between 2 imaginary line segments distant +/- Radius respectively - input
+		const Circle& circle,													//Circle data - input
+		const Vec2f& circleend,													//End circle position - input
+		const LineSegment& lineSeg,												//Line segment - input
+		Vec2f& interPt,														//Intersection point - output
+		Vec2f& normalAtCollision,												//Normal vector at collision time - output
+		float& interTime)
+	{
+		Vec2f V(circleend.x - circle.m_center.x, circleend.y - circle.m_center.y);
+		Vec2f M(circleend.y - circle.m_center.y, -(circleend.x - circle.m_center.x));
+		if (withinBothLines)
+		{
+			if ((lineSeg.m_pt0 - circle.m_center).Dot(lineSeg.m_pt1 - lineSeg.m_pt0) > 0.0f)//p0 side
+			{
+				float m = (lineSeg.m_pt0 - circle.m_center).Dot(V.GetNormalized());//BsP0V
+				if (m > 0.0f)
+				{
+					float dist0 = (lineSeg.m_pt0 - circle.m_center).Dot(M.GetNormalized());
+					if (abs(dist0) > circle.m_radius)
+						return false;
+
+
+					float s = sqrtf( (circle.m_radius * circle.m_radius) - (dist0 * dist0));
+					interTime = (m - s) / V.Len();
+					if (interTime <= 1.0f)
+					{
+						normalAtCollision = interPt - lineSeg.m_pt0;
+						interPt = circle.m_center + V * interTime;
+						return true;
+					}
+				}
+			}
+			else//(BsP1.P0P1 < 0) //P1 side //just return 1 for apply reflection in psuedo code 
+			{
+				float m = (lineSeg.m_pt1 - circle.m_center).Dot(V.GetNormalized());
+				if (m <= 0)
+					return false; //no collision
+				//here means circle facing p1
+				float dist1 = (lineSeg.m_pt1 - circle.m_center).Dot(M.GetNormalized());
+				if (fabsf(dist1) > circle.m_radius)
+					return false;
+				float s = sqrtf((circle.m_radius * circle.m_radius) - (dist1 * dist1));
+				interTime = (m - s) / V.Len();
+				if (interTime <= 1.0f)
+				{
+					interPt = circle.m_center + V * interTime;
+					normalAtCollision = interPt - lineSeg.m_pt1;
+					return true;
+				}
+
+			}
+		}
+		else//not within both lines
+		{
+			bool p0side = false;
+			float dist0 = (lineSeg.m_pt0 - circle.m_center).Dot(M.GetNormalized());
+			float dist1 = (lineSeg.m_pt1 - circle.m_center).Dot(M.GetNormalized());
+
+			float dist0_abs = abs(dist0);
+			float dist1_abs = abs(dist1);
+
+			if ((dist0_abs > circle.m_radius) && (dist1_abs > circle.m_radius))
+				return false;
+
+			else if ((dist0_abs <= circle.m_radius) && (dist1_abs <= circle.m_radius))
+			{
+				float m0 = (lineSeg.m_pt0 - circle.m_center).Dot(V.GetNormalized());
+				float m1 = (lineSeg.m_pt1 - circle.m_center).Dot(V.GetNormalized());
+
+				float m0_abs = abs(m0);
+				float m1_abs = abs(m1);
+
+				if (m0_abs < m1_abs) 
+					{ p0side = true; }
+				else 
+					{ p0side = false; }
+
+			}
+			else if (dist0_abs <= circle.m_radius)
+			{
+				p0side = true;
+			}
+			else
+			{
+				p0side = false;
+			}
+
+			if (p0side)//circle close to p0
+			{
+				float m = (lineSeg.m_pt0 - circle.m_center).Dot(V.GetNormalized());
+				if (m < 0.0f)
+					return false;
+				else
+				{
+					float s = sqrtf((circle.m_radius * circle.m_radius) - (dist0 * dist0));
+					interTime = (m - s) / V.Len();
+					if (interTime <= 1.0f)
+					{
+						interPt = circle.m_center + V * interTime;
+						normalAtCollision = interPt - lineSeg.m_pt0;
+						return true;
+					}
+				}
+			}
+			else//circle close to p1
+			{
+				float m = (lineSeg.m_pt1 - circle.m_center).Dot(V.GetNormalized());
+				if (m < 0.0f)
+					return false;
+				else
+				{
+					float s = sqrtf((circle.m_radius * circle.m_radius) - (dist1 * dist1));
+					interTime = (m - s) / V.Len();
+					if (interTime <= 1.0f)
+					{
+						interPt = circle.m_center + V * interTime;
+						normalAtCollision = interPt - lineSeg.m_pt1;
+						return true;
+					}
+					else
+						return false;
+				}
+
+
+			}
+
+
+
+		}
+	}
 	/******************************************************************************/
 	/*!
 	 * \brief			Function to check dynamic circle vs static line collision
@@ -314,15 +453,17 @@ namespace JZEngine
 		const LineSegment& lineSeg,												//Line segment - input
 		Vec2f& interPt,												//Intersection point - output
 		Vec2f& normalAtCollision,									//Normal vector at collision time - output
-		float& interTime)												//Intersection time ti - output
-
+		float& interTime,
+		bool checkLineEdges)//Intersection time ti - output												
 	{
+		
+		float a, b, c;
 		// outward normal M to circle velocity
 		Vec2f V(circleend.x - circle.m_center.x, circleend.y - circle.m_center.y);
 		Vec2f M(circleend.y - circle.m_center.y, -(circleend.x - circle.m_center.x));
 		float nbsnp0 = lineSeg.m_normal.Dot(circle.m_center) -
 			lineSeg.m_normal.Dot(lineSeg.m_pt0);
-		if (nbsnp0 < -circle.m_radius)
+		if (nbsnp0 <= -circle.m_radius)
 		{
 			Vec2f p0prime = lineSeg.m_pt0 - circle.m_radius * lineSeg.m_normal;
 			Vec2f p1prime = lineSeg.m_pt1 - circle.m_radius * lineSeg.m_normal;
@@ -343,11 +484,13 @@ namespace JZEngine
 			}
 			else
 			{
-				// checkmovingcircletolineedge (next part)
-				return false;
+				checkLineEdges = false;
+				bool retva=CheckMovingCircleToLineEdge(checkLineEdges, circle, circleend, lineSeg, interPt, normalAtCollision, interTime);
+				//CollisionResponse_CircleLineSegment(interPt, normalatcollision, circleend, reflectedvel);
+				return retva;
 			}
 		}
-		else if (nbsnp0 > circle.m_radius)
+		else if (nbsnp0 >= circle.m_radius)
 		{
 			Vec2f p0prime = lineSeg.m_pt0 + circle.m_radius * lineSeg.m_normal;
 			Vec2f p1prime = lineSeg.m_pt1 + circle.m_radius * lineSeg.m_normal;
@@ -369,13 +512,18 @@ namespace JZEngine
 			}
 			else
 			{
-				// checkmovingcircletolineedge (next part)
-				return false;
+				checkLineEdges = false;
+				bool retva = CheckMovingCircleToLineEdge(checkLineEdges, circle, circleend, lineSeg, interPt, normalAtCollision, interTime);
+				//return ();
+				return retva;
 			}
 		}
 		else
 		{
-			return false; // checkmovingcircletolineedge (next part)
+			checkLineEdges = true;
+			bool retva = CheckMovingCircleToLineEdge(checkLineEdges, circle, circleend, lineSeg, interPt, normalAtCollision, interTime);
+			return retva;
+		
 		}
 	}
 
@@ -442,6 +590,7 @@ namespace JZEngine
 		Vec2f& ptEnd,
 		Vec2f& reflected)
 	{
+	
 		reflected = (ptEnd - ptInter) - (2.0f * normal.Dot(ptEnd - ptInter) * normal);
 		ptEnd = ptInter + reflected;
 		reflected.Normalize();
@@ -488,6 +637,10 @@ namespace JZEngine
 		ptEndA = interPtA + nreflectedVectorA * (1.0f - interTime);
 		ptEndB = interPtB + nreflectedVectorB * (1.0f - interTime);
 	}
+
+
+
+
 
 
 }//JZEngine
