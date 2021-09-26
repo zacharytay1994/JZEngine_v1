@@ -45,17 +45,17 @@ namespace JZEngine
 		// calculate delta time of all timers
 		for (auto& t : default_timers_)
 		{
-			t.second.delta_time_ = std::chrono::duration<float, std::milli>(t.second.end_time_ - t.second.start_time_).count() / 1000.0f;
+			t.second.delta_time_ = t.second.elapsed_time_ / 1000.0f;
 			t.second.accumulated_delta_time_ += t.second.delta_time_;
 		}
 		for (auto& t : global_system_timers_)
 		{
-			t.second.delta_time_ = std::chrono::duration<float, std::milli>(t.second.end_time_ - t.second.start_time_).count() / 1000.0f;
+			t.second.delta_time_ = t.second.elapsed_time_ / 1000.0f;
 			t.second.accumulated_delta_time_ += t.second.delta_time_;
 		}
 		for (auto& t : ecs_system_timers_)
 		{
-			t.second.delta_time_ = std::chrono::duration<float, std::milli>(t.second.end_time_ - t.second.start_time_).count() / 1000.0f;
+			t.second.delta_time_ = t.second.elapsed_time_ / 1000.0f;
 			t.second.accumulated_delta_time_ += t.second.delta_time_;
 		}
 
@@ -88,6 +88,20 @@ namespace JZEngine
 			accumulated_app_fps_ = 0;
 		}
 
+		// reset all marks in preperation for new frame
+		for (auto& t : default_timers_)
+		{
+			t.second.elapsed_time_ = 0.0f;
+		}
+		for (auto& t : global_system_timers_)
+		{
+			t.second.elapsed_time_ = 0.0f;
+		}
+		for (auto& t : ecs_system_timers_)
+		{
+			t.second.elapsed_time_ = 0.0f;
+		}
+
 		++accumulated_frames_;
 		++frame_count_;
 
@@ -116,13 +130,13 @@ namespace JZEngine
 		switch (type)
 		{
 		case TimerType::DEFAULT:
-			default_timers_[name].end_time_ = std::chrono::high_resolution_clock::now();
+			default_timers_[name].elapsed_time_ += std::chrono::duration<float, std::milli>(std::chrono::high_resolution_clock::now() - default_timers_[name].start_time_).count();
 			break;
 		case TimerType::GLOBAL_SYSTEMS:
-			global_system_timers_[name].end_time_ = std::chrono::high_resolution_clock::now();
+			global_system_timers_[name].elapsed_time_ += std::chrono::duration<float, std::milli>(std::chrono::high_resolution_clock::now() - global_system_timers_[name].start_time_).count();
 			break;
 		case TimerType::ECS_SYSTEMS:
-			ecs_system_timers_[name].end_time_ = std::chrono::high_resolution_clock::now();
+			ecs_system_timers_[name].elapsed_time_ += std::chrono::duration<float, std::milli>(std::chrono::high_resolution_clock::now() - ecs_system_timers_[name].start_time_).count();
 			break;
 		}
 	}

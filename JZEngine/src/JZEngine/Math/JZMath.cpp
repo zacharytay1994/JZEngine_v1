@@ -4,6 +4,8 @@
 #include "../DebugTools/Log.h"
 #include "../EngineConfig.h"
 
+#include "../DebugTools/PerformanceData.h"
+
 namespace JZEngine
 {
 	namespace Math
@@ -15,6 +17,7 @@ namespace JZEngine
 
 		Mat3f GetTransform( const Vec2f& position, float rotate, const Vec2f& scale, const Vec2f& size )
 		{
+			//PerformanceData::StartMark("Mat3 GetTransform (JZMath.cpp, Line:20-33)");
 			// calculate transformation
 			JZEngine::Mat3f mat_scale = JZEngine::Mat3f::Scale( size.x * scale.x, size.y * scale.y, 1.0f );
 			JZEngine::Mat3f mat_rotate = JZEngine::Mat3f::RotateZ( Math::DegToRad( rotate ) );
@@ -27,6 +30,7 @@ namespace JZEngine
 			JZEngine::Mat3f transform = mat_translate * ( mat_rotate * mat_scale );
 			transform = camwin_to_ndc_xform * transform;
 			transform.Transpose();
+			//PerformanceData::EndMark("Mat3 GetTransform (JZMath.cpp, Line:20-33)");
 
 			return transform;
 		}

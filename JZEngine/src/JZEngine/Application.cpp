@@ -62,22 +62,32 @@ namespace JZEngine
 		InputHandler::IsMousePressed(MOUSEBUTTON::MOUSE_BUTTON_LEFT);*/
 
 		ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
-		for (int i = 0; i < 2500; ++i) {
+		for (int i = 0; i < 1000; ++i) {
 			int id = ecs->CreateEntity();
 			ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
 			entity.AddSystem(1);
 			entity.AddComponent<IsUnicorn>();
 			float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 			float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-			entity.GetComponent<Transform>().position_ = { x * 800.0f, y * 800.0f };
+			entity.GetComponent<Transform>().position_ = { x * -600.0f, y * -300.0f };
 		}
-		/*for (int i = 0; i < 5000; ++i) {
+		for (int i = 0; i < 1000; ++i)
+		{
+			int id = ecs->CreateEntity();
+			ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
+			entity.AddSystem(1);
+			entity.AddComponent<IsUnicorn>();
+			float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+			float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+			entity.GetComponent<Transform>().position_ = { x * 600.0f, y * 300.0f };
+		}
+		/*for (int i = 0; i < 1000; ++i) {
 			int id = ecs->CreateEntity();
 			ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
 			entity.AddSystem(1);
 			float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 			float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-			entity.GetComponent<Transform>().position_ = { x * -800.0f, y * -800.0f };
+			entity.GetComponent<Transform>().position_ = { x * 600.0f, y * 300.0f };
 			entity.GetComponent<Texture>().texture_id_ = 1;
 		}*/
 	}
@@ -106,7 +116,7 @@ namespace JZEngine
 			//double dt = limit_frames ? clamped_dt : actual_dt;
 
 			PerformanceData::FrameStart();
-			PerformanceData::StartMark("Overall", PerformanceData::TimerType::GLOBAL_SYSTEMS);
+			PerformanceData::StartMark("Game Loop", PerformanceData::TimerType::GLOBAL_SYSTEMS);
 
 			global_systems_->FrameStart();
 			global_systems_->Update(dt);
@@ -115,7 +125,7 @@ namespace JZEngine
 			auto end_time = std::chrono::high_resolution_clock::now();
 			global_systems_->FrameEnd();
 
-			PerformanceData::EndMark("Overall", PerformanceData::TimerType::GLOBAL_SYSTEMS);
+			PerformanceData::EndMark("Game Loop", PerformanceData::TimerType::GLOBAL_SYSTEMS);
 			PerformanceData::FrameEnd();
 
 			std::chrono::duration<double, std::milli> milli_dt = end_time - start_time;

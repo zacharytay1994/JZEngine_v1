@@ -25,6 +25,7 @@ namespace JZEngine
 			float display_delta_time_{ 0.0f };					// 
 			float accumulated_delta_time_{ 1.0f };				// in seconds
 			float average_delta_time_{ 0.0f };					// in seconds
+			float elapsed_time_{ 0.0f };						// in milliseconds
 		};
 
 		static float time_quantum_;

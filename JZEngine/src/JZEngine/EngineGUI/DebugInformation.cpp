@@ -58,7 +58,7 @@ namespace JZEngine
 				ImGui::TableNextColumn();
 				ImGui::Text(t.first.c_str());
 				ImGui::TableNextColumn();
-				ImGui::Text("%8.3f (%8.3f)", t.second.average_delta_time_ * 1000.0f, t.second.delta_time_ * 1000.0f);
+				ImGui::Text("%8.3f", t.second.average_delta_time_ * 1000.0f);
 				ImGui::TableNextColumn();
 				ImGui::SetNextItemWidth(200.0f);
 				t.second.display_delta_time_ += (t.second.average_delta_time_ - t.second.display_delta_time_) * 0.5f * dt;
@@ -74,7 +74,7 @@ namespace JZEngine
 				ImGui::TableNextColumn();
 				ImGui::Text(t.first.c_str());
 				ImGui::TableNextColumn();
-				ImGui::Text("%8.3f (%8.3f)", t.second.average_delta_time_ * 1000.0f, t.second.delta_time_ * 1000.0f);
+				ImGui::Text("%8.3f", t.second.average_delta_time_ * 1000.0f);
 				ImGui::TableNextColumn();
 				ImGui::SetNextItemWidth(200.0f);
 				t.second.display_delta_time_ += (t.second.average_delta_time_ - t.second.display_delta_time_) * 0.5f * dt;
@@ -90,7 +90,7 @@ namespace JZEngine
 				ImGui::TableNextColumn();
 				ImGui::Text(t.first.c_str());
 				ImGui::TableNextColumn();
-				ImGui::Text("%8.3f (%8.3f)", t.second.average_delta_time_ * 1000.0f, t.second.delta_time_ * 1000.0f);
+				ImGui::Text("%8.3f", t.second.average_delta_time_ * 1000.0f);
 				ImGui::TableNextColumn();
 				ImGui::SetNextItemWidth(200.0f);
 				t.second.display_delta_time_ += (t.second.average_delta_time_ - t.second.display_delta_time_) * 0.5f * dt;
