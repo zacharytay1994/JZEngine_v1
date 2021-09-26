@@ -1,15 +1,16 @@
 #include "PCH.h"
-#include <ft2build.h>
-#include FT_FREETYPE_H  // freetype.h
 
 #include "OpenGLDebug.h"
 #include "TextRenderer.h"
+#include "../EngineConfig.h"
+
+
+#define ROUND(x)  ((x+32) & -64)
 
 namespace JZEngine
 {
-	void TextRenderer::Data ( unsigned int width , unsigned int height )
+	void TextRenderer::Data ()
 	{
-
 		// configure VAO/VBO for texture quads
 		glGenVertexArrays ( 1 , &va );
 		glGenBuffers ( 1 , &vb );
@@ -35,22 +36,21 @@ namespace JZEngine
 		}
 		shader_program.Bind ();
 		glCheckError ();
-		float left = 0.0f ;
-		float right = static_cast< float >( width );
-		float bottom = 0.0f;
-		float top = static_cast< float >( height );
 
-		// orthographic projection 
+
+		JZEngine::Mat3f camwin_to_ndc_xform = { {2.0f / ( Settings::aspect_ratio * Settings::window_height ), 0.0f, 0.0f},
+												{0.0f, -2.0f / Settings::window_height, 0.0f},
+												{0.0f, 0.0f, 1.0f} };
 
 		glCheckError ();
-		//shader_program.SetUniform ( "projection" , projection );
+		shader_program.SetUniform ( "projection" , camwin_to_ndc_xform.Transpose () );
 		shader_program.SetUniform ( "text" , 0 );
 		glCheckError ();
 	}
 
-	void TextRenderer::Load ( std::string font , unsigned int fontSize , unsigned int width , unsigned int height )
+	void TextRenderer::Load ( std::string font , unsigned int fontSize )
 	{
-		Data ( width , height );
+		Data ();
 		glCheckError ();
 		// first clear the previously loaded Characters
 		Characters.clear ();
@@ -63,6 +63,7 @@ namespace JZEngine
 
 		// load font as face 
 		FT_Face face;
+		// FT_Open_Face to open a font by its pathname
 		// FT_New_Face ( Return : FreeType error code. 0~means success.)
 		if( FT_New_Face ( ft , font.c_str () , 0 , &face ) )
 			std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
@@ -107,11 +108,13 @@ namespace JZEngine
 
 			// now store character for later use
 			Character character = {
+				face,
 				texture,
 				JZEngine::Vec2f ( face->glyph->bitmap.width, face->glyph->bitmap.rows ),
 				JZEngine::Vec2f ( face->glyph->bitmap_left, face->glyph->bitmap_top ),
 				face->glyph->advance.x
 			};
+
 			Characters.insert ( std::pair<char , Character> ( c , character ) );
 		}
 		glBindTexture ( GL_TEXTURE_2D , 0 );
@@ -122,6 +125,22 @@ namespace JZEngine
 
 	}
 
+	/**
+	 * @brief
+	 * Render line of text.
+	 * To render a character, extract the corresponding Character struct of the Characters map and calculate the quad's dimensions using the character's metrics.
+	 * @param text
+	 * String of text that you like to render.
+	 * @param x
+	 * [-1, 1] OpenGL Window Coordinates
+	 * Do note that (0,0) of string located at top right of the string.
+	 * @param y
+	 * [-1, 1] OpenGL Window Coordinates
+	 * @param scale
+	   Scaling dimension.
+	 * @param color
+	 * Default colour is white { 1.0f , 1.0f , 1.0f };
+	*/
 	void TextRenderer::RenderText ( std::string text , float x , float y , float scale , JZEngine::Vec3f color )
 	{
 		// activate corresponding render state
@@ -130,14 +149,46 @@ namespace JZEngine
 		glActiveTexture ( GL_TEXTURE0 );
 		glBindVertexArray ( va );
 
-		// iterate through all characters
 		std::string::const_iterator c;
+
+		int offset_x{ 0 };
+		int offset_y{ 0 };
+
+		switch( GetAlignment () )
+		{
+			case Paragraph::AlignLeft:
+				offset_x = 0;
+				break;
+			case Paragraph::AlignCenter:
+				for( c = text.begin (); c != text.end (); c++ )
+				{
+					Character ch = Characters[ *c ];
+					offset_x += ( ch.advance >> 6 );
+				}
+				offset_x = ( -offset_x / 2 );
+				break;
+			case Paragraph::AlignRight:
+				for( c = text.begin (); c != text.end (); c++ )
+				{
+					Character ch = Characters[ *c ];
+					offset_x += ( ch.advance >> 6 );
+				}
+				offset_x = ( -offset_x );
+				break;
+		}
+
+
+
+
+		// iterate through all characters
 		for( c = text.begin (); c != text.end (); c++ )
 		{
+
 			Character ch = Characters[ *c ];
 
-			float xpos = x + ch.bearing_.x * scale;
-			float ypos = y + ( this->Characters[ 'H' ].bearing_.y - ch.bearing_.y ) * scale;
+			float xpos = offset_x + x + ch.bearing_.x * scale;
+			// edited (-) infront of y axis
+			float ypos = offset_y + -y + ( this->Characters[ 'H' ].bearing_.y - ch.bearing_.y ) * scale;
 
 			float w = ch.size_.x * scale;
 			float h = ch.size_.y * scale;
@@ -151,6 +202,7 @@ namespace JZEngine
 				{ xpos + w, ypos + h,   1.0f, 1.0f },
 				{ xpos + w, ypos,       1.0f, 0.0f }
 			};
+
 			// render glyph texture over quad
 			glBindTexture ( GL_TEXTURE_2D , ch.texture_id_ );
 			// update content of VBO memory
@@ -160,7 +212,8 @@ namespace JZEngine
 			// render quad
 			glDrawArrays ( GL_TRIANGLES , 0 , 6 );
 			// now advance cursors for next glyph
-			x += ( ch.advance >> 6 ) * scale; // bitshift by 6 to get value in pixels (1/64th times 2^6 = 64)
+			x += ( ch.advance >> 6 ) * scale   ; // bitshift by 6 to get value in pixels (1/64th times 2^6 = 64)
+
 		}
 		glBindVertexArray ( 0 );
 		glBindTexture ( GL_TEXTURE_2D , 0 );

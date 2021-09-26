@@ -81,7 +81,7 @@ namespace JZEngine
 			entity.GetComponent<Texture>().texture_id_ = 1;
 		}*/
 
-		text.Load ( "Assets/Fonts/Weather Sunday.otf" , 100 ,Settings::window_width , Settings::window_height  );
+		text.Load ( "Assets/Fonts/Weather Sunday.otf" , 50 );
 
 	}
 
@@ -99,7 +99,8 @@ namespace JZEngine
 			global_systems_->FrameStart ();
 			global_systems_->Update ( 1.0 );
 
-			text.RenderText ( "JZ Engine" , 100 , 100 , 1 , { 0.0f , 0.0f , 0.0f } );
+			text.RenderText ( "Welcome to JZ Engine !" , 0 , 0 , 1.0f , { 0.0f , 0.0f , 0.0f } );
+			text.Alignment (Paragraph::AlignCenter);
 			DeltaTime::update_time ( 1.0 );
 			global_systems_->FrameEnd ();
 		}
