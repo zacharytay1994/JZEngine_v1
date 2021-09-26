@@ -208,6 +208,13 @@ namespace JZEngine
 			ImGui::SliderFloat("velocity of y", &component.velocity.y, component.velocity.y -0.1f, component.velocity.y+ 0.1f);
 		}
 
+		template <>
+		void RenderComponent ( Background& component )
+		{
+			ImGui::InputFloat ( "Scroll X" , &component.speed_x_ );
+			ImGui::InputFloat ( "Scroll Y" , &component.speed_y_ );
+		}
+
 		/*!
 		 * @brief ___JZEngine::LoopTupleRender___
 		 * ****************************************************************************************************

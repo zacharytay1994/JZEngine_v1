@@ -42,6 +42,7 @@
     <ClCompile Include="src\JZEngine\EngineGUI\MenuBar.cpp" />
     <ClCompile Include="src\JZEngine\DebugTools\PerformanceData.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\PhysicsSystem.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Background.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\JZEngine.h" />
@@ -109,5 +110,6 @@
     <ClInclude Include="src\JZEngine\DebugTools\PerformanceData.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\PhysicsSystem.h" />
     <ClInclude Include="src\JZEngine\STL\Random.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Background.h" />
   </ItemGroup>
 </Project>

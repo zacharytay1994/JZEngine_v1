@@ -28,17 +28,22 @@ namespace JZEngine
 		int shader_id_{ 0 };
 	};
 
+	struct NotBackground
+	{
+		char flag;
+	};
+
 	// sprite system
 	struct Sprite : public ECS::System
 	{
 		SpriteRenderer sprite_renderer_;
 
-		Sprite()
+		Sprite ()
 		{
-			RegisterComponents<Transform, Texture, NonInstanceShader>();
+			RegisterComponents<Transform , Texture , NonInstanceShader , NotBackground> ();
 		}
 
-		virtual void FrameBegin( const float& dt ) override
+		virtual void FrameBegin ( const float& dt ) override
 		{
 			//sprite_renderer_.ClearPackets();
 		}
@@ -48,15 +53,15 @@ namespace JZEngine
 			sprite_renderer_.DrawAllInstances();
 		}*/
 
-		virtual void Update(const float& dt) override
+		virtual void Update ( const float& dt ) override
 		{
-			Transform& transform = GetComponent<Transform>();
-			Texture& texture = GetComponent<Texture>();
-			NonInstanceShader& shader = GetComponent<NonInstanceShader>();
+			Transform& transform = GetComponent<Transform> ();
+			Texture& texture = GetComponent<Texture> ();
+			NonInstanceShader& shader = GetComponent<NonInstanceShader> ();
 
 			// else use default render
-			sprite_renderer_.DrawSprite( shader.shader_id_, texture.texture_id_,
-										 transform.position_, transform.size_, transform.scale_, transform.rotation_, { 1.0f,1.0f,1.0f } );
+			sprite_renderer_.DrawSprite ( shader.shader_id_ , texture.texture_id_ ,
+										  transform.position_ , transform.size_ , transform.scale_ , transform.rotation_ , { 1.0f,1.0f,1.0f } );
 		}
 	};
 }
