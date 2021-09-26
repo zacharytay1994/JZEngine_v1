@@ -81,7 +81,7 @@ namespace JZEngine
 			entity.GetComponent<Texture>().texture_id_ = 1;
 		}*/
 
-		text.Load ( "Assets/Fonts/Weather Sunday.otf" , 100 , Settings::window_width/2.0f , Settings::window_height / 2.0f );
+		text.Load ( "Assets/Fonts/Weather Sunday.otf" , 100 ,Settings::window_width , Settings::window_height  );
 
 	}
 
