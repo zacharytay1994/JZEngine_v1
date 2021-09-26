@@ -177,9 +177,6 @@ namespace JZEngine
 				break;
 		}
 
-
-
-
 		// iterate through all characters
 		for( c = text.begin (); c != text.end (); c++ )
 		{
