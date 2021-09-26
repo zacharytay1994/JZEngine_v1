@@ -14,7 +14,7 @@ namespace JZEngine
 
 	void DebugInformation::Render(float dt) 
 	{
-		ImGui::Begin("Debug Information");
+		ImGui::Begin("Performance Visualizer");
 
 		ImGui::SetNextItemWidth(100.0f);
 		ImGui::InputInt("Target FPS |", &target_fps_);
@@ -39,7 +39,7 @@ namespace JZEngine
 
 		ImGui::Separator();
 
-		if (ImGui::BeginTable("Table", 4))
+		if (ImGui::BeginTable("Headers", 4))
 		{
 			//ImGui::TableSetupColumn("Table", 0, 100.0f);
 			ImGui::TableNextColumn();
@@ -51,8 +51,17 @@ namespace JZEngine
 			ImGui::TableNextColumn();
 			ImGui::Text("[%% of Target]");
 
-			// render global systems timers
-			ImGui::Separator();
+			ImGui::EndTable();
+		}
+
+		// render global systems timers
+		ImGui::Separator();
+		ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f, 1.0f, 1.0f, 1.0f });
+		ImGui::Text("Global Systems");
+		ImGui::PopStyleColor();
+		ImGui::Separator();
+		if (ImGui::BeginTable("Global Systems", 4))
+		{
 			for (auto& t : PerformanceData::global_system_timers_)
 			{
 				ImGui::TableNextColumn();
@@ -66,9 +75,17 @@ namespace JZEngine
 				ImGui::TableNextColumn();
 				ImGui::Text("%.3f%%", static_cast<float>(t.second.average_delta_time_ * target_fps_ * 100.0f));
 			}
+			ImGui::EndTable();
+		}
 
-			// render ecs system timers
-			ImGui::Separator();
+		// render ecs system timers
+		ImGui::Separator();
+		ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f, 1.0f, 1.0f, 1.0f });
+		ImGui::Text("ECS Systems");
+		ImGui::PopStyleColor();
+		ImGui::Separator();
+		if (ImGui::BeginTable("ECS Systems", 4))
+		{
 			for (auto& t : PerformanceData::ecs_system_timers_)
 			{
 				ImGui::TableNextColumn();
@@ -82,9 +99,17 @@ namespace JZEngine
 				ImGui::TableNextColumn();
 				ImGui::Text("%.3f%%", static_cast<float>(t.second.average_delta_time_ * target_fps_ * 100.0f));
 			}
+			ImGui::EndTable();
+		}
 
-			// render default timers
-			ImGui::Separator();
+		// render default timers
+		ImGui::Separator();
+		ImGui::PushStyleColor(ImGuiCol_Text, {0.0f, 1.0f, 1.0f, 1.0f});
+		ImGui::Text("Default Systems");
+		ImGui::PopStyleColor();
+		ImGui::Separator();
+		if (ImGui::BeginTable("Default Systems", 4))
+		{
 			for (auto& t : PerformanceData::default_timers_)
 			{
 				ImGui::TableNextColumn();

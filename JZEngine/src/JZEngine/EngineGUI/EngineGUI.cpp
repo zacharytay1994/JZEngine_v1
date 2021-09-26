@@ -46,8 +46,10 @@ namespace JZEngine
 		inspector_.ecs_instance_ = GetSystem<ECS::ECSInstance>();
 		scene_tree_.ecs_instance_ = GetSystem<ECS::ECSInstance>();
 
-		AddInterface<DebugInformation>(1.0f / 6.0f, 1.0f / 46.0f, 4.0f / 6.0f, 34.0f / 46.0f);
+		// add imgui interfaces
 		AddInterface<MenuBar>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 1.0f / 18.0f);
+		AddInterface<DebugInformation>(1.0f / 6.0f, 1.0f / 46.0f, 4.0f / 6.0f, 34.0f / 46.0f);
+		GetInterface<DebugInformation>()->active_ = false;
 	}
 
 	/*!
@@ -74,7 +76,7 @@ namespace JZEngine
 
 		// render all engine gui parts
 		console_.Render();
-		//scene_tree_.Render();
+		scene_tree_.Render();
 		inspector_.Render(scene_tree_.selected_entity_);
 
 		for (auto& interface : imgui_interfaces_) {

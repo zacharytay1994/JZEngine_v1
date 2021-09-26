@@ -61,8 +61,8 @@ namespace JZEngine
 		global_systems_->GetSystem<SoundSystem>()->setChannelGroupVolume(1.0f, "main");
 		InputHandler::IsMousePressed(MOUSEBUTTON::MOUSE_BUTTON_LEFT);*/
 
-		ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
-		for (int i = 0; i < 1000; ++i) {
+		/*ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
+		for (int i = 0; i < 100; ++i) {
 			int id = ecs->CreateEntity();
 			ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
 			entity.AddSystem(1);
@@ -70,25 +70,6 @@ namespace JZEngine
 			float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 			float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 			entity.GetComponent<Transform>().position_ = { x * -600.0f, y * -300.0f };
-		}
-		for (int i = 0; i < 1000; ++i)
-		{
-			int id = ecs->CreateEntity();
-			ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
-			entity.AddSystem(1);
-			entity.AddComponent<IsUnicorn>();
-			float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-			float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-			entity.GetComponent<Transform>().position_ = { x * 600.0f, y * 300.0f };
-		}
-		/*for (int i = 0; i < 1000; ++i) {
-			int id = ecs->CreateEntity();
-			ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
-			entity.AddSystem(1);
-			float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-			float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-			entity.GetComponent<Transform>().position_ = { x * 600.0f, y * 300.0f };
-			entity.GetComponent<Texture>().texture_id_ = 1;
 		}*/
 	}
 

@@ -2,6 +2,7 @@
 #include "MenuBar.h"
 #include "EngineGUI.h"
 
+#include "../DebugTools/PerformanceData.h"
 #include "DebugInformation.h"
 
 namespace JZEngine {
@@ -15,23 +16,19 @@ namespace JZEngine {
 	void MenuBar::Render(float dt) {
 		if (ImGui::BeginMainMenuBar())
 		{
-			//if (ImGui::BeginMenu("File"))
-			//{
-			//	if (ImGui::MenuItem("New"))
-			//	{
-			//		//Do something
-			//	}
-			//	ImGui::EndMenu();
-			//}
-
 			if (ImGui::BeginMenu("Settings"))
 			{
-				if (ImGui::MenuItem("DebugInformation", "[TAB]"))
+				if (ImGui::MenuItem("Performance Visualizer", "[TAB]"))
 				{
 					GetInterface<DebugInformation>()->active_ = !GetInterface<DebugInformation>()->active_;
 				}
 				ImGui::EndMenu();
 			}
+
+			ImGui::SameLine();
+			ImGui::Text(" | App FPS: %4d", PerformanceData::average_app_fps_);
+			ImGui::SameLine();
+			ImGui::Text(" | Process FPS: %4d |", PerformanceData::average_fps_);
 
 			ImGui::EndMainMenuBar();
 		}
