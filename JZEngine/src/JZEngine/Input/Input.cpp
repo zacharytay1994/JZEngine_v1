@@ -10,8 +10,8 @@ namespace JZEngine
     /*                                                   objects with file scope
     ----------------------------------------------------------------------------- */
     // static data members declared in GLHelper
-    std::unordered_map<int, GLboolean> InputHandler::keystate;
-    std::unordered_map<int, GLboolean> InputHandler::mousestate;
+    std::unordered_map<int, int> InputHandler::keystate;
+    std::unordered_map<int, int> InputHandler::mousestate;
 
 
     bool InputHandler::init(GLFWwindow* ptr) {
@@ -55,31 +55,7 @@ namespace JZEngine
     When the ESC key is pressed, the close flag of the window is set.
     */
     void InputHandler::key_cb(GLFWwindow* pwin, int key, int scancode, int action, int mod) {
-        if (GLFW_PRESS == action)
-        {
-            if (GLFW_KEY_ESCAPE == key)
-            {
-                glfwSetWindowShouldClose(pwin, GLFW_TRUE);
-            }
-            keystate[key] = GL_TRUE;
-
-            std::cout << "key press :" << key << "\n";
-
-        }
-        else if (GLFW_REPEAT == action)
-        {
-
-            keystate[key] = GL_TRUE;
-
-
-        }
-        else if (GLFW_RELEASE == action)
-        {
-            keystate[key] = GL_FALSE;
-
-        }
-
-
+        keystate[key] = action;
     }
 
     /*  _________________________________________________________________________*/
@@ -105,24 +81,7 @@ namespace JZEngine
     This function is called when mouse buttons are pressed.
     */
     void InputHandler::mousebutton_cb(GLFWwindow* pwin, int button, int action, int mod) {
-
-        if (GLFW_PRESS == action) {
-
-            mousestate[button] = GL_TRUE;
-            std::cout << "mouse press" << "\n";
-
-        }
-        else if (GLFW_REPEAT == action) {
-            // key state was and is being pressed
-            mousestate[button] = GL_FALSE;
-
-
-        }
-        else if (GLFW_RELEASE == action) {
-            // key start changes from pressed to released
-            mousestate[button] = GL_FALSE;
-
-        }
+        mousestate[button] = action;
     }
 
     /*  _________________________________________________________________________*/
@@ -215,12 +174,52 @@ namespace JZEngine
 
     bool InputHandler::IsKeyPressed(KEY key) 
     {
-        return keystate[static_cast<int>(key)];
+        if (keystate[static_cast<int>(key)] == GLFW_REPEAT)
+            return true;
+
+        else return false;
+    }
+    bool InputHandler::IsKeyTriggered(KEY key)
+    {
+        if (keystate[static_cast<int>(key)] == GLFW_PRESS)
+        {
+            keystate[static_cast<int>(key)] = -1;
+            return true;
+        }
+
+        else return false;
+    }
+    bool InputHandler::IsKeyReleased(KEY key)
+    {
+        if (keystate[static_cast<int>(key)] == GLFW_RELEASE)
+        {
+            keystate[static_cast<int>(key)] = -1;
+            return true;
+        }
+
+        else return false;
     }
 
-    bool InputHandler::IsMousePressed(MOUSEBUTTON key) 
+
+    bool InputHandler::IsMouseTriggered(MOUSE key)
     {
-        return mousestate[static_cast<int>(key)];
+        if (mousestate[static_cast<int>(key)] == GLFW_PRESS)
+        {
+            mousestate[static_cast<int>(key)] = -1;
+            return true;
+        }
+
+        else return false;
+    }
+    bool InputHandler::IsMouseReleased(MOUSE key)
+    {
+        if (mousestate[static_cast<int>(key)] == GLFW_RELEASE)
+        {
+            mousestate[static_cast<int>(key)] = -1;
+            return true;
+        }
+
+        else return false;
     }
 
 }//JZEngine

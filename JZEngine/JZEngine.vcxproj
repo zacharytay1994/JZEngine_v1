@@ -151,6 +151,7 @@
     <ClCompile Include="src\JZEngine\DebugTools\Log.cpp" />
     <ClCompile Include="src\JZEngine\DebugTools\PerformanceData.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.cpp" />
+    <ClCompile Include="src\JZEngine\ECSSystems\PhysicsSystem.cpp" />
     <ClCompile Include="src\JZEngine\ECS\ECS.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -242,7 +243,6 @@
       <SuppressStartupBanner Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SuppressStartupBanner>
     </ClCompile>
     <ClCompile Include="src\JZEngine\Resource\ResourceManager.cpp" />
-    <ClCompile Include="src\JZEngine\Physics\Collision.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\JZEngine\Sound\Sound.cpp" />
   </ItemGroup>
@@ -253,6 +253,7 @@
     <ClInclude Include="src\JZEngine\DebugTools\Log.h" />
     <ClInclude Include="src\JZEngine\DebugTools\PerformanceData.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h" />
+    <ClInclude Include="src\JZEngine\ECSSystems\PhysicsSystem.h" />
     <ClInclude Include="src\JZEngine\ECS\ECS.h" />
     <ClInclude Include="src\JZEngine\ECS\ECSConfig.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleSingleHeader.h" />
@@ -299,9 +300,9 @@
     <ClInclude Include="src\JZEngine\PCH.h" />
     <ClInclude Include="src\JZEngine\BuildDefinitions.h" />
     <ClInclude Include="src\JZEngine\Resource\ResourceManager.h" />
-    <ClInclude Include="src\JZEngine\Physics\Collision.h" />
     <ClInclude Include="src\JZEngine\Physics\Physics.h" />
     <ClInclude Include="src\JZEngine\Sound\Sound.h" />
+    <ClInclude Include="src\JZEngine\STL\Random.h" />
     <ClInclude Include="src\JZEngine\STL\Tuple.h" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
