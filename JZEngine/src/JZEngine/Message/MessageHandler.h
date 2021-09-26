@@ -1,8 +1,5 @@
 #pragma once
 
-#include <map>
-#include <typeinfo>
-
 namespace JZEngine
 {
 	class Event
@@ -35,6 +32,7 @@ namespace JZEngine
 	{
 	public:
 
+		//This is a function pointer
 		typedef void (T::* MemberFunction)(EventType*);
 
 		MemberFunctionHandler(T* instance, MemberFunction memberFunction) : instance{ instance }, memberFunction{ memberFunction } {};
@@ -42,6 +40,7 @@ namespace JZEngine
 		void call(Event* event)
 		{
 			//Cast event to the correct type and call member function
+			//For simplicity think of it as memberFunction(event)
 			(instance->*memberFunction)(static_cast<EventType*>(event));
 		}
 

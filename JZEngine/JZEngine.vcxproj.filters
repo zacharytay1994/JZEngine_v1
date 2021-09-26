@@ -140,6 +140,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
     <ClInclude Include="src\JZEngine\Input\Input.h" />
     <ClInclude Include="src\JZEngine\Input\DeltaTime.h" />
-    <ClInclude Include="src\JZEngine\Message\Message.h" />
+    <ClInclude Include="src\JZEngine\Message\MessageHandler.h" />
+    <ClInclude Include="src\JZEngine\Message\MessageBus.h" />
   </ItemGroup>
 </Project>
