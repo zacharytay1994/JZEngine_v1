@@ -74,6 +74,10 @@ namespace JZEngine
 			return vec = GetRotatedVectorZ(vec, radian);
 		}
 
+		Mat3f GetModelTransformNonTransposed(const Vec2f& position, float rotate, const Vec2f& scale, const Vec2f& size);
+
+		Mat3f GetProjectionTransformNonTransposed();
+
 		Mat3f GetTransform( const Vec2f& position, float rotate, const Vec2f& scale, const Vec2f& size );
 
 		//template<class T>
