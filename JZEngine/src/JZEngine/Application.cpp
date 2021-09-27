@@ -30,8 +30,6 @@
 #include <chrono>
 #include <thread>
 
-#include "ImGui/ImGuizmo.h"
-
 #define UNREFERENCED_PARAMETER(P)(P)
 
 
@@ -39,7 +37,6 @@
 
 namespace JZEngine
 {
-	ECS::Entity* test = nullptr;
 	Application::Application()
 		:
 		global_systems_(new GlobalSystemsManager())
@@ -137,17 +134,15 @@ namespace JZEngine
 			 entity2.GetComponent<Transform>().position_ = { random<float>(-300.0f, 300.0f),random<float>(-150.0f, 300.0f) };
 			 entity2.GetComponent<Texture>().texture_id_ = 2;
 			 entity2.GetComponent<PhysicsComponent>().shapeid = 0;
-			 float speed =  random<float>(0.3f, 3.0f) ;
-			 entity2.GetComponent<Transform>().size_.x = 30;
-			 entity2.GetComponent<Transform>().size_.y = 30;
+			 float speed =  random<float>(0.3f, 100.0f) ;
+			 entity2.GetComponent<Transform>().size_.x = 20;
+			 entity2.GetComponent<Transform>().size_.y = 20;
 			 entity2.GetComponent<PhysicsComponent>().speed = speed;
 			 entity2.GetComponent<PhysicsComponent>().velocity = { speed*cosf( random<float>(0.0f, 0.0f) ) , speed * sinf( random<float>(0.0f, 1.28f) ) };//dir
 		}
 
-		/*ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
-		int e = ecs->CreateEntity();
-		test = &ecs->entity_manager_.GetEntity(e);
-		test->AddSystem(0);*/
+
+
 	}
 
 	void Application::Free()
@@ -180,7 +175,8 @@ namespace JZEngine
 			global_systems_->Update(dt);
 			//DeltaTime::update_time(1.0);
 			//DeltaTime::update_deltatime(1.0);
-			
+
+
 			//Test code
 			//std::cout<<DeltaTime::get_FPS()<<std::endl;
 
