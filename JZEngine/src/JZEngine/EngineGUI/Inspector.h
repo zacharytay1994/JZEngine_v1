@@ -18,6 +18,7 @@
 #include "../ECS/ECSConfig.h"
 
 #include "../Resource/ResourceManager.h"
+#include "../Resource/Serialize.h"
 
 namespace JZEngine
 {

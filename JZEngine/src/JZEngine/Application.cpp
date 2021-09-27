@@ -8,8 +8,8 @@
 
 #include <PCH.h>
 #include "Application.h"
-#include "EngineConfig.h"
 #include "ECS/ECSconfig.h"
+#include "EngineConfig.h"
 #include "DebugTools/Log.h"
 #include "Sound/Sound.h"
 #include "GraphicRendering/Renderer.h"

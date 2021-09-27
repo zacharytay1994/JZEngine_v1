@@ -89,6 +89,27 @@ namespace JZEngine
 			ImGui::Separator();
 			ImGui::Text("Oops no entity selected...");
 		}
+
+		if (ImGui::Button("Serialize"))
+		{
+			if (entity)
+			{
+				if (!Serialize::SerializeEntity(*entity))
+				{
+					Log::Warning("Resource", "Serializing failed!");
+				}
+			}
+		}
+		if (ImGui::Button("DeSerialize"))
+		{
+			if (entity)
+			{
+				/*if (!DeserializeComponents(*entity, "testserialize.txt"))
+				{
+					Log::Warning("Resource", "De-serializing failed!");
+				}*/
+			}
+		}
 		ImGui::End();
 	}
 
