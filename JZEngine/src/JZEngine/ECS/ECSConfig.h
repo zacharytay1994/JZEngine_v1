@@ -27,7 +27,7 @@ namespace JZEngine
 				IsUnicorn ,
 				IsInputAffected ,
 				PhysicsComponent ,
-				Background ,
+				Parallax,
 				NotBackground
 
 				>;
@@ -37,7 +37,7 @@ namespace JZEngine
 				std::tuple<
 
 
-				BackgroundSystem ,
+				ParallaxBackground ,
 				Sprite ,
 				InstanceSprite ,
 				FloatAwayAllUnicorn ,

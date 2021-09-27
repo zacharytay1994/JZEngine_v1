@@ -26,6 +26,7 @@ namespace JZEngine
 	struct NonInstanceShader
 	{
 		int shader_id_{ 0 };
+		Vec3f tint{ 0.0f , 0.0f ,0.0f };
 	};
 
 	struct NotBackground
@@ -61,7 +62,7 @@ namespace JZEngine
 
 			// else use default render
 			sprite_renderer_.DrawSprite ( shader.shader_id_ , texture.texture_id_ ,
-										  transform.position_ , transform.size_ , transform.scale_ , transform.rotation_ , { 1.0f,1.0f,1.0f } );
+										  transform.position_ , transform.size_ , transform.scale_ , transform.rotation_ , { 1.0f,1.0f,1.0f }, shader.tint);
 		}
 	};
 }

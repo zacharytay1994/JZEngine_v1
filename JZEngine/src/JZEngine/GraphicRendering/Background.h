@@ -7,17 +7,18 @@
 
 namespace JZEngine
 {
-	struct Background
+	struct Parallax
 	{
 		float speed_x_{ 0.0f };
 		float speed_y_{ 0.0f };
+		bool is_vertical{ false };
 	};
 
-	struct BackgroundSystem : public ECS::System
+	struct ParallaxBackground : public ECS::System
 	{
 		SpriteRenderer sprite_renderer_;
 
-		BackgroundSystem ();
+		ParallaxBackground ();
 		virtual void Update ( const float& dt ) override;
 
 	private:

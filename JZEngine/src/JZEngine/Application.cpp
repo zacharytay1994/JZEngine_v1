@@ -54,7 +54,7 @@ namespace JZEngine
 		// give subsystems handle to global systems
 		global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<Sprite> ()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer> ();
 		global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<InstanceSprite> ()->sprite_renderer_instancing_.renderer_ = global_systems_->GetSystem<RendererInstancing> ();
-		global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<BackgroundSystem> ()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer> ();
+		global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<ParallaxBackground> ()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer> ();
 
 		// give singleton logger handle to the engine console
 		Log::Instance ().Initialize ( global_systems_->GetSystem<EngineGUI> ()->GetConsole () );
@@ -140,9 +140,6 @@ namespace JZEngine
 			entity2.GetComponent<PhysicsComponent> ().speed = speed;
 			entity2.GetComponent<PhysicsComponent> ().velocity = { speed * cosf ( random<float> ( 0.0f, 0.0f ) ) , speed * sinf ( random<float> ( 0.0f, 1.28f ) ) };//dir
 		}
-
-
-
 	}
 
 	void Application::Free ()
