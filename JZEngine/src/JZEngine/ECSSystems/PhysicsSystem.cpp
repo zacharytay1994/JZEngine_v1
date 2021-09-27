@@ -39,25 +39,24 @@ namespace JZEngine
 #ifdef SLOWDOWN
 		current_component.velocity *= 0.98f;
 #endif
-		//apply accel
-		if(current_component.shapeid==0)
+		if (current_component.shapeid == shapetype::circle)
 			current_component.velocity += current_component.acceleration * dt;
 
 		Transform& current_transform = GetComponent<Transform>();
-	
 		
-
-		if (current_component.shapeid == 0)
+		if (current_component.shapeid == shapetype::circle)
 		{
 			current_component.m_circle.m_center = current_transform.position_;
-			current_component.m_circle.m_radius = 0.5f*current_transform.size_.x ;
+			current_component.m_circle.m_radius = 0.5f * current_transform.size_.x;
 
 		}
-		if (current_component.shapeid == 1)
+		if (current_component.shapeid == shapetype::aabb)
 		{
 			AABB tmp{ current_transform.position_,current_transform.size_ };
 			current_component.m_AABB = tmp;
 		}
+
+
 		Vec2f posnex{};
 		posnex = current_transform.position_ + current_component.velocity * dt;
 		bool am_inside{ false };
@@ -84,7 +83,7 @@ namespace JZEngine
 						{
 							
 							Vec2f reflectedVecA, reflectedVecB, velA, velB,posnex;
-							Vec2f posNextB = transform_cont[i]->position_ + physics_cont[i]->velocity * dt;//not used yet, even though computed below
+							Vec2f posNextB;// = transform_cont[i]->position_ + physics_cont[i]->velocity * dt;//cannot use(wont work)
 
 							Vec2f normal = interpta- interptb;
 							normal.Normalize();
@@ -103,7 +102,7 @@ namespace JZEngine
 							reflectedVecB.Normalize();
 
 							physics_cont[i]->velocity = reflectedVecB * newspeed;
-							transform_cont[i]->position_ = posNextB;
+							//transform_cont[i]->position_ = posNextB;
 							//current_transform.position_ = posnex;
 
 #ifdef PHYSICSDEBUG
@@ -301,7 +300,6 @@ namespace JZEngine
 
 
 	}//__________________UPDATE_________________________//
-
 
 
 

@@ -56,20 +56,19 @@ namespace JZEngine
 	};
 	struct PhysicsComponent
 	{
-		int shapeid{ 0 };
+		int shapeid {};
 		//0 for circle 
 		//1 for AABB
 
 		float mass{ 1.0f };//To be added
-		float speed;
-
+		float speed {};
 		
 		//Vec2f position_next;
-		Vec2f velocity;//vel = speed * dir
+		Vec2f velocity {};//vel = speed * dir
 		Vec2f acceleration{ 0.0f,0.0f };
 
 		union {
-			Circle m_circle;
+			Circle m_circle{};
 			AABB m_AABB;
 		};
 		PhysicsComponent();
@@ -82,7 +81,6 @@ namespace JZEngine
 		
 		std::vector<PhysicsComponent*> physics_cont;
 
-
 		unsigned int j{ 0 };
 		float gravity{ -0.0981f };
 
@@ -93,7 +91,7 @@ namespace JZEngine
 		// updates once per entity component per system per frame
 		virtual void Update(const float& dt) override;
 
-
+		
 
 		// INTERSECTION FUNCTIONS
 		bool DynamicCollision_CircleLineSegment(const Circle& circle,			//Circle data - input

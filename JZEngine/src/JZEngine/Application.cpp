@@ -125,7 +125,7 @@ namespace JZEngine
 		
 
 
-		for (int i = 0; i < 20; ++i) 
+		for (int i = 0; i < 200; ++i) 
 		{
 			 int id3 = ecs->CreateEntity();
 			 ECS::Entity& entity2 = ecs->entity_manager_.GetEntity(id3);
@@ -135,8 +135,8 @@ namespace JZEngine
 			 entity2.GetComponent<Texture>().texture_id_ = 2;
 			 entity2.GetComponent<PhysicsComponent>().shapeid = 0;
 			 float speed =  random<float>(0.3f, 100.0f) ;
-			 entity2.GetComponent<Transform>().size_.x = 50;
-			 entity2.GetComponent<Transform>().size_.y = 50;
+			 entity2.GetComponent<Transform>().size_.x = 20;
+			 entity2.GetComponent<Transform>().size_.y = 20;
 			 entity2.GetComponent<PhysicsComponent>().speed = speed;
 			 entity2.GetComponent<PhysicsComponent>().velocity = { speed*cosf( random<float>(0.0f, 0.0f) ) , speed * sinf( random<float>(0.0f, 1.28f) ) };//dir
 		}
