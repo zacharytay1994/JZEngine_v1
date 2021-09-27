@@ -4,9 +4,14 @@
 
 #define PHYSICSDEBUG
 // #define GRAVITY
+// #define SLOWDOWN
+
 
 namespace JZEngine
 {
+	std::vector<Transform*> transform_cont;
+
+
 	PhysicsComponent::PhysicsComponent() {}
 	PhysicsComponent::PhysicsComponent(const PhysicsComponent& s) { std::memcpy(this, &s, sizeof(s)); }
 	PhysicsComponent::~PhysicsComponent() {}
@@ -31,33 +36,37 @@ namespace JZEngine
 			current_component.acceleration.y = -0.098f; //gravity instead of 0
 		
 #endif
-		//current_component.velocity *= 0.98f;
+#ifdef SLOWDOWN
+		current_component.velocity *= 0.98f;
+#endif
+		//apply accel
+		if(current_component.shapeid==0)
+			current_component.velocity += current_component.acceleration * dt;
 
-		current_component.velocity += current_component.acceleration * dt;
-
-		Transform& ptransform = GetComponent<Transform>();
-		Vec2f posnex = ptransform.position_ + current_component.velocity * dt ;
+		Transform& current_transform = GetComponent<Transform>();
+	
 		
 
 		if (current_component.shapeid == 0)
 		{
-			current_component.m_circle.m_center = ptransform.position_;
-			current_component.m_circle.m_radius = 0.5f*ptransform.size_.x ;
+			current_component.m_circle.m_center = current_transform.position_;
+			current_component.m_circle.m_radius = 0.5f*current_transform.size_.x ;
 
 		}
 		if (current_component.shapeid == 1)
 		{
-			AABB tmp{ ptransform.position_,ptransform.size_ };
+			AABB tmp{ current_transform.position_,current_transform.size_ };
 			current_component.m_AABB = tmp;
 		}
-		
+		Vec2f posnex{};
+		posnex = current_transform.position_ + current_component.velocity * dt;
 		bool am_inside{ false };
 		for (int i = 0; i < physics_cont.size(); ++i)
 		{
 			// to not check with itself
 			if (physics_cont[i] != &current_component)
 			{
-				Vec2f interpta{}, interptb{}, normalatcollision{},tmp_pt;
+				Vec2f interpta{}, interptb{}, normalatcollision{}, tmp_pt{};
 				float intertime{}, newspeed{};
 				LineSegment line{};
 
@@ -65,14 +74,17 @@ namespace JZEngine
 				switch (current_component.shapeid)
 				{
 				case 0:
+					
 					switch (physics_cont[i]->shapeid)
 					{
 					case 0://  dynamic circle dynamic circle 
 						
+
 						if (true == DynamicCollision_CircleCircle(current_component.m_circle, current_component.velocity*dt, physics_cont[i]->m_circle, physics_cont[i]->velocity*dt, interpta, interptb, intertime))
 						{
+							
 							Vec2f reflectedVecA, reflectedVecB, velA, velB,posnex;
-							Vec2f posNextB;//not used yet, even though computed below
+							Vec2f posNextB = transform_cont[i]->position_ + physics_cont[i]->velocity * dt;//not used yet, even though computed below
 
 							Vec2f normal = interpta- interptb;
 							normal.Normalize();
@@ -89,9 +101,13 @@ namespace JZEngine
 
 							newspeed = reflectedVecB.Len() / dt;//B: new speed
 							reflectedVecB.Normalize();
+
 							physics_cont[i]->velocity = reflectedVecB * newspeed;
+							transform_cont[i]->position_ = posNextB;
+							//current_transform.position_ = posnex;
+
 #ifdef PHYSICSDEBUG
-							Log::Info("Collision", "is circle-circle colliding!!!");
+	Log::Info("Collision", "is circle-circle colliding!!!");
 #endif
 						}
 
@@ -107,7 +123,7 @@ namespace JZEngine
 							if (true == DynamicCollision_CircleLineSegment(current_component.m_circle, posnex, line, interpta, normalatcollision, intertime, checkLineEdges))
 							{
 #ifdef PHYSICSDEBUG
-								Log::Info("Collision", "circle on right");
+	Log::Info("Collision", "circle on right");
 #endif
 								Vec2f reflectedvel{};
 								normalatcollision.Normalize();
@@ -127,10 +143,8 @@ namespace JZEngine
 							if (true == DynamicCollision_CircleLineSegment(current_component.m_circle, posnex, line, interpta, normalatcollision, intertime, checkLineEdges))
 							{
 #ifdef PHYSICSDEBUG
-								Log::Info("Collision", "circle on left");
+	Log::Info("Collision", "circle on left");
 #endif
-							
-
 								Vec2f reflectedvel{};
 								normalatcollision.Normalize();
 							
@@ -148,7 +162,7 @@ namespace JZEngine
 							if (true == DynamicCollision_CircleLineSegment(current_component.m_circle, posnex, line, interpta, normalatcollision, intertime, checkLineEdges))
 							{
 #ifdef PHYSICSDEBUG
-								Log::Info("Collision", "circle on top");
+	Log::Info("Collision", "circle on top");
 #endif
 								Vec2f reflectedvel{};
 								normalatcollision.Normalize();
@@ -166,7 +180,7 @@ namespace JZEngine
 							if (true == DynamicCollision_CircleLineSegment(current_component.m_circle, posnex, line, interpta, normalatcollision, intertime,checkLineEdges))
 							{
 #ifdef PHYSICSDEBUG
-								Log::Info("Collision", "circle below");
+	Log::Info("Collision", "circle below");
 #endif
 								Vec2f reflectedvel{};
 								normalatcollision.Normalize();
@@ -176,11 +190,99 @@ namespace JZEngine
 							}
 						}
 						
+						//current_transform.position_ = posnex;
 						
 						break;
 					}
 					break;
-				
+#if 0
+				case 1:
+					 posnex =transform_cont[i]->position_ + physics_cont[i]->velocity * dt;
+					switch (physics_cont[i]->shapeid)
+					{
+					case 0:
+						bool checkLineEdges = false;
+						//circle right of AABB
+						if (physics_cont[i]->m_circle.m_center.x > current_component.m_AABB.max.x)
+						{
+							tmp_pt = { current_component.m_AABB.max.x, current_component.m_AABB.min.y };
+							line = { current_component.m_AABB.max, tmp_pt };
+
+							if (true == DynamicCollision_CircleLineSegment(physics_cont[i]->m_circle, posnex, line, interpta, normalatcollision, intertime, checkLineEdges))
+							{
+#ifdef PHYSICSDEBUG
+	Log::Info("Collision", "circle on right");
+#endif
+								Vec2f reflectedvel{};
+								normalatcollision.Normalize();
+
+								CollisionResponse_CircleLineSegment(interpta, normalatcollision, posnex, reflectedvel);
+								physics_cont[i]->velocity = reflectedvel * physics_cont[i]->velocity.Len();
+							}
+						}
+
+						//circle left of AABB
+						else if (physics_cont[i]->m_circle.m_center.x < current_component.m_AABB.min.x)
+						{
+							tmp_pt = { current_component.m_AABB.min.x, current_component.m_AABB.max.y };
+
+							line = { current_component.m_AABB.min, tmp_pt };
+
+							if (true == DynamicCollision_CircleLineSegment(physics_cont[i]->m_circle, posnex, line, interpta, normalatcollision, intertime, checkLineEdges))
+							{
+#ifdef PHYSICSDEBUG
+	Log::Info("Collision", "circle on left");
+#endif
+								Vec2f reflectedvel{};
+								normalatcollision.Normalize();
+
+								CollisionResponse_CircleLineSegment(interpta, normalatcollision, posnex, reflectedvel);
+
+								physics_cont[i]->velocity = reflectedvel * physics_cont[i]->velocity.Len();
+							}
+
+						}
+						//circle above AABB
+						if (physics_cont[i]->m_circle.m_center.y > current_component.m_AABB.max.y)
+						{
+							tmp_pt = { current_component.m_AABB.min.x, current_component.m_AABB.max.y };
+							line = { current_component.m_AABB.max, tmp_pt };
+							if (true == DynamicCollision_CircleLineSegment(physics_cont[i]->m_circle, posnex, line, interpta, normalatcollision, intertime, checkLineEdges))
+							{
+#ifdef PHYSICSDEBUG
+	Log::Info("Collision", "circle on top");
+#endif
+								Vec2f reflectedvel{};
+								normalatcollision.Normalize();
+
+								CollisionResponse_CircleLineSegment(interpta, normalatcollision, posnex, reflectedvel);
+								physics_cont[i]->velocity = reflectedvel * physics_cont[i]->velocity.Len();
+
+							}
+						}
+						//circle below 
+						else if (physics_cont[i]->m_circle.m_center.y < current_component.m_AABB.min.y)
+						{
+							tmp_pt = { current_component.m_AABB.max.x, current_component.m_AABB.min.y };
+							line = { current_component.m_AABB.min, tmp_pt };
+							if (true == DynamicCollision_CircleLineSegment(physics_cont[i]->m_circle, posnex, line, interpta, normalatcollision, intertime, checkLineEdges))
+							{
+#ifdef PHYSICSDEBUG
+	Log::Info("Collision", "circle below");
+#endif
+								Vec2f reflectedvel{};
+								normalatcollision.Normalize();
+
+								CollisionResponse_CircleLineSegment(interpta, normalatcollision, posnex, reflectedvel);
+								physics_cont[i]->velocity = reflectedvel * physics_cont[i]->velocity.Len();
+							}
+						}
+						current_transform.position_ = posnex;
+
+						break;
+					}
+#endif
+
 				}
 			}
 			else
@@ -191,10 +293,18 @@ namespace JZEngine
 		if (!am_inside)
 		{
 			physics_cont.push_back(&current_component);
+			transform_cont.push_back(&current_transform);
 		}
 		++j;
-		ptransform.position_ = posnex;
-	}
+		current_transform.position_ = posnex;
+
+
+
+	}//__________________UPDATE_________________________//
+
+
+
+
 
 
 	//Dynamic AABB collision
