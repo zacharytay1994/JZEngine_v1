@@ -30,6 +30,27 @@ namespace JZEngine {
 			ImGui::SameLine();
 			ImGui::Text(" | Process FPS: %4d |", PerformanceData::average_fps_);
 
+			ImGui::SetNextItemWidth(100.0f);
+			if (ImGui::BeginMenu(transform_mode_.c_str()))
+			{
+				if (ImGui::MenuItem("Translate", "[t]"))
+				{
+					transform_mode_ = "Transform Mode: Translate";
+					engine_gui_->operation_ = ImGuizmo::OPERATION::TRANSLATE;
+				}
+				if (ImGui::MenuItem("Rotate", "[r]"))
+				{
+					transform_mode_ = "Transform Mode: Rotate";
+					engine_gui_->operation_ = ImGuizmo::OPERATION::ROTATE_Z;
+				}
+				if (ImGui::MenuItem("Scale", "[s]"))
+				{
+					transform_mode_ = "Transform Mode: Scale";
+					engine_gui_->operation_ = ImGuizmo::OPERATION::SCALE;
+				}
+				ImGui::EndMenu();
+			}
+
 			ImGui::EndMainMenuBar();
 		}
 	} 

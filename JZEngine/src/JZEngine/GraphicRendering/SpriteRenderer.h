@@ -31,6 +31,11 @@ namespace JZEngine
 						  JZEngine::Vec3f color = { 1.0f, 1.0f ,1.0f } ,
 						  JZEngine::Vec3f tint = { 0.0f , 0.0f , 0.0f } );
 
+		void DrawSprite( int shaderid,
+						int textureid,
+						const Mat3f& transform,
+						 JZEngine::Vec3f tint = { 0.0f , 0.0f , 0.0f } );
+
 		Renderer* renderer_{ nullptr };
 	};
 }

@@ -43,6 +43,11 @@
     <ClCompile Include="src\JZEngine\DebugTools\PerformanceData.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\PhysicsSystem.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Background.cpp" />
+    <ClCompile Include="src\JZEngine\ImGui\GraphEditor.cpp" />
+    <ClCompile Include="src\JZEngine\ImGui\ImCurveEdit.cpp" />
+    <ClCompile Include="src\JZEngine\ImGui\ImGradient.cpp" />
+    <ClCompile Include="src\JZEngine\ImGui\ImGuizmo.cpp" />
+    <ClCompile Include="src\JZEngine\ImGui\ImSequencer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\JZEngine.h" />
@@ -110,6 +115,15 @@
     <ClInclude Include="src\JZEngine\DebugTools\PerformanceData.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\PhysicsSystem.h" />
     <ClInclude Include="src\JZEngine\STL\Random.h" />
+<<<<<<< HEAD
     <ClInclude Include="src\JZEngine\GraphicRendering\Background.h" />
+=======
+    <ClInclude Include="src\JZEngine\ImGui\GraphEditor.h" />
+    <ClInclude Include="src\JZEngine\ImGui\ImCurveEdit.h" />
+    <ClInclude Include="src\JZEngine\ImGui\ImGradient.h" />
+    <ClInclude Include="src\JZEngine\ImGui\ImGuizmo.h" />
+    <ClInclude Include="src\JZEngine\ImGui\ImSequencer.h" />
+    <ClInclude Include="src\JZEngine\ImGui\ImZoomSlider.h" />
+>>>>>>> main
   </ItemGroup>
 </Project>

@@ -30,6 +30,8 @@
 #include <chrono>
 #include <thread>
 
+#include "ImGui/ImGuizmo.h"
+
 #define UNREFERENCED_PARAMETER(P)(P)
 
 
@@ -175,8 +177,7 @@ namespace JZEngine
 			global_systems_->Update ( dt );
 			//DeltaTime::update_time(1.0);
 			//DeltaTime::update_deltatime(1.0);
-
-
+			
 			//Test code
 			//std::cout<<DeltaTime::get_FPS()<<std::endl;
 
