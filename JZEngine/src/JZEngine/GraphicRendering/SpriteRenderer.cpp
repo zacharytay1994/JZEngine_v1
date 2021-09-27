@@ -17,7 +17,7 @@ namespace JZEngine
 	SpriteRenderer::~SpriteRenderer()
 	{}
 
-	void SpriteRenderer::DrawSprite( int shaderid, int textureid, const Mat3f& transform ,  , JZEngine::Vec3f tint)
+	void SpriteRenderer::DrawSprite( int shaderid, int textureid, const Mat3f& transform , JZEngine::Vec3f tint)
 	{
 		// bind buffer data
 		renderer_->Bind();
