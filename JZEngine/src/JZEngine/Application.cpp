@@ -30,6 +30,8 @@
 #include <chrono>
 #include <thread>
 
+#include "ImGui/ImGuizmo.h"
+
 #define UNREFERENCED_PARAMETER(P)(P)
 
 
@@ -37,6 +39,7 @@
 
 namespace JZEngine
 {
+	ECS::Entity* test = nullptr;
 	Application::Application()
 		:
 		global_systems_(new GlobalSystemsManager())
@@ -141,8 +144,10 @@ namespace JZEngine
 			 entity2.GetComponent<PhysicsComponent>().velocity = { speed*cosf( random<float>(0.0f, 0.0f) ) , speed * sinf( random<float>(0.0f, 1.28f) ) };//dir
 		}
 
-
-
+		/*ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
+		int e = ecs->CreateEntity();
+		test = &ecs->entity_manager_.GetEntity(e);
+		test->AddSystem(0);*/
 	}
 
 	void Application::Free()
@@ -175,8 +180,7 @@ namespace JZEngine
 			global_systems_->Update(dt);
 			//DeltaTime::update_time(1.0);
 			//DeltaTime::update_deltatime(1.0);
-
-
+			
 			//Test code
 			//std::cout<<DeltaTime::get_FPS()<<std::endl;
 

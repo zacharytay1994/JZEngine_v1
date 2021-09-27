@@ -176,6 +176,21 @@
     <ClCompile Include="src\JZEngine\GraphicRendering\SpriteRenderer.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Texture.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\VertexArray.cpp" />
+    <ClCompile Include="src\JZEngine\ImGui\GraphEditor.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\ImGui\ImCurveEdit.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\ImGui\ImGradient.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\ImGui\ImGuizmo.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\ImGui\ImSequencer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="src\JZEngine\Input\Input.cpp" />
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -279,15 +294,21 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\VertexArray.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\VertexBufferLayout.h" />
     <ClInclude Include="src\JZEngine\GlobalSystems.h" />
+    <ClInclude Include="src\JZEngine\ImGui\GraphEditor.h" />
     <ClInclude Include="src\JZEngine\ImGui\imconfig.h" />
+    <ClInclude Include="src\JZEngine\ImGui\ImCurveEdit.h" />
+    <ClInclude Include="src\JZEngine\ImGui\ImGradient.h" />
     <ClInclude Include="src\JZEngine\ImGui\imgui.h" />
+    <ClInclude Include="src\JZEngine\ImGui\ImGuizmo.h" />
     <ClInclude Include="src\JZEngine\ImGui\imgui_impl_glfw.h" />
     <ClInclude Include="src\JZEngine\ImGui\imgui_impl_opengl3.h" />
     <ClInclude Include="src\JZEngine\ImGui\imgui_internal.h" />
+    <ClInclude Include="src\JZEngine\ImGui\ImSequencer.h" />
     <ClInclude Include="src\JZEngine\ImGui\imstb_rectpack.h" />
     <ClInclude Include="src\JZEngine\ImGui\imstb_textedit.h" />
     <ClInclude Include="src\JZEngine\ImGui\imstb_truetype.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\EngineGUI.h" />
+    <ClInclude Include="src\JZEngine\ImGui\ImZoomSlider.h" />
     <ClInclude Include="src\JZEngine\Input\DeltaTime.h" />
     <ClInclude Include="src\JZEngine\Input\Input.h" />
     <ClInclude Include="src\JZEngine\JZGL\JZ_GL.h" />

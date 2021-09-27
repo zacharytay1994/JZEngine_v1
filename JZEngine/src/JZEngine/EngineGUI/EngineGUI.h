@@ -17,10 +17,13 @@
 #include "../ImGui/imgui_impl_glfw.h"
 
 #include "../ImGui/imgui_impl_opengl3.h"
+#include "../ImGui/ImGuizmo.h"
 
 #include "Inspector.h"
 //#include "Console.h"
 #include "SceneTree.h"
+
+#include "../ECS/ECSConfig.h"
 
 namespace JZEngine
 {
@@ -66,6 +69,7 @@ namespace JZEngine
 		}
 
 		Console* GetConsole();
+		ImGuizmo::OPERATION operation_{ ImGuizmo::OPERATION::TRANSLATE };
 	private:
 		Inspector	inspector_;		/*!< engine inspector */
 		Console		console_;		/*!< engine console */
