@@ -27,7 +27,7 @@ namespace JZEngine
 		std::shared_ptr<INTERFACE> GetInterface() {
 			return engine_gui_->GetInterface<INTERFACE>();
 		}
-	private:
+
 		EngineGUI* engine_gui_{ nullptr };
 	};
 }

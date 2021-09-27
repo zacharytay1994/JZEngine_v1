@@ -18,10 +18,14 @@
 #include "DebugInformation.h"
 #include "Console.h"
 #include "../Input/Input.h"
+#include "../Math/JZMath.h"
 
 
 namespace JZEngine
 {
+	//Mat4f view;
+	//Mat4f projection;
+	//Mat4f transform; //{ {100, 0, 0, 0}, { 0,100,0,0 }, { 0,0,1,0 }, { 0,0,0,1 }};
 	EngineGUI::EngineGUI()
 		:
 		inspector_(5.0f / 6.0f, 1.0f / 46.0f, 1.0f / 6.0f, 45.0f / 46.0f),
@@ -67,6 +71,7 @@ namespace JZEngine
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+		ImGuizmo::BeginFrame();
 
 		// engine gui shortcuts
 		if (InputHandler::IsKeyPressed(KEY::KEY_TAB))
@@ -83,7 +88,36 @@ namespace JZEngine
 			interface.second->RenderInterface(dt);
 		}
 
-		ImGui::EndFrame();
+		if (scene_tree_.selected_entity_)
+		{
+			// for now hardcoded as if has transform
+			if (scene_tree_.selected_entity_->HasComponent(0))
+			{
+				ImGuizmo::SetOrthographic(true);
+				ImGuiIO& io = ImGui::GetIO();
+				ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+				Mat4f projection = static_cast<Mat4f>(Math::GetProjectionTransformNonTransposed()).Transpose();
+				Mat4f view;
+
+				Transform& transform = scene_tree_.selected_entity_->GetComponent<Transform>();
+				Mat4f m4_translation = Mat4f::Translate(transform.position_.x, transform.position_.y, 0.0f);
+				Mat4f m4_rotation = Mat4f::RotateZ(Math::DegToRad(transform.rotation_));
+				Mat4f m4_scale = Mat4f::Scale(transform.scale_.x, transform.scale_.y, 1.0f);
+				Mat4f m4_transform = m4_translation * (m4_rotation * m4_scale);
+				m4_transform.Transpose();
+
+				ImGuizmo::Manipulate(view.data_[0], projection.data_[0], operation_, ImGuizmo::MODE::LOCAL, m4_transform.data_[0]);
+
+				float translation[3] = { transform.position_.x, transform.position_.y, 1.0f };
+				float rotation[3] = { 0.0f, 0.0f, transform.rotation_ };
+				float scale[3] = { transform.scale_.x, transform.scale_.y, 1.0f };
+				ImGuizmo::DecomposeMatrixToComponents(m4_transform.data_[0], translation, rotation, scale);
+
+				transform.position_ = { translation[0], translation[1] };
+				transform.rotation_ = rotation[2];
+				transform.scale_ = { scale[0], scale[1] };
+			}
+		}
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -102,7 +136,8 @@ namespace JZEngine
 	{
 		// initialize imgui
 		IMGUI_CHECKVERSION();
-		ImGui::CreateContext();
+		ImGuizmo::SetImGuiContext(ImGui::CreateContext());
+		//ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO();
 		ImGui_ImplGlfw_InitForOpenGL(glfwwindow, true);
 		ImGui_ImplOpenGL3_Init("#version 330");

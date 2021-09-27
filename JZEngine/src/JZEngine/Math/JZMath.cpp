@@ -15,6 +15,19 @@ namespace JZEngine
 			return val % 2 == 0;
 		}
 
+		Mat3f GetModelTransformNonTransposed(const Vec2f& position, float rotate, const Vec2f& scale, const Vec2f& size)
+		{
+			return (JZEngine::Mat3f::Translate(position.x, position.y) * 
+				(JZEngine::Mat3f::RotateZ(Math::DegToRad(rotate)) * JZEngine::Mat3f::Scale(size.x * scale.x, size.y * scale.y, 1.0f)));
+		}
+
+		Mat3f GetProjectionTransformNonTransposed()
+		{	
+			return	{ {2.0f / (Settings::aspect_ratio * Settings::window_height) , 0.0f								, 0.0f},
+					{0.0f														, 2.0f / Settings::window_height	, 0.0f},
+					{0.0f														, 0.0f								, 1.0f} };
+		}
+
 		Mat3f GetTransform( const Vec2f& position, float rotate, const Vec2f& scale, const Vec2f& size )
 		{
 			PerformanceData::StartMark("Mat3GetTransform (JZMath.cpp|L:20-33)");

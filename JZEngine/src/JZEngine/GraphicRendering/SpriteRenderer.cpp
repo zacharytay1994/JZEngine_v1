@@ -17,7 +17,7 @@ namespace JZEngine
 	SpriteRenderer::~SpriteRenderer()
 	{}
 
-	void SpriteRenderer::DrawSprite( int shaderid, int textureid, JZEngine::Vec2f position, JZEngine::Vec2f size, JZEngine::Vec2f scale, float rotateDegree, JZEngine::Vec3f color )
+	void SpriteRenderer::DrawSprite( int shaderid, int textureid, const Mat3f& transform )
 	{
 		// bind buffer data
 		renderer_->Bind();
@@ -32,7 +32,7 @@ namespace JZEngine
 		glCheckError();
 
 		// set shader uniforms
-		renderer_->GetShaderProgram( shaderid ).SetUniform( "transform", Math::GetTransform(position, rotateDegree, scale, size) );
+		renderer_->GetShaderProgram( shaderid ).SetUniform( "transform", transform );
 		glCheckError();
 
 		// draw sprite
