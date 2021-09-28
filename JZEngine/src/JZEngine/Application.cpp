@@ -134,9 +134,9 @@ namespace JZEngine
 			entity2.AddSystem ( 1 ); //JM : Change from 0 to 1 !
 			entity2.AddComponent<PhysicsComponent> ();
 			entity2.GetComponent<Transform> ().position_ = { random<float> ( -300.0f, 300.0f ),random<float> ( -150.0f, 300.0f ) };
-			entity2.GetComponent<Texture> ().texture_id_ = 2;
+			entity2.GetComponent<Texture> ().texture_id_ = 6;
 			entity2.GetComponent<PhysicsComponent> ().shapeid = 0;
-			float speed = random<float> ( 0.3f , 3.0f ) ;
+			float speed = random<float> ( 0.3f , 100.0f ) ;
 			entity2.GetComponent<Transform> ().size_.x = 30;
 			entity2.GetComponent<Transform> ().size_.y = 30;
 			entity2.GetComponent<PhysicsComponent> ().speed = speed;

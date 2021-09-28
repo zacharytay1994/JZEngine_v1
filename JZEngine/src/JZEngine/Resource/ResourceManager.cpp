@@ -6,14 +6,13 @@ namespace JZEngine
 	ResourceManager::ResourceManager ()
 	{
 		// load textures
-		LoadTexture2D ( "Unicorn" , "Assets/Textures/cute-unicorn.png" );
+		LoadTexture2D ( "Unicorn" , "Assets/Textures/cute-unicorn.png" );//0
 		LoadTexture2D ( "Square" , "Assets/Textures/square.jpg" );
-		//LoadTexture2D ( "Bomb" , "Assets/Textures/Bomb.png" );
 		LoadTexture2D ( "TempB1" , "Assets/Textures/TempBackground-01.png" );
 		LoadTexture2D ( "TempB2" , "Assets/Textures/TempBackground-02.png" );
 		LoadTexture2D ( "TempB3" , "Assets/Textures/TempBackground-03.png" );
 		LoadTexture2D ( "TempB4" , "Assets/Textures/TempBackground-04.png" );
-
+		LoadTexture2D("Circle", "Assets/Textures/circle.png");	//6
 		// load shaders
 		LoadShader ( "Default" ,
 					 "Assets/Shaders/Vertex/VS_Sprite2D.vs" ,
