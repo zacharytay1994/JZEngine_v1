@@ -23,11 +23,12 @@ namespace JZEngine
 				return;
 			}
 
-			//to loop thru
+			//to loop thru all subscribers
 			for (auto& handler : *handlers)
 			{
 				if (handler != nullptr)
 				{
+					//calls subscribers
 					handler->exec(event);
 				}
 			}
@@ -45,7 +46,23 @@ namespace JZEngine
 				subscribers[typeid(EventType)] = handlers;
 			}
 
+			//encpsulate instance & memberFunction
 			handlers->push_back(new MemberFunctionHandler<T, EventType>(instance, memberFunction));
+		}
+
+		~MessageBus()
+		{
+			for (const auto& [key, value]: subscribers)
+			{
+				for (auto& handler : *value)
+				{
+					//delete everything inside the list
+					delete handler;
+				}
+
+				//delete the HandlerList pointer itself
+				delete value;
+			}
 		}
 
 	private:

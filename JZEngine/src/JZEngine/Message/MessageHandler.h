@@ -5,7 +5,7 @@ namespace JZEngine
 	class Event
 	{
 	protected:
-		virtual ~Event() {};
+		virtual ~Event() = default;
 	};
 
 

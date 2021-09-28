@@ -142,5 +142,6 @@
     <ClInclude Include="src\JZEngine\Input\DeltaTime.h" />
     <ClInclude Include="src\JZEngine\Message\MessageHandler.h" />
     <ClInclude Include="src\JZEngine\Message\MessageBus.h" />
+    <ClInclude Include="src\JZEngine\Message\Event.h" />
   </ItemGroup>
 </Project>

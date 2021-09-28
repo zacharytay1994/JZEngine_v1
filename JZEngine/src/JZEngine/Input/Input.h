@@ -11,6 +11,8 @@
 #include <GLFW/glfw3.h>
 #include <string>
 #include <unordered_map>
+
+
 namespace JZEngine
 {
 	/*  _________________________________________________________________________ */
@@ -18,9 +20,11 @@ namespace JZEngine
 		/*! GLHelper structure to encapsulate initialization stuff ...
 		*/
 	{
+	public:
 		enum class MOUSEBUTTON;
 		enum class KEY;
 
+	private:
 		static void cleanup();
 
 		// callbacks ...
@@ -44,8 +48,8 @@ namespace JZEngine
 
 	};
 
-#endif /* GLHELPER_H */
-	enum class MOUSEBUTTON
+
+	enum class InputHandler::MOUSEBUTTON
 	{
 		MOUSE_BUTTON_1 = 0,
 		MOUSE_BUTTON_2 = 1,
@@ -60,7 +64,7 @@ namespace JZEngine
 		MOUSE_BUTTON_RIGHT = MOUSE_BUTTON_2,
 		MOUSE_BUTTON_MIDDLE = MOUSE_BUTTON_3
 	};
-	enum class KEY
+	enum class InputHandler::KEY
 	{
 		KEY_UNKNOWN = -1,
 
@@ -190,3 +194,5 @@ namespace JZEngine
 
 
 }//JZEngine
+
+#endif /* GLHELPER_H */

@@ -15,6 +15,7 @@
 #include "Input/Input.h"
 #include "Input/DeltaTime.h"
 
+
 #include "STL/Tuple.h"
 #include <iostream>
 #include <tuple>
@@ -28,8 +29,15 @@
 
 #include "Math/JZMath.h"
 
+#include "Message/Event.h"
+
+
+
+
+
 namespace JZEngine
 {
+	//instance
 	SoundSystem testsystem;
 
 	Application::Application()
@@ -41,11 +49,14 @@ namespace JZEngine
 		Log::Instance().Initialize(engine_gui_.GetConsole());
 		JZEngine::Log::Info("Main", "[{}] Up and Running! v{} [MEM LEAKS BEGONE]", Settings::engine_name, Settings::version);
 	
+		
 		testsystem.initialize();
-		/*testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
-		testsystem.playSound("testsound", true, 0.4f);
-		testsystem.setChannelGroupVolume(1.0f,"main");*/
+		testsystem.createSound("LOST CIVILIZATION - NewAge MSCNEW2_41.wav", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
+		//testsystem.playSound("testsound", true, 0.4f);
+		testsystem.setChannelGroupVolume(0.1f,"main");
 		//InputHandler::
+
+		msgbus.subscribe(&testsystem, &SoundSystem::playSound);
 
 	}
 
@@ -54,7 +65,7 @@ namespace JZEngine
 		Log::Instance().Free();
 		delete ecs_instance_;
 	}
-
+	
 	void Application::Run()
 	{
 		while (gl_instance_.Active())
@@ -74,8 +85,19 @@ namespace JZEngine
 
 			DeltaTime::update_time(1.0);
 
+			bool pressed = JZEngine::InputHandler::IsMousePressed(JZEngine::InputHandler::MOUSEBUTTON::MOUSE_BUTTON_LEFT);
+			
+			if (pressed == true)
+			{
+				SoundEvent event{};
+				event.name = "LOST CIVILIZATION - NewAge MSCNEW2_41.wav";
+				msgbus.publish(&event);
+			}
+
 
 		}
+
+
 	
 	}
 }
