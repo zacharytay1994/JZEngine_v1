@@ -1,2 +1,5 @@
 test
 Entity
+Entity(copy)
+unicorn
+newunicorn

@@ -172,7 +172,7 @@ namespace JZEngine
 		std::fstream file(ss.str());
 		if (file.is_open())
 		{
-			ss.clear();
+			ss.str("");
 			ss << file.rdbuf();
 			entities_[name] = ss.str();
 		}

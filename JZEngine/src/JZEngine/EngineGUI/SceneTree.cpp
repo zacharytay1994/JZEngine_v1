@@ -44,6 +44,27 @@ namespace JZEngine
 		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx_, static_cast<float>(Settings::window_height) * sy_ }, ImGuiCond_Always);
 		ImGui::Begin("Scene Heirarchy");
 
+		if (ImGui::Button("Save"))
+		{
+
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Remove All"))
+		{
+			// remove all root entities which also removes all children
+			for (auto& id : ecs_instance_->entity_manager_.root_ids_)
+			{
+				if (id != -1)
+				{
+					ecs_instance_->RemoveEntity(id);
+				}
+			}
+			for (auto& name : *names_)
+			{
+				name.second = 0;
+			}
+		}
+		ImGui::Separator();
 		// render text box for input name
 		ImGui::InputText(": Name", new_entity_name_, MAX_NAME_SIZE);
 
@@ -134,6 +155,11 @@ namespace JZEngine
 				ecs_instance_->RemoveEntity(entity->entity_id_);
 				selected_entity_ = nullptr;
 			}
+			if (ImGui::Selectable("Rename"))
+			{
+				entity->name_ = GetName();
+			}
+
 			ImGui::EndPopup();
 		}
 		if (is_selected)

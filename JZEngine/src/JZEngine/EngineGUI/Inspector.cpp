@@ -100,16 +100,6 @@ namespace JZEngine
 				}
 			}
 		}
-		if (ImGui::Button("DeSerialize"))
-		{
-			if (entity)
-			{
-				if (!Serialize::LoadEntity(*entity, "test"))
-				{
-					Log::Warning("Resource", "De-serializing failed!");
-				}
-			}
-		}
 		ImGui::End();
 	}
 

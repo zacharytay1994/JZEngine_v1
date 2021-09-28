@@ -160,6 +160,7 @@
     </ClCompile>
     <ClCompile Include="src\JZEngine\EngineGUI\Console.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\DebugInformation.cpp" />
+    <ClCompile Include="src\JZEngine\EngineGUI\FolderInterface.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\ImGuiInterface.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\Inspector.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\MenuBar.cpp" />
@@ -276,6 +277,7 @@
     <ClInclude Include="src\JZEngine\EngineConfig.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\Console.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\DebugInformation.h" />
+    <ClInclude Include="src\JZEngine\EngineGUI\FolderInterface.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\ImGuiInterface.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\Inspector.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\MenuBar.h" />

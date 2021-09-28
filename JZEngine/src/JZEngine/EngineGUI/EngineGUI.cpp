@@ -17,6 +17,7 @@
 #include "MenuBar.h"
 #include "DebugInformation.h"
 #include "Console.h"
+#include "FolderInterface.h"
 #include "../Input/Input.h"
 #include "../Math/JZMath.h"
 
@@ -54,6 +55,8 @@ namespace JZEngine
 		AddInterface<MenuBar>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 1.0f / 18.0f);
 		AddInterface<DebugInformation>(1.0f / 6.0f, 1.0f / 46.0f, 4.0f / 6.0f, 34.0f / 46.0f);
 		GetInterface<DebugInformation>()->active_ = false;
+		AddInterface<FolderInterface>(1.0f / 6.0f, 1.0f / 46.0f, 4.0f / 6.0f, 34.0f / 46.0f);
+		GetInterface<FolderInterface>()->ecs_instance_ = GetSystem<ECS::ECSInstance>();
 	}
 
 	/*!

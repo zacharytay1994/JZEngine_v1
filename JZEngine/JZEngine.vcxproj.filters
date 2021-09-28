@@ -48,6 +48,7 @@
     <ClCompile Include="src\JZEngine\ImGui\ImGuizmo.cpp" />
     <ClCompile Include="src\JZEngine\ImGui\ImSequencer.cpp" />
     <ClCompile Include="src\JZEngine\Resource\Serialize.cpp" />
+    <ClCompile Include="src\JZEngine\EngineGUI\FolderInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\JZEngine.h" />
@@ -122,5 +123,6 @@
     <ClInclude Include="src\JZEngine\ImGui\ImSequencer.h" />
     <ClInclude Include="src\JZEngine\ImGui\ImZoomSlider.h" />
     <ClInclude Include="src\JZEngine\Resource\Serialize.h" />
+    <ClInclude Include="src\JZEngine\EngineGUI\FolderInterface.h" />
   </ItemGroup>
 </Project>
