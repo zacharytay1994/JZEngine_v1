@@ -267,6 +267,7 @@
     <ClInclude Include="src\JZEngine.h" />
     <ClInclude Include="src\JZEngine\Application.h" />
     <ClInclude Include="src\JZEngine\Components\TestComponent.h" />
+    <ClInclude Include="src\JZEngine\DebugTools\Assert.h" />
     <ClInclude Include="src\JZEngine\DebugTools\Log.h" />
     <ClInclude Include="src\JZEngine\DebugTools\PerformanceData.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h" />

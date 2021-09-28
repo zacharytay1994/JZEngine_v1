@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../ECS/ECS.h"
 #include "SpriteRenderer.h"
 #include "../EngineConfig.h"
+#include "../ECS/ECS.h"
 
 
 namespace JZEngine

@@ -208,7 +208,8 @@ namespace JZEngine
 			ImGui::Text ( "Shader" );
 
 			////////////////////////////////////////////////////////////
-			static ImVec4 color{};
+			// Making of color pallette starts here .
+			static ImVec4 color{ 0,0,0,1 };
 			const char* memo
 			{
 				"Click on the color square to open a color picker.\n"
@@ -232,6 +233,7 @@ namespace JZEngine
 
 			// Generate a default palette. The palette will persist and can be edited.
 			static bool saved_palette_init = true;
+			// Palette are divided by 4 rows and 8 column
 			static ImVec4 saved_palette[ 32 ] = {};
 			if( saved_palette_init )
 			{
@@ -239,14 +241,18 @@ namespace JZEngine
 				{
 					ImGui::ColorConvertHSVtoRGB ( n / 31.0f , 0.8f , 0.8f ,
 												  saved_palette[ n ].x , saved_palette[ n ].y , saved_palette[ n ].z );
+					// Default alpha ( we will do changeable alpha soon !)
 					saved_palette[ n ].w = 1.0f; // Alpha
 				}
 				saved_palette_init = false;
 			}
 
+			// At this moment we are not using alpha yet .
+			// We will definitely add it in the future !
 			component.tint.x = 1.0f * color.x ;
 			component.tint.y = 1.0f * color.y ;
-			component.tint.z = 1.0f * color.z ; 
+			component.tint.z = 1.0f * color.z ;
+			// Stay tune people and stay vigilant !
 
 			static ImVec4 backup_color;
 			bool open_popup = ImGui::ColorButton ( "MyColor##3b" , color );

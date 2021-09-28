@@ -18,6 +18,7 @@
 #include "GraphicRendering/TextRenderer.h"
 #include "Input/Input.h"
 #include "Input/DeltaTime.h"
+#include "DebugTools/Assert.h"
 
 #include "STL/Random.h"
 #include "STL/Tuple.h"
@@ -40,8 +41,6 @@
 
 namespace JZEngine
 {
-	TextRenderer text;
-
 	Application::Application ()
 		:
 		global_systems_ ( new GlobalSystemsManager () )
@@ -82,8 +81,7 @@ namespace JZEngine
 			float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 			entity.GetComponent<Transform>().position_ = { x * -600.0f, y * -300.0f };
 		}*/
-
-		text.Load ( "Assets/Fonts/Weather Sunday.otf" , 50 );
+		TextRenderer::GetInstance ().Load ( "Assets/Fonts/Weather Sunday.otf" , 50 );
 
 		ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance> ();
 		int id = ecs->CreateEntity ();
@@ -146,6 +144,9 @@ namespace JZEngine
 			entity2.GetComponent<PhysicsComponent> ().speed = speed;
 			entity2.GetComponent<PhysicsComponent> ().velocity = { speed * cosf ( random<float> ( 0.0f, 0.0f ) ) , speed * sinf ( random<float> ( 0.0f, 1.28f ) ) };//dir
 		}
+
+
+		
 	}
 
 	void Application::Free ()
@@ -180,12 +181,12 @@ namespace JZEngine
 			global_systems_->FrameStart ();
 			global_systems_->Update ( dt );
 
-			text.RenderText ( "Welcome to JZ Engine !" , 0 , 0 , 1.0f , { 0.0f , 0.0f , 0.0f } );
-			text.Alignment (Paragraph::AlignCenter);
-			
+			TextRenderer::GetInstance ().RenderText ( "Welcome to JZ Engine !" , 0 , 0 , 1.0f , { 0.0f , 0.0f , 0.0f } );
+			TextRenderer::GetInstance ().Alignment ( Paragraph::AlignCenter );
+
 			//DeltaTime::update_time(1.0);
 			//DeltaTime::update_deltatime(1.0);
-			
+
 			//Test code
 			//std::cout<<DeltaTime::get_FPS()<<std::endl;
 
@@ -231,6 +232,8 @@ namespace JZEngine
 			Log::Info("Main", "Clamped dt: {}", clamped_dt);
 			Log::Info("Main", "Actual FPS: {}", 1.0 / actual_dt);
 			Log::Info("Main", "Clamped FPS: {}", 1.0 / clamped_dt);*/
+
+
 		}
 	}
 }

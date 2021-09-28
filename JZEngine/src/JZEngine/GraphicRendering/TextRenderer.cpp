@@ -3,31 +3,29 @@
 #include "OpenGLDebug.h"
 #include "TextRenderer.h"
 #include "../EngineConfig.h"
-
+#include "VertexBufferLayout.h"
 
 #define ROUND(x)  ((x+32) & -64)
 
 namespace JZEngine
 {
+	TextRenderer::TextRenderer ()
+		: vb ( sizeof ( float ) * 6 * 4 )
+	{}
+
 	void TextRenderer::Data ()
 	{
 		// configure VAO/VBO for texture quads
-		glGenVertexArrays ( 1 , &va );
-		glGenBuffers ( 1 , &vb );
-		glBindVertexArray ( va );
-		glBindBuffer ( GL_ARRAY_BUFFER , vb );
-		glBufferData ( GL_ARRAY_BUFFER , sizeof ( float ) * 6 * 4 , NULL , GL_DYNAMIC_DRAW );
-		glEnableVertexAttribArray ( 0 );
-		glVertexAttribPointer ( 0 , 4 , GL_FLOAT , GL_FALSE , 4 * sizeof ( float ) , 0 );
-		glBindBuffer ( GL_ARRAY_BUFFER , 0 );
-		glBindVertexArray ( 0 );
+		VertexBufferLayout layout;
+		layout.Push<float> ( 4 );
+		va.AddBuffer ( vb , layout );
+		va.Unbind ();
+		vb.Unbind ();
 
-		glCheckError ();
-
-		shader_program.CompileShaderFromFile ( GL_VERTEX_SHADER , "Assets/Shaders/Vertex/Font.vs" );
-		shader_program.CompileShaderFromFile ( GL_FRAGMENT_SHADER , "Assets/Shaders/Fragment/Font.fs" );
+		// initialised shader
+		shader_program.CompileShaderFromFile ( GL_VERTEX_SHADER , "Assets/Shaders/Vertex/VS_Font.vs" );
+		shader_program.CompileShaderFromFile ( GL_FRAGMENT_SHADER , "Assets/Shaders/Fragment/FS_Font.fs" );
 		shader_program.Link ();
-		glCheckError ();
 		if( GL_FALSE == shader_program.IsLinked () )
 		{
 			std::cout << "Unable to compile/link/validate shader programs" << "\n";
@@ -42,7 +40,6 @@ namespace JZEngine
 												{0.0f, -2.0f / Settings::window_height, 0.0f},
 												{0.0f, 0.0f, 1.0f} };
 
-		glCheckError ();
 		shader_program.SetUniform ( "projection" , camwin_to_ndc_xform.Transpose () );
 		shader_program.SetUniform ( "text" , 0 );
 		glCheckError ();
@@ -51,7 +48,7 @@ namespace JZEngine
 	void TextRenderer::Load ( std::string font , unsigned int fontSize )
 	{
 		Data ();
-		glCheckError ();
+		
 		// first clear the previously loaded Characters
 		Characters.clear ();
 
@@ -146,8 +143,9 @@ namespace JZEngine
 		// activate corresponding render state
 		shader_program.Bind ();
 		shader_program.SetUniform ( "textColor" , color );
-		glActiveTexture ( GL_TEXTURE0 );
-		glBindVertexArray ( va );
+		//glActiveTexture ( GL_TEXTURE0 );
+		va.Bind ();
+
 
 		std::string::const_iterator c;
 
@@ -201,18 +199,23 @@ namespace JZEngine
 			};
 
 			// render glyph texture over quad
+
+			glActiveTexture ( GL_TEXTURE0 );
 			glBindTexture ( GL_TEXTURE_2D , ch.texture_id_ );
 			// update content of VBO memory
-			glBindBuffer ( GL_ARRAY_BUFFER , vb );
-			glBufferSubData ( GL_ARRAY_BUFFER , 0 , sizeof ( vertices ) , vertices ); // be sure to use glBufferSubData and not glBufferData
-			glBindBuffer ( GL_ARRAY_BUFFER , 0 );
+
+			// be sure to use glBufferSubData and not glBufferData
+			vb.SetData ( vertices , sizeof ( vertices ) );
+			vb.Unbind ();
+
 			// render quad
 			glDrawArrays ( GL_TRIANGLES , 0 , 6 );
 			// now advance cursors for next glyph
 			x += ( ch.advance >> 6 ) * scale   ; // bitshift by 6 to get value in pixels (1/64th times 2^6 = 64)
 
 		}
-		glBindVertexArray ( 0 );
+		va.Unbind ();
+		//glBindVertexArray ( 0 );
 		glBindTexture ( GL_TEXTURE_2D , 0 );
 		glCheckError ();
 	}

@@ -50,6 +50,7 @@ namespace JZEngine
 	public:
 
 		Renderer();
+
 		/*static Renderer& Instance()
 		{
 			static Renderer Instance;
@@ -67,6 +68,6 @@ namespace JZEngine
 		void BindShader(int shaderid);
 		void UnbindShader(int shaderid);
 
-		ResourceManager* resource_manager_;
+		ResourceManager* resource_manager_{nullptr};
 	};
 }

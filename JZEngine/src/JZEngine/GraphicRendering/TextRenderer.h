@@ -6,6 +6,8 @@
 #include <map>
 
 #include "../Math/JZMath.h"
+#include "VertexArray.h"
+#include "Buffer.h"
 #include "Shader.h"
 
 namespace JZEngine
@@ -35,7 +37,6 @@ namespace JZEngine
 		// holds a list of pre-compiled Characters
 		std::map<char , Character> Characters;
 		// shader used for text rendering
-		Shader shader_program;
 		void Data ();
 		// pre-compiles a list of characters from the given font
 		void Load ( std::string font , unsigned int fontSize );
@@ -54,10 +55,19 @@ namespace JZEngine
 
 		/*	float GetTextWidth ();
 			float GetTextHeight ();*/
+		static TextRenderer &GetInstance ()
+		{
+			static TextRenderer Instance;
+			return Instance;
+		};
 
 	private:
+		TextRenderer ();
 		// render state
-		unsigned int va{} , vb{};
+		Shader shader_program;
+		VertexArray va ;
+		VertexBuffer vb;
+		//unsigned int va{} , vb{};
 		float text_width_{};
 		float text_height_{};
 		int scaled_kerning_{ 100 } ;
