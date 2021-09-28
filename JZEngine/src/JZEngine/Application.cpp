@@ -45,18 +45,10 @@
 
 namespace JZEngine
 {
-	//instance
-	//SoundSystem testsystem;
-
 	Application::Application ()
 		:
 		global_systems_ ( new GlobalSystemsManager () )
 	{
-		//testsystem.initialize();
-		//testsystem.createSound("LOST CIVILIZATION - NewAge MSCNEW2_41.wav", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
-		msgbus.subscribe(&testsystem, &SoundSystem::playSound);
-
-
 		/*testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
 		testsystem.playSound("testsound", true, 0.4f);
 		testsystem.setChannelGroupVolume(1.0f,"main");*/
@@ -76,11 +68,16 @@ namespace JZEngine
 		global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<InstanceSprite> ()->sprite_renderer_instancing_.renderer_ = global_systems_->GetSystem<RendererInstancing> ();
 		global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<ParallaxBackground> ()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer> ();
 
+		//Create sound
+		global_systems_->GetSystem<SoundSystem>()->createSound("LOST CIVILIZATION - NewAge MSCNEW2_41.wav", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
+
 		// give singleton logger handle to the engine console
 		Log::Instance ().Initialize ( global_systems_->GetSystem<EngineGUI> ()->GetConsole () );
 		JZEngine::Log::Info ( "Main" , "[{}] Up and Running! v{}" , Settings::engine_name , Settings::version );
 
 		PerformanceData::Init ();
+
+		msgbus.subscribe(global_systems_->GetSystem<SoundSystem>(), &SoundSystem::playSound);
 
 		// test code
 		/*global_systems_->GetSystem<SoundSystem>()->createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
@@ -188,7 +185,7 @@ namespace JZEngine
 
 			//double dt = limit_frames ? clamped_dt : actual_dt;
 
-			bool pressed = JZEngine::InputHandler::IsMousePressed(JZEngine::InputHandler::MOUSEBUTTON::MOUSE_BUTTON_LEFT);
+			bool pressed = JZEngine::InputHandler::IsMouseTriggered(JZEngine::MOUSE::MOUSE_BUTTON_LEFT);
 			
 			if (pressed == true)
 			{

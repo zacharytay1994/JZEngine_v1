@@ -65,7 +65,7 @@ namespace JZEngine
 		MOUSE_BUTTON_RIGHT = MOUSE_BUTTON_2,
 		MOUSE_BUTTON_MIDDLE = MOUSE_BUTTON_3
 	};
-	enum class InputHandler::KEY
+	enum class KEY
 	{
 		KEY_UNKNOWN = -1,
 
