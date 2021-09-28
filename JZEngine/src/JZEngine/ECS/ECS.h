@@ -698,6 +698,7 @@ namespace JZEngine
 				if (system_registered_.find(typeid(SYSTEM).name()) == system_registered_.end())
 				{
 					system_database_.emplace_back(std::make_shared<SYSTEM>());
+					system_database_.back()->name_ = typeid(SYSTEM).name();
 					system_registered_[typeid(SYSTEM).name()] = 1;
 					registered_systems_.push_back({ typeid(SYSTEM).name(), number_of_systems_++ });
 				}
@@ -714,7 +715,7 @@ namespace JZEngine
 			 * the component signature every frame.
 			 * ****************************************************************************************************
 			*/
-			void Update();
+			void Update(float dt);
 
 			/*!
 			 * @brief ___JZEngine::ECS::SystemManager::RegisterTuple()___
@@ -1286,6 +1287,7 @@ namespace JZEngine
 		*/
 		struct System
 		{
+			std::string						name_{ "System" };
 			ubyte							current_id_{ 0 };			/*!< current entity id of the component being updated */
 			Chunk*							current_chunk_{ nullptr };	/*!< current chunk the entity being updated belongs to */
 			std::bitset<MAX_COMPONENTS>		mask_;						/*!< component mask of the system, to decide which entities to update */

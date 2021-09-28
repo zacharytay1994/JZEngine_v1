@@ -1,5 +1,6 @@
 #include <PCH.h>
 #include "GlobalSystems.h"
+#include "DebugTools/PerformanceData.h"
 
 namespace JZEngine
 {
@@ -44,7 +45,9 @@ namespace JZEngine
 	{
 		for (auto& system : global_systems_vec_)
 		{
+			PerformanceData::StartMark(system->name_, PerformanceData::TimerType::GLOBAL_SYSTEMS);
 			system->Update(dt);
+			PerformanceData::EndMark(system->name_, PerformanceData::TimerType::GLOBAL_SYSTEMS);
 		}
 	}
 

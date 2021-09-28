@@ -12,6 +12,7 @@
 
 #include "ECS.h"
 #include "ECSconfig.h"
+#include "../DebugTools/PerformanceData.h"
 
 #include <iostream>
 
@@ -539,12 +540,12 @@ namespace JZEngine
 		* the component signature every frame.
 		* ****************************************************************************************************
 		*/
-		void SystemManager::Update()
+		void SystemManager::Update(float dt)
 		{
-			const float dt = 1.0f;
 			ArchetypeManager& am = ecs_instance_->archetype_manager_;
 			for (auto& system : system_database_)
 			{
+				PerformanceData::StartMark(system->name_, PerformanceData::TimerType::ECS_SYSTEMS);
 				system->FrameBegin(0.02f);
 				for (ui32 j = 0; j < am.number_of_archetypes_; ++j)
 				{
@@ -562,12 +563,13 @@ namespace JZEngine
 								if (system->current_chunk_->active_flags_[i])
 								{
 									system->current_id_ = i;
-									system->Update(1.0f);
+									system->Update(dt);
 								}
 							}
 						}
 					}
 				}
+				PerformanceData::EndMark(system->name_, PerformanceData::TimerType::ECS_SYSTEMS);
 			}
 		}
 
@@ -672,7 +674,7 @@ namespace JZEngine
 		*/
 		void ECSInstance::Update(float dt)
 		{
-			system_manager_.Update();
+			system_manager_.Update(dt);
 		}
 
 		ui32 ECSInstance::CreateEntity(ui32 parent)

@@ -11,6 +11,7 @@ namespace JZEngine
 	struct GlobalSystemsManager;
 	struct GlobalSystem
 	{
+		std::string name_{ "system" };
 		virtual ~GlobalSystem() {};
 		virtual void Init() {};
 		virtual void FrameStart() {};
@@ -34,12 +35,13 @@ namespace JZEngine
 		~GlobalSystemsManager();
 
 		template <typename DERIVED, typename...ARGS>
-		void AddSystem(ARGS... args)
+		void AddSystem(const std::string& name, ARGS... args)
 		{
 			global_systems_vec_.push_back(new DERIVED(args...));
 			global_systems_map_[typeid(DERIVED).name()] = global_systems_vec_.back();
 			global_systems_vec_.back()->SetGSM(this);
 			global_systems_vec_.back()->Init();
+			global_systems_vec_.back()->name_ = name;
 		}
 
 		template <typename DERIVED>

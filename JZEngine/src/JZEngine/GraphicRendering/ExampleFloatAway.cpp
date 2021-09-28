@@ -14,7 +14,7 @@ namespace JZEngine
 	void FloatAwayAllUnicorn::Update( const float& dt )
 	{
 		//float y = static_cast < float > ( rand() ) / static_cast < float > ( RAND_MAX );
-		GetComponent<Transform>().position_.y += 1 * 10.0f;
+		GetComponent<Transform>().position_.y += dt * 10.0f;
 	}
 
 	// input unicorn

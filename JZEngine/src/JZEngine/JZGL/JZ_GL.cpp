@@ -70,6 +70,7 @@ namespace JZEngine
 			glfwTerminate();
 		}
 		glfwMakeContextCurrent( window_ );
+		glfwSwapInterval(0);
 
 		// test glad is working
 		if ( !gladLoadGLLoader( ( GLADloadproc )glfwGetProcAddress ) )
@@ -83,14 +84,10 @@ namespace JZEngine
 		// set resize window callback function
 		glfwSetFramebufferSizeCallback( window_, FramebufferSizeCallback );
 
-
 		if ( !InputHandler::init(window_))
 		{
 			std::cout << "Failed to initialize input handler" << std::endl;
 		}
-		
-
-
 
 		int flags;
 		// features of contexts can be detected via context flags
