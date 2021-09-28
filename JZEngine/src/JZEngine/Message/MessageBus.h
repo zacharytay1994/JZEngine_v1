@@ -33,18 +33,24 @@ namespace JZEngine
 			}
 		}
 
+		template<typename T, typename EventType>
+		void subscribe(T* instance, void (T::* memberFunction)(EventType*))
+		{
+			HandlerList* handlers = subscribers[typeid(EventType)];
+
+			//First time initialization
+			if (handlers == nullptr)
+			{
+				handlers = new HandlerList();
+				subscribers[typeid(EventType)] = handlers;
+			}
+
+			handlers->push_back(new MemberFunctionHandler<T, EventType>(instance, memberFunction));
+		}
+
 	private:
 		std::map<std::type_index, HandlerList*> subscribers;
 	};
-
-
-
-
-
-
-
-
-
 
 
 
