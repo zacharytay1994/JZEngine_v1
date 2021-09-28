@@ -3,6 +3,7 @@
 #include <initializer_list>
 #include <assert.h>
 #include <iomanip>
+#include "../DebugTools/Log.h"
 
 #include "Vec2.h"
 #include "Vec3.h"
@@ -531,7 +532,7 @@ namespace JZEngine
 
 		static Mat4 Translate(TYPE x, TYPE y, TYPE z)
 		{
-			return static_cast<Mat4>(Mat3<TYPE>::Translate(x, y, z));
+			return { {1,0,0,x},{0,1,0,y},{0,0,1,z},{0,0,0,1} };
 		}
 
 		explicit operator Mat2<TYPE>() const

@@ -4,6 +4,12 @@
 #include "../ECSSystems/ExampleSingleHeader.h"
 #include "../ECSSystems/ExampleSplitHeaderSource.h"
 
+#include "../ECSSystems/PhysicsSystem.h"
+#include "../GraphicRendering/NonInstanceSpriteRenderer.h"
+#include "../GraphicRendering/InstanceSpriteRenderer.h"
+#include "../GraphicRendering/ExampleFloatAway.h"
+#include "../GraphicRendering/Background.h"
+
 namespace JZEngine
 {
 	namespace ECS
@@ -13,23 +19,31 @@ namespace JZEngine
 			// add your structs/classes here that you want to be treated as Components
 			using Component =
 				std::tuple<
-				
-				TestComponent,
-				TestComponent2,
-				TestComponent3,
-				Transform,
-				MyNewComponent
+
+				Transform ,
+				Texture ,
+				NonInstanceShader ,
+				InstanceShader ,
+				IsUnicorn ,
+				IsInputAffected ,
+				PhysicsComponent ,
+				Parallax,
+				NotBackground
 
 				>;
 
 			// add your structs/classes here that you want to be treated as Systems
 			using System =
 				std::tuple<
-				
-				TestSystem,
-				TestSystem2,
-				MyNewSystem
-				
+
+
+				ParallaxBackground ,
+				Sprite ,
+				InstanceSprite ,
+				FloatAwayAllUnicorn ,
+				MakeUnicornAffectedByInput ,
+				PhysicsSystem
+
 				>;
 		};
 	}
