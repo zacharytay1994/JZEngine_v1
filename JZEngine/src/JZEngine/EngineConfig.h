@@ -14,6 +14,7 @@ namespace JZEngine
 		constexpr const double		min_tpf			= 1.0 / static_cast<double>(max_fps);
 
 		constexpr const char*		logs_directory	= "Logs/";
-		constexpr const char*		obj_directory	= "Objects/";
+		constexpr const char*		saves_directory	= "Saves/";
+		constexpr const char*		saves_config	= "Saves/config.txt";
 	}
 }

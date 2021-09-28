@@ -104,10 +104,10 @@ namespace JZEngine
 		{
 			if (entity)
 			{
-				/*if (!DeserializeComponents(*entity, "testserialize.txt"))
+				if (!Serialize::LoadEntity(*entity, "test"))
 				{
 					Log::Warning("Resource", "De-serializing failed!");
-				}*/
+				}
 			}
 		}
 		ImGui::End();
