@@ -5,7 +5,6 @@
 
 namespace JZEngine
 {
-
 	struct VertexBufferElement
 	{
 		unsigned int type ;

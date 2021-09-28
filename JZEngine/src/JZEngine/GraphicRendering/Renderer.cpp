@@ -1,73 +1,88 @@
 #include <PCH.h>
 #include <glad/glad.h>
-
 #include "Renderer.h"
-#include "OpenGLDebug.h"
+
+
 
 namespace JZEngine
 {
-
-	/*const char* vertexShaderSource = "#version 450 core\n"
-		"layout (location = 0) in vec3 aPos;\n"
-		"out vec3 vPos;"
-		"void main()\n"
-		"{\n"
-		"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-		"	vPos = aPos;"
-		"}\0";
-	const char* fragmentShaderSource = "#version 450 core\n"
-		"out vec4 FragColor;\n"
-		"in vec3 vPos;"
-		"void main()\n"
-		"{\n"
-		"   FragColor = vec4(vPos,1.0f);\n"
-		"}\n\0";*/
-
-
-
-	Renderer::Renderer ()
+	Renderer::Renderer()
 		:
-		ib ( indices , 6 ) ,
-		vb ( vertices , sizeof ( vertices ))
-	{}
-
-	void Renderer::Init ()
+		ib(indices.data(), static_cast <unsigned int> (indices.size()))
 	{
-		VertexBufferLayout layout ;
-		layout.Push<float> ( 3 );
-		va.AddBuffer ( vb , layout );
-		va.Unbind ();
-		vb.Unbind ();
-		ib.Unbind ();
+		// load all texture images
+		//textures_["unicorn"].Texture2DLoad("Assets/Textures/cute-unicorn.png");
+	};
 
-		shader_program.CompileShaderFromFile ( GL_VERTEX_SHADER , "Assets/Shaders/Vertex/VertexShader_Color_Testing.vs" );
-		shader_program.CompileShaderFromFile ( GL_FRAGMENT_SHADER , "Assets/Shaders/Fragment/FragmentShader_Color_Testing.fs" );
-		shader_program.Link ();
+	void Renderer::Init()
+	{
+		resource_manager_ = GetSystem<ResourceManager>();
+		VertexBuffer vb( vertices.data(), static_cast< unsigned int >( vertices.size() * sizeof( float ) ) );
+		VertexBufferLayout layout;
+		layout.Push<float>( 3 );
+		layout.Push<float>( 3 );
+		layout.Push<float>( 2 );
+		va.AddBuffer( vb, layout );
+		va.Unbind();
+		vb.Unbind();
+		ib.Unbind();
 
-		if( GL_FALSE == shader_program.IsLinked () )
+		/*shader_program.CompileShaderFromFile( GL_VERTEX_SHADER, "Assets/Shaders/Vertex/VertexShader_Tex.vs" );
+		shader_program.CompileShaderFromFile( GL_FRAGMENT_SHADER, "Assets/Shaders/Fragment/FragmentShader_Tex.fs" );
+		shader_program.Link();
+
+		if ( GL_FALSE == shader_program.IsLinked() )
 		{
 			std::cout << "Unable to compile/link/validate shader programs" << "\n";
-			std::cout << shader_program.GetLog () << std::endl;
-			std::exit ( EXIT_FAILURE );
-		}
+			std::cout << shader_program.GetLog() << std::endl;
+			std::exit( EXIT_FAILURE );
+		}*/
 	}
 
-	void Renderer::Draw ()
+	void Renderer::Draw()
 	{
-		Bind ( va , ib , shader_program );
+		glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
 	}
 
-	void Renderer::Clear ()
+	void Renderer::Clear()
 	{
-		glClear ( GL_COLOR_BUFFER_BIT ) ;
+		glClear( GL_COLOR_BUFFER_BIT );
 	}
 
-	void Renderer::Bind ( const VertexArray& va , const IndexBuffer& ib , const Shader& shader ) const
+	void Renderer::Bind()
 	{
-		va.Bind ();
-		ib.Bind ();
-		shader.Bind ();
-		glDrawElements ( GL_TRIANGLES , ib.GetCount () , GL_UNSIGNED_INT , 0 );
+		va.Bind();
+		ib.Bind();
 	}
 
+	void Renderer::Unbind()
+	{
+		va.Unbind();
+		ib.Unbind();
+	}
+
+	Shader& Renderer::GetShaderProgram(int shaderid)
+	{
+		return resource_manager_->shader_programs_[shaderid].shader_program_;
+	}
+
+	void Renderer::BindTexture(const std::string& name)
+	{
+		textures_[name].Bind();
+	}
+	
+	void Renderer::BindTexture(int textureid)
+	{
+		resource_manager_->texture2ds_[textureid].texture2d_.Bind();
+	}
+
+	void Renderer::BindShader(int shaderid)
+	{
+		resource_manager_->shader_programs_[shaderid].shader_program_.Bind();
+	}
+
+	void Renderer::UnbindShader(int shaderid)
+	{
+		resource_manager_->shader_programs_[shaderid].shader_program_.Unbind();
+	}
 }

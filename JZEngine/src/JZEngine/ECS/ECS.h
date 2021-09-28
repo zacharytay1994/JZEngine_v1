@@ -22,6 +22,8 @@
 #include <iostream>
 #include <unordered_map>
 
+#include "../GlobalSystems.h"
+
 namespace JZEngine
 {
 	/*!
@@ -68,9 +70,11 @@ namespace JZEngine
 		constexpr ui32 MAX_COMPONENTS			{ 256 };			/*!< arbitrary number */
 		constexpr ui32 MAX_ARCHETYPES			{ 128 };			/*!< arbitrary number */
 		constexpr ui32 CHUNKS_PER_ARCHETYPE		{ 256 };			/*!< arbitrary number */
-		constexpr ui32 ENTITIES_PER_CHUNK		{ 256 };			/*!< arbitrary number */
 		constexpr ui32 ENTITIES_RESERVE			{ 256 };			/*!< arbitrary number*/
 		constexpr ui32 ENTITY_MAX_CHILDREN		{ 10 };				/*!< arbitrary number*/
+
+		constexpr ui32 ENTITIES_PER_CHUNK		{ 255 };			/*!< not to be changed entity ids only go up to 255
+																		 because the count it stored in a byte */
 
 		using SystemComponents	= std::array<ui32, MAX_COMPONENTS>;
 		using ComponentMask		= std::bitset<MAX_COMPONENTS>;
@@ -663,7 +667,7 @@ namespace JZEngine
 		struct SystemManager
 		{
 			ECSInstance*							const ecs_instance_;
-			std::vector<std::unique_ptr<System>>	system_database_;			/*!< storage for all the polymorphic systems */
+			std::vector<std::shared_ptr<System>>	system_database_;			/*!< storage for all the polymorphic systems */
 			std::unordered_map<std::string, bool>	system_registered_;			/*!< account for which systems are registered */
 			
 			unsigned int							number_of_systems_{ 0 };	/*!< number of registered systems */
@@ -693,7 +697,8 @@ namespace JZEngine
 				// if struct/class is not yet registered
 				if (system_registered_.find(typeid(SYSTEM).name()) == system_registered_.end())
 				{
-					system_database_.emplace_back(std::make_unique<SYSTEM>());
+					system_database_.emplace_back(std::make_shared<SYSTEM>());
+					system_database_.back()->name_ = typeid(SYSTEM).name();
 					system_registered_[typeid(SYSTEM).name()] = 1;
 					registered_systems_.push_back({ typeid(SYSTEM).name(), number_of_systems_++ });
 				}
@@ -710,7 +715,7 @@ namespace JZEngine
 			 * the component signature every frame.
 			 * ****************************************************************************************************
 			*/
-			void Update();
+			void Update(float dt);
 
 			/*!
 			 * @brief ___JZEngine::ECS::SystemManager::RegisterTuple()___
@@ -820,7 +825,7 @@ namespace JZEngine
 		 * manager. Main interface to the ECS.
 		 * ****************************************************************************************************
 		*/
-		struct ECSInstance // destructor still missing
+		struct ECSInstance : public GlobalSystem // destructor still missing
 		{
 			ComponentManager	component_manager_;		/*!< holds all registered components  */
 			ArchetypeManager	archetype_manager_;		/*!< holds all unique archetypes, i.e. component combinations */
@@ -843,7 +848,7 @@ namespace JZEngine
 			 * all systems with matching archetypes, i.e. entities.
 			 * ****************************************************************************************************
 			*/
-			void Update();
+			virtual void Update(float dt) override;
 
 			/*!
 			 * @brief ___JZEngine::ECS::ECSInstance::RegisterComponent()___
@@ -911,6 +916,20 @@ namespace JZEngine
 			 * ****************************************************************************************************
 			*/
 			Entity& GetEntity(ui32 id);
+
+			template <typename SYSTEM>
+			std::shared_ptr<SYSTEM> GetSystemInefficient()
+			{
+				std::string system_name = typeid(SYSTEM).name();
+				for (auto& s : system_manager_.registered_systems_)
+				{
+					if (s.name_ == system_name)
+					{
+						return std::dynamic_pointer_cast<SYSTEM>(system_manager_.system_database_[s.id_]);
+					}
+				}
+				return nullptr;
+			}
 
 			/*!
 			 * @brief ___JZEngine::ECS::ECSInstance::Print()___
@@ -1268,6 +1287,7 @@ namespace JZEngine
 		*/
 		struct System
 		{
+			std::string						name_{ "System" };
 			ubyte							current_id_{ 0 };			/*!< current entity id of the component being updated */
 			Chunk*							current_chunk_{ nullptr };	/*!< current chunk the entity being updated belongs to */
 			std::bitset<MAX_COMPONENTS>		mask_;						/*!< component mask of the system, to decide which entities to update */

@@ -4,15 +4,25 @@
 
 namespace JZEngine {
 
-    namespace DeltaTime {
+    class DeltaTime {
 
-        double FPS;
+        static inline double  FPS;
+        static inline double  delta_time;
 
-        double update_time(double fps_calc_interval) {
+    public:
+        static double get_FPS()
+        {
+            return FPS;
+        }
+        static double get_deltatime()
+        {
+            return delta_time;
+        }
+        static void update_deltatime(double fps_calc_interval) {
             // get elapsed time (in seconds) between previous and current frames
             static double prev_time = glfwGetTime();
             double curr_time = glfwGetTime();
-            double delta_time = curr_time - prev_time;
+            delta_time = curr_time - prev_time;
             prev_time = curr_time;
 
             // fps calculations
@@ -31,9 +41,8 @@ namespace JZEngine {
                 start_time = curr_time;
                 count = 0.0;
             }
-
             // done calculating fps ...
-            return delta_time;
+            
         }
 
     };

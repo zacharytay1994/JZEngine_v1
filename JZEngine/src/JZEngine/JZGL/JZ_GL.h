@@ -10,9 +10,10 @@
 
 #include "../BuildDefinitions.h"
 
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
+#include "../GlobalSystems.h"
 
 
 namespace JZEngine
@@ -22,15 +23,16 @@ namespace JZEngine
 	 *
 	 * An OpenGL instance created using GLFW and glad.
 	*/
-	struct JZENGINE_API GLFW_Instance
+	struct GLFW_Instance : public GlobalSystem
 	{
-		GLFWwindow* window_{ nullptr };	/*!< handle to the window created using GLFW */
-		int				window_width_{ 0 };			/*!< width of the GLFWwindow created and updated from resizing */
-		int				window_height_{ 0 };			/*!< height of the GLFWwindow created and updated from resizing */
+		GLFWwindow*		window_{ nullptr };		/*!< handle to the window created using GLFW */
+		int				window_width_{ 0 };		/*!< width of the GLFWwindow created and updated from resizing */
+		int				window_height_{ 0 };	/*!< height of the GLFWwindow created and updated from resizing */
 
 		GLFW_Instance ( int width , int height );
 		~GLFW_Instance ();
 
+		virtual void Init() override;
 
 		/*!
 		 * @brief ___JZEngine::GLFW_Instance::FrameStart()___
@@ -56,8 +58,6 @@ namespace JZEngine
 		*/
 		bool Active ();
 
-		void Draw ();
-
 	private:
 		/*!
 		 * @brief ___JZEngine::GLFW_Instance::Initialize()___
@@ -77,6 +77,4 @@ namespace JZEngine
 	 * @param height	: height of the window to resize to
 	*/
 	void FramebufferSizeCallback ( GLFWwindow* window , int width , int height );
-
-
 }

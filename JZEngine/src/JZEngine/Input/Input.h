@@ -9,20 +9,28 @@
 
 #include <glad/glad.h> // for access to OpenGL API declarations 
 #include <GLFW/glfw3.h>
-#include <string>
+
 #include <unordered_map>
 namespace JZEngine
 {
-	/*  _________________________________________________________________________ */
+	//Forward Declaration
+	enum class MOUSE;
+	enum class KEY;
+
+	//Input Handler class
 	class InputHandler
-		/*! GLHelper structure to encapsulate initialization stuff ...
-		*/
 	{
-		enum class MOUSEBUTTON;
-		enum class KEY;
+	public:
+		static bool init(GLFWwindow*);
+		static bool IsKeyPressed(KEY key);
+		static bool IsKeyTriggered(KEY key);
+		static bool IsKeyReleased(KEY key);
 
-		static void cleanup();
+		//mouse only has triggered n release
+		static bool IsMouseTriggered(MOUSE key);
+		static bool IsMouseReleased(MOUSE key);
 
+	private:
 		// callbacks ...
 		static void error_cb(int error, char const* description);
 		static void fbsize_cb(GLFWwindow* ptr_win, int width, int height);
@@ -32,20 +40,15 @@ namespace JZEngine
 		static void mousescroll_cb(GLFWwindow* pwin, double xoffset, double yoffset);
 		static void mousepos_cb(GLFWwindow* pwin, double xpos, double ypos);
 
-		static double update_time(double fpsCalcInt = 1.0);
-		static  std::unordered_map<int, GLboolean> keystate;
-		static  std::unordered_map<int, GLboolean> mousestate;
+		static  std::unordered_map<int, int> keystate;
+		static  std::unordered_map<int, int> mousestate;
 
-		public:
-		static bool init(GLFWwindow*);
-		static bool IsKeyPressed(KEY key);
-		static bool IsMousePressed(MOUSEBUTTON key);
-		static GLdouble fps;
+
 
 	};
 
-#endif /* GLHELPER_H */
-	enum class MOUSEBUTTON
+
+	enum class MOUSE
 	{
 		MOUSE_BUTTON_1 = 0,
 		MOUSE_BUTTON_2 = 1,
@@ -190,3 +193,5 @@ namespace JZEngine
 
 
 }//JZEngine
+
+#endif 

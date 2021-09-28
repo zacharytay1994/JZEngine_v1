@@ -30,7 +30,7 @@ namespace JZEngine
 	*/
 	struct JZENGINE_API SceneTree
 	{
-		ECS::ECSInstance* const ecs_instance_;
+		ECS::ECSInstance* ecs_instance_{nullptr};
 		float x_, y_, sx_, sy_;		/*!< position and scale of ImGui window */
 
 		static constexpr unsigned int					MAX_NAME_SIZE = 50;					/*!< maximum length a custom name can be */
@@ -40,7 +40,7 @@ namespace JZEngine
 		char											new_entity_name_[MAX_NAME_SIZE];	/*!< buffer for custom name when creating new entities */
 		std::unordered_map<std::string, unsigned int>*	names_;								/*!< for repeated names to add an index behind */
 
-		SceneTree(float x, float y, float sx, float sy, ECS::ECSInstance* ecs);
+		SceneTree(float x, float y, float sx, float sy);
 		~SceneTree();
 
 		/*!

@@ -12,6 +12,7 @@ namespace JZEngine
 	namespace Math
 	{	
 		constexpr float PI = 3.1415926535897932384626433832795f;
+		constexpr float PIx2 = 3.1415926535897932384626433832795f * 2.0f;
 
 		template <typename T>
 		T RadToDeg(T val)
@@ -72,6 +73,12 @@ namespace JZEngine
 		{
 			return vec = GetRotatedVectorZ(vec, radian);
 		}
+
+		Mat3f GetModelTransformNonTransposed(const Vec2f& position, float rotate, const Vec2f& scale, const Vec2f& size);
+
+		Mat3f GetProjectionTransformNonTransposed();
+
+		Mat3f GetTransform( const Vec2f& position, float rotate, const Vec2f& scale, const Vec2f& size );
 
 		//template<class T>
 		//typename std::enable_if<!std::numeric_limits<T>::is_integer, bool>::type

@@ -195,8 +195,8 @@ namespace JZEngine
         void RenderConsoleLog(bool* p_open, float x, float y, float sx, float sy)
         {
             ImGui::SetNextWindowBgAlpha(0.8f);
-            ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x, static_cast<float>(Settings::window_height) * y }, ImGuiCond_Once);
-            ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx, static_cast<float>(Settings::window_height) * sy }, ImGuiCond_Once);
+            ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x, static_cast<float>(Settings::window_height) * y }, ImGuiCond_Always);
+            ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx, static_cast<float>(Settings::window_height) * sy }, ImGuiCond_Always);
             Draw("Console", *console_.currently_selected_console_, p_open);
         }
     };

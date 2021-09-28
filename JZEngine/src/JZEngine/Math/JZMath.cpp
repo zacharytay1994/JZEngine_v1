@@ -2,6 +2,9 @@
 #include "JZMath.h"
 
 #include "../DebugTools/Log.h"
+#include "../EngineConfig.h"
+
+#include "../DebugTools/PerformanceData.h"
 
 namespace JZEngine
 {
@@ -10,6 +13,39 @@ namespace JZEngine
 		bool IsEven(int val)
 		{
 			return val % 2 == 0;
+		}
+
+		Mat3f GetModelTransformNonTransposed(const Vec2f& position, float rotate, const Vec2f& scale, const Vec2f& size)
+		{
+			return (JZEngine::Mat3f::Translate(position.x, position.y) * 
+				(JZEngine::Mat3f::RotateZ(Math::DegToRad(rotate)) * JZEngine::Mat3f::Scale(size.x * scale.x, size.y * scale.y, 1.0f)));
+		}
+
+		Mat3f GetProjectionTransformNonTransposed()
+		{	
+			return	{ {2.0f / (Settings::aspect_ratio * Settings::window_height) , 0.0f								, 0.0f},
+					{0.0f														, 2.0f / Settings::window_height	, 0.0f},
+					{0.0f														, 0.0f								, 1.0f} };
+		}
+
+		Mat3f GetTransform( const Vec2f& position, float rotate, const Vec2f& scale, const Vec2f& size )
+		{
+			PerformanceData::StartMark("Mat3GetTransform (JZMath.cpp|L:20-33)");
+			// calculate transformation
+			JZEngine::Mat3f mat_scale = JZEngine::Mat3f::Scale( size.x * scale.x, size.y * scale.y, 1.0f );
+			JZEngine::Mat3f mat_rotate = JZEngine::Mat3f::RotateZ( Math::DegToRad( rotate ) );
+			JZEngine::Mat3f mat_translate = JZEngine::Mat3f::Translate( position.x, position.y );
+
+			JZEngine::Mat3f camwin_to_ndc_xform = { {2.0f / ( Settings::aspect_ratio * Settings::window_height ), 0.0f, 0.0f},
+													{0.0f, 2.0f / Settings::window_height, 0.0f},
+													{0.0f, 0.0f, 1.0f} };
+
+			JZEngine::Mat3f transform = mat_translate * ( mat_rotate * mat_scale );
+			transform = camwin_to_ndc_xform * transform;
+			transform.Transpose();
+			PerformanceData::EndMark("Mat3GetTransform (JZMath.cpp|L:20-33)");
+
+			return transform;
 		}
 
 		void TestMat2(const Mat2d& check, const Mat2d& against)
