@@ -113,6 +113,7 @@
     <ClCompile Include="src\JZEngine\ImGui\ImGradient.cpp" />
     <ClCompile Include="src\JZEngine\ImGui\ImGuizmo.cpp" />
     <ClCompile Include="src\JZEngine\ImGui\ImSequencer.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\Collision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\JZEngine.h" />
@@ -193,5 +194,6 @@
     <ClInclude Include="src\JZEngine\ImGui\ImGuizmo.h" />
     <ClInclude Include="src\JZEngine\ImGui\ImSequencer.h" />
     <ClInclude Include="src\JZEngine\ImGui\ImZoomSlider.h" />
+    <ClInclude Include="src\JZEngine\Physics\Collision.h" />
   </ItemGroup>
 </Project>

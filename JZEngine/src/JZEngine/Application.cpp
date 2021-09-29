@@ -89,67 +89,91 @@ namespace JZEngine
 			entity.GetComponent<Transform>().position_ = { x * -600.0f, y * -300.0f };
 		}*/
 
-		ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance> ();
-		int id = ecs->CreateEntity ();
-		ECS::Entity& entity = ecs->entity_manager_.GetEntity ( id );
-		entity.AddSystem ( 1 ); //JM : Change from 0 to 1 !
-		entity.AddComponent<PhysicsComponent> ();
-		entity.GetComponent<Texture> ().texture_id_ = 1;
-		entity.GetComponent<PhysicsComponent> ().shapeid = 1;
-		entity.GetComponent<Transform> ().size_.x = 800;
-		entity.GetComponent<Transform> ().position_.y = -200;
+		ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
+		int id = ecs->CreateEntity();
+		ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
+		entity.AddSystem(1);
+		entity.AddComponent<PhysicsComponent>();
+		entity.GetComponent<Texture>().texture_id_ = 1;
+		entity.GetComponent<PhysicsComponent>().shapeid = 1;
+		entity.GetComponent<Transform>().size_.x = 800;
+		entity.GetComponent<Transform>().position_.y = -200;
 
-		id = ecs->CreateEntity ();
-		ECS::Entity& entity1 = ecs->entity_manager_.GetEntity ( id );
-		entity1.AddSystem ( 1 ); //JM : Change from 0 to 1 !
-		entity1.AddComponent<PhysicsComponent> ();
-		entity1.GetComponent<Texture> ().texture_id_ = 1;
-		entity1.GetComponent<PhysicsComponent> ().shapeid = 1;
-		entity1.GetComponent<Transform> ().size_.x = 800;
-		entity1.GetComponent<Transform> ().position_.y = 400;
+		id = ecs->CreateEntity();
+		ECS::Entity& entity1 = ecs->entity_manager_.GetEntity(id);
+		entity1.AddSystem(1);
+		entity1.AddComponent<PhysicsComponent>();
+		entity1.GetComponent<Texture>().texture_id_ = 1;
+		entity1.GetComponent<PhysicsComponent>().shapeid = 1;
+		entity1.GetComponent<Transform>().size_.x = 800;
+		entity1.GetComponent<Transform>().position_.y = 400;
 
-		id = ecs->CreateEntity ();
-		ECS::Entity& entity3 = ecs->entity_manager_.GetEntity ( id );
-		entity3.AddSystem ( 1 ); //JM : Change from 0 to 1 !
-		entity3.AddComponent<PhysicsComponent> ();
-		entity3.GetComponent<Texture> ().texture_id_ = 1;
-		entity3.GetComponent<PhysicsComponent> ().shapeid = 1;
-		entity3.GetComponent<Transform> ().size_.y = 800;
-		entity3.GetComponent<Transform> ().position_.x = 400;
+		id = ecs->CreateEntity();
+		ECS::Entity& entity3 = ecs->entity_manager_.GetEntity(id);
+		entity3.AddSystem(1);
+		entity3.AddComponent<PhysicsComponent>();
+		entity3.GetComponent<Texture>().texture_id_ = 1;
+		entity3.GetComponent<PhysicsComponent>().shapeid = 1;
+		entity3.GetComponent<Transform>().size_.y = 800;
+		entity3.GetComponent<Transform>().position_.x = 400;
 
-		id = ecs->CreateEntity ();
-		ECS::Entity& entity4 = ecs->entity_manager_.GetEntity ( id );
-		entity4.AddSystem ( 1 ); //JM : Change from 0 to 1 !
-		entity4.AddComponent<PhysicsComponent> ();
-		entity4.GetComponent<Texture> ().texture_id_ = 1;
-		entity4.GetComponent<PhysicsComponent> ().shapeid = 1;
-		entity4.GetComponent<Transform> ().size_.y = 800;
-		entity4.GetComponent<Transform> ().position_.x = -400;
+		id = ecs->CreateEntity();
+		ECS::Entity& entity4 = ecs->entity_manager_.GetEntity(id);
+		entity4.AddSystem(1);
+		entity4.AddComponent<PhysicsComponent>();
+		entity4.GetComponent<Texture>().texture_id_ = 1;
+		entity4.GetComponent<PhysicsComponent>().shapeid = 1;
+		entity4.GetComponent<Transform>().size_.y = 800;
+		entity4.GetComponent<Transform>().position_.x = -400;
 
-		id = ecs->CreateEntity ();
-		ECS::Entity& entity5 = ecs->entity_manager_.GetEntity ( id );
-		entity5.AddSystem ( 1 ); //JM : Change from 0 to 1 !
-		entity5.AddComponent<PhysicsComponent> ();
-		entity5.GetComponent<Texture> ().texture_id_ = 1;
-		entity5.GetComponent<PhysicsComponent> ().shapeid = 1;
-		entity5.GetComponent<Transform> ().size_.x = 400;
-		entity5.GetComponent<Transform> ().size_.y = 10;
+		id = ecs->CreateEntity();//line in middle
+		ECS::Entity& entity5 = ecs->entity_manager_.GetEntity(id);
+		entity5.AddSystem(1);
+		entity5.AddComponent<PhysicsComponent>();
+		entity5.GetComponent<Texture>().texture_id_ = 1;
+		entity5.GetComponent<PhysicsComponent>().shapeid = 1;
+		entity5.GetComponent<Transform>().size_.x = 400;
+		entity5.GetComponent<Transform>().size_.y = 10;
+		
 
-		for( int i = 0; i < 200; ++i )
+
+		for (int i = 0; i < 50; ++i) 
 		{
-			int id3 = ecs->CreateEntity ();
-			ECS::Entity& entity2 = ecs->entity_manager_.GetEntity ( id3 );
-			entity2.AddSystem ( 1 ); //JM : Change from 0 to 1 !
-			entity2.AddComponent<PhysicsComponent> ();
-			entity2.GetComponent<Transform> ().position_ = { random<float> ( -300.0f, 300.0f ),random<float> ( -150.0f, 300.0f ) };
-			entity2.GetComponent<Texture> ().texture_id_ = 6;
-			entity2.GetComponent<PhysicsComponent> ().shapeid = 0;
-			float speed = random<float> ( 0.3f , 100.0f ) ;
-			entity2.GetComponent<Transform> ().size_.x = 30;
-			entity2.GetComponent<Transform> ().size_.y = 30;
-			entity2.GetComponent<PhysicsComponent> ().speed = speed;
-			entity2.GetComponent<PhysicsComponent> ().velocity = { speed * cosf ( random<float> ( 0.0f, 0.0f ) ) , speed * sinf ( random<float> ( 0.0f, 1.28f ) ) };//dir
+			 int id3 = ecs->CreateEntity();
+			 ECS::Entity& entity2 = ecs->entity_manager_.GetEntity(id3);
+			 entity2.AddSystem(1);
+			 entity2.AddComponent<PhysicsComponent>();
+			 entity2.GetComponent<Transform>().position_ = { random<float>(-300.0f, 300.0f),random<float>(-100.0f, 300.0f) };
+			 entity2.GetComponent<Texture>().texture_id_ = 6;
+			 entity2.GetComponent<PhysicsComponent>().shapeid = 0;
+			 float speed =  random<float>(0.3f, 100.0f) ;
+			 entity2.GetComponent<Transform>().size_.x = 20;
+			 entity2.GetComponent<Transform>().size_.y = 20;
+			 entity2.GetComponent<PhysicsComponent>().speed = speed;
+			 entity2.GetComponent<PhysicsComponent>().mass = 20 * 20;
+			 entity2.GetComponent<PhysicsComponent>().velocity = { speed*cosf( random<float>(0.0f, 0.0f) ) , speed * sinf( random<float>(0.0f, 1.28f) ) };//dir
 		}
+		for (int i = 0; i < 50; ++i)
+		{
+			int id3 = ecs->CreateEntity();
+			ECS::Entity& entity2 = ecs->entity_manager_.GetEntity(id3);
+			entity2.AddSystem(1);
+			entity2.AddComponent<PhysicsComponent>();
+			entity2.GetComponent<Transform>().position_ = { random<float>(-300.0f, 300.0f),random<float>(-100.0f, 300.0f) };
+			entity2.GetComponent<Texture>().texture_id_ = 6;
+			entity2.GetComponent<PhysicsComponent>().shapeid = 0;
+			float speed = random<float>(0.3f, 100.0f);
+			entity2.GetComponent<Transform>().size_.x = 35;
+			entity2.GetComponent<Transform>().size_.y = 35;
+			entity2.GetComponent<PhysicsComponent>().speed = speed;
+			entity2.GetComponent<PhysicsComponent>().mass = 35 * 35;
+			entity2.GetComponent<PhysicsComponent>().velocity = { speed * cosf(random<float>(0.0f, 0.0f)) , speed * sinf(random<float>(0.0f, 1.28f)) };//dir
+		}
+
+		/*ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
+		int e = ecs->CreateEntity();
+		test = &ecs->entity_manager_.GetEntity(e);
+		test->AddSystem(0);*/
 	}
 
 	void Application::Free ()
