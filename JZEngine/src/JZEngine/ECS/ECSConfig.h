@@ -8,6 +8,7 @@
 #include "../GraphicRendering/NonInstanceSpriteRenderer.h"
 #include "../GraphicRendering/InstanceSpriteRenderer.h"
 #include "../GraphicRendering/ExampleFloatAway.h"
+#include "../GraphicRendering/Background.h"
 
 namespace JZEngine
 {
@@ -18,27 +19,31 @@ namespace JZEngine
 			// add your structs/classes here that you want to be treated as Components
 			using Component =
 				std::tuple<
-				
-				Transform,
-				Texture,
-				NonInstanceShader,
-				InstanceShader,
-				IsUnicorn,
-				IsInputAffected,
-				PhysicsComponent
+
+				Transform ,
+				Texture ,
+				NonInstanceShader ,
+				InstanceShader ,
+				IsUnicorn ,
+				IsInputAffected ,
+				PhysicsComponent ,
+				Parallax,
+				NotBackground
 
 				>;
 
 			// add your structs/classes here that you want to be treated as Systems
 			using System =
 				std::tuple<
-				
-				Sprite,
-				InstanceSprite,
-				FloatAwayAllUnicorn,
-				MakeUnicornAffectedByInput,
+
+
+				ParallaxBackground ,
+				Sprite ,
+				InstanceSprite ,
+				FloatAwayAllUnicorn ,
+				MakeUnicornAffectedByInput ,
 				PhysicsSystem
-				
+
 				>;
 		};
 	}

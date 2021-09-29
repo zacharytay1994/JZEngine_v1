@@ -20,11 +20,21 @@ namespace JZEngine
 	class SpriteRenderer
 	{
 	public:
-		SpriteRenderer();
-		~SpriteRenderer();
+		SpriteRenderer ();
+		~SpriteRenderer ();
+		void DrawSprite ( int shaderid ,
+						  int textureid ,
+						  JZEngine::Vec2f position ,
+						  JZEngine::Vec2f size = { 10.0f , 10.0f } ,
+						  JZEngine::Vec2f scale = { 1.0f ,1.0f } ,
+						  float rotateDegree = 0.0f ,
+						  JZEngine::Vec3f color = { 1.0f, 1.0f ,1.0f } ,
+						  JZEngine::Vec3f tint = { 0.0f , 0.0f , 0.0f } );
+
 		void DrawSprite( int shaderid,
 						int textureid,
-						const Mat3f& transform);
+						const Mat3f& transform,
+						 JZEngine::Vec3f tint = { 0.0f , 0.0f , 0.0f } );
 
 		Renderer* renderer_{ nullptr };
 	};

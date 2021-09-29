@@ -37,8 +37,8 @@ namespace JZEngine
 		vb.Unbind();
 		instance_vb.Unbind();
 
-		shader_program.CompileShaderFromFile( GL_VERTEX_SHADER, "Assets/Shaders/Vertex/VertexShader_Instancing.vs" );
-		shader_program.CompileShaderFromFile( GL_FRAGMENT_SHADER, "Assets/Shaders/Fragment/FragmentShader_Instancing.fs" );
+		shader_program.CompileShaderFromFile( GL_VERTEX_SHADER, "Assets/Shaders/Vertex/VS_Instancing.vs" );
+		shader_program.CompileShaderFromFile( GL_FRAGMENT_SHADER, "Assets/Shaders/Fragment/FS_Instancing.fs" );
 		shader_program.Link();
 
 		if ( GL_FALSE == shader_program.IsLinked() )

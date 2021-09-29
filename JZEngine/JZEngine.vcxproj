@@ -165,6 +165,7 @@
     <ClCompile Include="src\JZEngine\EngineGUI\MenuBar.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\SceneTree.cpp" />
     <ClCompile Include="src\JZEngine\GlobalSystems.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Background.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Buffer.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\ExampleFloatAway.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.cpp" />
@@ -281,6 +282,7 @@
     <ClInclude Include="src\JZEngine\EngineGUI\MenuBar.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\SceneTree.h" />
     <ClInclude Include="src\JZEngine\EntryPoint.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Background.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Buffer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\ExampleFloatAway.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.h" />

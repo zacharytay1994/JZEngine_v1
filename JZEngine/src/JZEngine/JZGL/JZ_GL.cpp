@@ -89,6 +89,14 @@ namespace JZEngine
 			std::cout << "Failed to initialize input handler" << std::endl;
 		}
 
+		if ( !InputHandler::init(window_))
+		{
+			std::cout << "Failed to initialize input handler" << std::endl;
+		}
+		
+
+
+
 		int flags;
 		// features of contexts can be detected via context flags
 		glGetIntegerv( GL_CONTEXT_FLAGS, &flags );

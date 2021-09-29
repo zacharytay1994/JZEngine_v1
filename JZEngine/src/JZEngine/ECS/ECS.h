@@ -1358,6 +1358,15 @@ namespace JZEngine
 			 * ****************************************************************************************************
 			*/
 			virtual void Update(const float& dt) = 0;
+
+			/*!
+			 * @brief ___JZEngine::ECS::System::FrameEnd()___
+			 * ****************************************************************************************************
+			 * Virtual function, called only once per frame after updating entities of that system
+			 * for each system.
+			 * ****************************************************************************************************
+			*/
+			virtual void FrameEnd(const float& dt) { };
 		};
 	}
 }
