@@ -88,11 +88,6 @@ namespace JZEngine
 		{
 			std::cout << "Failed to initialize input handler" << std::endl;
 		}
-
-		if ( !InputHandler::init(window_))
-		{
-			std::cout << "Failed to initialize input handler" << std::endl;
-		}
 		
 
 

@@ -95,7 +95,7 @@ namespace JZEngine
 		entity.AddSystem(1);
 		entity.AddComponent<PhysicsComponent>();
 		entity.GetComponent<Texture>().texture_id_ = 1;
-		entity.GetComponent<PhysicsComponent>().shapeid = 1;
+		entity.GetComponent<PhysicsComponent>().shapeid = 2;
 		entity.GetComponent<Transform>().size_.x = 800;
 		entity.GetComponent<Transform>().position_.y = -200;
 
@@ -104,7 +104,7 @@ namespace JZEngine
 		entity1.AddSystem(1);
 		entity1.AddComponent<PhysicsComponent>();
 		entity1.GetComponent<Texture>().texture_id_ = 1;
-		entity1.GetComponent<PhysicsComponent>().shapeid = 1;
+		entity1.GetComponent<PhysicsComponent>().shapeid = 2;
 		entity1.GetComponent<Transform>().size_.x = 800;
 		entity1.GetComponent<Transform>().position_.y = 400;
 
@@ -113,7 +113,7 @@ namespace JZEngine
 		entity3.AddSystem(1);
 		entity3.AddComponent<PhysicsComponent>();
 		entity3.GetComponent<Texture>().texture_id_ = 1;
-		entity3.GetComponent<PhysicsComponent>().shapeid = 1;
+		entity3.GetComponent<PhysicsComponent>().shapeid = 2;
 		entity3.GetComponent<Transform>().size_.y = 800;
 		entity3.GetComponent<Transform>().position_.x = 400;
 
@@ -122,7 +122,7 @@ namespace JZEngine
 		entity4.AddSystem(1);
 		entity4.AddComponent<PhysicsComponent>();
 		entity4.GetComponent<Texture>().texture_id_ = 1;
-		entity4.GetComponent<PhysicsComponent>().shapeid = 1;
+		entity4.GetComponent<PhysicsComponent>().shapeid = 2;
 		entity4.GetComponent<Transform>().size_.y = 800;
 		entity4.GetComponent<Transform>().position_.x = -400;
 
@@ -131,7 +131,7 @@ namespace JZEngine
 		entity5.AddSystem(1);
 		entity5.AddComponent<PhysicsComponent>();
 		entity5.GetComponent<Texture>().texture_id_ = 1;
-		entity5.GetComponent<PhysicsComponent>().shapeid = 1;
+		entity5.GetComponent<PhysicsComponent>().shapeid = 2;
 		entity5.GetComponent<Transform>().size_.x = 400;
 		entity5.GetComponent<Transform>().size_.y = 10;
 		
@@ -146,12 +146,12 @@ namespace JZEngine
 			 entity2.GetComponent<Transform>().position_ = { random<float>(-300.0f, 300.0f),random<float>(-100.0f, 300.0f) };
 			 entity2.GetComponent<Texture>().texture_id_ = 6;
 			 entity2.GetComponent<PhysicsComponent>().shapeid = 0;
-			 float speed =  random<float>(0.3f, 100.0f) ;
+			 float speed =  random<float>(10.0f, 100.0f) ;
 			 entity2.GetComponent<Transform>().size_.x = 20;
 			 entity2.GetComponent<Transform>().size_.y = 20;
 			 entity2.GetComponent<PhysicsComponent>().speed = speed;
 			 entity2.GetComponent<PhysicsComponent>().mass = 20 * 20;
-			 entity2.GetComponent<PhysicsComponent>().velocity = { speed*cosf( random<float>(0.0f, 0.0f) ) , speed * sinf( random<float>(0.0f, 1.28f) ) };//dir
+			 entity2.GetComponent<PhysicsComponent>().velocity = { speed*cosf( random<float>(-3.14f, 3.14f) ) , speed * sinf( random<float>(-3.14f, 3.14f) ) };//dir
 		}
 		for (int i = 0; i < 50; ++i)
 		{
@@ -162,12 +162,12 @@ namespace JZEngine
 			entity2.GetComponent<Transform>().position_ = { random<float>(-300.0f, 300.0f),random<float>(-100.0f, 300.0f) };
 			entity2.GetComponent<Texture>().texture_id_ = 6;
 			entity2.GetComponent<PhysicsComponent>().shapeid = 0;
-			float speed = random<float>(0.3f, 100.0f);
+			float speed = random<float>(10.0f, 100.0f) ;
 			entity2.GetComponent<Transform>().size_.x = 35;
 			entity2.GetComponent<Transform>().size_.y = 35;
 			entity2.GetComponent<PhysicsComponent>().speed = speed;
 			entity2.GetComponent<PhysicsComponent>().mass = 35 * 35;
-			entity2.GetComponent<PhysicsComponent>().velocity = { speed * cosf(random<float>(0.0f, 0.0f)) , speed * sinf(random<float>(0.0f, 1.28f)) };//dir
+			entity2.GetComponent<PhysicsComponent>().velocity = { speed * cosf(random<float>(-3.14f, 3.14f)) , speed * sinf(random<float>(-3.14f, 3.14f)) };//dir
 		}
 
 		/*ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();

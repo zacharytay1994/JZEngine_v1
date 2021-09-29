@@ -20,7 +20,23 @@ namespace JZEngine
 		AABB(Vec2f midpt, Vec2f scale)
 		{
 			min = midpt - (scale / 2.0f);
-			max = midpt + (scale / 2.0f);
+			max = midpt + (scale / 2.0f);//to change
+		}
+	};
+
+	struct Square
+	{
+		Vec2f topleft;
+		Vec2f topright;
+		Vec2f botleft;
+		Vec2f botright;
+		
+		Square(Vec2f midpt, Vec2f scale)
+		{
+			botleft = midpt - (scale / 2.0f);
+			botright = { botleft.x + scale.x, botleft.y };
+			topright = botleft + scale ;
+			topleft = { topright.x - scale.x, topright.y };
 		}
 	};
 	struct LineSegment
@@ -54,7 +70,14 @@ namespace JZEngine
 
 	namespace Collision
 	{
-		
+		bool DynamicCollision_CircleSquare(const Circle& circle,			//Circle data - input
+			const Vec2f& ptEnd,											//End circle position - input
+			const Square& m_square,												//square data - input
+			Vec2f& interPt,												//Intersection point - output
+			Vec2f& normalAtCollision,									//Normal vector at collision time - output
+			float& interTime,
+			bool checkLineEdges);										//Intersection time ti - output
+
 		// INTERSECTION FUNCTIONS
 		bool DynamicCollision_CircleLineSegment(const Circle& circle,			//Circle data - input
 			const Vec2f& ptEnd,											//End circle position - input

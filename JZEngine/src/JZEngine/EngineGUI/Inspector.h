@@ -340,7 +340,7 @@ namespace JZEngine
 		template <>
 		void RenderComponent ( PhysicsComponent& component )
 		{
-			ImGui::SliderInt ( "Shape" , &component.shapeid , 0 , 1 );
+			ImGui::SliderInt ( "Shape" , &component.shapeid , 0 , 2 );
 			ImGui::SliderFloat ( "Velocity of y" , &component.velocity.y , component.velocity.y - 0.1f , component.velocity.y + 0.1f );
 		}
 
