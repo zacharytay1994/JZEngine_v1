@@ -258,6 +258,52 @@ namespace JZEngine
 				return false;
 			}
 		}
+
+		bool DynamicCollision_CircleSquare(const Circle& circle,			//Circle data - input
+			const Vec2f& circleend,											//End circle position - input
+			const Square& m_square,												//Line segment - input
+			Vec2f& interPt,												//Intersection point - output
+			Vec2f& normalAtCollision,									//Normal vector at collision time - output
+			float& interTime,
+			bool checkLineEdges)//Intersection time ti - output												
+		{
+			LineSegment line;
+			bool returnvalue = false;
+			//circle right of square
+			if (circle.m_center.x > m_square.topright.x)
+			{
+				line={ m_square.topright , m_square.botright };
+				returnvalue=DynamicCollision_CircleLineSegment(circle, circleend, line, interPt, normalAtCollision, interTime, checkLineEdges);
+				if (returnvalue)
+					return returnvalue;
+			}
+			//circle left of square
+			else if (circle.m_center.x < m_square.topleft.x)
+			{
+				line = { m_square.topleft , m_square.botleft };
+				returnvalue = DynamicCollision_CircleLineSegment(circle, circleend, line, interPt, normalAtCollision, interTime, checkLineEdges);
+				if (returnvalue)
+					return returnvalue;
+			}
+			//circle top of square
+			if (circle.m_center.y > m_square.topright.y)
+			{
+				line = { m_square.topright , m_square.topleft };
+				returnvalue = DynamicCollision_CircleLineSegment(circle, circleend, line, interPt, normalAtCollision, interTime, checkLineEdges);
+				if (returnvalue)
+					return returnvalue;
+			}
+			//circle below of square
+			else if (circle.m_center.y < m_square.botright.y)
+			{
+				line = { m_square.botright , m_square.botleft };
+				returnvalue = DynamicCollision_CircleLineSegment(circle, circleend, line, interPt, normalAtCollision, interTime, checkLineEdges);
+				if (returnvalue)
+					return returnvalue;
+			}
+			return false;
+		}
+
 		/******************************************************************************/
 		/*!
 		 * \brief			Function to check dynamic circle vs static line collision
@@ -412,6 +458,7 @@ namespace JZEngine
 			Vec2f& ptEnd,
 			Vec2f& reflected)
 		{
+			Log::Info("Collision", "response!!!");
 
 			reflected = (ptEnd - ptInter) - (2.0f * normal.Dot(ptEnd - ptInter) * normal);
 			ptEnd = ptInter + reflected;

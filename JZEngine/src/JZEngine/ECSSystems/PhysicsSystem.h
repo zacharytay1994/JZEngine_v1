@@ -11,7 +11,8 @@ namespace JZEngine
 	enum shapetype
 	{
 		circle = 0,
-		aabb = 1
+		aabb = 1,
+		square = 2,
 	};
 
 	struct PhysicsComponent
@@ -27,7 +28,8 @@ namespace JZEngine
 
 		union {
 			Circle m_circle{};
-			AABB m_AABB;
+			//AABB m_AABB;
+			Square m_square;
 		};
 		PhysicsComponent();
 		PhysicsComponent(const PhysicsComponent& s);
@@ -37,7 +39,8 @@ namespace JZEngine
 	struct PhysicsSystem : public JZEngine::ECS::System
 	{
 		
-		std::vector<PhysicsComponent*> physics_cont;
+		std::vector<PhysicsComponent*> physics_cont;//so far only store circles
+		std::vector<PhysicsComponent*> static_physics_cont;//so far only store static sq
 
 		unsigned int j{ 0 };
 		float gravity{ -0.0981f };
@@ -49,6 +52,7 @@ namespace JZEngine
 		// updates once per entity component per system per frame
 		virtual void Update(const float& dt) override;
 
+		virtual void FrameEnd(const float& dt) override;
 		
 	};
 }
