@@ -53,11 +53,13 @@ namespace JZEngine
 		global_systems_->AddSystem<RendererInstancing> ( "Instance Renderer" );
 		global_systems_->AddSystem<EngineGUI> ( "Engine GUI" );
 		global_systems_->AddSystem<SoundSystem> ( "Sound System" );
+		global_systems_->AddSystem<TextRenderer> ( "Text Renderer" );
 
 		// give subsystems handle to global systems
 		global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<Sprite> ()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer> ();
 		global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<InstanceSprite> ()->sprite_renderer_instancing_.renderer_ = global_systems_->GetSystem<RendererInstancing> ();
 		global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<ParallaxBackground> ()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer> ();
+		global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<Text> ()->text_renderer_ = global_systems_->GetSystem<TextRenderer> ();
 
 		// give singleton logger handle to the engine console
 		Log::Instance ().Initialize ( global_systems_->GetSystem<EngineGUI> ()->GetConsole () );
@@ -81,7 +83,7 @@ namespace JZEngine
 			float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 			entity.GetComponent<Transform>().position_ = { x * -600.0f, y * -300.0f };
 		}*/
-		TextRenderer::GetInstance ().Load ( "Assets/Fonts/Weather Sunday.otf" , 200 );
+		//TextRenderer::GetInstance ().Load ( "Assets/Fonts/Weather Sunday.otf" , 200 );
 
 		//ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance> ();
 		//int id = ecs->CreateEntity ();
@@ -179,8 +181,8 @@ namespace JZEngine
 			global_systems_->FrameStart ();
 			global_systems_->Update ( dt );
 
-			TextRenderer::GetInstance ().RenderText ( "Welcome to JZ Engine !" , 0 , 0 , 0.5f , { 0.0f , 0.0f , 0.0f } );
-			TextRenderer::GetInstance ().Alignment ( Paragraph::AlignCenter );
+			global_systems_->GetSystem<TextRenderer>()->RenderText ( "Welcome to JZ Engine !" , 100 , 0 , 0.5f , { 0.0f , 0.0f , 0.0f } );
+			global_systems_->GetSystem<TextRenderer>()->Alignment ( Paragraph::AlignCenter );
 
 			//DeltaTime::update_time(1.0);
 			//DeltaTime::update_deltatime(1.0);

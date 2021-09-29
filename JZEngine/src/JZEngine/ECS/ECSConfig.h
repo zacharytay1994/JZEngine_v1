@@ -9,6 +9,7 @@
 #include "../GraphicRendering/InstanceSpriteRenderer.h"
 #include "../GraphicRendering/ExampleFloatAway.h"
 #include "../GraphicRendering/Background.h"
+#include "../GraphicRendering/Text.h"
 
 namespace JZEngine
 {
@@ -28,7 +29,8 @@ namespace JZEngine
 				IsInputAffected ,
 				PhysicsComponent ,
 				Parallax,
-				NotBackground
+				NotBackground,
+				TextData
 
 				>;
 
@@ -42,7 +44,8 @@ namespace JZEngine
 				InstanceSprite ,
 				FloatAwayAllUnicorn ,
 				MakeUnicornAffectedByInput ,
-				PhysicsSystem
+				PhysicsSystem,
+				Text
 
 				>;
 		};

@@ -393,6 +393,14 @@ namespace JZEngine
 			}
 			ImGui::PopItemWidth ();
 		}
+		
+		template <>
+		void RenderComponent ( TextData& component )
+		{
+			ImGui::SliderFloat ( "X" , &component.position_.x , 0.0f , 100.0f );
+			ImGui::SliderFloat ( "Y" , &component.position_.y , 0.0f , 100.0f );
+			ImGui::SliderFloat ( "Scale" , &component.scale_ , 0.0f , 100.0f );
+		}
 
 		/*!
 		 * @brief ___JZEngine::LoopTupleRender___

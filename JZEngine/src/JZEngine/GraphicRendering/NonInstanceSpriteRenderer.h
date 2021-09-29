@@ -26,7 +26,7 @@ namespace JZEngine
 
 	struct NonInstanceShader
 	{
-		int shader_id_{ 0 };
+		int shader_id_ { 0 };
 		Vec3f tint{ 0.0f , 0.0f ,0.0f };
 	};
 

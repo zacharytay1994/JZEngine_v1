@@ -37,7 +37,7 @@ namespace JZEngine
 		vb.Unbind ();
 		instance_vb.Unbind ();
 
-		shader_program.CompileShaderFromFile ( GL_VERTEX_SHADER , "Assets/Shaders/Vertex/VS_Instancing.vs" );
+	/*	shader_program.CompileShaderFromFile ( GL_VERTEX_SHADER , "Assets/Shaders/Vertex/VS_Instancing.vs" );
 		shader_program.CompileShaderFromFile ( GL_FRAGMENT_SHADER , "Assets/Shaders/Fragment/FS_Instancing.fs" );
 		shader_program.Link ();
 
@@ -46,7 +46,7 @@ namespace JZEngine
 			std::cout << "Unable to compile/link/validate shader programs" << "\n";
 			std::cout << shader_program.GetLog () << std::endl;
 			std::exit ( EXIT_FAILURE );
-		}
+		}*/
 	}
 
 	void RendererInstancing::Draw ()
