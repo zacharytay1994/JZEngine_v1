@@ -117,7 +117,7 @@ namespace JZEngine
 		entity4.GetComponent<Transform>().size_.y = 800;
 		entity4.GetComponent<Transform>().position_.x = -400;
 
-		id = ecs->CreateEntity();
+		id = ecs->CreateEntity();//line in middle
 		ECS::Entity& entity5 = ecs->entity_manager_.GetEntity(id);
 		entity5.AddSystem(0);
 		entity5.AddComponent<PhysicsComponent>();
@@ -128,20 +128,37 @@ namespace JZEngine
 		
 
 
-		for (int i = 0; i < 200; ++i) 
+		for (int i = 0; i < 50; ++i) 
 		{
 			 int id3 = ecs->CreateEntity();
 			 ECS::Entity& entity2 = ecs->entity_manager_.GetEntity(id3);
 			 entity2.AddSystem(0);
 			 entity2.AddComponent<PhysicsComponent>();
-			 entity2.GetComponent<Transform>().position_ = { random<float>(-300.0f, 300.0f),random<float>(-150.0f, 300.0f) };
+			 entity2.GetComponent<Transform>().position_ = { random<float>(-300.0f, 300.0f),random<float>(-100.0f, 300.0f) };
 			 entity2.GetComponent<Texture>().texture_id_ = 2;
 			 entity2.GetComponent<PhysicsComponent>().shapeid = 0;
 			 float speed =  random<float>(0.3f, 100.0f) ;
 			 entity2.GetComponent<Transform>().size_.x = 20;
 			 entity2.GetComponent<Transform>().size_.y = 20;
 			 entity2.GetComponent<PhysicsComponent>().speed = speed;
+			 entity2.GetComponent<PhysicsComponent>().mass = 20 * 20;
 			 entity2.GetComponent<PhysicsComponent>().velocity = { speed*cosf( random<float>(0.0f, 0.0f) ) , speed * sinf( random<float>(0.0f, 1.28f) ) };//dir
+		}
+		for (int i = 0; i < 50; ++i)
+		{
+			int id3 = ecs->CreateEntity();
+			ECS::Entity& entity2 = ecs->entity_manager_.GetEntity(id3);
+			entity2.AddSystem(0);
+			entity2.AddComponent<PhysicsComponent>();
+			entity2.GetComponent<Transform>().position_ = { random<float>(-300.0f, 300.0f),random<float>(-100.0f, 300.0f) };
+			entity2.GetComponent<Texture>().texture_id_ = 2;
+			entity2.GetComponent<PhysicsComponent>().shapeid = 0;
+			float speed = random<float>(0.3f, 100.0f);
+			entity2.GetComponent<Transform>().size_.x = 35;
+			entity2.GetComponent<Transform>().size_.y = 35;
+			entity2.GetComponent<PhysicsComponent>().speed = speed;
+			entity2.GetComponent<PhysicsComponent>().mass = 35 * 35;
+			entity2.GetComponent<PhysicsComponent>().velocity = { speed * cosf(random<float>(0.0f, 0.0f)) , speed * sinf(random<float>(0.0f, 1.28f)) };//dir
 		}
 
 		/*ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
