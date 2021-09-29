@@ -18,10 +18,10 @@ namespace JZEngine
 	{
 		int shapeid {};
 
-		float mass{ 1.0f };//To be added
+		float mass {};
 		float speed {};
 		
-		//Vec2f position_next;
+		Vec2f posnex;
 		Vec2f velocity {};//vel = speed * dir
 		Vec2f acceleration{ 0.0f,0.0f };
 

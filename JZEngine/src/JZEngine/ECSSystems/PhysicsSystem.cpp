@@ -47,7 +47,7 @@ namespace JZEngine
 			AABB tmp{ current_transform.position_,current_transform.size_ };
 			current_component.m_AABB = tmp;
 		}
-
+		
 
 		Vec2f posnex{};
 		posnex = current_transform.position_ + current_component.velocity * dt;
@@ -74,7 +74,7 @@ namespace JZEngine
 						if (true == Collision::DynamicCollision_CircleCircle(current_component.m_circle, current_component.velocity*dt, physics_cont[i]->m_circle, physics_cont[i]->velocity*dt, interpta, interptb, intertime))
 						{
 							
-							Vec2f reflectedVecA, reflectedVecB, velA, velB,posnex;
+							Vec2f reflectedVecA, reflectedVecB, velA, velB;
 							Vec2f posNextB;// = transform_cont[i]->position_ + physics_cont[i]->velocity * dt;//cannot use(wont work)
 
 							Vec2f normal = interpta- interptb;
