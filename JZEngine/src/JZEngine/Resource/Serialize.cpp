@@ -47,6 +47,7 @@ namespace JZEngine
 			{
 				config << entity.first << '\n';
 			}
+			config.close();
 		}
 		else
 		{
@@ -56,7 +57,7 @@ namespace JZEngine
 
 	bool Serialize::SerializeEntity(ECS::Entity& entity)
 	{
-		// create the log directory if it isn't there
+		// create the saves directory if it isn't there
 		if (!std::filesystem::is_directory(Settings::saves_directory))
 		{
 			std::filesystem::create_directory(Settings::saves_directory);
@@ -175,6 +176,7 @@ namespace JZEngine
 			ss.str("");
 			ss << file.rdbuf();
 			entities_[name] = ss.str();
+			file.close();
 		}
 		else
 		{
@@ -182,5 +184,83 @@ namespace JZEngine
 			return false;
 		}
 		return true;
+	}
+
+	void Serialize::DeSerializeAllChildEntities(ECS::ECSInstance* ecs, std::ifstream& file)
+	{
+		 // read line of file
+		int id = ecs->CreateEntity();
+		ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
+		// read data and load entity
+		std::string line;
+		std::getline(file, line);
+		std::stringstream ss;
+		ss << line;
+		ss >> entity.name_;
+		int standing;
+		ss >> standing;
+		entities_[entity.name_] = ss.str();
+		LoadEntity(entity, entity.name_);
+	}
+
+	void Serialize::SerializeAllChildEntities(ECS::ECSInstance* ecs, std::ofstream& file, ECS::Entity& entity, int i)
+	{
+		file << entity.name_ << " " << i << " ";
+		auto& mask = entity.owning_chunk_->owning_archetype_->mask_;
+		// serialize all components
+		std::stringstream ss;
+		for (int i = 0; i < mask.size(); ++i)
+		{
+			// if has that component
+			if (mask[i])
+			{
+				ss << "c " << i << " ";
+				SerializeECSConfigComponent(ECS::ECSConfig::Component(), i, entity, ss);
+			}
+		}
+		file << ss.str();
+		// for all its children call this serialize and increment number
+		for (auto& child : entity.children_)
+		{
+			if (child != -1)
+			{
+				SerializeAllChildEntities(ecs, file, ecs->entity_manager_.GetEntity(child), i + 1);
+			}
+		}
+		return;
+	}
+
+	bool Serialize::SerializeScene(ECS::ECSInstance* ecs, const std::string& name)
+	{
+		// open file
+		std::stringstream ss;
+		ss << Settings::saves_directory << Settings::scenes_dir;
+
+		// create the log directory if it isn't there
+		if (!std::filesystem::is_directory(ss.str()))
+		{
+			std::filesystem::create_directory(ss.str());
+		}
+
+		ss << name << ".txt";
+		std::ofstream file(ss.str());
+
+		if (file.is_open())
+		{
+			for (auto& id : ecs->entity_manager_.root_ids_)
+			{
+				if (id != -1)
+				{
+					// recursively render all children of a root entity
+					SerializeAllChildEntities(ecs, file, ecs->entity_manager_.GetEntity(id), 0);
+				}
+			}
+			file.close();
+		}
+		else
+		{
+			Log::Error("Serialize", "Unable to open {} to save Scene [{}].", ss.str(), name);
+			return false;
+		}
 	}
 }

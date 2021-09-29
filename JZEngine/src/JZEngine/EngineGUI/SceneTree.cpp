@@ -12,6 +12,7 @@
 #include "../EngineConfig.h"
 #include "../ECS/ECSConfig.h"
 #include "Console.h"
+#include "../Resource/Serialize.h"
 
 namespace JZEngine
 {
@@ -46,7 +47,7 @@ namespace JZEngine
 
 		if (ImGui::Button("Save"))
 		{
-
+			Serialize::SerializeScene(ecs_instance_, "test");
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Remove All"))

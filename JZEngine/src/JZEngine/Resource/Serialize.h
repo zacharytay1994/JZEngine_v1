@@ -48,6 +48,10 @@ namespace JZEngine
 
 		static bool DeserializeEntityFromFile(const std::string& name);
 
+		static void DeSerializeAllChildEntities(ECS::ECSInstance* ecs, std::ifstream& file);
+		static void SerializeAllChildEntities(ECS::ECSInstance* ecs, std::ofstream& file, ECS::Entity& entity, int i);
+		static bool SerializeScene(ECS::ECSInstance* ecs_instance_, const std::string& name);
+
 		template <typename COMPONENT>
 		static void SerializeComponent(COMPONENT& component, std::stringstream& stream, MODE mode = MODE::WRITE)
 		{
