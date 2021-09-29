@@ -73,11 +73,11 @@ namespace JZEngine
 
 	void PhysicsSystem::FrameEnd(const float& dt)
 	{
-
-		for (int i = 0; i < physics_cont.size()-1; ++i)
+		//Circle Circle
+		for (int i = 0; i < physics_cont.size(); ++i)
 		{
 			PhysicsComponent& componentA = *physics_cont[i];
-			for(int j=i+1;j< physics_cont.size();++j)
+			for(int j= 0;j< physics_cont.size();++j)
 			{
 				PhysicsComponent& componentB = *physics_cont[j];
 
@@ -95,7 +95,7 @@ namespace JZEngine
 
 						velA = componentA.velocity * dt;
 						velB = componentB.velocity * dt;
-
+						Vec2f posnexb;
 						Collision::CollisionResponse_CircleCircle(normal, intertime, velA, componentA.mass, interpta, velB, componentB.mass, interptb,
 							reflectedVecA, componentA.posnex, reflectedVecB, componentB.posnex);
 

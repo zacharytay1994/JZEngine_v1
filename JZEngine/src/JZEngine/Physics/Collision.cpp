@@ -278,7 +278,7 @@ namespace JZEngine
 					return returnvalue;
 			}
 			//circle left of square
-			else if (circle.m_center.x < m_square.topleft.x)
+			if (circle.m_center.x < m_square.topleft.x)
 			{
 				line = { m_square.topleft , m_square.botleft };
 				returnvalue = DynamicCollision_CircleLineSegment(circle, circleend, line, interPt, normalAtCollision, interTime, checkLineEdges);
@@ -294,7 +294,7 @@ namespace JZEngine
 					return returnvalue;
 			}
 			//circle below of square
-			else if (circle.m_center.y < m_square.botright.y)
+			if (circle.m_center.y < m_square.botright.y)
 			{
 				line = { m_square.botright , m_square.botleft };
 				returnvalue = DynamicCollision_CircleLineSegment(circle, circleend, line, interPt, normalAtCollision, interTime, checkLineEdges);
