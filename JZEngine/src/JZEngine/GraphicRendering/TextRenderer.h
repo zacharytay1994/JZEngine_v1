@@ -55,7 +55,7 @@ namespace JZEngine
 
 		/*	float GetTextWidth ();
 			float GetTextHeight ();*/
-		static TextRenderer &GetInstance ()
+		static TextRenderer& GetInstance ()
 		{
 			static TextRenderer Instance;
 			return Instance;

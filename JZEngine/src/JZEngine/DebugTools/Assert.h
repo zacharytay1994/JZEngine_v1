@@ -6,37 +6,22 @@
 
 	How to use :
 	Call the word "ASSERT" .
-	Example #1 : ASSERT(J+Z == 1 , "engine");
+	Example #1 : JZ_ASSERT(J+Z == 1 , "engine");
 
 		Console Print Out for Example 1 :
 		Assertion Failed: J+Z == 1
 		Message         : engine
 		File            : main.cpp, line 33
 
-	Example #2 : ASSERT(J+Z == 1, "engine")(J)(Z);
+	Example #2 : JZ_ASSERT(J+Z == 1, "engine")(J);
 
 		Console Print Out for Example 2 :
 		Assertion Failed: J+Z == 1
 		Message         : engine
 		File            : main.cpp, line 33
 		Report          : J = 2
-		Report          : Z = 8
 
-*/
-
-/*
-	Why mutual recursion?
-
-	Example #3: ASSERT(J+Z == 1, "engine")(J)(Z)
-		 Expands :
-		 if(!(J+Z == 1)) Assert("J+Z == 1","engine","test.cpp",36).report("J",(J)).__ASSERT1__(Z);
-
-
-	Call it a SMART assert ? hohoho
-	Mutual recursion of between macros __ASSERT1__ and __ASSERT2__, and
-	by two useless members Assert.__ASSERT1__ and Assert.__ASSERT2__, it
-	manage to coin a confusing syntax. C macros doesn't make any sense.
-	It's a legacy tool.
+	More explanation below.
 */
 
 #pragma once
@@ -47,12 +32,12 @@
 //#c
 #define __REPORT__(x) report(#x,(x)) 
 //#d
-#define ASSERT(cond, msg) if(!(cond)) Assert(#cond,msg,__FILE__,__LINE__).__ASSERT1__
+#define JZ_ASSERT(cond, msg) if(!(cond)) Assert(#cond,msg,__FILE__,__LINE__).__ASSERT1__
 
 /*
-	Let's expand using example #3 cause i can't think of better example.
+	Why mutual recursion? Let's expand using example #3.
 
-	Example #3: ASSERT(J+Z == 1, "engine")(J)(Z)
+	Example #3: JZ_ASSERT(J+Z == 1, "engine")(J)(Z)
 
 	1.  if(!(J+Z)==1)Assert(J+Z==1,"engine", __FILE__ , __LINE__).
 		report("J",(J)).__ASSERT2__(Z)
@@ -62,6 +47,12 @@
 
 	Sequence :d>a>c>b
 	__ASSERT1__ will not continue to expand.
+
+	Call it a SMART assert ? hohoho
+	Mutual recursion of between macros __ASSERT1__ and __ASSERT2__, and
+	by two useless members Assert.__ASSERT1__ and Assert.__ASSERT2__, it
+	manage to coin a confusing syntax. C macros doesn't make any sense.
+	It's a legacy tool.
 */
 
 #include <iostream>
@@ -71,18 +62,18 @@ struct Assert
 	template<class T>
 	Assert ( const char* cond , T&& msg , const char* file , int line )
 	{
-		std::cout << "\n_____________ASSERT_____________\n";
+		std::cout << "\n_____________JZ_ASSERT_____________\n";
 		std::cerr << "Assertion Failed: " << cond << "\n";
 		std::cerr << "Message         : " << msg << "\n";
 		std::cerr << "File            : " << file << ", line " << line << "\n";
-	}
+	};
 
 	template<class T>
 	Assert& report ( const char* name , T&& value )
 	{
 		std::cerr << "Report          : " << name << " = " << value << "\n";
 		return *this;
-	}
+	};
 
 	struct Empty
 	{};
@@ -91,5 +82,5 @@ struct Assert
 	~Assert ()
 	{
 		exit ( -1 );
-	}
+	};
 };

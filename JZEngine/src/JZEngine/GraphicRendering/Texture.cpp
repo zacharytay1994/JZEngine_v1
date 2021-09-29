@@ -89,7 +89,8 @@ namespace JZEngine
 	void Texture2D::SetData ( void* data , unsigned int size )
 	{
 		unsigned int bpp = data_format_ == GL_RGBA ? 4 : 3;
-		
+		bool result = size == ( width_ * height_ * bpp );
+		JZ_ASSERT ( result , "Data must be entire texture!" );
 		glTextureSubImage2D ( renderer_id_ , 0 , 0 , 0 , width_ , height_ , data_format_ , GL_UNSIGNED_BYTE , data );
 	}
 
@@ -99,11 +100,16 @@ namespace JZEngine
 	 * @param slot
 	 * Specifies the texture unit, to which the texture object should be bound to.
 	*/
-	void Texture2D::Bind ( unsigned int slot )
+	void Texture2D::Bind ()
 	{
 		// glBindTextureUnit( slot, renderer_id_ );
 		// bind textures on corresponding texture units
 		glActiveTexture ( GL_TEXTURE0 );
 		glBindTexture ( GL_TEXTURE_2D , renderer_id_ );
+	}
+
+	void Texture2D::Unbind ()
+	{
+		glBindTexture ( GL_TEXTURE_2D , 0 );
 	}
 }

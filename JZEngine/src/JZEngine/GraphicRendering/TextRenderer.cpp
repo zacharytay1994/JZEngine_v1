@@ -5,7 +5,6 @@
 #include "../EngineConfig.h"
 #include "VertexBufferLayout.h"
 
-#define ROUND(x)  ((x+32) & -64)
 
 namespace JZEngine
 {
@@ -15,7 +14,6 @@ namespace JZEngine
 
 	void TextRenderer::Data ()
 	{
-		// configure VAO/VBO for texture quads
 		VertexBufferLayout layout;
 		layout.Push<float> ( 4 );
 		va.AddBuffer ( vb , layout );
@@ -34,7 +32,6 @@ namespace JZEngine
 		}
 		shader_program.Bind ();
 		glCheckError ();
-
 
 		JZEngine::Mat3f camwin_to_ndc_xform = { {2.0f / ( Settings::aspect_ratio * Settings::window_height ), 0.0f, 0.0f},
 												{0.0f, -2.0f / Settings::window_height, 0.0f},
@@ -66,7 +63,13 @@ namespace JZEngine
 			std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
 
 		// set size to load glyphs as
-		FT_Set_Pixel_Sizes ( face , 0 , fontSize );
+		//FT_Set_Pixel_Sizes ( face , 0 , fontSize );
+
+		//For some twisted reason, Freetype measures font size
+		//in terms of 1/64ths of pixels.  Thus, to make a font
+		//h pixels high, we need to request a size of h*64.
+		//(h << 6 is just a prettier way of writting h*64)
+		FT_Set_Char_Size ( face , fontSize << 6 , fontSize << 6 , 96 , 96 );
 
 		// disable byte-alignment restriction
 		glPixelStorei ( GL_UNPACK_ALIGNMENT , 1 );
@@ -102,6 +105,7 @@ namespace JZEngine
 			glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_CLAMP_TO_EDGE );
 			glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR );
 			glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR );
+
 
 			// now store character for later use
 			Character character = {
@@ -143,9 +147,7 @@ namespace JZEngine
 		// activate corresponding render state
 		shader_program.Bind ();
 		shader_program.SetUniform ( "textColor" , color );
-		//glActiveTexture ( GL_TEXTURE0 );
 		va.Bind ();
-
 
 		std::string::const_iterator c;
 
@@ -215,7 +217,7 @@ namespace JZEngine
 
 		}
 		va.Unbind ();
-		//glBindVertexArray ( 0 );
+
 		glBindTexture ( GL_TEXTURE_2D , 0 );
 		glCheckError ();
 	}

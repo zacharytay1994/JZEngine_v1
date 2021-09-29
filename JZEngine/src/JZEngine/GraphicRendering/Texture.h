@@ -16,26 +16,27 @@ namespace JZEngine
 	class Texture2D
 	{
 	public:
-		Texture2D();
-		~Texture2D();
+		Texture2D ();
+		~Texture2D ();
 
-		void Texture2DLoad( GLuint width, GLuint height );
-		void Texture2DLoad( const std::string& path );
+		void Texture2DLoad ( GLuint width , GLuint height );
+		void Texture2DLoad ( const std::string& path );
 
-		void SetData( void* data, unsigned int size );
-		void Bind( unsigned int slot = 0 );
+		void SetData ( void* data , unsigned int size );
+		void Bind ();
+		void Unbind ();
 
-		GLuint GetWidth() const
+		GLuint GetWidth () const
 		{
 			return width_;
 		};
 
-		GLuint GetHeight() const
+		GLuint GetHeight () const
 		{
 			return height_;
 		};
 
-		GLuint GetRendererID() const
+		GLuint GetRendererID () const
 		{
 			return renderer_id_;
 		}
