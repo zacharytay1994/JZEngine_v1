@@ -52,18 +52,7 @@ namespace JZEngine
 		ImGui::SameLine();
 		if (ImGui::Button("Remove All"))
 		{
-			// remove all root entities which also removes all children
-			for (auto& id : ecs_instance_->entity_manager_.root_ids_)
-			{
-				if (id != -1)
-				{
-					ecs_instance_->RemoveEntity(id);
-				}
-			}
-			for (auto& name : *names_)
-			{
-				name.second = 0;
-			}
+			RemoveAllEntities();
 		}
 		ImGui::Separator();
 		// render text box for input name
@@ -228,6 +217,22 @@ namespace JZEngine
 				ss << "(" << (*names_)[new_entity_name_]++ << ")";
 				return ss.str();
 			}
+		}
+	}
+
+	void SceneTree::RemoveAllEntities()
+	{
+		// remove all root entities which also removes all children
+		for (int i = ecs_instance_->entity_manager_.root_ids_.size() - 1; i >= 0; --i)
+		{
+			if (ecs_instance_->entity_manager_.root_ids_[i] != -1)
+			{
+				ecs_instance_->RemoveEntity(ecs_instance_->entity_manager_.root_ids_[i]);
+			}
+		}
+		for (auto& name : *names_)
+		{
+			name.second = 0;
 		}
 	}
 }

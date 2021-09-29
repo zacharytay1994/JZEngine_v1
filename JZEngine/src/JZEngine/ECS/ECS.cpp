@@ -758,14 +758,16 @@ namespace JZEngine
 			id_			= static_cast<ubyte>(255);
 			ecs_id_		= static_cast<ui32>(-1);;
 			children_count_ = 0;
+			children_before_ = 0;
 			children_.fill(-1);
 		}
 		
 		bool Entity::AddChild(ui32 childId)
 		{
-			if (children_count_ < ENTITY_MAX_CHILDREN)
+			if (children_before_ < ENTITY_MAX_CHILDREN)
 			{
-				children_[children_count_++] = childId;
+				children_[children_before_++] = childId;
+				++children_count_;
 				return true;
 			}
 			else
@@ -775,6 +777,7 @@ namespace JZEngine
 					if (c == -1)
 					{
 						c = childId;
+						++children_count_;
 						return true;
 					}
 				}
@@ -791,6 +794,7 @@ namespace JZEngine
 					if (c == childId)
 					{
 						c = -1;
+						--children_count_;
 					}
 				}
 			}
@@ -798,7 +802,7 @@ namespace JZEngine
 
 		bool Entity::HasChildSpace()
 		{
-			if (children_count_ < ENTITY_MAX_CHILDREN)
+			if (children_before_ < ENTITY_MAX_CHILDREN)
 			{
 				return true;
 			}

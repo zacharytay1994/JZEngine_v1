@@ -17,6 +17,7 @@ namespace JZEngine
 	struct Serialize
 	{
 		static std::unordered_map<std::string, std::string> entities_;
+		static std::vector<std::string> scenes_;
 
 		enum class MODE
 		{
@@ -47,9 +48,11 @@ namespace JZEngine
 		static bool LoadEntity(ECS::Entity& entity, const std::string& name);
 
 		static bool DeserializeEntityFromFile(const std::string& name);
+		static void ListAllSceneFiles();
 
-		static void DeSerializeAllChildEntities(ECS::ECSInstance* ecs, std::ifstream& file);
-		static void SerializeAllChildEntities(ECS::ECSInstance* ecs, std::ofstream& file, ECS::Entity& entity, int i);
+		static void DeSerializeAllChildEntities(ECS::ECSInstance* ecs, std::ifstream& file, std::stringstream& ss, unsigned int parent = -1);
+		static void DeserializeScene(ECS::ECSInstance* ecs, const std::string& name);
+		static void SerializeAllChildEntities(ECS::ECSInstance* ecs, std::ofstream& file, ECS::Entity& entity);
 		static bool SerializeScene(ECS::ECSInstance* ecs_instance_, const std::string& name);
 
 		template <typename COMPONENT>

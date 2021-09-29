@@ -7,6 +7,7 @@ namespace JZEngine
 	{
 		struct ECSInstance;
 	}
+	struct SceneTree;
 	struct FolderInterface : public ImGuiInterface
 	{
 		enum class DISPLAY
@@ -16,12 +17,14 @@ namespace JZEngine
 		};
 
 		ECS::ECSInstance* ecs_instance_{ nullptr };
+		SceneTree* scene_tree_;
 		static constexpr unsigned int display_columns_{ 5 };
 
 		FolderInterface(float x, float y, float sx, float sy);
 		virtual void Render(float dt) override;
 
 		void RenderPrefabs();
+		void RenderScenes();
 
 	private:
 		DISPLAY mode{ DISPLAY::PREFAB };

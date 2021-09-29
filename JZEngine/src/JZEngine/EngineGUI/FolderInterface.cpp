@@ -6,6 +6,7 @@
 #include "../Resource/ResourceManager.h"
 #include "../EngineConfig.h"
 #include "../ECS/ECS.h"
+#include "SceneTree.h"
 
 namespace JZEngine
 {
@@ -44,6 +45,7 @@ namespace JZEngine
 		switch (mode)
 		{
 		case (DISPLAY::SCENES):
+			RenderScenes();
 			break;
 		case(DISPLAY::PREFAB):
 			RenderPrefabs();
@@ -75,6 +77,29 @@ namespace JZEngine
 					ImGui::EndPopup();
 				}
 				ImGui::Text(e.first.c_str());
+			}
+			ImGui::EndTable();
+		}
+	}
+
+	void FolderInterface::RenderScenes()
+	{
+		if (ImGui::BeginTable("scene_table", display_columns_))
+		{
+			for (auto& s : Serialize::scenes_)
+			{
+				ImGui::TableNextColumn();
+				ImGui::Image((void*)ResourceManager::texture2ds_[0].texture2d_.GetRendererID(), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f });
+				if (ImGui::BeginPopupContextItem(s.c_str()))
+				{
+					if (ImGui::Selectable("Add To Scene"))
+					{
+						scene_tree_->RemoveAllEntities();
+						Serialize::DeserializeScene(ecs_instance_, s);
+					}
+					ImGui::EndPopup();
+				}
+				ImGui::Text(s.c_str());
 			}
 			ImGui::EndTable();
 		}
