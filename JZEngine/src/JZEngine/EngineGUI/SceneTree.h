@@ -30,7 +30,7 @@ namespace JZEngine
 	*/
 	struct JZENGINE_API SceneTree
 	{
-		ECS::ECSInstance* ecs_instance_;
+		ECS::ECSInstance* ecs_instance_{nullptr};
 		float x_, y_, sx_, sy_;		/*!< position and scale of ImGui window */
 
 		static constexpr unsigned int					MAX_NAME_SIZE = 50;					/*!< maximum length a custom name can be */

@@ -546,7 +546,7 @@ namespace JZEngine
 			for (auto& system : system_database_)
 			{
 				PerformanceData::StartMark(system->name_, PerformanceData::TimerType::ECS_SYSTEMS);
-				system->FrameBegin(0.02f);
+				system->FrameBegin(dt);
 				for (ui32 j = 0; j < am.number_of_archetypes_; ++j)
 				{
 					// if system mask matches archetype mask, means archetype holds entities of interest
@@ -569,6 +569,7 @@ namespace JZEngine
 						}
 					}
 				}
+				system->FrameEnd(dt);
 				PerformanceData::EndMark(system->name_, PerformanceData::TimerType::ECS_SYSTEMS);
 			}
 		}

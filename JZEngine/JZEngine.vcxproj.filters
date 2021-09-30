@@ -34,6 +34,71 @@
     <ClCompile Include="src\JZEngine\GlobalSystems.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\JZEngine\Sound\Sound.cpp" />
+    <ClCompile Include="src\JZEngine\Math\JZMath.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\Collision.cpp" />
+    <ClCompile Include="src\JZEngine\Input\Input.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\JZEngine\JZGL\glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\PCH.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\ImGui\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\ImGui\imgui_impl_glfw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\ImGui\imgui_impl_opengl3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\ImGui\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\ImGui\imgui_tables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\ImGui\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\EngineGUI\EngineGUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\JZGL\JZ_GL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\Math\Math.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\Math\Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\ECS\ECS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\EngineGUI\Inspector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\EngineGUI\Console.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\EngineGUI\SceneTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\DebugTools\Log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JZEngine\GraphicRendering\Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\ExampleFloatAway.cpp" />
@@ -42,6 +107,7 @@
     <ClCompile Include="src\JZEngine\EngineGUI\MenuBar.cpp" />
     <ClCompile Include="src\JZEngine\DebugTools\PerformanceData.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\PhysicsSystem.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Background.cpp" />
     <ClCompile Include="src\JZEngine\ImGui\GraphEditor.cpp" />
     <ClCompile Include="src\JZEngine\ImGui\ImCurveEdit.cpp" />
     <ClCompile Include="src\JZEngine\ImGui\ImGradient.cpp" />
@@ -49,6 +115,7 @@
     <ClCompile Include="src\JZEngine\ImGui\ImSequencer.cpp" />
     <ClCompile Include="src\JZEngine\Resource\Serialize.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\FolderInterface.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\Collision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\JZEngine.h" />
@@ -65,6 +132,9 @@
     <ClInclude Include="src\JZEngine\EngineGUI\SceneTree.h" />
     <ClInclude Include="src\JZEngine\EntryPoint.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Buffer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\OpenGLDebug.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Renderer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Shader.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\NonInstanceSpriteRenderer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\OpenGLDebug.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Renderer.h" />
@@ -94,11 +164,14 @@
     <ClInclude Include="src\JZEngine\Math\Vec4.h" />
     <ClInclude Include="src\JZEngine\PCH.h" />
     <ClInclude Include="src\JZEngine\BuildDefinitions.h" />
+    <ClInclude Include="src\JZEngine\Physics\Collision.h" />
     <ClInclude Include="src\JZEngine\Resource\ResourceManager.h" />
     <ClInclude Include="src\JZEngine\Physics\Physics.h" />
     <ClInclude Include="src\JZEngine\Sound\Sound.h" />
     <ClInclude Include="src\JZEngine\STL\Tuple.h" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />
+    <ClInclude Include="src\JZEngine\Input\Input.h" />
+    <ClInclude Include="src\JZEngine\Input\DeltaTime.h" />
     <ClInclude Include="src\JZEngine\Math\JZMatrix.h" />
     <ClInclude Include="src\JZEngine\Math\JZMath.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\SpriteRenderer.h" />
@@ -116,6 +189,7 @@
     <ClInclude Include="src\JZEngine\DebugTools\PerformanceData.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\PhysicsSystem.h" />
     <ClInclude Include="src\JZEngine\STL\Random.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Background.h" />
     <ClInclude Include="src\JZEngine\ImGui\GraphEditor.h" />
     <ClInclude Include="src\JZEngine\ImGui\ImCurveEdit.h" />
     <ClInclude Include="src\JZEngine\ImGui\ImGradient.h" />
@@ -124,5 +198,6 @@
     <ClInclude Include="src\JZEngine\ImGui\ImZoomSlider.h" />
     <ClInclude Include="src\JZEngine\Resource\Serialize.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\FolderInterface.h" />
+    <ClInclude Include="src\JZEngine\Physics\Collision.h" />
   </ItemGroup>
 </Project>

@@ -16,9 +16,9 @@
 
 namespace JZEngine
 {
-	SceneTree::SceneTree(float x, float y, float sx, float sy)
+	SceneTree::SceneTree ( float x , float y , float sx , float sy )
 		:
-		x_(x), y_(y), sx_(sx), sy_(sy)
+		x_ ( x ) , y_ ( y ) , sx_ ( sx ) , sy_ ( sy )
 	{
 		default_entity_name_ = new std::string("NoName");
 		//*default_entity_name_ = "Entity";
@@ -27,7 +27,7 @@ namespace JZEngine
 		new_entity_name_[0] = '\0';
 	}
 
-	SceneTree::~SceneTree()
+	SceneTree::~SceneTree ()
 	{
 		delete default_entity_name_;
 		delete names_;
@@ -40,12 +40,12 @@ namespace JZEngine
 	 * Renders the ImGui window.
 	 * ****************************************************************************************************
 	*/
-	void SceneTree::Render()
+	void SceneTree::Render ()
 	{
-		ImGui::SetNextWindowBgAlpha(0.8f);
-		ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x_, static_cast<float>(Settings::window_height) * y_ }, ImGuiCond_Always);
-		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx_, static_cast<float>(Settings::window_height) * sy_ }, ImGuiCond_Always);
-		ImGui::Begin("Scene Heirarchy");
+		ImGui::SetNextWindowBgAlpha ( 0.8f );
+		ImGui::SetNextWindowPos ( { static_cast< float >( Settings::window_width ) * x_, static_cast< float >( Settings::window_height ) * y_ } , ImGuiCond_Always );
+		ImGui::SetNextWindowSize ( { static_cast< float >( Settings::window_width ) * sx_, static_cast< float >( Settings::window_height ) * sy_ } , ImGuiCond_Always );
+		ImGui::Begin ( "Scene Heirarchy" );
 
 		ImGui::Text("%s", current_scene_name_->c_str());
 		ImGui::Separator();
@@ -60,32 +60,44 @@ namespace JZEngine
 		}
 		ImGui::Separator();
 		// render text box for input name
-		ImGui::InputText(": Name", new_entity_name_, MAX_NAME_SIZE);
+		ImGui::InputText ( ": Name" , new_entity_name_ , MAX_NAME_SIZE );
 
-		if (ImGui::Button("Add Default Entity"))
+		if( ImGui::Button ( "Add Default Entity" ) )
 		{
 			// create a new entity, pushed into EntityManager
-			unsigned int id = ecs_instance_->CreateEntity();
+			unsigned int id = ecs_instance_->CreateEntity ();
 
 			// if successful
-			if (id != -1)
+			if( id != -1 )
 			{
 				// rename it
-				ecs_instance_->GetEntity(id).name_ = GetName();
+				ecs_instance_->GetEntity ( id ).name_ = GetName ();
 			}
 		}
-		ImGui::Text("\nCurrent Scene");
-		ImGui::PushStyleColor(ImGuiCol_Separator, { 0.8f,0.8f,0.8f,1.0f });
-		ImGui::Separator();
-		ImGui::PopStyleColor();
+		ImGui::Text ( "\nCurrent Scene" );
+
+		static ImGuiTextFilter filter;
+		// Helper class to easy setup a text filter.
+		// You may want to implement a more feature-full filtering scheme in your own application.
+		filter.Draw ( ": Filter" );
+
+		ImGui::PushStyleColor ( ImGuiCol_Separator , { 0.8f,0.8f,0.8f,1.0f } );
+		ImGui::Separator ();
+		ImGui::PopStyleColor ();
 
 		int popup_id{ 0 };
 		// render all root entities in EntityManager
-		for (auto& id : ecs_instance_->entity_manager_.root_ids_)
+		for( auto& id : ecs_instance_->entity_manager_.root_ids_ )
 		{
-			if (id != -1)
+			if( id != -1 )
 			{
+				ECS::Entity* e = &ecs_instance_->entity_manager_.GetEntity ( id );
+				if( filter.PassFilter ( e->name_.c_str () ) )
+				{
+					RenderAllChildObjects ( e );
+				}
 				// recursively render all children of a root entity
+<<<<<<< HEAD
 				RenderAllChildObjects(&ecs_instance_->entity_manager_.GetEntity(id), ++popup_id);
 			}
 		}
@@ -94,6 +106,13 @@ namespace JZEngine
 		if (confirmation_flag_ != Confirmation::NONE) {
 			RenderConfirmation();
 		}
+=======
+			}
+		}
+
+
+		ImGui::End ();
+>>>>>>> main
 	}
 
 	/*!
@@ -106,39 +125,47 @@ namespace JZEngine
 	 * : The entity to render. Should be a root entity in EntityManager.
 	 * ****************************************************************************************************
 	*/
+<<<<<<< HEAD
 	void SceneTree::RenderAllChildObjects(ECS::Entity* entity, int& id)
+=======
+	void SceneTree::RenderAllChildObjects ( ECS::Entity* entity )
+>>>>>>> main
 	{
 		std::stringstream ss;
 		ss << entity->name_;
 
 		// add own tree node
-		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		ImGui::SetNextItemOpen ( true , ImGuiCond_Once );
 		bool is_selected = false;
-		if (selected_entity_)
+		if( selected_entity_ )
 		{
-			if (entity->entity_id_ == selected_entity_->entity_id_)
+			if( entity->entity_id_ == selected_entity_->entity_id_ )
 			{
 				is_selected = true;
-				ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f,1.0f,0.0f,1.0f });
+				ImGui::PushStyleColor ( ImGuiCol_Text , { 0.0f,1.0f,0.0f,1.0f } );
 			}
 		}
 
-		bool open = ImGui::TreeNodeEx(ss.str().c_str(), ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick);
+		bool open = ImGui::TreeNodeEx ( ss.str ().c_str () , ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick );
 
 		// if a treenode is clicked, make that entity the selected_entity_
-		if (ImGui::IsItemClicked())
+		if( ImGui::IsItemClicked () )
 		{
 			selected_entity_ = entity;
 		}
+<<<<<<< HEAD
 		std::stringstream unique_popup_id_;
 		unique_popup_id_ << id;
 		if (ImGui::BeginPopupContextItem(unique_popup_id_.str().c_str()))
+=======
+		if( ImGui::BeginPopupContextItem ( ss.str ().c_str () ) )
+>>>>>>> main
 		{
 			// adds an entity as a child of this entity on right click
-			if (ImGui::Selectable("Add Entity"))
+			if( ImGui::Selectable ( "Add Entity" ) )
 			{
-				int id = ecs_instance_->CreateEntity(entity->entity_id_);
-				if (id == -1)
+				int id = ecs_instance_->CreateEntity ( entity->entity_id_ );
+				if( id == -1 )
 				{
 					std::stringstream ss;
 					ss << "Entity " << entity->name_ << " (ID: " << entity->entity_id_ << ") has maximum number of children!";
@@ -146,16 +173,17 @@ namespace JZEngine
 				}
 				else
 				{
-					ECS::Entity& created_entity = ecs_instance_->GetEntity(id);
-					created_entity.name_ = GetName();
+					ECS::Entity& created_entity = ecs_instance_->GetEntity ( id );
+					created_entity.name_ = GetName ();
 				}
 			}
 			// removes an entity from the tree
-			if (ImGui::Selectable("Remove Entity"))
+			if( ImGui::Selectable ( "Remove Entity" ) )
 			{
-				ecs_instance_->RemoveEntity(entity->entity_id_);
+				ecs_instance_->RemoveEntity ( entity->entity_id_ );
 				selected_entity_ = nullptr;
 			}
+<<<<<<< HEAD
 			if (ImGui::Selectable("Rename"))
 			{
 				if (new_entity_name_[0] != '\0')
@@ -166,24 +194,31 @@ namespace JZEngine
 			}
 
 			ImGui::EndPopup();
+=======
+			ImGui::EndPopup ();
+>>>>>>> main
 		}
-		if (is_selected)
+		if( is_selected )
 		{
-			ImGui::PopStyleColor();
+			ImGui::PopStyleColor ();
 		}
 
 		// end own tree node
-		if (open)
+		if( open )
 		{
 			// add all child tree nodes
-			for (auto& c : entity->children_)
+			for( auto& c : entity->children_ )
 			{
-				if (c != -1)
+				if( c != -1 )
 				{
+<<<<<<< HEAD
 					RenderAllChildObjects(&ecs_instance_->entity_manager_.GetEntity(c), ++id);
+=======
+					RenderAllChildObjects ( &ecs_instance_->entity_manager_.GetEntity ( c ) );
+>>>>>>> main
 				}
 			}
-			ImGui::TreePop();
+			ImGui::TreePop ();
 		}
 	}
 
@@ -197,24 +232,24 @@ namespace JZEngine
 	 * : The name padded with the index.
 	 * ****************************************************************************************************
 	*/
-	std::string SceneTree::GetName()
+	std::string SceneTree::GetName ()
 	{
 		// if a custom name is typed
-		if (new_entity_name_[0] == '\0')
+		if( new_entity_name_[ 0 ] == '\0' )
 		{
 			std::stringstream ss;
 			ss << *default_entity_name_;
-			
+
 			// pad identical names with an index
-			if (names_->find(*default_entity_name_) == names_->end())
+			if( names_->find ( *default_entity_name_ ) == names_->end () )
 			{
-				(*names_)[*default_entity_name_] = 1;
+				( *names_ )[ *default_entity_name_ ] = 1;
 				return *default_entity_name_;
 			}
 			else
 			{
-				ss << "(" << (*names_)[*default_entity_name_]++ << ")";
-				return ss.str();
+				ss << "(" << ( *names_ )[ *default_entity_name_ ]++ << ")";
+				return ss.str ();
 			}
 		}
 		// else use the default name padded with index
@@ -222,15 +257,15 @@ namespace JZEngine
 		{
 			std::stringstream ss;
 			ss << new_entity_name_;
-			if (names_->find(new_entity_name_) == names_->end())
+			if( names_->find ( new_entity_name_ ) == names_->end () )
 			{
-				(*names_)[new_entity_name_] = 1;
-				return ss.str();
+				( *names_ )[ new_entity_name_ ] = 1;
+				return ss.str ();
 			}
 			else
 			{
-				ss << "(" << (*names_)[new_entity_name_]++ << ")";
-				return ss.str();
+				ss << "(" << ( *names_ )[ new_entity_name_ ]++ << ")";
+				return ss.str ();
 			}
 		}
 	}
