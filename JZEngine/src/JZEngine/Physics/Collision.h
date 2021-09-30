@@ -79,11 +79,11 @@ namespace JZEngine
 
 	namespace Collision
 	{
-		void ProjectVertices(const std::vector<Vec2f>& vertices,const Vec2f& axis, float& min, float& max);
+		
 
 		bool IntersectPolygons(const Square& squareA, const Square& squareB, Vec2f& normal, float depth);
 
-
+		void ProjectVertices(const std::vector<Vec2f>& vertices, const Vec2f& axis, float& min, float& max);
 
 
 		bool DynamicCollision_CircleSquare(const Circle& circle,			//Circle data - input

@@ -1,6 +1,7 @@
 #include "PCH.h"
 
 #include "../Physics/Collision.h"
+#include <limits> 
 const float			PI = 3.1415926f;
 const float			PI_OVER_180 = PI / 180.0f;
 
@@ -9,29 +10,85 @@ namespace JZEngine
 	namespace Collision
 	{
 #if 1
-		void ProjectVertices(const std::vector<Vec2f>& vertices, const Vec2f& axis,  float& min, float& max)
+		bool IntersectCirclePolygon(const Circle& circle, const Square& square,
+			Vec2f& normal, float& depth)
 		{
-			max = -999999999999.9f;
-			min = 999999999999.9f;
+			//normal = { 0,0 };
+			depth = std::numeric_limits<float>::max();
 
-			for (int i = 0; i < vertices.size(); i++)
+			Vec2f axis{};
+			float axisDepth{ 0.f };
+			float minA, maxA, minB, maxB;
+
+			for (int i = 0; i < vertices.Length; i++)
 			{
-				Vec2f v = vertices[i];
-				float proj = v.Dot( axis);
+				FlatVector va = vertices[i];
+				FlatVector vb = vertices[(i + 1) % vertices.Length];
 
-				if (proj < min) { min = proj; }
-				if (proj > max) { max = proj; }
+				FlatVector edge = vb - va;
+				axis = new FlatVector(-edge.Y, edge.X);
+				axis = FlatMath.Normalize(axis);
+
+				Collisions.ProjectVertices(vertices, axis, out minA, out maxA);
+				Collisions.ProjectCircle(circleCenter, circleRadius, axis, out minB, out maxB);
+
+				if (minA >= maxB || minB >= maxA)
+				{
+					return false;
+				}
+
+				axisDepth = MathF.Min(maxB - minA, maxA - minB);
+
+				if (axisDepth < depth)
+				{
+					depth = axisDepth;
+					normal = axis;
+				}
 			}
+
+			int cpIndex = Collisions.FindClosestPointOnPolygon(circleCenter, vertices);
+			FlatVector cp = vertices[cpIndex];
+
+			axis = cp - circleCenter;
+			axis = FlatMath.Normalize(axis);
+
+			Collisions.ProjectVertices(vertices, axis, out minA, out maxA);
+			Collisions.ProjectCircle(circleCenter, circleRadius, axis, out minB, out maxB);
+
+			if (minA >= maxB || minB >= maxA)
+			{
+				return false;
+			}
+
+			axisDepth = MathF.Min(maxB - minA, maxA - minB);
+
+			if (axisDepth < depth)
+			{
+				depth = axisDepth;
+				normal = axis;
+			}
+
+			FlatVector direction = polygonCenter - circleCenter;
+
+			if (FlatMath.Dot(direction, normal) < 0f)
+			{
+				normal = -normal;
+			}
+
+			return true;
 		}
+#endif
+
 
 		//using SAT for polygon polygon
-		bool IntersectPolygons(const Square& squareA, const Square& squareB, Vec2f& normal, float depth)
+		bool IntersectPolygons(const Square& squareA, const Square& squareB, Vec2f& normal, float depth)//normal is to push the 2nd obj out of collision
 		{
 			
 			//Initialising Vertices for looping
 			std::vector<Vec2f> verticesA{ squareA.botleft,squareA.botright,squareA.topright,squareA.topleft };
 			std::vector<Vec2f> verticesB{ squareB.botleft,squareB.botright,squareB.topright,squareB.topleft };
-			depth = 9999999999.f;
+
+			depth = std::numeric_limits<float>::max();//these values will be set
 
 
 			for (size_t i = 0; i < verticesA.size(); i++)
@@ -40,20 +97,20 @@ namespace JZEngine
 				Vec2f vb = verticesA[(i + 1) % verticesA.size()];
 				
 				//find the normal of 1 side of the polygon will be the axis to be tested
-				Vec2f edge = vb - va;
-				Vec2f axis = { -edge.y, edge.x };
+				Vec2f edge = vb - va;//line
+				Vec2f axis = { -edge.y, edge.x };//normal
 				axis.Normalize();
 
 				float minA, maxA, minB, maxB;
-				ProjectVertices(verticesA, axis,  minA,  maxA);
-				ProjectVertices(verticesB, axis,  minB,  maxB);
+				ProjectVertices(verticesA, axis,  minA,  maxA);//project the vertices of A onto the axis(normal)
+				ProjectVertices(verticesB, axis,  minB,  maxB);//project the vertices of B onto the axis(normal)
 
 				if (minA >= maxB || minB >= maxA)
 				{
-					return false;
+					return false;//if they are seperated, return false
 				}
 
-				float axisDepth = std::min(maxB - minA, maxA - minB);
+				float axisDepth = std::min(maxB - minA, maxA - minB);//min depth to resolve collision
 
 				if (axisDepth < depth)
 				{
@@ -91,14 +148,29 @@ namespace JZEngine
 
 			Vec2f direction = squareB.midpoint - squareA.midpoint;
 
-			if ( direction.Dot(normal)  < 0.f)
+			if ( direction.Dot(normal)  < 0.f)//make sure norma is same direction as vector [AB]
 			{
 				normal = -normal;
 			}
 
 			return true;
 		}
-#endif
+
+		void ProjectVertices(const std::vector<Vec2f>& vertices, const Vec2f& axis, float& min, float& max)
+		{
+			max = std::numeric_limits<float>::min();//these values will be set
+			min = std::numeric_limits<float>::max();
+
+			for (int i = 0; i < vertices.size(); i++)
+			{
+				Vec2f v = vertices[i];
+				float proj = v.Dot(axis);
+
+				if (proj < min) { min = proj; }
+				if (proj > max) { max = proj; }
+			}
+		}
+
 
 		//Dynamic AABB collision
 		bool DynamicCollision_RectRect(const AABB& aabb1, const JZEngine::Vec2f& vel1,

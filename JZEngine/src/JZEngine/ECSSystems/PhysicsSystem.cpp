@@ -169,6 +169,8 @@ namespace JZEngine
 #ifdef PHYSICSDEBUG
 						Log::Info("Collision", "square square");
 #endif
+						componentA.posnex = componentB.m_square.midpoint + (-normal * depth / 2.f);
+						componentB.posnex = componentB.m_square.midpoint + (normal * depth / 2.f);
 					}
 
 
