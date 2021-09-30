@@ -112,13 +112,8 @@ namespace JZEngine
 
 		shader.Bind ();
 
-
-		//GetSystem<ResourceManager>()->font_shader_programs_
-
-		//glCheckError ();
-
 		JZEngine::Mat3f camwin_to_ndc_xform = { {2.0f / ( Settings::aspect_ratio * Settings::window_height ), 0.0f, 0.0f},
-												{0.0f, -2.0f / Settings::window_height, 0.0f},
+												{0.0f, 2.0f / Settings::window_height, 0.0f},
 												{0.0f, 0.0f, 1.0f} };
 
 		shader.SetUniform ( "projection" , camwin_to_ndc_xform.Transpose () );
@@ -142,9 +137,6 @@ namespace JZEngine
 		// FT_New_Face ( Return : FreeType error code. 0~means success.)
 		if( FT_New_Face ( ft , font.c_str () , 0 , &face ) )
 			std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
-
-		// set size to load glyphs as
-		//FT_Set_Pixel_Sizes ( face , 0 , fontSize );
 
 		//For some twisted reason, Freetype measures font size
 		//in terms of 1/64ths of pixels.  Thus, to make a font

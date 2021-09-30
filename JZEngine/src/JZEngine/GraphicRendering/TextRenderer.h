@@ -44,7 +44,7 @@ namespace JZEngine
 		// renders a string of text using the precompiled list of characters
 		void RenderText ( std::string text , float x , float y , float scale , JZEngine::Vec3f color = { 1.0f , 1.0f , 1.0f } );
 
-		void  Alignment ( int aligment = Paragraph::AlignCenter )
+		void  Alignment ( int aligment = Paragraph::AlignLeft )
 		{
 			aligning_text_ = aligment;
 		};

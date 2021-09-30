@@ -181,9 +181,6 @@ namespace JZEngine
 			global_systems_->FrameStart ();
 			global_systems_->Update ( dt );
 
-			global_systems_->GetSystem<TextRenderer>()->RenderText ( "Welcome to JZ Engine !" , 100 , 0 , 0.5f , { 0.0f , 0.0f , 0.0f } );
-			global_systems_->GetSystem<TextRenderer>()->Alignment ( Paragraph::AlignCenter );
-
 			//DeltaTime::update_time(1.0);
 			//DeltaTime::update_deltatime(1.0);
 
@@ -232,8 +229,6 @@ namespace JZEngine
 			Log::Info("Main", "Clamped dt: {}", clamped_dt);
 			Log::Info("Main", "Actual FPS: {}", 1.0 / actual_dt);
 			Log::Info("Main", "Clamped FPS: {}", 1.0 / clamped_dt);*/
-
-
 		}
 	}
 }
