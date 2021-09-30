@@ -79,8 +79,11 @@ namespace JZEngine
 				t.second.accumulated_delta_time_ = 0.0f;
 			}
 
-			average_fps_ = accumulated_fps_ / accumulated_frames_;
-			average_app_fps_ = accumulated_app_fps_ / accumulated_frames_;
+			if (accumulated_frames_ > 0)
+			{
+				average_fps_ = accumulated_fps_ / accumulated_frames_;
+				average_app_fps_ = accumulated_app_fps_ / accumulated_frames_;
+			}
 
 			current_time_ = std::chrono::high_resolution_clock::now();
 			accumulated_fps_ = 0;

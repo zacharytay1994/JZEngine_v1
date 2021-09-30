@@ -12,8 +12,21 @@ namespace JZEngine
 
 	void Serialize::Load()
 	{
+		// create save folder
+		if (!std::filesystem::is_directory(Settings::saves_directory))
+		{
+			std::filesystem::create_directory(Settings::saves_directory);
+		}
+		if (!std::filesystem::is_directory(Settings::scenes_dir))
+		{
+			std::filesystem::create_directory(Settings::scenes_dir);
+		}
+		if (!std::filesystem::is_directory(Settings::prefabs_dir))
+		{
+			std::filesystem::create_directory(Settings::prefabs_dir);
+		}
 		// open config file and load all entity names in it
-		std::ifstream config(Settings::saves_config);
+		/*std::ifstream config(Settings::saves_config);
 		if (config.is_open())
 		{
 			Log::Info("Serialize", "\nLoading the following resources:");
@@ -35,8 +48,8 @@ namespace JZEngine
 			Log::Error("Serialize", "Unable to open and load saves from config file.");
 			return;
 		}
-		Log::Info("Serialize", "- Serialized resources finished loading.");
-
+		Log::Info("Serialize", "- Serialized resources finished loading.");*/
+		ListAllPrefabFiles();
 		ListAllSceneFiles();
 	}
 
@@ -58,113 +71,61 @@ namespace JZEngine
 		}
 	}
 
-	bool Serialize::SerializeEntity(ECS::Entity& entity)
+
+
+	bool Serialize::SerializeEntity(ECS::ECSInstance* ecs, ECS::Entity& entity)
 	{
 		// create the saves directory if it isn't there
-		if (!std::filesystem::is_directory(Settings::saves_directory))
+		std::stringstream folder_path;
+		folder_path << Settings::saves_directory << Settings::prefabs_dir;
+		if (!std::filesystem::is_directory(folder_path.str()))
 		{
-			std::filesystem::create_directory(Settings::saves_directory);
+			std::filesystem::create_directory(folder_path.str());
 		}
 
 		Log::Info("Serialize", "\nTrying to serialize {}.", entity.name_);
 
-		auto& mask = entity.owning_chunk_->owning_archetype_->mask_;
-
-		std::stringstream ss;
-		ss << Settings::saves_directory << entity.name_ << ".txt";
+		/*std::stringstream ss;
+		ss << Settings::saves_directory << Settings::prefabs_dir << entity.name_ << ".txt";*/
+		folder_path << entity.name_ << ".txt";
 		// create file
-		std::ofstream openfile(ss.str());
+		std::ofstream openfile(folder_path.str());
 		if (openfile.is_open())
 		{
 			openfile.close();
 		}
 		// open file
-		std::fstream file;
-		file.open(ss.str());
+		std::ofstream file;
+		file.open(folder_path.str());
 		if (!file.is_open())
 		{
-			Log::Info("Serialize", "- Unable to open {}, to serialize {}", ss.str(), entity.name_);
+			Log::Info("Serialize", "- Unable to open {}, to serialize {}", folder_path.str(), entity.name_);
 			return false;
 		}
 		else
 		{
-			std::stringstream ss;
-			// write components
-			for (int i = 0; i < mask.size(); ++i)
-			{
-				// if has that component
-				if (mask[i])
-				{
-					ss << "c " << i << " ";
-					SerializeECSConfigComponent(ECS::ECSConfig::Component(), i, entity, ss);
-				}
-			}
-			file << ss.str();
+			SerializeAllChildEntities(ecs, file, entity);
 			file.close();
-
-			entities_[entity.name_] = ss.str();
-
 			Log::Info("Serialize", "- Successfully serialized entity {} as {}.", entity.name_, entity.name_);
+			DeserializeEntityFromFile(entity.name_);
 		}
 		return true;
 	}
 
-	//bool Serialize::DeserializeEntity(ECS::Entity& entity, const std::string& name)
-	//{
-	//	// open file
- //		std::stringstream ss;
-	//	ss << Settings::saves_directory << name << ".txt";
-	//	std::fstream file;
-	//	file.open(ss.str());
-	//	if (!file.is_open())
-	//	{
-	//		return false;
-	//	}
-	//	else
-	//	{
-	//		std::stringstream ss;
-	//		ss << file.rdbuf();
-	//		file.close();
-	//		char c;
-	//		while (ss >> c)
-	//		{
-	//			switch (c)
-	//			{
-	//			case 'c':
-	//				int i;
-	//				ss >> i;
-	//				entity.AddComponent(i);
-	//				DeSerializeECSConfigComponent(ECS::ECSConfig::Component(), i, entity, ss);
-	//				break;
-	//			}
-	//		}
-	//	}
-	//	return true;
-	//}
-
-	bool Serialize::LoadEntity(ECS::Entity& entity, const std::string& name)
+	bool Serialize::LoadEntity(ECS::ECSInstance* ecs, const std::string& name)
 	{
 		if (entities_.find(name) == entities_.end())
 		{
-			Log::Warning("Serialize", "Tried to load entity {} that does not exist into {}.", name, entity.name_);
+			Log::Warning("Serialize", "Tried to load entity {} that does not exist.", name);
 			return false;
 		}
+		std::stringstream file;
 		std::stringstream ss;
-		ss << entities_[name];
-
-		char c;
-		while (ss >> c)
-		{
-			switch (c)
-			{
-			case 'c':
-				int i;
-				ss >> i;
-				entity.AddComponent(i);
-				DeSerializeECSConfigComponent(ECS::ECSConfig::Component(), i, entity, ss);
-				break;
-			}
-		}
+		file << entities_[name];
+		std::string line;
+		std::getline(file, line);
+		ss << line;
+		DeSerializeAllChildEntities(ecs, file, ss);
 		return true;
 	}
 
@@ -172,7 +133,7 @@ namespace JZEngine
 	{
 		// open file
 		std::stringstream ss;
-		ss << Settings::saves_directory << name << ".txt";
+		ss << Settings::saves_directory << Settings::prefabs_dir << name << ".txt";
 		std::fstream file(ss.str());
 		if (file.is_open())
 		{
@@ -193,6 +154,11 @@ namespace JZEngine
 	{
 		std::stringstream ss;
 		ss << Settings::saves_directory << Settings::scenes_dir;
+		// create the log directory if it isn't there
+		if (!std::filesystem::is_directory(ss.str()))
+		{
+			std::filesystem::create_directory(ss.str());
+		}
 		Log::Info("Serialize", "\nReading scenes from {}", ss.str());
 		std::string path;
 		std::string scene_name;
@@ -204,51 +170,6 @@ namespace JZEngine
 			scene_name = path.substr(dash+1, path.find_last_of('.') - dash - 1);
 			scenes_[scene_name];
 			Log::Info("Serialize", "- [{}] read.", scene_name);
-		}
-	}
-
-	void Serialize::DeSerializeAllChildEntities(ECS::ECSInstance* ecs, std::ifstream& file, std::stringstream& ss, unsigned int parent)
-	{
-		// read line of file
-		// if no parent
-		int id;
-		if (parent == -1)
-		{
-			id = ecs->CreateEntity();
-		}
-		else // else create with parent
-		{
-			id = ecs->CreateEntity(parent);
-		}
-		ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
-		// read data and load entity
-		ss >> entity.name_;
-		int children;
-		ss >> children;
-
-		// deserialize all components
-		char c;
-		while (ss >> c)
-		{
-			switch (c)
-			{
-			case 'c':
-				int i;
-				ss >> i;
-				entity.AddComponent(i);
-				DeSerializeECSConfigComponent(ECS::ECSConfig::Component(), i, entity, ss);
-				break;
-			}
-		}
-
-		// deserialize all children
-		for (int i = 0; i < children; ++i)
-		{
-			std::string line;
-			std::getline(file, line);
-			std::stringstream next_ss;
-			next_ss << line;
-			DeSerializeAllChildEntities(ecs, file, next_ss, id);
 		}
 	}
 
@@ -289,15 +210,6 @@ namespace JZEngine
 			file << ss.str();
 		}
 		file << '\n';
-		// for all its children call this serialize and increment number
-		/*int number_of_children{ 0 }; 
-		for (auto& child : entity.children_)
-		{
-			if (child != -1)
-			{
-				++number_of_children;
-			}
-		}*/
 		for (auto& child : entity.children_)
 		{
 			if (child != -1)
@@ -343,5 +255,34 @@ namespace JZEngine
 			return false;
 		}
 		return true;
+	}
+
+	void Serialize::ListAllPrefabFiles()
+	{
+		std::stringstream ss;
+		ss << Settings::saves_directory << Settings::prefabs_dir;
+		// create the log directory if it isn't there
+		if (!std::filesystem::is_directory(ss.str()))
+		{
+			std::filesystem::create_directory(ss.str());
+		}
+		Log::Info("Serialize", "\nReading prefabs from {}", ss.str());
+		std::string path;
+		std::string prefab_name;
+		size_t dash;
+		for (const auto& file : std::filesystem::directory_iterator(ss.str()))
+		{
+			path = file.path().string();
+			dash = path.find_last_of('/');
+			prefab_name = path.substr(dash + 1, path.find_last_of('.') - dash - 1);
+			if (DeserializeEntityFromFile(prefab_name))
+			{
+				Log::Info("Serialize", "- [Success] {}", prefab_name);
+			}
+			else
+			{
+				Log::Info("Serialize", "- [Failed] {}", prefab_name);
+			}
+		}
 	}
 }

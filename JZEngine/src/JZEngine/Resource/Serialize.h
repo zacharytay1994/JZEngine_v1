@@ -41,16 +41,58 @@ namespace JZEngine
 		static void Load();
 		static void Save();
 
-		static bool SerializeEntity(ECS::Entity& entity);
-
-		//static bool DeserializeEntity(ECS::Entity& entity, const std::string& name);
-
-		static bool LoadEntity(ECS::Entity& entity, const std::string& name);
-
+		static bool SerializeEntity(ECS::ECSInstance* ecs, ECS::Entity& entity);
+		static bool LoadEntity(ECS::ECSInstance* ecs, const std::string& name);
 		static bool DeserializeEntityFromFile(const std::string& name);
 		static void ListAllSceneFiles();
+		static void ListAllPrefabFiles();
 
-		static void DeSerializeAllChildEntities(ECS::ECSInstance* ecs, std::ifstream& file, std::stringstream& ss, unsigned int parent = -1);
+		template <typename STREAM>
+		static void DeSerializeAllChildEntities(ECS::ECSInstance* ecs, STREAM& file, std::stringstream& ss, unsigned int parent = -1)
+		{
+			// read line of file
+			// if no parent
+			int id;
+			if (parent == -1)
+			{
+				id = ecs->CreateEntity();
+			}
+			else // else create with parent
+			{
+				id = ecs->CreateEntity(parent);
+			}
+			ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
+			// read data and load entity
+			ss >> entity.name_;
+			int children;
+			ss >> children;
+
+			// deserialize all components
+			char c;
+			while (ss >> c)
+			{
+				switch (c)
+				{
+				case 'c':
+					int i;
+					ss >> i;
+					entity.AddComponent(i);
+					DeSerializeECSConfigComponent(ECS::ECSConfig::Component(), i, entity, ss);
+					break;
+				}
+			}
+
+			// deserialize all children
+			for (int i = 0; i < children; ++i)
+			{
+				std::string line;
+				std::getline(file, line);
+				std::stringstream next_ss;
+				next_ss << line;
+				DeSerializeAllChildEntities(ecs, file, next_ss, id);
+			}
+		}
+
 		static void DeserializeScene(ECS::ECSInstance* ecs, const std::string& name);
 		static void SerializeAllChildEntities(ECS::ECSInstance* ecs, std::ofstream& file, ECS::Entity& entity);
 		static bool SerializeScene(ECS::ECSInstance* ecs_instance_, const std::string& name);

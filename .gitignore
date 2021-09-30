@@ -33,6 +33,7 @@ bld/
 bin/
 bin-int/
 Sandbox/Logs/
+Sandbox/Saves/
 >>>>>>> main
 **/OutputFiles
 

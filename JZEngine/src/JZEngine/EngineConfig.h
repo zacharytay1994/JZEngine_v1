@@ -17,5 +17,6 @@ namespace JZEngine
 		constexpr const char*		saves_directory	= "Saves/";
 		constexpr const char*		saves_config	= "Saves/config.txt";
 		constexpr const char*		scenes_dir		= "Scenes/";
+		constexpr const char*		prefabs_dir		= "Prefabs/";
 	}
 }

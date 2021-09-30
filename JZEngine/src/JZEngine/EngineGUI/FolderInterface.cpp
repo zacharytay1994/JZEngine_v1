@@ -61,26 +61,30 @@ namespace JZEngine
 
 	void FolderInterface::RenderPrefabs()
 	{
+		ImGui::Separator();
+		ImGui::Text("Prefabs |");
+		ImGui::SameLine();
+		static ImGuiTextFilter filter;
+		filter.Draw(": Filter");
+		ImGui::Separator();
 		if (ImGui::BeginTable("prefab_table", display_columns_))
 		{
 			for (auto& e : Serialize::entities_)
 			{
-				ImGui::TableNextColumn();
-				ImGui::Image((void*)ResourceManager::texture2ds_[0].texture2d_.GetRendererID(), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f });
-				if (ImGui::BeginPopupContextItem(e.first.c_str()))
+				if (filter.PassFilter(e.first.c_str()))
 				{
-					if (ImGui::Selectable("Add To Scene"))
+					ImGui::TableNextColumn();
+					ImGui::Image((void*)ResourceManager::texture2ds_[0].texture2d_.GetRendererID(), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f });
+					if (ImGui::BeginPopupContextItem(e.first.c_str()))
 					{
-						int id = ecs_instance_->CreateEntity();
-						ECS::Entity& entity = ecs_instance_->entity_manager_.GetEntity(id);
-						Serialize::LoadEntity(entity, e.first);
-						std::stringstream ss;
-						ss << e.first << "(copy)";
-						entity.name_ = ss.str();
+						if (ImGui::Selectable("Add To Scene"))
+						{
+							Serialize::LoadEntity(ecs_instance_, e.first);
+						}
+						ImGui::EndPopup();
 					}
-					ImGui::EndPopup();
+					ImGui::Text(e.first.c_str());
 				}
-				ImGui::Text(e.first.c_str());
 			}
 			ImGui::EndTable();
 		}
@@ -88,22 +92,36 @@ namespace JZEngine
 
 	void FolderInterface::RenderScenes()
 	{
+		ImGui::Separator();
+		ImGui::Text("Scenes |");
+		ImGui::SameLine();
+		static ImGuiTextFilter filter;
+		filter.Draw(": Filter");
+		ImGui::Separator();
 		if (ImGui::BeginTable("scene_table", display_columns_))
 		{
 			for (auto& s : Serialize::scenes_)
 			{
-				ImGui::TableNextColumn();
-				ImGui::Image((void*)ResourceManager::texture2ds_[0].texture2d_.GetRendererID(), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f });
-				if (ImGui::BeginPopupContextItem(s.first.c_str()))
+				if (filter.PassFilter(s.first.c_str()))
 				{
-					if (ImGui::Selectable("Add To Scene"))
+					ImGui::TableNextColumn();
+					ImGui::Image((void*)ResourceManager::texture2ds_[0].texture2d_.GetRendererID(), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f });
+					if (ImGui::BeginPopupContextItem(s.first.c_str()))
 					{
-						scene_tree_->RemoveAllEntities();
-						Serialize::DeserializeScene(ecs_instance_, s.first);
+						if (ImGui::Selectable("Load Scene"))
+						{
+							scene_tree_->RemoveAllEntities();
+							Serialize::DeserializeScene(ecs_instance_, s.first);
+							*scene_tree_->current_scene_name_ = s.first;
+						}
+						if (ImGui::Selectable("Append To Scene"))
+						{
+							Serialize::DeserializeScene(ecs_instance_, s.first);
+						}
+						ImGui::EndPopup();
 					}
-					ImGui::EndPopup();
+					ImGui::Text(s.first.c_str());
 				}
-				ImGui::Text(s.first.c_str());
 			}
 			ImGui::EndTable();
 		}

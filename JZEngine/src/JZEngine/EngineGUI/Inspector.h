@@ -67,7 +67,7 @@ namespace JZEngine
 		};
 
 		Confirmation confirmation_flag_{ Confirmation::NONE };
-		char rename_buffer_[64];
+		char rename_buffer_[64] = {'\0'};
 		void RenderConfirmation(ECS::Entity* const entity);
 
 		/* ____________________________________________________________________________________________________

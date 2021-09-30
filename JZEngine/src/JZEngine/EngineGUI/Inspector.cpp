@@ -104,6 +104,11 @@ namespace JZEngine
 			}
 		}
 		ImGui::End();
+
+		if (confirmation_flag_ == Confirmation::SERIALIZE)
+		{
+			RenderConfirmation(entity);
+		}
 	}
 
 	/*!
@@ -314,7 +319,7 @@ namespace JZEngine
 				}
 				if (name_exists_) {
 					ImGui::NewLine();
-					TextCenter("A saved object already exists with this name, do you want to overwrite existing?");
+					TextCenter("A saved object already exists, do you want to overwrite existing?");
 				}
 				else {
 					ImGui::NewLine();
@@ -324,12 +329,12 @@ namespace JZEngine
 				ImGui::SameLine(ImGui::GetWindowSize().x / 4 - 50.0f);
 				if (ImGui::Button("Confirm", ImVec2(100.0f, 0.0f))) {
 					if (rename_buffer_[0] == '\0') {
-						Serialize::SerializeEntity(*entity);
+						Serialize::SerializeEntity(ecs_instance_, *entity);
 					}
 					else {
 						std::string temp = entity->name_;
 						entity->name_ = final_name.str();
-						if (Serialize::SerializeEntity(*entity)) {
+						if (Serialize::SerializeEntity(ecs_instance_, *entity)) {
 							Log::Warning("Resource", "Serializing entity {} failed!", final_name.str());
 						}
 						entity->name_ = temp;

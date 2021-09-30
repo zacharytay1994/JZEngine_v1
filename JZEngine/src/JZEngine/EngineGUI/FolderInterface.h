@@ -27,6 +27,6 @@ namespace JZEngine
 		void RenderScenes();
 
 	private:
-		DISPLAY mode{ DISPLAY::PREFAB };
+		DISPLAY mode{ DISPLAY::SCENES };
 	};
 }
