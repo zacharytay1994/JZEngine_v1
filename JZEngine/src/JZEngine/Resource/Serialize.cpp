@@ -8,7 +8,7 @@
 namespace JZEngine
 {
 	std::unordered_map<std::string, std::string> Serialize::entities_;
-	std::vector<std::string> Serialize::scenes_;
+	std::unordered_map<std::string, bool> Serialize::scenes_;
 
 	void Serialize::Load()
 	{
@@ -202,7 +202,7 @@ namespace JZEngine
 			path = file.path().string();
 			dash = path.find_last_of('/');
 			scene_name = path.substr(dash+1, path.find_last_of('.') - dash - 1);
-			scenes_.push_back(scene_name);
+			scenes_[scene_name];
 			Log::Info("Serialize", "- [{}] read.", scene_name);
 		}
 	}
@@ -342,5 +342,6 @@ namespace JZEngine
 			Log::Error("Serialize", "Unable to open {} to save Scene [{}].", ss.str(), name);
 			return false;
 		}
+		return true;
 	}
 }

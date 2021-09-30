@@ -17,7 +17,7 @@ namespace JZEngine
 	struct Serialize
 	{
 		static std::unordered_map<std::string, std::string> entities_;
-		static std::vector<std::string> scenes_;
+		static std::unordered_map<std::string, bool> scenes_;
 
 		enum class MODE
 		{

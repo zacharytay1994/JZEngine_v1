@@ -20,7 +20,7 @@ namespace JZEngine
 		:
 		x_(x), y_(y), sx_(sx), sy_(sy)
 	{
-		default_entity_name_ = new std::string("Entity");
+		default_entity_name_ = new std::string("NoName");
 		//*default_entity_name_ = "Entity";
 		names_ = new std::unordered_map<std::string, unsigned int>();
 		new_entity_name_[0] = '\0';
@@ -47,7 +47,7 @@ namespace JZEngine
 
 		if (ImGui::Button("Save"))
 		{
-			Serialize::SerializeScene(ecs_instance_, "test");
+			confirmation_flag_ = Confirmation::SAVE;
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Remove All"))
@@ -85,6 +85,10 @@ namespace JZEngine
 			}
 		}
 		ImGui::End();
+
+		if (confirmation_flag_ != Confirmation::NONE) {
+			RenderConfirmation();
+		}
 	}
 
 	/*!
@@ -234,5 +238,89 @@ namespace JZEngine
 		{
 			name.second = 0;
 		}
+	}
+
+	template <typename... ARGS>
+	void TextCenter(std::string text, ARGS...args) {
+		float font_size = ImGui::GetFontSize() * text.size() / 2;
+		ImGui::SameLine(
+			ImGui::GetWindowSize().x / 2 -
+			font_size + (font_size / 2)
+		);
+
+		ImGui::Text(text.c_str(), args...);
+		ImGui::NewLine();
+	}
+
+	void SceneTree::RenderConfirmation() {
+		ImGui::SetNextWindowBgAlpha(0.8f);
+		ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * (1.0f / 3.0f), static_cast<float>(Settings::window_height) * (1.0f / 3.0f) }, ImGuiCond_Once);
+		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * (1.0f / 3.0f), static_cast<float>(Settings::window_height) * (1.0f / 5.0f) }, ImGuiCond_Once);
+
+		ImGui::Begin("SceneTree Confirmation", 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+		if (ImGui::BeginTable("Confirmation Table", 1)) {
+			ImGui::TableNextColumn();
+			char text_buffer_[64] = { '\0' };
+			bool name_exists_{ false };
+			std::stringstream ss;
+			switch (confirmation_flag_) {
+			case Confirmation::SAVE:
+				TextCenter("[SAVING SCENE]");
+				ss << new_entity_name_;
+				if (new_entity_name_[0] == '\0') {
+					TextCenter("Name not specified. Using default name:");
+					TextCenter((*default_entity_name_).c_str());
+				}
+				else {
+					TextCenter("You are about to save the current scene as:");
+					TextCenter(ss.str().c_str());
+				}
+
+				ImGui::SameLine(ImGui::GetWindowSize().x / 2 - 100.0f);
+				ImGui::PushItemWidth(200.0f);
+				ImGui::InputText("##Rename", new_entity_name_, MAX_NAME_SIZE);
+				ImGui::PopItemWidth();
+				ImGui::SameLine();
+				ImGui::Text(": Rename");
+				ss.str("");
+				ss << new_entity_name_;
+				// check if input name already exists and warn the user
+				for (auto& s : Serialize::scenes_) {
+					if (s.first == ss.str()) {
+						name_exists_ = true;
+					}
+				}
+				if (name_exists_) {
+					ImGui::NewLine();
+					TextCenter("Scene already exists, do you want to overwrite existing?");
+				}
+				else {
+					ImGui::NewLine();
+					TextCenter("...");
+				}
+				ImGui::NewLine();
+				ImGui::SameLine(ImGui::GetWindowSize().x / 4 - 50.0f);
+				if (ImGui::Button("Confirm", ImVec2(100.0f, 0.0f))) {
+					if (new_entity_name_[0] == '\0') {
+						Serialize::SerializeScene(ecs_instance_, *default_entity_name_);
+						Serialize::scenes_[(*default_entity_name_)];
+					}
+					else {
+						Serialize::SerializeScene(ecs_instance_, ss.str());
+						Serialize::scenes_[ss.str()];
+					}
+					confirmation_flag_ = Confirmation::NONE;
+				}
+				ImGui::SameLine(ImGui::GetWindowSize().x / 4 * 3 - 50.0f);
+				if (ImGui::Button("Cancel", ImVec2(100.0f, 0.0f))) {
+					confirmation_flag_ = Confirmation::NONE;
+				}
+				break;
+			case Confirmation::REMOVE:
+				break;
+			}
+			ImGui::EndTable();
+		}
+		ImGui::End();
 	}
 }

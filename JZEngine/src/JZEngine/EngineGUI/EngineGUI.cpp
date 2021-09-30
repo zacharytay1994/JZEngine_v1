@@ -56,6 +56,7 @@ namespace JZEngine
 		AddInterface<DebugInformation>(1.0f / 6.0f, 1.0f / 46.0f, 4.0f / 6.0f, 34.0f / 46.0f);
 		GetInterface<DebugInformation>()->active_ = false;
 		AddInterface<FolderInterface>(1.0f / 6.0f, 1.0f / 46.0f, 4.0f / 6.0f, 34.0f / 46.0f);
+		GetInterface<FolderInterface>()->active_ = false;
 		GetInterface<FolderInterface>()->ecs_instance_ = GetSystem<ECS::ECSInstance>();
 		GetInterface<FolderInterface>()->scene_tree_ =	&scene_tree_;
 	}

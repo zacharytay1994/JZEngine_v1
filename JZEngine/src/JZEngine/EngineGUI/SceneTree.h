@@ -76,5 +76,14 @@ namespace JZEngine
 		std::string GetName();
 
 		void RemoveAllEntities();
+
+		enum class Confirmation {
+			NONE,
+			SAVE,
+			REMOVE
+		};
+
+		Confirmation confirmation_flag_{ Confirmation::NONE };
+		void RenderConfirmation();
 	};
 }

@@ -3,6 +3,7 @@
 #include "EngineGUI.h"
 
 #include "../DebugTools/PerformanceData.h"
+#include "FolderInterface.h"
 #include "DebugInformation.h"
 
 namespace JZEngine {
@@ -16,6 +17,13 @@ namespace JZEngine {
 	void MenuBar::Render(float dt) {
 		if (ImGui::BeginMainMenuBar())
 		{
+			if (ImGui::BeginMenu("File")) {
+				if (ImGui::MenuItem("Resources", "[SHIFT+R]"))
+				{
+					GetInterface<FolderInterface>()->active_ = !GetInterface<FolderInterface>()->active_;
+				}
+				ImGui::EndMenu();
+			}
 			if (ImGui::BeginMenu("Settings"))
 			{
 				if (ImGui::MenuItem("Performance Visualizer", "[TAB]"))
