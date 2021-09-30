@@ -73,8 +73,21 @@ namespace JZEngine
 		String& operator += ( const String& s );
 
 		/*---NON MEMBER FUNCTION---*/
-		//friend String operator + (const String& rhs , )
-		//https://github.com/bryangoodrich/cpp_String/blob/master/String.h
+		/**
+		 * @brief 
+		 * Concatenates two string or a string ad a char.
+		 * @param lhs 
+		 * String , character or pointer to the first character in a null terminated array.
+		 * @param rhs 
+		 * 
+		 * @return 
+		*/
+		friend String operator + (const String& lhs, const String& rhs);
+		friend String operator + (const String& lhs, char rhs);
+		friend String operator + (const String& lhs, const char* rhs);
+		friend String operator + (char lhs, const String& rhs);
+		friend String operator + (const char* lhs, const String& rhs);
+
 	};
 
 }
