@@ -17,14 +17,6 @@ namespace JZEngine
 		{
 			std::filesystem::create_directory(Settings::saves_directory);
 		}
-		if (!std::filesystem::is_directory(Settings::scenes_dir))
-		{
-			std::filesystem::create_directory(Settings::scenes_dir);
-		}
-		if (!std::filesystem::is_directory(Settings::prefabs_dir))
-		{
-			std::filesystem::create_directory(Settings::prefabs_dir);
-		}
 		// open config file and load all entity names in it
 		/*std::ifstream config(Settings::saves_config);
 		if (config.is_open())

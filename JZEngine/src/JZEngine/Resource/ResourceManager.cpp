@@ -3,6 +3,9 @@
 
 namespace JZEngine
 {
+	std::vector<ResourceManager::InstancedShaderID> ResourceManager::instanced_shader_programs_;
+	std::vector<ResourceManager::ShaderID> ResourceManager::shader_programs_;
+	std::vector<ResourceManager::Texture2DID> ResourceManager::texture2ds_;
 	ResourceManager::ResourceManager ()
 	{
 		// load textures

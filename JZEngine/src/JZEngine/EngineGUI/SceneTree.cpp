@@ -94,11 +94,10 @@ namespace JZEngine
 				ECS::Entity* e = &ecs_instance_->entity_manager_.GetEntity ( id );
 				if( filter.PassFilter ( e->name_.c_str () ) )
 				{
-					RenderAllChildObjects ( e );
+					RenderAllChildObjects ( e, ++popup_id );
 				}
 				// recursively render all children of a root entity
-<<<<<<< HEAD
-				RenderAllChildObjects(&ecs_instance_->entity_manager_.GetEntity(id), ++popup_id);
+				//RenderAllChildObjects(&ecs_instance_->entity_manager_.GetEntity(id), ++popup_id);
 			}
 		}
 		ImGui::End();
@@ -106,13 +105,6 @@ namespace JZEngine
 		if (confirmation_flag_ != Confirmation::NONE) {
 			RenderConfirmation();
 		}
-=======
-			}
-		}
-
-
-		ImGui::End ();
->>>>>>> main
 	}
 
 	/*!
@@ -125,11 +117,7 @@ namespace JZEngine
 	 * : The entity to render. Should be a root entity in EntityManager.
 	 * ****************************************************************************************************
 	*/
-<<<<<<< HEAD
 	void SceneTree::RenderAllChildObjects(ECS::Entity* entity, int& id)
-=======
-	void SceneTree::RenderAllChildObjects ( ECS::Entity* entity )
->>>>>>> main
 	{
 		std::stringstream ss;
 		ss << entity->name_;
@@ -153,13 +141,9 @@ namespace JZEngine
 		{
 			selected_entity_ = entity;
 		}
-<<<<<<< HEAD
 		std::stringstream unique_popup_id_;
 		unique_popup_id_ << id;
 		if (ImGui::BeginPopupContextItem(unique_popup_id_.str().c_str()))
-=======
-		if( ImGui::BeginPopupContextItem ( ss.str ().c_str () ) )
->>>>>>> main
 		{
 			// adds an entity as a child of this entity on right click
 			if( ImGui::Selectable ( "Add Entity" ) )
@@ -183,7 +167,6 @@ namespace JZEngine
 				ecs_instance_->RemoveEntity ( entity->entity_id_ );
 				selected_entity_ = nullptr;
 			}
-<<<<<<< HEAD
 			if (ImGui::Selectable("Rename"))
 			{
 				if (new_entity_name_[0] != '\0')
@@ -194,9 +177,6 @@ namespace JZEngine
 			}
 
 			ImGui::EndPopup();
-=======
-			ImGui::EndPopup ();
->>>>>>> main
 		}
 		if( is_selected )
 		{
@@ -211,11 +191,7 @@ namespace JZEngine
 			{
 				if( c != -1 )
 				{
-<<<<<<< HEAD
 					RenderAllChildObjects(&ecs_instance_->entity_manager_.GetEntity(c), ++id);
-=======
-					RenderAllChildObjects ( &ecs_instance_->entity_manager_.GetEntity ( c ) );
->>>>>>> main
 				}
 			}
 			ImGui::TreePop ();
