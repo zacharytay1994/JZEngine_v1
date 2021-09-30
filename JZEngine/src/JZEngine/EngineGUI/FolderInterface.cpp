@@ -10,9 +10,9 @@
 
 namespace JZEngine
 {
-	FolderInterface::FolderInterface(float x, float y, float sx, float sy)
+	FolderInterface::FolderInterface(float x, float y, float sx, float sy, int group)
 		:
-		ImGuiInterface(x, y, sx, sy)
+		ImGuiInterface(x, y, sx, sy, group)
 	{
 
 	}
@@ -24,6 +24,8 @@ namespace JZEngine
 		{
 			if (ImGui::BeginMenu("Scenes"))
 			{ 
+				ImGui::Text("Scenes");
+				ImGui::Separator();
 				if (ImGui::MenuItem("All"))
 				{
 					mode = DISPLAY::SCENES;
@@ -32,6 +34,8 @@ namespace JZEngine
 			}
 			if (ImGui::BeginMenu("Prefabs"))
 			{
+				ImGui::Text("Prefabs");
+				ImGui::Separator();
 				if (ImGui::MenuItem("All"))
 				{
 					mode = DISPLAY::PREFAB;

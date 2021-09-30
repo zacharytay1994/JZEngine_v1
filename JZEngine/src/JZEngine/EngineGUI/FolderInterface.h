@@ -20,7 +20,7 @@ namespace JZEngine
 		SceneTree* scene_tree_;
 		static constexpr unsigned int display_columns_{ 5 };
 
-		FolderInterface(float x, float y, float sx, float sy);
+		FolderInterface(float x, float y, float sx, float sy, int group);
 		virtual void Render(float dt) override;
 
 		void RenderPrefabs();

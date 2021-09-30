@@ -61,6 +61,15 @@ namespace JZEngine
 
 		int TrimName(const std::string& name);
 
+		enum class Confirmation {
+			NONE,
+			SERIALIZE
+		};
+
+		Confirmation confirmation_flag_{ Confirmation::NONE };
+		char rename_buffer_[64];
+		void RenderConfirmation(ECS::Entity* const entity);
+
 		/* ____________________________________________________________________________________________________
 		*	CUSTOM COMPONENT IMGUI LAYOUTS
 		   ____________________________________________________________________________________________________*/
