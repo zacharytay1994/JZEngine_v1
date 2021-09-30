@@ -10,7 +10,7 @@ namespace JZEngine
 {
 	std::vector<Transform*> transform_cont;
 
-
+	
 	PhysicsComponent::PhysicsComponent() {}
 	PhysicsComponent::PhysicsComponent(const PhysicsComponent& s) { std::memcpy(this, &s, sizeof(s)); }
 	PhysicsComponent::~PhysicsComponent() {}
@@ -43,8 +43,8 @@ namespace JZEngine
 		}
 		if (current_pcomponent.shapeid == shapetype::square)
 		{
-			Square tmp{ current_transform.position_,current_transform.size_ };//to change
-			current_pcomponent.m_square = tmp;
+			current_pcomponent.m_square = { current_transform.position_,current_transform.size_ };
+			
 		}
 		//std::cout << current_pcomponent.shapeid << std::endl;
 
@@ -80,6 +80,9 @@ namespace JZEngine
 			for(int j= 0;j< physics_cont.size();++j)
 			{
 				PhysicsComponent& componentB = *physics_cont[j];
+
+				if (&componentB == &componentA)
+					continue;
 
 				Vec2f interpta{}, interptb{}, normalatcollision{};
 				float intertime{}, newspeed{};
@@ -153,6 +156,22 @@ namespace JZEngine
 						componentB.velocity = reflectedvel * componentB.velocity.Len();
 						
 					}
+				}
+				if (componentA.shapeid == square && componentB.shapeid == square)// square square
+				{
+					if (&componentA == &componentB)
+						continue;
+
+					Vec2f normal;
+					float depth=0.f;
+					if (true==Collision::IntersectPolygons(componentA.m_square, componentB.m_square, normal,depth))
+					{
+#ifdef PHYSICSDEBUG
+						Log::Info("Collision", "square square");
+#endif
+					}
+
+
 				}
 			}
 		}

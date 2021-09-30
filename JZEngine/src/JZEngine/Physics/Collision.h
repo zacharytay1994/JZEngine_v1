@@ -3,9 +3,13 @@
 //#include "../ECSSystems/PhysicsSystem.h"
 #include "../Math/JZMath.h"
 
+#include <vector>
 
 namespace JZEngine
 {
+
+
+
 	struct Circle
 	{
 		Vec2f m_center;
@@ -26,13 +30,18 @@ namespace JZEngine
 
 	struct Square
 	{
-		Vec2f topleft;
-		Vec2f topright;
-		Vec2f botleft;
-		Vec2f botright;
-		
-		Square(Vec2f midpt, Vec2f scale)
+		struct {
+			Vec2f topleft;
+			Vec2f topright;
+			Vec2f botleft;
+			Vec2f botright;
+			Vec2f midpoint;
+		};
+		//std::vector<Vec2f> vertices_;
+
+		Square(Vec2f midpt, Vec2f scale) : midpoint{ midpt }
 		{
+			//vertices_.reserve(4);
 			botleft = midpt - (scale / 2.0f);
 			botright = { botleft.x + scale.x, botleft.y };
 			topright = botleft + scale ;
@@ -70,6 +79,13 @@ namespace JZEngine
 
 	namespace Collision
 	{
+		void ProjectVertices(const std::vector<Vec2f>& vertices,const Vec2f& axis, float& min, float& max);
+
+		bool IntersectPolygons(const Square& squareA, const Square& squareB, Vec2f& normal, float depth);
+
+
+
+
 		bool DynamicCollision_CircleSquare(const Circle& circle,			//Circle data - input
 			const Vec2f& ptEnd,											//End circle position - input
 			const Square& m_square,												//square data - input
@@ -96,8 +112,8 @@ namespace JZEngine
 			const Vec2f& velB,														//CircleA velocity - input
 			Vec2f& interPtA,														//Intersection point of CircleA at collision time - output
 			Vec2f& interPtB,														//Intersection point of CircleB at collision time - output
-			float& interTime
-		);														//intersection time - output
+			float& interTime														//intersection time - output
+		);														
 
 
 		// RESPONSE FUNCTIONS In this case the object bounces off the line

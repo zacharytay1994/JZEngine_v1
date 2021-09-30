@@ -39,8 +39,8 @@ namespace JZEngine
 	struct PhysicsSystem : public JZEngine::ECS::System
 	{
 		
-		std::vector<PhysicsComponent*> physics_cont;//so far only store circles
-		std::vector<PhysicsComponent*> static_physics_cont;//so far only store static sq
+		std::vector<PhysicsComponent*> physics_cont;
+		//std::vector<PhysicsComponent*> polygon_cont;
 
 		unsigned int j{ 0 };
 		float gravity{ -0.0981f };
