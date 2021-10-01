@@ -89,6 +89,8 @@ namespace JZEngine
 			entity.GetComponent<Transform>().position_ = { x * -600.0f, y * -300.0f };
 		}*/
 
+		
+#if 1
 		ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
 		int id = ecs->CreateEntity();
 		ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
@@ -137,7 +139,7 @@ namespace JZEngine
 		
 
 
-		for (int i = 0; i < 10; ++i) 
+		for (int i = 0; i < 1; ++i) 
 		{
 			 int id3 = ecs->CreateEntity();
 			 ECS::Entity& entity2 = ecs->entity_manager_.GetEntity(id3);
@@ -153,7 +155,7 @@ namespace JZEngine
 			 entity2.GetComponent<PhysicsComponent>().mass = 20 * 20;
 			 entity2.GetComponent<PhysicsComponent>().velocity = { speed*cosf( random<float>(-3.14f, 3.14f) ) , speed * sinf( random<float>(-3.14f, 3.14f) ) };//dir
 		}
-		for (int i = 0; i < 10; ++i)
+		for (int i = 0; i < 0; ++i)
 		{
 			int id3 = ecs->CreateEntity();
 			ECS::Entity& entity2 = ecs->entity_manager_.GetEntity(id3);
@@ -169,7 +171,7 @@ namespace JZEngine
 			entity2.GetComponent<PhysicsComponent>().mass = 35 * 35;
 			entity2.GetComponent<PhysicsComponent>().velocity = { speed * cosf(random<float>(-3.14f, 3.14f)) , speed * sinf(random<float>(-3.14f, 3.14f)) };//dir
 		}
-
+#endif
 		/*ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
 		int e = ecs->CreateEntity();
 		test = &ecs->entity_manager_.GetEntity(e);

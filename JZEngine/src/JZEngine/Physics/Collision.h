@@ -79,7 +79,12 @@ namespace JZEngine
 
 	namespace Collision
 	{
-		
+		bool IntersectCirclePolygon(const Circle& circle, const Square& squareA,
+			Vec2f& normal, float& depth);
+
+		int FindClosestPointOnPolygon(const Vec2f& point, std::vector<Vec2f>& vertices);
+
+		void ProjectCircle(const Circle& circle, const Vec2f& axis, float& min, float& max);
 
 		bool IntersectPolygons(const Square& squareA, const Square& squareB, Vec2f& normal, float depth);
 

@@ -10,34 +10,35 @@ namespace JZEngine
 	namespace Collision
 	{
 #if 1
-		bool IntersectCirclePolygon(const Circle& circle, const Square& square,
-			Vec2f& normal, float& depth)
+		bool IntersectCirclePolygon(const Circle& circle, const Square& squareA, Vec2f& normal, float& depth)
 		{
-			//normal = { 0,0 };
-			depth = std::numeric_limits<float>::max();
+
+			//Initialising Vertices for looping
+			std::vector<Vec2f> verticesA{ squareA.botleft,squareA.botright,squareA.topright,squareA.topleft };
+			
+
+			depth = std::numeric_limits<float>::max();//these values will be set
 
 			Vec2f axis{};
-			float axisDepth{ 0.f };
-			float minA, maxA, minB, maxB;
-
-			for (int i = 0; i < vertices.Length; i++)
+			float minA{}, maxA{}, minB{}, maxB{};
+			for (size_t i = 0; i < verticesA.size(); i++)
 			{
-				FlatVector va = vertices[i];
-				FlatVector vb = vertices[(i + 1) % vertices.Length];
+				Vec2f va = verticesA[i];
+				Vec2f vb = verticesA[(i + 1) % verticesA.size()];
 
-				FlatVector edge = vb - va;
-				axis = new FlatVector(-edge.Y, edge.X);
-				axis = FlatMath.Normalize(axis);
+				//find the normal of 1 side of the polygon will be the axis to be tested
+				Vec2f edge = vb - va;//line
+				axis = { -edge.y, edge.x };//normal
 
-				Collisions.ProjectVertices(vertices, axis, out minA, out maxA);
-				Collisions.ProjectCircle(circleCenter, circleRadius, axis, out minB, out maxB);
+				ProjectVertices(verticesA, axis, minA, maxA);//project the vertices of A onto the axis(normal)
+				ProjectCircle(circle, axis, minB, maxB);//project circle onto axis
 
 				if (minA >= maxB || minB >= maxA)
 				{
-					return false;
+					return false;//if they are seperated, return false
 				}
 
-				axisDepth = MathF.Min(maxB - minA, maxA - minB);
+				float axisDepth = std::min(maxB - minA, maxA - minB);//min depth to resolve collision
 
 				if (axisDepth < depth)
 				{
@@ -46,37 +47,77 @@ namespace JZEngine
 				}
 			}
 
-			int cpIndex = Collisions.FindClosestPointOnPolygon(circleCenter, vertices);
-			FlatVector cp = vertices[cpIndex];
-
-			axis = cp - circleCenter;
-			axis = FlatMath.Normalize(axis);
-
-			Collisions.ProjectVertices(vertices, axis, out minA, out maxA);
-			Collisions.ProjectCircle(circleCenter, circleRadius, axis, out minB, out maxB);
+			int index = FindClosestPointOnPolygon(circle.m_center, verticesA);
+			Vec2f closestpoint = verticesA[index];
+			axis = closestpoint - circle.m_center;//              
+	
+			ProjectVertices(verticesA, axis, minA, maxA);//project the vertices of A onto the axis(normal)
+			ProjectCircle(circle, axis, minB, maxB);//project circle onto axis
 
 			if (minA >= maxB || minB >= maxA)
 			{
-				return false;
+				return false;//if they are seperated, return false
 			}
 
-			axisDepth = MathF.Min(maxB - minA, maxA - minB);
+			float axisDepth = std::min(maxB - minA, maxA - minB);//min depth to resolve collision
 
 			if (axisDepth < depth)
 			{
 				depth = axisDepth;
 				normal = axis;
 			}
+			depth /= normal.Len();
+			normal.Normalize();
 
-			FlatVector direction = polygonCenter - circleCenter;
+			Vec2f direction = circle.m_center - squareA.midpoint;
 
-			if (FlatMath.Dot(direction, normal) < 0f)
+			if (direction.Dot(normal) < 0.f)//make sure norma is same direction as vector [AB]
 			{
 				normal = -normal;
 			}
-
 			return true;
 		}
+
+		int  FindClosestPointOnPolygon(const Vec2f& point, std::vector<Vec2f>& vertices)
+		{
+			int result = -1;
+			float minDistance = std::numeric_limits<float>::max();
+
+			for (size_t i = 0; i < vertices.size(); i++)
+			{
+				Vec2f v = vertices[i];
+				float distance = Math::Get2DVectorDistance(v, point);
+
+				if (distance < minDistance)
+				{
+					minDistance = distance;
+					result = i;
+				}
+			}
+
+			return result;
+		}
+
+		void ProjectCircle(const Circle& circle, const Vec2f& axis,  float& min,  float& max)
+		{
+			Vec2f Direction = axis.GetNormalized();
+			Vec2f DirectiontxRadius = Direction  * circle.m_radius;
+			//create 2 points on the circle with regards to the axis being tested
+			Vec2f p1 = circle.m_center + DirectiontxRadius;
+			Vec2f p2 = circle.m_center - DirectiontxRadius;
+
+			min = p1.Dot(axis);
+			max = p2.Dot( axis);
+
+			if (min > max)
+			{
+				//std::swap(min, max);
+				float t = min;
+				min = max;
+				max = t;
+			}
+		}
+
 #endif
 
 
@@ -99,7 +140,7 @@ namespace JZEngine
 				//find the normal of 1 side of the polygon will be the axis to be tested
 				Vec2f edge = vb - va;//line
 				Vec2f axis = { -edge.y, edge.x };//normal
-				axis.Normalize();
+			
 
 				float minA, maxA, minB, maxB;
 				ProjectVertices(verticesA, axis,  minA,  maxA);//project the vertices of A onto the axis(normal)
@@ -126,7 +167,7 @@ namespace JZEngine
 
 				Vec2f edge = vb - va;
 				Vec2f axis{ -edge.y, edge.x };
-				axis.Normalize();
+			
 
 				float minA, maxA, minB, maxB;
 				ProjectVertices(verticesA, axis, minA, maxA);
@@ -145,6 +186,8 @@ namespace JZEngine
 					normal = axis;
 				}
 			}
+			depth /= normal.Len();
+			normal.Normalize();
 
 			Vec2f direction = squareB.midpoint - squareA.midpoint;
 

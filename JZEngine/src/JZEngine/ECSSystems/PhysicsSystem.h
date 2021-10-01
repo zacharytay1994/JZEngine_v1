@@ -18,7 +18,7 @@ namespace JZEngine
 	struct PhysicsComponent
 	{
 		int shapeid {};
-
+		bool player{ false };//
 		float mass {};
 		float speed {};
 		
@@ -42,7 +42,7 @@ namespace JZEngine
 		std::vector<PhysicsComponent*> physics_cont;
 		//std::vector<PhysicsComponent*> polygon_cont;
 
-		unsigned int j{ 0 };
+		
 		float gravity{ -0.0981f };
 
 		PhysicsSystem();

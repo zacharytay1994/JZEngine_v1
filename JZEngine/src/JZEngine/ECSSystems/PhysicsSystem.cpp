@@ -22,19 +22,20 @@ namespace JZEngine
 
 	void PhysicsSystem::FrameBegin(const float& dt)
 	{
-		j = 0;
+		
 	}
 
 	//_____Updates Physic Components and calculates posnex for Collision & Response____//
 	void PhysicsSystem::Update(const float& dt)
 	{
 		PhysicsComponent& current_pcomponent = GetComponent<PhysicsComponent>();
-
+		Transform& current_transform = GetComponent<Transform>();
 		//acceleration
 		if (current_pcomponent.shapeid == shapetype::circle)
 			current_pcomponent.velocity += current_pcomponent.acceleration * dt;
 
-		Transform& current_transform = GetComponent<Transform>();
+		current_pcomponent.posnex = current_transform.position_ + current_pcomponent.velocity * dt;
+
 		
 		if (current_pcomponent.shapeid == shapetype::circle)
 		{
@@ -49,7 +50,7 @@ namespace JZEngine
 		//std::cout << current_pcomponent.shapeid << std::endl;
 
 		
-		current_pcomponent.posnex = current_transform.position_ + current_pcomponent.velocity * dt;
+		
 
 		bool am_inside{ false };
 		for (int i = 0; i < physics_cont.size(); ++i)
@@ -65,8 +66,7 @@ namespace JZEngine
 			physics_cont.push_back(&current_pcomponent);
 			transform_cont.push_back(&current_transform);
 		}
-		++j;
-		
+
 
 	}//__________________UPDATE_________________________//
 
@@ -77,7 +77,7 @@ namespace JZEngine
 		for (int i = 0; i < physics_cont.size(); ++i)
 		{
 			PhysicsComponent& componentA = *physics_cont[i];
-			for(int j= 0;j< physics_cont.size();++j)
+			for (int j = 0; j < physics_cont.size(); ++j)
 			{
 				PhysicsComponent& componentB = *physics_cont[j];
 
@@ -86,8 +86,8 @@ namespace JZEngine
 
 				Vec2f interpta{}, interptb{}, normalatcollision{};
 				float intertime{}, newspeed{};
-			
-				if(componentA.shapeid ==circle && componentB.shapeid == circle)
+
+				if (componentA.shapeid == circle && componentB.shapeid == circle)
 				{
 					if (true == Collision::DynamicCollision_CircleCircle(componentA.m_circle, componentA.velocity * dt, componentB.m_circle, componentB.velocity * dt, interpta, interptb, intertime))
 					{
@@ -115,47 +115,67 @@ namespace JZEngine
 				}
 			}
 		}
-		for (int i = 0; i < physics_cont.size() - 1; ++i)
+		for (int i = 0; i < static_cast<int>(physics_cont.size() - 1); i++)
 		{
 			PhysicsComponent& componentA = *physics_cont[i];
+			Transform& componentA_transform = *transform_cont[i];
 			for (int j = i + 1; j < physics_cont.size(); ++j)
 			{
 				PhysicsComponent& componentB = *physics_cont[j];
+				Transform& componentB_transform = *transform_cont[j];
+
 
 				Vec2f interpta{}, interptb{}, normalatcollision{};
 				float intertime{}, newspeed{};
 
-				if(componentA.shapeid==circle && componentB.shapeid == square)// Circle Square
+				if (componentA.shapeid == circle && componentB.shapeid == square)// Circle Square
 				{
-					bool checkLineEdges = true;
-					if (true == Collision::DynamicCollision_CircleSquare(componentA.m_circle, componentA.posnex, componentB.m_square, interpta, normalatcollision, intertime, checkLineEdges))
-					{
-#ifdef PHYSICSDEBUG
-						Log::Info("Collision", "Circle square");
-#endif
-						Vec2f reflectedvel{};
-						normalatcollision.Normalize();
+					float normal, depth;
 
-						Collision::CollisionResponse_CircleLineSegment(interpta, normalatcollision, componentA.posnex, reflectedvel);
-						componentA.velocity = reflectedvel * componentA.velocity.Len();
+					if (true == Collision::IntersectCirclePolygon(componentA.m_circle, componentB.m_square, normalatcollision, depth))
+					{
+						#ifdef PHYSICSDEBUG
+												Log::Info("Collision", "Circle square sat");
+						#endif
 					}
+//					bool checkLineEdges = true;
+//					if (true == Collision::DynamicCollision_CircleSquare(componentA.m_circle, componentA.posnex, componentB.m_square, interpta, normalatcollision, intertime, checkLineEdges))
+//					{
+//#ifdef PHYSICSDEBUG
+//						Log::Info("Collision", "Circle square");
+//#endif
+//						Vec2f reflectedvel{};
+//						normalatcollision.Normalize();
+//
+//						Collision::CollisionResponse_CircleLineSegment(interpta, normalatcollision, componentA.posnex, reflectedvel);
+//						componentA.velocity = reflectedvel * componentA.velocity.Len();
+//					}
 						
 				}
 				if (componentA.shapeid == square && componentB.shapeid == circle)// square circle
 				{
-					bool checkLineEdges = true;
-					if (true == Collision::DynamicCollision_CircleSquare(componentB.m_circle, componentB.posnex, componentA.m_square, interpta, normalatcollision, intertime, checkLineEdges))
+					float normal, depth;
+
+					if (true == Collision::IntersectCirclePolygon(componentB.m_circle, componentA.m_square, normalatcollision, depth))
 					{
 #ifdef PHYSICSDEBUG
-						Log::Info("Collision", "square circle");
+						Log::Info("Collision", "square circe sat");
 #endif
-						Vec2f reflectedvel{};
-						normalatcollision.Normalize();
-
-						Collision::CollisionResponse_CircleLineSegment(interpta, normalatcollision, componentB.posnex, reflectedvel);
-						componentB.velocity = reflectedvel * componentB.velocity.Len();
-						
 					}
+
+//					bool checkLineEdges = true;
+//					if (true == Collision::DynamicCollision_CircleSquare(componentB.m_circle, componentB.posnex, componentA.m_square, interpta, normalatcollision, intertime, checkLineEdges))
+//					{
+//#ifdef PHYSICSDEBUG
+//						Log::Info("Collision", "square circle");
+//#endif
+//						Vec2f reflectedvel{};
+//						normalatcollision.Normalize();
+//
+//						Collision::CollisionResponse_CircleLineSegment(interpta, normalatcollision, componentB.posnex, reflectedvel);
+//						componentB.velocity = reflectedvel * componentB.velocity.Len();
+//						
+//					}
 				}
 				if (componentA.shapeid == square && componentB.shapeid == square)// square square
 				{
@@ -169,7 +189,7 @@ namespace JZEngine
 #ifdef PHYSICSDEBUG
 						Log::Info("Collision", "square square");
 #endif
-						componentA.posnex = componentB.m_square.midpoint + (-normal * depth / 2.f);
+						componentA.posnex = componentA.m_square.midpoint - (normal * depth / 2.f);
 						componentB.posnex = componentB.m_square.midpoint + (normal * depth / 2.f);
 					}
 
@@ -181,6 +201,7 @@ namespace JZEngine
 		for (int i = 0; i < transform_cont.size(); ++i)
 		{
 			transform_cont[i]->position_ = physics_cont[i]->posnex;
+			//transform_cont[i]->position_ += physics_cont[i]->velocity * dt;
 		}
 		
 	}

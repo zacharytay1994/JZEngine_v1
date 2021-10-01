@@ -340,8 +340,29 @@ namespace JZEngine
 		template <>
 		void RenderComponent ( PhysicsComponent& component )
 		{
-			ImGui::SliderInt ( "Shape" , &component.shapeid , 0 , 2 );
-			ImGui::SliderFloat ( "Velocity of y" , &component.velocity.y , component.velocity.y - 0.1f , component.velocity.y + 0.1f );
+			// General data
+			ImGuiStyle& style = ImGui::GetStyle();
+			float w = ImGui::CalcItemWidth();
+			float spacing = style.ItemInnerSpacing.x;
+			float button_sz = ImGui::GetFrameHeight();
+			ImGui::Text("Shape");
+			ImGui::SliderInt("ID", &component.shapeid, 0, 2);
+
+			// Position
+			ImGui::Text("Velocity");
+			ImGui::PushItemWidth((w / 2.0f) - spacing);
+			ImGui::InputFloat("##VelX", &component.velocity.x);
+			ImGui::SameLine();
+			ImGui::Text("X");
+			ImGui::SameLine();
+			ImGui::InputFloat("##VelY", &component.velocity.y);
+			ImGui::SameLine();
+			ImGui::Text("Y");
+			ImGui::PopItemWidth();
+
+			ImGui::Text("Mass");
+			ImGui::SliderFloat ( "Mass" , &component.mass , component.mass - 20.0f , component.mass + 20.0f);
+			
 		}
 
 		template <>
