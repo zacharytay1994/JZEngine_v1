@@ -69,7 +69,8 @@ namespace JZEngine
 		global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<ParallaxBackground> ()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer> ();
 
 		//Create sound
-		global_systems_->GetSystem<SoundSystem>()->createSound("LOST CIVILIZATION - NewAge MSCNEW2_41.wav", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
+		//global_systems_->GetSystem<SoundSystem>()->createSound("LOST CIVILIZATION - NewAge MSCNEW2_41.wav", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
+		global_systems_->GetSystem<SoundSystem>()->createSound("mellau__button-click-1.wav", "../JZEngine/Resources/mellau__button-click-1.wav");
 
 		// give singleton logger handle to the engine console
 		Log::Instance ().Initialize ( global_systems_->GetSystem<EngineGUI> ()->GetConsole () );
@@ -190,7 +191,7 @@ namespace JZEngine
 			if (pressed == true)
 			{
 				SoundEvent event{};
-				event.name = "LOST CIVILIZATION - NewAge MSCNEW2_41.wav";
+				event.name = "mellau__button-click-1.wav";
 				msgbus.publish(&event);
 			}
 

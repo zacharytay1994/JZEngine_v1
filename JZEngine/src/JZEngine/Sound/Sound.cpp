@@ -115,7 +115,8 @@ namespace JZEngine
 
     void SoundSystem::playSound(SoundEvent* msg)
     {
-        playSound(msg->name, true, 1.0f);
+        //this just calls the normal playSound function
+        playSound(msg->name, false, 1.0f);
     }
 
     /**

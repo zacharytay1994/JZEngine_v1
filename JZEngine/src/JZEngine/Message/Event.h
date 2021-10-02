@@ -8,7 +8,7 @@ namespace JZEngine
 	class SoundEvent : public Event
 	{
 	public:
-		std::string name = "LOST CIVILIZATION - NewAge MSCNEW2_41.wav";
+		std::string name = "mellau__button-click-1.wav";
 
 	};
 
