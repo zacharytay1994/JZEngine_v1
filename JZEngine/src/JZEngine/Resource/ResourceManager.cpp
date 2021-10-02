@@ -13,6 +13,8 @@ namespace JZEngine
 		LoadTexture2D ( "TempB3" , "Assets/Textures/TempBackground-03.png" );
 		LoadTexture2D ( "TempB4" , "Assets/Textures/TempBackground-04.png" );
 		LoadTexture2D("Circle", "Assets/Textures/circle.png");	//6
+		LoadTexture2D("CircleRed", "Assets/Textures/circlered.png");	//7
+
 		// load shaders
 		LoadShader ( "Default" ,
 					 "Assets/Shaders/Vertex/VS_Sprite2D.vs" ,

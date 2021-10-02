@@ -1,6 +1,7 @@
 #include "PCH.h"
 
 #include "../Physics/Collision.h"
+#include "../Physics/AABB.h"
 #include <limits> 
 const float			PI = 3.1415926f;
 const float			PI_OVER_180 = PI / 180.0f;
@@ -29,7 +30,7 @@ namespace JZEngine
 				//find the normal of 1 side of the polygon will be the axis to be tested
 				Vec2f edge = vb - va;//line
 				axis = { -edge.y, edge.x };//normal
-
+				axis.Normalize();
 				ProjectVertices(verticesA, axis, minA, maxA);//project the vertices of A onto the axis(normal)
 				ProjectCircle(circle, axis, minB, maxB);//project circle onto axis
 
@@ -50,7 +51,7 @@ namespace JZEngine
 			int index = FindClosestPointOnPolygon(circle.m_center, verticesA);
 			Vec2f closestpoint = verticesA[index];
 			axis = closestpoint - circle.m_center;//              
-	
+			axis.Normalize();
 			ProjectVertices(verticesA, axis, minA, maxA);//project the vertices of A onto the axis(normal)
 			ProjectCircle(circle, axis, minB, maxB);//project circle onto axis
 
@@ -66,8 +67,7 @@ namespace JZEngine
 				depth = axisDepth;
 				normal = axis;
 			}
-			depth /= normal.Len();
-			normal.Normalize();
+
 
 			Vec2f direction = circle.m_center - squareA.midpoint;
 
@@ -140,7 +140,7 @@ namespace JZEngine
 				//find the normal of 1 side of the polygon will be the axis to be tested
 				Vec2f edge = vb - va;//line
 				Vec2f axis = { -edge.y, edge.x };//normal
-			
+				axis.Normalize();
 
 				float minA, maxA, minB, maxB;
 				ProjectVertices(verticesA, axis,  minA,  maxA);//project the vertices of A onto the axis(normal)
@@ -167,7 +167,7 @@ namespace JZEngine
 
 				Vec2f edge = vb - va;
 				Vec2f axis{ -edge.y, edge.x };
-			
+				axis.Normalize();
 
 				float minA, maxA, minB, maxB;
 				ProjectVertices(verticesA, axis, minA, maxA);
@@ -186,8 +186,6 @@ namespace JZEngine
 					normal = axis;
 				}
 			}
-			depth /= normal.Len();
-			normal.Normalize();
 
 			Vec2f direction = squareB.midpoint - squareA.midpoint;
 

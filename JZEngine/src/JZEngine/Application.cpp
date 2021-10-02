@@ -90,7 +90,7 @@ namespace JZEngine
 		}*/
 
 		
-#if 1
+#if 1 // 0 to not run physics stuff
 		ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
 		int id = ecs->CreateEntity();
 		ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);

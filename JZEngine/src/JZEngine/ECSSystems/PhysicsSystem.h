@@ -18,7 +18,7 @@ namespace JZEngine
 	struct PhysicsComponent
 	{
 		int shapeid {};
-		bool player{ false };//
+
 		float mass {};
 		float speed {};
 		

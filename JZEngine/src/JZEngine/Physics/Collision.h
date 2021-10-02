@@ -1,8 +1,8 @@
 #pragma once
 
-//#include "../ECSSystems/PhysicsSystem.h"
-#include "../Math/JZMath.h"
 
+#include "../Math/JZMath.h"
+#include "../Physics/AABB.h"
 #include <vector>
 
 namespace JZEngine
@@ -17,16 +17,7 @@ namespace JZEngine
 		float m_mass;//to be used
 	};
 
-	struct AABB
-	{
-		Vec2f min;
-		Vec2f max;
-		AABB(Vec2f midpt, Vec2f scale)
-		{
-			min = midpt - (scale / 2.0f);
-			max = midpt + (scale / 2.0f);//to change
-		}
-	};
+
 
 	struct Square
 	{

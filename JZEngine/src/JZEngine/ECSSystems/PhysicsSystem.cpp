@@ -30,6 +30,8 @@ namespace JZEngine
 	{
 		PhysicsComponent& current_pcomponent = GetComponent<PhysicsComponent>();
 		Transform& current_transform = GetComponent<Transform>();
+
+
 		//acceleration
 		if (current_pcomponent.shapeid == shapetype::circle)
 			current_pcomponent.velocity += current_pcomponent.acceleration * dt;
@@ -108,6 +110,7 @@ namespace JZEngine
 						newspeed = reflectedVecB.Len() / dt;//B: new speed
 						reflectedVecB.Normalize();
 						componentB.velocity = reflectedVecB * newspeed;
+
 #ifdef PHYSICSDEBUG
 						Log::Info("Collision", "is circle-circle colliding!!!");
 #endif
