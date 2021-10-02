@@ -53,7 +53,11 @@ namespace JZEngine
 			
 		}
 		//std::cout << current_pcomponent.shapeid << std::endl;
+#ifdef PHYSICSDEBUG
 		RendererDebug::DrawLine(current_transform.position_, current_transform.position_ + current_pcomponent.velocity * 0.2f);
+#endif // 
+
+		
 		
 		
 
