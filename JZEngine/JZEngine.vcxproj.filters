@@ -122,5 +122,6 @@
     <ClInclude Include="src\JZEngine\DebugTools\Assert.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Text.h" />
     <ClInclude Include="src\JZEngine\STL\String.h" />
+    <ClInclude Include="src\JZEngine\DebugTools\DebugNew.h" />
   </ItemGroup>
 </Project>

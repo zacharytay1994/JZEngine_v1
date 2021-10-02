@@ -113,7 +113,7 @@ namespace JZEngine
 		shader.Bind ();
 
 		JZEngine::Mat3f camwin_to_ndc_xform = { {2.0f / ( Settings::aspect_ratio * Settings::window_height ), 0.0f, 0.0f},
-												{0.0f, 2.0f / Settings::window_height, 0.0f},
+												{0.0f, -2.0f / Settings::window_height, 0.0f},
 												{0.0f, 0.0f, 1.0f} };
 
 		shader.SetUniform ( "projection" , camwin_to_ndc_xform.Transpose () );

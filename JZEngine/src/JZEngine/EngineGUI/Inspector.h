@@ -216,6 +216,8 @@ namespace JZEngine
 				"Click and hold to use drag and drop.\n"
 				"Right-click on the color square to show options.\n"
 				"CTRL+click on individual component to input value.\n"
+				"! Alpha is not integrated at this moment.\n"
+				"Thank you for your patience !"
 			};
 
 			ImGui::Text ( "Tint" );
@@ -393,14 +395,18 @@ namespace JZEngine
 			}
 			ImGui::PopItemWidth ();
 		}
-		
-		template <>
-		void RenderComponent ( TextData& component )
-		{
-			ImGui::SliderFloat ( "X" , &component.position_.x , 0.0f , 100.0f );
-			ImGui::SliderFloat ( "Y" , &component.position_.y , 0.0f , 100.0f );
-			ImGui::SliderFloat ( "Scale" , &component.scale_ , 0.0f , 100.0f );
-		}
+
+		//template <>
+		//void RenderComponent ( TextData& component )
+		//{	
+		//	//ImGui::InputFloat ( "Scale" , &component.font_size_ , 0.0f , 100.0f );
+		//	//char text[ 200 ]= "test";
+		///*	static ImGuiInputTextFlags flags = ImGuiInputTextFlags_AllowTabInput;
+		//	ImGui::CheckboxFlags ( "ReadOnly" , &flags , ImGuiInputTextFlags_ReadOnly );
+		//	ImGui::InputTextMultiline ( "##source" , text , IM_ARRAYSIZE ( text ) , ImVec2 ( -FLT_MIN , ImGui::GetTextLineHeight () * 16 ) , flags );*/
+		//	//component.text = text;
+		//
+		//}
 
 		/*!
 		 * @brief ___JZEngine::LoopTupleRender___

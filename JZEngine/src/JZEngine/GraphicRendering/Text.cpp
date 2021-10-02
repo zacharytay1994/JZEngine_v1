@@ -16,7 +16,7 @@ namespace JZEngine
 			Transform& transform = GetComponent<Transform> ();
 			TextData& text_data = GetComponent<TextData> ();
 
-			text_renderer_->RenderText ( "temp" , text_data.position_.x + transform.position_.x , text_data.position_.y + transform.position_.y , text_data.scale_ , { 0.0f,0.0f,0.0f } );
+			text_renderer_->RenderText ( "test" ,transform.position_.x , transform.position_.y , text_data.font_size_, { 0.0f,0.0f,0.0f } );
 		}
 	}
 }

@@ -6,6 +6,7 @@
 
 	How to use :
 	Call the word "ASSERT" .
+
 	Example #1 : JZ_ASSERT(J+Z == 1 , "engine");
 
 		Console Print Out for Example 1 :
