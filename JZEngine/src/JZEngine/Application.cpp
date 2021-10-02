@@ -39,16 +39,18 @@
 
 
 
+#include "Message/Event.h"
+
+
+
+
+
 namespace JZEngine
 {
-
 	Application::Application ()
 		:
 		global_systems_ ( new GlobalSystemsManager () )
 	{
-		//mushroom//
-		//testsystem.initialize();
-
 		/*testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
 		testsystem.playSound("testsound", true, 0.4f);
 		testsystem.setChannelGroupVolume(1.0f,"main");*/
@@ -69,12 +71,18 @@ namespace JZEngine
 		global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<InstanceSprite> ()->sprite_renderer_instancing_.renderer_ = global_systems_->GetSystem<RendererInstancing> ();
 		global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<ParallaxBackground> ()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer> ();
 
+		//Create sound
+		//global_systems_->GetSystem<SoundSystem>()->createSound("LOST CIVILIZATION - NewAge MSCNEW2_41.wav", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
+		global_systems_->GetSystem<SoundSystem>()->createSound("mellau__button-click-1.wav", "../JZEngine/Resources/mellau__button-click-1.wav");
+
 		// give singleton logger handle to the engine console
 		Log::Instance ().Initialize ( global_systems_->GetSystem<EngineGUI> ()->GetConsole () );
 		JZEngine::Log::Info ( "Main" , "[{}] Up and Running! v{}" , Settings::engine_name , Settings::version );
 
 		PerformanceData::Init();
 		Serialize::Load();
+
+		msgbus.subscribe(global_systems_->GetSystem<SoundSystem>(), &SoundSystem::playSound);
 
 		// test code
 		/*global_systems_->GetSystem<SoundSystem>()->createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
@@ -188,6 +196,15 @@ namespace JZEngine
 			auto start_time = std::chrono::high_resolution_clock::now ();
 
 			//double dt = limit_frames ? clamped_dt : actual_dt;
+
+			bool pressed = JZEngine::InputHandler::IsMouseTriggered(JZEngine::MOUSE::MOUSE_BUTTON_LEFT);
+			
+			if (pressed == true)
+			{
+				SoundEvent event{};
+				event.name = "mellau__button-click-1.wav";
+				msgbus.publish(&event);
+			}
 
 			PerformanceData::FrameStart ();
 			PerformanceData::StartMark ( "Game Loop" , PerformanceData::TimerType::GLOBAL_SYSTEMS );

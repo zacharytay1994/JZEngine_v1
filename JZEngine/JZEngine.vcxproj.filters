@@ -173,6 +173,9 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
     <ClInclude Include="src\JZEngine\Input\Input.h" />
     <ClInclude Include="src\JZEngine\Input\DeltaTime.h" />
+    <ClInclude Include="src\JZEngine\Message\MessageHandler.h" />
+    <ClInclude Include="src\JZEngine\Message\MessageBus.h" />
+    <ClInclude Include="src\JZEngine\Message\Event.h" />
     <ClInclude Include="src\JZEngine\Math\JZMatrix.h" />
     <ClInclude Include="src\JZEngine\Math\JZMath.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\SpriteRenderer.h" />

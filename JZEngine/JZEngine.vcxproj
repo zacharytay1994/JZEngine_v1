@@ -326,6 +326,9 @@
     <ClInclude Include="src\JZEngine\Math\Vec2.h" />
     <ClInclude Include="src\JZEngine\Math\Vec3.h" />
     <ClInclude Include="src\JZEngine\Math\Vec4.h" />
+    <ClInclude Include="src\JZEngine\Message\Event.h" />
+    <ClInclude Include="src\JZEngine\Message\MessageBus.h" />
+    <ClInclude Include="src\JZEngine\Message\MessageHandler.h" />
     <ClInclude Include="src\JZEngine\PCH.h" />
     <ClInclude Include="src\JZEngine\BuildDefinitions.h" />
     <ClInclude Include="src\JZEngine\Physics\Collision.h" />
