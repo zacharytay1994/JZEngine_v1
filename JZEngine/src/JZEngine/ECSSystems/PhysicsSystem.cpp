@@ -31,7 +31,8 @@ namespace JZEngine
 	{
 		PhysicsComponent& current_pcomponent = GetComponent<PhysicsComponent>();
 		Transform& current_transform = GetComponent<Transform>();
-
+		current_pcomponent.position = current_transform.position_;
+		current_pcomponent.size = current_transform.size_;
 
 		//acceleration
 		if (current_pcomponent.shapeid == shapetype::circle)
@@ -48,12 +49,34 @@ namespace JZEngine
 		if (current_pcomponent.shapeid == shapetype::square)
 		{
 			current_pcomponent.m_square = { current_transform.position_,current_transform.size_ };
-			
-		}
-		//std::cout << current_pcomponent.shapeid << std::endl;
+			//RendererDebug::DrawSquare(current_pcomponent.m_square.midpoint, current_pcomponent.size);
+			Vec2f pt{ 100.f,100.f };
+			//RendererDebug::DrawLine(current_pcomponent.m_square.midpoint, pt);
+			//std::cout << current_pcomponent.shapeid << std::endl;
+#if 1
+			std::vector<Vec2f> vertices;
+			vertices.push_back(current_pcomponent.m_square.topleft);
+			vertices.push_back(current_pcomponent.m_square.topright);
+			vertices.push_back(current_pcomponent.m_square.botright);
+			vertices.push_back(current_pcomponent.m_square.botleft);
+			for (int i = 0; i < vertices.size(); i++)
+			{
+				//float tempx = vertices[i].x - current_pcomponent.m_square.midpoint.x;
+				//float tempy = vertices[i].y - current_pcomponent.m_square.midpoint.y;
+				//float rotatedX = tempx * cosf(3.14f/4.f) - tempy * sinf(3.14f / 4.f);
+				//float rotatedY = tempx * sinf(3.14f / 4.f) + tempy * cosf(3.14f / 4.f);
 
-		
-		
+				//// translate back
+				//vertices[i].y = rotatedY+current_pcomponent.m_square.midpoint.y;
+				//vertices[i].x = rotatedX+current_pcomponent.m_square.midpoint.x;
+
+				if(i== vertices.size()-1)
+					RendererDebug::DrawLine(vertices[i], vertices[0]);
+				else
+					RendererDebug::DrawLine(vertices[i], vertices[(i+1)] );
+			}
+#endif
+		}
 
 		bool am_inside{ false };
 		for (int i = 0; i < physics_cont.size(); ++i)

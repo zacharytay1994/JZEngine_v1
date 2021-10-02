@@ -9,16 +9,20 @@ namespace JZEngine
 	std::vector<ResourceManager::Texture2DID> ResourceManager::texture2ds_;
 	ResourceManager::ResourceManager ()
 	{
+		//add below so existing code dont need edit hehe
 		// load textures
-		LoadTexture2D("TextFile", "Assets/Textures/textfileicon.png");
-		LoadTexture2D ( "Unicorn" , "Assets/Textures/cute-unicorn.png" );//0
+		LoadTexture2D("TextFile", "Assets/Textures/textfileicon.png");	
+		LoadTexture2D ( "Unicorn" , "Assets/Textures/cute-unicorn.png" );//1
 		LoadTexture2D ( "Square" , "Assets/Textures/square.jpg" );
 		LoadTexture2D ( "TempB1" , "Assets/Textures/TempBackground-01.png" );
 		LoadTexture2D ( "TempB2" , "Assets/Textures/TempBackground-02.png" );
 		LoadTexture2D ( "TempB3" , "Assets/Textures/TempBackground-03.png" );
 		LoadTexture2D ( "TempB4" , "Assets/Textures/TempBackground-04.png" );
-		LoadTexture2D("Circle", "Assets/Textures/circle.png");	//6
-		LoadTexture2D("CircleRed", "Assets/Textures/circlered.png");	//7
+		LoadTexture2D("Circle", "Assets/Textures/circle.png");	//7
+		LoadTexture2D("CircleRed", "Assets/Textures/circlered.png");	//8
+		LoadTexture2D("Square", "Assets/Textures/squareblue.png");//9
+
+
 
 		// load shaders
 		LoadShader ( "Default" ,

@@ -5,6 +5,7 @@
 #include "../ECS/ECSConfig.h"
 #include "../Physics/Collision.h"
 //#include "../Physics/PhysicsBody.h"
+#include "../GraphicRendering/RendererDebug.h"
 
 namespace JZEngine
 {
@@ -12,11 +13,13 @@ namespace JZEngine
 
 	struct PhysicsComponent
 	{
+
 		int shapeid {};
 
 		float mass {};
 		float speed {};
-		
+		Vec2f size;
+		Vec2f position;
 		Vec2f posnex;
 		Vec2f velocity {};//vel = speed * dir
 		Vec2f acceleration{ 0.0f,0.0f };

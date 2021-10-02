@@ -40,8 +40,8 @@ namespace JZEngine
 				Sprite ,
 				InstanceSprite ,
 				FloatAwayAllUnicorn ,
-				MakeUnicornAffectedByInput
-				//PhysicsSystem
+				MakeUnicornAffectedByInput,
+				PhysicsSystem
 
 				>;
 		};
