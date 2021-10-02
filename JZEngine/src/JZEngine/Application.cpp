@@ -231,10 +231,6 @@ namespace JZEngine
 			global_systems_->FrameStart ();
 			global_systems_->Update ( dt );
 
-			RendererDebug::DrawSquare({ -100.0f, 100.0f }, { 10.0f, 50.0f });
-			RendererDebug::DrawSquare({ 100.0f, -100.0f }, { 20.0f, 30.0f });
-			RendererDebug::DrawLines({ {50.0f, 50.0f},{60.0f, 20.0f},{30.0f, -40.0f},{0.0f, -40.0f},{30.0f, 100.0f} });
-			RendererDebug::DrawLines({ {-50.0f, -50.0f},{-60.0f, -20.0f},{-30.0f, 40.0f}}, true);
 			//DeltaTime::update_time(1.0);
 			//DeltaTime::update_deltatime(1.0);
 			
