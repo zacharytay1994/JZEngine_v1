@@ -146,14 +146,14 @@ namespace JZEngine
 			 entity2.AddSystem(1);
 			 entity2.AddComponent<PhysicsComponent>();
 			 entity2.GetComponent<Transform>().position_ = { random<float>(-300.0f, 300.0f),random<float>(-100.0f, 300.0f) };
-			 entity2.GetComponent<Texture>().texture_id_ = 6;
-			 entity2.GetComponent<PhysicsComponent>().shapeid = 0;
+			 entity2.GetComponent<Texture>().texture_id_ = 1;
+			 entity2.GetComponent<PhysicsComponent>().shapeid = 2;
 			 float speed =  random<float>(10.0f, 100.0f) ;
 			 entity2.GetComponent<Transform>().size_.x = 20;
 			 entity2.GetComponent<Transform>().size_.y = 20;
 			 entity2.GetComponent<PhysicsComponent>().speed = speed;
 			 entity2.GetComponent<PhysicsComponent>().mass = 20 * 20;
-			 entity2.GetComponent<PhysicsComponent>().velocity = { speed*cosf( random<float>(-3.14f, 3.14f) ) , speed * sinf( random<float>(-3.14f, 3.14f) ) };//dir
+			 //entity2.GetComponent<PhysicsComponent>().velocity = { speed*cosf( random<float>(-3.14f, 3.14f) ) , speed * sinf( random<float>(-3.14f, 3.14f) ) };//dir
 		}
 		for (int i = 0; i < 0; ++i)
 		{

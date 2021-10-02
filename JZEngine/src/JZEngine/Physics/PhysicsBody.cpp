@@ -1,10 +1,11 @@
 #include "PCH.h"
 #include "../Physics/PhysicsBody.h"
+#if 0
 namespace JZEngine
 {
     
     PhysicsBody::PhysicsBody(Vec2f position, float density, float mass, float restitution, float area,
-        bool isStatic, float radius, float width, float height, JZEngine::ShapeType shapeType)
+        bool isStatic, float radius, float width, float height, JZEngine::shapetype shapetype)
     {
         this->position = position;
         this->linearVelocity = { 0,0 };
@@ -22,7 +23,7 @@ namespace JZEngine
         this->Radius = radius;
         this->Width = width;
         this->Height = height;
-        this->ShapeType = shapeType;
+        this->shapetype = shapetype;
 
         if (!IsStatic)
         {
@@ -33,7 +34,7 @@ namespace JZEngine
             this->InvMass = 0.f;
         }
 
-        if (this->ShapeType == JZEngine::Box)
+        if (this->shapetype == JZEngine::Box)
         {
             CreateBoxVertices();
             CreateBoxTriangles();
@@ -93,7 +94,7 @@ namespace JZEngine
 
             for (int i = 0; i < transformedVertices.size(); i++)
             {
-                transformedVertices[i] -= - position;
+                transformedVertices[i] -=  position;
                 float rotatedX = transformedVertices[i].x * cosf(rotation) - transformedVertices[i].y * sin(rotation);
                 float rotatedY = transformedVertices[i].x * sinf(rotation) + transformedVertices[i].y * cos(rotation);
 

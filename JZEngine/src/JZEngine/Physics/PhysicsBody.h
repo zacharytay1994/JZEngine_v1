@@ -7,10 +7,11 @@
 
 namespace JZEngine
 {
-    enum ShapeType
+    enum shapetype
     {
-        Circle = 0,
-        Box = 1
+        circle = 0,
+        aabb = 1,
+        square = 2,
     };
 
     class PhysicsBody
@@ -42,7 +43,7 @@ namespace JZEngine
         bool transformUpdateRequired;
         bool aabbUpdateRequired;
 
-        ShapeType ShapeType;
+        shapetype shapetype;
 
         Vec2f GetPosition()
         {
@@ -56,7 +57,7 @@ namespace JZEngine
         }
         PhysicsBody() = default;
         PhysicsBody(Vec2f position, float density, float mass, float restitution, float area,
-            bool isStatic, float radius, float width, float height, JZEngine::ShapeType shapeType);
+            bool isStatic, float radius, float width, float height, JZEngine::shapetype shapetype);
         ~PhysicsBody() {} 
 
         void CreateBoxTriangles();
@@ -75,7 +76,7 @@ namespace JZEngine
                 float maxX = float.MinValue;
                 float maxY = float.MinValue;
 
-                if (this->ShapeType is ShapeType.Box)
+                if (this->shapetype is shapetype.Box)
                 {
                     Vec2f[] vertices = TransformedVertices();
 
@@ -89,7 +90,7 @@ namespace JZEngine
                         if (v.Y > maxY) { maxY = v.Y; }
                     }
                 }
-                else if (this->ShapeType is ShapeType.Circle)
+                else if (this->shapetype is shapetype.Circle)
                 {
                     minX = this->position.X - this->Radius;
                     minY = this->position.Y - this->Radius;
@@ -98,7 +99,7 @@ namespace JZEngine
                 }
                 else
                 {
-                    throw new Exception("Unknown ShapeType.");
+                    throw new Exception("Unknown shapetype.");
                 }
 
                 this->aabb = new FlatAABB(minX, minY, maxX, maxY);

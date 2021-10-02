@@ -2,6 +2,7 @@
 #include "../ECS/ECS.h"
 #include "../ECS/ECSConfig.h"
 #include "../Physics/Collision.h"
+#include "PhysicsSystem.h"
 #define PHYSICSDEBUG
 
 

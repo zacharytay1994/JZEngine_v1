@@ -4,16 +4,11 @@
 #include "../ECS/ECS.h"
 #include "../ECS/ECSConfig.h"
 #include "../Physics/Collision.h"
-
+//#include "../Physics/PhysicsBody.h"
 
 namespace JZEngine
 {
-	enum shapetype
-	{
-		circle = 0,
-		aabb = 1,
-		square = 2,
-	};
+
 
 	struct PhysicsComponent
 	{
@@ -26,8 +21,20 @@ namespace JZEngine
 		Vec2f velocity {};//vel = speed * dir
 		Vec2f acceleration{ 0.0f,0.0f };
 
+		Vec2f linearVelocity;
+		float rotationalVelocity;
+		Vec2f force;
+
+		float Density;
+		float Mass;
+		float InvMass;
+		float Restitution;
+		float Area;
+
+		bool IsStatic;
+
 		union {
-			Circle m_circle{};
+			Circle m_circle;
 			//AABB m_AABB;
 			Square m_square;
 		};

@@ -8,7 +8,12 @@
 namespace JZEngine
 {
 
-
+	enum shapetype
+	{
+		circle = 0,
+		aabb = 1,
+		square = 2,
+	};
 
 	struct Circle
 	{

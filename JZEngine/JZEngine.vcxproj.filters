@@ -37,7 +37,6 @@
     <ClCompile Include="src\JZEngine\Math\JZMath.cpp" />
     <ClCompile Include="src\JZEngine\Physics\Collision.cpp" />
     <ClCompile Include="src\JZEngine\Input\Input.cpp" />
-    <ClCompile Include="src\JZEngine\Physics\PhysicsBody.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
@@ -196,7 +195,6 @@
     <ClInclude Include="src\JZEngine\ImGui\ImSequencer.h" />
     <ClInclude Include="src\JZEngine\ImGui\ImZoomSlider.h" />
     <ClInclude Include="src\JZEngine\Physics\Collision.h" />
-    <ClInclude Include="src\JZEngine\Physics\PhysicsBody.h" />
     <ClInclude Include="src\JZEngine\Physics\AABB.h" />
   </ItemGroup>
 </Project>
