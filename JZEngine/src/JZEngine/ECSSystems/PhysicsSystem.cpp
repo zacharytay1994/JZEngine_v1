@@ -2,6 +2,9 @@
 #include "../ECS/ECS.h"
 #include "../ECS/ECSConfig.h"
 #include "../Physics/Collision.h"
+#include "../GraphicRendering/RendererDebug.h"
+
+
 #define PHYSICSDEBUG
 
 
@@ -10,7 +13,7 @@ namespace JZEngine
 {
 	std::vector<Transform*> transform_cont;
 
-
+	
 	PhysicsComponent::PhysicsComponent() {}
 	PhysicsComponent::PhysicsComponent(const PhysicsComponent& s) { std::memcpy(this, &s, sizeof(s)); }
 	PhysicsComponent::~PhysicsComponent() {}
@@ -22,19 +25,22 @@ namespace JZEngine
 
 	void PhysicsSystem::FrameBegin(const float& dt)
 	{
-		j = 0;
+		
 	}
 
 	//_____Updates Physic Components and calculates posnex for Collision & Response____//
 	void PhysicsSystem::Update(const float& dt)
 	{
 		PhysicsComponent& current_pcomponent = GetComponent<PhysicsComponent>();
+		Transform& current_transform = GetComponent<Transform>();
+
 
 		//acceleration
 		if (current_pcomponent.shapeid == shapetype::circle)
 			current_pcomponent.velocity += current_pcomponent.acceleration * dt;
 
-		Transform& current_transform = GetComponent<Transform>();
+		current_pcomponent.posnex = current_transform.position_ + current_pcomponent.velocity * dt;
+
 		
 		if (current_pcomponent.shapeid == shapetype::circle)
 		{
@@ -43,13 +49,17 @@ namespace JZEngine
 		}
 		if (current_pcomponent.shapeid == shapetype::square)
 		{
-			Square tmp{ current_transform.position_,current_transform.size_ };//to change
-			current_pcomponent.m_square = tmp;
+			current_pcomponent.m_square = { current_transform.position_,current_transform.size_ };
+			
 		}
 		//std::cout << current_pcomponent.shapeid << std::endl;
+#ifdef PHYSICSDEBUG
+		RendererDebug::DrawLine(current_transform.position_, current_transform.position_ + current_pcomponent.velocity * 0.2f);
+#endif // 
 
 		
-		current_pcomponent.posnex = current_transform.position_ + current_pcomponent.velocity * dt;
+		
+		
 
 		bool am_inside{ false };
 		for (int i = 0; i < physics_cont.size(); ++i)
@@ -65,8 +75,7 @@ namespace JZEngine
 			physics_cont.push_back(&current_pcomponent);
 			transform_cont.push_back(&current_transform);
 		}
-		++j;
-		
+
 
 	}//__________________UPDATE_________________________//
 
@@ -77,14 +86,17 @@ namespace JZEngine
 		for (int i = 0; i < physics_cont.size(); ++i)
 		{
 			PhysicsComponent& componentA = *physics_cont[i];
-			for(int j= 0;j< physics_cont.size();++j)
+			for (int j = 0; j < physics_cont.size(); ++j)
 			{
 				PhysicsComponent& componentB = *physics_cont[j];
 
+				if (&componentB == &componentA)
+					continue;
+
 				Vec2f interpta{}, interptb{}, normalatcollision{};
 				float intertime{}, newspeed{};
-			
-				if(componentA.shapeid ==circle && componentB.shapeid == circle)
+
+				if (componentA.shapeid == circle && componentB.shapeid == circle)
 				{
 					if (true == Collision::DynamicCollision_CircleCircle(componentA.m_circle, componentA.velocity * dt, componentB.m_circle, componentB.velocity * dt, interpta, interptb, intertime))
 					{
@@ -105,6 +117,7 @@ namespace JZEngine
 						newspeed = reflectedVecB.Len() / dt;//B: new speed
 						reflectedVecB.Normalize();
 						componentB.velocity = reflectedVecB * newspeed;
+
 #ifdef PHYSICSDEBUG
 						Log::Info("Collision", "is circle-circle colliding!!!");
 #endif
@@ -112,18 +125,29 @@ namespace JZEngine
 				}
 			}
 		}
-		for (int i = 0; i < physics_cont.size() - 1; ++i)
+		for (int i = 0; i < static_cast<int>(physics_cont.size() - 1); i++)
 		{
 			PhysicsComponent& componentA = *physics_cont[i];
+			Transform& componentA_transform = *transform_cont[i];
 			for (int j = i + 1; j < physics_cont.size(); ++j)
 			{
 				PhysicsComponent& componentB = *physics_cont[j];
+				Transform& componentB_transform = *transform_cont[j];
+
 
 				Vec2f interpta{}, interptb{}, normalatcollision{};
 				float intertime{}, newspeed{};
 
-				if(componentA.shapeid==circle && componentB.shapeid == square)// Circle Square
+				if (componentA.shapeid == circle && componentB.shapeid == square)// Circle Square
 				{
+					float normal, depth;
+
+					if (true == Collision::IntersectCirclePolygon(componentA.m_circle, componentB.m_square, normalatcollision, depth))
+					{
+						#ifdef PHYSICSDEBUG
+												Log::Info("Collision", "Circle square sat");
+						#endif
+					}
 					bool checkLineEdges = true;
 					if (true == Collision::DynamicCollision_CircleSquare(componentA.m_circle, componentA.posnex, componentB.m_square, interpta, normalatcollision, intertime, checkLineEdges))
 					{
@@ -140,6 +164,15 @@ namespace JZEngine
 				}
 				if (componentA.shapeid == square && componentB.shapeid == circle)// square circle
 				{
+					float normal, depth;
+
+					if (true == Collision::IntersectCirclePolygon(componentB.m_circle, componentA.m_square, normalatcollision, depth))
+					{
+#ifdef PHYSICSDEBUG
+						Log::Info("Collision", "square circe sat");
+#endif
+					}
+
 					bool checkLineEdges = true;
 					if (true == Collision::DynamicCollision_CircleSquare(componentB.m_circle, componentB.posnex, componentA.m_square, interpta, normalatcollision, intertime, checkLineEdges))
 					{
@@ -154,12 +187,31 @@ namespace JZEngine
 						
 					}
 				}
+				if (componentA.shapeid == square && componentB.shapeid == square)// square square
+				{
+					if (&componentA == &componentB)
+						continue;
+
+					Vec2f normal;
+					float depth=0.f;
+					if (true==Collision::IntersectPolygons(componentA.m_square, componentB.m_square, normal,depth))
+					{
+#ifdef PHYSICSDEBUG
+						Log::Info("Collision", "square square");
+#endif
+						componentA.posnex = componentA.m_square.midpoint - (normal * depth / 2.f);
+						componentB.posnex = componentB.m_square.midpoint + (normal * depth / 2.f);
+					}
+
+
+				}
 			}
 		}
 
 		for (int i = 0; i < transform_cont.size(); ++i)
 		{
 			transform_cont[i]->position_ = physics_cont[i]->posnex;
+			//transform_cont[i]->position_ += physics_cont[i]->velocity * dt;
 		}
 		
 	}

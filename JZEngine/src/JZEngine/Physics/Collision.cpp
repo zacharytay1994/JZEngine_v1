@@ -1,12 +1,218 @@
 #include "PCH.h"
 
 #include "../Physics/Collision.h"
-
+#include "../Physics/AABB.h"
+#include <limits> 
+const float			PI = 3.1415926f;
+const float			PI_OVER_180 = PI / 180.0f;
 
 namespace JZEngine
 {
 	namespace Collision
 	{
+#if 1
+		bool IntersectCirclePolygon(const Circle& circle, const Square& squareA, Vec2f& normal, float& depth)
+		{
+
+			//Initialising Vertices for looping
+			std::vector<Vec2f> verticesA{ squareA.botleft,squareA.botright,squareA.topright,squareA.topleft };
+			
+
+			depth = std::numeric_limits<float>::max();//these values will be set
+
+			Vec2f axis{};
+			float minA{}, maxA{}, minB{}, maxB{};
+			for (size_t i = 0; i < verticesA.size(); i++)
+			{
+				Vec2f va = verticesA[i];
+				Vec2f vb = verticesA[(i + 1) % verticesA.size()];
+
+				//find the normal of 1 side of the polygon will be the axis to be tested
+				Vec2f edge = vb - va;//line
+				axis = { -edge.y, edge.x };//normal
+				axis.Normalize();
+				ProjectVertices(verticesA, axis, minA, maxA);//project the vertices of A onto the axis(normal)
+				ProjectCircle(circle, axis, minB, maxB);//project circle onto axis
+
+				if (minA >= maxB || minB >= maxA)
+				{
+					return false;//if they are seperated, return false
+				}
+
+				float axisDepth = std::min(maxB - minA, maxA - minB);//min depth to resolve collision
+
+				if (axisDepth < depth)
+				{
+					depth = axisDepth;
+					normal = axis;
+				}
+			}
+
+			int index = FindClosestPointOnPolygon(circle.m_center, verticesA);
+			Vec2f closestpoint = verticesA[index];
+			axis = closestpoint - circle.m_center;//              
+			axis.Normalize();
+			ProjectVertices(verticesA, axis, minA, maxA);//project the vertices of A onto the axis(normal)
+			ProjectCircle(circle, axis, minB, maxB);//project circle onto axis
+
+			if (minA >= maxB || minB >= maxA)
+			{
+				return false;//if they are seperated, return false
+			}
+
+			float axisDepth = std::min(maxB - minA, maxA - minB);//min depth to resolve collision
+
+			if (axisDepth < depth)
+			{
+				depth = axisDepth;
+				normal = axis;
+			}
+
+
+			Vec2f direction = circle.m_center - squareA.midpoint;
+
+			if (direction.Dot(normal) < 0.f)//make sure norma is same direction as vector [AB]
+			{
+				normal = -normal;
+			}
+			return true;
+		}
+
+		int  FindClosestPointOnPolygon(const Vec2f& point, std::vector<Vec2f>& vertices)
+		{
+			int result = -1;
+			float minDistance = std::numeric_limits<float>::max();
+
+			for (size_t i = 0; i < vertices.size(); i++)
+			{
+				Vec2f v = vertices[i];
+				float distance = Math::Get2DVectorDistance(v, point);
+
+				if (distance < minDistance)
+				{
+					minDistance = distance;
+					result = i;
+				}
+			}
+
+			return result;
+		}
+
+		void ProjectCircle(const Circle& circle, const Vec2f& axis,  float& min,  float& max)
+		{
+			Vec2f Direction = axis.GetNormalized();
+			Vec2f DirectiontxRadius = Direction  * circle.m_radius;
+			//create 2 points on the circle with regards to the axis being tested
+			Vec2f p1 = circle.m_center + DirectiontxRadius;
+			Vec2f p2 = circle.m_center - DirectiontxRadius;
+
+			min = p1.Dot(axis);
+			max = p2.Dot( axis);
+
+			if (min > max)
+			{
+				//std::swap(min, max);
+				float t = min;
+				min = max;
+				max = t;
+			}
+		}
+
+#endif
+
+
+		//using SAT for polygon polygon
+		bool IntersectPolygons(const Square& squareA, const Square& squareB, Vec2f& normal, float depth)//normal is to push the 2nd obj out of collision
+		{
+			
+			//Initialising Vertices for looping
+			std::vector<Vec2f> verticesA{ squareA.botleft,squareA.botright,squareA.topright,squareA.topleft };
+			std::vector<Vec2f> verticesB{ squareB.botleft,squareB.botright,squareB.topright,squareB.topleft };
+
+			depth = std::numeric_limits<float>::max();//these values will be set
+
+
+			for (size_t i = 0; i < verticesA.size(); i++)
+			{
+				Vec2f va = verticesA[i];
+				Vec2f vb = verticesA[(i + 1) % verticesA.size()];
+				
+				//find the normal of 1 side of the polygon will be the axis to be tested
+				Vec2f edge = vb - va;//line
+				Vec2f axis = { -edge.y, edge.x };//normal
+				axis.Normalize();
+
+				float minA, maxA, minB, maxB;
+				ProjectVertices(verticesA, axis,  minA,  maxA);//project the vertices of A onto the axis(normal)
+				ProjectVertices(verticesB, axis,  minB,  maxB);//project the vertices of B onto the axis(normal)
+
+				if (minA >= maxB || minB >= maxA)
+				{
+					return false;//if they are seperated, return false
+				}
+
+				float axisDepth = std::min(maxB - minA, maxA - minB);//min depth to resolve collision
+
+				if (axisDepth < depth)
+				{
+					depth = axisDepth;
+					normal = axis;
+				}
+			}
+
+			for (size_t i = 0; i < verticesB.size(); i++)
+			{
+				Vec2f va = verticesB[i];
+				Vec2f vb = verticesB[(i + 1) % verticesB.size()];
+
+				Vec2f edge = vb - va;
+				Vec2f axis{ -edge.y, edge.x };
+				axis.Normalize();
+
+				float minA, maxA, minB, maxB;
+				ProjectVertices(verticesA, axis, minA, maxA);
+				ProjectVertices(verticesB, axis, minB, maxB);
+
+				if (minA >= maxB || minB >= maxA)
+				{
+					return false;
+				}
+
+				float axisDepth = std::min(maxB - minA, maxA - minB);
+
+				if (axisDepth < depth)
+				{
+					depth = axisDepth;
+					normal = axis;
+				}
+			}
+
+			Vec2f direction = squareB.midpoint - squareA.midpoint;
+
+			if ( direction.Dot(normal)  < 0.f)//make sure norma is same direction as vector [AB]
+			{
+				normal = -normal;
+			}
+
+			return true;
+		}
+
+		void ProjectVertices(const std::vector<Vec2f>& vertices, const Vec2f& axis, float& min, float& max)
+		{
+			max = std::numeric_limits<float>::min();//these values will be set
+			min = std::numeric_limits<float>::max();
+
+			for (int i = 0; i < vertices.size(); i++)
+			{
+				Vec2f v = vertices[i];
+				float proj = v.Dot(axis);
+
+				if (proj < min) { min = proj; }
+				if (proj > max) { max = proj; }
+			}
+		}
+
+
 		//Dynamic AABB collision
 		bool DynamicCollision_RectRect(const AABB& aabb1, const JZEngine::Vec2f& vel1,
 			const AABB& aabb2, const JZEngine::Vec2f& vel2)
@@ -175,6 +381,7 @@ namespace JZEngine
 					}
 
 				}
+				return false;
 			}
 			else//not within both lines
 			{
@@ -250,13 +457,10 @@ namespace JZEngine
 						else
 							return false;
 					}
-
-
 				}
-
-
 				return false;
 			}
+
 		}
 
 		bool DynamicCollision_CircleSquare(const Circle& circle,			//Circle data - input

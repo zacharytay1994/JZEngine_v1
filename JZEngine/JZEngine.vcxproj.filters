@@ -37,6 +37,7 @@
     <ClCompile Include="src\JZEngine\Math\JZMath.cpp" />
     <ClCompile Include="src\JZEngine\Physics\Collision.cpp" />
     <ClCompile Include="src\JZEngine\Input\Input.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\PhysicsBody.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\RendererDebug.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +204,8 @@
     <ClInclude Include="src\JZEngine\Resource\Serialize.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\FolderInterface.h" />
     <ClInclude Include="src\JZEngine\Physics\Collision.h" />
+    <ClInclude Include="src\JZEngine\Physics\PhysicsBody.h" />
+    <ClInclude Include="src\JZEngine\Physics\AABB.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\RendererDebug.h" />
   </ItemGroup>
 </Project>
