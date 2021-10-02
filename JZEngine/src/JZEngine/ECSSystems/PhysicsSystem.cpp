@@ -141,18 +141,18 @@ namespace JZEngine
 												Log::Info("Collision", "Circle square sat");
 						#endif
 					}
-//					bool checkLineEdges = true;
-//					if (true == Collision::DynamicCollision_CircleSquare(componentA.m_circle, componentA.posnex, componentB.m_square, interpta, normalatcollision, intertime, checkLineEdges))
-//					{
-//#ifdef PHYSICSDEBUG
-//						Log::Info("Collision", "Circle square");
-//#endif
-//						Vec2f reflectedvel{};
-//						normalatcollision.Normalize();
-//
-//						Collision::CollisionResponse_CircleLineSegment(interpta, normalatcollision, componentA.posnex, reflectedvel);
-//						componentA.velocity = reflectedvel * componentA.velocity.Len();
-//					}
+					bool checkLineEdges = true;
+					if (true == Collision::DynamicCollision_CircleSquare(componentA.m_circle, componentA.posnex, componentB.m_square, interpta, normalatcollision, intertime, checkLineEdges))
+					{
+#ifdef PHYSICSDEBUG
+						Log::Info("Collision", "Circle square");
+#endif
+						Vec2f reflectedvel{};
+						normalatcollision.Normalize();
+
+						Collision::CollisionResponse_CircleLineSegment(interpta, normalatcollision, componentA.posnex, reflectedvel);
+						componentA.velocity = reflectedvel * componentA.velocity.Len();
+					}
 						
 				}
 				if (componentA.shapeid == square && componentB.shapeid == circle)// square circle
@@ -166,19 +166,19 @@ namespace JZEngine
 #endif
 					}
 
-//					bool checkLineEdges = true;
-//					if (true == Collision::DynamicCollision_CircleSquare(componentB.m_circle, componentB.posnex, componentA.m_square, interpta, normalatcollision, intertime, checkLineEdges))
-//					{
-//#ifdef PHYSICSDEBUG
-//						Log::Info("Collision", "square circle");
-//#endif
-//						Vec2f reflectedvel{};
-//						normalatcollision.Normalize();
-//
-//						Collision::CollisionResponse_CircleLineSegment(interpta, normalatcollision, componentB.posnex, reflectedvel);
-//						componentB.velocity = reflectedvel * componentB.velocity.Len();
-//						
-//					}
+					bool checkLineEdges = true;
+					if (true == Collision::DynamicCollision_CircleSquare(componentB.m_circle, componentB.posnex, componentA.m_square, interpta, normalatcollision, intertime, checkLineEdges))
+					{
+#ifdef PHYSICSDEBUG
+						Log::Info("Collision", "square circle");
+#endif
+						Vec2f reflectedvel{};
+						normalatcollision.Normalize();
+
+						Collision::CollisionResponse_CircleLineSegment(interpta, normalatcollision, componentB.posnex, reflectedvel);
+						componentB.velocity = reflectedvel * componentB.velocity.Len();
+						
+					}
 				}
 				if (componentA.shapeid == square && componentB.shapeid == square)// square square
 				{
