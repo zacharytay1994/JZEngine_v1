@@ -2,6 +2,9 @@
 #include "../ECS/ECS.h"
 #include "../ECS/ECSConfig.h"
 #include "../Physics/Collision.h"
+#include "../GraphicRendering/RendererDebug.h"
+
+
 #define PHYSICSDEBUG
 
 
@@ -50,7 +53,7 @@ namespace JZEngine
 			
 		}
 		//std::cout << current_pcomponent.shapeid << std::endl;
-
+		RendererDebug::DrawLine(current_transform.position_, current_transform.position_ + current_pcomponent.velocity * 0.2f);
 		
 		
 
