@@ -15,6 +15,7 @@
 #include "GraphicRendering/Renderer.h"
 #include "GraphicRendering/SpriteRenderer.h"
 #include "GraphicRendering/RendererInstancing.h"
+#include "GraphicRendering/RendererDebug.h"
 #include "Input/Input.h"
 #include "Input/DeltaTime.h"
 #include "Resource/Serialize.h"
@@ -59,6 +60,7 @@ namespace JZEngine
 		global_systems_->AddSystem<ECS::ECSInstance> ( "ECS Instance" );
 		global_systems_->AddSystem<Renderer> ( "Default Renderer" );
 		global_systems_->AddSystem<RendererInstancing> ( "Instance Renderer" );
+		global_systems_->AddSystem<RendererDebug>( "Debug Renderer" );
 		global_systems_->AddSystem<EngineGUI> ( "Engine GUI" );
 		global_systems_->AddSystem<SoundSystem> ( "Sound System" );
 

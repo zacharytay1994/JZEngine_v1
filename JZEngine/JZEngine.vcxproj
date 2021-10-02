@@ -170,6 +170,7 @@
     <ClCompile Include="src\JZEngine\GraphicRendering\Buffer.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\ExampleFloatAway.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\RendererDebug.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\OpenGLDebug.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Renderer.cpp" />
@@ -289,6 +290,7 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\Buffer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\ExampleFloatAway.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\RendererDebug.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\NonInstanceSpriteRenderer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\OpenGLDebug.h" />

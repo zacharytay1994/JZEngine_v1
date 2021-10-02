@@ -30,6 +30,15 @@ namespace JZEngine
 			{}
 		};
 
+		struct DebugShader
+		{
+			const unsigned int id_;
+			std::string name_;
+			Shader shader_program_;
+
+			DebugShader(unsigned int id, const std::string& name) : id_(id), name_(name) {}
+		};
+
 		struct Texture2DID
 		{
 			const unsigned int id_;
@@ -41,12 +50,14 @@ namespace JZEngine
 
 		static std::vector<InstancedShaderID> instanced_shader_programs_;
 		static std::vector<ShaderID> shader_programs_;
+		static std::vector<DebugShader> debug_shaders_;
 		static std::vector<Texture2DID> texture2ds_;
 
 		ResourceManager();
 
 		static unsigned int LoadInstancedShader( const std::string& name, const std::string& vspath, const std::string& fspath );
 		static unsigned int LoadShader(const std::string& name, const std::string& vspath, const std::string& fspath);
+		static unsigned int LoadDebugShader(const std::string& name, const std::string& vspath, const std::string& fspath);
 		static unsigned int LoadTexture2D(const std::string& name, const std::string& path);
 	};
 }

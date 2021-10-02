@@ -36,7 +36,6 @@ namespace JZEngine
 			using System =
 				std::tuple<
 
-
 				ParallaxBackground ,
 				Sprite ,
 				InstanceSprite ,

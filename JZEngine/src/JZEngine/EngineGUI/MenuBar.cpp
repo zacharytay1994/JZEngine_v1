@@ -3,6 +3,7 @@
 #include "EngineGUI.h"
 #include "../Input/Input.h"
 
+#include "../GraphicRendering/RendererDebug.h"
 #include "../DebugTools/PerformanceData.h"
 #include "FolderInterface.h"
 #include "DebugInformation.h"
@@ -36,10 +37,18 @@ namespace JZEngine {
 			}
 			if (ImGui::BeginMenu("Settings"))
 			{
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Debug"))
+			{
 				if (ImGui::MenuItem("Performance Visualizer", "[TAB]"))
 				{
 					GetInterface<DebugInformation>()->ToggleOnOff();
 				}
+				ImGui::Checkbox(": Sprite Outline", &RendererDebug::sprite_outline_);
+				ImGui::Checkbox(": Debug Shapes", &RendererDebug::draw_debug_);
+				ImGui::SetNextItemWidth(50.0f);
+				ImGui::SliderFloat(": Point Size", &RendererDebug::point_size_, 1.0f, 20.0f);
 				ImGui::EndMenu();
 			}
 
