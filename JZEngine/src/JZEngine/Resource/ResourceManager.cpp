@@ -3,9 +3,13 @@
 
 namespace JZEngine
 {
+	std::vector<ResourceManager::InstancedShaderID> ResourceManager::instanced_shader_programs_;
+	std::vector<ResourceManager::ShaderID> ResourceManager::shader_programs_;
+	std::vector<ResourceManager::Texture2DID> ResourceManager::texture2ds_;
 	ResourceManager::ResourceManager ()
 	{
 		// load textures
+		LoadTexture2D("TextFile", "Assets/Textures/textfileicon.png");
 		LoadTexture2D ( "Unicorn" , "Assets/Textures/cute-unicorn.png" );//0
 		LoadTexture2D ( "Square" , "Assets/Textures/square.jpg" );
 		LoadTexture2D ( "TempB1" , "Assets/Textures/TempBackground-01.png" );

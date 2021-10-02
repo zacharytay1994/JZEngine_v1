@@ -22,7 +22,7 @@ namespace JZEngine
         osloggers_ = new std::unordered_map<std::string, OSLogger>();
 
         // create the log directory if it isn't there
-        if (std::filesystem::is_directory(Settings::logs_directory))
+        if (!std::filesystem::is_directory(Settings::logs_directory))
         {
             std::filesystem::create_directory(Settings::logs_directory);
         }   
