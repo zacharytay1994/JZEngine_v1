@@ -3,7 +3,7 @@
 #include "../ECS/ECSConfig.h"
 #include "../Physics/Collision.h"
 #include "../GraphicRendering/RendererDebug.h"
-
+#include "../Input/input.h"
 
 #define PHYSICSDEBUG
 
@@ -207,13 +207,31 @@ namespace JZEngine
 				}
 			}
 		}
+	
+		if (InputHandler::IsKeyTriggered(KEY::KEY_P))
+			pause = !pause;
 
-		for (int i = 0; i < transform_cont.size(); ++i)
+		if (pause == false)
 		{
-			transform_cont[i]->position_ = physics_cont[i]->posnex;
-			//transform_cont[i]->position_ += physics_cont[i]->velocity * dt;
+			for (int i = 0; i < transform_cont.size(); ++i)
+			{
+				transform_cont[i]->position_ = physics_cont[i]->posnex;
+				//transform_cont[i]->position_ += physics_cont[i]->velocity * dt;
+			}
 		}
-		
+
+		if (InputHandler::IsKeyTriggered(KEY::KEY_O))
+			stepbystep = !stepbystep;
+		if (stepbystep == true)
+		{
+			for (int i = 0; i < transform_cont.size(); ++i)
+			{
+				transform_cont[i]->position_ = physics_cont[i]->posnex;
+				//transform_cont[i]->position_ += physics_cont[i]->velocity * dt;
+			}
+			stepbystep = !stepbystep;
+		}
+
 	}
 
 }//JZEngine
