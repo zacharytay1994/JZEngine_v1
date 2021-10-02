@@ -5,16 +5,16 @@
 
 namespace JZEngine 
 {
-	DebugInformation::DebugInformation(float x, float y, float sx, float sy) 
+	DebugInformation::DebugInformation(float x, float y, float sx, float sy, int group)
 		:
-		ImGuiInterface(x, y, sx, sy)
+		ImGuiInterface(x, y, sx, sy, group)
 	{
 
 	}
 
 	void DebugInformation::Render(float dt) 
 	{
-		ImGui::Begin("Performance Visualizer");
+		ImGui::Begin("Performance Visualizer", 0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 
 		ImGui::SetNextItemWidth(100.0f);
 		ImGui::InputInt("Target FPS |", &target_fps_);

@@ -18,6 +18,7 @@
 #include "../ECS/ECSConfig.h"
 
 #include "../Resource/ResourceManager.h"
+#include "../Resource/Serialize.h"
 
 namespace JZEngine
 {
@@ -59,6 +60,15 @@ namespace JZEngine
 		void TreeNodeComponentsAndSystems ( ECS::Entity* const entity );
 
 		int TrimName ( const std::string& name );
+
+		enum class Confirmation {
+			NONE,
+			SERIALIZE
+		};
+
+		Confirmation confirmation_flag_{ Confirmation::NONE };
+		char rename_buffer_[64] = {'\0'};
+		void RenderConfirmation(ECS::Entity* const entity);
 
 		/* ____________________________________________________________________________________________________
 		*	CUSTOM COMPONENT IMGUI LAYOUTS

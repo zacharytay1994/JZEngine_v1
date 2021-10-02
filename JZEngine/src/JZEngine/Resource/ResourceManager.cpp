@@ -3,9 +3,14 @@
 
 namespace JZEngine
 {
+	std::vector<ResourceManager::InstancedShaderID> ResourceManager::instanced_shader_programs_;
+	std::vector<ResourceManager::ShaderID> ResourceManager::shader_programs_;
+	std::vector<ResourceManager::DebugShader> ResourceManager::debug_shaders_;
+	std::vector<ResourceManager::Texture2DID> ResourceManager::texture2ds_;
 	ResourceManager::ResourceManager ()
 	{
 		// load textures
+		LoadTexture2D("TextFile", "Assets/Textures/textfileicon.png");
 		LoadTexture2D ( "Unicorn" , "Assets/Textures/cute-unicorn.png" );//0
 		LoadTexture2D ( "Square" , "Assets/Textures/square.jpg" );
 		LoadTexture2D ( "TempB1" , "Assets/Textures/TempBackground-01.png" );
@@ -22,6 +27,14 @@ namespace JZEngine
 		LoadShader ( "Red Tint" ,
 					 "Assets/Shaders/Vertex/VS_Sprite2D.vs" ,
 					 "Assets/Shaders/Fragment/FS_TexRedTint.fs" );
+
+		// load debug shaders
+		LoadDebugShader("Point2D",
+						"Assets/Shaders/Vertex/VS_Point2D.vs",
+						"Assets/Shaders/Fragment/FS_Point2D.fs");
+		LoadDebugShader("Line2D",
+						"Assets/Shaders/Vertex/VS_Line2D.vs",
+						"Assets/Shaders/Fragment/FS_Line2D.fs");
 
 		// load instanced shaders
 		LoadInstancedShader ( "Default" ,
@@ -60,6 +73,24 @@ namespace JZEngine
 			std::cout << "Unable to compile/link/validate shader programs" << "\n";
 			std::cout << shader.GetLog () << std::endl;
 			std::exit ( EXIT_FAILURE );
+		}
+
+		return 1;
+	}
+
+	unsigned int ResourceManager::LoadDebugShader(const std::string& name, const std::string& vspath, const std::string& fspath)
+	{
+		debug_shaders_.emplace_back(static_cast<unsigned int>(debug_shaders_.size()), name);
+		Shader& shader = debug_shaders_.back().shader_program_;
+		shader.CompileShaderFromFile(GL_VERTEX_SHADER, vspath);
+		shader.CompileShaderFromFile(GL_FRAGMENT_SHADER, fspath);
+		shader.Link();
+
+		if (GL_FALSE == shader.IsLinked())
+		{
+			std::cout << "Unable to compile/link/validate shader programs" << "\n";
+			std::cout << shader.GetLog() << std::endl;
+			std::exit(EXIT_FAILURE);
 		}
 
 		return 1;
