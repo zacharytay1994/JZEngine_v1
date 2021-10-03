@@ -61,20 +61,32 @@ namespace JZEngine
 			vertices.push_back(current_pcomponent.m_square.botleft);
 			for (int i = 0; i < vertices.size(); i++)
 			{
-				//float tempx = vertices[i].x - current_pcomponent.m_square.midpoint.x;
-				//float tempy = vertices[i].y - current_pcomponent.m_square.midpoint.y;
-				//float rotatedX = tempx * cosf(3.14f/4.f) - tempy * sinf(3.14f / 4.f);
-				//float rotatedY = tempx * sinf(3.14f / 4.f) + tempy * cosf(3.14f / 4.f);
+		
+				/*
+				float tempx = vertices[i].x - current_pcomponent.m_square.midpoint.x;
+				float tempy = vertices[i].y - current_pcomponent.m_square.midpoint.y;
+				float rotatedX = tempx * cosf(3.14f/4.f) - tempy * sinf(3.14f / 4.f);
+				float rotatedY = tempx * sinf(3.14f / 4.f) + tempy * cosf(3.14f / 4.f);
 
-				//// translate back
-				//vertices[i].y = rotatedY+current_pcomponent.m_square.midpoint.y;
-				//vertices[i].x = rotatedX+current_pcomponent.m_square.midpoint.x;
+				// translate back
+				vertices[i].y = rotatedY+current_pcomponent.m_square.midpoint.y;
+				vertices[i].x = rotatedX+current_pcomponent.m_square.midpoint.x;
+				*/
 
-				if(i== vertices.size()-1)
+				RendererDebug::DrawPoint(current_pcomponent.m_square.midpoint);
+				vertices[i] = Math::GetRotatedVector( (vertices[i] - current_transform.position_), Math::PI / 4.0f) + current_transform.position_;
+
+			}
+
+			for (int i = 0; i < vertices.size(); i++)
+			{
+
+				if (i == vertices.size() - 1)
 					RendererDebug::DrawLine(vertices[i], vertices[0]);
 				else
-					RendererDebug::DrawLine(vertices[i], vertices[(i+1)] );
+					RendererDebug::DrawLine(vertices[i], vertices[(i + 1)]);
 			}
+
 #endif
 		}
 
