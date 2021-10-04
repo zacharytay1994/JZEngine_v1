@@ -28,6 +28,7 @@ namespace JZEngine
 	 * Able to add and remove entities from the selected entity.
 	 * ****************************************************************************************************
 	*/
+
 	struct JZENGINE_API Inspector
 	{
 		ECS::ECSInstance* ecs_instance_{ nullptr };
@@ -225,7 +226,7 @@ namespace JZEngine
 			ImGui::SameLine ();
 			ImGui::TextDisabled ( "(?)" );
 			if( ImGui::IsItemHovered () )
-			{
+			{ 
 				ImGui::BeginTooltip ();
 				ImGui::PushTextWrapPos ( ImGui::GetFontSize () * 35.0f );
 				ImGui::TextUnformatted ( memo );
@@ -396,17 +397,48 @@ namespace JZEngine
 			ImGui::PopItemWidth ();
 		}
 
-		//template <>
-		//void RenderComponent ( TextData& component )
-		//{	
-		//	//ImGui::InputFloat ( "Scale" , &component.font_size_ , 0.0f , 100.0f );
-		//	//char text[ 200 ]= "test";
-		///*	static ImGuiInputTextFlags flags = ImGuiInputTextFlags_AllowTabInput;
-		//	ImGui::CheckboxFlags ( "ReadOnly" , &flags , ImGuiInputTextFlags_ReadOnly );
-		//	ImGui::InputTextMultiline ( "##source" , text , IM_ARRAYSIZE ( text ) , ImVec2 ( -FLT_MIN , ImGui::GetTextLineHeight () * 16 ) , flags );*/
-		//	//component.text = text;
-		//
-		//}
+		template <>
+		void RenderComponent ( TextData& component )
+		{
+			// General data
+			ImGuiStyle& style = ImGui::GetStyle ();
+			float w = ImGui::CalcItemWidth ();
+			float spacing = style.ItemInnerSpacing.x;
+
+			// Font Size
+			ImGui::Text ( "Font Size" );
+			ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
+			ImGui::InputFloat ( "##fontscale" , &component.font_size_ , 0.0f , 100.0f );
+
+			const char* memo
+			{
+				"ENTER to type on new line.\n"
+				"! Alpha is not integrated at this moment.\n"
+				"Thank you for your patience !"
+			};
+
+			
+			// Input Text
+			ImGui::Text ( "Text" );
+			ImGui::SameLine ();
+			ImGui::TextDisabled ( "(?)" );
+			if( ImGui::IsItemHovered () )
+			{
+				ImGui::BeginTooltip ();
+				ImGui::PushTextWrapPos ( ImGui::GetFontSize () * 35.0f );
+				ImGui::TextUnformatted ( memo );
+				ImGui::PopTextWrapPos ();
+				ImGui::EndTooltip ();
+			}
+			static ImGuiInputTextFlags flags ;
+			ImGui::InputTextMultiline ( "##fonttext" , component.text.data , IM_ARRAYSIZE ( component.text.data ) , ImVec2 ( w + ( spacing * 4.0f ) , ImGui::GetTextLineHeight () * 10 ) , flags );
+			ImGui::CheckboxFlags ( "Lock " , &flags , ImGuiInputTextFlags_ReadOnly );
+			ImGui::SameLine ( 0 , ( spacing * 4.0f ) );
+			ImGui::Text ( "Characters " );
+			ImGui::SameLine ( 0 , spacing );
+			ImGui::Text ( "%d " , component.text.size () );
+
+		}
 
 		/*!
 		 * @brief ___JZEngine::LoopTupleRender___

@@ -112,11 +112,14 @@ namespace JZEngine
 
 		shader.Bind ();
 
-		JZEngine::Mat3f camwin_to_ndc_xform = { {2.0f / ( Settings::aspect_ratio * Settings::window_height ), 0.0f, 0.0f},
-												{0.0f, -2.0f / Settings::window_height, 0.0f},
-												{0.0f, 0.0f, 1.0f} };
+		JZEngine::Mat3f camwin_to_ndc_xform =
+		{ {2.0f / ( Settings::aspect_ratio * Settings::window_height ), 0.0f, 0.0f},
+		  {0.0f, -2.0f / Settings::window_height, 0.0f},
+		  {0.0f, 0.0f, 1.0f} };
 
 		shader.SetUniform ( "projection" , camwin_to_ndc_xform.Transpose () );
+
+
 		shader.SetUniform ( "text" , 0 );
 		//glCheckError ();
 
@@ -142,7 +145,9 @@ namespace JZEngine
 		//in terms of 1/64ths of pixels.  Thus, to make a font
 		//h pixels high, we need to request a size of h*64.
 		//(h << 6 is just a prettier way of writting h*64)
-		FT_Set_Char_Size ( face , fontSize << 6 , fontSize << 6 , 96 , 96 );
+		if( FT_Set_Char_Size ( face , fontSize << 6 , fontSize << 6 , 180 , 180 ) )
+			std::cout << "ERROR::FREETYPE: Died on set char size function" << std::endl;
+
 
 		// disable byte-alignment restriction
 		glPixelStorei ( GL_UNPACK_ALIGNMENT , 1 );

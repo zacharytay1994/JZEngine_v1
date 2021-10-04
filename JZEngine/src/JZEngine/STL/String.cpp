@@ -32,13 +32,13 @@ namespace JZEngine
 	{
 		if( c )
 		{
-			unsigned n = 0;
+			unsigned int n = 0;
 			while( c[ n ] != '\0' )
 			{
 				n++;
 			}
 			length = n;
-			for( unsigned j = 0 ; j < n ; j++ )
+			for( unsigned int j = 0 ; j < n ; j++ )
 			{
 				data[ j ] = c[ j ];
 			}
@@ -54,9 +54,7 @@ namespace JZEngine
 		:
 		length ( s.size () )
 	{
-
-		//this->clear ();
-		for( unsigned j = 0 ; j < length ; ++j )
+		for( unsigned int j = 0 ; j < length ; ++j )
 		{
 			data[ j ] = s[ j ];
 		}
@@ -67,29 +65,21 @@ namespace JZEngine
 		clear ();
 	}
 
-	std::string String::StdString ()
+	
+	unsigned int String::size () const
 	{
-		std::string temp{};
-
-		if( length > 0 )
+		unsigned int n = 0 ;
+		while( ( data[ n ] != '\0' ) && ( n <= MAX_STRING_SIZE ) )
 		{
-			for( unsigned j = 0; j < length; j++ )
-			{
-				temp += data[ j ];
-			}
-			return temp;
-		}
-		return temp;
-	}
-
-	unsigned String::size () const
-	{
+			n++;
+		};
+		const_cast < unsigned int& > ( length ) = n ;
 		return length ;
 	}
 
 	int String::index ( char c ) const
 	{
-		for( unsigned j = 0; j < length; j++ )
+		for( unsigned j = 0; j < size (); j++ )
 		{
 			if( data[ j ] == c )
 			{
@@ -101,16 +91,14 @@ namespace JZEngine
 
 	void String::clear ()
 	{
-		if( length != 0 )
-		{
-			memset ( data , '\0' , MAX_STRING_SIZE );
-			length = 0 ;
-		}
+		length = 0 ;
 	}
 
 	void String::upcase ( unsigned first , unsigned last )
 	{
-		if( ( first >= last ) || ( last >= length ) )
+		length = size ();
+
+		if( ( first >= last ) || ( last >= length ) || ( last > MAX_STRING_SIZE ) )
 		{
 			JZ_ASSERT ( ( ( first < last ) && ( last < length ) ) , "Upcase Fail" )( first )( last );
 		}
@@ -127,6 +115,8 @@ namespace JZEngine
 
 	void String::downcase ( unsigned first , unsigned last )
 	{
+		length = size ();
+
 		JZ_ASSERT ( ( first < last ) && ( last < length ) , "Downcase Fail" )( first ) ( last );
 
 		for( unsigned j = first; j < last; j++ )
@@ -142,6 +132,8 @@ namespace JZEngine
 
 	void String::togglecase ( unsigned first , unsigned last )
 	{
+		length = size ();
+
 		if( ( first >= last ) || ( last >= length ) )
 		{
 			JZ_ASSERT ( ( first < last ) && ( last < length ) , "ToggleCase Fail" )( first )( last );
@@ -162,6 +154,8 @@ namespace JZEngine
 
 	char String::operator[]( unsigned pos ) const
 	{
+		const_cast< unsigned int& > ( length ) = size ();
+
 		if( pos >= length )
 		{
 			JZ_ASSERT ( ( pos < length ) , "Out of range" )( pos )( length );
@@ -171,6 +165,7 @@ namespace JZEngine
 
 	char& String::operator[]( unsigned pos )
 	{
+		length = size ();
 		if( pos >= length )
 		{
 			JZ_ASSERT ( ( pos < length ) , "Out of range" )( pos )( length );
@@ -186,7 +181,7 @@ namespace JZEngine
 		}
 		this->clear ();
 		length = s.size ();
-		for( unsigned j = 0; j < length; j++ )
+		for( unsigned int j = 0; j < length; j++ )
 		{
 			data[ j ] = s[ j ];
 		}
@@ -195,14 +190,19 @@ namespace JZEngine
 
 	String& String::operator+=( const String& s )
 	{
-		unsigned len = length + s.size ();
+		unsigned int len = length + s.size ();
+
+		if( len > MAX_STRING_SIZE )
+		{
+			JZ_ASSERT ( len < MAX_STRING_SIZE , "unsigned int len = length + s.size ();" )( len )( length )( s.size () );
+		}
 
 		String str{};
 
-		for( unsigned j = 0; j < length; j++ )
+		for( unsigned int j = 0; j < length; j++ )
 			str[ j ] = data[ j ];
 
-		for( unsigned i = 0; i < s.size (); i++ )
+		for( unsigned int i = 0; i < s.size (); i++ )
 			str[ length + i ] = s[ i ];
 
 		length = len;
@@ -262,8 +262,8 @@ namespace JZEngine
 		{
 			return false;
 		}
-		unsigned cap = lhs.size ();
-		unsigned   n = 0;
+		unsigned int cap = lhs.size ();
+		unsigned int n = 0;
 		while( ( n < cap ) && ( lhs[ n ] == rhs[ n ] ) )
 		{
 			n++;
@@ -294,8 +294,8 @@ namespace JZEngine
 
 	bool operator> ( const String& lhs , const String& rhs )
 	{
-		unsigned cap = ( lhs.size () < rhs.size () ) ? lhs.size () : rhs.size ();
-		unsigned n = 0;
+		unsigned int cap = ( lhs.size () < rhs.size () ) ? lhs.size () : rhs.size ();
+		unsigned int n = 0;
 		while( ( n < cap ) && ( lhs[ n ] == rhs[ n ] ) ) n++;
 		if( n == cap ) return ( lhs.size () > rhs.size () );
 

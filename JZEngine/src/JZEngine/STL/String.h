@@ -1,14 +1,12 @@
 #pragma once
 
-#include <string> // Only for JZENGINE::String to std::string
-
 namespace JZEngine
 {
-	inline constexpr int MAX_STRING_SIZE { 200 }; 
+	inline constexpr int MAX_STRING_SIZE{ 200 };
 	struct String
 	{
 		char data[ MAX_STRING_SIZE ];
-		unsigned length{ 0 };
+		unsigned int length{ 0 };
 
 		/*---CONSTUCTOR---*/
 		/**
@@ -60,17 +58,6 @@ namespace JZEngine
 		 */
 		~String ();
 
-
-		/*---TRANSLATE DATA*/
-		/**
-		 * @brief 
-		 * Convert JZENGINE::String to std::string
-		 * @return 
-		 * Data in std::string
-		*/
-		std::string StdString ();
-
-
 		/*---PUBLIC MEMBER FUNCTION---*/
 		/**
 		 * @brief
@@ -79,7 +66,7 @@ namespace JZEngine
 		 * @return
 		 * The number of CharT elements in the string.
 		*/
-		unsigned size () const;
+		unsigned int size () const;
 		/**
 		 * @brief
 		 * String index of a character.
@@ -92,7 +79,7 @@ namespace JZEngine
 		*/
 		int index ( char c ) const ;
 		/**
-		 * @brief 
+		 * @brief
 		 * clear all the data in String and reser size to MAX_STRING_SIZE.
 		*/
 		void clear () ;

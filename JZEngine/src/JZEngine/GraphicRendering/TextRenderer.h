@@ -24,7 +24,7 @@ namespace JZEngine
 	};
 
 
-	enum Paragraph
+	enum class Paragraph
 	{
 		AlignLeft , AlignCenter , AlignRight /*, JustifyLeft , JustifyCenter , JustifyRight , JustifyFull*/
 	};
@@ -44,12 +44,12 @@ namespace JZEngine
 		// renders a string of text using the precompiled list of characters
 		void RenderText ( std::string text , float x , float y , float scale , JZEngine::Vec3f color = { 1.0f , 1.0f , 1.0f } );
 
-		void  Alignment ( int aligment = Paragraph::AlignLeft )
+		void Alignment ( Paragraph aligment = Paragraph::AlignLeft )
 		{
 			aligning_text_ = aligment;
 		};
 
-		int  GetAlignment ()
+		Paragraph GetAlignment ()
 		{
 			return aligning_text_;
 		};
@@ -72,7 +72,7 @@ namespace JZEngine
 		float text_width_{};
 		float text_height_{};
 		int scaled_kerning_{ 100 } ;
-		int aligning_text_{};
+		Paragraph aligning_text_{ Paragraph::AlignCenter };
 
 	};
 

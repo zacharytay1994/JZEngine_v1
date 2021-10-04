@@ -15,7 +15,7 @@ namespace JZEngine
 		Vec3f color_{ 0.0f , 0.0f ,0.0f };
 		Vec2f position_{ 0.0f,0.0f };
 		float font_size_{ 1.0f };
-		//JZEngine::String text{};
+		JZEngine::String text{};
 	};
 
 	// sprite system
