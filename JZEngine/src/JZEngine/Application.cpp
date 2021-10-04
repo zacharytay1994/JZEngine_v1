@@ -204,10 +204,12 @@ namespace JZEngine
 		double actual_dt{ Settings::min_tpf };
 		double clamped_dt{ Settings::min_tpf };
 		bool limit_frames = true;
+		
+	
 
 		while( global_systems_->GetSystem<GLFW_Instance> ()->Active () )
 		{
-			if( InputHandler::IsKeyPressed ( KEY::KEY_L ) )
+			if( InputHandler::IsKeyTriggered ( KEY::KEY_L ) )
 			{
 				limit_frames = !limit_frames;
 			}
@@ -216,8 +218,18 @@ namespace JZEngine
 
 			//double dt = limit_frames ? clamped_dt : actual_dt;
 
-			bool pressed = JZEngine::InputHandler::IsMouseTriggered(JZEngine::MOUSE::MOUSE_BUTTON_LEFT);
+
 			
+			PerformanceData::FrameStart ();
+			PerformanceData::StartMark ( "Game Loop" , PerformanceData::TimerType::GLOBAL_SYSTEMS );
+
+			global_systems_->FrameStart ();
+
+
+			global_systems_->Update ( dt );
+
+			//click sound test code
+			bool pressed = JZEngine::InputHandler::IsMouseTriggered(JZEngine::MOUSE::MOUSE_BUTTON_LEFT);
 			if (pressed == true)
 			{
 				SoundEvent event{};
@@ -225,30 +237,41 @@ namespace JZEngine
 				msgbus.publish(&event);
 			}
 
-			PerformanceData::FrameStart ();
-			PerformanceData::StartMark ( "Game Loop" , PerformanceData::TimerType::GLOBAL_SYSTEMS );
+			//test code for input system, can be removed
+			if (InputHandler::IsMouseTriggered(MOUSE::MOUSE_BUTTON_1))
+			{
+				Log::Info("Input", "Mouse Triggered!!!");
+			}
+			if (InputHandler::IsMouseReleased(MOUSE::MOUSE_BUTTON_1))
+			{
+				Log::Info("Input", "Mouse Release!!!");
+			}
+			if (InputHandler::IsMousePressed(MOUSE::MOUSE_BUTTON_1))
+			{
+				Log::Info("Input", "Mouse PRess!!!");
+			}
+			if (InputHandler::IsKeyPressed(KEY::KEY_M))
+			{
+				Log::Info("Input", "M press!!!");
+			}
+			if (InputHandler::IsKeyReleased(KEY::KEY_M))
+			{
+				Log::Info("Input", "M release!!!");
+			}
+			if (InputHandler::IsKeyTriggered(KEY::KEY_M))
+			{
+				Log::Info("Input", "M triggered!!!");
+			}
 
-			global_systems_->FrameStart ();
-			global_systems_->Update ( dt );
-
-			//DeltaTime::update_time(1.0);
-			//DeltaTime::update_deltatime(1.0);
-			
-			//Test code
-			//std::cout<<DeltaTime::get_FPS()<<std::endl;
-
-			//if (InputHandler::IsKeyPressed(KEY::KEY_W))
-			//	std::cout << "pressedW";
-			//if (InputHandler::IsKeyTriggered(KEY::KEY_W))
-			//	std::cout << "triggerededW";
-			//if (InputHandler::IsKeyReleased(KEY::KEY_W))
-			//	std::cout << "releasedW";
+	
 
 
-
+			InputHandler::FrameEnd();//input handler frameend MUST be here before global system->frameend
 
 			auto end_time = std::chrono::high_resolution_clock::now ();
 			global_systems_->FrameEnd ();
+		
+
 
 			PerformanceData::EndMark ( "Game Loop" , PerformanceData::TimerType::GLOBAL_SYSTEMS );
 			PerformanceData::FrameEnd ();
