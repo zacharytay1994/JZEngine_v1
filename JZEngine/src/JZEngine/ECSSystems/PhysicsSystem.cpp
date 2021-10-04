@@ -3,7 +3,7 @@
 #include "../ECS/ECSConfig.h"
 #include "../Physics/Collision.h"
 #include "PhysicsSystem.h"
-#define PHYSICSDEBUG
+#include "../Input/Input.h"
 
 
 
@@ -49,42 +49,24 @@ namespace JZEngine
 		if (current_pcomponent.shapeid == shapetype::square)
 		{
 			current_pcomponent.m_square = { current_transform.position_,current_transform.size_ };
-			//RendererDebug::DrawSquare(current_pcomponent.m_square.midpoint, current_pcomponent.size);
-			Vec2f pt{ 100.f,100.f };
-			//RendererDebug::DrawLine(current_pcomponent.m_square.midpoint, pt);
-			//std::cout << current_pcomponent.shapeid << std::endl;
-#if 1
-			std::vector<Vec2f> vertices;
-			vertices.push_back(current_pcomponent.m_square.topleft);
-			vertices.push_back(current_pcomponent.m_square.topright);
-			vertices.push_back(current_pcomponent.m_square.botright);
-			vertices.push_back(current_pcomponent.m_square.botleft);
-			for (int i = 0; i < vertices.size(); i++)
-			{
-		
-				/*
-				float tempx = vertices[i].x - current_pcomponent.m_square.midpoint.x;
-				float tempy = vertices[i].y - current_pcomponent.m_square.midpoint.y;
-				float rotatedX = tempx * cosf(3.14f/4.f) - tempy * sinf(3.14f / 4.f);
-				float rotatedY = tempx * sinf(3.14f / 4.f) + tempy * cosf(3.14f / 4.f);
 
-				// translate back
-				vertices[i].y = rotatedY+current_pcomponent.m_square.midpoint.y;
-				vertices[i].x = rotatedX+current_pcomponent.m_square.midpoint.x;
-				*/
+#if 1
+
+			for (int i = 0; i <4; i++)
+			{
 
 				RendererDebug::DrawPoint(current_pcomponent.m_square.midpoint);
-				vertices[i] = Math::GetRotatedVector( (vertices[i] - current_transform.position_), Math::PI / 4.0f) + current_transform.position_;
+				current_pcomponent.m_square.vertices[i] = Math::GetRotatedVector( (current_pcomponent.m_square.vertices[i] - current_transform.position_), Math::PI / 4.0f) + current_transform.position_;
 
 			}
 
-			for (int i = 0; i < vertices.size(); i++)
+			for (int i = 0; i < 4; i++)
 			{
 
-				if (i == vertices.size() - 1)
-					RendererDebug::DrawLine(vertices[i], vertices[0]);
+				if (i == 3)
+					RendererDebug::DrawLine(current_pcomponent.m_square.vertices[i], current_pcomponent.m_square.vertices[0]);
 				else
-					RendererDebug::DrawLine(vertices[i], vertices[(i + 1)]);
+					RendererDebug::DrawLine(current_pcomponent.m_square.vertices[i], current_pcomponent.m_square.vertices[(i + 1)]);
 			}
 
 #endif
@@ -105,144 +87,43 @@ namespace JZEngine
 			transform_cont.push_back(&current_transform);
 		}
 
-
+		if (current_pcomponent.player)
+		{
+			if (InputHandler::IsKeyPressed(KEY::KEY_W))
+				current_pcomponent.position.y += 1.0f;
+			if (InputHandler::IsKeyPressed(KEY::KEY_A))
+				current_pcomponent.position.x -= 1.0f;
+			if (InputHandler::IsKeyPressed(KEY::KEY_S))
+				current_pcomponent.position.y -= 1.0f;
+			if (InputHandler::IsKeyPressed(KEY::KEY_D))
+				current_pcomponent.position.x += 1.0f;
+		}
 	}//__________________UPDATE_________________________//
 
 
 	void PhysicsSystem::FrameEnd(const float& dt)
 	{
-		//Circle Circle
-		for (int i = 0; i < physics_cont.size(); ++i)
+		//optimised double for loop
+		for (int i = 0; i < physics_cont.size() - 1; ++i)
 		{
 			PhysicsComponent& componentA = *physics_cont[i];
-			for (int j = 0; j < physics_cont.size(); ++j)
+			for (int j = i+1; j < physics_cont.size(); ++j)
 			{
 				PhysicsComponent& componentB = *physics_cont[j];
 
 				if (&componentB == &componentA)
 					continue;
 
-				Vec2f interpta{}, interptb{}, normalatcollision{};
-				float intertime{}, newspeed{};
+				Collision::CheckPhysicsComponentCollision(componentA, componentB);
 
-				if (componentA.shapeid == circle && componentB.shapeid == circle)
-				{
-					if (true == Collision::DynamicCollision_CircleCircle(componentA.m_circle, componentA.velocity * dt, componentB.m_circle, componentB.velocity * dt, interpta, interptb, intertime))
-					{
-
-						Vec2f reflectedVecA, reflectedVecB, velA, velB;
-						Vec2f normal = interpta - interptb;
-						normal.Normalize();
-
-						velA = componentA.velocity * dt;
-						velB = componentB.velocity * dt;
-						Vec2f posnexb;
-						Collision::CollisionResponse_CircleCircle(normal, intertime, velA, componentA.mass, interpta, velB, componentB.mass, interptb,
-							reflectedVecA, componentA.posnex, reflectedVecB, componentB.posnex);
-
-						newspeed = reflectedVecA.Len() / dt;//A: new speed
-						reflectedVecA.Normalize();//A: new speed direction
-						componentA.velocity = reflectedVecA * newspeed;
-						newspeed = reflectedVecB.Len() / dt;//B: new speed
-						reflectedVecB.Normalize();
-						componentB.velocity = reflectedVecB * newspeed;
-
-#ifdef PHYSICSDEBUG
-						Log::Info("Collision", "is circle-circle colliding!!!");
-#endif
-					}
-				}
 			}
 		}
-		for (int i = 0; i < static_cast<int>(physics_cont.size() - 1); i++)
-		{
-			PhysicsComponent& componentA = *physics_cont[i];
-			Transform& componentA_transform = *transform_cont[i];
-			for (int j = i + 1; j < physics_cont.size(); ++j)
-			{
-				PhysicsComponent& componentB = *physics_cont[j];
-				Transform& componentB_transform = *transform_cont[j];
-
-
-				Vec2f interpta{}, interptb{}, normalatcollision{};
-				float intertime{}, newspeed{};
-
-				if (componentA.shapeid == circle && componentB.shapeid == square)// Circle Square
-				{
-					float normal, depth;
-
-					if (true == Collision::IntersectCirclePolygon(componentA.m_circle, componentB.m_square, normalatcollision, depth))
-					{
-						#ifdef PHYSICSDEBUG
-												Log::Info("Collision", "Circle square sat");
-						#endif
-					}
-//					bool checkLineEdges = true;
-//					if (true == Collision::DynamicCollision_CircleSquare(componentA.m_circle, componentA.posnex, componentB.m_square, interpta, normalatcollision, intertime, checkLineEdges))
-//					{
-//#ifdef PHYSICSDEBUG
-//						Log::Info("Collision", "Circle square");
-//#endif
-//						Vec2f reflectedvel{};
-//						normalatcollision.Normalize();
-//
-//						Collision::CollisionResponse_CircleLineSegment(interpta, normalatcollision, componentA.posnex, reflectedvel);
-//						componentA.velocity = reflectedvel * componentA.velocity.Len();
-//					}
-						
-				}
-				if (componentA.shapeid == square && componentB.shapeid == circle)// square circle
-				{
-					float normal, depth;
-
-					if (true == Collision::IntersectCirclePolygon(componentB.m_circle, componentA.m_square, normalatcollision, depth))
-					{
-#ifdef PHYSICSDEBUG
-						Log::Info("Collision", "square circe sat");
-#endif
-					}
-
-//					bool checkLineEdges = true;
-//					if (true == Collision::DynamicCollision_CircleSquare(componentB.m_circle, componentB.posnex, componentA.m_square, interpta, normalatcollision, intertime, checkLineEdges))
-//					{
-//#ifdef PHYSICSDEBUG
-//						Log::Info("Collision", "square circle");
-//#endif
-//						Vec2f reflectedvel{};
-//						normalatcollision.Normalize();
-//
-//						Collision::CollisionResponse_CircleLineSegment(interpta, normalatcollision, componentB.posnex, reflectedvel);
-//						componentB.velocity = reflectedvel * componentB.velocity.Len();
-//						
-//					}
-				}
-				if (componentA.shapeid == square && componentB.shapeid == square)// square square
-				{
-					if (&componentA == &componentB)
-						continue;
-
-					Vec2f normal;
-					float depth=0.f;
-					if (true==Collision::IntersectPolygons(componentA.m_square, componentB.m_square, normal,depth))
-					{
-#ifdef PHYSICSDEBUG
-						Log::Info("Collision", "square square");
-#endif
-						componentA.posnex = componentA.m_square.midpoint - (normal * depth / 2.f);
-						componentB.posnex = componentB.m_square.midpoint + (normal * depth / 2.f);
-					}
-
-
-				}
-			}
-		}
-
 		for (int i = 0; i < transform_cont.size(); ++i)
 		{
-			transform_cont[i]->position_ = physics_cont[i]->posnex;
-			//transform_cont[i]->position_ += physics_cont[i]->velocity * dt;
+			//transform_cont[i]->position_ = physics_cont[i]->posnex;
+			transform_cont[i]->position_ = physics_cont[i]->position;
 		}
-		
+
 	}
 
 }//JZEngine

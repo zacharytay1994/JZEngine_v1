@@ -203,7 +203,8 @@
     <ClInclude Include="src\JZEngine\Resource\Serialize.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\FolderInterface.h" />
     <ClInclude Include="src\JZEngine\Physics\Collision.h" />
-    <ClInclude Include="src\JZEngine\Physics\AABB.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\RendererDebug.h" />
+    <ClInclude Include="src\JZEngine\Physics\PhysicsComponent.h" />
+    <ClInclude Include="src\JZEngine\Physics\PhysicsShapes.h" />
   </ItemGroup>
 </Project>

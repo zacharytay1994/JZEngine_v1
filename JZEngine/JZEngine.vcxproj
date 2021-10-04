@@ -273,6 +273,7 @@
     <ClInclude Include="src\JZEngine\DebugTools\Log.h" />
     <ClInclude Include="src\JZEngine\DebugTools\PerformanceData.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h" />
+    <ClInclude Include="src\JZEngine\Physics\PhysicsComponent.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\PhysicsSystem.h" />
     <ClInclude Include="src\JZEngine\ECS\ECS.h" />
     <ClInclude Include="src\JZEngine\ECS\ECSConfig.h" />
@@ -331,8 +332,8 @@
     <ClInclude Include="src\JZEngine\Message\MessageHandler.h" />
     <ClInclude Include="src\JZEngine\PCH.h" />
     <ClInclude Include="src\JZEngine\BuildDefinitions.h" />
-    <ClInclude Include="src\JZEngine\Physics\AABB.h" />
     <ClInclude Include="src\JZEngine\Physics\Collision.h" />
+    <ClInclude Include="src\JZEngine\Physics\PhysicsShapes.h" />
     <ClInclude Include="src\JZEngine\Resource\ResourceManager.h" />
     <ClInclude Include="src\JZEngine\Physics\Physics.h" />
     <ClInclude Include="src\JZEngine\Resource\Serialize.h" />
