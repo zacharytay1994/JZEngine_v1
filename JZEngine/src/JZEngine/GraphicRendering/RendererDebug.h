@@ -1,7 +1,5 @@
 #pragma once
 
-#include <initializer_list>
-
 #include "../GlobalSystems.h"
 #include "../Math/JZMath.h"
 
@@ -38,18 +36,6 @@ namespace JZEngine
 
 		static void DrawPoint(const Vec2f& p1);
 		static void DrawLine(const Vec2f& p1, const Vec2f& p2);
-		static void DrawLines(const std::initializer_list<Vec2f>& vertices, bool loop = false)
-		{
-			auto data = std::data(vertices);
-			for (int i = 0; i < vertices.size() - 1; ++i)
-			{
-				DrawLine(data[i], data[i + 1]);
-			}
-			if (loop)
-			{
-				DrawLine(data[vertices.size() - 1], data[0]);
-			}
-		}
 		static void DrawSpriteSquare(const Vec2f& centre, const Vec2f& dimensions);
 		static void DrawSquare(const Vec2f& centre, const Vec2f& dimensions);
 		static void DrawCircle(const Vec2f& centre, float radius, int density = 20);

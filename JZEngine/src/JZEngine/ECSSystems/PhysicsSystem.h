@@ -52,8 +52,7 @@ namespace JZEngine
 		std::vector<PhysicsComponent*> physics_cont;
 		//std::vector<PhysicsComponent*> polygon_cont;
 
-		bool pause{ false };
-		bool stepbystep{ false };
+		
 		float gravity{ -0.0981f };
 
 		PhysicsSystem();
