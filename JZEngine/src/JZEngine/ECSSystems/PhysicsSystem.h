@@ -6,6 +6,7 @@
 #include "../Physics/PhysicsComponent.h"
 #include "../Physics/Collision.h"
 #include "../GraphicRendering/RendererDebug.h"
+#include "../Physics/RigidBody.h"
 
 namespace JZEngine
 {

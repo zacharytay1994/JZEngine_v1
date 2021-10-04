@@ -371,7 +371,7 @@ namespace JZEngine
 			ImGui::PopItemWidth();
 
 			ImGui::Text("Mass");
-			ImGui::SliderFloat ( "Mass" , &component.mass , component.mass - 20.0f , component.mass + 20.0f);
+			ImGui::SliderFloat ( "Mass" , &component.Mass , component.Mass - 20.0f , component.Mass + 20.0f);
 			
 		}
 

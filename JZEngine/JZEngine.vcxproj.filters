@@ -38,6 +38,7 @@
     <ClCompile Include="src\JZEngine\Physics\Collision.cpp" />
     <ClCompile Include="src\JZEngine\Input\Input.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\RendererDebug.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\RigidBody.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
@@ -206,5 +207,6 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\RendererDebug.h" />
     <ClInclude Include="src\JZEngine\Physics\PhysicsComponent.h" />
     <ClInclude Include="src\JZEngine\Physics\PhysicsShapes.h" />
+    <ClInclude Include="src\JZEngine\Physics\RigidBody.h" />
   </ItemGroup>
 </Project>

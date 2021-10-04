@@ -4,7 +4,7 @@
 #include "../Physics/Collision.h"
 #include "PhysicsSystem.h"
 #include "../Input/Input.h"
-
+#include "../Physics/RigidBody.h"
 
 
 namespace JZEngine
@@ -33,33 +33,57 @@ namespace JZEngine
 		Transform& current_transform = GetComponent<Transform>();
 		current_pcomponent.position = current_transform.position_;
 		current_pcomponent.size = current_transform.size_;
+		current_pcomponent.rotation = current_transform.rotation_;
+		current_pcomponent.Restitution = 1.0f;
+		current_pcomponent.Mass = 20.0f;
 
-		//acceleration
-		if (current_pcomponent.shapeid == shapetype::circle)
-			current_pcomponent.velocity += current_pcomponent.acceleration * dt;
+		//current_pcomponent.posnex = current_transform.position_ + current_pcomponent.velocity * dt;
 
-		current_pcomponent.posnex = current_transform.position_ + current_pcomponent.velocity * dt;
+		if (current_pcomponent.player)
+		{
+			float dx = 0.f;
+			float dy = 0.f;
+			float forcemagnitude = 800.f;
+			if (InputHandler::IsKeyPressed(KEY::KEY_W))
+				dy++;
+			if (InputHandler::IsKeyPressed(KEY::KEY_A))
+				dx--;
+			if (InputHandler::IsKeyPressed(KEY::KEY_S))
+				dy--;
+			if (InputHandler::IsKeyPressed(KEY::KEY_D))
+				dx++;
 
-		
+			if (dx != 0.f || dy != 0.f)
+			{
+				Vec2f forcedirection{ dx,dy };
+				forcedirection.Normalize();
+				Vec2f force = forcedirection * forcemagnitude;
+				RigidBody::AddForce(current_pcomponent, force);
+
+			}
+			
+		}
+
+		RigidBody::Step(current_pcomponent, dt);
+
+
 		if (current_pcomponent.shapeid == shapetype::circle)
 		{
-			current_pcomponent.m_circle.m_center = current_transform.position_;
-			current_pcomponent.m_circle.m_radius = 0.5f * current_transform.size_.x;
+			current_pcomponent.m_circle.m_center = current_pcomponent.position;
+			current_pcomponent.m_circle.m_radius = 0.5f * current_pcomponent.size.x;
+			RendererDebug::DrawCircle(current_pcomponent.m_circle.m_center, current_pcomponent.m_circle.m_radius);
 		}
 		if (current_pcomponent.shapeid == shapetype::square)
 		{
-			current_pcomponent.m_square = { current_transform.position_,current_transform.size_ };
+			current_pcomponent.m_square = { current_pcomponent.position,current_pcomponent.size };
 
 #if 1
 
-			for (int i = 0; i <4; i++)
+			for (int i = 0; i < 4; i++)
 			{
-
-				RendererDebug::DrawPoint(current_pcomponent.m_square.midpoint);
-				current_pcomponent.m_square.vertices[i] = Math::GetRotatedVector( (current_pcomponent.m_square.vertices[i] - current_transform.position_), Math::PI / 4.0f) + current_transform.position_;
+				current_pcomponent.m_square.vertices[i] = Math::GetRotatedVector((current_pcomponent.m_square.vertices[i] - current_transform.position_), Math::DegToRad(current_transform.rotation_)) + current_transform.position_;
 
 			}
-
 			for (int i = 0; i < 4; i++)
 			{
 
@@ -68,9 +92,9 @@ namespace JZEngine
 				else
 					RendererDebug::DrawLine(current_pcomponent.m_square.vertices[i], current_pcomponent.m_square.vertices[(i + 1)]);
 			}
-
 #endif
 		}
+
 
 		bool am_inside{ false };
 		for (int i = 0; i < physics_cont.size(); ++i)
@@ -86,18 +110,6 @@ namespace JZEngine
 			physics_cont.push_back(&current_pcomponent);
 			transform_cont.push_back(&current_transform);
 		}
-
-		if (current_pcomponent.player)
-		{
-			if (InputHandler::IsKeyPressed(KEY::KEY_W))
-				current_pcomponent.position.y += 1.0f;
-			if (InputHandler::IsKeyPressed(KEY::KEY_A))
-				current_pcomponent.position.x -= 1.0f;
-			if (InputHandler::IsKeyPressed(KEY::KEY_S))
-				current_pcomponent.position.y -= 1.0f;
-			if (InputHandler::IsKeyPressed(KEY::KEY_D))
-				current_pcomponent.position.x += 1.0f;
-		}
 	}//__________________UPDATE_________________________//
 
 
@@ -111,10 +123,24 @@ namespace JZEngine
 			{
 				PhysicsComponent& componentB = *physics_cont[j];
 
-				if (&componentB == &componentA)
-					continue;
+				Vec2f normal{ 0.f,0.f };
+				float depth;
+				if (true == Collision::CheckPhysicsComponentCollision(componentA, componentB, normal, depth))
+				{
+					RigidBody::Move(componentA, -normal * depth /2.f);
+					RigidBody::Move(componentB, normal * depth / 2.f);
 
-				Collision::CheckPhysicsComponentCollision(componentA, componentB);
+
+					Vec2f relativevelocity = componentB.velocity - componentA.velocity;
+					float restitution = std::min(componentA.Restitution, componentB.Restitution);
+					float j = -(1.f + restitution) * relativevelocity.Dot(normal);
+					j /= (1.f / componentA.Mass) + (1.f / componentB.Mass);
+
+					componentA.velocity -= j / componentA.Mass * normal;
+					componentB.velocity += j / componentB.Mass * normal;
+					//Collision::ResolvePhysicsComponentCollision(componentA, componentB, normal, depth);
+
+				}
 
 			}
 		}
@@ -122,6 +148,7 @@ namespace JZEngine
 		{
 			//transform_cont[i]->position_ = physics_cont[i]->posnex;
 			transform_cont[i]->position_ = physics_cont[i]->position;
+			transform_cont[i]->rotation_ = physics_cont[i]->rotation;
 		}
 
 	}

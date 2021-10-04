@@ -9,65 +9,58 @@
 
 namespace JZEngine
 {
-	bool Collision::CheckPhysicsComponentCollision( PhysicsComponent& componentA,  PhysicsComponent& componentB)
+	bool Collision::CheckPhysicsComponentCollision( PhysicsComponent& componentA,  PhysicsComponent& componentB, Vec2f& normal, float& depth)
 	{
-
-		Vec2f interpta{}, interptb{}, normalatcollision{};
-		float intertime{}, newspeed{};
-
 		//circle circle
 		if (componentA.shapeid == circle && componentB.shapeid == circle)
 		{
-			Vec2f normal;
-			float depth;
+
 			if (true == Collision::IntersectCircles(componentA.m_circle, componentB.m_circle, normal, depth))
 			{
-				componentA.position += -normal * depth / 2.f;
-				componentB.position += normal * depth / 2.f;
+
 
 #ifdef PHYSICSDEBUG
 				Log::Info("Collision", "is circle-circle colliding!!!");
 #endif
 				return true;
 			}
+			return false;
 		}
 
 		// Circle Square
 		if (componentA.shapeid == circle && componentB.shapeid == square)
 		{
-			float normal, depth;
+	
 			
-			if (true == Collision::IntersectCirclePolygon(componentA.m_circle, componentB.m_square, normalatcollision, depth))
+			if (true == Collision::IntersectCirclePolygon(componentA.m_circle, componentB.m_square, normal, depth))
 			{
 
 #ifdef PHYSICSDEBUG
-						Log::Info("Collision", "Circle square sat");
+				Log::Info("Collision", "Circle square sat");
 #endif
 				return true;
-			}						
+			}	
+			return false;
 		}
 
 		// square circle
 		if (componentA.shapeid == square && componentB.shapeid == circle)
 		{
-			float normal, depth;
-			
-			if (true == Collision::IntersectCirclePolygon(componentB.m_circle, componentA.m_square, normalatcollision, depth))
+			if (true == Collision::IntersectCirclePolygon(componentB.m_circle, componentA.m_square, normal, depth))
 			{
 #ifdef PHYSICSDEBUG
 			Log::Info("Collision", "square circe sat");
 #endif
+				normal = -normal;
 				return true;
 			}
-			
+			return false;
 		}
 		// square square
 		if (componentA.shapeid == square && componentB.shapeid == square)
 		{
 
-			
-			Vec2f normal;
-			float depth=0.f;
+
 			if (true==Collision::IntersectPolygons(componentA.m_square, componentB.m_square, normal,depth))
 			{
 #ifdef PHYSICSDEBUG
@@ -76,8 +69,21 @@ namespace JZEngine
 
 				return true;
 			}
+			return false;
 		}
 		return false;
+	}
+
+	void Collision::ResolvePhysicsComponentCollision(PhysicsComponent& componentA, PhysicsComponent& componentB, const Vec2f& normal, const float& depth)
+	{
+		Vec2f relativevelocity = componentB.velocity - componentA.velocity;
+		float restitution = std::min(componentA.Restitution, componentB.Restitution);
+		float j = -(1.f + restitution) * relativevelocity.Dot(normal)  ;
+		j /= (1.f / componentA.Mass) + (1.f / componentB.Mass); 
+
+		componentA.velocity -= j / componentA.Mass * normal;
+		componentB.velocity += j / componentB.Mass * normal;
+	
 	}
 
 	bool Collision::IntersectCircles(
@@ -110,7 +116,7 @@ namespace JZEngine
 			
 
 		depth = std::numeric_limits<float>::max();//these values will be set
-
+		float axisDepth = 0.f;
 		Vec2f axis{};
 		float minA{}, maxA{}, minB{}, maxB{};
 		for (size_t i = 0; i < verticesA.size(); i++)
@@ -130,7 +136,7 @@ namespace JZEngine
 				return false;//if they are seperated, return false
 			}
 
-			float axisDepth = std::min(maxB - minA, maxA - minB);//min depth to resolve collision
+			axisDepth = std::min(maxB - minA, maxA - minB);//min depth to resolve collision
 
 			if (axisDepth < depth)
 			{
@@ -151,7 +157,7 @@ namespace JZEngine
 			return false;//if they are seperated, return false
 		}
 
-		float axisDepth = std::min(maxB - minA, maxA - minB);//min depth to resolve collision
+		axisDepth = std::min(maxB - minA, maxA - minB);//min depth to resolve collision
 
 		if (axisDepth < depth)
 		{
@@ -160,7 +166,7 @@ namespace JZEngine
 		}
 
 
-		Vec2f direction = circle.m_center - squareA.midpoint;
+		Vec2f direction = squareA.midpoint-circle.m_center ;
 
 		if (direction.Dot(normal) < 0.f)//make sure norma is same direction as vector [AB]
 		{

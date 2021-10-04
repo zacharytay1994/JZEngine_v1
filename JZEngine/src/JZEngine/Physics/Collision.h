@@ -12,9 +12,10 @@ namespace JZEngine
 
 
 	public:
-		static bool CheckPhysicsComponentCollision( PhysicsComponent& p1,  PhysicsComponent& p2);
-
+		static bool CheckPhysicsComponentCollision(PhysicsComponent& componentA, PhysicsComponent& componentB, Vec2f& normal, float& depth);
+		static void ResolvePhysicsComponentCollision(PhysicsComponent& componentA, PhysicsComponent& componentB, const Vec2f& normal, const float& depth);
 	private:
+		
 		static bool IntersectCircles(const Circle& circleA, const Circle& circleB, Vec2f& normal, float& depth);
 
 		static bool IntersectCirclePolygon(const Circle& circle, const Square& squareA,

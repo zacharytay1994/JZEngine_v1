@@ -110,7 +110,7 @@ namespace JZEngine
 		entity.AddComponent<PhysicsComponent>();
 		entity.GetComponent<Texture>().texture_id_ = 2;
 		entity.GetComponent<PhysicsComponent>().shapeid = 2;
-		entity.GetComponent<Transform>().size_.x = 800;
+		entity.GetComponent<Transform>().size_.x = 700;
 		entity.GetComponent<Transform>().position_.y = -200;
 
 		id = ecs->CreateEntity();
@@ -119,7 +119,7 @@ namespace JZEngine
 		entity1.AddComponent<PhysicsComponent>();
 		entity1.GetComponent<Texture>().texture_id_ = 2;
 		entity1.GetComponent<PhysicsComponent>().shapeid = 2;
-		entity1.GetComponent<Transform>().size_.x = 800;
+		entity1.GetComponent<Transform>().size_.x = 700;
 		entity1.GetComponent<Transform>().position_.y = 400;
 
 		id = ecs->CreateEntity();
@@ -128,7 +128,7 @@ namespace JZEngine
 		entity3.AddComponent<PhysicsComponent>();
 		entity3.GetComponent<Texture>().texture_id_ = 2;
 		entity3.GetComponent<PhysicsComponent>().shapeid = 2;
-		entity3.GetComponent<Transform>().size_.y = 800;
+		entity3.GetComponent<Transform>().size_.y = 700;
 		entity3.GetComponent<Transform>().position_.x = 400;
 
 		id = ecs->CreateEntity();
@@ -137,7 +137,7 @@ namespace JZEngine
 		entity4.AddComponent<PhysicsComponent>();
 		entity4.GetComponent<Texture>().texture_id_ = 2;
 		entity4.GetComponent<PhysicsComponent>().shapeid = 2;
-		entity4.GetComponent<Transform>().size_.y = 800;
+		entity4.GetComponent<Transform>().size_.y = 700;
 		entity4.GetComponent<Transform>().position_.x = -400;
 
 		id = ecs->CreateEntity();//line in middle
@@ -162,7 +162,7 @@ namespace JZEngine
 			entity2.GetComponent<Transform>().size_.x = 20;
 			entity2.GetComponent<Transform>().size_.y = 20;
 			entity2.GetComponent<PhysicsComponent>().speed = 0.f;
-			entity2.GetComponent<PhysicsComponent>().mass = 20 * 20;
+			entity2.GetComponent<PhysicsComponent>().Mass = 20 * 20;
 			entity2.GetComponent<PhysicsComponent>().velocity = { speed * cosf(random<float>(-3.14f, 3.14f)) , speed * sinf(random<float>(-3.14f, 3.14f)) };//dir
 		}
 
@@ -180,7 +180,7 @@ namespace JZEngine
 			entity2.GetComponent<Transform>().size_.x = 20;
 			entity2.GetComponent<Transform>().size_.y = 20;
 			entity2.GetComponent<PhysicsComponent>().speed = 0.f;
-			entity2.GetComponent<PhysicsComponent>().mass = 20 * 20;
+			entity2.GetComponent<PhysicsComponent>().Mass = 20 * 20;
 			entity2.GetComponent<PhysicsComponent>().velocity = { speed * cosf(random<float>(-3.14f, 3.14f)) , speed * sinf(random<float>(-3.14f, 3.14f)) };//dir
 		}
 		for (int i = 0; i < 0; ++i)
@@ -196,7 +196,7 @@ namespace JZEngine
 			entity2.GetComponent<Transform>().size_.x = 35;
 			entity2.GetComponent<Transform>().size_.y = 35;
 			entity2.GetComponent<PhysicsComponent>().speed = speed;
-			entity2.GetComponent<PhysicsComponent>().mass = 35 * 35;
+			entity2.GetComponent<PhysicsComponent>().Mass = 35 * 35;
 			entity2.GetComponent<PhysicsComponent>().velocity = { speed * cosf(random<float>(-3.14f, 3.14f)) , speed * sinf(random<float>(-3.14f, 3.14f)) };//dir
 		}
 #endif

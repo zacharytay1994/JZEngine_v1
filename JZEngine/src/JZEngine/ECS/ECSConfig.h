@@ -11,7 +11,7 @@
 #include "../GraphicRendering/Background.h"
 
 namespace JZEngine
-{
+{ 
 	namespace ECS
 	{
 		struct ECSConfig
