@@ -10,11 +10,9 @@ namespace JZEngine
     /*                                                   objects with file scope
     ----------------------------------------------------------------------------- */
     // static data members declared in GLHelper
-    std::unordered_map<int, bool> InputHandler::keystate;
-    std::unordered_map<int, bool> InputHandler::prevkeystate;
-    std::unordered_map<int, bool> InputHandler::mousestate;
-    std::unordered_map<int, bool> InputHandler::prevmousestate;
-    
+    std::unordered_map<int, int> InputHandler::keystate;
+    std::unordered_map<int, int> InputHandler::mousestate;
+
 
     bool InputHandler::init(GLFWwindow* ptr) {
         if (ptr==nullptr)
@@ -29,16 +27,6 @@ namespace JZEngine
         return true;
     }
 
-    void InputHandler::FrameEnd()
-    {
-        for (auto& it : mousestate) {
-            prevmousestate[it.first] = it.second;
-        }
-        for (auto& it : keystate) {
-            prevkeystate[it.first] = it.second;
-        }
-       
-    }
 
     /*  _________________________________________________________________________*/
     /*! key_cb
@@ -67,10 +55,7 @@ namespace JZEngine
     When the ESC key is pressed, the close flag of the window is set.
     */
     void InputHandler::key_cb(GLFWwindow* pwin, int key, int scancode, int action, int mod) {
-        if (GLFW_PRESS == action || GLFW_REPEAT == action)
-            keystate[key] = true;
-        else if (GLFW_RELEASE == action)
-            keystate[key] = false;
+        keystate[key] = action;
     }
 
     /*  _________________________________________________________________________*/
@@ -96,10 +81,7 @@ namespace JZEngine
     This function is called when mouse buttons are pressed.
     */
     void InputHandler::mousebutton_cb(GLFWwindow* pwin, int button, int action, int mod) {
-        if(GLFW_PRESS == action || GLFW_REPEAT == action)
-            mousestate[button] = true;
-        else if (GLFW_RELEASE == action)
-            mousestate[button] = false;
+        mousestate[button] = action;
     }
 
     /*  _________________________________________________________________________*/
@@ -192,45 +174,38 @@ namespace JZEngine
 
     bool InputHandler::IsKeyPressed(KEY key) 
     {
-        if (keystate[static_cast<int>(key)] == true)
+        if (keystate[static_cast<int>(key)] == GLFW_REPEAT)
             return true;
 
         else return false;
     }
     bool InputHandler::IsKeyTriggered(KEY key)
     {
-        if (keystate[static_cast<int>(key)] == true && prevkeystate[static_cast<int>(key)] == false)
+        if (keystate[static_cast<int>(key)] == GLFW_PRESS)
         {
-            
+            keystate[static_cast<int>(key)] = -1;
             return true;
         }
 
         else return false;
     }
-
     bool InputHandler::IsKeyReleased(KEY key)
     {
-        if (keystate[static_cast<int>(key)] == false && prevkeystate[static_cast<int>(key)] == true)
+        if (keystate[static_cast<int>(key)] == GLFW_RELEASE)
         {
-
+            keystate[static_cast<int>(key)] = -1;
             return true;
         }
 
         else return false;
     }
 
-    bool InputHandler::IsMousePressed(MOUSE key)
-    {
-        if (mousestate[static_cast<int>(key)] == true)
-            return true;
 
-        else return false;
-    }
     bool InputHandler::IsMouseTriggered(MOUSE key)
     {
-        if (mousestate[static_cast<int>(key)] == true && prevmousestate[static_cast<int>(key)] == false)
+        if (mousestate[static_cast<int>(key)] == GLFW_PRESS)
         {
-
+            mousestate[static_cast<int>(key)] = -1;
             return true;
         }
 
@@ -238,9 +213,9 @@ namespace JZEngine
     }
     bool InputHandler::IsMouseReleased(MOUSE key)
     {
-        if (mousestate[static_cast<int>(key)] == false && prevmousestate[static_cast<int>(key)] == true)
+        if (mousestate[static_cast<int>(key)] == GLFW_RELEASE)
         {
-
+            mousestate[static_cast<int>(key)] = -1;
             return true;
         }
 
