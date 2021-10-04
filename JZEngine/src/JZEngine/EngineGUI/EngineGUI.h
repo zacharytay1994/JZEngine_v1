@@ -58,6 +58,7 @@ namespace JZEngine
 		void AddInterface(float x, float y, float sx, float sy, int group = -1) {
 			imgui_interfaces_[typeid(INTERFACE).name()] = { group, std::make_shared<INTERFACE>(x, y, sx, sy, group) };
 			imgui_interfaces_[typeid(INTERFACE).name()].interface_->SetEngineGUI(this);
+			imgui_interfaces_[typeid(INTERFACE).name()].interface_->active_ = false;
 		}
 
 		template <typename INTERFACE>

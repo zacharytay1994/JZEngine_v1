@@ -55,7 +55,7 @@ namespace JZEngine
 		testsystem.playSound("testsound", true, 0.4f);
 		testsystem.setChannelGroupVolume(1.0f,"main");*/
 		//InputHandler::
-
+		Settings::LoadFromConfigFile();
 		// add and initialize global systems
 		global_systems_->AddSystem<GLFW_Instance> ( "GLFW Instance" , Settings::window_width , Settings::window_height );
 		global_systems_->AddSystem<ResourceManager> ( "Resource Manager" );
@@ -266,6 +266,7 @@ namespace JZEngine
 			Log::Info("Main", "Clamped FPS: {}", 1.0 / clamped_dt);*/
 		}
 
-		Serialize::Save();
+		//Serialize::Save();
+		Settings::SaveToConfigFile();
 	}
 }

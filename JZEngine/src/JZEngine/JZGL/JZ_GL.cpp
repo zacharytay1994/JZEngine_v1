@@ -15,6 +15,7 @@
 
 namespace JZEngine
 {
+	GLFWwindow* GLFW_Instance::window_{ nullptr };
 	GLFW_Instance::GLFW_Instance( int width, int height )
 		:
 		window_width_( width ),
@@ -50,6 +51,14 @@ namespace JZEngine
 		return !glfwWindowShouldClose( window_ );
 	}
 
+	void GLFW_Instance::ResizeWindow(int width, int height)
+	{
+		if (window_)
+		{
+			glfwSetWindowSize(window_, width, height);
+		}
+	}
+
 	void GLFW_Instance::Initialize ()
 	{
 		glfwInit();
@@ -63,7 +72,7 @@ namespace JZEngine
 #endif
 
 		// create glfw window
-		window_ = glfwCreateWindow( window_width_, window_height_, JZEngine::Settings::engine_name, NULL, NULL );
+		window_ = glfwCreateWindow( Settings::window_width, Settings::window_height, JZEngine::Settings::engine_name.c_str(), NULL, NULL );
 		if ( window_ == NULL )
 		{
 			std::cout << "Failed to create GLFW window" << std::endl;
@@ -79,7 +88,7 @@ namespace JZEngine
 		}
 
 		// create opengl viewport
-		glViewport( 0, 0, window_width_, window_height_ );
+		glViewport( 0, 0, Settings::window_width, Settings::window_height);
 
 		// set resize window callback function
 		glfwSetFramebufferSizeCallback( window_, FramebufferSizeCallback );
@@ -88,9 +97,6 @@ namespace JZEngine
 		{
 			std::cout << "Failed to initialize input handler" << std::endl;
 		}
-		
-
-
 
 		int flags;
 		// features of contexts can be detected via context flags
@@ -116,5 +122,7 @@ namespace JZEngine
 		UNREFERENCED_PARAMETER( window );
 		UNREFERENCED_PARAMETER( window );
 		glViewport( 0, 0, width, height );
+		Settings::window_width = width;
+		Settings::window_height = height;
 	}
 }

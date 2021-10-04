@@ -38,6 +38,8 @@
     <ClCompile Include="src\JZEngine\Physics\Collision.cpp" />
     <ClCompile Include="src\JZEngine\Input\Input.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\RendererDebug.cpp" />
+    <ClCompile Include="src\JZEngine\EngineConfig.cpp" />
+    <ClCompile Include="src\JZEngine\EngineGUI\EngineSettings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
@@ -204,5 +206,6 @@
     <ClInclude Include="src\JZEngine\EngineGUI\FolderInterface.h" />
     <ClInclude Include="src\JZEngine\Physics\Collision.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\RendererDebug.h" />
+    <ClInclude Include="src\JZEngine\EngineGUI\EngineSettings.h" />
   </ItemGroup>
 </Project>

@@ -18,6 +18,7 @@
 #include "DebugInformation.h"
 #include "Console.h"
 #include "FolderInterface.h"
+#include "EngineSettings.h"
 #include "../Input/Input.h"
 #include "../Math/JZMath.h"
 
@@ -53,12 +54,12 @@ namespace JZEngine
 
 		// add imgui interfaces
 		AddInterface<MenuBar>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 1.0f / 18.0f, 0);
-		AddInterface<DebugInformation>(1.0f / 6.0f, 1.0f / 46.0f, 4.0f / 6.0f, 34.0f / 46.0f, 1);
-		GetInterface<DebugInformation>()->active_ = false;
-		AddInterface<FolderInterface>(1.0f / 6.0f, 1.0f / 46.0f, 4.0f / 6.0f, 34.0f / 46.0f, 1);
-		GetInterface<FolderInterface>()->active_ = false;
+		GetInterface<MenuBar>()->active_ = true;
+		AddInterface<DebugInformation>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 35.0f / 46.0f, 1);
+		AddInterface<FolderInterface>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 35.0f / 46.0f, 1);
 		GetInterface<FolderInterface>()->ecs_instance_ = GetSystem<ECS::ECSInstance>();
 		GetInterface<FolderInterface>()->scene_tree_ =	&scene_tree_;
+		AddInterface<EngineSettings>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 35.0f / 46.0f, 1);
 	}
 
 	/*!

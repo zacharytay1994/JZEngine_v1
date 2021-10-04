@@ -12,6 +12,7 @@
 #include "../EngineConfig.h"
 #include "../ECS/ECSConfig.h"
 #include "Console.h"
+#include "MenuBar.h"
 
 namespace JZEngine
 {
@@ -34,11 +35,11 @@ namespace JZEngine
 	void Inspector::Render(ECS::Entity* const entity)
 	{
 		ImGui::SetNextWindowBgAlpha(0.8f);
-		ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x_, static_cast<float>(Settings::window_height) * y_ }, ImGuiCond_Always);
-		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx_, static_cast<float>(Settings::window_height) * sy_ }, ImGuiCond_Always);
+		ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x_, MenuBar::height_ }, ImGuiCond_Always);
+		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx_, static_cast<float>(Settings::window_height - MenuBar::height_)}, ImGuiCond_Always);
 
 		// start rendering the inspector
-		ImGui::Begin("Inspector");
+		ImGui::Begin("Inspector", 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
 
 		// renders all registered components and systems 
 		TreeNodeComponentsAndSystems(entity);

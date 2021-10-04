@@ -2,6 +2,7 @@
 #include "ImGuiInterface.h"
 #include "../EngineConfig.h"
 #include "EngineGUI.h"
+#include "MenuBar.h"
 
 namespace JZEngine 
 {
@@ -17,8 +18,8 @@ namespace JZEngine
 		if (active_)
 		{
 			ImGui::SetNextWindowBgAlpha(0.8f);
-			ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x_, static_cast<float>(Settings::window_height) * y_ }, ImGuiCond_Always);
-			ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx_, static_cast<float>(Settings::window_height) * sy_ }, ImGuiCond_Always);
+			ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x_, MenuBar::height_ + static_cast<float>(Settings::window_height - MenuBar::height_) * y_ }, ImGuiCond_Always);
+			ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx_, static_cast<float>(Settings::window_height - MenuBar::height_) * sy_ }, ImGuiCond_Always);
 
 			Render(dt);
 		}

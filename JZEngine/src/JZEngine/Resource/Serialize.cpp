@@ -48,7 +48,7 @@ namespace JZEngine
 	void Serialize::Save()
 	{
 		// open config file and save all entity names in it
-		std::ofstream config(Settings::saves_config);
+		/*std::ofstream config(Settings::saves_config);
 		if (config.is_open())
 		{
 			for (auto& entity : entities_)
@@ -60,7 +60,7 @@ namespace JZEngine
 		else
 		{
 			Log::Error("Serialize", "Unable to open and save to config file.");
-		}
+		}*/
 	}
 
 
@@ -69,7 +69,7 @@ namespace JZEngine
 	{
 		// create the saves directory if it isn't there
 		std::stringstream folder_path;
-		folder_path << Settings::saves_directory << Settings::prefabs_dir;
+		folder_path << Settings::saves_directory << Settings::prefabs_directory;
 		if (!std::filesystem::is_directory(folder_path.str()))
 		{
 			std::filesystem::create_directory(folder_path.str());
@@ -125,7 +125,7 @@ namespace JZEngine
 	{
 		// open file
 		std::stringstream ss;
-		ss << Settings::saves_directory << Settings::prefabs_dir << name << ".txt";
+		ss << Settings::saves_directory << Settings::prefabs_directory << name << ".txt";
 		std::fstream file(ss.str());
 		if (file.is_open())
 		{
@@ -145,7 +145,7 @@ namespace JZEngine
 	void Serialize::ListAllSceneFiles()
 	{
 		std::stringstream ss;
-		ss << Settings::saves_directory << Settings::scenes_dir;
+		ss << Settings::saves_directory << Settings::scenes_directory;
 		// create the log directory if it isn't there
 		if (!std::filesystem::is_directory(ss.str()))
 		{
@@ -169,7 +169,7 @@ namespace JZEngine
 	{
 		// open file
 		std::stringstream ss;
-		ss << Settings::saves_directory << Settings::scenes_dir << name << ".txt";
+		ss << Settings::saves_directory << Settings::scenes_directory << name << ".txt";
 		std::ifstream file(ss.str());
 
 		std::string line;
@@ -216,7 +216,7 @@ namespace JZEngine
 	{
 		// open file
 		std::stringstream ss;
-		ss << Settings::saves_directory << Settings::scenes_dir;
+		ss << Settings::saves_directory << Settings::scenes_directory;
 
 		// create the log directory if it isn't there
 		if (!std::filesystem::is_directory(ss.str()))
@@ -252,7 +252,7 @@ namespace JZEngine
 	void Serialize::ListAllPrefabFiles()
 	{
 		std::stringstream ss;
-		ss << Settings::saves_directory << Settings::prefabs_dir;
+		ss << Settings::saves_directory << Settings::prefabs_directory;
 		// create the log directory if it isn't there
 		if (!std::filesystem::is_directory(ss.str()))
 		{
