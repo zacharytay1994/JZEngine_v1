@@ -443,10 +443,15 @@ namespace JZEngine
 			ImGui::InputFloat ( "##fontscale" , &component.font_size_ , 0.0f , 100.0f );
 
 
+			// Font Tracking
+			ImGui::Text ( "Tracking" );
+			ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
+			ImGui::InputFloat ( "##fonttracking" , &component.tracking_x_ , 1.0f , 10.0f );
+
 			// Font Leading 
 			ImGui::Text ( "Leading" );
 			ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
-			ImGui::InputFloat ( "##fontleading" , &component.font_leading , 0.0f , 100.0f );
+			ImGui::InputFloat ( "##fontleading" , &component.leading_y_ , 1.0f , 10.0f );
 
 			const char* font_memo
 			{

@@ -41,7 +41,7 @@ namespace JZEngine
 	 * @param color
 	 * Default colour is white { 1.0f , 1.0f , 1.0f };
 	*/
-	void TextRenderer::RenderText ( std::string text , float x , float y , float scale , JZEngine::Vec3f color , float leading )
+	void TextRenderer::RenderText ( std::string text , float x , float y , float scale , JZEngine::Vec3f color , float tracking_x , float leading_y )
 	{
 		scale = scale / 10.0f;
 
@@ -85,7 +85,7 @@ namespace JZEngine
 			if( *c == '\n' )
 			{
 				x = start_x;
-				y += offset_y;
+				y += offset_y * leading_y;
 			}
 			else
 			{
@@ -122,7 +122,7 @@ namespace JZEngine
 				// render quad
 				glDrawArrays ( GL_TRIANGLES , 0 , 6 );
 				// now advance cursors for next glyph
-				x += ( ch.advance >> 6 ) * scale   ; // bitshift by 6 to get value in pixels (1/64th times 2^6 = 64)
+				x += ( ch.advance >> 6 ) * scale * tracking_x  ; // bitshift by 6 to get value in pixels (1/64th times 2^6 = 64)
 			}
 
 		}

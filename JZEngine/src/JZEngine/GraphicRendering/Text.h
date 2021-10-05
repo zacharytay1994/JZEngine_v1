@@ -17,7 +17,8 @@ namespace JZEngine
 		Vec2f position_{ 0.0f,0.0f };
 		float font_size_{ 1.0f };
 		JZEngine::String text{};
-		float font_leading{ 1.0f };
+		float tracking_x_{ 0.0f };
+		float leading_y_{ 0.0f };
 	};
 
 	// sprite system

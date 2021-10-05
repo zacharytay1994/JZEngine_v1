@@ -42,7 +42,16 @@ namespace JZEngine
 		// pre-compiles a list of characters from the given font
 		//void Load ( std::string font , unsigned int fontSize );
 		// renders a string of text using the precompiled list of characters
-		void RenderText ( std::string text , float x , float y , float scale , JZEngine::Vec3f color = { 1.0f , 1.0f , 1.0f } , float leading = { 1.0f } );
+		void RenderText
+		(
+			std::string text ,
+			float x ,
+			float y ,
+			float scale ,
+			JZEngine::Vec3f color = { 1.0f , 1.0f , 1.0f } ,
+			float tracking_x = { 1.0f },
+			float leading_y = { 2.0f }
+		);
 
 		void Alignment ( Paragraph aligment = Paragraph::AlignLeft )
 		{
