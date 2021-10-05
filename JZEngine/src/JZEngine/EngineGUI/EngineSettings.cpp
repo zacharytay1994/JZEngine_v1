@@ -18,7 +18,7 @@ namespace JZEngine
 	{
 		ImGui::Begin("EngineSettings", 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 		std::stringstream ss;
-		ss << Settings::engine_name << " v" << Settings::version << "Settings";
+		ss << Settings::engine_name << " v" << Settings::version << " Settings";
 		ImGui::Text(ss.str().c_str());
 		ImGui::Separator();
 		if (ImGui::BeginTable("settings", 2))

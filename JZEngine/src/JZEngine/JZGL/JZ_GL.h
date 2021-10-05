@@ -59,6 +59,8 @@ namespace JZEngine
 		bool Active ();
 
 		static void ResizeWindow(int width, int height);
+		static void GetWindowPos(int& x, int& y);
+		static void SetWindowPos(int x, int y);
 
 	private:
 		/*!

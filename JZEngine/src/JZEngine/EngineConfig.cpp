@@ -1,10 +1,13 @@
 #include <PCH.h>
 #include "EngineConfig.h"
+#include "JZGL/JZ_GL.h"
 
 namespace JZEngine
 {
 	std::string		Settings::engine_name{ "Jump Zero Engine" };
 	float			Settings::version{ 1.0 };
+	int				Settings::window_x{ 100 };
+	int				Settings::window_y{ 100 };
 	unsigned int	Settings::window_width{ 1600 };
 	unsigned int	Settings::window_height{ 900 };
 	float			Settings::aspect_ratio;
@@ -34,6 +37,8 @@ namespace JZEngine
 		{
 			// read all variables inside
 			file >> version;
+			file >> window_x;
+			file >> window_y;
 			file >> window_width;
 			file >> window_height;
 			file >> max_fps;
@@ -42,6 +47,9 @@ namespace JZEngine
 			//file >> saves_config;
 			file >> scenes_directory;
 			file >> prefabs_directory;
+
+			min_tpf = 1.0 / static_cast<double>(max_fps);
+			aspect_ratio = static_cast<float>(window_width) / static_cast<float>(window_height);
 		}
 	}
 
@@ -63,8 +71,12 @@ namespace JZEngine
 
 		if (file.is_open())
 		{
+			GLFW_Instance::GetWindowPos(window_x, window_y);
+
 			// write all variables inside
 			file << version << "\n";
+			file << window_x << "\n";
+			file << window_y << "\n";
 			file << window_width << "\n";
 			file << window_height << "\n";
 			file << max_fps << "\n";

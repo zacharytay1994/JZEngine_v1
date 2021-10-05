@@ -2,6 +2,7 @@
 
 #include "DebugInformation.h"
 #include "../DebugTools/PerformanceData.h"
+#include "../EngineConfig.h"
 
 namespace JZEngine 
 {
@@ -9,7 +10,7 @@ namespace JZEngine
 		:
 		ImGuiInterface(x, y, sx, sy, group)
 	{
-
+		target_fps_ = Settings::max_fps;
 	}
 
 	void DebugInformation::Render(float dt) 
@@ -18,10 +19,13 @@ namespace JZEngine
 
 		ImGui::SetNextItemWidth(100.0f);
 		ImGui::InputInt("Target FPS |", &target_fps_);
-		if (target_fps_ <= 0)
+		if (target_fps_ < 30)
 		{
-			target_fps_ = 1;
+			target_fps_ = 30;
 		}
+
+		Settings::max_fps = target_fps_;
+		Settings::min_tpf = 1.0 / static_cast<double>(Settings::max_fps);
 
 		ImGui::SameLine();
 		ImGui::Text("%5d Process FPS |", PerformanceData::average_fps_);

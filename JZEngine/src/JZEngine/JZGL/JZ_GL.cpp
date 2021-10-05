@@ -51,6 +51,22 @@ namespace JZEngine
 		return !glfwWindowShouldClose( window_ );
 	}
 
+	void GLFW_Instance::GetWindowPos(int& x, int& y)
+	{
+		if (window_)
+		{
+			glfwGetWindowPos(window_, &x, &y);
+		}
+	}
+
+	void GLFW_Instance::SetWindowPos(int x, int y)
+	{
+		if (window_)
+		{
+			glfwSetWindowPos(window_, x, y);
+		}
+	}
+
 	void GLFW_Instance::ResizeWindow(int width, int height)
 	{
 		if (window_)
@@ -115,6 +131,8 @@ namespace JZEngine
 		glCheckError();
 		glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 		glCheckError();
+
+		SetWindowPos(Settings::window_x, Settings::window_y);
 	}
 
 	void JZEngine::FramebufferSizeCallback( GLFWwindow* window, int width, int height )
