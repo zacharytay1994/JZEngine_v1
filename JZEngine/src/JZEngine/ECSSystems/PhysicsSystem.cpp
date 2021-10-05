@@ -62,9 +62,9 @@ namespace JZEngine
 			if (InputHandler::IsKeyPressed(KEY::KEY_W))
 				++dy;
 			if (InputHandler::IsKeyPressed(KEY::KEY_A))
-				++dx;
+				--dx;
 			if (InputHandler::IsKeyPressed(KEY::KEY_S))
-				++dy;
+				--dy;
 			if (InputHandler::IsKeyPressed(KEY::KEY_D))
 				++dx;
 
