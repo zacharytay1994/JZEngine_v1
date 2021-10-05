@@ -28,7 +28,7 @@ namespace JZEngine
 		
 	}
 
-	//_____Updates Physic Components and calculates posnex for Collision & Response____//
+	//_____Updates Physic Components____//
 	void PhysicsSystem::Update(const float& dt)
 	{
 		PhysicsComponent& current_pcomponent = GetComponent<PhysicsComponent>();
@@ -60,13 +60,13 @@ namespace JZEngine
 			float dy = 0.f;
 			float forcemagnitude = 800.f;
 			if (InputHandler::IsKeyPressed(KEY::KEY_W))
-				dy++;
+				++dy;
 			if (InputHandler::IsKeyPressed(KEY::KEY_A))
-				dx--;
+				++dx;
 			if (InputHandler::IsKeyPressed(KEY::KEY_S))
-				dy--;
+				++dy;
 			if (InputHandler::IsKeyPressed(KEY::KEY_D))
-				dx++;
+				++dx;
 
 			if (dx != 0.f || dy != 0.f)
 			{
@@ -134,7 +134,6 @@ namespace JZEngine
 		if (InputHandler::IsKeyTriggered(KEY::KEY_I))
 		{
 			pause = !pause;
-			Log::Info("Physics", "I");
 		}
 		if (pause)
 		{
@@ -150,7 +149,7 @@ namespace JZEngine
 		}
 #endif
 		//optimised double for loop for collision & response
-		for (int i = 0; i < physics_cont.size() - 1; ++i)
+		for (int i = 0; i < (int)physics_cont.size() - 1; ++i)
 		{
 			PhysicsComponent& componentA = *physics_cont[i];
 			for (int j = i+1; j < physics_cont.size(); ++j)
@@ -166,11 +165,11 @@ namespace JZEngine
 				{
 					if (componentA.IsStatic)
 					{
-						RigidBody::Move(componentB, normal * depth / 2.f);
+						RigidBody::Move(componentB, normal * depth );
 					}
 					else if (componentB.IsStatic)
 					{
-						RigidBody::Move(componentA, -normal * depth / 2.f);
+						RigidBody::Move(componentA, -normal * depth );
 					}
 					else
 					{

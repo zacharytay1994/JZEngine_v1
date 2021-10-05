@@ -9,7 +9,7 @@
 
 namespace JZEngine
 {
-	bool Collision::CheckPhysicsComponentCollision( PhysicsComponent& componentA,  PhysicsComponent& componentB, Vec2f& normal, float& depth)
+	bool Collision::CheckPhysicsComponentCollision( const PhysicsComponent& componentA, const PhysicsComponent& componentB, Vec2f& normal, float& depth)
 	{
 		//circle circle
 		if (componentA.shapeid == circle && componentB.shapeid == circle)
@@ -67,7 +67,7 @@ namespace JZEngine
 
 	void Collision::ResolvePhysicsComponentCollision(PhysicsComponent& componentA, PhysicsComponent& componentB, const Vec2f& normal, const float& depth)
 	{
-		//Based on Physics, Part 3: Collision Response - Feb/Mar 97 By Chris Hecker
+		//Based on "Physics, Part 3: Collision Response" - Feb/Mar 97 By Chris Hecker
 		//https://www.chrishecker.com/Rigid_Body_Dynamics#Physics_Articles
 
 
@@ -167,7 +167,7 @@ namespace JZEngine
 		return true;
 	}
 
-	int  Collision::FindClosestPointOnPolygon(const Vec2f& point, std::vector<Vec2f>& vertices)
+	int  Collision::FindClosestPointOnPolygon(const Vec2f& point,const std::vector<Vec2f>& vertices)
 	{
 		int result = -1;
 		float minDistance = std::numeric_limits<float>::max();

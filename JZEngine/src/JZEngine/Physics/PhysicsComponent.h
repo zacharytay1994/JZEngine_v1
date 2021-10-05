@@ -12,14 +12,11 @@ namespace JZEngine
 		bool player{ false };
 		int shapeid{};
 
-		float speed{};
-
 		Vec2f size; // cm
 		Vec2f position;
 		Vec2f posnex;
 		Vec2f velocity{ 0.f, 0.f }; // cm/s
 		Vec2f acceleration{ 0.0f,0.0f }; // cm/s^2
-
 
 		float rotation{ 0.f };
 		float rotationalVelocity{ 0.f };

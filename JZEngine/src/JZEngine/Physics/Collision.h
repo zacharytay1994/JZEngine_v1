@@ -12,7 +12,8 @@ namespace JZEngine
 
 
 	public:
-		static bool CheckPhysicsComponentCollision(PhysicsComponent& componentA, PhysicsComponent& componentB, Vec2f& normal, float& depth);
+		static bool CheckPhysicsComponentCollision(const PhysicsComponent& componentA, const PhysicsComponent& componentB, Vec2f& normal, float& depth);
+
 		static void ResolvePhysicsComponentCollision(PhysicsComponent& componentA, PhysicsComponent& componentB, const Vec2f& normal, const float& depth);
 	private:
 		
@@ -21,7 +22,7 @@ namespace JZEngine
 		static bool IntersectCirclePolygon(const Circle& circle, const Square& squareA,
 			Vec2f& normal, float& depth);
 
-		static int FindClosestPointOnPolygon(const Vec2f& point, std::vector<Vec2f>& vertices);
+		static int FindClosestPointOnPolygon(const Vec2f& point, const std::vector<Vec2f>& vertices);
 
 		static void ProjectCircle(const Circle& circle, const Vec2f& axis, float& min, float& max);
 
