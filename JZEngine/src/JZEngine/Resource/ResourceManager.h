@@ -43,7 +43,7 @@ namespace JZEngine
 
 			FontShaderID ( unsigned int id , const std::string& name ) : id_ ( id ) , name_ ( name )
 			{}
-		}
+		};
 
 		struct DebugShader
 		{
@@ -51,7 +51,8 @@ namespace JZEngine
 			std::string name_;
 			Shader shader_program_;
 			
-			DebugShader(unsigned int id, const std::string& name) : id_(id), name_(name) {}
+			DebugShader ( unsigned int id , const std::string& name ) : id_ ( id ) , name_ ( name )
+			{}
 		};
 
 		struct Texture2DID
@@ -76,17 +77,14 @@ namespace JZEngine
 
 
 		std::vector<FontShaderID> font_shader_programs_;
-		std::vector<InstancedShaderID> instanced_shader_programs_;
-		std::vector<ShaderID> shader_programs_;
-		std::vector<Texture2DID> texture2ds_;
 		std::vector<FontID> text_;
 
-		ResourceManager();
+		/*ResourceManager();
 
-		unsigned int LoadInstancedShader( const std::string& name, const std::string& vspath, const std::string& fspath );
+		unsigned int LoadInstancedShader( const std::string& name, const std::string& vspath, const std::string& fspath );*/
 		unsigned int LoadFontShader ( const std::string& name , const std::string& vspath , const std::string& fspath );
-		unsigned int LoadShader(const std::string& name, const std::string& vspath, const std::string& fspath);
-		unsigned int LoadTexture2D(const std::string& name, const std::string& path);
+		/*unsigned int LoadShader(const std::string& name, const std::string& vspath, const std::string& fspath);
+		unsigned int LoadTexture2D(const std::string& name, const std::string& path);*/
 
 		// FONT RESOURCE
 		// Holds all state information relevant to a character as loaded using FreeType

@@ -62,14 +62,15 @@ namespace JZEngine
 
 		int TrimName ( const std::string& name );
 
-		enum class Confirmation {
-			NONE,
+		enum class Confirmation
+		{
+			NONE ,
 			SERIALIZE
 		};
 
 		Confirmation confirmation_flag_{ Confirmation::NONE };
-		char rename_buffer_[64] = {'\0'};
-		void RenderConfirmation(ECS::Entity* const entity);
+		char rename_buffer_[ 64 ] = { '\0' };
+		void RenderConfirmation ( ECS::Entity* const entity );
 
 		/* ____________________________________________________________________________________________________
 		*	CUSTOM COMPONENT IMGUI LAYOUTS
@@ -183,9 +184,9 @@ namespace JZEngine
 					{
 						component.texture_id_ = texture.id_;
 					}
-				}
+				};
 				ImGui::EndPopup ();
-			}
+			};
 
 			// button event to display all texture options
 			if( ImGui::Button ( resource_manager_->texture2ds_[ component.texture_id_ ].name_.c_str () , ImVec2 ( 168.0f , 0.0f ) ) )
@@ -236,7 +237,7 @@ namespace JZEngine
 			ImGui::SameLine ();
 			ImGui::TextDisabled ( "(?)" );
 			if( ImGui::IsItemHovered () )
-			{ 
+			{
 				ImGui::BeginTooltip ();
 				ImGui::PushTextWrapPos ( ImGui::GetFontSize () * 35.0f );
 				ImGui::TextUnformatted ( memo );
@@ -360,28 +361,28 @@ namespace JZEngine
 		void RenderComponent ( PhysicsComponent& component )
 		{
 			// General data
-			ImGuiStyle& style = ImGui::GetStyle();
-			float w = ImGui::CalcItemWidth();
+			ImGuiStyle& style = ImGui::GetStyle ();
+			float w = ImGui::CalcItemWidth ();
 			float spacing = style.ItemInnerSpacing.x;
-			float button_sz = ImGui::GetFrameHeight();
-			ImGui::Text("Shape");
-			ImGui::SliderInt("ID", &component.shapeid, 0, 2);
+			float button_sz = ImGui::GetFrameHeight ();
+			ImGui::Text ( "Shape" );
+			ImGui::SliderInt ( "ID" , &component.shapeid , 0 , 2 );
 
 			// Position
-			ImGui::Text("Velocity");
-			ImGui::PushItemWidth((w / 2.0f) - spacing);
-			ImGui::InputFloat("##VelX", &component.velocity.x);
-			ImGui::SameLine();
-			ImGui::Text("X");
-			ImGui::SameLine();
-			ImGui::InputFloat("##VelY", &component.velocity.y);
-			ImGui::SameLine();
-			ImGui::Text("Y");
-			ImGui::PopItemWidth();
+			ImGui::Text ( "Velocity" );
+			ImGui::PushItemWidth ( ( w / 2.0f ) - spacing );
+			ImGui::InputFloat ( "##VelX" , &component.velocity.x );
+			ImGui::SameLine ();
+			ImGui::Text ( "X" );
+			ImGui::SameLine ();
+			ImGui::InputFloat ( "##VelY" , &component.velocity.y );
+			ImGui::SameLine ();
+			ImGui::Text ( "Y" );
+			ImGui::PopItemWidth ();
 
-			ImGui::Text("Mass");
-			ImGui::SliderFloat ( "Mass" , &component.mass , component.mass - 20.0f , component.mass + 20.0f);
-			
+			ImGui::Text ( "Mass" );
+			ImGui::SliderFloat ( "Mass" , &component.mass , component.mass - 20.0f , component.mass + 20.0f );
+
 		}
 
 		template <>
@@ -441,14 +442,20 @@ namespace JZEngine
 			ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
 			ImGui::InputFloat ( "##fontscale" , &component.font_size_ , 0.0f , 100.0f );
 
-			const char* memo
+
+			// Font Leading 
+			ImGui::Text ( "Leading" );
+			ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
+			ImGui::InputFloat ( "##fontleading" , &component.font_leading , 0.0f , 100.0f );
+
+			const char* font_memo
 			{
 				"ENTER to type on new line.\n"
+				"Maximum of 199 characters."
 				"! Alpha is not integrated at this moment.\n"
 				"Thank you for your patience !"
 			};
 
-			
 			// Input Text
 			ImGui::Text ( "Text" );
 			ImGui::SameLine ();
@@ -457,7 +464,7 @@ namespace JZEngine
 			{
 				ImGui::BeginTooltip ();
 				ImGui::PushTextWrapPos ( ImGui::GetFontSize () * 35.0f );
-				ImGui::TextUnformatted ( memo );
+				ImGui::TextUnformatted ( font_memo );
 				ImGui::PopTextWrapPos ();
 				ImGui::EndTooltip ();
 			}
@@ -468,6 +475,14 @@ namespace JZEngine
 			ImGui::Text ( "Characters " );
 			ImGui::SameLine ( 0 , spacing );
 			ImGui::Text ( "%d " , component.text.size () );
+
+			// Text color
+			static float color[ 3 ];
+			ImGui::ColorEdit3 ( "Color" , color );
+			component.color_.x = color[ 0 ];
+			component.color_.y = color[ 1 ];
+			component.color_.z = color[ 2 ];
+
 
 		}
 

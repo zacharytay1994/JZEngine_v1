@@ -224,8 +224,6 @@
     <ClInclude Include="src\JZEngine\Resource\ResourceManager.h" />
     <ClInclude Include="src\JZEngine\Input\DeltaTime.h" />
     <ClInclude Include="src\JZEngine\GlobalSystems.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\ExampleFloatAway.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\DebugInformation.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\ImGuiInterface.h" />

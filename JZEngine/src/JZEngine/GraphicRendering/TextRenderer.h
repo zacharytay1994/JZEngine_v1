@@ -32,9 +32,9 @@ namespace JZEngine
 	// A renderer class for rendering text displayed by a font loaded using the 
 	// FreeType library. A single font is loaded, processed into a list of Character
 	// items for later rendering.
-	class TextRenderer : public GlobalSystem
+	struct TextRenderer : public GlobalSystem
 	{
-	public:
+		TextRenderer ();
 		// holds a list of pre-compiled Characters
 		//std::map<char , Character> Characters;
 		// shader used for text rendering
@@ -42,7 +42,7 @@ namespace JZEngine
 		// pre-compiles a list of characters from the given font
 		//void Load ( std::string font , unsigned int fontSize );
 		// renders a string of text using the precompiled list of characters
-		void RenderText ( std::string text , float x , float y , float scale , JZEngine::Vec3f color = { 1.0f , 1.0f , 1.0f } );
+		void RenderText ( std::string text , float x , float y , float scale , JZEngine::Vec3f color = { 1.0f , 1.0f , 1.0f } , float leading = { 1.0f } );
 
 		void Alignment ( Paragraph aligment = Paragraph::AlignLeft )
 		{
@@ -54,21 +54,11 @@ namespace JZEngine
 			return aligning_text_;
 		};
 
-		/*	float GetTextWidth ();
-			float GetTextHeight ();*/
-		static TextRenderer& GetInstance ()
-		{
-			static TextRenderer Instance;
-			return Instance;
-		};
-
-	/*private:*/
-		TextRenderer ();
 		// render state
 		Shader shader_program;
 		VertexArray va ;
 		VertexBuffer vb;
-		//unsigned int va{} , vb{};
+
 		float text_width_{};
 		float text_height_{};
 		int scaled_kerning_{ 100 } ;

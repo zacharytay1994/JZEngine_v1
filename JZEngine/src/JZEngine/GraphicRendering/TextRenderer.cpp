@@ -41,7 +41,7 @@ namespace JZEngine
 	 * @param color
 	 * Default colour is white { 1.0f , 1.0f , 1.0f };
 	*/
-	void TextRenderer::RenderText ( std::string text , float x , float y , float scale , JZEngine::Vec3f color )
+	void TextRenderer::RenderText ( std::string text , float x , float y , float scale , JZEngine::Vec3f color , float leading )
 	{
 		scale = scale / 10.0f;
 
@@ -50,48 +50,34 @@ namespace JZEngine
 		GetSystem<ResourceManager> ()->font_shader_programs_[ 0 ].shader_program_.SetUniform ( "textColor" , color );
 		va.Bind ();
 
+
 		std::string::const_iterator c;
 
-		int offset_x{ 0 };
-		int offset_y{ 0 };
-
-		int temp_offset_x{ 0 };
-		//auto& test_c = GetSystem<ResourceManager> ()->font_characters_;
+		float start_x{ x };
+		float offset_x{ 0 };
+		float offset_y{ 0 };
+		float temp_offset_x{ 0 };
 		auto& Characters = GetSystem<ResourceManager> ()->font_characters_[ 0 ];
-		int start_x = x ;
-		switch( GetAlignment () )
+
+		for( c = text.begin (); c != text.end (); c++ )
 		{
-			case Paragraph::AlignLeft:
-				offset_x = 0;
-				break;
-			case Paragraph::AlignCenter:
-				for( c = text.begin (); c != text.end (); c++ )
-				{
-					ResourceManager::Character ch = Characters[ *c ];
-					if( *c != '\n' )
-					{
-						temp_offset_x += ( ch.advance >> 6 );
-					}
-					else
-					{
-						offset_x = temp_offset_x > offset_x ? temp_offset_x : offset_x;
-						temp_offset_x = 0 ;
-					}
-				}
+			ResourceManager::Character ch = Characters[ *c ];
+			if( *c != '\n' )
+			{
+				temp_offset_x += ( ch.advance >> 6 );
+			}
+			else
+			{
 				offset_x = temp_offset_x > offset_x ? temp_offset_x : offset_x;
-				offset_x = ( -offset_x / 2 ) * scale;
-				break;
-			case Paragraph::AlignRight:
-				for( c = text.begin (); c != text.end (); c++ )
-				{
-					ResourceManager::Character ch = Characters[ *c ];
-					offset_x += ( ch.advance >> 6 );
-				}
-				offset_x = ( -offset_x );
-				break;
+				temp_offset_x = 0 ;
+			}
 		}
 
-		offset_y = static_cast < int >( -Characters[ 'H' ].size_.y / 2 * scale );
+		offset_x = temp_offset_x > offset_x ? temp_offset_x : offset_x;
+		offset_x = -offset_x * scale ;
+
+
+		offset_y = -Characters[ 'H' ].size_.y / 2 * scale ;
 
 		// iterate through all characters
 		for( c = text.begin (); c != text.end (); c++ )
@@ -137,12 +123,11 @@ namespace JZEngine
 				glDrawArrays ( GL_TRIANGLES , 0 , 6 );
 				// now advance cursors for next glyph
 				x += ( ch.advance >> 6 ) * scale   ; // bitshift by 6 to get value in pixels (1/64th times 2^6 = 64)
-
 			}
 
 		}
-		va.Unbind ();
 
+		va.Unbind ();
 		glBindTexture ( GL_TEXTURE_2D , 0 );
 		glCheckError ();
 	}
