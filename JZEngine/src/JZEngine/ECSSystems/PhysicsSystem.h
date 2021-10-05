@@ -5,7 +5,7 @@
 #include "../ECS/ECSConfig.h"
 #include "../Physics/PhysicsComponent.h"
 #include "../Physics/Collision.h"
-#include "../GraphicRendering/RendererDebug.h"
+
 #include "../Physics/RigidBody.h"
 
 namespace JZEngine
@@ -32,6 +32,7 @@ namespace JZEngine
 		virtual void Update(const float& dt) override;
 
 		virtual void FrameEnd(const float& dt) override;
-		
+
+	
 	};
 }

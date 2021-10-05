@@ -76,16 +76,20 @@ namespace JZEngine
 
 	void Collision::ResolvePhysicsComponentCollision(PhysicsComponent& componentA, PhysicsComponent& componentB, const Vec2f& normal, const float& depth)
 	{
+		//Based on Physics, Part 3: Collision Response - Feb/Mar 97 By Chris Hecker
+		//https://www.chrishecker.com/Rigid_Body_Dynamics#Physics_Articles
+
+
 		Vec2f relativevelocity = componentB.velocity - componentA.velocity;
 
 		if (relativevelocity.Dot(normal) > 0.f)
 			return;
 		float restitution = std::min(componentA.Restitution, componentB.Restitution);
 		float j = -(1.f + restitution) * relativevelocity.Dot(normal);
-		j /= (1.f / componentA.Mass) + (1.f / componentB.Mass);
+		j /= componentA.InvMass + componentB.InvMass;
 		Vec2f impulse = j * normal;
-		componentA.velocity -= 1.f / componentA.Mass * impulse;
-		componentB.velocity += 1.f / componentB.Mass * impulse;
+		componentA.velocity -= componentA.InvMass * impulse;
+		componentB.velocity += componentB.InvMass * impulse;
 	
 	}
 

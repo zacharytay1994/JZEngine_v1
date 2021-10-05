@@ -10,14 +10,14 @@ namespace JZEngine
 	{
 	
 	public:
-		static void Step(PhysicsComponent& pcomponent, const float& dt);
+		static void ApplyForces(PhysicsComponent& pcomponent, const float& dt);
 
 		static void AddForce(PhysicsComponent& pcomponent, const Vec2f& force);
 
 		static void Move(PhysicsComponent& pcomponent, const Vec2f& moveby);
 
 	private:
-		Vec2f gravity{ 0.f,-0.981f };// m / s*s
+		static Vec2f gravity;// m / s*s
 
 	};
 
