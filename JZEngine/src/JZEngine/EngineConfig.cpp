@@ -47,10 +47,9 @@ namespace JZEngine
 			//file >> saves_config;
 			file >> scenes_directory;
 			file >> prefabs_directory;
-
-			min_tpf = 1.0 / static_cast<double>(max_fps);
-			aspect_ratio = static_cast<float>(window_width) / static_cast<float>(window_height);
 		}
+		min_tpf = 1.0 / static_cast<double>(max_fps);
+		aspect_ratio = static_cast<float>(window_width) / static_cast<float>(window_height);
 	}
 
 	void Settings::SaveToConfigFile()

@@ -1,17 +1,10 @@
-10
 1
-11
-2
-3
-4
-5
-6
-7
-8
-9
-Object
-ball 2
-player
-Wall
-Wall2
-Wall3
+100
+100
+1300
+900
+60
+Logs/
+Saves/
+Scenes/
+Prefabs/
