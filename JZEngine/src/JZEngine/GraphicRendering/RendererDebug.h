@@ -53,5 +53,6 @@ namespace JZEngine
 		static void DrawSpriteSquare(const Vec2f& centre, const Vec2f& dimensions);
 		static void DrawSquare(const Vec2f& centre, const Vec2f& dimensions);
 		static void DrawCircle(const Vec2f& centre, float radius, int density = 20);
+		//static void DrawPolygon(const std::vector<Vec2f&> vertices);
 	};
 }

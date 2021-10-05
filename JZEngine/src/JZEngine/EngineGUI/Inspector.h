@@ -158,7 +158,7 @@ namespace JZEngine
 			ImGui::PopItemWidth ();
 
 			// Size
-			ImGui::Text ( "Size" );
+			ImGui::Text ( "Size(cm)" );
 			ImGui::PushItemWidth ( ( w / 2.0f ) - spacing );
 			ImGui::InputFloat ( "##SizeW" , &component.size_.x );
 			ImGui::SameLine ();
@@ -350,8 +350,34 @@ namespace JZEngine
 		template <>
 		void RenderComponent ( PhysicsComponent& component )
 		{
-			ImGui::SliderInt ( "Shape" , &component.shapeid , 0 , 2 );
-			ImGui::SliderFloat ( "Velocity of y" , &component.velocity.y , component.velocity.y - 0.1f , component.velocity.y + 0.1f );
+			// General data
+			ImGuiStyle& style = ImGui::GetStyle();
+			float w = ImGui::CalcItemWidth();
+			float spacing = style.ItemInnerSpacing.x;
+			float button_sz = ImGui::GetFrameHeight();
+			ImGui::Text("Shape");
+			ImGui::SliderInt("ID", &component.shapeid, 0, 2);
+
+			// Position
+			ImGui::Text("Velocity");
+			ImGui::PushItemWidth((w / 2.0f) - spacing);
+			ImGui::InputFloat("##VelX", &component.velocity.x);
+			ImGui::SameLine();
+			ImGui::Text("X");
+			ImGui::SameLine();
+			ImGui::InputFloat("##VelY", &component.velocity.y);
+			ImGui::SameLine();
+			ImGui::Text("Y");
+			ImGui::PopItemWidth();
+
+			ImGui::Text("Area");
+			ImGui::SliderFloat("m^2", &component.Area, component.Area, component.Area);
+			ImGui::Text("Density ");
+			ImGui::SliderFloat("kg/cm^2", &component.Density,1.0f, 50.0f);
+			ImGui::Text("Mass");
+			ImGui::SliderFloat ( "kg" , &component.Mass , component.Mass - 10.0f , component.Mass + 10.0f);
+			ImGui::Text("Restitution");
+			ImGui::SliderFloat("Restitution", &component.Restitution, 0.0f, 1.0f);
 		}
 
 		template <>

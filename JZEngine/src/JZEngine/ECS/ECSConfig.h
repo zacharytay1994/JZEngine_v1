@@ -11,7 +11,7 @@
 #include "../GraphicRendering/Background.h"
 
 namespace JZEngine
-{
+{ 
 	namespace ECS
 	{
 		struct ECSConfig
@@ -40,8 +40,8 @@ namespace JZEngine
 				Sprite ,
 				InstanceSprite ,
 				FloatAwayAllUnicorn ,
-				MakeUnicornAffectedByInput
-				//PhysicsSystem
+				MakeUnicornAffectedByInput,
+				PhysicsSystem
 
 				>;
 		};
