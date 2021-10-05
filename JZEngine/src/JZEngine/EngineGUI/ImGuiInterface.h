@@ -10,10 +10,11 @@ namespace JZEngine
 	struct EngineGUI;
 	struct ImGuiInterface
 	{
+		int group_{ -1 };
 		bool active_{ true };
 		float x_, y_, sx_, sy_;		/*!< position and scale of the ImGui interface */
 
-		ImGuiInterface(float x, float y, float sx, float sy);
+		ImGuiInterface(float x, float y, float sx, float sy, int group = -1);
 		virtual ~ImGuiInterface() = default;
 
 		void RenderInterface(float dt);
@@ -21,6 +22,8 @@ namespace JZEngine
 		virtual void Render(float dt) {};
 
 		void SetEngineGUI(EngineGUI* enginegui);
+
+		void ToggleOnOff();
 
 	protected:
 		template <typename INTERFACE>

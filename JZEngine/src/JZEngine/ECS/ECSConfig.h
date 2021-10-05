@@ -38,14 +38,13 @@ namespace JZEngine
 			using System =
 				std::tuple<
 
-
 				ParallaxBackground ,
 				Sprite ,
 				InstanceSprite ,
 				FloatAwayAllUnicorn ,
 				MakeUnicornAffectedByInput ,
-				PhysicsSystem,
-				Text
+				PhysicsSystem ,
+				Text 
 
 				>;
 		};

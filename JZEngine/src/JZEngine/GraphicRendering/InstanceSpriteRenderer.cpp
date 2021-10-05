@@ -1,6 +1,7 @@
 #include <PCH.h>
 #include "InstanceSpriteRenderer.h"
 #include "NonInstanceSpriteRenderer.h"
+#include "RendererDebug.h"
 
 namespace JZEngine
 {
@@ -22,6 +23,8 @@ namespace JZEngine
 
 		sprite_renderer_instancing_.renderer_->AddTransform( shader.shader_id_, texture.texture_id_,
 															 Math::GetTransform(transform.position_, transform.rotation_, transform.scale_, transform.size_));
+
+		RendererDebug::DrawSpriteSquare(transform.position_, { transform.scale_.x * transform.size_.x, transform.scale_.y * transform.size_.y });
 	}
 }
 

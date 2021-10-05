@@ -546,7 +546,7 @@ namespace JZEngine
 			for (auto& system : system_database_)
 			{
 				PerformanceData::StartMark(system->name_, PerformanceData::TimerType::ECS_SYSTEMS);
-				system->FrameBegin(0.02f);
+				system->FrameBegin(dt);
 				for (ui32 j = 0; j < am.number_of_archetypes_; ++j)
 				{
 					// if system mask matches archetype mask, means archetype holds entities of interest
@@ -569,6 +569,7 @@ namespace JZEngine
 						}
 					}
 				}
+				system->FrameEnd(dt);
 				PerformanceData::EndMark(system->name_, PerformanceData::TimerType::ECS_SYSTEMS);
 			}
 		}
@@ -758,14 +759,16 @@ namespace JZEngine
 			id_			= static_cast<ubyte>(255);
 			ecs_id_		= static_cast<ui32>(-1);;
 			children_count_ = 0;
+			children_before_ = 0;
 			children_.fill(-1);
 		}
 		
 		bool Entity::AddChild(ui32 childId)
 		{
-			if (children_count_ < ENTITY_MAX_CHILDREN)
+			if (children_before_ < ENTITY_MAX_CHILDREN)
 			{
-				children_[children_count_++] = childId;
+				children_[children_before_++] = childId;
+				++children_count_;
 				return true;
 			}
 			else
@@ -775,6 +778,7 @@ namespace JZEngine
 					if (c == -1)
 					{
 						c = childId;
+						++children_count_;
 						return true;
 					}
 				}
@@ -791,6 +795,7 @@ namespace JZEngine
 					if (c == childId)
 					{
 						c = -1;
+						--children_count_;
 					}
 				}
 			}
@@ -798,7 +803,7 @@ namespace JZEngine
 
 		bool Entity::HasChildSpace()
 		{
-			if (children_count_ < ENTITY_MAX_CHILDREN)
+			if (children_before_ < ENTITY_MAX_CHILDREN)
 			{
 				return true;
 			}

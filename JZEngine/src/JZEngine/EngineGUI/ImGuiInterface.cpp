@@ -5,9 +5,9 @@
 
 namespace JZEngine 
 {
-	ImGuiInterface::ImGuiInterface(float x, float y, float sx, float sy)
+	ImGuiInterface::ImGuiInterface(float x, float y, float sx, float sy, int group)
 		:
-		x_(x), y_(y), sx_(sx), sy_(sy)
+		x_(x), y_(y), sx_(sx), sy_(sy), group_(group)
 	{
 
 	}
@@ -26,5 +26,13 @@ namespace JZEngine
 
 	void ImGuiInterface::SetEngineGUI(EngineGUI* enginegui) {
 		engine_gui_ = enginegui;
+	}
+
+	void ImGuiInterface::ToggleOnOff() {
+		if (engine_gui_) {
+			bool temp = active_;
+			engine_gui_->CloseAllGroupedInterface(group_);
+			active_ = !temp;
+		}
 	}
 }

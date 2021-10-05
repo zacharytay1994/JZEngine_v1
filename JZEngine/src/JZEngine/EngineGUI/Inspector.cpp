@@ -89,7 +89,26 @@ namespace JZEngine
 			ImGui::Separator();
 			ImGui::Text("Oops no entity selected...");
 		}
+
+		ImGui::NewLine();
+		ImGui::SameLine(ImGui::GetWindowWidth() / 2 - 50.0f);
+		if (ImGui::Button("Serialize", ImVec2(100.0f, 0.0f)))
+		{
+			if (entity)
+			{
+				/*if (!Serialize::SerializeEntity(*entity))
+				{
+					Log::Warning("Resource", "Serializing failed!");
+				}*/
+				confirmation_flag_ = Confirmation::SERIALIZE;
+			}
+		}
 		ImGui::End();
+
+		if (confirmation_flag_ == Confirmation::SERIALIZE)
+		{
+			RenderConfirmation(entity);
+		}
 	}
 
 	/*!
@@ -245,5 +264,91 @@ namespace JZEngine
 			++count;
 		}
 		return 0;
+	}
+
+	template <typename... ARGS>
+	void TextCenter(std::string text, ARGS...args) {
+		float font_size = ImGui::GetFontSize() * text.size() / 2;
+		ImGui::SameLine(
+			ImGui::GetWindowSize().x / 2 -
+			font_size + (font_size / 2)
+		);
+
+		ImGui::Text(text.c_str(), args...);
+		ImGui::NewLine();
+	}
+
+	void Inspector::RenderConfirmation(ECS::Entity* const entity) {
+		ImGui::SetNextWindowBgAlpha(0.8f);
+		ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * (1.0f / 3.0f), static_cast<float>(Settings::window_height) * (1.0f / 3.0f) }, ImGuiCond_Once);
+		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * (1.0f / 3.0f), static_cast<float>(Settings::window_height) * (1.0f / 5.0f) }, ImGuiCond_Once);
+
+		ImGui::Begin("SceneTree Confirmation", 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+		if (ImGui::BeginTable("Confirmation Table", 1)) {
+			ImGui::TableNextColumn();
+			bool name_exists_{ false };
+			std::stringstream final_name;
+			switch (confirmation_flag_) {
+			case Confirmation::SERIALIZE:
+				TextCenter("[SERIALIZING OBJECT]");
+				TextCenter("You are about to save the current object as:");
+				if (rename_buffer_[0] == '\0') {
+					TextCenter(entity->name_.c_str());
+				}
+				else {
+					TextCenter(rename_buffer_);
+				}
+
+				ImGui::SameLine(ImGui::GetWindowSize().x / 2 - 100.0f);
+				ImGui::PushItemWidth(200.0f);
+				ImGui::InputText("##Rename", rename_buffer_, 64);
+				ImGui::PopItemWidth();
+				ImGui::SameLine();
+				ImGui::Text(": Rename");
+				// check if input name already exists and warn the user
+				if (rename_buffer_[0] == '\0') {
+					final_name << entity->name_;
+				}
+				else {
+					final_name << rename_buffer_;
+				}
+				for (auto& e : Serialize::entities_) {
+					if (e.first == final_name.str()) {
+						name_exists_ = true;
+					}
+				}
+				if (name_exists_) {
+					ImGui::NewLine();
+					TextCenter("A saved object already exists, do you want to overwrite existing?");
+				}
+				else {
+					ImGui::NewLine();
+					TextCenter("...");
+				}
+				ImGui::NewLine();
+				ImGui::SameLine(ImGui::GetWindowSize().x / 4 - 50.0f);
+				if (ImGui::Button("Confirm", ImVec2(100.0f, 0.0f))) {
+					if (rename_buffer_[0] == '\0') {
+						Serialize::SerializeEntity(ecs_instance_, *entity);
+					}
+					else {
+						std::string temp = entity->name_;
+						entity->name_ = final_name.str();
+						if (Serialize::SerializeEntity(ecs_instance_, *entity)) {
+							Log::Warning("Resource", "Serializing entity {} failed!", final_name.str());
+						}
+						entity->name_ = temp;
+					}
+					confirmation_flag_ = Confirmation::NONE;
+				}
+				ImGui::SameLine(ImGui::GetWindowSize().x / 4 * 3 - 50.0f);
+				if (ImGui::Button("Cancel", ImVec2(100.0f, 0.0f))) {
+					confirmation_flag_ = Confirmation::NONE;
+				}
+				break;
+			}
+			ImGui::EndTable();
+		}
+		ImGui::End();
 	}
 }

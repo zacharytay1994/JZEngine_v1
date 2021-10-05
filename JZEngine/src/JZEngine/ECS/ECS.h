@@ -988,7 +988,8 @@ namespace JZEngine
 			ubyte								id_{ 255 };						/*!< unique id corresponding to its chunk, i.e. only unique per chunk */
 			ui32								ecs_id_;						/*!< unique ecs_id, no 2 entities can ever have the same ecs_id */
 
-			ui32										children_count_{ 0 };	/*!< number of children entity attached to this entity */
+			ui32										children_count_{ 0 };
+			ui32										children_before_{ 0 };	/*!< number of children entity attached to this entity */
 			std::array<ui32, ENTITY_MAX_CHILDREN>		children_;				/*!< handle to children entity */
 
 			Entity(ECSInstance* ecs);
@@ -1358,6 +1359,15 @@ namespace JZEngine
 			 * ****************************************************************************************************
 			*/
 			virtual void Update(const float& dt) = 0;
+
+			/*!
+			 * @brief ___JZEngine::ECS::System::FrameEnd()___
+			 * ****************************************************************************************************
+			 * Virtual function, called only once per frame after updating entities of that system
+			 * for each system.
+			 * ****************************************************************************************************
+			*/
+			virtual void FrameEnd(const float& dt) { };
 		};
 	}
 }

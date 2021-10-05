@@ -17,6 +17,7 @@
 #include "MenuBar.h"
 #include "DebugInformation.h"
 #include "Console.h"
+#include "FolderInterface.h"
 #include "../Input/Input.h"
 #include "../Math/JZMath.h"
 
@@ -51,9 +52,13 @@ namespace JZEngine
 		scene_tree_.ecs_instance_ = GetSystem<ECS::ECSInstance>();
 
 		// add imgui interfaces
-		AddInterface<MenuBar>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 1.0f / 18.0f);
-		AddInterface<DebugInformation>(1.0f / 6.0f, 1.0f / 46.0f, 4.0f / 6.0f, 34.0f / 46.0f);
+		AddInterface<MenuBar>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 1.0f / 18.0f, 0);
+		AddInterface<DebugInformation>(1.0f / 6.0f, 1.0f / 46.0f, 4.0f / 6.0f, 34.0f / 46.0f, 1);
 		GetInterface<DebugInformation>()->active_ = false;
+		AddInterface<FolderInterface>(1.0f / 6.0f, 1.0f / 46.0f, 4.0f / 6.0f, 34.0f / 46.0f, 1);
+		GetInterface<FolderInterface>()->active_ = false;
+		GetInterface<FolderInterface>()->ecs_instance_ = GetSystem<ECS::ECSInstance>();
+		GetInterface<FolderInterface>()->scene_tree_ =	&scene_tree_;
 	}
 
 	/*!
@@ -74,10 +79,10 @@ namespace JZEngine
 		ImGuizmo::BeginFrame();
 
 		// engine gui shortcuts
-		if (InputHandler::IsKeyPressed(KEY::KEY_TAB))
+		/*if (InputHandler::IsKeyPressed(KEY::KEY_TAB))
 		{
 			GetInterface<DebugInformation>()->active_ = !GetInterface<DebugInformation>()->active_;
-		}
+		}*/
 
 		// render all engine gui parts
 		console_.Render();
@@ -85,7 +90,7 @@ namespace JZEngine
 		inspector_.Render(scene_tree_.selected_entity_);
 
 		for (auto& interface : imgui_interfaces_) {
-			interface.second->RenderInterface(dt);
+			interface.second.interface_->RenderInterface(dt);
 		}
 
 		if (scene_tree_.selected_entity_)
@@ -121,6 +126,14 @@ namespace JZEngine
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	}
+
+	void EngineGUI::CloseAllGroupedInterface(int group) {
+		for (auto& i : imgui_interfaces_) {
+			if (i.second.group_ == group) {
+				i.second.interface_->active_ = false;
+			}
+		}
 	}
 
 	/*!

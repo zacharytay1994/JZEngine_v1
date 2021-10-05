@@ -55,18 +55,20 @@ namespace JZEngine
 		virtual void Update(float dt) override;
 
 		template <typename INTERFACE>
-		void AddInterface(float x, float y, float sx, float sy) {
-			imgui_interfaces_[typeid(INTERFACE).name()] = std::make_shared<INTERFACE>(x, y, sx, sy);
-			imgui_interfaces_[typeid(INTERFACE).name()]->SetEngineGUI(this);
+		void AddInterface(float x, float y, float sx, float sy, int group = -1) {
+			imgui_interfaces_[typeid(INTERFACE).name()] = { group, std::make_shared<INTERFACE>(x, y, sx, sy, group) };
+			imgui_interfaces_[typeid(INTERFACE).name()].interface_->SetEngineGUI(this);
 		}
 
 		template <typename INTERFACE>
 		std::shared_ptr<INTERFACE> GetInterface() {
 			if (imgui_interfaces_.find(typeid(INTERFACE).name()) != imgui_interfaces_.end()) {
-				return std::dynamic_pointer_cast<INTERFACE>(imgui_interfaces_[typeid(INTERFACE).name()]);
+				return std::dynamic_pointer_cast<INTERFACE>(imgui_interfaces_[typeid(INTERFACE).name()].interface_);
 			}
 			return nullptr;
 		}
+
+		void CloseAllGroupedInterface(int group);
 
 		Console* GetConsole();
 		ImGuizmo::OPERATION operation_{ ImGuizmo::OPERATION::TRANSLATE };
@@ -74,7 +76,12 @@ namespace JZEngine
 		Inspector	inspector_;		/*!< engine inspector */
 		Console		console_;		/*!< engine console */
 		SceneTree	scene_tree_;	/*!< engine console */
-		std::unordered_map<std::string, std::shared_ptr<ImGuiInterface>> imgui_interfaces_;
+		
+		struct InterfaceGroup {
+			int group_{ -1 };
+			std::shared_ptr<ImGuiInterface> interface_{ nullptr };
+		};
+		std::unordered_map<std::string, InterfaceGroup> imgui_interfaces_;
 
 		/*!
 		 * @brief ___JZEngine::ToolsGUI::IntiializeWithGLFW()___

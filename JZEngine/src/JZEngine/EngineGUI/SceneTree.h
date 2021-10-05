@@ -37,6 +37,8 @@ namespace JZEngine
 
 		ECS::Entity*									selected_entity_{ nullptr };		/*!< the currently selected entity */
 		std::string*									default_entity_name_{ nullptr };	/*!< the default entity name if no name is specified */
+		std::string*									current_scene_name_{ nullptr };
+		char											reset_name_[MAX_NAME_SIZE]{ '\0' };
 		char											new_entity_name_[MAX_NAME_SIZE];	/*!< buffer for custom name when creating new entities */
 		std::unordered_map<std::string, unsigned int>*	names_;								/*!< for repeated names to add an index behind */
 
@@ -61,7 +63,7 @@ namespace JZEngine
 		 * : The entity to render. Should be a root entity in EntityManager.
 		 * ****************************************************************************************************
 		*/
-		void RenderAllChildObjects(ECS::Entity* entity);
+		void RenderAllChildObjects(ECS::Entity* entity, int& id);
 
 		/*!
 		 * @brief ___JZEngine::SceneTree::GetName()___
@@ -74,5 +76,16 @@ namespace JZEngine
 		 * ****************************************************************************************************
 		*/
 		std::string GetName();
+
+		void RemoveAllEntities();
+
+		enum class Confirmation {
+			NONE,
+			SAVE,
+			REMOVE
+		};
+
+		Confirmation confirmation_flag_{ Confirmation::NONE };
+		void RenderConfirmation();
 	};
 }

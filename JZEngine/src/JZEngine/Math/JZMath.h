@@ -27,6 +27,12 @@ namespace JZEngine
 		}
 
 		template <typename T>
+		float	Get2DVectorDistance(const Vec2<T>& vec0, const Vec2<T>& vec1)
+		{
+			return sqrtf((vec0.x - vec1.x) * (vec0.x - vec1.x) + (vec0.y - vec1.y) * (vec0.y - vec1.y));
+		}
+
+		template <typename T>
 		Vec2<T> GetRotatedVector(const Vec2<T>& vec, double radian)
 		{
 			return Mat2<T>::Rotate(radian) * vec;

@@ -13,6 +13,10 @@ namespace JZEngine
 		constexpr const int			max_fps			= 60;
 		constexpr const double		min_tpf			= 1.0 / static_cast<double>(max_fps);
 
-		constexpr const char*		logs_directory	= "Log/";
+		constexpr const char*		logs_directory	= "Logs/";
+		constexpr const char*		saves_directory	= "Saves/";
+		constexpr const char*		saves_config	= "Saves/config.txt";
+		constexpr const char*		scenes_dir		= "Scenes/";
+		constexpr const char*		prefabs_dir		= "Prefabs/";
 	}
 }

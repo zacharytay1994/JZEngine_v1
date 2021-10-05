@@ -1,5 +1,6 @@
 #include "PCH.h"
 #include "Sound.h"
+#include "../Message/MessageHandler.h"
 
 namespace JZEngine
 {
@@ -111,6 +112,13 @@ namespace JZEngine
         }
         return 0;
     }
+
+    void SoundSystem::playSound(SoundEvent* msg)
+    {
+        //this just calls the normal playSound function
+        playSound(msg->name, false, 0.15f);
+    }
+
     /**
      * Releases a sound specified by name.
      * 
