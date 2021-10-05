@@ -77,12 +77,15 @@ namespace JZEngine
 	void Collision::ResolvePhysicsComponentCollision(PhysicsComponent& componentA, PhysicsComponent& componentB, const Vec2f& normal, const float& depth)
 	{
 		Vec2f relativevelocity = componentB.velocity - componentA.velocity;
-		float restitution = std::min(componentA.Restitution, componentB.Restitution);
-		float j = -(1.f + restitution) * relativevelocity.Dot(normal)  ;
-		j /= (1.f / componentA.Mass) + (1.f / componentB.Mass); 
 
-		componentA.velocity -= j / componentA.Mass * normal;
-		componentB.velocity += j / componentB.Mass * normal;
+		if (relativevelocity.Dot(normal) > 0.f)
+			return;
+		float restitution = std::min(componentA.Restitution, componentB.Restitution);
+		float j = -(1.f + restitution) * relativevelocity.Dot(normal);
+		j /= (1.f / componentA.Mass) + (1.f / componentB.Mass);
+		Vec2f impulse = j * normal;
+		componentA.velocity -= 1.f / componentA.Mass * impulse;
+		componentB.velocity += 1.f / componentB.Mass * impulse;
 	
 	}
 
@@ -102,7 +105,7 @@ namespace JZEngine
 			return false;
 		}
 
-		normal = (circleB.m_center - circleA.m_center).Normalize();
+		normal = (circleB.m_center - circleA.m_center).GetNormalized();
 		depth = radii - distance;
 
 		return true;
@@ -218,7 +221,7 @@ namespace JZEngine
 
 
 	//using SAT for polygon polygon
-	bool Collision::IntersectPolygons(const Square& squareA, const Square& squareB, Vec2f& normal, float depth)//normal is to push the 2nd obj out of collision
+	bool Collision::IntersectPolygons(const Square& squareA, const Square& squareB, Vec2f& normal, float& depth)//normal is to push the 2nd obj out of collision
 	{
 			
 		//Initialising Vertices for looping

@@ -1,5 +1,17 @@
-Wall3
+10
+1
+11
+2
+3
+4
+5
+6
+7
+8
+9
+Object
 ball 2
 player
-Wall2
 Wall
+Wall2
+Wall3

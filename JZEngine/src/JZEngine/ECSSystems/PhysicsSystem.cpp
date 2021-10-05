@@ -34,8 +34,8 @@ namespace JZEngine
 		current_pcomponent.position = current_transform.position_;
 		current_pcomponent.size = current_transform.size_;
 		current_pcomponent.rotation = current_transform.rotation_;
-		current_pcomponent.Restitution = 1.0f;
-		current_pcomponent.Mass = 20.0f;
+		//current_pcomponent.Restitution = 0.5f;
+		//current_pcomponent.Mass = 20.0f;
 
 		//current_pcomponent.posnex = current_transform.position_ + current_pcomponent.velocity * dt;
 
@@ -43,7 +43,7 @@ namespace JZEngine
 		{
 			float dx = 0.f;
 			float dy = 0.f;
-			float forcemagnitude = 800.f;
+			float forcemagnitude = 8000.f;
 			if (InputHandler::IsKeyPressed(KEY::KEY_W))
 				dy++;
 			if (InputHandler::IsKeyPressed(KEY::KEY_A))
@@ -66,7 +66,7 @@ namespace JZEngine
 
 		RigidBody::Step(current_pcomponent, dt);
 
-
+		//update vertices
 		if (current_pcomponent.shapeid == shapetype::circle)
 		{
 			current_pcomponent.m_circle.m_center = current_pcomponent.position;
@@ -131,14 +131,8 @@ namespace JZEngine
 					RigidBody::Move(componentB, normal * depth / 2.f);
 
 
-					Vec2f relativevelocity = componentB.velocity - componentA.velocity;
-					float restitution = std::min(componentA.Restitution, componentB.Restitution);
-					float j = -(1.f + restitution) * relativevelocity.Dot(normal);
-					j /= (1.f / componentA.Mass) + (1.f / componentB.Mass);
 
-					componentA.velocity -= j / componentA.Mass * normal;
-					componentB.velocity += j / componentB.Mass * normal;
-					//Collision::ResolvePhysicsComponentCollision(componentA, componentB, normal, depth);
+					Collision::ResolvePhysicsComponentCollision(componentA, componentB, normal, depth);
 
 				}
 

@@ -25,7 +25,7 @@ namespace JZEngine
 
 		static void ProjectCircle(const Circle& circle, const Vec2f& axis, float& min, float& max);
 
-		static bool IntersectPolygons(const Square& squareA, const Square& squareB, Vec2f& normal, float depth);
+		static bool IntersectPolygons(const Square& squareA, const Square& squareB, Vec2f& normal, float& depth);
 
 		static void ProjectVertices(const std::vector<Vec2f>& vertices, const Vec2f& axis, float& min, float& max);
 
