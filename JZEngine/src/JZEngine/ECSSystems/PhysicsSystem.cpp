@@ -78,12 +78,16 @@ namespace JZEngine
 			}
 			
 		}
-		
-		RigidBody::ApplyForces(current_pcomponent, dt);
+
+		if (!pause)
+		{
+			RigidBody::ApplyForces(current_pcomponent, dt);
+		}
 
 #ifdef PHYSICSDEBUG
-		PhysicsDebug::DebugDrawLine(current_pcomponent.position,current_pcomponent.position + 0.33f * (current_pcomponent.velocity));
+		PhysicsDebug::DebugDrawLine(current_pcomponent.position,current_pcomponent.position + 0.33f * (current_pcomponent.velocity));	
 #endif
+
 
 		//update shapes & vertices
 		if (current_pcomponent.shapeid == shapetype::circle)
@@ -126,6 +130,25 @@ namespace JZEngine
 
 	void PhysicsSystem::FrameEnd(const float& dt)
 	{
+#ifdef PHYSICSDEBUG
+		if (InputHandler::IsKeyTriggered(KEY::KEY_I))
+		{
+			pause = !pause;
+			Log::Info("Physics", "I");
+		}
+		if (pause)
+		{
+			if (InputHandler::IsKeyTriggered(KEY::KEY_O))
+			{
+				for (int i = 0; i < physics_cont.size(); ++i)
+				{
+					PhysicsComponent& current_pcomponent = *physics_cont[i];
+					RigidBody::ApplyForces(current_pcomponent, dt);
+				}
+				
+			}
+		}
+#endif
 		//optimised double for loop for collision & response
 		for (int i = 0; i < physics_cont.size() - 1; ++i)
 		{

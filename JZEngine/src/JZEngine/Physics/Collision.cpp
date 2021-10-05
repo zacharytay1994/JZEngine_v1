@@ -14,11 +14,8 @@ namespace JZEngine
 		//circle circle
 		if (componentA.shapeid == circle && componentB.shapeid == circle)
 		{
-
 			if (true == Collision::IntersectCircles(componentA.m_circle, componentB.m_circle, normal, depth))
 			{
-
-
 #ifdef PHYSICSDEBUG
 				Log::Info("Collision", "is circle-circle colliding!!!");
 #endif
@@ -30,11 +27,8 @@ namespace JZEngine
 		// Circle Square
 		if (componentA.shapeid == circle && componentB.shapeid == square)
 		{
-	
-			
 			if (true == Collision::IntersectCirclePolygon(componentA.m_circle, componentB.m_square, normal, depth))
 			{
-
 #ifdef PHYSICSDEBUG
 				Log::Info("Collision", "Circle square sat");
 #endif
@@ -59,14 +53,11 @@ namespace JZEngine
 		// square square
 		if (componentA.shapeid == square && componentB.shapeid == square)
 		{
-
-
 			if (true==Collision::IntersectPolygons(componentA.m_square, componentB.m_square, normal,depth))
 			{
 #ifdef PHYSICSDEBUG
 			Log::Info("Collision", "square square");
 #endif
-
 				return true;
 			}
 			return false;
@@ -98,26 +89,20 @@ namespace JZEngine
 		const Circle& circleB,
 		Vec2f& normal, float& depth)
 	{
-			
 		depth = 0.f;
-			
 		float distance = Math::Get2DVectorDistance(circleA.m_center, circleB.m_center);
 		float radii = circleA.m_radius + circleB.m_radius;
-
 		if (distance >= radii)
 		{
 			return false;
 		}
-
 		normal = (circleB.m_center - circleA.m_center).GetNormalized();
 		depth = radii - distance;
-
 		return true;
 	}
 
 	bool Collision::IntersectCirclePolygon(const Circle& circle, const Square& squareA, Vec2f& normal, float& depth)
 	{
-
 		//Initialising Vertices for looping
 		std::vector<Vec2f> verticesA{ squareA.botleft,squareA.botright,squareA.topright,squareA.topleft };
 			

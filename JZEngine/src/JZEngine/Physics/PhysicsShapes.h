@@ -35,7 +35,7 @@ namespace JZEngine {
 
 		Square(Vec2f midpt, Vec2f scale) : midpoint{ midpt }
 		{
-			//vertices_.reserve(4);
+			
 			vertices[0] = midpt - (scale / 2.0f);//botleft
 			vertices[1] = { vertices[0].x + scale.x,vertices[0].y };//bot right
 			vertices[2] = vertices[0] + scale;//top right

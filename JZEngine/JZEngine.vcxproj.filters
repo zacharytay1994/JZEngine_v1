@@ -169,7 +169,6 @@
     <ClInclude Include="src\JZEngine\BuildDefinitions.h" />
     <ClInclude Include="src\JZEngine\Physics\Collision.h" />
     <ClInclude Include="src\JZEngine\Resource\ResourceManager.h" />
-    <ClInclude Include="src\JZEngine\Physics\Physics.h" />
     <ClInclude Include="src\JZEngine\Sound\Sound.h" />
     <ClInclude Include="src\JZEngine\STL\Tuple.h" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />

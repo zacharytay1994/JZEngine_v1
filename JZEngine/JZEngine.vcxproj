@@ -339,7 +339,6 @@
     <ClInclude Include="src\JZEngine\Physics\PhysicsShapes.h" />
     <ClInclude Include="src\JZEngine\Physics\RigidBody.h" />
     <ClInclude Include="src\JZEngine\Resource\ResourceManager.h" />
-    <ClInclude Include="src\JZEngine\Physics\Physics.h" />
     <ClInclude Include="src\JZEngine\Resource\Serialize.h" />
     <ClInclude Include="src\JZEngine\Sound\Sound.h" />
     <ClInclude Include="src\JZEngine\STL\Random.h" />
