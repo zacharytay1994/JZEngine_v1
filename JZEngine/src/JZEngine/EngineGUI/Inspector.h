@@ -317,6 +317,9 @@ namespace JZEngine
 				ImGui::EndGroup ();
 				ImGui::EndPopup ();
 			}
+
+			//  End of color pallette making !
+			////////////////////////////////////////////////////////////
 		}
 
 		template <>
@@ -351,6 +354,7 @@ namespace JZEngine
 			ImGui::SliderFloat ( "a float" , &component.not_a_component.im_a_float_ , -300 , 300 );
 			ImGui::Text ( "this is a %c" , component.nomal_data_ );
 		}
+
 		template <>
 		void RenderComponent ( IsInputAffected& component )
 		{
@@ -369,39 +373,25 @@ namespace JZEngine
 			ImGui::SliderInt ( "ID" , &component.shapeid , 0 , 2 );
 
 			// Position
-			// ImGui::Text ( "Velocity" );
-			// ImGui::PushItemWidth ( ( w / 2.0f ) - spacing );
-			// ImGui::InputFloat ( "##VelX" , &component.velocity.x );
-			// ImGui::SameLine ();
-			// ImGui::Text ( "X" );
-			// ImGui::SameLine ();
-			// ImGui::InputFloat ( "##VelY" , &component.velocity.y );
-			// ImGui::SameLine ();
-			// ImGui::Text ( "Y" );
-			// ImGui::PopItemWidth ();
+			ImGui::Text ( "Velocity" );
+			ImGui::PushItemWidth ( ( w / 2.0f ) - spacing );
+			ImGui::InputFloat ( "##VelX" , &component.velocity.x );
+			ImGui::SameLine ();
+			ImGui::Text ( "X" );
+			ImGui::SameLine ();
+			ImGui::InputFloat ( "##VelY" , &component.velocity.y );
+			ImGui::SameLine ();
+			ImGui::Text ( "Y" );
+			ImGui::PopItemWidth ();
 
-			// ImGui::Text ( "Mass" );
-			// ImGui::SliderFloat ( "Mass" , &component.mass , component.mass - 20.0f , component.mass + 20.0f );
-
-			ImGui::Text("Velocity");
-			ImGui::PushItemWidth((w / 2.0f) - spacing);
-			ImGui::InputFloat("##VelX", &component.velocity.x);
-			ImGui::SameLine();
-			ImGui::Text("X");
-			ImGui::SameLine();
-			ImGui::InputFloat("##VelY", &component.velocity.y);
-			ImGui::SameLine();
-			ImGui::Text("Y");
-			ImGui::PopItemWidth();
-
-			ImGui::Text("Area");
-			ImGui::SliderFloat("m^2", &component.Area, component.Area, component.Area);
-			ImGui::Text("Density ");
-			ImGui::SliderFloat("kg/cm^2", &component.Density,1.0f, 50.0f);
-			ImGui::Text("Mass");
-			ImGui::SliderFloat ( "kg" , &component.Mass , component.Mass - 10.0f , component.Mass + 10.0f);
-			ImGui::Text("Restitution");
-			ImGui::SliderFloat("Restitution", &component.Restitution, 0.0f, 1.0f);
+			ImGui::Text ( "Area" );
+			ImGui::SliderFloat ( "m^2" , &component.Area , component.Area , component.Area );
+			ImGui::Text ( "Density " );
+			ImGui::SliderFloat ( "kg/cm^2" , &component.Density , 1.0f , 50.0f );
+			ImGui::Text ( "Mass" );
+			ImGui::SliderFloat ( "kg" , &component.Mass , component.Mass - 10.0f , component.Mass + 10.0f );
+			ImGui::Text ( "Restitution" );
+			ImGui::SliderFloat ( "Restitution" , &component.Restitution , 0.0f , 1.0f );
 		}
 
 		template <>
@@ -461,7 +451,6 @@ namespace JZEngine
 			ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
 			ImGui::InputFloat ( "##fontscale" , &component.font_size_ , 0.0f , 100.0f );
 
-
 			// Font Tracking
 			ImGui::Text ( "Tracking" );
 			ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
@@ -508,6 +497,42 @@ namespace JZEngine
 			component.color_.z = color[ 2 ];
 
 
+		}
+
+		template <>
+		void RenderComponent ( Animation2D& component )
+		{
+			ImGui::Checkbox ( "Animation" , &component.animation_check_ );
+			if( component.animation_check_ )
+			{
+				// General data
+				ImGuiStyle& style = ImGui::GetStyle ();
+				float w = ImGui::CalcItemWidth ();
+				float spacing = style.ItemInnerSpacing.x;
+
+				ImGui::Text ( "Current Frame" );
+				ImGui::SliderInt ( "##AnimationFrame" , &component.frame_ , 0 , component.max_frames_ - 1 );
+				
+				ImGui::Text ( "Max Frames" );
+				ImGui::SliderInt ( "##AnimationMaxFrames" , &component.max_frames_ , 1 , component.rows_* component.column_ );
+
+				ImGui::Text ( "Frame Speed" );
+				if( component.animation_speed_ >= 2.0f )
+				{
+					component.animation_speed_ = 2.0f;
+				}
+				else if( component.animation_speed_ <= 0.0f )
+				{
+					component.animation_speed_ = 0.0f;
+				}
+				ImGui::InputFloat ( "##AnimationFrameSpeed" , &component.animation_speed_ , 0.1f , 2.0f , "%.2f");
+				
+				ImGui::Text ( "Rows" );
+				ImGui::SliderInt ( "##AnimationRows" , &component.rows_ , 1 , 30 );
+				
+				ImGui::Text ( "Columns" );
+				ImGui::SliderInt ( "##AnimationColumns" , &component.column_ , 1 , 30 );
+			}
 		}
 
 		/*!

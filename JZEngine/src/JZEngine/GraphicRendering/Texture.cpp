@@ -51,7 +51,7 @@ namespace JZEngine
 		// tell stb_image.h to flip loaded texture's on the y-axis
 		stbi_set_flip_vertically_on_load ( true );
 
-		unsigned char* data = stbi_load ( path.c_str () , &width , &height , &channels , 0 );
+		unsigned char * data = stbi_load ( path.c_str () , &width , &height , &channels , 0 );
 		width_ = width;
 		height_ = height;
 

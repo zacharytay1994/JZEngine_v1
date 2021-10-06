@@ -30,7 +30,8 @@ namespace JZEngine
 				PhysicsComponent ,
 				Parallax,
 				NotBackground,
-				TextData
+				TextData,
+				Animation2D
 
 				>;
 

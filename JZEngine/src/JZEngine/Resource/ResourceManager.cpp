@@ -23,6 +23,7 @@ namespace JZEngine
 		LoadTexture2D ( "Circle" , "Assets/Textures/circle.png" );	//7
 		LoadTexture2D ( "CircleRed" , "Assets/Textures/squarered.png" );	//8
 		LoadTexture2D ( "Anrgy" , "Assets/Textures/angry.png" );//9
+		LoadTexture2D ( "Star" , "Assets/Textures/SpriteSheet_Star.png" );//9
 
 
 
