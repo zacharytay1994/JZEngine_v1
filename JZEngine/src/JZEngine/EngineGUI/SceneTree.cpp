@@ -13,6 +13,7 @@
 #include "../ECS/ECSConfig.h"
 #include "Console.h"
 #include "../Resource/Serialize.h"
+#include "MenuBar.h"
 
 namespace JZEngine
 {
@@ -43,9 +44,9 @@ namespace JZEngine
 	void SceneTree::Render ()
 	{
 		ImGui::SetNextWindowBgAlpha ( 0.8f );
-		ImGui::SetNextWindowPos ( { static_cast< float >( Settings::window_width ) * x_, static_cast< float >( Settings::window_height ) * y_ } , ImGuiCond_Always );
-		ImGui::SetNextWindowSize ( { static_cast< float >( Settings::window_width ) * sx_, static_cast< float >( Settings::window_height ) * sy_ } , ImGuiCond_Always );
-		ImGui::Begin ( "Scene Heirarchy" );
+		ImGui::SetNextWindowPos ( { static_cast< float >( Settings::window_width ) * x_, MenuBar::height_ } , ImGuiCond_Always );
+		ImGui::SetNextWindowSize ( { static_cast< float >( Settings::window_width ) * sx_, static_cast<float>(Settings::window_height - MenuBar::height_) } , ImGuiCond_Always );
+		ImGui::Begin ( "Scene Heirarchy" , 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
 
 		ImGui::Text("%s", current_scene_name_->c_str());
 		ImGui::Separator();

@@ -12,6 +12,7 @@
 #include "../EngineConfig.h"
 #include "../ECS/ECSConfig.h"
 #include "Console.h"
+#include "MenuBar.h"
 
 namespace JZEngine
 {
@@ -34,11 +35,11 @@ namespace JZEngine
 	void Inspector::Render(ECS::Entity* const entity)
 	{
 		ImGui::SetNextWindowBgAlpha(0.8f);
-		ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x_, static_cast<float>(Settings::window_height) * y_ }, ImGuiCond_Always);
-		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx_, static_cast<float>(Settings::window_height) * sy_ }, ImGuiCond_Always);
+		ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x_, MenuBar::height_ }, ImGuiCond_Always);
+		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx_, static_cast<float>(Settings::window_height - MenuBar::height_)}, ImGuiCond_Always);
 
 		// start rendering the inspector
-		ImGui::Begin("Inspector");
+		ImGui::Begin("Inspector", 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
 
 		// renders all registered components and systems 
 		TreeNodeComponentsAndSystems(entity);
@@ -129,115 +130,121 @@ namespace JZEngine
 			if (entity)
 			{
 				ImGui::Text("Components:");
-				ImGui::BeginListBox("[Com]", { 0.0f, 100.0f });
-
-				// renders all registered components in a listbox
-				for (auto& c : ecs_instance_->component_manager_.registered_components_)
+				if (ImGui::BeginListBox("[Com]", { 0.0f, 100.0f }))
 				{
-					bool has_component_ = false;
-					
-					// if the selected entity has the component, color it green
-					if (entity->HasComponent(c.bit_))
+					// renders all registered components in a listbox
+					for (auto& c : ecs_instance_->component_manager_.registered_components_)
 					{
-						has_component_ = true;
-						ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f,1.0f,0.0f,1.0f });
-					}
+						bool has_component_ = false;
 
-					// if component is selected
-					if (ImGui::Selectable(c.name_.c_str()+TrimName(c.name_), true))
-					{
+						// if the selected entity has the component, color it green
+						if (entity->HasComponent(c.bit_))
+						{
+							has_component_ = true;
+							ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f,1.0f,0.0f,1.0f });
+						}
 
-						// if selected entity does not have component, add it in
-						if (!has_component_)
+						// if component is selected
+						if (ImGui::Selectable(c.name_.c_str() + TrimName(c.name_), true))
 						{
-							entity->AddComponent(c.bit_);
-							ecs_instance_->Print();
+
+							// if selected entity does not have component, add it in
+							if (!has_component_)
+							{
+								entity->AddComponent(c.bit_);
+								ecs_instance_->Print();
+							}
+							// else remove it
+							else
+							{
+								entity->RemoveComponent(c.bit_);
+								ecs_instance_->Print();
+							}
 						}
-						// else remove it
-						else
+						if (has_component_)
 						{
-							entity->RemoveComponent(c.bit_);
-							ecs_instance_->Print();
+							has_component_ = false;
+							ImGui::PopStyleColor(1);
 						}
 					}
-					if (has_component_)
-					{
-						has_component_ = false;
-						ImGui::PopStyleColor(1);
-					}
+					ImGui::EndListBox();
 				}
-				ImGui::EndListBox();
 
 				ImGui::Separator();
 				ImGui::Text("Systems:");
-				ImGui::BeginListBox("[Sys]", { 0.0f, 100.0f });
-
-				// render all registered systems in a listbox
-				for (auto& s : ecs_instance_->system_manager_.registered_systems_)
+				if (ImGui::BeginListBox("[Sys]", { 0.0f, 100.0f }))
 				{
-					bool has_system_ = true;
-					
-					// check if the selected entity has the components of the system already added, if so mark green
-					for (auto& c : ecs_instance_->system_manager_.system_database_[s.id_]->components_)
+					// render all registered systems in a listbox
+					for (auto& s : ecs_instance_->system_manager_.registered_systems_)
 					{
-						if (c != -1)
+						bool has_system_ = true;
+
+						// check if the selected entity has the components of the system already added, if so mark green
+						for (auto& c : ecs_instance_->system_manager_.system_database_[s.id_]->components_)
 						{
-							has_system_ = has_system_ ? entity->HasComponent(c) : false;
+							if (c != -1)
+							{
+								has_system_ = has_system_ ? entity->HasComponent(c) : false;
+							}
+							else
+							{
+								break;
+							}
 						}
-						else
+						if (has_system_)
 						{
-							break;
+							ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f,1.0f,0.0f,1.0f });
 						}
-					}
-					if (has_system_)
-					{
-						ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f,1.0f,0.0f,1.0f });
-					}
-					
-					// if system selected
-					if (ImGui::Selectable(s.name_.c_str()+TrimName(s.name_), true))
-					{
-						// add the system components to the selected entity is any are missing
-						if (!has_system_)
+
+						// if system selected
+						if (ImGui::Selectable(s.name_.c_str() + TrimName(s.name_), true))
 						{
-							entity->AddSystem(s.id_);
-							ecs_instance_->Print();
+							// add the system components to the selected entity is any are missing
+							if (!has_system_)
+							{
+								entity->AddSystem(s.id_);
+								ecs_instance_->Print();
+							}
+						}
+						if (has_system_)
+						{
+							has_system_ = false;
+							ImGui::PopStyleColor(1);
 						}
 					}
-					if (has_system_)
-					{
-						has_system_ = false;
-						ImGui::PopStyleColor(1);
-					}
+					ImGui::EndListBox();
 				}
-				ImGui::EndListBox();
 			}
 			// if no selected entity case, print default messages
 			else
 			{
 				ImGui::Separator();
 				ImGui::Text("Components:");
-				ImGui::BeginListBox("[Com]", { 0.0f, 100.0f });
-				for (auto& c : ecs_instance_->component_manager_.registered_components_)
+				if (ImGui::BeginListBox("[Com]", { 0.0f, 100.0f }))
 				{
-					if (ImGui::Selectable(c.name_.c_str()+TrimName(c.name_), true))
+					for (auto& c : ecs_instance_->component_manager_.registered_components_)
 					{
-						//Console::Log("Oops please select an entity before adding...");
+						if (ImGui::Selectable(c.name_.c_str() + TrimName(c.name_), true))
+						{
+							//Console::Log("Oops please select an entity before adding...");
+						}
 					}
+					ImGui::EndListBox();
 				}
-				ImGui::EndListBox();
 
 				ImGui::Separator();
 				ImGui::Text("Systems:");
-				ImGui::BeginListBox("[Sys]", { 0.0f, 100.0f });
-				for (auto& s : ecs_instance_->system_manager_.registered_systems_)
+				if (ImGui::BeginListBox("[Sys]", { 0.0f, 100.0f }))
 				{
-					if (ImGui::Selectable(s.name_.c_str()+TrimName(s.name_), true))
+					for (auto& s : ecs_instance_->system_manager_.registered_systems_)
 					{
-						//Console::Log("Oops please select an entity before adding...");
+						if (ImGui::Selectable(s.name_.c_str() + TrimName(s.name_), true))
+						{
+							//Console::Log("Oops please select an entity before adding...");
+						}
 					}
+					ImGui::EndListBox();
 				}
-				ImGui::EndListBox();
 			}
 			ImGui::TreePop();
 		}

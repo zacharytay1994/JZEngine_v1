@@ -5,6 +5,7 @@
 
 namespace JZEngine {
 	struct MenuBar : public ImGuiInterface {
+		static float height_;
 		MenuBar(float x, float y, float sx, float sy, int group);
 		virtual void Render(float dt) override;
 	private:

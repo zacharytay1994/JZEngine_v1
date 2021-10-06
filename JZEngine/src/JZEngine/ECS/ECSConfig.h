@@ -12,7 +12,7 @@
 #include "../GraphicRendering/Text.h"
 
 namespace JZEngine
-{
+{ 
 	namespace ECS
 	{
 		struct ECSConfig

@@ -54,8 +54,11 @@
     <ClCompile Include="src\JZEngine\Math\JZMath.cpp" />
     <ClCompile Include="src\JZEngine\Physics\Collision.cpp" />
     <ClCompile Include="src\JZEngine\Input\Input.cpp" />
-    <ClCompile Include="src\JZEngine\Physics\PhysicsBody.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\RendererDebug.cpp" />
+    <ClCompile Include="src\JZEngine\EngineConfig.cpp" />
+    <ClCompile Include="src\JZEngine\EngineGUI\EngineSettings.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\RigidBody.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\PhyicsDebug.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
@@ -202,7 +205,6 @@
     <ClInclude Include="src\JZEngine\BuildDefinitions.h" />
     <ClInclude Include="src\JZEngine\Physics\Collision.h" />
     <ClInclude Include="src\JZEngine\Resource\ResourceManager.h" />
-    <ClInclude Include="src\JZEngine\Physics\Physics.h" />
     <ClInclude Include="src\JZEngine\Sound\Sound.h" />
     <ClInclude Include="src\JZEngine\STL\Random.h" />
     <ClInclude Include="src\JZEngine\STL\Tuple.h" />
@@ -241,8 +243,11 @@
     <ClInclude Include="src\JZEngine\Resource\Serialize.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\FolderInterface.h" />
     <ClInclude Include="src\JZEngine\Physics\Collision.h" />
-    <ClInclude Include="src\JZEngine\Physics\PhysicsBody.h" />
-    <ClInclude Include="src\JZEngine\Physics\AABB.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\RendererDebug.h" />
+    <ClInclude Include="src\JZEngine\EngineGUI\EngineSettings.h" />
+    <ClInclude Include="src\JZEngine\Physics\PhysicsComponent.h" />
+    <ClInclude Include="src\JZEngine\Physics\PhysicsShapes.h" />
+    <ClInclude Include="src\JZEngine\Physics\RigidBody.h" />
+    <ClInclude Include="src\JZEngine\Physics\PhyicsDebug.h" />
   </ItemGroup>
 </Project>

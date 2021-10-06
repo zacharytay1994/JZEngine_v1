@@ -25,7 +25,7 @@ namespace JZEngine
 	*/
 	struct GLFW_Instance : public GlobalSystem
 	{
-		GLFWwindow* window_{ nullptr };		/*!< handle to the window created using GLFW */
+		static GLFWwindow*		window_;		/*!< handle to the window created using GLFW */
 		int				window_width_{ 0 };		/*!< width of the GLFWwindow created and updated from resizing */
 		int				window_height_{ 0 };	/*!< height of the GLFWwindow created and updated from resizing */
 
@@ -57,6 +57,10 @@ namespace JZEngine
 		 * Application.cpp should continue.
 		*/
 		bool Active ();
+
+		static void ResizeWindow(int width, int height);
+		static void GetWindowPos(int& x, int& y);
+		static void SetWindowPos(int x, int y);
 
 	private:
 		/*!

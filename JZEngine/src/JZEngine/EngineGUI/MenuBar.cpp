@@ -7,8 +7,10 @@
 #include "../DebugTools/PerformanceData.h"
 #include "FolderInterface.h"
 #include "DebugInformation.h"
+#include "EngineSettings.h"
 
 namespace JZEngine {
+	float MenuBar::height_{ 0.0f };
 	MenuBar::MenuBar(float x, float y, float sx, float sy, int group) 
 		:
 		ImGuiInterface(x, y, sx, sy, group)
@@ -28,6 +30,7 @@ namespace JZEngine {
 		// render main menu bar
 		if (ImGui::BeginMainMenuBar())
 		{
+			height_ = ImGui::GetWindowHeight();
 			if (ImGui::BeginMenu("File")) {
 				if (ImGui::MenuItem("Resources", "[SHIFT+TAB]"))
 				{
@@ -37,6 +40,10 @@ namespace JZEngine {
 			}
 			if (ImGui::BeginMenu("Settings"))
 			{
+				if (ImGui::MenuItem("Settings", "[SHIFT+S]"))
+				{
+					GetInterface<EngineSettings>()->ToggleOnOff();
+				}
 				ImGui::EndMenu();
 			}
 			if (ImGui::BeginMenu("Debug"))

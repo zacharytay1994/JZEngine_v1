@@ -158,8 +158,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\JZEngine\EngineConfig.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\Console.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\DebugInformation.cpp" />
+    <ClCompile Include="src\JZEngine\EngineGUI\EngineSettings.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\FolderInterface.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\ImGuiInterface.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\Inspector.cpp" />
@@ -183,18 +185,23 @@
     <ClCompile Include="src\JZEngine\GraphicRendering\VertexArray.cpp" />
     <ClCompile Include="src\JZEngine\ImGui\GraphEditor.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\JZEngine\ImGui\ImCurveEdit.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\JZEngine\ImGui\ImGradient.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\JZEngine\ImGui\ImGuizmo.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\JZEngine\ImGui\ImSequencer.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\JZEngine\Input\Input.cpp" />
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
@@ -263,7 +270,8 @@
       <SuppressStartupBanner Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SuppressStartupBanner>
     </ClCompile>
     <ClCompile Include="src\JZEngine\Physics\Collision.cpp" />
-    <ClCompile Include="src\JZEngine\Physics\PhysicsBody.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\PhyicsDebug.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\RigidBody.cpp" />
     <ClCompile Include="src\JZEngine\Resource\ResourceManager.cpp" />
     <ClCompile Include="src\JZEngine\STL\String.cpp" />
     <ClCompile Include="src\JZEngine\Resource\Serialize.cpp" />
@@ -279,6 +287,8 @@
     <ClInclude Include="src\JZEngine\DebugTools\Log.h" />
     <ClInclude Include="src\JZEngine\DebugTools\PerformanceData.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h" />
+    <ClInclude Include="src\JZEngine\Physics\PhyicsDebug.h" />
+    <ClInclude Include="src\JZEngine\Physics\PhysicsComponent.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\PhysicsSystem.h" />
     <ClInclude Include="src\JZEngine\ECS\ECS.h" />
     <ClInclude Include="src\JZEngine\ECS\ECSConfig.h" />
@@ -286,6 +296,7 @@
     <ClInclude Include="src\JZEngine\EngineConfig.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\Console.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\DebugInformation.h" />
+    <ClInclude Include="src\JZEngine\EngineGUI\EngineSettings.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\FolderInterface.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\ImGuiInterface.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\Inspector.h" />
@@ -339,11 +350,10 @@
     <ClInclude Include="src\JZEngine\Message\MessageHandler.h" />
     <ClInclude Include="src\JZEngine\PCH.h" />
     <ClInclude Include="src\JZEngine\BuildDefinitions.h" />
-    <ClInclude Include="src\JZEngine\Physics\AABB.h" />
     <ClInclude Include="src\JZEngine\Physics\Collision.h" />
-    <ClInclude Include="src\JZEngine\Physics\PhysicsBody.h" />
+    <ClInclude Include="src\JZEngine\Physics\PhysicsShapes.h" />
+    <ClInclude Include="src\JZEngine\Physics\RigidBody.h" />
     <ClInclude Include="src\JZEngine\Resource\ResourceManager.h" />
-    <ClInclude Include="src\JZEngine\Physics\Physics.h" />
     <ClInclude Include="src\JZEngine\Resource\Serialize.h" />
     <ClInclude Include="src\JZEngine\Sound\Sound.h" />
     <ClInclude Include="src\JZEngine\STL\Random.h" />

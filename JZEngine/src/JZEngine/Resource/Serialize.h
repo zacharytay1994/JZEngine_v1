@@ -124,8 +124,24 @@ namespace JZEngine
 				component.texture_id_);
 		}
 
+		template <>
+		static void SerializeComponent(PhysicsComponent& component, std::stringstream& stream, MODE mode)
+		{
+			SERIALIZE(stream, mode,
+				component.player,
+				component.shapeid,
+				component.position.x,
+				component.position.y,
+				component.rotation,
+				component.rotationalVelocity,
+				component.Density,
+				component.Restitution,
+				component.IsStatic
+				);
+		}
+
 		/*!_______________________________________________________________________________________________________*/
-		/* STOP HERE GO NO FURTHER! */
+		/* STOP HERE GO NO FURTHER! */ // WHY NOT
 		/*!_______________________________________________________________________________________________________*/
 		template <size_t I = 0, typename...TUPLE>
 		static typename std::enable_if<I == sizeof...(TUPLE), void>::type

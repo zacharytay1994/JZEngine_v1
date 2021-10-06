@@ -13,6 +13,7 @@
 #include "Console.h"
 #include "../EngineConfig.h"
 #include "../DebugTools/Log.h"
+#include "MenuBar.h"
 
 namespace JZEngine
 {
@@ -87,7 +88,7 @@ namespace JZEngine
         */
         void Draw(const char* title, const std::string& name, bool* p_open = NULL)
         {
-            if (!ImGui::Begin(title, p_open))
+            if (!ImGui::Begin(title, p_open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize))
             {
                 ImGui::End();
                 return;
@@ -195,8 +196,8 @@ namespace JZEngine
         void RenderConsoleLog(bool* p_open, float x, float y, float sx, float sy)
         {
             ImGui::SetNextWindowBgAlpha(0.8f);
-            ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x, static_cast<float>(Settings::window_height) * y }, ImGuiCond_Always);
-            ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx, static_cast<float>(Settings::window_height) * sy }, ImGuiCond_Always);
+            ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x, MenuBar::height_ + static_cast<float>(Settings::window_height - MenuBar::height_) * y }, ImGuiCond_Always);
+            ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx, static_cast<float>(Settings::window_height - MenuBar::height_) * sy }, ImGuiCond_Always);
             Draw("Console", *console_.currently_selected_console_, p_open);
         }
     };
