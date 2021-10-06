@@ -5,8 +5,6 @@
 #include <limits> 
 
 
-#define PHYSICSDEBUG
-
 namespace JZEngine
 {
 	bool Collision::CheckPhysicsComponentCollision( const PhysicsComponent& componentA, const PhysicsComponent& componentB, Vec2f& normal, float& depth)
@@ -16,7 +14,7 @@ namespace JZEngine
 		{
 			if (true == Collision::IntersectCircles(componentA.m_circle, componentB.m_circle, normal, depth))
 			{
-#ifdef PHYSICSDEBUG
+#ifdef COLLISIONDEBUG
 				Log::Info("Collision", "is circle-circle colliding!!!");
 #endif
 				return true;
@@ -29,7 +27,7 @@ namespace JZEngine
 		{
 			if (true == Collision::IntersectCirclePolygon(componentA.m_circle, componentB.m_square, normal, depth))
 			{
-#ifdef PHYSICSDEBUG
+#ifdef COLLISIONDEBUG
 				Log::Info("Collision", "Circle square sat");
 #endif
 				return true;
@@ -42,7 +40,7 @@ namespace JZEngine
 		{
 			if (true == Collision::IntersectCirclePolygon(componentB.m_circle, componentA.m_square, normal, depth))
 			{
-#ifdef PHYSICSDEBUG
+#ifdef COLLISIONDEBUG
 			Log::Info("Collision", "square circe sat");
 #endif
 				normal = -normal;
@@ -55,7 +53,7 @@ namespace JZEngine
 		{
 			if (true==Collision::IntersectPolygons(componentA.m_square, componentB.m_square, normal,depth))
 			{
-#ifdef PHYSICSDEBUG
+#ifdef COLLISIONDEBUG
 			Log::Info("Collision", "square square");
 #endif
 				return true;

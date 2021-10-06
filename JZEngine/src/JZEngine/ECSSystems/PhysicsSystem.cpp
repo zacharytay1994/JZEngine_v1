@@ -7,7 +7,7 @@
 #include "../Input/Input.h"
 #include "../Physics/RigidBody.h"
 
-#define PHYSICSDEBUG
+#define PHYSICSDEBUG 
 
 namespace JZEngine
 {
