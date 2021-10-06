@@ -1,20 +1,22 @@
 #pragma once
 #include "../Math/JZMath.h"
-
+#include <array>
 namespace JZEngine {
 
 	enum shapetype
 	{
 		circle = 0,
 		aabb = 1,
-		square = 2,
+		square = 2
+	
 	};
 
 	struct Circle
 	{
 		Vec2f m_center;
 		float m_radius;
-		float m_mass;//to be used
+		Circle() = default;
+		~Circle() = default;
 	};
 
 
@@ -30,9 +32,9 @@ namespace JZEngine {
 				Vec2f topleft;
 				Vec2f midpoint;
 			};
-			Vec2f vertices[5];
+			std::array<Vec2f,4> vertices;
 		};
-
+		Square() = default;
 		Square(Vec2f midpt, Vec2f scale) : midpoint{ midpt }
 		{
 			

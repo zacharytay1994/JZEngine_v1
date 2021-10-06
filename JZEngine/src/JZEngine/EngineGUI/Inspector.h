@@ -160,7 +160,7 @@ namespace JZEngine
 			ImGui::PopItemWidth ();
 
 			// Size
-			ImGui::Text ( "Size(cm)" );
+			ImGui::Text ( "Size (cm)" );
 			ImGui::PushItemWidth ( ( w / 2.0f ) - spacing );
 			ImGui::InputFloat ( "##SizeW" , &component.size_.x );
 			ImGui::SameLine ();
@@ -368,30 +368,32 @@ namespace JZEngine
 			ImGuiStyle& style = ImGui::GetStyle ();
 			float w = ImGui::CalcItemWidth ();
 			float spacing = style.ItemInnerSpacing.x;
-			float button_sz = ImGui::GetFrameHeight ();
-			ImGui::Text ( "Shape" );
-			ImGui::SliderInt ( "ID" , &component.shapeid , 0 , 2 );
+			float button_sz = ImGui::GetFrameHeight();
+			ImGui::Text("Shape");
+			
+			ImGui::SliderInt("ID", &component.shapeid, 0, 2);
+		
+			ImGui::Checkbox("Static", &component.IsStatic);
 
-			// Position
-			ImGui::Text ( "Velocity" );
-			ImGui::PushItemWidth ( ( w / 2.0f ) - spacing );
-			ImGui::InputFloat ( "##VelX" , &component.velocity.x );
-			ImGui::SameLine ();
-			ImGui::Text ( "X" );
-			ImGui::SameLine ();
-			ImGui::InputFloat ( "##VelY" , &component.velocity.y );
-			ImGui::SameLine ();
-			ImGui::Text ( "Y" );
-			ImGui::PopItemWidth ();
+			ImGui::Text("Velocity (cm/s)");
+			ImGui::PushItemWidth((w / 2.0f) - spacing);
+			ImGui::InputFloat("##VelX", &component.velocity.x);
+			ImGui::SameLine();
+			ImGui::Text("X");
+			ImGui::SameLine();
+			ImGui::InputFloat("##VelY", &component.velocity.y);
+			ImGui::SameLine();
+			ImGui::Text("Y");
+			ImGui::PopItemWidth();
 
-			ImGui::Text ( "Area" );
-			ImGui::SliderFloat ( "m^2" , &component.Area , component.Area , component.Area );
-			ImGui::Text ( "Density " );
-			ImGui::SliderFloat ( "kg/cm^2" , &component.Density , 1.0f , 50.0f );
-			ImGui::Text ( "Mass" );
-			ImGui::SliderFloat ( "kg" , &component.Mass , component.Mass - 10.0f , component.Mass + 10.0f );
-			ImGui::Text ( "Restitution" );
-			ImGui::SliderFloat ( "Restitution" , &component.Restitution , 0.0f , 1.0f );
+			ImGui::Text("Area");
+			ImGui::SliderFloat("m^2", &component.Area, component.Area, component.Area);
+			ImGui::Text("Density ");
+			ImGui::SliderFloat("kg/cm^2", &component.Density,1.0f, 50.0f);
+			ImGui::Text("Mass");
+			ImGui::SliderFloat ( "kg" , &component.Mass , component.Mass - 10.0f , component.Mass + 10.0f);
+			ImGui::Text("Restitution");
+			ImGui::SliderFloat("Restitution", &component.Restitution, 0.0f, 1.0f);
 		}
 
 		template <>
