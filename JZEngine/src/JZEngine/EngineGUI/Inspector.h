@@ -160,7 +160,7 @@ namespace JZEngine
 			ImGui::PopItemWidth ();
 
 			// Size
-			ImGui::Text ( "Size(cm)" );
+			ImGui::Text ( "Size (cm)" );
 			ImGui::PushItemWidth ( ( w / 2.0f ) - spacing );
 			ImGui::InputFloat ( "##SizeW" , &component.size_.x );
 			ImGui::SameLine ();
@@ -364,26 +364,14 @@ namespace JZEngine
 			ImGuiStyle& style = ImGui::GetStyle ();
 			float w = ImGui::CalcItemWidth ();
 			float spacing = style.ItemInnerSpacing.x;
-			float button_sz = ImGui::GetFrameHeight ();
-			ImGui::Text ( "Shape" );
-			ImGui::SliderInt ( "ID" , &component.shapeid , 0 , 2 );
+			float button_sz = ImGui::GetFrameHeight();
+			ImGui::Text("Shape");
+			ImGui::SliderInt("ID", &component.shapeid, 0, 2);
+		
 
-			// Position
-			// ImGui::Text ( "Velocity" );
-			// ImGui::PushItemWidth ( ( w / 2.0f ) - spacing );
-			// ImGui::InputFloat ( "##VelX" , &component.velocity.x );
-			// ImGui::SameLine ();
-			// ImGui::Text ( "X" );
-			// ImGui::SameLine ();
-			// ImGui::InputFloat ( "##VelY" , &component.velocity.y );
-			// ImGui::SameLine ();
-			// ImGui::Text ( "Y" );
-			// ImGui::PopItemWidth ();
+			ImGui::Checkbox("Static", &component.IsStatic);
 
-			// ImGui::Text ( "Mass" );
-			// ImGui::SliderFloat ( "Mass" , &component.mass , component.mass - 20.0f , component.mass + 20.0f );
-
-			ImGui::Text("Velocity");
+			ImGui::Text("Velocity (cm/s)");
 			ImGui::PushItemWidth((w / 2.0f) - spacing);
 			ImGui::InputFloat("##VelX", &component.velocity.x);
 			ImGui::SameLine();
