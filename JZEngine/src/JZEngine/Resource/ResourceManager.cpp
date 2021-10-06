@@ -13,16 +13,16 @@ namespace JZEngine
 	{
 		//add below so existing code dont need edit hehe
 		// load textures
-		LoadTexture2D("TextFile", "Assets/Textures/textfileicon.png");	
+		LoadTexture2D ( "TextFile" , "Assets/Textures/textfileicon.png" );
 		LoadTexture2D ( "Unicorn" , "Assets/Textures/cute-unicorn.png" );//1
 		LoadTexture2D ( "Square" , "Assets/Textures/square.jpg" );
 		LoadTexture2D ( "TempB1" , "Assets/Textures/TempBackground-01.png" );
 		LoadTexture2D ( "TempB2" , "Assets/Textures/TempBackground-02.png" );
 		LoadTexture2D ( "TempB3" , "Assets/Textures/TempBackground-03.png" );
 		LoadTexture2D ( "TempB4" , "Assets/Textures/TempBackground-04.png" );
-		LoadTexture2D("Circle", "Assets/Textures/circle.png");	//7
-		LoadTexture2D("CircleRed", "Assets/Textures/squarered.png");	//8
-		LoadTexture2D("Anrgy", "Assets/Textures/angry.png");//9
+		LoadTexture2D ( "Circle" , "Assets/Textures/circle.png" );	//7
+		LoadTexture2D ( "CircleRed" , "Assets/Textures/squarered.png" );	//8
+		LoadTexture2D ( "Anrgy" , "Assets/Textures/angry.png" );//9
 
 
 
@@ -38,13 +38,13 @@ namespace JZEngine
 		LoadFont ( "Assets/Fonts/Weather Sunday.otf" , 100 , "Font1" , "Assets/Shaders/Vertex/VS_Font.vs" , "Assets/Shaders/Fragment/FS_Font.fs" );
 
 		// load debug shaders
-		LoadDebugShader("Point2D",
-						"Assets/Shaders/Vertex/VS_Point2D.vs",
-						"Assets/Shaders/Fragment/FS_Point2D.fs");
-						
-		LoadDebugShader("Line2D",
-						"Assets/Shaders/Vertex/VS_Line2D.vs",
-						"Assets/Shaders/Fragment/FS_Line2D.fs");
+		LoadDebugShader ( "Point2D" ,
+						  "Assets/Shaders/Vertex/VS_Point2D.vs" ,
+						  "Assets/Shaders/Fragment/FS_Point2D.fs" );
+
+		LoadDebugShader ( "Line2D" ,
+						  "Assets/Shaders/Vertex/VS_Line2D.vs" ,
+						  "Assets/Shaders/Fragment/FS_Line2D.fs" );
 
 		// load instanced shaders
 		LoadInstancedShader ( "Default" ,
@@ -106,19 +106,19 @@ namespace JZEngine
 		return 1;
 	}
 
-	unsigned int ResourceManager::LoadDebugShader(const std::string& name, const std::string& vspath, const std::string& fspath)
+	unsigned int ResourceManager::LoadDebugShader ( const std::string& name , const std::string& vspath , const std::string& fspath )
 	{
-		debug_shaders_.emplace_back(static_cast<unsigned int>(debug_shaders_.size()), name);
-		Shader& shader = debug_shaders_.back().shader_program_;
-		shader.CompileShaderFromFile(GL_VERTEX_SHADER, vspath);
-		shader.CompileShaderFromFile(GL_FRAGMENT_SHADER, fspath);
-		shader.Link();
+		debug_shaders_.emplace_back ( static_cast< unsigned int >( debug_shaders_.size () ) , name );
+		Shader& shader = debug_shaders_.back ().shader_program_;
+		shader.CompileShaderFromFile ( GL_VERTEX_SHADER , vspath );
+		shader.CompileShaderFromFile ( GL_FRAGMENT_SHADER , fspath );
+		shader.Link ();
 
-		if (GL_FALSE == shader.IsLinked())
+		if( GL_FALSE == shader.IsLinked () )
 		{
 			std::cout << "Unable to compile/link/validate shader programs" << "\n";
-			std::cout << shader.GetLog() << std::endl;
-			std::exit(EXIT_FAILURE);
+			std::cout << shader.GetLog () << std::endl;
+			std::exit ( EXIT_FAILURE );
 		}
 
 		return 1;
@@ -227,8 +227,8 @@ namespace JZEngine
 			Character character = {
 				face,
 				texture,
-				JZEngine::Vec2f ( face->glyph->bitmap.width, face->glyph->bitmap.rows ),
-				JZEngine::Vec2f ( face->glyph->bitmap_left, face->glyph->bitmap_top ),
+				JZEngine::Vec2f ( static_cast< float >( face->glyph->bitmap.width ),  static_cast< float >( face->glyph->bitmap.rows ) ),
+				JZEngine::Vec2f ( static_cast< float >( face->glyph->bitmap_left ),  static_cast< float >( face->glyph->bitmap_top ) ),
 				face->glyph->advance.x
 			};
 
