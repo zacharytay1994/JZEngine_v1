@@ -85,10 +85,10 @@ namespace JZEngine
 			Vec2f& ptEndB);														//Final position of the circle B after reflection - output
 
 
-		static bool DynamicCollision_RectRect(const AABB& aabb1, const Vec2f& vel1,
+		static bool DynamicCollision_AABB(const AABB& aabb1, const Vec2f& vel1,
 			const AABB& aabb2, const Vec2f& vel2);
 
-		static bool StaticCollision_PointRect(const Vec2f& point,
+		static bool StaticCollision_PointAABB(const Vec2f& point,
 			const AABB& aabb2);
 
 		static bool CheckMovingCircleToLineEdge(bool withinBothLines,						//Flag stating that the circle is starting from between 2 imaginary line segments distant +/- Radius respectively - input

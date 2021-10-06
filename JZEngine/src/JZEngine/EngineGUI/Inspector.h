@@ -158,7 +158,7 @@ namespace JZEngine
 			ImGui::PopItemWidth ();
 
 			// Size
-			ImGui::Text ( "Size(cm)" );
+			ImGui::Text ( "Size (cm)" );
 			ImGui::PushItemWidth ( ( w / 2.0f ) - spacing );
 			ImGui::InputFloat ( "##SizeW" , &component.size_.x );
 			ImGui::SameLine ();
@@ -358,8 +358,7 @@ namespace JZEngine
 			ImGui::Text("Shape");
 			ImGui::SliderInt("ID", &component.shapeid, 0, 2);
 
-			// Position
-			ImGui::Text("Velocity");
+			ImGui::Text("Velocity (cm/s)");
 			ImGui::PushItemWidth((w / 2.0f) - spacing);
 			ImGui::InputFloat("##VelX", &component.velocity.x);
 			ImGui::SameLine();

@@ -101,6 +101,7 @@ namespace JZEngine
 		return true;
 	}
 
+	//Seperating Axis Theorem for polygon circle
 	bool Collision::IntersectCirclePolygon(const Circle& circle, const Square& squareA, Vec2f& normal, float& depth)
 	{
 
@@ -197,16 +198,13 @@ namespace JZEngine
 
 		if (min > max)
 		{
-			//std::swap(min, max);
-			float t = min;
-			min = max;
-			max = t;
+			std::swap(min, max);
 		}
 	}
 
 
 
-	//using SAT for polygon polygon
+	//Seperating Axis Theorem for polygon polygon
 	bool Collision::IntersectPolygons(const Square& squareA, const Square& squareB, Vec2f& normal, float& depth)//normal is to push the 2nd obj out of collision
 	{
 
@@ -295,7 +293,7 @@ namespace JZEngine
 
 
 	//Dynamic AABB collision
-	bool Collision::DynamicCollision_RectRect(const AABB& aabb1, const JZEngine::Vec2f& vel1,
+	bool Collision::DynamicCollision_AABB(const AABB& aabb1, const JZEngine::Vec2f& vel1,
 		const AABB& aabb2, const JZEngine::Vec2f& vel2)
 	{
 		if ((aabb1.max.x < aabb2.min.x) || (aabb1.max.y < aabb2.min.y) || (aabb1.min.x > aabb2.max.x) || (aabb1.min.y > aabb2.max.y))
@@ -402,8 +400,9 @@ namespace JZEngine
 		}
 	}
 
-	//Static AABB Collision
-	bool Collision::StaticCollision_PointRect(const Vec2f& point,
+	//	Static Point AABB Collision
+	// Use this for UI button press
+	bool Collision::StaticCollision_PointAABB(const Vec2f& point,
 		const AABB& aabb2)
 	{
 		if (point.x < aabb2.max.x && point.x > aabb2.min.x && point.y < aabb2.max.y && point.y > aabb2.min.y)
