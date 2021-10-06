@@ -3,7 +3,8 @@
 
 #include "../Math/JZMath.h"
 #include "../Physics/PhysicsComponent.h"
-#include <vector>
+#include <memory>
+
 
 namespace JZEngine
 {
@@ -22,13 +23,14 @@ namespace JZEngine
 		static bool IntersectCirclePolygon(const Circle& circle, const Square& squareA,
 			Vec2f& normal, float& depth);
 
-		static int FindClosestPointOnPolygon(const Vec2f& point, const std::vector<Vec2f>& vertices);
+		static int FindClosestPointOnPolygon(const Vec2f& point, const std::array<Vec2f, 4>& vertices);
 
 		static void ProjectCircle(const Circle& circle, const Vec2f& axis, float& min, float& max);
 
 		static bool IntersectPolygons(const Square& squareA, const Square& squareB, Vec2f& normal, float& depth);
 
-		static void ProjectVertices(const std::vector<Vec2f>& vertices, const Vec2f& axis, float& min, float& max);
+		//For now only takes in polygons with 4 vertices
+		static void ProjectVertices(const std::array<Vec2f, 4>& vertices, const Vec2f& axis, float& min, float& max);
 
 
 		static bool DynamicCollision_CircleSquare(const Circle& circle,			//Circle data - input

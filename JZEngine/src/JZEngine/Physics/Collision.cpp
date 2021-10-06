@@ -103,24 +103,21 @@ namespace JZEngine
 
 	bool Collision::IntersectCirclePolygon(const Circle& circle, const Square& squareA, Vec2f& normal, float& depth)
 	{
-		//Initialising Vertices for looping
-		std::vector<Vec2f> verticesA{ squareA.botleft,squareA.botright,squareA.topright,squareA.topleft };
-			
 
 		depth = std::numeric_limits<float>::max();//these values will be set
 		float axisDepth = 0.f;
 		Vec2f axis{};
 		float minA{}, maxA{}, minB{}, maxB{};
-		for (size_t i = 0; i < verticesA.size(); i++)
+		for (size_t i = 0; i < squareA.vertices.size(); i++)
 		{
-			Vec2f va = verticesA[i];
-			Vec2f vb = verticesA[(i + 1) % verticesA.size()];
+			Vec2f va = squareA.vertices[i];
+			Vec2f vb = squareA.vertices[(i + 1) % squareA.vertices.size()];
 
 			//find the normal of 1 side of the polygon will be the axis to be tested
 			Vec2f edge = vb - va;//line
 			axis = { -edge.y, edge.x };//normal
 			axis.Normalize();
-			ProjectVertices(verticesA, axis, minA, maxA);//project the vertices of A onto the axis(normal)
+			ProjectVertices(squareA.vertices, axis, minA, maxA);//project the vertices of A onto the axis(normal)
 			ProjectCircle(circle, axis, minB, maxB);//project circle onto axis
 
 			if (minA >= maxB || minB >= maxA)
@@ -137,11 +134,11 @@ namespace JZEngine
 			}
 		}
 
-		int index = FindClosestPointOnPolygon(circle.m_center, verticesA);
-		Vec2f closestpoint = verticesA[index];
+		int index = FindClosestPointOnPolygon(circle.m_center, squareA.vertices);
+		Vec2f closestpoint = squareA.vertices[index];
 		axis = closestpoint - circle.m_center;//              
 		axis.Normalize();
-		ProjectVertices(verticesA, axis, minA, maxA);//project the vertices of A onto the axis(normal)
+		ProjectVertices(squareA.vertices, axis, minA, maxA);//project the vertices of A onto the axis(normal)
 		ProjectCircle(circle, axis, minB, maxB);//project circle onto axis
 
 		if (minA >= maxB || minB >= maxA)
@@ -167,7 +164,7 @@ namespace JZEngine
 		return true;
 	}
 
-	int  Collision::FindClosestPointOnPolygon(const Vec2f& point,const std::vector<Vec2f>& vertices)
+	int  Collision::FindClosestPointOnPolygon(const Vec2f& point, const std::array<Vec2f, 4>& vertices)
 	{
 		int result = -1;
 		float minDistance = std::numeric_limits<float>::max();
@@ -212,18 +209,14 @@ namespace JZEngine
 	//using SAT for polygon polygon
 	bool Collision::IntersectPolygons(const Square& squareA, const Square& squareB, Vec2f& normal, float& depth)//normal is to push the 2nd obj out of collision
 	{
-			
-		//Initialising Vertices for looping
-		std::vector<Vec2f> verticesA{ squareA.botleft,squareA.botright,squareA.topright,squareA.topleft };
-		std::vector<Vec2f> verticesB{ squareB.botleft,squareB.botright,squareB.topright,squareB.topleft };
 
 		depth = std::numeric_limits<float>::max();//these values will be set
 
 
-		for (size_t i = 0; i < verticesA.size(); i++)
+		for (size_t i = 0; i < squareA.vertices.size(); i++)
 		{
-			Vec2f va = verticesA[i];
-			Vec2f vb = verticesA[(i + 1) % verticesA.size()];
+			Vec2f va = squareA.vertices[i];
+			Vec2f vb = squareA.vertices[(i + 1) % squareA.vertices.size()];
 				
 			//find the normal of 1 side of the polygon will be the axis to be tested
 			Vec2f edge = vb - va;//line
@@ -231,8 +224,8 @@ namespace JZEngine
 			axis.Normalize();
 
 			float minA, maxA, minB, maxB;
-			ProjectVertices(verticesA, axis,  minA,  maxA);//project the vertices of A onto the axis(normal)
-			ProjectVertices(verticesB, axis,  minB,  maxB);//project the vertices of B onto the axis(normal)
+			ProjectVertices(squareA.vertices, axis,  minA,  maxA);//project the vertices of A onto the axis(normal)
+			ProjectVertices(squareB.vertices, axis,  minB,  maxB);//project the vertices of B onto the axis(normal)
 
 			if (minA >= maxB || minB >= maxA)
 			{
@@ -248,18 +241,18 @@ namespace JZEngine
 			}
 		}
 
-		for (size_t i = 0; i < verticesB.size(); i++)
+		for (size_t i = 0; i < squareB.vertices.size(); i++)
 		{
-			Vec2f va = verticesB[i];
-			Vec2f vb = verticesB[(i + 1) % verticesB.size()];
+			Vec2f va = squareB.vertices[i];
+			Vec2f vb = squareB.vertices[(i + 1) % squareB.vertices.size()];
 
 			Vec2f edge = vb - va;
 			Vec2f axis{ -edge.y, edge.x };
 			axis.Normalize();
 
 			float minA, maxA, minB, maxB;
-			ProjectVertices(verticesA, axis, minA, maxA);
-			ProjectVertices(verticesB, axis, minB, maxB);
+			ProjectVertices(squareA.vertices, axis, minA, maxA);
+			ProjectVertices(squareB.vertices, axis, minB, maxB);
 
 			if (minA >= maxB || minB >= maxA)
 			{
@@ -285,7 +278,7 @@ namespace JZEngine
 		return true;
 	}
 
-	void Collision::ProjectVertices(const std::vector<Vec2f>& vertices, const Vec2f& axis, float& min, float& max)
+	void Collision::ProjectVertices(const std::array<Vec2f,4>& vertices, const Vec2f& axis, float& min, float& max)
 	{
 		max = std::numeric_limits<float>::min();//these values will be set
 		min = std::numeric_limits<float>::max();
