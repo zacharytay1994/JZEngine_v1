@@ -42,6 +42,8 @@
     <ClCompile Include="src\JZEngine\EngineGUI\EngineSettings.cpp" />
     <ClCompile Include="src\JZEngine\Physics\RigidBody.cpp" />
     <ClCompile Include="src\JZEngine\Physics\PhyicsDebug.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\NonInstanceSpriteRenderer.cpp" />
+    <ClCompile Include="src\JZEngine\EngineGUI\Selectable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
@@ -212,5 +214,6 @@
     <ClInclude Include="src\JZEngine\Physics\PhysicsShapes.h" />
     <ClInclude Include="src\JZEngine\Physics\RigidBody.h" />
     <ClInclude Include="src\JZEngine\Physics\PhyicsDebug.h" />
+    <ClInclude Include="src\JZEngine\EngineGUI\Selectable.h" />
   </ItemGroup>
 </Project>

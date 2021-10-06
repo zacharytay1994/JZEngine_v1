@@ -1,5 +1,6 @@
 #include <PCH.h>
 #include "RendererDebug.h"
+#include "../EngineGUI/EngineGUI.h"
 
 namespace JZEngine
 {
@@ -44,7 +45,7 @@ namespace JZEngine
 				va_lines_.Bind();
 				resource_manager_->debug_shaders_[1].shader_program_.Bind();
 				resource_manager_->debug_shaders_[1].shader_program_.SetUniform("uColor", { 1.0f,1.0f,1.0f });
-				resource_manager_->debug_shaders_[1].shader_program_.SetUniform("projection", Math::GetProjectionTransformNonTransposed().Transpose());
+				resource_manager_->debug_shaders_[1].shader_program_.SetUniform("projection", (Math::GetProjectionTransformNonTransposed() * EngineGUI::GetCameraTransform()).GetTranspose());
 				for (int start = 0; start < sprite_lines_.size(); start += MAX_LINES)
 				{
 					int size = std::min(MAX_LINES, static_cast<unsigned int>(sprite_lines_.size() - start));
@@ -62,7 +63,7 @@ namespace JZEngine
 				va_lines_.Bind();
 				resource_manager_->debug_shaders_[1].shader_program_.Bind();
 				resource_manager_->debug_shaders_[1].shader_program_.SetUniform("uColor", { 1.0f,1.0f,1.0f });
-				resource_manager_->debug_shaders_[1].shader_program_.SetUniform("projection", Math::GetProjectionTransformNonTransposed().Transpose());
+				resource_manager_->debug_shaders_[1].shader_program_.SetUniform("projection", (Math::GetProjectionTransformNonTransposed() * EngineGUI::GetCameraTransform()).GetTranspose());
 				for (int start = 0; start < lines_.size(); start += MAX_LINES)
 				{
 					int size = std::min(MAX_LINES, static_cast<unsigned int>(lines_.size() - start));
@@ -78,7 +79,7 @@ namespace JZEngine
 				va_points_.Bind();
 				resource_manager_->debug_shaders_[0].shader_program_.Bind();
 				resource_manager_->debug_shaders_[1].shader_program_.SetUniform("uColor", { 1.0f,1.0f,1.0f });
-				resource_manager_->debug_shaders_[0].shader_program_.SetUniform("projection", Math::GetProjectionTransformNonTransposed().Transpose());
+				resource_manager_->debug_shaders_[0].shader_program_.SetUniform("projection", (Math::GetProjectionTransformNonTransposed() * EngineGUI::GetCameraTransform()).GetTranspose());
 				for (int start = 0; start < points_.size(); start += MAX_POINTS)
 				{
 					int size = std::min(MAX_POINTS, static_cast<unsigned int>(points_.size() - start));

@@ -15,7 +15,6 @@ namespace JZEngine {
 		:
 		ImGuiInterface(x, y, sx, sy, group)
 	{
-
 	}
 
 	void MenuBar::Render(float dt) {

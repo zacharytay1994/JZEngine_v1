@@ -33,8 +33,7 @@ namespace JZEngine
 		static bool IsMousePressed(MOUSE key);
 		static bool IsMouseTriggered(MOUSE key);
 		static bool IsMouseReleased(MOUSE key);
-
-
+		static int mouse_scrolled_;
 
 	private:
 		// callbacks ...
@@ -50,7 +49,6 @@ namespace JZEngine
 		static  std::unordered_map<int, bool> prevkeystate;
 		static  std::unordered_map<int, bool> mousestate;
 		static  std::unordered_map<int, bool> prevmousestate;
-
 
 	};
 

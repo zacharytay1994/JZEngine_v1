@@ -23,9 +23,9 @@ namespace JZEngine
 
 		Mat3f GetProjectionTransformNonTransposed()
 		{	
-			return	{ {2.0f / (Settings::aspect_ratio * Settings::window_height) , 0.0f								, 0.0f},
-					{0.0f														, 2.0f / Settings::window_height	, 0.0f},
-					{0.0f														, 0.0f								, 1.0f} };
+			return	{	{2.0f / Settings::camera_width		, 0.0f								, 0.0f},
+					{	0.0f								, 2.0f / Settings::camera_height	, 0.0f},
+					{	0.0f								, 0.0f								, 1.0f} };
 		}
 
 		Mat3f GetTransform( const Vec2f& position, float rotate, const Vec2f& scale, const Vec2f& size )
@@ -36,9 +36,10 @@ namespace JZEngine
 			JZEngine::Mat3f mat_rotate = JZEngine::Mat3f::RotateZ( Math::DegToRad( rotate ) );
 			JZEngine::Mat3f mat_translate = JZEngine::Mat3f::Translate( position.x, position.y );
 
-			JZEngine::Mat3f camwin_to_ndc_xform = { {2.0f / ( Settings::aspect_ratio * Settings::window_height ), 0.0f, 0.0f},
+			/*JZEngine::Mat3f camwin_to_ndc_xform = { {2.0f / ( Settings::aspect_ratio * Settings::window_height ), 0.0f, 0.0f},
 													{0.0f, 2.0f / Settings::window_height, 0.0f},
-													{0.0f, 0.0f, 1.0f} };
+													{0.0f, 0.0f, 1.0f} };*/
+			JZEngine::Mat3f camwin_to_ndc_xform = GetProjectionTransformNonTransposed();
 
 			JZEngine::Mat3f transform = mat_translate * ( mat_rotate * mat_scale );
 			transform = camwin_to_ndc_xform * transform;

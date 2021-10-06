@@ -12,6 +12,7 @@
 #include "../EngineConfig.h"
 #include "../GraphicRendering/OpenGLDebug.h"
 #include "../DebugTools/Log.h"
+#include "../EngineGUI/MenuBar.h"
 
 namespace JZEngine
 {
@@ -104,7 +105,7 @@ namespace JZEngine
 		}
 
 		// create opengl viewport
-		glViewport( 0, 0, Settings::window_width, Settings::window_height);
+		glViewport( 1.0/6.0*Settings::window_width, 1.0/4.0*Settings::window_height, 4.0/6.0*Settings::window_width, 35.0/46.0*Settings::window_height);
 
 		// set resize window callback function
 		glfwSetFramebufferSizeCallback( window_, FramebufferSizeCallback );
@@ -135,12 +136,21 @@ namespace JZEngine
 		SetWindowPos(Settings::window_x, Settings::window_y);
 	}
 
+	bool GLFW_Instance::dimensions_updated{ false };
+	void GLFW_Instance::UpdateViewportDimensions()
+	{
+		glViewport(1.0 / 6.0 * Settings::window_width, (1.0 / 4.0 * (Settings::window_height - MenuBar::height_)), 4.0 / 6.0 * Settings::window_width, 3.0 / 4.0 * (Settings::window_height - MenuBar::height_));
+	}
+
 	void JZEngine::FramebufferSizeCallback( GLFWwindow* window, int width, int height )
 	{
 		UNREFERENCED_PARAMETER( window );
 		UNREFERENCED_PARAMETER( window );
-		glViewport( 0, 0, width, height );
+		//glViewport( 0, 0, width, height );
 		Settings::window_width = width;
 		Settings::window_height = height;
+		Settings::aspect_ratio = static_cast<float>(Settings::window_height) / static_cast<float>(Settings::window_width);
+		//glViewport(1.0 / 6.0 * Settings::window_width, 11.0 / 46.0f * Settings::window_height, 4.0 / 6.0 * Settings::window_width, 3.0 / 4.0 * Settings::window_height);
+		GLFW_Instance::UpdateViewportDimensions();
 	}
 }

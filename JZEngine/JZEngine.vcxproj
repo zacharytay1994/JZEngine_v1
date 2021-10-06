@@ -166,6 +166,8 @@
     <ClCompile Include="src\JZEngine\EngineGUI\ImGuiInterface.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\Inspector.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\MenuBar.cpp" />
+    <ClCompile Include="src\JZEngine\EngineGUI\Selectable.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\NonInstanceSpriteRenderer.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\SceneTree.cpp" />
     <ClCompile Include="src\JZEngine\GlobalSystems.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Background.cpp" />
@@ -282,6 +284,7 @@
     <ClInclude Include="src\JZEngine\DebugTools\Log.h" />
     <ClInclude Include="src\JZEngine\DebugTools\PerformanceData.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h" />
+    <ClInclude Include="src\JZEngine\EngineGUI\Selectable.h" />
     <ClInclude Include="src\JZEngine\Physics\PhyicsDebug.h" />
     <ClInclude Include="src\JZEngine\Physics\PhysicsComponent.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\PhysicsSystem.h" />

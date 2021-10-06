@@ -26,6 +26,8 @@ namespace JZEngine
 		static float		version;
 		static int			window_x;
 		static int			window_y;
+		static int			camera_width;
+		static int			camera_height;
 		static unsigned int	window_width;
 		static unsigned int	window_height;
 		static float		aspect_ratio;

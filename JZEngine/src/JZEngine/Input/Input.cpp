@@ -14,6 +14,7 @@ namespace JZEngine
     std::unordered_map<int, bool> InputHandler::prevkeystate;
     std::unordered_map<int, bool> InputHandler::mousestate;
     std::unordered_map<int, bool> InputHandler::prevmousestate;
+    int InputHandler::mouse_scrolled_{ 0 };
     
 
     bool InputHandler::init(GLFWwindow* ptr) {
@@ -37,7 +38,7 @@ namespace JZEngine
         for (auto& it : keystate) {
             prevkeystate[it.first] = it.second;
         }
-       
+        mouse_scrolled_ = 0;
     }
 
     /*  _________________________________________________________________________*/
@@ -147,6 +148,7 @@ namespace JZEngine
 #ifdef _DEBUG
         std::cout << "Mouse scroll wheel offset: ("
             << xoffset << ", " << yoffset << ")" << std::endl;
+        mouse_scrolled_ = yoffset;
 #endif
     }
 

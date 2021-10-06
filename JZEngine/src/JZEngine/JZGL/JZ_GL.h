@@ -58,6 +58,9 @@ namespace JZEngine
 		*/
 		bool Active ();
 
+		static bool dimensions_updated;
+		static void UpdateViewportDimensions();
+
 		static void ResizeWindow(int width, int height);
 		static void GetWindowPos(int& x, int& y);
 		static void SetWindowPos(int x, int y);

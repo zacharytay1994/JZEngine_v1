@@ -43,7 +43,7 @@ namespace JZEngine
 	*/
 	void SceneTree::Render ()
 	{
-		ImGui::SetNextWindowBgAlpha ( 0.8f );
+		ImGui::SetNextWindowBgAlpha ( 1.0f );
 		ImGui::SetNextWindowPos ( { static_cast< float >( Settings::window_width ) * x_, MenuBar::height_ } , ImGuiCond_Always );
 		ImGui::SetNextWindowSize ( { static_cast< float >( Settings::window_width ) * sx_, static_cast<float>(Settings::window_height - MenuBar::height_) } , ImGuiCond_Always );
 		ImGui::Begin ( "Scene Heirarchy" , 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);

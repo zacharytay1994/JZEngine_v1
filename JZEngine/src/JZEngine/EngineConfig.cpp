@@ -8,6 +8,8 @@ namespace JZEngine
 	float			Settings::version{ 1.0 };
 	int				Settings::window_x{ 100 };
 	int				Settings::window_y{ 100 };
+	int				Settings::camera_width{ 1600 };
+	int				Settings::camera_height{ 900 };
 	unsigned int	Settings::window_width{ 1600 };
 	unsigned int	Settings::window_height{ 900 };
 	float			Settings::aspect_ratio;
@@ -49,7 +51,7 @@ namespace JZEngine
 			file >> prefabs_directory;
 		}
 		min_tpf = 1.0 / static_cast<double>(max_fps);
-		aspect_ratio = static_cast<float>(window_width) / static_cast<float>(window_height);
+		aspect_ratio = static_cast<float>(window_height) / static_cast<float>(window_width);
 	}
 
 	void Settings::SaveToConfigFile()

@@ -28,10 +28,11 @@ namespace JZEngine
 	//Mat4f view;
 	//Mat4f projection;
 	//Mat4f transform; //{ {100, 0, 0, 0}, { 0,100,0,0 }, { 0,0,1,0 }, { 0,0,0,1 }};
+	Mat3f EngineGUI::camera_transform_;
 	EngineGUI::EngineGUI()
 		:
 		inspector_(5.0f / 6.0f, 1.0f / 46.0f, 1.0f / 6.0f, 45.0f / 46.0f),
-		console_(1.0f / 6.0f, 35.0f / 46.0f, 4.0f / 6.0f, 11.0f / 46.0f),
+		console_(1.0f / 6.0f, 3.0f / 4.0f, 4.0f / 6.0f, 1.0f / 4.0f),
 		scene_tree_(0.0f, 1.0f / 46.0f, 1.0f / 6.0f, 45.0f / 46.0f)
 	{
 		//InitializeWithGLFW();
@@ -51,15 +52,16 @@ namespace JZEngine
 		inspector_.resource_manager_ = GetSystem<ResourceManager>();
 		inspector_.ecs_instance_ = GetSystem<ECS::ECSInstance>();
 		scene_tree_.ecs_instance_ = GetSystem<ECS::ECSInstance>();
+		ecs_instance_ = GetSystem<ECS::ECSInstance>();
 
 		// add imgui interfaces
 		AddInterface<MenuBar>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 1.0f / 18.0f, 0);
 		GetInterface<MenuBar>()->active_ = true;
-		AddInterface<DebugInformation>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 35.0f / 46.0f, 1);
-		AddInterface<FolderInterface>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 35.0f / 46.0f, 1);
+		AddInterface<DebugInformation>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 3.0f / 4.0f, 1);
+		AddInterface<FolderInterface>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 3.0f / 4.0f, 1);
 		GetInterface<FolderInterface>()->ecs_instance_ = GetSystem<ECS::ECSInstance>();
 		GetInterface<FolderInterface>()->scene_tree_ =	&scene_tree_;
-		AddInterface<EngineSettings>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 35.0f / 46.0f, 1);
+		AddInterface<EngineSettings>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 3.0f / 4.0f, 1);
 	}
 
 	/*!
@@ -101,9 +103,9 @@ namespace JZEngine
 			{
 				ImGuizmo::SetOrthographic(true);
 				ImGuiIO& io = ImGui::GetIO();
-				ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
+				ImGuizmo::SetRect(1.0 / 6.0 * Settings::window_width, MenuBar::height_, 4.0 / 6.0 * Settings::window_width, 3.0 / 4.0 * (Settings::window_height - MenuBar::height_));
 				Mat4f projection = static_cast<Mat4f>(Math::GetProjectionTransformNonTransposed()).Transpose();
-				Mat4f view;
+				Mat4f view = Mat4f::Translate(-camera_position_.x, -camera_position_.y, 0.0f).Transpose();
 
 				Transform& transform = scene_tree_.selected_entity_->GetComponent<Transform>();
 				Mat4f m4_translation = Mat4f::Translate(transform.position_.x, transform.position_.y, 0.0f);
@@ -127,6 +129,16 @@ namespace JZEngine
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		if (!GLFW_Instance::dimensions_updated)
+		{
+			GLFW_Instance::UpdateViewportDimensions();
+			GLFW_Instance::dimensions_updated = true;
+		}
+
+		ProcessCameraInput();
+
+		camera_transform_ = Math::GetModelTransformNonTransposed(-camera_position_, 0.0f, { camera_zoom_, camera_zoom_ }, { 1.0f, 1.0f });
 	}
 
 	void EngineGUI::CloseAllGroupedInterface(int group) {
@@ -161,5 +173,85 @@ namespace JZEngine
 	Console* EngineGUI::GetConsole()
 	{
 		return &console_;
+	}
+
+	Mat3f EngineGUI::GetCameraTransform()
+	{
+		return camera_transform_;
+	}
+
+	void EngineGUI::ProcessCameraInput()
+	{
+		GLFWwindow* window = GetSystem<GLFW_Instance>()->window_;
+		if (!window)
+		{
+			return;
+		}
+		double x, y;
+		glfwGetCursorPos(window, &x, &y);
+		Vec2f screen_position_ = { static_cast<float>(x), static_cast<float>(y) };
+		if (InputHandler::IsMouseTriggered(MOUSE::MOUSE_BUTTON_2))
+		{
+			camera_record_world_ = camera_position_;
+			camera_record_screen_ = screen_position_;
+			camera_locked = true;
+		}
+		if (InputHandler::IsMousePressed(MOUSE::MOUSE_BUTTON_2))
+		{
+			Vec2f offset = screen_position_ - camera_record_screen_;
+			offset.x = (offset.x / Settings::window_width) * Settings::camera_width * 1.5f;
+			//offset.y = (offset.y / Settings::window_height) * Settings::camera_height * 1.5f;
+			offset.y = -(((offset.y / Settings::window_height)) / (0.375f * (1.0f - (MenuBar::height_ / Settings::window_height)))) * 0.5f * Settings::camera_height;
+			camera_position_ = camera_record_world_ - offset;
+		}
+		if (InputHandler::IsMouseReleased(MOUSE::MOUSE_BUTTON_2))
+		{
+			camera_locked = false;
+		}
+
+		// convert mouse into world coordinates
+		mouse_world_position_.x = ((screen_position_.x / Settings::window_width) - 0.5f) * Settings::camera_width * 1.5f;
+		float percent = (MenuBar::height_ / Settings::window_height) + (0.375f * (1.0f - (MenuBar::height_ / Settings::window_height)));
+		mouse_world_position_.y = (-(((screen_position_.y / Settings::window_height) - percent) / (0.375f * (1.0f - (MenuBar::height_ / Settings::window_height)))) * 0.5f) * Settings::camera_height;
+		//Log::Info("MousePress", "y: {}", mouse_world_position_.y);
+		//mouse_world_position_.y = (screen_position_.y / Settings::window_height)
+		mouse_world_position_.x += camera_position_.x;
+		mouse_world_position_.y += camera_position_.y;
+		//Log::Info("MousePress", "x: {}, y: {}", mouse_world_position_.x, mouse_world_position_.y);
+
+		// check all entities with transforms
+		if (InputHandler::IsMouseTriggered(MOUSE::MOUSE_BUTTON_1))
+		{
+			for (auto& e : ecs_instance_->entity_manager_.entities_)
+			{
+				if (e.HasComponent(0))
+				{
+					Transform& transform = e.GetComponent<Transform>();
+					// do bounding box check
+					float half_width = ((transform.scale_.x * transform.size_.x) / 2.0f);
+					float half_height = ((transform.scale_.y * transform.size_.y) / 2.0f);
+					int left = transform.position_.x - half_width;
+					int right = transform.position_.x + half_width;
+					int top = transform.position_.y + half_height;
+					int bottom = transform.position_.y - half_height;
+					// check if mouse point within it
+					if (!(mouse_world_position_.x < left || mouse_world_position_.x > right || mouse_world_position_.y > top || mouse_world_position_.y < bottom))
+					{
+						scene_tree_.selected_entity_ = &e;
+					}
+				}
+			}
+		}
+
+		if (InputHandler::IsKeyPressed(KEY::KEY_LEFT_CONTROL) && InputHandler::mouse_scrolled_ == -1)
+		{
+			Settings::camera_width += 100;
+			Settings::camera_height += 100 * Settings::aspect_ratio;
+		}
+		else if (InputHandler::IsKeyPressed(KEY::KEY_LEFT_CONTROL) && InputHandler::mouse_scrolled_ == 1)
+		{
+			Settings::camera_width -= 100;
+			Settings::camera_height -= 100 * Settings::aspect_ratio;
+		}
 	}
 }

@@ -195,7 +195,7 @@ namespace JZEngine
         // renders the console log with ImGui widget attributes
         void RenderConsoleLog(bool* p_open, float x, float y, float sx, float sy)
         {
-            ImGui::SetNextWindowBgAlpha(0.8f);
+            ImGui::SetNextWindowBgAlpha(1.0f);
             ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x, MenuBar::height_ + static_cast<float>(Settings::window_height - MenuBar::height_) * y }, ImGuiCond_Always);
             ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx, static_cast<float>(Settings::window_height - MenuBar::height_) * sy }, ImGuiCond_Always);
             Draw("Console", *console_.currently_selected_console_, p_open);

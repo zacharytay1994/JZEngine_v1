@@ -66,6 +66,8 @@ namespace JZEngine
 		global_systems_->AddSystem<EngineGUI>("Engine GUI");
 		global_systems_->AddSystem<SoundSystem>("Sound System");
 
+		global_systems_->GetSystem<GLFW_Instance>()->UpdateViewportDimensions();
+
 		// give subsystems handle to global systems
 		global_systems_->GetSystem<ECS::ECSInstance>()->GetSystemInefficient<Sprite>()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer>();
 		global_systems_->GetSystem<ECS::ECSInstance>()->GetSystemInefficient<InstanceSprite>()->sprite_renderer_instancing_.renderer_ = global_systems_->GetSystem<RendererInstancing>();

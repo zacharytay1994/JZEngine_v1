@@ -9,7 +9,9 @@ namespace JZEngine
 		:
 		ImGuiInterface(x, y, sx, sy, group),
 		temp_width_(Settings::window_width),
-		temp_height_(Settings::window_height)
+		temp_height_(Settings::window_height),
+		temp_cam_x(Settings::camera_width),
+		temp_cam_y(Settings::camera_height)
 	{
 
 	}
@@ -23,6 +25,7 @@ namespace JZEngine
 		ImGui::Separator();
 		if (ImGui::BeginTable("settings", 2))
 		{
+			// window width and height
 			ImGui::TableNextColumn();
 			ImGui::Text("Window Width:");
 			ImGui::TableNextColumn();
@@ -31,6 +34,18 @@ namespace JZEngine
 			ImGui::Text("Window Height:");
 			ImGui::TableNextColumn();
 			ImGui::InputInt("##windowheight", &temp_height_);
+
+			// resolution
+			ImGui::TableNextColumn();
+			ImGui::Text("Camera:");
+			ImGui::TableNextColumn();
+			ImGui::SetNextItemWidth(100.0f);
+			ImGui::InputInt("##resox", &temp_cam_x);
+			ImGui::SameLine();
+			ImGui::Text(" x ");
+			ImGui::SameLine();
+			ImGui::SetNextItemWidth(100.0f);
+			ImGui::InputInt("##resoy", &temp_cam_y);
 
 			// confirmation button
 			ImGui::TableNextColumn();
@@ -41,6 +56,8 @@ namespace JZEngine
 				Settings::window_width = static_cast<unsigned int>(temp_width_);
 				Settings::window_height = static_cast<unsigned int>(temp_height_);
 				GLFW_Instance::ResizeWindow(Settings::window_width, Settings::window_height);
+				Settings::camera_width = temp_cam_x;
+				Settings::camera_height = temp_cam_y;
 			}
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(100.0f);

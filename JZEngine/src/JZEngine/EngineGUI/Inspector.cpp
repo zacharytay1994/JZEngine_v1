@@ -34,7 +34,7 @@ namespace JZEngine
 	*/
 	void Inspector::Render(ECS::Entity* const entity)
 	{
-		ImGui::SetNextWindowBgAlpha(0.8f);
+		ImGui::SetNextWindowBgAlpha(1.0f);
 		ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x_, MenuBar::height_ }, ImGuiCond_Always);
 		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx_, static_cast<float>(Settings::window_height - MenuBar::height_)}, ImGuiCond_Always);
 
