@@ -368,32 +368,32 @@ namespace JZEngine
 			ImGuiStyle& style = ImGui::GetStyle ();
 			float w = ImGui::CalcItemWidth ();
 			float spacing = style.ItemInnerSpacing.x;
-			float button_sz = ImGui::GetFrameHeight();
-			ImGui::Text("Shape");
-			
-			ImGui::SliderInt("ID", &component.shapeid, 0, 2);
-		
-			ImGui::Checkbox("Static", &component.IsStatic);
+			float button_sz = ImGui::GetFrameHeight ();
+			ImGui::Text ( "Shape" );
 
-			ImGui::Text("Velocity (cm/s)");
-			ImGui::PushItemWidth((w / 2.0f) - spacing);
-			ImGui::InputFloat("##VelX", &component.velocity.x);
-			ImGui::SameLine();
-			ImGui::Text("X");
-			ImGui::SameLine();
-			ImGui::InputFloat("##VelY", &component.velocity.y);
-			ImGui::SameLine();
-			ImGui::Text("Y");
-			ImGui::PopItemWidth();
+			ImGui::SliderInt ( "ID" , &component.shapeid , 0 , 2 );
 
-			ImGui::Text("Area");
-			ImGui::SliderFloat("m^2", &component.Area, component.Area, component.Area);
-			ImGui::Text("Density ");
-			ImGui::SliderFloat("kg/cm^2", &component.Density,1.0f, 50.0f);
-			ImGui::Text("Mass");
-			ImGui::SliderFloat ( "kg" , &component.Mass , component.Mass - 10.0f , component.Mass + 10.0f);
-			ImGui::Text("Restitution");
-			ImGui::SliderFloat("Restitution", &component.Restitution, 0.0f, 1.0f);
+			ImGui::Checkbox ( "Static" , &component.IsStatic );
+
+			ImGui::Text ( "Velocity (cm/s)" );
+			ImGui::PushItemWidth ( ( w / 2.0f ) - ( spacing * 3.0f ) );
+			ImGui::InputFloat ( "##VelX" , &component.velocity.x );
+			ImGui::SameLine ();
+			ImGui::Text ( "X" );
+			ImGui::SameLine ();
+			ImGui::InputFloat ( "##VelY" , &component.velocity.y );
+			ImGui::SameLine ();
+			ImGui::Text ( "Y" );
+			ImGui::PopItemWidth ();
+
+			ImGui::Text ( "Area" );
+			ImGui::SliderFloat ( "m^2" , &component.Area , component.Area , component.Area );
+			ImGui::Text ( "Density " );
+			ImGui::SliderFloat ( "kg/cm^2" , &component.Density , 1.0f , 50.0f );
+			ImGui::Text ( "Mass" );
+			ImGui::SliderFloat ( "kg" , &component.Mass , component.Mass - 10.0f , component.Mass + 10.0f );
+			ImGui::Text ( "Restitution" );
+			ImGui::SliderFloat ( "##PhysicsComponentRestitution" , &component.Restitution , 0.0f , 1.0f );
 		}
 
 		template <>
@@ -512,13 +512,17 @@ namespace JZEngine
 				float w = ImGui::CalcItemWidth ();
 				float spacing = style.ItemInnerSpacing.x;
 
+				// No. of frame it is currently at.
 				ImGui::Text ( "Current Frame" );
+				ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
 				ImGui::SliderInt ( "##AnimationFrame" , &component.frame_ , 0 , component.max_frames_ - 1 );
-				
+
 				ImGui::Text ( "Max Frames" );
-				ImGui::SliderInt ( "##AnimationMaxFrames" , &component.max_frames_ , 1 , component.rows_* component.column_ );
+				ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
+				ImGui::SliderInt ( "##AnimationMaxFrames" , &component.max_frames_ , 1 , component.rows_ * component.column_ );
 
 				ImGui::Text ( "Frame Speed" );
+				ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
 				if( component.animation_speed_ >= 2.0f )
 				{
 					component.animation_speed_ = 2.0f;
@@ -527,12 +531,14 @@ namespace JZEngine
 				{
 					component.animation_speed_ = 0.0f;
 				}
-				ImGui::InputFloat ( "##AnimationFrameSpeed" , &component.animation_speed_ , 0.1f , 2.0f , "%.2f");
-				
+				ImGui::InputFloat ( "##AnimationFrameSpeed" , &component.animation_speed_ , 0.1f , 2.0f , "%.2f" );
+
 				ImGui::Text ( "Rows" );
+				ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
 				ImGui::SliderInt ( "##AnimationRows" , &component.rows_ , 1 , 30 );
-				
+
 				ImGui::Text ( "Columns" );
+				ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
 				ImGui::SliderInt ( "##AnimationColumns" , &component.column_ , 1 , 30 );
 			}
 		}
