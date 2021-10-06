@@ -357,6 +357,9 @@ namespace JZEngine
 			float button_sz = ImGui::GetFrameHeight();
 			ImGui::Text("Shape");
 			ImGui::SliderInt("ID", &component.shapeid, 0, 2);
+		
+
+			ImGui::Checkbox("Static", &component.IsStatic);
 
 			ImGui::Text("Velocity (cm/s)");
 			ImGui::PushItemWidth((w / 2.0f) - spacing);

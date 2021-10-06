@@ -15,26 +15,25 @@ namespace JZEngine
 		Vec2f size; // cm
 		Vec2f position;
 		Vec2f posnex;
-		Vec2f velocity{ 0.f, 0.f }; // cm/s
-		Vec2f acceleration{ 0.0f,0.0f }; // cm/s^2
+		Vec2f velocity; // cm/s
+		Vec2f acceleration; // cm/s^2
 
-		float rotation{ 0.f };
-		float rotationalVelocity{ 0.f };
-		Vec2f force{ 0.f,0.f };
+		float rotation;
+		float rotationalVelocity;
+		Vec2f force;
 
-		float Area{ 0.f }; // size * size (m^2)
-		float Density{ 10.f };// mass / volume(area for 2D) // kg/cm^2
-		float Mass{ 1.0f }; // kg
-		float InvMass{ 1.0f }; // 1/kg
-		float Restitution{ 0.5f };
+		float Area; // size * size (m^2)
+		float Density;// mass / volume(area for 2D) // kg/cm^2
+		float Mass; // kg
+		float InvMass; // 1/kg
+		float Restitution;
 		//The coefficient of Restitution [ 0.0f to 1.0f ]
 		
-
-		bool IsStatic{ false };
+		bool IsStatic{ true };
+		bool IsAlive{ true };
 
 		union {
 			Circle m_circle;
-			//AABB m_AABB;
 			Square m_square;
 		};
 		PhysicsComponent();

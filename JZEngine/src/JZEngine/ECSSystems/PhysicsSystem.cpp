@@ -13,19 +13,21 @@ namespace JZEngine
 {
 	std::vector<Transform*> transform_cont;
 
-	
-	PhysicsComponent::PhysicsComponent() {}
-	PhysicsComponent::PhysicsComponent(const PhysicsComponent& s) { std::memcpy(this, &s, sizeof(s)); }
-	PhysicsComponent::~PhysicsComponent() {}
-
 	PhysicsSystem::PhysicsSystem()
 	{
-		RegisterComponents<PhysicsComponent,Transform>();
+		RegisterComponents<PhysicsComponent, Transform>();
 	}
 
-	void PhysicsSystem::FrameBegin(const float& dt)
+	void PhysicsSystem::FrameBegin(const float& dt) 
 	{
-		
+		for (int i = 0; i < physics_cont.size(); ++i)
+		{
+			if (physics_cont[i]->IsAlive == false)
+			{
+				physics_cont.erase(physics_cont.begin() + i);
+				transform_cont.erase(transform_cont.begin() + i);
+			}
+		}
 	}
 
 	//_____Updates Physic Components____//
@@ -125,6 +127,7 @@ namespace JZEngine
 			physics_cont.push_back(&current_pcomponent);
 			transform_cont.push_back(&current_transform);
 		}
+
 	}//__________________UPDATE_________________________//
 
 

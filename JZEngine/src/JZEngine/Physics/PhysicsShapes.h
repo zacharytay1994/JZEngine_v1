@@ -7,14 +7,16 @@ namespace JZEngine {
 	{
 		circle = 0,
 		aabb = 1,
-		square = 2,
+		square = 2
+	
 	};
 
 	struct Circle
 	{
 		Vec2f m_center;
 		float m_radius;
-		float m_mass;//to be used
+		Circle() = default;
+		~Circle() = default;
 	};
 
 
@@ -32,7 +34,7 @@ namespace JZEngine {
 			};
 			std::array<Vec2f,4> vertices;
 		};
-
+		Square() = default;
 		Square(Vec2f midpt, Vec2f scale) : midpoint{ midpt }
 		{
 			

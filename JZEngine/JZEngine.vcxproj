@@ -269,6 +269,7 @@
     </ClCompile>
     <ClCompile Include="src\JZEngine\Physics\Collision.cpp" />
     <ClCompile Include="src\JZEngine\Physics\PhyicsDebug.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\PhysicsComponent.cpp" />
     <ClCompile Include="src\JZEngine\Physics\RigidBody.cpp" />
     <ClCompile Include="src\JZEngine\Resource\ResourceManager.cpp" />
     <ClCompile Include="src\JZEngine\Resource\Serialize.cpp" />

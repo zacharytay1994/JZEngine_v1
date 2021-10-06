@@ -42,6 +42,7 @@
     <ClCompile Include="src\JZEngine\EngineGUI\EngineSettings.cpp" />
     <ClCompile Include="src\JZEngine\Physics\RigidBody.cpp" />
     <ClCompile Include="src\JZEngine\Physics\PhyicsDebug.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\PhysicsComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
