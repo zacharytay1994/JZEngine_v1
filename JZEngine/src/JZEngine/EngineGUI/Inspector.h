@@ -29,6 +29,7 @@ namespace JZEngine
 	 * Able to add and remove entities from the selected entity.
 	 * ****************************************************************************************************
 	*/
+
 	struct JZENGINE_API Inspector
 	{
 		ECS::ECSInstance* ecs_instance_{ nullptr };
@@ -61,14 +62,15 @@ namespace JZEngine
 
 		int TrimName ( const std::string& name );
 
-		enum class Confirmation {
-			NONE,
+		enum class Confirmation
+		{
+			NONE ,
 			SERIALIZE
 		};
 
 		Confirmation confirmation_flag_{ Confirmation::NONE };
-		char rename_buffer_[64] = {'\0'};
-		void RenderConfirmation(ECS::Entity* const entity);
+		char rename_buffer_[ 64 ] = { '\0' };
+		void RenderConfirmation ( ECS::Entity* const entity );
 
 		/* ____________________________________________________________________________________________________
 		*	CUSTOM COMPONENT IMGUI LAYOUTS
@@ -158,7 +160,7 @@ namespace JZEngine
 			ImGui::PopItemWidth ();
 
 			// Size
-			ImGui::Text ( "Size(cm)" );
+			ImGui::Text ( "Size (cm)" );
 			ImGui::PushItemWidth ( ( w / 2.0f ) - spacing );
 			ImGui::InputFloat ( "##SizeW" , &component.size_.x );
 			ImGui::SameLine ();
@@ -182,9 +184,9 @@ namespace JZEngine
 					{
 						component.texture_id_ = texture.id_;
 					}
-				}
+				};
 				ImGui::EndPopup ();
-			}
+			};
 
 			// button event to display all texture options
 			if( ImGui::Button ( resource_manager_->texture2ds_[ component.texture_id_ ].name_.c_str () , ImVec2 ( 168.0f , 0.0f ) ) )
@@ -218,13 +220,16 @@ namespace JZEngine
 			ImGui::Text ( "Shader" );
 
 			////////////////////////////////////////////////////////////
-			static ImVec4 color{};
+			// Making of color pallette starts here .
+			static ImVec4 color{ 0,0,0,1 };
 			const char* memo
 			{
 				"Click on the color square to open a color picker.\n"
 				"Click and hold to use drag and drop.\n"
 				"Right-click on the color square to show options.\n"
 				"CTRL+click on individual component to input value.\n"
+				"! Alpha is not integrated at this moment.\n"
+				"Thank you for your patience !"
 			};
 
 			ImGui::Text ( "Tint" );
@@ -242,6 +247,7 @@ namespace JZEngine
 
 			// Generate a default palette. The palette will persist and can be edited.
 			static bool saved_palette_init = true;
+			// Palette are divided by 4 rows and 8 column
 			static ImVec4 saved_palette[ 32 ] = {};
 			if( saved_palette_init )
 			{
@@ -249,14 +255,18 @@ namespace JZEngine
 				{
 					ImGui::ColorConvertHSVtoRGB ( n / 31.0f , 0.8f , 0.8f ,
 												  saved_palette[ n ].x , saved_palette[ n ].y , saved_palette[ n ].z );
+					// Default alpha ( we will do changeable alpha soon !)
 					saved_palette[ n ].w = 1.0f; // Alpha
 				}
 				saved_palette_init = false;
 			}
 
+			// At this moment we are not using alpha yet .
+			// We will definitely add it in the future !
 			component.tint.x = 1.0f * color.x ;
 			component.tint.y = 1.0f * color.y ;
-			component.tint.z = 1.0f * color.z ; 
+			component.tint.z = 1.0f * color.z ;
+			// Stay tune people and stay vigilant !
 
 			static ImVec4 backup_color;
 			bool open_popup = ImGui::ColorButton ( "MyColor##3b" , color );
@@ -307,6 +317,9 @@ namespace JZEngine
 				ImGui::EndGroup ();
 				ImGui::EndPopup ();
 			}
+
+			//  End of color pallette making !
+			////////////////////////////////////////////////////////////
 		}
 
 		template <>
@@ -341,6 +354,7 @@ namespace JZEngine
 			ImGui::SliderFloat ( "a float" , &component.not_a_component.im_a_float_ , -300 , 300 );
 			ImGui::Text ( "this is a %c" , component.nomal_data_ );
 		}
+
 		template <>
 		void RenderComponent ( IsInputAffected& component )
 		{
@@ -351,33 +365,35 @@ namespace JZEngine
 		void RenderComponent ( PhysicsComponent& component )
 		{
 			// General data
-			ImGuiStyle& style = ImGui::GetStyle();
-			float w = ImGui::CalcItemWidth();
+			ImGuiStyle& style = ImGui::GetStyle ();
+			float w = ImGui::CalcItemWidth ();
 			float spacing = style.ItemInnerSpacing.x;
-			float button_sz = ImGui::GetFrameHeight();
-			ImGui::Text("Shape");
-			ImGui::SliderInt("ID", &component.shapeid, 0, 2);
+			float button_sz = ImGui::GetFrameHeight ();
+			ImGui::Text ( "Shape" );
 
-			// Position
-			ImGui::Text("Velocity");
-			ImGui::PushItemWidth((w / 2.0f) - spacing);
-			ImGui::InputFloat("##VelX", &component.velocity.x);
-			ImGui::SameLine();
-			ImGui::Text("X");
-			ImGui::SameLine();
-			ImGui::InputFloat("##VelY", &component.velocity.y);
-			ImGui::SameLine();
-			ImGui::Text("Y");
-			ImGui::PopItemWidth();
+			ImGui::SliderInt ( "ID" , &component.shapeid , 0 , 2 );
 
-			ImGui::Text("Area");
-			ImGui::SliderFloat("m^2", &component.Area, component.Area, component.Area);
-			ImGui::Text("Density ");
-			ImGui::SliderFloat("kg/cm^2", &component.Density,1.0f, 50.0f);
-			ImGui::Text("Mass");
-			ImGui::SliderFloat ( "kg" , &component.Mass , component.Mass - 10.0f , component.Mass + 10.0f);
-			ImGui::Text("Restitution");
-			ImGui::SliderFloat("Restitution", &component.Restitution, 0.0f, 1.0f);
+			ImGui::Checkbox ( "Static" , &component.IsStatic );
+
+			ImGui::Text ( "Velocity (cm/s)" );
+			ImGui::PushItemWidth ( ( w / 2.0f ) - ( spacing * 3.0f ) );
+			ImGui::InputFloat ( "##VelX" , &component.velocity.x );
+			ImGui::SameLine ();
+			ImGui::Text ( "X" );
+			ImGui::SameLine ();
+			ImGui::InputFloat ( "##VelY" , &component.velocity.y );
+			ImGui::SameLine ();
+			ImGui::Text ( "Y" );
+			ImGui::PopItemWidth ();
+
+			ImGui::Text ( "Area" );
+			ImGui::SliderFloat ( "m^2" , &component.Area , component.Area , component.Area );
+			ImGui::Text ( "Density " );
+			ImGui::SliderFloat ( "kg/cm^2" , &component.Density , 1.0f , 50.0f );
+			ImGui::Text ( "Mass" );
+			ImGui::SliderFloat ( "kg" , &component.Mass , component.Mass - 10.0f , component.Mass + 10.0f );
+			ImGui::Text ( "Restitution" );
+			ImGui::SliderFloat ( "##PhysicsComponentRestitution" , &component.Restitution , 0.0f , 1.0f );
 		}
 
 		template <>
@@ -422,6 +438,109 @@ namespace JZEngine
 				ImGui::InputFloat ( "##y" , &component.speed_y_ );
 			}
 			ImGui::PopItemWidth ();
+		}
+
+		template <>
+		void RenderComponent ( TextData& component )
+		{
+			// General data
+			ImGuiStyle& style = ImGui::GetStyle ();
+			float w = ImGui::CalcItemWidth ();
+			float spacing = style.ItemInnerSpacing.x;
+
+			// Font Size
+			ImGui::Text ( "Font Size" );
+			ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
+			ImGui::InputFloat ( "##fontscale" , &component.font_size_ , 0.0f , 100.0f );
+
+			// Font Tracking
+			ImGui::Text ( "Tracking" );
+			ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
+			ImGui::InputFloat ( "##fonttracking" , &component.tracking_x_ , 1.0f , 10.0f );
+
+			// Font Leading 
+			ImGui::Text ( "Leading" );
+			ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
+			ImGui::InputFloat ( "##fontleading" , &component.leading_y_ , 1.0f , 10.0f );
+
+			const char* font_memo
+			{
+				"ENTER to type on new line.\n"
+				"Maximum of 199 characters."
+				"! Alpha is not integrated at this moment.\n"
+				"Thank you for your patience !"
+			};
+
+			// Input Text
+			ImGui::Text ( "Text" );
+			ImGui::SameLine ();
+			ImGui::TextDisabled ( "(?)" );
+			if( ImGui::IsItemHovered () )
+			{
+				ImGui::BeginTooltip ();
+				ImGui::PushTextWrapPos ( ImGui::GetFontSize () * 35.0f );
+				ImGui::TextUnformatted ( font_memo );
+				ImGui::PopTextWrapPos ();
+				ImGui::EndTooltip ();
+			}
+			static ImGuiInputTextFlags flags ;
+			ImGui::InputTextMultiline ( "##fonttext" , component.text.data , IM_ARRAYSIZE ( component.text.data ) , ImVec2 ( w + ( spacing * 4.0f ) , ImGui::GetTextLineHeight () * 10 ) , flags );
+			ImGui::CheckboxFlags ( "Lock " , &flags , ImGuiInputTextFlags_ReadOnly );
+			ImGui::SameLine ( 0 , ( spacing * 4.0f ) );
+			ImGui::Text ( "Characters " );
+			ImGui::SameLine ( 0 , spacing );
+			ImGui::Text ( "%d " , component.text.size () );
+
+			// Text color
+			static float color[ 3 ];
+			ImGui::ColorEdit3 ( "Color" , color );
+			component.color_.x = color[ 0 ];
+			component.color_.y = color[ 1 ];
+			component.color_.z = color[ 2 ];
+
+
+		}
+
+		template <>
+		void RenderComponent ( Animation2D& component )
+		{
+			ImGui::Checkbox ( "Animation" , &component.animation_check_ );
+			if( component.animation_check_ )
+			{
+				// General data
+				ImGuiStyle& style = ImGui::GetStyle ();
+				float w = ImGui::CalcItemWidth ();
+				float spacing = style.ItemInnerSpacing.x;
+
+				// No. of frame it is currently at.
+				ImGui::Text ( "Current Frame" );
+				ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
+				ImGui::SliderInt ( "##AnimationFrame" , &component.frame_ , 0 , component.max_frames_ - 1 );
+
+				ImGui::Text ( "Max Frames" );
+				ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
+				ImGui::SliderInt ( "##AnimationMaxFrames" , &component.max_frames_ , 1 , component.rows_ * component.column_ );
+
+				ImGui::Text ( "Frame Speed" );
+				ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
+				if( component.animation_speed_ >= 2.0f )
+				{
+					component.animation_speed_ = 2.0f;
+				}
+				else if( component.animation_speed_ <= 0.0f )
+				{
+					component.animation_speed_ = 0.0f;
+				}
+				ImGui::InputFloat ( "##AnimationFrameSpeed" , &component.animation_speed_ , 0.1f , 2.0f , "%.2f" );
+
+				ImGui::Text ( "Rows" );
+				ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
+				ImGui::SliderInt ( "##AnimationRows" , &component.rows_ , 1 , 30 );
+
+				ImGui::Text ( "Columns" );
+				ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
+				ImGui::SliderInt ( "##AnimationColumns" , &component.column_ , 1 , 30 );
+			}
 		}
 
 		/*!

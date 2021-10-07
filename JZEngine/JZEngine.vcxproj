@@ -181,6 +181,8 @@
     <ClCompile Include="src\JZEngine\GraphicRendering\RendererInstancing.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Shader.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\SpriteRenderer.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Text.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\TextRenderer.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Texture.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\VertexArray.cpp" />
     <ClCompile Include="src\JZEngine\ImGui\GraphEditor.cpp">
@@ -271,8 +273,10 @@
     </ClCompile>
     <ClCompile Include="src\JZEngine\Physics\Collision.cpp" />
     <ClCompile Include="src\JZEngine\Physics\PhyicsDebug.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\PhysicsComponent.cpp" />
     <ClCompile Include="src\JZEngine\Physics\RigidBody.cpp" />
     <ClCompile Include="src\JZEngine\Resource\ResourceManager.cpp" />
+    <ClCompile Include="src\JZEngine\STL\String.cpp" />
     <ClCompile Include="src\JZEngine\Resource\Serialize.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\JZEngine\Sound\Sound.cpp" />
@@ -281,6 +285,8 @@
     <ClInclude Include="src\JZEngine.h" />
     <ClInclude Include="src\JZEngine\Application.h" />
     <ClInclude Include="src\JZEngine\Components\TestComponent.h" />
+    <ClInclude Include="src\JZEngine\DebugTools\Assert.h" />
+    <ClInclude Include="src\JZEngine\DebugTools\DebugNew.h" />
     <ClInclude Include="src\JZEngine\DebugTools\Log.h" />
     <ClInclude Include="src\JZEngine\DebugTools\PerformanceData.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h" />
@@ -305,6 +311,7 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\Buffer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\ExampleFloatAway.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Text.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\RendererDebug.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\NonInstanceSpriteRenderer.h" />
@@ -313,6 +320,7 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\RendererInstancing.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Shader.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\SpriteRenderer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\TextRenderer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Texture.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\VertexArray.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\VertexBufferLayout.h" />
@@ -353,6 +361,7 @@
     <ClInclude Include="src\JZEngine\Resource\Serialize.h" />
     <ClInclude Include="src\JZEngine\Sound\Sound.h" />
     <ClInclude Include="src\JZEngine\STL\Random.h" />
+    <ClInclude Include="src\JZEngine\STL\String.h" />
     <ClInclude Include="src\JZEngine\STL\Tuple.h" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>

@@ -32,7 +32,7 @@ namespace JZEngine
 		GLFW_Instance ( int width , int height );
 		~GLFW_Instance ();
 
-		virtual void Init() override;
+		virtual void Init () override;
 
 		/*!
 		 * @brief ___JZEngine::GLFW_Instance::FrameStart()___

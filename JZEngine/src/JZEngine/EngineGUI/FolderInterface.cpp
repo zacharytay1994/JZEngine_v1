@@ -13,9 +13,7 @@ namespace JZEngine
 	FolderInterface::FolderInterface(float x, float y, float sx, float sy, int group)
 		:
 		ImGuiInterface(x, y, sx, sy, group)
-	{
-
-	}
+	{}
 
 	void FolderInterface::Render(float dt)
 	{

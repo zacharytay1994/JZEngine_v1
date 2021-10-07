@@ -39,17 +39,30 @@ namespace JZEngine
 
 			for( int i = 1 ; i <= repeat_right ; ++i )
 			{
-				sprite_renderer_.DrawSprite ( shader.shader_id_ , texture.texture_id_ ,
-											  { transform.position_.x + ( trans_x_ * i ) , transform.position_.y } ,
-											  transform.size_ , transform.scale_ ,
-											  transform.rotation_ , { 1.0f,1.0f,1.0f } , shader.tint);
+				transform.model_transform_ = Math::GetModelTransformNonTransposed
+				(
+					{ transform.position_.x + ( trans_x_ * i ) , transform.position_.y } ,
+					transform.rotation_ , transform.scale_ , transform.size_
+				);
+
+				sprite_renderer_.DrawSprite ( shader.shader_id_ ,
+											  texture.texture_id_ ,
+											  ( Math::GetProjectionTransformNonTransposed () * transform.model_transform_ ).Transpose () ,
+											  shader.tint );
 			}
 
 			for( int i = 1 ; i <= repeat_left ; ++i )
 			{
-				sprite_renderer_.DrawSprite ( shader.shader_id_ , texture.texture_id_ ,
-											  { transform.position_.x - ( trans_x_ * i ) , transform.position_.y } ,
-											  transform.size_ , transform.scale_ , transform.rotation_ , { 1.0f,1.0f,1.0f }, shader.tint );
+				transform.model_transform_ = Math::GetModelTransformNonTransposed
+				(
+					{ transform.position_.x - ( trans_x_ * i ) , transform.position_.y } ,
+					transform.rotation_ , transform.scale_ , transform.size_
+				);
+
+				sprite_renderer_.DrawSprite ( shader.shader_id_ ,
+											  texture.texture_id_ ,
+											  ( Math::GetProjectionTransformNonTransposed () * transform.model_transform_ ).Transpose () ,
+											  shader.tint );
 			}
 		}
 
@@ -73,23 +86,44 @@ namespace JZEngine
 				transform.position_.y = -win_height_div2 - ( trans_y_ / 2.0f );
 			}
 
+			// draw for +Y axis
 			for( int i = 1 ; i <= repeat_top ; ++i )
 			{
-				sprite_renderer_.DrawSprite ( shader.shader_id_ , texture.texture_id_ ,
-											  { transform.position_.x , transform.position_.y + ( trans_y_ * i ) } ,
-											  transform.size_ , transform.scale_ , transform.rotation_ , { 1.0f,1.0f,1.0f }, shader.tint );
+				transform.model_transform_ = Math::GetModelTransformNonTransposed
+				(
+					{ transform.position_.x , transform.position_.y + ( trans_y_ * i ) } ,
+					transform.rotation_ , transform.scale_ , transform.size_
+				);
+
+				sprite_renderer_.DrawSprite ( shader.shader_id_ ,
+											  texture.texture_id_ ,
+											  ( Math::GetProjectionTransformNonTransposed () * transform.model_transform_ ).Transpose () ,
+											  shader.tint );
+
 			}
 
+			// draw for -Y axis
 			for( int i = 1 ; i <= repeat_bottom ; ++i )
 			{
+				transform.model_transform_ = Math::GetModelTransformNonTransposed
+				(
+					{ transform.position_.x , transform.position_.y - ( trans_y_ * i ) } ,
+					transform.rotation_ , transform.scale_ , transform.size_
+				);
+
 				sprite_renderer_.DrawSprite ( shader.shader_id_ , texture.texture_id_ ,
-											  { transform.position_.x , transform.position_.y - ( trans_y_ * i ) } ,
-											  transform.size_ , transform.scale_ , transform.rotation_ , { 1.0f,1.0f,1.0f }, shader.tint );
+											  ( Math::GetProjectionTransformNonTransposed () * transform.model_transform_ ).Transpose () ,
+											  shader.tint );
+
 			}
+
 		}
 
-		sprite_renderer_.DrawSprite ( shader.shader_id_ , texture.texture_id_ , transform.position_ ,
-									  transform.size_ , transform.scale_ , transform.rotation_ , { 1.0f,1.0f,1.0f } , shader.tint);
+		transform.model_transform_ = Math::GetModelTransformNonTransposed ( transform.position_ , transform.rotation_ , transform.scale_ , transform.size_ );
 
+		sprite_renderer_.DrawSprite ( shader.shader_id_ ,
+									  texture.texture_id_ ,
+									  ( Math::GetProjectionTransformNonTransposed () * transform.model_transform_ ).Transpose () ,
+									  shader.tint );
 	}
 }

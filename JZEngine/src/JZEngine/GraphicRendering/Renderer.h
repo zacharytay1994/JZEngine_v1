@@ -28,7 +28,7 @@ namespace JZEngine
 
 		/*set up vertex data ( and buffer ( s ) ) and configure vertex attributes
 			------------------------------------------------------------------*/
-		std::array < float, 32 > vertices
+		std::array < float , 32 > vertices
 		{
 			// positions          // colors           // texture coords
 			 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
@@ -36,7 +36,8 @@ namespace JZEngine
 			-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
 			-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
 		};
-		std::array < unsigned int, 6 > indices
+
+		std::array < unsigned int , 6 > indices
 		{  // note that we start from 0!
 			0, 1, 3,  // first Triangle
 			1, 2, 3   // second Triangle
@@ -44,29 +45,27 @@ namespace JZEngine
 
 		Shader shader_program;
 		VertexArray va;
+		VertexBuffer vb;
 		IndexBuffer ib;
-		std::unordered_map<std::string, Texture2D> textures_;
+		std::unordered_map<std::string , Texture2D> textures_;
 
 	public:
 
-		Renderer();
-		/*static Renderer& Instance()
-		{
-			static Renderer Instance;
-			return Instance;
-		};*/
-		virtual void Init() override;
-		void Draw();
-		void Bind();
-		void Unbind();
-		void Clear();
+		Renderer ();
 
-		Shader& GetShaderProgram(int shaderid);
-		void BindTexture(const std::string& name);
-		void BindTexture(int textureid);
-		void BindShader(int shaderid);
-		void UnbindShader(int shaderid);
+		virtual void Init () override;
+		void Draw ();
+		void Draw ( int frame , int row , int col );
+		void Bind ();
+		void Unbind ();
+		void Clear ();
 
-		ResourceManager* resource_manager_;
+		Shader& GetShaderProgram ( int shaderid );
+		void BindTexture ( const std::string& name );
+		void BindTexture ( int textureid );
+		void BindShader ( int shaderid );
+		void UnbindShader ( int shaderid );
+
+		ResourceManager* resource_manager_{ nullptr };
 	};
 }

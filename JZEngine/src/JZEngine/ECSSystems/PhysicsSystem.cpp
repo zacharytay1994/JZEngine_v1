@@ -7,28 +7,30 @@
 #include "../Input/Input.h"
 #include "../Physics/RigidBody.h"
 
-#define PHYSICSDEBUG
+#define PHYSICSDEBUG 
 
 namespace JZEngine
 {
 	std::vector<Transform*> transform_cont;
 
-	
-	PhysicsComponent::PhysicsComponent() {}
-	PhysicsComponent::PhysicsComponent(const PhysicsComponent& s) { std::memcpy(this, &s, sizeof(s)); }
-	PhysicsComponent::~PhysicsComponent() {}
-
 	PhysicsSystem::PhysicsSystem()
 	{
-		RegisterComponents<PhysicsComponent,Transform>();
+		RegisterComponents<PhysicsComponent, Transform>();
 	}
 
-	void PhysicsSystem::FrameBegin(const float& dt)
+	void PhysicsSystem::FrameBegin(const float& dt) 
 	{
-		
+		for (int i = 0; i < physics_cont.size(); ++i)
+		{
+			if (physics_cont[i]->IsAlive == false)
+			{
+				physics_cont.erase(physics_cont.begin() + i);
+				transform_cont.erase(transform_cont.begin() + i);
+			}
+		}
 	}
 
-	//_____Updates Physic Components and calculates posnex for Collision & Response____//
+	//_____Updates Physic Components____//
 	void PhysicsSystem::Update(const float& dt)
 	{
 		PhysicsComponent& current_pcomponent = GetComponent<PhysicsComponent>();
@@ -60,13 +62,13 @@ namespace JZEngine
 			float dy = 0.f;
 			float forcemagnitude = 800.f;
 			if (InputHandler::IsKeyPressed(KEY::KEY_W))
-				dy++;
+				++dy;
 			if (InputHandler::IsKeyPressed(KEY::KEY_A))
-				dx--;
+				--dx;
 			if (InputHandler::IsKeyPressed(KEY::KEY_S))
-				dy--;
+				--dy;
 			if (InputHandler::IsKeyPressed(KEY::KEY_D))
-				dx++;
+				++dx;
 
 			if (dx != 0.f || dy != 0.f)
 			{
@@ -125,6 +127,7 @@ namespace JZEngine
 			physics_cont.push_back(&current_pcomponent);
 			transform_cont.push_back(&current_transform);
 		}
+
 	}//__________________UPDATE_________________________//
 
 
@@ -134,7 +137,6 @@ namespace JZEngine
 		if (InputHandler::IsKeyTriggered(KEY::KEY_I))
 		{
 			pause = !pause;
-			Log::Info("Physics", "I");
 		}
 		if (pause)
 		{
@@ -150,7 +152,7 @@ namespace JZEngine
 		}
 #endif
 		//optimised double for loop for collision & response
-		for (int i = 0; i < physics_cont.size() - 1; ++i)
+		for (int i = 0; i < (int)physics_cont.size() - 1; ++i)
 		{
 			PhysicsComponent& componentA = *physics_cont[i];
 			for (int j = i+1; j < physics_cont.size(); ++j)
@@ -166,11 +168,11 @@ namespace JZEngine
 				{
 					if (componentA.IsStatic)
 					{
-						RigidBody::Move(componentB, normal * depth / 2.f);
+						RigidBody::Move(componentB, normal * depth );
 					}
 					else if (componentB.IsStatic)
 					{
-						RigidBody::Move(componentA, -normal * depth / 2.f);
+						RigidBody::Move(componentA, -normal * depth );
 					}
 					else
 					{
