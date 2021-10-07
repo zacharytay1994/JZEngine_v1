@@ -130,6 +130,16 @@ namespace JZEngine
 			SERIALIZE(stream, mode,
 				component.texture_id_);
 		}
+		
+		template <>
+			static void SerializeComponent(NonInstanceShader& component, std::stringstream& stream, MODE mode)
+		{
+			SERIALIZE(stream, mode,
+				component.shader_id_,
+				component.tint.x,
+				component.tint.y,
+				component.tint.z);
+		}
 
 		template <>
 		static void SerializeComponent(PhysicsComponent& component, std::stringstream& stream, MODE mode)
@@ -145,6 +155,35 @@ namespace JZEngine
 				component.Restitution,
 				component.IsStatic
 				);
+		}
+		
+		template <>
+		static void SerializeComponent(InstanceShader& component, std::stringstream& stream, MODE mode)
+		{
+			SERIALIZE(stream, mode,
+				component.shader_id_);
+		}
+		
+		template <>
+		static void SerializeComponent(Parallax& component, std::stringstream& stream, MODE mode)
+		{
+			SERIALIZE(stream, mode,
+				component.is_vertical,
+				component.speed_x_,
+				component.speed_y_);
+		}
+
+		template <>
+		static void SerializeComponent(Animation2D& component, std::stringstream& stream, MODE mode)
+		{
+			SERIALIZE(stream, mode,
+				component.animation_check_,
+				component.animation_counter_,
+				component.animation_speed_,
+				component.column_,
+				component.frame_,
+				component.max_frames_,
+				component.rows_);
 		}
 
 		/*!_______________________________________________________________________________________________________*/

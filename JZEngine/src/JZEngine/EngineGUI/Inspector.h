@@ -365,6 +365,11 @@ namespace JZEngine
 			ImGui::Text ( "Y" );
 			ImGui::PopItemWidth ();
 
+			ImGui::Text("A. Velocity (cm/s)");
+			ImGui::PushItemWidth((w / 2.0f) - (spacing * 3.0f));
+			ImGui::InputFloat("##AVel", &component.rotationalVelocity);
+			ImGui::PopItemWidth();
+
 			ImGui::Text ( "Area" );
 			ImGui::SliderFloat ( "m^2" , &component.Area , component.Area , component.Area );
 			ImGui::Text ( "Density " );

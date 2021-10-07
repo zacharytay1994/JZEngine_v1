@@ -220,7 +220,7 @@ namespace JZEngine
 		//Log::Info("MousePress", "x: {}, y: {}", mouse_world_position_.x, mouse_world_position_.y);
 
 		// check all entities with transforms
-		if (InputHandler::IsMouseTriggered(MOUSE::MOUSE_BUTTON_1))
+		if (InputHandler::IsKeyPressed(KEY::KEY_LEFT_SHIFT) && InputHandler::IsMouseTriggered(MOUSE::MOUSE_BUTTON_1))
 		{
 			for (auto& e : ecs_instance_->entity_manager_.entities_)
 			{
