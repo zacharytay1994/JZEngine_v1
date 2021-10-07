@@ -26,17 +26,37 @@ namespace JZEngine {
 
 	void MenuBar::Render(float dt) {
 		// shortcuts
-		if (InputHandler::IsKeyTriggered(KEY::KEY_TAB)) {
+		if (InputHandler::IsKeyPressed(KEY::KEY_LEFT_SHIFT) && InputHandler::IsKeyTriggered(KEY::KEY_TAB)) {
 			GetInterface<FolderInterface>()->ToggleOnOff();
 		}
-		if (InputHandler::IsKeyTriggered(KEY::KEY_P)) {
+		if (InputHandler::IsKeyPressed(KEY::KEY_LEFT_SHIFT) && InputHandler::IsKeyTriggered(KEY::KEY_P)) {
 			GetInterface<DebugInformation>()->ToggleOnOff();
 		}
+		if (InputHandler::IsKeyTriggered(KEY::KEY_ESCAPE))
+		{
+			GetInterface<EngineSettings>()->ToggleOnOff();
+		}
+		if (InputHandler::IsKeyPressed(KEY::KEY_LEFT_SHIFT) && InputHandler::IsKeyTriggered(KEY::KEY_T))
+		{
+			transform_mode_ = "Transform Mode: Translate";
+			engine_gui_->operation_ = ImGuizmo::OPERATION::TRANSLATE;
+		}
+		if (InputHandler::IsKeyPressed(KEY::KEY_LEFT_SHIFT) && InputHandler::IsKeyTriggered(KEY::KEY_R))
+		{
+			transform_mode_ = "Transform Mode: Rotate";
+			engine_gui_->operation_ = ImGuizmo::OPERATION::ROTATE_Z;
+		}
+		if (InputHandler::IsKeyPressed(KEY::KEY_LEFT_SHIFT) && InputHandler::IsKeyTriggered(KEY::KEY_S))
+		{
+			transform_mode_ = "Transform Mode: Scale";
+			engine_gui_->operation_ = ImGuizmo::OPERATION::SCALE;
+		}
 
+		float menubar_height = 0.0f;
 		// render main menu bar
 		if (ImGui::BeginMainMenuBar())
 		{
-			height_ = ImGui::GetWindowHeight();
+			menubar_height = ImGui::GetWindowHeight();
 			if (ImGui::BeginMenu("File")) {
 				if (ImGui::MenuItem("Resources", "[SHIFT+TAB]"))
 				{
@@ -46,15 +66,19 @@ namespace JZEngine {
 			}
 			if (ImGui::BeginMenu("Settings"))
 			{
-				if (ImGui::MenuItem("Settings", "[SHIFT+S]"))
+				if (ImGui::MenuItem("Settings", "[ESC]"))
 				{
+					GetInterface<EngineSettings>()->temp_width_ = Settings::window_width;
+					GetInterface<EngineSettings>()->temp_height_ = Settings::window_height;
+					/*GetInterface<EngineSettings>()->temp_cam_x = Settings::camera_width;
+					GetInterface<EngineSettings>()->temp_cam_y = Settings::camera_height;*/
 					GetInterface<EngineSettings>()->ToggleOnOff();
 				}
 				ImGui::EndMenu();
 			}
 			if (ImGui::BeginMenu("Debug"))
 			{
-				if (ImGui::MenuItem("Performance Visualizer", "[TAB]"))
+				if (ImGui::MenuItem("Performance Visualizer", "[SHIFT+P]"))
 				{
 					GetInterface<DebugInformation>()->ToggleOnOff();
 				}
@@ -73,17 +97,17 @@ namespace JZEngine {
 			ImGui::SetNextItemWidth(100.0f);
 			if (ImGui::BeginMenu(transform_mode_.c_str()))
 			{
-				if (ImGui::MenuItem("Translate", "[t]"))
+				if (ImGui::MenuItem("Translate", "[SHIFT+T]"))
 				{
 					transform_mode_ = "Transform Mode: Translate";
 					engine_gui_->operation_ = ImGuizmo::OPERATION::TRANSLATE;
 				}
-				if (ImGui::MenuItem("Rotate", "[r]"))
+				if (ImGui::MenuItem("Rotate", "[SHIFT+R]"))
 				{
 					transform_mode_ = "Transform Mode: Rotate";
 					engine_gui_->operation_ = ImGuizmo::OPERATION::ROTATE_Z;
 				}
-				if (ImGui::MenuItem("Scale", "[s]"))
+				if (ImGui::MenuItem("Scale", "[SHIFT+S]"))
 				{
 					transform_mode_ = "Transform Mode: Scale";
 					engine_gui_->operation_ = ImGuizmo::OPERATION::SCALE;
@@ -93,5 +117,30 @@ namespace JZEngine {
 
 			ImGui::EndMainMenuBar();
 		}
+
+		ImGui::SetNextWindowBgAlpha(1.0f);
+		ImGui::SetNextWindowPos({ 0.0f, menubar_height }, ImGuiCond_Always);
+		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width), menubar_height * 2.0f }, ImGuiCond_Always);
+		ImGui::Begin("playbar", 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
+
+		ImGui::SameLine(Settings::window_width / 2.0f - (menubar_height * 1.5f));
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::texture2ds_[1].texture2d_.GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }))
+		{
+			// start code
+		}
+		ImGui::SameLine(Settings::window_width / 2.0f);
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::texture2ds_[2].texture2d_.GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }))
+		{
+			// stop code
+		}
+		ImGui::SameLine(Settings::window_width / 2.0f + (menubar_height * 1.5f));
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::texture2ds_[3].texture2d_.GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }))
+		{
+			// pause code
+		}
+
+		ImGui::End();
+
+		height_ = menubar_height * 3.0f;
 	} 
 }

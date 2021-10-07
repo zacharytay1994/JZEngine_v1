@@ -17,7 +17,6 @@ namespace JZEngine
 
 		virtual void Render(float dt) override;
 
-	private:
 		int temp_width_;
 		int temp_height_;
 		int temp_cam_x;

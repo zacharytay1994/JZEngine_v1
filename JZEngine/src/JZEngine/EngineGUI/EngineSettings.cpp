@@ -66,6 +66,7 @@ namespace JZEngine
 				GLFW_Instance::ResizeWindow(Settings::window_width, Settings::window_height);
 				Settings::camera_width = temp_cam_x;
 				Settings::camera_height = temp_cam_y;
+				ToggleOnOff();
 			}
 			ImGui::SameLine();
 			ImGui::SetNextItemWidth(100.0f);

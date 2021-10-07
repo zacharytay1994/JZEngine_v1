@@ -21,6 +21,9 @@ namespace JZEngine
 		//add below so existing code dont need edit hehe
 		// load textures
 		LoadTexture2D ( "TextFile" , "Assets/Textures/textfileicon.png" );
+		LoadTexture2D (	"StartIcon", "Assets/Textures/iconstart.png" );
+		LoadTexture2D (	"StopIcon", "Assets/Textures/iconstop.png" );
+		LoadTexture2D (	"PauseIcon", "Assets/Textures/iconpause.png" );
 		LoadTexture2D ( "Unicorn" , "Assets/Textures/cute-unicorn.png" );//1
 		LoadTexture2D ( "Square" , "Assets/Textures/square.jpg" );
 		LoadTexture2D ( "TempB1" , "Assets/Textures/TempBackground-01.png" );
