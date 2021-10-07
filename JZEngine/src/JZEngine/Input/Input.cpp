@@ -148,7 +148,7 @@ namespace JZEngine
 #ifdef _DEBUG
         std::cout << "Mouse scroll wheel offset: ("
             << xoffset << ", " << yoffset << ")" << std::endl;
-        mouse_scrolled_ = yoffset;
+        mouse_scrolled_ = static_cast<int>(yoffset);
 #endif
     }
 

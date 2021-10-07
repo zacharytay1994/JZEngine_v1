@@ -103,7 +103,7 @@ namespace JZEngine
 			{
 				ImGuizmo::SetOrthographic(true);
 				ImGuiIO& io = ImGui::GetIO();
-				ImGuizmo::SetRect(1.0 / 6.0 * Settings::window_width, MenuBar::height_, 4.0 / 6.0 * Settings::window_width, 3.0 / 4.0 * (Settings::window_height - MenuBar::height_));
+				ImGuizmo::SetRect(static_cast<float>(1.0 / 6.0 * Settings::window_width), MenuBar::height_, static_cast<float>(4.0 / 6.0 * Settings::window_width), static_cast<float>(3.0 / 4.0 * (Settings::window_height - MenuBar::height_)));
 				Mat4f projection = static_cast<Mat4f>(Math::GetProjectionTransformNonTransposed()).Transpose();
 				Mat4f view = Mat4f::Translate(-camera_position_.x, -camera_position_.y, 0.0f).Transpose();
 
@@ -230,10 +230,10 @@ namespace JZEngine
 					// do bounding box check
 					float half_width = ((transform.scale_.x * transform.size_.x) / 2.0f);
 					float half_height = ((transform.scale_.y * transform.size_.y) / 2.0f);
-					int left = transform.position_.x - half_width;
-					int right = transform.position_.x + half_width;
-					int top = transform.position_.y + half_height;
-					int bottom = transform.position_.y - half_height;
+					float left = transform.position_.x - half_width;
+					float right = transform.position_.x + half_width;
+					float top = transform.position_.y + half_height;
+					float bottom = transform.position_.y - half_height;
 					// check if mouse point within it
 					if (!(mouse_world_position_.x < left || mouse_world_position_.x > right || mouse_world_position_.y > top || mouse_world_position_.y < bottom))
 					{
@@ -246,12 +246,12 @@ namespace JZEngine
 		if (InputHandler::IsKeyPressed(KEY::KEY_LEFT_CONTROL) && InputHandler::mouse_scrolled_ == -1)
 		{
 			Settings::camera_width += 100;
-			Settings::camera_height += 100 * Settings::aspect_ratio;
+			Settings::camera_height += static_cast<int>(100 * Settings::aspect_ratio);
 		}
 		else if (InputHandler::IsKeyPressed(KEY::KEY_LEFT_CONTROL) && InputHandler::mouse_scrolled_ == 1)
 		{
 			Settings::camera_width -= 100;
-			Settings::camera_height -= 100 * Settings::aspect_ratio;
+			Settings::camera_height -= static_cast<int>(100 * Settings::aspect_ratio);
 		}
 	}
 }

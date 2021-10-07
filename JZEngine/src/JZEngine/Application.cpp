@@ -52,6 +52,7 @@ namespace JZEngine
 {
 	Application::Application ()
 		:
+		msgbus( new MessageBus() ),
 		global_systems_ ( new GlobalSystemsManager () )
 	{
 		/*testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
@@ -89,7 +90,7 @@ namespace JZEngine
 		PerformanceData::Init ();
 		Serialize::Load ();
 
-		msgbus.subscribe ( global_systems_->GetSystem<SoundSystem> () , &SoundSystem::playSound );
+		msgbus->subscribe ( global_systems_->GetSystem<SoundSystem> () , &SoundSystem::playSound );
 
 		// test code
 		/*global_systems_->GetSystem<SoundSystem>()->createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
@@ -202,6 +203,7 @@ namespace JZEngine
 	{
 		Log::Instance ().Free ();
 		global_systems_->Free ();
+		delete msgbus;
 		delete global_systems_;
 	}
 
@@ -232,7 +234,7 @@ namespace JZEngine
 			global_systems_->FrameStart ();
 
 
-			global_systems_->Update ( dt );
+			global_systems_->Update ( static_cast<float>(dt) );
 
 			//DeltaTime::update_time(1.0);
 			//DeltaTime::update_deltatime(1.0);
@@ -246,7 +248,7 @@ namespace JZEngine
 			{
 				SoundEvent event{};
 				event.name = "mellau__button-click-1.wav";
-				msgbus.publish ( &event );
+				msgbus->publish ( &event );
 			}
 
 			//test code for input system, can be removed

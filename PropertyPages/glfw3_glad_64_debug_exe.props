@@ -17,8 +17,7 @@
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)bin\JZEngine-$(Configuration)-$(Platform)\JZEngine.dll" "$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\JZEngine.dll" /Y
 copy "$(SolutionDir)vendors\fmod\lib\fmodx64\fmodL.dll" "$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\fmodL.dll" /Y
-copy "$(SolutionDir)OpenGL\lib\lib64\glfw3.dll" "$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\glfw3.dll" /Y
-copy "$(SolutionDir)vendors\FreeType\dll\win64\freetype.dll" "$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\freetype.dll" /Y</Command>
+copy "$(SolutionDir)OpenGL\lib\lib64\glfw3.dll" "$(SolutionDir)bin\$(ProjectName)-$(Configuration)-$(Platform)\glfw3.dll" /Y</Command>
     </PostBuildEvent>
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
@@ -28,6 +27,7 @@ copy "$(SolutionDir)vendors\FreeType\dll\win64\freetype.dll" "$(SolutionDir)bin\
       <PreprocessorDefinitions>JZENGINE_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)JZEngine\vendor\spdlog\include;</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />

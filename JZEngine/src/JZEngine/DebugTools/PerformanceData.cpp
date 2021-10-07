@@ -81,8 +81,8 @@ namespace JZEngine
 
 			if (accumulated_frames_ > 0)
 			{
-				average_fps_ = accumulated_fps_ / accumulated_frames_;
-				average_app_fps_ = accumulated_app_fps_ / accumulated_frames_;
+				average_fps_ = accumulated_fps_ / static_cast<unsigned int>(accumulated_frames_);
+				average_app_fps_ = accumulated_app_fps_ / static_cast<unsigned int>(accumulated_frames_);
 			}
 
 			current_time_ = std::chrono::high_resolution_clock::now();

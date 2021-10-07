@@ -250,7 +250,7 @@ namespace JZEngine
 	void SceneTree::RemoveAllEntities()
 	{
 		// remove all root entities which also removes all children
-		for (int i = ecs_instance_->entity_manager_.root_ids_.size() - 1; i >= 0; --i)
+		for (int i = static_cast<int>(ecs_instance_->entity_manager_.root_ids_.size() - 1); i >= 0; --i)
 		{
 			if (ecs_instance_->entity_manager_.root_ids_[i] != -1)
 			{

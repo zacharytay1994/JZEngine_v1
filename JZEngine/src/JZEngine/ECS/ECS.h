@@ -1293,7 +1293,7 @@ namespace JZEngine
 			Chunk*							current_chunk_{ nullptr };	/*!< current chunk the entity being updated belongs to */
 			std::bitset<MAX_COMPONENTS>		mask_;						/*!< component mask of the system, to decide which entities to update */
 			ui32							number_of_components_{ 0 };	/*!< number of components*/
-			JZEngine::ECS::SystemComponents components_;				/*!< ID of all registered components that this system acts on
+			JZEngine::ECS::SystemComponents components_{};				/*!< ID of all registered components that this system acts on
 																			 Essentially does what mask_ does, but does not require iteration,
 																			 over the bits. [Write a function to get all flagged bits of a bitset] */
 

@@ -230,7 +230,7 @@ namespace JZEngine
 				texture,
 				JZEngine::Vec2f ( static_cast< float >( face->glyph->bitmap.width ),  static_cast< float >( face->glyph->bitmap.rows ) ),
 				JZEngine::Vec2f ( static_cast< float >( face->glyph->bitmap_left ),  static_cast< float >( face->glyph->bitmap_top ) ),
-				face->glyph->advance.x
+				static_cast<unsigned int>(face->glyph->advance.x)
 			};
 
 			characters.insert ( std::pair<char , Character> ( c , character ) );

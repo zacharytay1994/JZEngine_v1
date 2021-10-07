@@ -72,7 +72,7 @@ namespace JZEngine
 				if (filter.PassFilter(e.first.c_str()))
 				{
 					ImGui::TableNextColumn();
-					ImGui::Image((void*)ResourceManager::texture2ds_[0].texture2d_.GetRendererID(), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f });
+					ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::texture2ds_[0].texture2d_.GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f });
 					if (ImGui::BeginPopupContextItem(e.first.c_str()))
 					{
 						if (ImGui::Selectable("Add To Scene"))
@@ -103,7 +103,7 @@ namespace JZEngine
 				if (filter.PassFilter(s.first.c_str()))
 				{
 					ImGui::TableNextColumn();
-					ImGui::Image((void*)ResourceManager::texture2ds_[0].texture2d_.GetRendererID(), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f });
+					ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::texture2ds_[0].texture2d_.GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f });
 					if (ImGui::BeginPopupContextItem(s.first.c_str()))
 					{
 						if (ImGui::Selectable("Load Scene"))

@@ -176,7 +176,7 @@ namespace JZEngine
 			if (distance < minDistance)
 			{
 				minDistance = distance;
-				result = i;
+				result = static_cast<int>(i);
 			}
 		}
 

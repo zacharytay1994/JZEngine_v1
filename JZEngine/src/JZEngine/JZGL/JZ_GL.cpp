@@ -105,7 +105,7 @@ namespace JZEngine
 		}
 
 		// create opengl viewport
-		glViewport( 1.0/6.0*Settings::window_width, 1.0/4.0*Settings::window_height, 4.0/6.0*Settings::window_width, 35.0/46.0*Settings::window_height);
+		glViewport( static_cast<GLsizei>(1.0/6.0*Settings::window_width), static_cast<GLsizei>(1.0/4.0*Settings::window_height), static_cast<GLsizei>(4.0/6.0*Settings::window_width), static_cast<GLsizei>(35.0/46.0*Settings::window_height));
 
 		// set resize window callback function
 		glfwSetFramebufferSizeCallback( window_, FramebufferSizeCallback );
@@ -139,7 +139,7 @@ namespace JZEngine
 	bool GLFW_Instance::dimensions_updated{ false };
 	void GLFW_Instance::UpdateViewportDimensions()
 	{
-		glViewport(1.0 / 6.0 * Settings::window_width, (1.0 / 4.0 * (Settings::window_height - MenuBar::height_)), 4.0 / 6.0 * Settings::window_width, 3.0 / 4.0 * (Settings::window_height - MenuBar::height_));
+		glViewport(static_cast<GLsizei>(1.0 / 6.0 * Settings::window_width), static_cast<GLsizei>(1.0 / 4.0 * (Settings::window_height - MenuBar::height_)), static_cast<GLsizei>(4.0 / 6.0 * Settings::window_width), static_cast<GLsizei>(3.0 / 4.0 * (Settings::window_height - MenuBar::height_)));
 	}
 
 	void JZEngine::FramebufferSizeCallback( GLFWwindow* window, int width, int height )
