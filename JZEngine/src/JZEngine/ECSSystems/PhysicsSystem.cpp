@@ -38,7 +38,7 @@ namespace JZEngine
 		current_pcomponent.position = current_transform.position_;
 		current_pcomponent.size = current_transform.size_;
 		current_pcomponent.rotation = current_transform.rotation_;
-	
+		
 		//calculate area
 		// Square = size.x * size.y;
 		// Circle = PI * radius * radius
@@ -46,11 +46,11 @@ namespace JZEngine
 		if (!current_pcomponent.IsStatic)
 		{
 			if(current_pcomponent.shapeid ==square)
-				current_pcomponent.Area = (current_transform.size_.x * current_transform.size_.y)/10000.f; // cm * cm ---> m^2
+				current_pcomponent.Area = (current_transform.size_.x * current_transform.size_.y); // cm * cm ---> m^2
 			if (current_pcomponent.shapeid == circle)
-				current_pcomponent.Area = Math::PI * current_transform.size_.x * current_transform.size_.x / 10000.f; // cm^2 ---> m^2
+				current_pcomponent.Area = Math::PI * current_transform.size_.x * current_transform.size_.x ; // cm^2 ---> m^2
 
-			current_pcomponent.Mass = current_pcomponent.Density * current_pcomponent.Area;// Mass = Density * volume (area for 2D)
+			current_pcomponent.Mass = current_pcomponent.Density * current_pcomponent.Area;// Mass = Density * area (not using volume for 2D)
 			current_pcomponent.InvMass = 1.f / current_pcomponent.Mass;
 		}
 		else
@@ -176,8 +176,8 @@ namespace JZEngine
 					}
 					else
 					{
-						RigidBody::Move(componentA, -normal * depth / 2.f);
-						RigidBody::Move(componentB, normal * depth / 2.f);
+						RigidBody::Move(componentA, -normal * depth / 2.00f);
+						RigidBody::Move(componentB, normal * depth / 2.00f);
 					}
 					Collision::ResolvePhysicsComponentCollision(componentA, componentB, normal, depth);
 
