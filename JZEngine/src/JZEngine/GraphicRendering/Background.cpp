@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		Background.cpp
+	Primary:	Jee Jia Min
+	Date:		26/08/21
+	Brief:		Parallax background system.
+*/
+
 #include <PCH.h>
 #include "Background.h"
 #include "../ECS/ECSConfig.h"

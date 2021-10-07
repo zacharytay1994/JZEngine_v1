@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		EngineConfig.h
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Engine settings.
+*/
+
 #pragma once
 
 namespace JZEngine

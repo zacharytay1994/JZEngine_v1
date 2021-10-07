@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		DeltaTime.h
+    Primary:	Deon Khong
+    Date:		26/08/21
+    Brief:		Measures delta time.
+*/
+
 #pragma once
 
 #include <GLFW/glfw3.h>

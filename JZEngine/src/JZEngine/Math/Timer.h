@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		Timer.h
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		Custom timer class.
+*/
+
 #pragma once
 
 #include "../BuildDefinitions.h"

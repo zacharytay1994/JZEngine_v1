@@ -1,13 +1,13 @@
 /*	__FILE HEADER__
-*	File:	ECS.cpp
-	Author: JZ
-	Date:	26/08/21
-	Brief:	Contains all ECS logic:
-			Entity, EntityManager, Component, ComponentManager,
-			Archetype, ArchetypeManager, System, SystemManager,
-			ECSInstance Singleton.
+*	File:		ECS.cpp
+	Primary:	Zachary Tay
+	Date:		26/08/21
+	Brief:		Contains all ECS logic:
+				Entity, EntityManager, Component, ComponentManager,
+				Archetype, ArchetypeManager, System, SystemManager,
+				ECSInstance Singleton.
 
-			Exposes the ECS through an ECSInstance singleton.
+				Exposes the ECS through an ECSInstance singleton.
 */
 
 #include "ECS.h"

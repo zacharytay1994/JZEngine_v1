@@ -1,7 +1,13 @@
+/*	__FILE HEADER__
+*	File:		RegidBody.cpp
+	Primary:	Deon Khong
+	Date:		01/07/21
+	Brief:		Physics rigidbodies.
+*/
+
 #include "PCH.h"
 #include "RigidBody.h"
 #if 1
-
 
 namespace JZEngine
 {

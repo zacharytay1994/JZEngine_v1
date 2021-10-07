@@ -1,3 +1,9 @@
+/*	__FILE HEADER__
+*	File:		Input.h
+	Primary:	Deon Khong
+	Date:		26/08/21
+	Brief:		Wraps GLFW input.
+*/
 
 /*                                                                      guard
 ----------------------------------------------------------------------------- */

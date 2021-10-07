@@ -1,8 +1,9 @@
 /*	__FILE HEADER__
-*	File:	Log.cpp
-    Author: JZ
-    Date:	01/09/21
-    Brief:	Logging functionality. Uses spdlog.
+*	File:	    Log.cpp
+    Primary:    Zachary Tay
+    Secondary:
+    Date:	    01/09/21
+    Brief:	    Logging functionality. Uses spdlog.
 */
 
 #include "PCH.h"

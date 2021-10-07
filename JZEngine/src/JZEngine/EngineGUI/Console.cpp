@@ -1,9 +1,9 @@
 /*	__FILE HEADER__
-*	File:	Console.cpp
-	Author: JZ
-	Date:	26/08/21
-	Brief:	Engine console system. Able to write to console
-			through a static function Console::Log(const char*).
+*	File:	    Console.cpp
+	Primary:    Zachary Tay
+	Date:	    26/08/21
+	Brief:	    Engine console system. Able to write to console
+			    through a static function Console::Log(const char*).
 */
 
 #include "PCH.h"

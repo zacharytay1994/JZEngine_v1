@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		FolderInterface.cpp
+	Primary:	Zachary Tay
+	Date:		26/08/21
+	Brief:		Renders assets that are loaded into the engine.
+*/
+
 #include <PCH.h>
 
 #include "FolderInterface.h"

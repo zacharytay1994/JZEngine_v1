@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		GlobalSystems.cpp
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Virtual class for global systems.
+*/
+
 #include <PCH.h>
 #include "GlobalSystems.h"
 #include "DebugTools/PerformanceData.h"

@@ -1,8 +1,14 @@
+/*	__FILE HEADER__
+*	File:		RendererInstancing.cpp
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		Renders all instanced sprites.
+*/
+
 #include <PCH.h>
 #include "RendererInstancing.h"
 #include "../Math/JZMath.h"
 #include "VertexBufferLayout.h"
-
 
 namespace JZEngine
 {

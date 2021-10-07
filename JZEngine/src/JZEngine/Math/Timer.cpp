@@ -1,6 +1,12 @@
+/*	__FILE HEADER__
+*	File:		Timer.cpp
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		Custom timer class.
+*/
+
 #include "PCH.h"
 #include "Timer.h"
-
 
 using namespace std::chrono;
 std::chrono::steady_clock::time_point last_{};

@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		FolderInterface.h
+	Primary:	Zachary Tay
+	Date:		26/08/21
+	Brief:		Renders assets that are loaded into the engine.
+*/
+
 #pragma once
 #include "ImGuiInterface.h"
 

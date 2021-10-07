@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		VertexArray.cpp
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		Handles OpenGL vertex array objects.
+*/
+
 #include <PCH.h>
 #include "VertexArray.h"
 

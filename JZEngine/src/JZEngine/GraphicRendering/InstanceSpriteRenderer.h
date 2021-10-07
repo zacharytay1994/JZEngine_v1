@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		InstanceSpriteRenderer.h
+	Primary:	Jee Jia Min
+	Date:		26/08/21
+	Brief:		ECS system to render instanced sprites.
+*/
+
 #pragma once
 
 #include "../ECS/ECS.h"

@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		NonInstanceSpriteRenderer.cpp
+	Primary:	Jee Jia Min
+	Date:		26/08/21
+	Brief:		ECS system to render non instanced sprites.
+*/
+
 #include <PCH.h>
 #include "NonInstanceSpriteRenderer.h"
 #include "../EngineGUI/EngineGUI.h"

@@ -1,9 +1,10 @@
 /*	__FILE HEADER__
-*	File:	Inspector.cpp
-	Author: JZ
-	Date:	26/08/21
-	Brief:	Renders all components of a selected entity
-			in the engine GUI with ImGui.
+*	File:		Inspector.cpp
+	Primary:	Zachary Tay
+	Secondary:	Jee Jia Min
+	Date:		26/08/21
+	Brief:		Renders all components of a selected entity
+				in the engine GUI with ImGui.
 */
 
 #include "PCH.h"

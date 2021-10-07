@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		Math.cpp
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Custom Math Library.
+*/
+
 #include "Vec2.h"
 #include "Vec3.h"
 

@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		Event.h
+	Primary:	Yu Ching Yin
+	Date:		01/07/21
+	Brief:		Message Handler.
+*/
+
 #pragma once
 
 namespace JZEngine

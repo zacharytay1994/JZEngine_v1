@@ -1,8 +1,8 @@
 /*	__FILE HEADER__
-*	File:	Renderer.h
-	Author: JZ
-	Date:	01/07/21
-	Brief:	Bind VAO , VBO , IBO and Shader .
+*	File:		Renderer.h
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		Bind VAO , VBO , IBO and Shader .
 */
 
 #pragma once

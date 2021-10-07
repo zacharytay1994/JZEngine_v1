@@ -1,8 +1,8 @@
 /*	__FILE HEADER__
-*	File:	Shader.h
-	Author: JZ
-	Date:	01/07/21
-	Brief:	General purpsoe shader object. Compiles from file, generates compile/link-time error messages and hosts several utility functions for easy management.
+*	File:		Shader.h
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		General purpsoe shader object. Compiles from file, generates compile/link-time error messages and hosts several utility functions for easy management.
 */
 
 #pragma once

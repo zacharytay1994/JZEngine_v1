@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		MenuBar.h
+	Primary:	Zachary Tay
+	Date:		26/08/21
+	Brief:		Renders the menubar at the top of the engine.
+*/
+
 #pragma once
 
 #include <string>

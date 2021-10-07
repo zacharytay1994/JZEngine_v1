@@ -1,9 +1,11 @@
-/*	__FILE HEADER__ 
-*	File:	Application.h
-	Author: JZ
-	Date:	19/06/21
-	Brief:	Declares an application class that runs the engine editor. 
+/*	__FILE HEADER__
+*	File:		Application.cpp
+	Primary:	Deon Khong, Jee Jia Min, Yu Ching Yin, Zachary Tay
+	Date:		19/06/21
+	Brief:		Declares an application class that runs the engine editor.
+				See Application.h for more information on the class.
 */
+
 
 #pragma once
 

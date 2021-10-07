@@ -1,3 +1,11 @@
+/*	__FILE HEADER__
+*	File:		ExampleSplitHeaderSource.h
+	Primary:	Zachary Tay
+	Date:		07/10/2021
+	Brief:
+	Examples of creating ECS components and systems.
+*/
+
 #include "PCH.h"
 #include "ExampleSplitHeaderSource.h"
 

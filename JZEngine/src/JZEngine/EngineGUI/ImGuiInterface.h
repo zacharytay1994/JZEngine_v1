@@ -1,3 +1,11 @@
+/*	__FILE HEADER__
+*	File:		ImGuiInterface.h
+	Primary:	Zachary Tay
+	Date:		26/08/21
+	Brief:		Virtual class to be inherited by any
+				imgui interface and added to the enginegui.
+*/
+
 #pragma once
 
 #include <memory>

@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		SpriteRenderer.cpp
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		ECS sprite renderer to render non instanced sprites.
+*/
+
 #include <PCH.h>
 #include <math.h>
 #include <assert.h>

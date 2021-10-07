@@ -166,13 +166,11 @@
     <ClCompile Include="src\JZEngine\EngineGUI\ImGuiInterface.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\Inspector.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\MenuBar.cpp" />
-    <ClCompile Include="src\JZEngine\EngineGUI\Selectable.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\NonInstanceSpriteRenderer.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\SceneTree.cpp" />
     <ClCompile Include="src\JZEngine\GlobalSystems.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Background.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Buffer.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\ExampleFloatAway.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\RendererDebug.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.cpp" />
@@ -284,13 +282,11 @@
   <ItemGroup>
     <ClInclude Include="src\JZEngine.h" />
     <ClInclude Include="src\JZEngine\Application.h" />
-    <ClInclude Include="src\JZEngine\Components\TestComponent.h" />
     <ClInclude Include="src\JZEngine\DebugTools\Assert.h" />
     <ClInclude Include="src\JZEngine\DebugTools\DebugNew.h" />
     <ClInclude Include="src\JZEngine\DebugTools\Log.h" />
     <ClInclude Include="src\JZEngine\DebugTools\PerformanceData.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h" />
-    <ClInclude Include="src\JZEngine\EngineGUI\Selectable.h" />
     <ClInclude Include="src\JZEngine\Physics\PhyicsDebug.h" />
     <ClInclude Include="src\JZEngine\Physics\PhysicsComponent.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\PhysicsSystem.h" />
@@ -309,7 +305,6 @@
     <ClInclude Include="src\JZEngine\EntryPoint.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Background.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Buffer.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\ExampleFloatAway.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Text.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\RendererDebug.h" />

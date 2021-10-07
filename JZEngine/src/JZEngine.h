@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		JZEngine.h
+	Primary:	JZ
+	Date:		01/07/21
+	Brief:		dll interface.
+*/
+
 #pragma once
 
 #include "JZEngine/Application.h"

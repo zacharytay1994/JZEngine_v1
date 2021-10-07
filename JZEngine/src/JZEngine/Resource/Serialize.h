@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		Serialize.h
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Serializes components.
+*/
+
 #pragma once
 #include <string>
 #include <fstream>

@@ -1,9 +1,9 @@
 /*	__FILE HEADER__
-*	File:	JZ_GL.cpp
-	Author: JZ
-	Date:	01/07/21
-	Brief:	Encapsulates all OpenGL initializations
-			and updates using GLFW and glad.
+*	File:		JZ_GL.cpp
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Encapsulates all OpenGL initializations
+				and updates using GLFW and glad.
 */
 
 #include <PCH.h>

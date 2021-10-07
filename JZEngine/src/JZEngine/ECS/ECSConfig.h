@@ -1,3 +1,12 @@
+/*	__FILE HEADER__
+*	File:		ECSConfig.h
+	Primary:	Zachary Tay
+	Secondary:
+	Date:		07/10/2021
+	Brief:
+	Registers all ECS components and systems here.
+*/
+
 #pragma once
 #include <tuple>
 
@@ -7,7 +16,6 @@
 #include "../ECSSystems/PhysicsSystem.h"
 #include "../GraphicRendering/NonInstanceSpriteRenderer.h"
 #include "../GraphicRendering/InstanceSpriteRenderer.h"
-#include "../GraphicRendering/ExampleFloatAway.h"
 #include "../GraphicRendering/Background.h"
 #include "../GraphicRendering/Text.h"
 
@@ -25,8 +33,6 @@ namespace JZEngine
 				Texture ,
 				NonInstanceShader ,
 				InstanceShader ,
-				IsUnicorn ,
-				IsInputAffected ,
 				PhysicsComponent ,
 				Parallax,
 				NotBackground,
@@ -42,8 +48,6 @@ namespace JZEngine
 				ParallaxBackground ,
 				Sprite ,
 				InstanceSprite ,
-				FloatAwayAllUnicorn ,
-				MakeUnicornAffectedByInput ,
 				PhysicsSystem ,
 				Text 
 

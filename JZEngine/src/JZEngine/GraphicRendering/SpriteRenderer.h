@@ -1,8 +1,8 @@
 /*	__FILE HEADER__
-*	File:	SpriteRenderer.h
-	Author: JZ
-	Date:	01/07/21
-	Brief:	For user to pass in data to render a sprite or picture.
+*	File:		SpriteRenderer.h
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		For user to pass in data to render a sprite or picture.
 */
 
 #pragma once

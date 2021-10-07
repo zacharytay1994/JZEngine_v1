@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		ResourceManager.cpp
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Manages all external assets.
+*/
+
 #include <PCH.h>
 #include "ResourceManager.h"
 #include "../EngineConfig.h"
@@ -31,9 +38,9 @@ namespace JZEngine
 		LoadShader ( "Default" ,
 					 "Assets/Shaders/Vertex/VS_Sprite2D.vs" ,
 					 "Assets/Shaders/Fragment/FS_Tex.fs" );
-		LoadShader ( "Red Tint" ,
+		LoadShader ( "Black White" ,
 					 "Assets/Shaders/Vertex/VS_Sprite2D.vs" ,
-					 "Assets/Shaders/Fragment/FS_TexRedTint.fs" );
+					 "Assets/Shaders/Fragment/FS_BlackWhite.fs" );
 
 		// load font shaders
 		LoadFont ( "Assets/Fonts/Weather Sunday.otf" , 100 , "Font1" , "Assets/Shaders/Vertex/VS_Font.vs" , "Assets/Shaders/Fragment/FS_Font.fs" );

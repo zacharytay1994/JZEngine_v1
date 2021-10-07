@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		Vec4.h
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		Custom Vec4 type.
+*/
+
 #pragma once
 
 #include <iostream>

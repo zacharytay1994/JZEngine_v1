@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		Input.cpp
+    Primary:	Deon Khong
+    Date:		26/08/21
+    Brief:		Wraps GLFW input.
+*/
+
 /*                                                                   includes
 ----------------------------------------------------------------------------- */
 #include "PCH.h"

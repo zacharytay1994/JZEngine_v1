@@ -1,8 +1,13 @@
+/*	__FILE HEADER__
+*	File:		Renderer.cpp
+	Primary:	Jee Jia Min
+	Date:		26/08/21
+	Brief:		Renderer handles all default sprites.
+*/
+
 #include <PCH.h>
 #include <glad/glad.h>
 #include "Renderer.h"
-
-
 
 namespace JZEngine
 {

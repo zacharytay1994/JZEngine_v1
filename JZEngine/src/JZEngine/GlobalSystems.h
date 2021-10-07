@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		GlobalSystems.h
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Virtual class for global systems.
+*/
+
 #pragma once
 
 #include <vector>

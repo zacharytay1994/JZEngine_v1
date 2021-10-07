@@ -1,3 +1,11 @@
+/*	__FILE HEADER__
+*	File:		EngineSettings.cpp
+	Primary:	Zachary Tay
+	Date:		26/08/21
+	Brief:		Renders the interface that allows the user to
+				modify the engine settings.
+*/
+
 #include <PCH.h>
 #include "EngineSettings.h"
 #include "../EngineConfig.h"

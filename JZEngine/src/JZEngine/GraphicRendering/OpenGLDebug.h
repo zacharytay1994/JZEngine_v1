@@ -1,8 +1,8 @@
 /*	__FILE HEADER__
-*	File:	OpenGLDebug.h
-	Author: JZ
-	Date:	01/07/21
-	Brief:	OpenGL feature that makes debugging and optimizing OpenGL applications easier.
+*	File:		OpenGLDebug.h
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		OpenGL feature that makes debugging and optimizing OpenGL applications easier.
 */
 
 #pragma once

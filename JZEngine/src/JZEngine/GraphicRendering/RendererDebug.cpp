@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		RendererDebug.cpp
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Renders points, line, squares, and circles.
+*/
+
 #include <PCH.h>
 #include "RendererDebug.h"
 #include "../EngineGUI/EngineGUI.h"

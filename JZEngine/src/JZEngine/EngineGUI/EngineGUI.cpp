@@ -1,9 +1,9 @@
 /*	__FILE HEADER__
-*	File:	EngineGUI.cpp
-	Author: JZ
-	Date:	26/08/21
-	Brief:	Handles the rendering of the Engine GUI,
-			e.g. Inspector, Console, etc.
+*	File:		EngineGUI.cpp
+	Primary:	Zachary Tay
+	Date:		26/08/21
+	Brief:		Handles the rendering of the Engine GUI,
+				e.g. Inspector, Console, etc.
 */
 
 #include "PCH.h"

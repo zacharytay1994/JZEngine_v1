@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		Text.cpp
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		ECS Text Renderer
+*/
+
 #include <PCH.h>
 #include "Text.h"
 #include "../ECS/ECSConfig.h"

@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		JZMath.h
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Custom Math Library.
+*/
+
 #pragma once
 
 #include <limits>

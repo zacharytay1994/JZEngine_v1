@@ -1,3 +1,11 @@
+/*	__FILE HEADER__
+*	File:		EngineSettings.h
+	Primary:	Zachary Tay
+	Date:		26/08/21
+	Brief:		Renders the interface that allows the user to
+				modify the engine settings.
+*/
+
 #pragma once
 #include "ImGuiInterface.h"
 

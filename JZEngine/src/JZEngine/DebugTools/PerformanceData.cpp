@@ -1,3 +1,12 @@
+/*	__FILE HEADER__
+*	File:		PerformanceData.cpp
+	Primary:	Zachary Tay
+	Secondary:
+	Date:		07/10/2021
+	Brief:
+	To visualize performance of the engine.
+*/
+
 #include <PCH.h>
 #include "PerformanceData.h"
 

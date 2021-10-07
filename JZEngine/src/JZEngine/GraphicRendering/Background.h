@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		Background.h
+	Primary:	Jee Jia Min
+	Date:		26/08/21
+	Brief:		Parallax background system.
+*/
+
 #pragma once
 
 #include "SpriteRenderer.h"

@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		Shader.cpp
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		Handles OpenGL shader program.
+*/
+
 #include <PCH.h>
 #include "Shader.h"
 

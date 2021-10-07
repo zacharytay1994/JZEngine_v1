@@ -1,9 +1,9 @@
 /*	__FILE HEADER__
-*	File:	SceneTree.cpp
-	Author: JZ
-	Date:	26/08/21
-	Brief:	Renders all entities in the scene tree on the
-			GUI using ImGui.
+*	File:		SceneTree.cpp
+	Primary:	Zachary Tay
+	Date:		26/08/21
+	Brief:		Renders all entities in the scene tree on the
+				GUI using ImGui.
 */
 
 #include "PCH.h"

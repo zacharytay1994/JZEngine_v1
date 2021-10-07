@@ -1,3 +1,12 @@
+/*	__FILE HEADER__
+*	File:		PerformanceData.h
+	Primary:	Zachary Tay
+	Secondary:
+	Date:		07/10/2021
+	Brief:
+	To visualize the performance of the engine.
+*/
+
 #pragma once
 #include <string>
 #include <unordered_map>

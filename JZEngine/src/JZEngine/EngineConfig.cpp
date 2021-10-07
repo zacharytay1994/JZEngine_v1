@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		EngineCofig.cpp
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Engine settings.
+*/
+
 #include <PCH.h>
 #include "EngineConfig.h"
 #include "JZGL/JZ_GL.h"

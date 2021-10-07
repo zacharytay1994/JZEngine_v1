@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		RendererDebug.h
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Renders points, line, squares, and circles.
+*/
+
 #pragma once
 
 #include <initializer_list>

@@ -1,17 +1,17 @@
 /*	__FILE HEADER__
-*	File:	RendererInstancing.h
-	Author: JZ
-	Date:	01/07/21
-	Brief:	Instancing is a technique where we draw many (equal mesh data) object
-			at once with a single render call, saving us all the CPU -> GPU
-			communications each time we need to render an object.
+*	File:		RendererInstancing.h
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		Instancing is a technique where we draw many (equal mesh data) object
+				at once with a single render call, saving us all the CPU -> GPU
+				communications each time we need to render an object.
 
 
-			Fun Fact:
-			For example, you can make a forest scene by creating 100 instances of a single tree asset.
-			Each instance would be in a different position, with a slightly different size, and rotated
-			a little bit. From the viewer’s perspective, it looks like 100 different trees.
-			From the programmer’s perspective, it is actually just one tree that is drawn 100 times.
+				Fun Fact:
+				For example, you can make a forest scene by creating 100 instances of a single tree asset.
+				Each instance would be in a different position, with a slightly different size, and rotated
+				a little bit. From the viewer’s perspective, it looks like 100 different trees.
+				From the programmer’s perspective, it is actually just one tree that is drawn 100 times.
 */
 
 #pragma once

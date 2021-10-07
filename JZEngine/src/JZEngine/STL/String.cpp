@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		Sound.cpp
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		Custom string class.
+*/
+
 #include <PCH.h>
 #include "../DebugTools/DebugNew.h"
 #include "String.h"

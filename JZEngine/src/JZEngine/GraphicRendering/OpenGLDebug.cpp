@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		OpenGLDebug.cpp
+	Primary:	Jee Jia Min
+	Date:		26/08/21
+	Brief:		Handles all OpenGL errors.
+*/
+
 #include "PCH.h"
 #include "OpenGLDebug.h"
 #include <assert.h> 

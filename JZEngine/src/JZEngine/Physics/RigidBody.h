@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		RegidBody.h
+	Primary:	Deon Khong
+	Date:		01/07/21
+	Brief:		Physics rigidbodies.
+*/
+
 #pragma once
 #if 1
 #include "../Math/JZMath.h"

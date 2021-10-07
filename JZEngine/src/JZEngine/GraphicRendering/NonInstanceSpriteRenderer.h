@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		NonInstanceSpriteRenderer.h
+	Primary:	Jee Jia Min
+	Date:		26/08/21
+	Brief:		ECS system to render non instanced sprites.
+*/
+
 #pragma once
 
 #include "SpriteRenderer.h"
@@ -62,32 +69,6 @@ namespace JZEngine
 		{}
 
 		virtual void Update(const float& dt) override;
-		//{
-		//	Transform& transform = GetComponent<Transform> ();
-		//	Texture& texture = GetComponent<Texture> ();
-		//	NonInstanceShader& shader = GetComponent<NonInstanceShader> ();
-		//	Animation2D& anim2d = GetComponent<Animation2D> ();
-
-		//	// update animation
-		//	if( anim2d.animation_counter_ < anim2d.animation_speed_ )
-		//	{
-		//		anim2d.animation_counter_ += dt;
-		//	}
-		//	else
-		//	{
-		//		++anim2d.frame_;
-		//		if( anim2d.frame_ >= anim2d.max_frames_ )
-		//		{
-		//			anim2d.frame_ = 0;
-		//		}
-		//		anim2d.animation_counter_ = 0.0f;
-		//	}
-
-		//	transform.model_transform_ = Math::GetModelTransformNonTransposed ( transform.position_ , transform.rotation_ , transform.scale_ , transform.size_ );
-
-		//	sprite_renderer_.DrawSprite ( shader.shader_id_ , texture.texture_id_ , ( Math::GetProjectionTransformNonTransposed () * transform.model_transform_ ).Transpose () , shader.tint , anim2d.frame_ , anim2d.rows_ , anim2d.column_ , anim2d.animation_check_);
-
-		//	RendererDebug::DrawSpriteSquare ( transform.position_ , { transform.scale_.x * transform.size_.x, transform.scale_.y * transform.size_.y } );
-		//}
+		
 	};
 }

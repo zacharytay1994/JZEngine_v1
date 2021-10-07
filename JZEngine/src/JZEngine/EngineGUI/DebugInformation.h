@@ -1,3 +1,13 @@
+/*	__FILE HEADER__
+*	File:		DebugInformation.h
+	Primary:	Zachary Tay
+	Secondary:
+	Date:		07/10/2021
+	Brief:
+	Handles the rendering of all debug information.
+	Data that the performance visualizer calculates.
+*/
+
 #pragma once
 
 #include "ImGuiInterface.h"

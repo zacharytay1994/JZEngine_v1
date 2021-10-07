@@ -1,5 +1,11 @@
-#pragma once
+/*	__FILE HEADER__
+*	File:		Text.h
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		ECS Text Renderer
+*/
 
+#pragma once
 
 #include "../ECS/ECS.h"
 #include "TextRenderer.h"

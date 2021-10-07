@@ -1,7 +1,8 @@
 /*	__FILE HEADER__
-*	File:	DebugNew.h
-	Author: JZ
-	Date:	28/09/2021
+*	File:		DebugNew.h
+	Primary:	Jia Min
+	Secondary:	
+	Date:		28/09/2021
 	Brief:
 	Memory leaks result from the failure to correctly deallocate memory
 	that was previously allocated. A small memory leak might not be noticed 

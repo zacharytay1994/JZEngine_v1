@@ -1,8 +1,9 @@
 /*	__FILE HEADER__
-*	File:	Buffer.h
-	Author: JZ
-	Date:	01/07/21
-	Brief:	Vertex Buffer and Index Buffer are stores here.
+*	File:		Buffer.h
+	Primary:	Jee Jia Min
+	Date:		26/08/21
+	Brief:		OpenGL vertex buffer wrapper.
+				Vertex buffer and Index buffer are stored here.
 */
 
 #pragma once

@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		JZMath.cpp
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Custom Math Library.
+*/
+
 #include <PCH.h>
 #include "JZMath.h"
 

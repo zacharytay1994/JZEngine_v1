@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		Serialize.cpp
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Serializes components.
+*/
+
 #include <PCH.h>
 
 #include "Serialize.h"

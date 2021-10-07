@@ -1,5 +1,11 @@
-#pragma once
+/*	__FILE HEADER__
+*	File:		PhysicsComponent.h
+	Primary:	Deon Khong
+	Date:		01/07/21
+	Brief:		ECS physics component.
+*/
 
+#pragma once
 
 #include "../Math/JZMath.h"
 #include "../Physics/PhysicsShapes.h"

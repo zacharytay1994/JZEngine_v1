@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		MenuBar.cpp
+	Primary:	Zachary Tay
+	Date:		26/08/21
+	Brief:		Renders the menubar at the top of the engine.
+*/
+
 #include <PCH.h>
 #include "MenuBar.h"
 #include "EngineGUI.h"

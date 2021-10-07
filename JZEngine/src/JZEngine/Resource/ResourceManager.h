@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		ResourceManager.h
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Manages all external assets.
+*/
+
 #pragma once
 
 #include <ft2build.h>

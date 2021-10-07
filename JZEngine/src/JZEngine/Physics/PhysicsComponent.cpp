@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		PhysicsComponent.cpp
+	Primary:	Deon Khong
+	Date:		01/07/21
+	Brief:		ECS physics component.
+*/
+
 #include "PCH.h"
 #include "PhysicsComponent.h"
 

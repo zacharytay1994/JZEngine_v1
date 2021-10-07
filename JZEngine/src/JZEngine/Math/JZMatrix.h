@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		JZMatrix.h
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Custom Matrix class. 2, 3, and 4 dimensional matrix.
+*/
+
 #pragma once
 
 #include <initializer_list>

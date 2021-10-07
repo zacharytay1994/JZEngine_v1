@@ -1,6 +1,11 @@
+/*	__FILE HEADER__
+*	File:		Random.h
+	Primary:	Deon Khong
+	Date:		01/07/21
+	Brief:		Random class.
+*/
+
 #include "PCH.h"
-
-
 
 template<class T>
 using uniform_distribution =

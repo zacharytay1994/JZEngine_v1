@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		TextRenderer.cpp
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		Renderer for rendering text.
+*/
+
 #include "PCH.h"
 
 #include "OpenGLDebug.h"
@@ -5,8 +12,7 @@
 #include "../EngineConfig.h"
 #include "../Resource/ResourceManager.h"
 #include "VertexBufferLayout.h"
-
-
+#include "../EngineGUI/EngineGUI.h"
 
 namespace JZEngine
 {
@@ -119,6 +125,11 @@ namespace JZEngine
 				vb.SetData ( vertices , sizeof ( vertices ) );
 				vb.Unbind ();
 
+				JZEngine::Mat3f camwin_to_ndc_xform =
+				{ {2.0f / Settings::camera_width, 0.0f, 0.0f},
+				  {0.0f, -2.0f / Settings::camera_height, 0.0f},
+				  {0.0f, 0.0f, 1.0f} };
+				GetSystem<ResourceManager>()->font_shader_programs_[0].shader_program_.SetUniform("projection", (camwin_to_ndc_xform * EngineGUI::GetCameraTransform()).Transpose());
 				// render quad
 				glDrawArrays ( GL_TRIANGLES , 0 , 6 );
 				// now advance cursors for next glyph

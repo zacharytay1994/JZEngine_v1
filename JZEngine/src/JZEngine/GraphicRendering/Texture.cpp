@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		Texture.cpp
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		Handles OpenGL textures.
+*/
+
 #include <PCH.h>
 
 #include "Texture.h"

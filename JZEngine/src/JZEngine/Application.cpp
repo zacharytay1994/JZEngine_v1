@@ -1,9 +1,9 @@
 /*	__FILE HEADER__
-*	File:	Application.cpp
-	Author: JZ
-	Date:	19/06/21
-	Brief:	Defines an application class that runs the engine editor.
-			See Application.h for more information on the class.
+*	File:		Application.cpp
+	Primary:	Deon Khong, Jee Jia Min, Yu Ching Yin, Zachary Tay
+	Date:		19/06/21
+	Brief:		Defines an application class that runs the engine editor.
+				See Application.h for more information on the class.
 */
 
 #include <PCH.h>

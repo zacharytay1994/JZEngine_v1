@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		VertexBufferLayout.h
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		Handles OpenGL vertex buffer layouts.
+*/
+
 #pragma once
 
 #include <glad/glad.h>

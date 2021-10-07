@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		Buffer.cpp
+	Primary:	Jee Jia Min
+	Date:		26/08/21
+	Brief:		OpenGL vertex buffer wrapper.
+*/
+
 #include <PCH.h>
 #include "Buffer.h"
 

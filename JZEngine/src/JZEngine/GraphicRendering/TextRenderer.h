@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		TextRenderer.h
+	Primary:	Jee Jia Min
+	Date:		01/07/21
+	Brief:		Renderer for rendering text.
+*/
+
 #pragma once
 
 #include <ft2build.h>

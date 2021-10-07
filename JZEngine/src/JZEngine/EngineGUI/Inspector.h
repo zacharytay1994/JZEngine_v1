@@ -1,9 +1,10 @@
 /*	__FILE HEADER__
-*	File:	Inspector.h
-	Author: JZ
-	Date:	26/08/21
-	Brief:	Renders all components of a selected entity
-			in the engine GUI with ImGui.
+*	File:		Inspector.h
+	Primary:	Zachary Tay
+	Secondary:	Jee Jia Min
+	Date:		26/08/21
+	Brief:		Renders all components of a selected entity
+				in the engine GUI with ImGui.
 */
 
 #pragma once
@@ -91,13 +92,6 @@ namespace JZEngine
 		void RenderComponent ( COMPONENT& component )
 		{
 			ImGui::Text ( "Oops nothing here..." );
-		}
-
-		template <>
-		void RenderComponent ( TestComponent& component )
-		{
-			ImGui::SliderInt ( "x" , &component.x , -180 , 180 );
-			ImGui::SliderInt ( "y" , &component.y , -180 , 180 );
 		}
 
 		template <>
@@ -344,21 +338,6 @@ namespace JZEngine
 
 			ImGui::SameLine ();
 			ImGui::Text ( "Shader" );
-		}
-
-		template <>
-		void RenderComponent ( MyNewComponent& component )
-		{
-			ImGui::SliderInt ( "x" , &component.not_a_component.im_another_component_.x , -3000 , 1000 );
-			ImGui::SliderInt ( "y" , &component.not_a_component.im_another_component_.y , -2000 , 1000 );
-			ImGui::SliderFloat ( "a float" , &component.not_a_component.im_a_float_ , -300 , 300 );
-			ImGui::Text ( "this is a %c" , component.nomal_data_ );
-		}
-
-		template <>
-		void RenderComponent ( IsInputAffected& component )
-		{
-			ImGui::SliderFloat ( "val" , &component.val , -2.0f , 2.0f );
 		}
 
 		template <>

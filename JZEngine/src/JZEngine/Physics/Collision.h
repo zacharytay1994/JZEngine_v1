@@ -1,5 +1,11 @@
-#pragma once
+/*	__FILE HEADER__
+*	File:		Collision.h
+	Primary:	Deon Khong
+	Date:		01/07/21
+	Brief:		Collision Detection
+*/
 
+#pragma once
 
 #include "../Math/JZMath.h"
 #include "../Physics/PhysicsComponent.h"
@@ -10,8 +16,6 @@ namespace JZEngine
 {
 	class Collision
 	{
-
-
 	public:
 		static bool CheckPhysicsComponentCollision(const PhysicsComponent& componentA, const PhysicsComponent& componentB, Vec2f& normal, float& depth);
 
