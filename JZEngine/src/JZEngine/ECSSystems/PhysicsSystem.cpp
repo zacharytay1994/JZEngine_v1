@@ -69,7 +69,7 @@ namespace JZEngine
 		{
 			float dx = 0.f;
 			float dy = 0.f;
-			float forcemagnitude = 800.f;
+			float forcemagnitude = 1500.f;
 			if (InputHandler::IsKeyPressed(KEY::KEY_W))
 				++dy;
 			if (InputHandler::IsKeyPressed(KEY::KEY_A))

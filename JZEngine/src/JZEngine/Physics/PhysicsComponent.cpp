@@ -23,7 +23,7 @@ namespace JZEngine
 	rotationalVelocity{ 0.f },
 	force{ 0.f,0.f },
 	Area{ 0.f },
-	Density{ 10.f },
+	Density{ 0.001f },
 	Mass{ 1.0f },
 	InvMass{ 1.0f },
 	Restitution{ 0.5f },
