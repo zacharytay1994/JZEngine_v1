@@ -374,6 +374,7 @@ namespace JZEngine
 			ImGui::SliderInt ( "ID" , &component.shapeid , 0 , 2 );
 
 			ImGui::Checkbox ( "Static" , &component.IsStatic );
+			ImGui::Checkbox("Player", &component.player);
 
 			ImGui::Text ( "Velocity (cm/s)" );
 			ImGui::PushItemWidth ( ( w / 2.0f ) - ( spacing * 3.0f ) );
@@ -386,8 +387,15 @@ namespace JZEngine
 			ImGui::Text ( "Y" );
 			ImGui::PopItemWidth ();
 
+			ImGui::Text("Angular Velocity (degree/s)");
+			ImGui::PushItemWidth((w / 2.0f) - (spacing * 3.0f));
+			ImGui::InputFloat("##Vel", &component.rotationalVelocity);
+			ImGui::SameLine();
+			ImGui::Text("o");
+			ImGui::PopItemWidth();
+
 			ImGui::Text ( "Area" );
-			ImGui::SliderFloat ( "m^2" , &component.Area , component.Area , component.Area );
+			ImGui::SliderFloat ( "cm^2" , &component.Area , component.Area , component.Area );
 			ImGui::Text ( "Density " );
 			ImGui::SliderFloat ( "kg/cm^2" , &component.Density , 0.001f , 1.f );
 			ImGui::Text ( "Mass" );

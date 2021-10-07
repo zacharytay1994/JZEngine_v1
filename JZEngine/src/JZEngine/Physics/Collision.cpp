@@ -88,14 +88,15 @@ namespace JZEngine
 		Vec2f& normal, float& depth)
 	{
 		depth = 0.f;
-		float distance = Math::Get2DVectorDistance(circleA.m_center, circleB.m_center);
+		float distancesq = Math::Get2DVectorDistanceSquare(circleA.m_center, circleB.m_center);
 		float radii = circleA.m_radius + circleB.m_radius;
-		if (distance >= radii)
+		float radiisq = radii * radii;
+		if (distancesq >= radiisq)
 		{
 			return false;
 		}
 		normal = (circleB.m_center - circleA.m_center).GetNormalized();
-		depth = radii - distance;
+		depth = radii - sqrt(distancesq);
 		return true;
 	}
 
@@ -171,11 +172,11 @@ namespace JZEngine
 		for (size_t i = 0; i < vertices.size(); i++)
 		{
 			Vec2f v = vertices[i];
-			float distance = Math::Get2DVectorDistance(v, point);
+			float distancesq = Math::Get2DVectorDistanceSquare(v, point);
 
-			if (distance < minDistance)
+			if (distancesq < minDistance)
 			{
-				minDistance = distance;
+				minDistance = distancesq;
 				result = static_cast<int>(i);
 			}
 		}
