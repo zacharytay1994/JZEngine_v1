@@ -22,7 +22,7 @@ namespace JZEngine
 		float rotationalVelocity;
 		Vec2f force;
 
-		float Area; // size * size (m^2)
+		float Area; // size * size (m^3)
 		float Density;// mass / volume(area for 2D) // kg/cm^2
 		float Mass; // kg
 		float InvMass; // 1/kg

@@ -389,7 +389,7 @@ namespace JZEngine
 			ImGui::Text ( "Area" );
 			ImGui::SliderFloat ( "m^2" , &component.Area , component.Area , component.Area );
 			ImGui::Text ( "Density " );
-			ImGui::SliderFloat ( "kg/cm^2" , &component.Density , 1.0f , 50.0f );
+			ImGui::SliderFloat ( "kg/cm^2" , &component.Density , 0.001f , 1.f );
 			ImGui::Text ( "Mass" );
 			ImGui::SliderFloat ( "kg" , &component.Mass , component.Mass - 10.0f , component.Mass + 10.0f );
 			ImGui::Text ( "Restitution" );
