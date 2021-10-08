@@ -1,0 +1,10 @@
+1
+0
+23
+1920
+1017
+60
+Logs/
+Saves/
+Scenes/
+Prefabs/
