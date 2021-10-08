@@ -8,6 +8,7 @@
 #include <PCH.h>
 #include "Background.h"
 #include "../ECS/ECSConfig.h"
+#include "../EngineGUI/EngineGUI.h"
 
 namespace JZEngine
 {
@@ -54,7 +55,7 @@ namespace JZEngine
 
 				sprite_renderer_.DrawSprite ( shader.shader_id_ ,
 											  texture.texture_id_ ,
-											  ( Math::GetProjectionTransformNonTransposed () * transform.model_transform_ ).Transpose () ,
+											  ( Math::GetProjectionTransformNonTransposed () * EngineGUI::GetCameraTransform() * transform.model_transform_ ).Transpose () ,
 											  shader.tint );
 			}
 
@@ -68,7 +69,7 @@ namespace JZEngine
 
 				sprite_renderer_.DrawSprite ( shader.shader_id_ ,
 											  texture.texture_id_ ,
-											  ( Math::GetProjectionTransformNonTransposed () * transform.model_transform_ ).Transpose () ,
+											  ( Math::GetProjectionTransformNonTransposed () * EngineGUI::GetCameraTransform() * transform.model_transform_ ).Transpose () ,
 											  shader.tint );
 			}
 		}
@@ -104,7 +105,7 @@ namespace JZEngine
 
 				sprite_renderer_.DrawSprite ( shader.shader_id_ ,
 											  texture.texture_id_ ,
-											  ( Math::GetProjectionTransformNonTransposed () * transform.model_transform_ ).Transpose () ,
+											  ( Math::GetProjectionTransformNonTransposed () * EngineGUI::GetCameraTransform() * transform.model_transform_ ).Transpose () ,
 											  shader.tint );
 
 			}
@@ -119,7 +120,7 @@ namespace JZEngine
 				);
 
 				sprite_renderer_.DrawSprite ( shader.shader_id_ , texture.texture_id_ ,
-											  ( Math::GetProjectionTransformNonTransposed () * transform.model_transform_ ).Transpose () ,
+											  ( Math::GetProjectionTransformNonTransposed () * EngineGUI::GetCameraTransform() * transform.model_transform_ ).Transpose () ,
 											  shader.tint );
 
 			}
@@ -130,7 +131,7 @@ namespace JZEngine
 
 		sprite_renderer_.DrawSprite ( shader.shader_id_ ,
 									  texture.texture_id_ ,
-									  ( Math::GetProjectionTransformNonTransposed () * transform.model_transform_ ).Transpose () ,
+									  ( Math::GetProjectionTransformNonTransposed () * EngineGUI::GetCameraTransform()* transform.model_transform_ ).Transpose () ,
 									  shader.tint );
 	}
 }

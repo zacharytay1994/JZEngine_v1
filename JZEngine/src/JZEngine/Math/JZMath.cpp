@@ -10,6 +10,7 @@
 
 #include "../DebugTools/Log.h"
 #include "../EngineConfig.h"
+#include "../EngineGUI/EngineGUI.h"
 
 #include "../DebugTools/PerformanceData.h"
 
@@ -49,7 +50,7 @@ namespace JZEngine
 			JZEngine::Mat3f camwin_to_ndc_xform = GetProjectionTransformNonTransposed();
 
 			JZEngine::Mat3f transform = mat_translate * ( mat_rotate * mat_scale );
-			transform = camwin_to_ndc_xform * transform;
+			transform = camwin_to_ndc_xform * EngineGUI::GetCameraTransform() * transform;
 			transform.Transpose();
 			PerformanceData::EndMark("Mat3GetTransform (JZMath.cpp|L:20-33)");
 
