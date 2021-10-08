@@ -186,6 +186,14 @@ namespace JZEngine
 				component.rows_);
 		}
 
+		template <>
+		static void SerializeComponent(RandomMovement& component, std::stringstream& stream, MODE mode)
+		{
+			SERIALIZE(stream, mode,
+				component.direction_.x,
+				component.direction_.y);
+		}
+
 		/*!_______________________________________________________________________________________________________*/
 		/* STOP HERE GO NO FURTHER! */ // WHY NOT
 		/*!_______________________________________________________________________________________________________*/

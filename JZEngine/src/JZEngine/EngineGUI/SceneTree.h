@@ -41,6 +41,7 @@ namespace JZEngine
 		char											reset_name_[MAX_NAME_SIZE]{ '\0' };
 		char											new_entity_name_[MAX_NAME_SIZE];	/*!< buffer for custom name when creating new entities */
 		std::unordered_map<std::string, unsigned int>*	names_;								/*!< for repeated names to add an index behind */
+		bool											hide_{ false };
 
 		SceneTree(float x, float y, float sx, float sy);
 		~SceneTree();

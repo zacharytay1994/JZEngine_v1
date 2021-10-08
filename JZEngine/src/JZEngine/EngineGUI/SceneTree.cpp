@@ -75,6 +75,11 @@ namespace JZEngine
 				ecs_instance_->GetEntity ( id ).name_ = GetName ();
 			}
 		}
+		ImGui::SameLine();
+		if (ImGui::Button("Hide"))
+		{
+			hide_ = !hide_;
+		}
 		ImGui::Text ( "\nCurrent Scene" );
 
 		static ImGuiTextFilter filter;
@@ -86,21 +91,25 @@ namespace JZEngine
 		ImGui::Separator ();
 		ImGui::PopStyleColor ();
 
-		int popup_id{ 0 };
-		// render all root entities in EntityManager
-		for( auto& id : ecs_instance_->entity_manager_.root_ids_ )
+		if (!hide_)
 		{
-			if( id != -1 )
+			int popup_id{ 0 };
+			// render all root entities in EntityManager
+			for (auto& id : ecs_instance_->entity_manager_.root_ids_)
 			{
-				ECS::Entity* e = &ecs_instance_->entity_manager_.GetEntity ( id );
-				if( filter.PassFilter ( e->name_.c_str () ) )
+				if (id != -1)
 				{
-					RenderAllChildObjects ( e, ++popup_id );
+					ECS::Entity* e = &ecs_instance_->entity_manager_.GetEntity(id);
+					if (filter.PassFilter(e->name_.c_str()))
+					{
+						RenderAllChildObjects(e, ++popup_id);
+					}
+					// recursively render all children of a root entity
+					//RenderAllChildObjects(&ecs_instance_->entity_manager_.GetEntity(id), ++popup_id);
 				}
-				// recursively render all children of a root entity
-				//RenderAllChildObjects(&ecs_instance_->entity_manager_.GetEntity(id), ++popup_id);
 			}
 		}
+
 		ImGui::End();
 
 		if (confirmation_flag_ != Confirmation::NONE) {

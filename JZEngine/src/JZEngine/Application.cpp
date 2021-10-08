@@ -92,6 +92,16 @@ namespace JZEngine
 
 		msgbus->subscribe ( global_systems_->GetSystem<SoundSystem> () , &SoundSystem::playSound );
 
+		/*ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
+		for (int i = 0; i < 2500; ++i)
+		{
+			int id = ecs->CreateEntity();
+			ECS::Entity& e = ecs->entity_manager_.GetEntity(id);
+			e.AddSystem(2);
+			e.AddComponent<RandomMovement>();
+			e.GetComponent<RandomMovement>().direction_ = { static_cast<float>(rand() % 50 + 1), static_cast<float>(rand() % 50 + 1) };
+		}*/
+
 		// test code
 		/*global_systems_->GetSystem<SoundSystem>()->createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
 		global_systems_->GetSystem<SoundSystem>()->playSound("testsound", true, 0.4f);

@@ -60,6 +60,7 @@
     <ClCompile Include="src\JZEngine\Physics\PhyicsDebug.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\NonInstanceSpriteRenderer.cpp" />
     <ClCompile Include="src\JZEngine\Physics\PhysicsComponent.cpp" />
+    <ClCompile Include="src\JZEngine\ECSSystems\FloatRandom.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
@@ -124,7 +125,6 @@
     </ClCompile>
     <ClCompile Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\ExampleFloatAway.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\DebugInformation.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\ImGuiInterface.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\MenuBar.cpp" />
@@ -225,7 +225,6 @@
     <ClInclude Include="src\JZEngine\Resource\ResourceManager.h" />
     <ClInclude Include="src\JZEngine\Input\DeltaTime.h" />
     <ClInclude Include="src\JZEngine\GlobalSystems.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\ExampleFloatAway.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\DebugInformation.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\ImGuiInterface.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\MenuBar.h" />
@@ -248,5 +247,6 @@
     <ClInclude Include="src\JZEngine\Physics\PhysicsShapes.h" />
     <ClInclude Include="src\JZEngine\Physics\RigidBody.h" />
     <ClInclude Include="src\JZEngine\Physics\PhyicsDebug.h" />
+    <ClInclude Include="src\JZEngine\ECSSystems\FloatRandom.h" />
   </ItemGroup>
 </Project>

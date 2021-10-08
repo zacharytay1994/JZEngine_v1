@@ -18,6 +18,7 @@
 #include "../GraphicRendering/InstanceSpriteRenderer.h"
 #include "../GraphicRendering/Background.h"
 #include "../GraphicRendering/Text.h"
+#include "../ECSSystems/FloatRandom.h"
 
 namespace JZEngine
 { 
@@ -34,10 +35,11 @@ namespace JZEngine
 				NonInstanceShader ,
 				InstanceShader ,
 				PhysicsComponent ,
-				Parallax,
-				NotBackground,
-				TextData,
-				Animation2D
+				Parallax ,
+				NotBackground ,
+				TextData ,
+				Animation2D ,
+				RandomMovement
 
 				>;
 
@@ -49,7 +51,8 @@ namespace JZEngine
 				Sprite ,
 				InstanceSprite ,
 				PhysicsSystem ,
-				Text 
+				Text ,
+				FloatRandom
 
 				>;
 		};
