@@ -299,6 +299,9 @@ namespace JZEngine
 			check[texture_name] = true;
 		}
 		// check if already removed
+		// erased textures will no longer be able to be assigned to entities
+		// however are still cached and will continue working for existing entities on the same session
+		// once the app refreshes however, the image will cease to exists and display a missing image icon instead.
 		for (auto& c : check)
 		{
 			if (!c.second)

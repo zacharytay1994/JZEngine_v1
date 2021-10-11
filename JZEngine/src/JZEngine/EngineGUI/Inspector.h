@@ -183,7 +183,8 @@ namespace JZEngine
 			};
 
 			// button event to display all texture options
-			std::string current_texture;
+			// if no texture is found, meaning deleted, it will display as deleted
+			std::string current_texture{ "Deleted" };
 			for (auto& texture : resource_manager_->umap_texture2ds_)
 			{
 				if (texture.second == component.texture_id_)
