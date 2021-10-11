@@ -29,8 +29,6 @@ namespace JZEngine
 		{
 			if (ImGui::BeginMenu("Scenes"))
 			{ 
-				ImGui::Text("Scenes");
-				ImGui::Separator();
 				if (ImGui::MenuItem("All"))
 				{
 					mode = DISPLAY::SCENES;
@@ -39,11 +37,17 @@ namespace JZEngine
 			}
 			if (ImGui::BeginMenu("Prefabs"))
 			{
-				ImGui::Text("Prefabs");
-				ImGui::Separator();
 				if (ImGui::MenuItem("All"))
 				{
 					mode = DISPLAY::PREFAB;
+				}
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Resources"))
+			{
+				if (ImGui::MenuItem("Textures"))
+				{
+					mode = DISPLAY::RESOURCES_TEXTURES;
 				}
 				ImGui::EndMenu();
 			}
@@ -54,10 +58,19 @@ namespace JZEngine
 		switch (mode)
 		{
 		case (DISPLAY::SCENES):
+			ImGui::Text("Scenes");
+			ImGui::Separator();
 			RenderScenes();
 			break;
 		case(DISPLAY::PREFAB):
+			ImGui::Text("Prefabs");
+			ImGui::Separator();
 			RenderPrefabs();
+			break;
+		case(DISPLAY::RESOURCES_TEXTURES):
+			ImGui::Text("Resources");
+			ImGui::Separator();
+			RenderTextures();
 			break;
 		}
 
@@ -79,7 +92,7 @@ namespace JZEngine
 				if (filter.PassFilter(e.first.c_str()))
 				{
 					ImGui::TableNextColumn();
-					ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::texture2ds_[0].texture2d_.GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f });
+					ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("textfileicon")->GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f }, {0,1}, {1,0});
 					if (ImGui::BeginPopupContextItem(e.first.c_str()))
 					{
 						if (ImGui::Selectable("Add To Scene"))
@@ -110,7 +123,7 @@ namespace JZEngine
 				if (filter.PassFilter(s.first.c_str()))
 				{
 					ImGui::TableNextColumn();
-					ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::texture2ds_[0].texture2d_.GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f });
+					ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("textfileicon")->GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f }, { 0,1 }, { 1,0 });
 					if (ImGui::BeginPopupContextItem(s.first.c_str()))
 					{
 						if (ImGui::Selectable("Load Scene"))
@@ -126,6 +139,34 @@ namespace JZEngine
 						ImGui::EndPopup();
 					}
 					ImGui::Text(s.first.c_str());
+				}
+			}
+			ImGui::EndTable();
+		}
+	}
+
+	void FolderInterface::RenderTextures()
+	{
+		ImGui::Separator();
+		ImGui::Text("Textures |");
+		ImGui::SameLine();
+		static ImGuiTextFilter filter;
+		filter.Draw(": Filter");
+		ImGui::SameLine();
+		if (ImGui::Button("Refresh"))
+		{
+			ResourceManager::LoadAllTexturesInFolder();
+		}
+		ImGui::Separator();
+		if (ImGui::BeginTable("textures_table", display_columns_))
+		{
+			for (auto& texture : ResourceManager::umap_texture2ds_)
+			{
+				if (filter.PassFilter(texture.first.c_str()))
+				{
+					ImGui::TableNextColumn();
+					ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture(texture.second)->GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f }, { 0,1 }, { 1,0 }, {1, 1, 1, 1}, {0.5, 0.5, 0.5, 1});
+					ImGui::Text(texture.first.c_str());
 				}
 			}
 			ImGui::EndTable();

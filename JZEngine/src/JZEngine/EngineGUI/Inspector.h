@@ -172,18 +172,26 @@ namespace JZEngine
 			// display selection for all the textures
 			if( ImGui::BeginPopup ( "Textures" ) )
 			{
-				for( auto& texture : resource_manager_->texture2ds_ )
+				for( auto& texture : resource_manager_->umap_texture2ds_ )
 				{
-					if( ImGui::Selectable ( texture.name_.c_str () ) )
+					if( ImGui::Selectable ( texture.first.c_str () ) )
 					{
-						component.texture_id_ = texture.id_;
+						component.texture_id_ = texture.second;
 					}
 				};
 				ImGui::EndPopup ();
 			};
 
 			// button event to display all texture options
-			if( ImGui::Button ( resource_manager_->texture2ds_[ component.texture_id_ ].name_.c_str () , ImVec2 ( 168.0f , 0.0f ) ) )
+			std::string current_texture;
+			for (auto& texture : resource_manager_->umap_texture2ds_)
+			{
+				if (texture.second == component.texture_id_)
+				{
+					current_texture = texture.first;
+				}
+			}
+			if( ImGui::Button ( current_texture.c_str () , ImVec2 ( 168.0f , 0.0f ) ) )
 				ImGui::OpenPopup ( "Textures" );
 
 			ImGui::SameLine ();

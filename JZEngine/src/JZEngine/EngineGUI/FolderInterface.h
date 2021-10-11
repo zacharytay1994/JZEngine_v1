@@ -20,7 +20,8 @@ namespace JZEngine
 		enum class DISPLAY
 		{
 			SCENES,
-			PREFAB
+			PREFAB,
+			RESOURCES_TEXTURES
 		};
 
 		ECS::ECSInstance* ecs_instance_{ nullptr };
@@ -32,6 +33,7 @@ namespace JZEngine
 
 		void RenderPrefabs();
 		void RenderScenes();
+		void RenderTextures();
 
 	private:
 		DISPLAY mode{ DISPLAY::SCENES };

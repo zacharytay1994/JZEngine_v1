@@ -21,6 +21,7 @@ namespace JZEngine
 		std::string name_{ "system" };
 		virtual ~GlobalSystem() {};
 		virtual void Init() {};
+		virtual void PostInit() {};
 		virtual void FrameStart() {};
 		virtual void Update(float dt) {};
 		virtual void FrameEnd() {};
@@ -62,6 +63,7 @@ namespace JZEngine
 		}
 
 		void Init();
+		void PostInit();
 		void FrameStart();
 		void Update(float dt);
 		void FrameEnd();

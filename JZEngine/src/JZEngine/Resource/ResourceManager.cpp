@@ -8,34 +8,39 @@
 #include <PCH.h>
 #include "ResourceManager.h"
 #include "../EngineConfig.h"
+#include "../DebugTools/Log.h"
 
 namespace JZEngine
 {
 	std::vector<ResourceManager::InstancedShaderID> ResourceManager::instanced_shader_programs_;
 	std::vector<ResourceManager::ShaderID> ResourceManager::shader_programs_;
 	std::vector<ResourceManager::DebugShader> ResourceManager::debug_shaders_;
+	//std::vector<ResourceManager::Texture2DID> ResourceManager::texture2ds_;
+
+	unsigned int ResourceManager::texture_unique_id_{ 0 };
 	std::vector<ResourceManager::Texture2DID> ResourceManager::texture2ds_;
+	std::unordered_map<std::string, int> ResourceManager::umap_texture2ds_;
 
 	ResourceManager::ResourceManager ()
 	{
 		//add below so existing code dont need edit hehe
 		// load textures
-		LoadTexture2D ( "TextFile" , "Assets/Textures/textfileicon.png" );
-		LoadTexture2D (	"StartIcon", "Assets/Textures/iconstart.png" );
-		LoadTexture2D (	"StopIcon", "Assets/Textures/iconstop.png" );
-		LoadTexture2D (	"PauseIcon", "Assets/Textures/iconpause.png" );
-		LoadTexture2D ( "Unicorn" , "Assets/Textures/cute-unicorn.png" );//1
-		LoadTexture2D ( "Square" , "Assets/Textures/square.jpg" );
-		LoadTexture2D ( "TempB1" , "Assets/Textures/TempBackground-01.png" );
-		LoadTexture2D ( "TempB2" , "Assets/Textures/TempBackground-02.png" );
-		LoadTexture2D ( "TempB3" , "Assets/Textures/TempBackground-03.png" );
-		LoadTexture2D ( "TempB4" , "Assets/Textures/TempBackground-04.png" );
-		LoadTexture2D ( "Circle" , "Assets/Textures/circle.png" );	//7
-		LoadTexture2D ( "CircleRed" , "Assets/Textures/squarered.png" );	//8
-		LoadTexture2D ( "Anrgy" , "Assets/Textures/angry.png" );//9
-		LoadTexture2D ( "Star" , "Assets/Textures/SpriteSheet_Star.png" );//9
-		LoadTexture2D ( "Springroll", "Assets/Textures/springroll.png");//9
-		LoadTexture2D ( "Fishball", "Assets/Textures/fishball.png");//9
+		//LoadTexture2D ( "TextFile" , "Assets/Textures/textfileicon.png" );
+		//LoadTexture2D (	"StartIcon", "Assets/Textures/iconstart.png" );
+		//LoadTexture2D (	"StopIcon", "Assets/Textures/iconstop.png" );
+		//LoadTexture2D (	"PauseIcon", "Assets/Textures/iconpause.png" );
+		//LoadTexture2D ( "Unicorn" , "Assets/Textures/cute-unicorn.png" );//1
+		//LoadTexture2D ( "Square" , "Assets/Textures/square.jpg" );
+		//LoadTexture2D ( "TempB1" , "Assets/Textures/TempBackground-01.png" );
+		//LoadTexture2D ( "TempB2" , "Assets/Textures/TempBackground-02.png" );
+		//LoadTexture2D ( "TempB3" , "Assets/Textures/TempBackground-03.png" );
+		//LoadTexture2D ( "TempB4" , "Assets/Textures/TempBackground-04.png" );
+		//LoadTexture2D ( "Circle" , "Assets/Textures/circle.png" );	//7
+		//LoadTexture2D ( "CircleRed" , "Assets/Textures/squarered.png" );	//8
+		//LoadTexture2D ( "Anrgy" , "Assets/Textures/angry.png" );//9
+		//LoadTexture2D ( "Star" , "Assets/Textures/SpriteSheet_Star.png" );//9
+		//LoadTexture2D ( "Springroll", "Assets/Textures/springroll.png");//9
+		//LoadTexture2D ( "Fishball", "Assets/Textures/fishball.png");//9
 
 
 
@@ -63,6 +68,11 @@ namespace JZEngine
 		LoadInstancedShader ( "Default" ,
 							  "Assets/Shaders/Vertex/VS_Instancing.vs" ,
 							  "Assets/Shaders/Fragment/FS_Instancing.fs" );
+	}
+
+	void ResourceManager::PostInit()
+	{
+		LoadAllTexturesInFolder();
 	}
 
 	unsigned int ResourceManager::LoadInstancedShader ( const std::string& name , const std::string& vspath , const std::string& fspath )
@@ -137,14 +147,14 @@ namespace JZEngine
 		return 1;
 	}
 
-	unsigned int ResourceManager::LoadTexture2D ( const std::string& name , const std::string& path )
+	/*unsigned int ResourceManager::LoadTexture2D ( const std::string& name , const std::string& path )
 	{
 		texture2ds_.emplace_back ( static_cast< unsigned int >( texture2ds_.size () ) , name );
 		Texture2D& texture = texture2ds_.back ().texture2d_;
 		texture.Texture2DLoad ( path );
 
 		return 1;
-	}
+	}*/
 
 	void ResourceManager::LoadFont ( std::string font , unsigned int fontSize , const std::string& name , const std::string& vspath , const std::string& fspath )
 	{
@@ -251,5 +261,65 @@ namespace JZEngine
 		// destroy FreeType once we're finished
 		FT_Done_Face ( face );
 		FT_Done_FreeType ( ft );
+	}
+
+	void ResourceManager::LoadAllTexturesInFolder(const std::string& folder)
+	{
+		// check if folder exists else create it
+		if (!std::filesystem::is_directory(folder))
+		{
+			std::filesystem::create_directory(folder);
+		}
+		std::string path;
+		std::string texture_name;
+		size_t dash;
+		std::unordered_map<std::string, bool> check;
+		// create temp
+		for (auto& c : umap_texture2ds_)
+		{
+			check[c.first] = false;
+		}
+		// read files
+		Log::Info("Resources", "\n Reading textures from {}:", folder);
+		for (const auto& file : std::filesystem::directory_iterator(folder))
+		{
+			path = file.path().string();
+			dash = path.find_last_of('/');
+			texture_name = path.substr(dash + 1, path.find_last_of('.') - dash - 1);
+			// check if texture already loaded
+			if (umap_texture2ds_.find(texture_name) == umap_texture2ds_.end())
+			{
+				texture2ds_.emplace_back(static_cast<int>(texture2ds_.size()));
+				texture2ds_.back().texture2d_.Texture2DLoad(file.path().string());
+				umap_texture2ds_[texture_name] = texture2ds_.back().id_; 
+				/*umap_texture2ds_[texture_name].id_ = static_cast<int>(vec_texture2ds_.size());
+				umap_texture2ds_[texture_name].texture2d_.Texture2DLoad(file.path().string());*/
+				Log::Info("Resources", "- Read [{}].", file.path().string());
+			}
+			check[texture_name] = true;
+		}
+		// check if already removed
+		for (auto& c : check)
+		{
+			if (!c.second)
+			{
+				/*vec_texture2ds_[umap_texture2ds_[c.first].id_] = nullptr;*/
+				umap_texture2ds_.erase(c.first);
+			}
+		}
+	}
+
+	Texture2D* ResourceManager::GetTexture(int id)
+	{
+		if (id < texture2ds_.size() && id >= 0)
+		{
+			return &texture2ds_[id].texture2d_;
+		}
+		return nullptr;
+	}
+
+	Texture2D* ResourceManager::GetTexture(const std::string& name)
+	{
+		return GetTexture(umap_texture2ds_[name]);
 	}
 }

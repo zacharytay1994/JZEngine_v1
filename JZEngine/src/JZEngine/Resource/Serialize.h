@@ -10,6 +10,7 @@
 #include <fstream>
 #include <unordered_map>
 #include "../ECS/ECSConfig.h"
+#include "ResourceManager.h"
 
 namespace JZEngine
 {
@@ -127,8 +128,32 @@ namespace JZEngine
 		template <>
 		static void SerializeComponent(Texture& component, std::stringstream& stream, MODE mode)
 		{
-			SERIALIZE(stream, mode,
-				component.texture_id_);
+			if (mode == MODE::WRITE)
+			{
+				// get string representation of texture_id
+				for (auto& rm : ResourceManager::umap_texture2ds_)
+				{
+					if (component.texture_id_ == rm.second)
+					{
+						std::string write_string = rm.first;
+						SERIALIZE(stream, mode, write_string);
+					}
+				}
+			}
+			else if (mode == MODE::READ)
+			{
+				// set int representation of string
+				std::string read_string;
+				SERIALIZE(stream, mode, read_string);
+				if (ResourceManager::umap_texture2ds_.find(read_string) != ResourceManager::umap_texture2ds_.end())
+				{
+					component.texture_id_ = ResourceManager::umap_texture2ds_[read_string];
+				}
+				else
+				{
+					component.texture_id_ = 0;
+				}
+			}
 		}
 		
 		template <>
