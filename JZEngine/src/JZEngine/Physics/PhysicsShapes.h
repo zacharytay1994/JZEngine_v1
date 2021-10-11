@@ -30,26 +30,34 @@ namespace JZEngine {
 	// a square is a 4 point polygon
 	struct Square
 	{
-		union {
-			struct
-			{
-				Vec2f botleft;
-				Vec2f botright;
-				Vec2f topright;
-				Vec2f topleft;
-				Vec2f midpoint;
-			};
-			std::array<Vec2f,4> vertices;
-		};
+		Vec2f midpoint;
+		std::array<Vec2f,4> vertices;
+
 		Square() = default;
 		Square(Vec2f midpt, Vec2f scale) : midpoint{ midpt }
 		{
-			
 			vertices[0] = midpt - (scale / 2.0f);//botleft
 			vertices[1] = { vertices[0].x + scale.x,vertices[0].y };//bot right
 			vertices[2] = vertices[0] + scale;//top right
 			vertices[3] = { vertices[2].x - scale.x, vertices[2].y };//top left
 		}
+		Vec2f& botleft()
+		{
+			return vertices[0];
+		}
+		Vec2f& botright()
+		{
+			return vertices[1];
+		}
+		Vec2f& topright()
+		{
+			return vertices[2];
+		}
+		Vec2f& topleft()
+		{
+			return vertices[3];
+		}
+
 	};
 	struct LineSegment
 	{
