@@ -37,9 +37,9 @@ namespace JZEngine
 		static void ProjectVertices(const std::array<Vec2f, 4>& vertices, const Vec2f& axis, float& min, float& max);
 
 
-		static bool DynamicCollision_CircleSquare(const Circle& circle,			//Circle data - input
+		static bool DynamicCollision_CircleAABB(const Circle& circle,			//Circle data - input
 			const Vec2f& ptEnd,											//End circle position - input
-			const Square& m_square,												//square data - input
+			const AABB& m_square,												//square data - input
 			Vec2f& interPt,												//Intersection point - output
 			Vec2f& normalAtCollision,									//Normal vector at collision time - output
 			float& interTime,

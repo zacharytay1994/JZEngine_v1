@@ -549,9 +549,9 @@ namespace JZEngine
 
 	}
 
-	bool Collision::DynamicCollision_CircleSquare(const Circle& circle,			//Circle data - input
+	bool Collision::DynamicCollision_CircleAABB(const Circle& circle,			//Circle data - input
 		const Vec2f& circleend,											//End circle position - input
-		const Square& m_square,												//Line segment - input
+		const AABB& m_square,												//Line segment - input
 		Vec2f& interPt,												//Intersection point - output
 		Vec2f& normalAtCollision,									//Normal vector at collision time - output
 		float& interTime,
@@ -560,33 +560,33 @@ namespace JZEngine
 		LineSegment line;
 		bool returnvalue = false;
 		//circle right of square
-		if (circle.m_center.x > m_square.topright.x)
+		if (circle.m_center.x > m_square.max.x)
 		{
-			line={ m_square.topright , m_square.botright };
+			line = { m_square.max , {m_square.max.x,m_square.min.y} };
 			returnvalue=DynamicCollision_CircleLineSegment(circle, circleend, line, interPt, normalAtCollision, interTime, checkLineEdges);
 			if (returnvalue)
 				return returnvalue;
 		}
 		//circle left of square
-		if (circle.m_center.x < m_square.topleft.x)
+		if (circle.m_center.x < m_square.min.x)
 		{
-			line = { m_square.topleft , m_square.botleft };
+			line = { m_square.min , {m_square.min.x,m_square.max.y} };
 			returnvalue = DynamicCollision_CircleLineSegment(circle, circleend, line, interPt, normalAtCollision, interTime, checkLineEdges);
 			if (returnvalue)
 				return returnvalue;
 		}
 		//circle top of square
-		if (circle.m_center.y > m_square.topright.y)
+		if (circle.m_center.y > m_square.max.y)
 		{
-			line = { m_square.topright , m_square.topleft };
+			line = { m_square.max ,{m_square.min.x,m_square.max.y} };
 			returnvalue = DynamicCollision_CircleLineSegment(circle, circleend, line, interPt, normalAtCollision, interTime, checkLineEdges);
 			if (returnvalue)
 				return returnvalue;
 		}
 		//circle below of square
-		if (circle.m_center.y < m_square.botright.y)
+		if (circle.m_center.y < m_square.min.y)
 		{
-			line = { m_square.botright , m_square.botleft };
+			line = { m_square.min ,{m_square.max.x,m_square.min.y} };
 			returnvalue = DynamicCollision_CircleLineSegment(circle, circleend, line, interPt, normalAtCollision, interTime, checkLineEdges);
 			if (returnvalue)
 				return returnvalue;
