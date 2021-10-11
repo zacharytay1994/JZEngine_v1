@@ -151,7 +151,7 @@ namespace JZEngine
 				}
 				else
 				{
-					component.texture_id_ = 0;
+					component.texture_id_ = ResourceManager::umap_texture2ds_["imagenotfound"];
 				}
 			}
 		}
