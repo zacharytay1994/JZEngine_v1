@@ -21,6 +21,7 @@ namespace JZEngine
     std::unordered_map<int, bool> InputHandler::prevkeystate;
     std::unordered_map<int, bool> InputHandler::mousestate;
     std::unordered_map<int, bool> InputHandler::prevmousestate;
+    Vec2f InputHandler::mousepos;
     int InputHandler::mouse_scrolled_{ 0 };
     
 
@@ -128,9 +129,7 @@ namespace JZEngine
     relative to the top-left corner of the window client area.
     */
     void InputHandler::mousepos_cb(GLFWwindow* pwin, double xpos, double ypos) {
-#ifdef _DEBUG
-        //std::cout << "Mouse cursor position: (" << xpos << ", " << ypos << ")" << std::endl;
-#endif
+        mousepos = { static_cast<float>(xpos),static_cast<float>(ypos) };
     }
 
     /*  _________________________________________________________________________*/
@@ -155,8 +154,8 @@ namespace JZEngine
 #ifdef _DEBUG
         std::cout << "Mouse scroll wheel offset: ("
             << xoffset << ", " << yoffset << ")" << std::endl;
-        mouse_scrolled_ = static_cast<int>(yoffset);
 #endif
+        mouse_scrolled_ = static_cast<int>(yoffset);
     }
 
     /*  _________________________________________________________________________ */
@@ -174,7 +173,9 @@ namespace JZEngine
     (when possible) its cause.
     */
     void InputHandler::error_cb(int error, char const* description) {
+#ifdef _DEBUG
         std::cerr << "GLFW error: " << description << std::endl;
+#endif
     }
 
     /*  _________________________________________________________________________ */
@@ -195,8 +196,9 @@ namespace JZEngine
     of the window in pixels.
     */
     void InputHandler::fbsize_cb(GLFWwindow* ptr_win, int width, int height) {
+#ifdef _DEBUG
         std::cout << "fbsize_cb getting called!!!" << std::endl;
-       
+#endif
     }
 
     bool InputHandler::IsKeyPressed(KEY key) 
@@ -226,6 +228,11 @@ namespace JZEngine
         }
 
         else return false;
+    }
+
+    Vec2f InputHandler::GetMousePosition()
+    {
+        return mousepos;
     }
 
     bool InputHandler::IsMousePressed(MOUSE key)
