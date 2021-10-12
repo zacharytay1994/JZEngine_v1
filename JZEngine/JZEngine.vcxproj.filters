@@ -248,5 +248,6 @@
     <ClInclude Include="src\JZEngine\Physics\RigidBody.h" />
     <ClInclude Include="src\JZEngine\Physics\PhyicsDebug.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\FloatRandom.h" />
+    <ClInclude Include="src\JZEngine\UnreferencedParam.h" />
   </ItemGroup>
 </Project>

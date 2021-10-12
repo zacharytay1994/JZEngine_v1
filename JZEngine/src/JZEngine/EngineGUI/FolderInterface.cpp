@@ -24,6 +24,7 @@ namespace JZEngine
 
 	void FolderInterface::Render(float dt)
 	{
+		UNREFERENCED_PARAMETER(dt);
 		ImGui::Begin("Directory", 0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 		if (ImGui::BeginMenuBar())
 		{

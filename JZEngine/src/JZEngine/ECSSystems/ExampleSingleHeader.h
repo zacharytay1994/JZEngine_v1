@@ -13,6 +13,8 @@
 #include "../EngineGUI/Console.h"
 #include "../DebugTools/Log.h"
 
+#include "../UnreferencedParam.h"
+
 struct TestComponent
 {
 	int x{ -90 }, y{ -5 };
@@ -47,6 +49,7 @@ struct TestSystem : public JZEngine::ECS::System
 
 	virtual void FrameBegin(const float& dt) override
 	{
+		UNREFERENCED_PARAMETER(dt);
 		JZEngine::Log::Info("Main", "Count: {}", count);
 		count = 0;
 	}
@@ -54,6 +57,7 @@ struct TestSystem : public JZEngine::ECS::System
 	// updates once per entity component per system per frame
 	virtual void Update(const float& dt) override
 	{
+		UNREFERENCED_PARAMETER(dt);
 		++count;
 	}
 };
@@ -71,6 +75,7 @@ struct TestSystem2 : public JZEngine::ECS::System
 	// not once per entity component per system per frame
 	virtual void FrameBegin(const float& dt) override
 	{
+		UNREFERENCED_PARAMETER(dt);
 		JZEngine::Log::Info("Main", "Count2: {}", count);
 		count = 0;
 	}
@@ -79,6 +84,7 @@ struct TestSystem2 : public JZEngine::ECS::System
 	// this will be run twice, whereas FrameBegin will run once no matter how many entities
 	virtual void Update(const float& dt) override
 	{
+		UNREFERENCED_PARAMETER(dt);
 		++count;
 	}
 };

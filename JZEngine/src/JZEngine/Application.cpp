@@ -224,8 +224,8 @@ namespace JZEngine
 	{
 		double time = 0.0;
 		double dt{ Settings::min_tpf };
-		double actual_dt{ Settings::min_tpf };
-		double clamped_dt{ Settings::min_tpf };
+		//double actual_dt{ Settings::min_tpf };
+		//double clamped_dt{ Settings::min_tpf };
 		bool limit_frames = true;
 
 

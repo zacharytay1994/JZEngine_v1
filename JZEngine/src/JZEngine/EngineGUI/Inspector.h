@@ -356,7 +356,7 @@ namespace JZEngine
 			ImGuiStyle& style = ImGui::GetStyle ();
 			float w = ImGui::CalcItemWidth ();
 			float spacing = style.ItemInnerSpacing.x;
-			float button_sz = ImGui::GetFrameHeight ();
+			//float button_sz = ImGui::GetFrameHeight ();
 			ImGui::Text ( "Shape" );
 
 			ImGui::SliderInt ( "ID" , &component.shapeid , 0 , 2 );
@@ -395,21 +395,21 @@ namespace JZEngine
 		template <>
 		void RenderComponent ( Parallax& component )
 		{
-			const char* items [] = { "X", "Y" };
-			static const char* current_item = items[ 0 ] ;
+			std::string items [] = { "X", "Y" };
+			static std::string current_item = items[ 0 ] ;
 
 			ImGuiStyle& style = ImGui::GetStyle ();
 			float w = ImGui::CalcItemWidth ();
 			float spacing = style.ItemInnerSpacing.x;
-			float button_sz = ImGui::GetFrameHeight ();
+			//float button_sz = ImGui::GetFrameHeight ();
 			ImGui::PushItemWidth ( ( w / 2.0f ) - spacing );
 
-			if( ImGui::BeginCombo ( "##custom combo" , current_item , ImGuiComboFlags_NoArrowButton ) )
+			if( ImGui::BeginCombo ( "##custom combo" , current_item.c_str() , ImGuiComboFlags_NoArrowButton ) )
 			{
 				for( int n = 0; n < IM_ARRAYSIZE ( items ); n++ )
 				{
 					bool is_selected = ( current_item == items[ n ] );
-					if( ImGui::Selectable ( items[ n ] , is_selected ) )
+					if( ImGui::Selectable ( items[ n ].c_str() , is_selected ) )
 						current_item = items[ n ];
 					if( is_selected )
 						ImGui::SetItemDefaultFocus ();
@@ -556,6 +556,9 @@ namespace JZEngine
 		typename std::enable_if<I == sizeof...( TUPLE ) , void>::type
 			LoopTupleRender ( std::tuple<TUPLE...> t , size_t i , ECS::Entity& entity )
 		{
+			UNREFERENCED_PARAMETER(t);
+			UNREFERENCED_PARAMETER(i);
+			UNREFERENCED_PARAMETER(entity);
 			std::cout << "LoopTupleRender::tuple size exceeded." << std::endl;
 			return;
 		}

@@ -12,6 +12,8 @@
 #include "../ECS/ECSConfig.h"
 #include "ResourceManager.h"
 
+#include "../UnreferencedParam.h"
+
 namespace JZEngine
 {
 	namespace ECS
@@ -108,6 +110,9 @@ namespace JZEngine
 		template <typename COMPONENT>
 		static void SerializeComponent(COMPONENT& component, std::stringstream& stream, MODE mode = MODE::WRITE)
 		{
+			UNREFERENCED_PARAMETER(component);
+			UNREFERENCED_PARAMETER(stream);
+			UNREFERENCED_PARAMETER(mode);
 			Log::Warning("Serialize", "- Unsure how to serialize {}. Have you specialized your serialize in Serialize.h?",
 				typeid(COMPONENT).name());
 		}
@@ -226,6 +231,10 @@ namespace JZEngine
 		static typename std::enable_if<I == sizeof...(TUPLE), void>::type
 			SerializeECSConfigComponent(std::tuple<TUPLE...> t, size_t i, ECS::Entity& entity, std::stringstream& stream)
 		{
+			UNREFERENCED_PARAMETER(t);
+			UNREFERENCED_PARAMETER(i);
+			UNREFERENCED_PARAMETER(entity);
+			UNREFERENCED_PARAMETER(stream);
 			Log::Warning("Serialize", "- SerializeECSConfigComponent::tuple size exceeded.");
 			return;
 		}
@@ -247,6 +256,10 @@ namespace JZEngine
 		static typename std::enable_if<I == sizeof...(TUPLE), void>::type
 			DeSerializeECSConfigComponent(std::tuple<TUPLE...> t, size_t i, ECS::Entity& entity, std::stringstream& stream)
 		{
+			UNREFERENCED_PARAMETER(t);
+			UNREFERENCED_PARAMETER(i);
+			UNREFERENCED_PARAMETER(entity);
+			UNREFERENCED_PARAMETER(stream);
 			Log::Warning("Serialize", "- DeSerializeECSConfigComponent::tuple size exceeded.");
 			return;
 		}

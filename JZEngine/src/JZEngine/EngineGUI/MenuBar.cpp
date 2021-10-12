@@ -16,6 +16,8 @@
 #include "DebugInformation.h"
 #include "EngineSettings.h"
 
+#define UNREFERENCED_PARAMETER(P)(P);
+
 namespace JZEngine {
 	float MenuBar::height_{ 0.0f };
 	MenuBar::MenuBar(float x, float y, float sx, float sy, int group) 
@@ -25,6 +27,7 @@ namespace JZEngine {
 	}
 
 	void MenuBar::Render(float dt) {
+		UNREFERENCED_PARAMETER(dt);
 		// shortcuts
 		if (InputHandler::IsKeyPressed(KEY::KEY_LEFT_SHIFT) && InputHandler::IsKeyTriggered(KEY::KEY_TAB)) {
 			GetInterface<FolderInterface>()->ToggleOnOff();

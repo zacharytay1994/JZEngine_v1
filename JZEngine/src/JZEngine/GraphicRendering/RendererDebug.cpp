@@ -44,6 +44,7 @@ namespace JZEngine
 
 	void RendererDebug::Update(float dt)
 	{
+		UNREFERENCED_PARAMETER(dt);
 		if (initialized_)
 		{
 			if (sprite_outline_)

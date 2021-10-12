@@ -25,7 +25,7 @@ namespace JZEngine
 		};
 
 		ECS::ECSInstance* ecs_instance_{ nullptr };
-		SceneTree* scene_tree_;
+		SceneTree* scene_tree_{ nullptr };
 		static constexpr unsigned int display_columns_{ 5 };
 
 		FolderInterface(float x, float y, float sx, float sy, int group);

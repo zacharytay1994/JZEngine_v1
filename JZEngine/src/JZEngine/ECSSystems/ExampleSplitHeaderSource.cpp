@@ -16,11 +16,12 @@ MyNewSystem::MyNewSystem()
 
 void MyNewSystem::FrameBegin(const float& dt)
 {
-
+	UNREFERENCED_PARAMETER(dt);
 }
 
 void MyNewSystem::Update(const float& dt)
 {
+	UNREFERENCED_PARAMETER(dt);
 	// see the changes in the editor
 	// when an entity both MyNewComponent and TestComponent
 	GetComponent<MyNewComponent>().not_a_component.im_a_float_ -= 0.001f;
