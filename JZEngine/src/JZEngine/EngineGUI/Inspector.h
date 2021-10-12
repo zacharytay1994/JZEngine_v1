@@ -539,6 +539,12 @@ namespace JZEngine
 			}
 		}
 
+		template <>
+		void RenderComponent(SpriteLayer& component)
+		{
+			ImGui::InputInt(": Layer", &component.layer_);
+		}
+
 		/*!
 		 * @brief ___JZEngine::LoopTupleRender___
 		 * ****************************************************************************************************

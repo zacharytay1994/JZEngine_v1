@@ -55,6 +55,11 @@ namespace JZEngine
 		char flag;
 	};
 
+	struct SpriteLayer
+	{
+		int layer_{ 0 };
+	};
+
 	// sprite system
 	struct Sprite : public ECS::System
 	{
@@ -62,11 +67,10 @@ namespace JZEngine
 
 		Sprite ()
 		{
-			RegisterComponents<Transform , Texture , Animation2D , NonInstanceShader , NotBackground> ();
+			RegisterComponents<Transform , Texture , Animation2D , NonInstanceShader, SpriteLayer> ();
 		}
 
-		virtual void FrameBegin ( const float& dt ) override
-		{}
+		virtual void FrameEnd(const float& dt) override;
 
 		virtual void Update(const float& dt) override;
 		

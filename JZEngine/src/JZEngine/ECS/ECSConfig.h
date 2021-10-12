@@ -39,7 +39,8 @@ namespace JZEngine
 				NotBackground ,
 				TextData ,
 				Animation2D ,
-				RandomMovement
+				RandomMovement,
+				SpriteLayer
 
 				>;
 
