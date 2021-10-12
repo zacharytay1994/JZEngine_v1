@@ -172,18 +172,27 @@ namespace JZEngine
 			// display selection for all the textures
 			if( ImGui::BeginPopup ( "Textures" ) )
 			{
-				for( auto& texture : resource_manager_->texture2ds_ )
+				for( auto& texture : resource_manager_->umap_texture2ds_ )
 				{
-					if( ImGui::Selectable ( texture.name_.c_str () ) )
+					if( ImGui::Selectable ( texture.first.c_str () ) )
 					{
-						component.texture_id_ = texture.id_;
+						component.texture_id_ = texture.second;
 					}
 				};
 				ImGui::EndPopup ();
 			};
 
 			// button event to display all texture options
-			if( ImGui::Button ( resource_manager_->texture2ds_[ component.texture_id_ ].name_.c_str () , ImVec2 ( 168.0f , 0.0f ) ) )
+			// if no texture is found, meaning deleted, it will display as deleted
+			std::string current_texture{ "Deleted" };
+			for (auto& texture : resource_manager_->umap_texture2ds_)
+			{
+				if (texture.second == component.texture_id_)
+				{
+					current_texture = texture.first;
+				}
+			}
+			if( ImGui::Button ( current_texture.c_str () , ImVec2 ( 168.0f , 0.0f ) ) )
 				ImGui::OpenPopup ( "Textures" );
 
 			ImGui::SameLine ();
@@ -347,7 +356,7 @@ namespace JZEngine
 			ImGuiStyle& style = ImGui::GetStyle ();
 			float w = ImGui::CalcItemWidth ();
 			float spacing = style.ItemInnerSpacing.x;
-			float button_sz = ImGui::GetFrameHeight ();
+			//float button_sz = ImGui::GetFrameHeight ();
 			ImGui::Text ( "Shape" );
 
 			ImGui::SliderInt ( "ID" , &component.shapeid , 0 , 2 );
@@ -386,21 +395,21 @@ namespace JZEngine
 		template <>
 		void RenderComponent ( Parallax& component )
 		{
-			const char* items [] = { "X", "Y" };
-			static const char* current_item = items[ 0 ] ;
+			std::string items [] = { "X", "Y" };
+			static std::string current_item = items[ 0 ] ;
 
 			ImGuiStyle& style = ImGui::GetStyle ();
 			float w = ImGui::CalcItemWidth ();
 			float spacing = style.ItemInnerSpacing.x;
-			float button_sz = ImGui::GetFrameHeight ();
+			//float button_sz = ImGui::GetFrameHeight ();
 			ImGui::PushItemWidth ( ( w / 2.0f ) - spacing );
 
-			if( ImGui::BeginCombo ( "##custom combo" , current_item , ImGuiComboFlags_NoArrowButton ) )
+			if( ImGui::BeginCombo ( "##custom combo" , current_item.c_str() , ImGuiComboFlags_NoArrowButton ) )
 			{
 				for( int n = 0; n < IM_ARRAYSIZE ( items ); n++ )
 				{
 					bool is_selected = ( current_item == items[ n ] );
-					if( ImGui::Selectable ( items[ n ] , is_selected ) )
+					if( ImGui::Selectable ( items[ n ].c_str() , is_selected ) )
 						current_item = items[ n ];
 					if( is_selected )
 						ImGui::SetItemDefaultFocus ();
@@ -547,6 +556,9 @@ namespace JZEngine
 		typename std::enable_if<I == sizeof...( TUPLE ) , void>::type
 			LoopTupleRender ( std::tuple<TUPLE...> t , size_t i , ECS::Entity& entity )
 		{
+			UNREFERENCED_PARAMETER(t);
+			UNREFERENCED_PARAMETER(i);
+			UNREFERENCED_PARAMETER(entity);
 			std::cout << "LoopTupleRender::tuple size exceeded." << std::endl;
 			return;
 		}

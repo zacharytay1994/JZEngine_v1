@@ -252,7 +252,7 @@ namespace JZEngine
 			std::cout << std::endl << "Entity Addresses: " << std::endl;
 			for (int i = 0; i < number_of_entities_; ++i)
 			{
-				std::cout << "Entity " << i << ". " << static_cast<void*>(GetDataBegin(i)) << std::endl;
+				std::cout << "Entity " << i << ". " << static_cast<void*>(GetDataBegin(static_cast<ubyte>(i))) << std::endl;
 			}
 		}
 
@@ -597,17 +597,17 @@ namespace JZEngine
 			{
 				if (!entities_[parent].HasChildSpace())
 				{
-					return -1;
+					return static_cast<ui32>(-1);
 				}
 			}
 			ui32 id{ 0 };
 			if (free_entity_slots_.empty())
 			{
 				id = entity_count_;
-				if (entity_count_ > 256)
+				/*if (entity_count_ > 256)
 				{
 					int i = 0;
-				}
+				}*/
 				entities_.push_back(Entity(ecs_instance_, entity_count_++, parent));
 			}
 			else
@@ -703,9 +703,12 @@ namespace JZEngine
 
 		Entity::Entity(ECSInstance* ecs)
 			:
-			ecs_instance_(ecs)
+			ecs_instance_(ecs),
+			ecs_id_(static_cast<ui32>(-1)),
+			entity_id_(static_cast<ui32>(-1)),
+			parent_(static_cast<ui32>(-1))
 		{
-			children_.fill(-1);
+			children_.fill(static_cast<ui32>(-1));
 		}
 
 		Entity::Entity(ECSInstance* ecs, ui32 entityid, ui32 parent)
@@ -715,7 +718,7 @@ namespace JZEngine
 			parent_(parent),
 			ecs_id_(static_cast<ui32>(-1))
 		{
-			children_.fill(-1);
+			children_.fill(static_cast<ui32>(-1));
 		}
 
 		Entity::~Entity()
@@ -747,7 +750,7 @@ namespace JZEngine
 			// if entity was a root, remove from root
 			if (root_id_ != -1)
 			{
-				ecs_instance_->entity_manager_.root_ids_[root_id_] = -1;
+				ecs_instance_->entity_manager_.root_ids_[root_id_] = static_cast<ui32>(-1);
 				ecs_instance_->entity_manager_.free_root_slots_.push(root_id_);
 			}
 			// set id to be used again by entity manager
@@ -760,7 +763,7 @@ namespace JZEngine
 			ecs_id_		= static_cast<ui32>(-1);;
 			children_count_ = 0;
 			children_before_ = 0;
-			children_.fill(-1);
+			children_.fill(static_cast<ui32>(-1));
 		}
 		
 		bool Entity::AddChild(ui32 childId)
@@ -794,7 +797,7 @@ namespace JZEngine
 				{
 					if (c == childId)
 					{
-						c = -1;
+						c = static_cast<ui32>(-1);
 						--children_count_;
 					}
 				}
@@ -856,7 +859,7 @@ namespace JZEngine
 			}
 
 			SystemComponents components;
-			components.fill(-1);
+			components.fill(static_cast<ui32>(-1));
 			int count{ 0 };
 			for (int i = 0; i < MAX_COMPONENTS; ++i)
 			{

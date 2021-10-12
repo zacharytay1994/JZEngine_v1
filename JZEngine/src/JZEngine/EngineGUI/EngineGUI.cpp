@@ -102,7 +102,7 @@ namespace JZEngine
 			if (scene_tree_.selected_entity_->HasComponent(0))
 			{
 				ImGuizmo::SetOrthographic(true);
-				ImGuiIO& io = ImGui::GetIO();
+				//ImGuiIO& io = ImGui::GetIO();
 				ImGuizmo::SetRect(static_cast<float>(1.0 / 6.0 * Settings::window_width), MenuBar::height_, static_cast<float>(4.0 / 6.0 * Settings::window_width), static_cast<float>(3.0 / 4.0 * (Settings::window_height - MenuBar::height_)));
 				Mat4f projection = static_cast<Mat4f>(Math::GetProjectionTransformNonTransposed()).Transpose();
 				Mat4f view = Mat4f::Translate(-camera_position_.x, -camera_position_.y, 0.0f).Transpose();
@@ -164,7 +164,7 @@ namespace JZEngine
 		IMGUI_CHECKVERSION();
 		ImGuizmo::SetImGuiContext(ImGui::CreateContext());
 		//ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO();
+		//ImGuiIO& io = ImGui::GetIO();
 		ImGui_ImplGlfw_InitForOpenGL(glfwwindow, true);
 		ImGui_ImplOpenGL3_Init("#version 330");
 		ImGui::StyleColorsDark();
