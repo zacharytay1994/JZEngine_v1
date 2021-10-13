@@ -4,6 +4,7 @@
 #include "../Math/JZMath.h"
 
 #include <queue>
+#include <vector>
 
 namespace JZEngine {
 	class Renderer;
@@ -35,6 +36,8 @@ namespace JZEngine {
 
 		virtual void Update(float dt) override;
 
+		virtual void FrameEnd() override;
+
 		static void DrawQueue(		int layer,
 									int shaderid,
 									int textureid,
@@ -46,6 +49,9 @@ namespace JZEngine {
 									bool animated = false);
 
 		void SetRenderer(Renderer* renderer);
+
+		static std::vector<int*> layers_;
+		
 	private:
 		Renderer*			renderer_				{ nullptr };
 		static std::priority_queue<RenderData, std::vector<RenderData>, CompareRenderData> render_queue_;

@@ -34,7 +34,7 @@ namespace JZEngine
 		:
 		inspector_(5.0f / 6.0f, 1.0f / 46.0f, 1.0f / 6.0f, 45.0f / 46.0f),
 		console_(1.0f / 6.0f, 3.0f / 4.0f, 4.0f / 6.0f, 1.0f / 4.0f),
-		scene_tree_(0.0f, 1.0f / 46.0f, 1.0f / 6.0f, 10.0f / 46.0f)
+		scene_tree_(0.0f, 0.0f, 1.0f / 6.0f, 3.0f / 4.0f)
 	{
 		//InitializeWithGLFW();
 	}
