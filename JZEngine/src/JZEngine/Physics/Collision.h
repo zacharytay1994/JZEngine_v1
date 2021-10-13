@@ -9,7 +9,7 @@
 
 #include "../Math/JZMath.h"
 #include "../Physics/PhysicsComponent.h"
-#include <memory>
+
 
 
 namespace JZEngine

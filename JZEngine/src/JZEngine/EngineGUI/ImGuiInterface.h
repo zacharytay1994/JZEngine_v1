@@ -27,7 +27,7 @@ namespace JZEngine
 
 		void RenderInterface(float dt);
 
-		virtual void Render(float dt) {};
+		virtual void Render(float dt) { UNREFERENCED_PARAMETER(dt); };
 
 		void SetEngineGUI(EngineGUI* enginegui);
 

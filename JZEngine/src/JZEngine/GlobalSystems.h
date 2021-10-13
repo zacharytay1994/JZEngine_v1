@@ -13,6 +13,8 @@
 #include <string>
 #include <initializer_list>
 
+#define UNREFERENCED_PARAMETER(P)(P);
+
 namespace JZEngine
 {
 	struct GlobalSystemsManager;
@@ -21,8 +23,9 @@ namespace JZEngine
 		std::string name_{ "system" };
 		virtual ~GlobalSystem() {};
 		virtual void Init() {};
+		virtual void PostInit() {};
 		virtual void FrameStart() {};
-		virtual void Update(float dt) {};
+		virtual void Update(float dt) { UNREFERENCED_PARAMETER(dt); };
 		virtual void FrameEnd() {};
 		virtual void Free() {};
 
@@ -30,7 +33,7 @@ namespace JZEngine
 		template <typename SYSTEM>
 		SYSTEM* GetSystem();
 	private:
-		GlobalSystemsManager* global_systems_manager_;
+		GlobalSystemsManager* global_systems_manager_{ nullptr };
 	};
 
 	struct GlobalSystemsManager
@@ -62,6 +65,7 @@ namespace JZEngine
 		}
 
 		void Init();
+		void PostInit();
 		void FrameStart();
 		void Update(float dt);
 		void FrameEnd();

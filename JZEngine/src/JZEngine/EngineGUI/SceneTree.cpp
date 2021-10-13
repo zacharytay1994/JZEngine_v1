@@ -158,16 +158,16 @@ namespace JZEngine
 			// adds an entity as a child of this entity on right click
 			if( ImGui::Selectable ( "Add Entity" ) )
 			{
-				int id = ecs_instance_->CreateEntity ( entity->entity_id_ );
-				if( id == -1 )
+				int temp_id = ecs_instance_->CreateEntity ( entity->entity_id_ );
+				if(temp_id == -1 )
 				{
-					std::stringstream ss;
-					ss << "Entity " << entity->name_ << " (ID: " << entity->entity_id_ << ") has maximum number of children!";
+					std::stringstream ss_warning;
+					ss_warning << "Entity " << entity->name_ << " (ID: " << entity->entity_id_ << ") has maximum number of children!";
 					//Console::Log(ss.str().c_str());
 				}
 				else
 				{
-					ECS::Entity& created_entity = ecs_instance_->GetEntity ( id );
+					ECS::Entity& created_entity = ecs_instance_->GetEntity (temp_id);
 					created_entity.name_ = GetName ();
 				}
 			}
@@ -293,7 +293,7 @@ namespace JZEngine
 		ImGui::Begin("SceneTree Confirmation", 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
 		if (ImGui::BeginTable("Confirmation Table", 1)) {
 			ImGui::TableNextColumn();
-			char text_buffer_[64] = { '\0' };
+			//char text_buffer_[64] = { '\0' };
 			bool name_exists_{ false };
 			std::stringstream ss;
 			switch (confirmation_flag_) {

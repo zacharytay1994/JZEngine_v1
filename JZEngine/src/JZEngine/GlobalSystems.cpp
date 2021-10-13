@@ -40,6 +40,14 @@ namespace JZEngine
 		}
 	}
 
+	void GlobalSystemsManager::PostInit()
+	{
+		for (auto& system : global_systems_vec_)
+		{
+			system->PostInit();
+		}
+	}
+
 	void GlobalSystemsManager::FrameStart()
 	{
 		for (auto& system : global_systems_vec_)

@@ -87,11 +87,14 @@ namespace JZEngine
 		Log::Instance ().Initialize ( global_systems_->GetSystem<EngineGUI> ()->GetConsole () );
 		JZEngine::Log::Info ( "Main" , "[{}] Up and Running! v{}" , Settings::engine_name , Settings::version );
 
+		// initialize all global systems
+		global_systems_->PostInit();
 		PerformanceData::Init ();
 		Serialize::Load ();
 
 		msgbus->subscribe ( global_systems_->GetSystem<SoundSystem> () , &SoundSystem::playSound );
 
+		//change
 		/*ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
 		for (int i = 0; i < 2500; ++i)
 		{
@@ -221,8 +224,8 @@ namespace JZEngine
 	{
 		double time = 0.0;
 		double dt{ Settings::min_tpf };
-		double actual_dt{ Settings::min_tpf };
-		double clamped_dt{ Settings::min_tpf };
+		//double actual_dt{ Settings::min_tpf };
+		//double clamped_dt{ Settings::min_tpf };
 		bool limit_frames = true;
 
 

@@ -15,7 +15,7 @@
 
 #include <glad/glad.h> // for access to OpenGL API declarations 
 #include <GLFW/glfw3.h>
-
+#include "../Math/JZMath.h"
 #include <unordered_map>
 
 
@@ -35,7 +35,7 @@ namespace JZEngine
 		static bool IsKeyTriggered(KEY key);
 		static bool IsKeyReleased(KEY key);
 
-		
+		static Vec2f GetMousePosition();
 		static bool IsMousePressed(MOUSE key);
 		static bool IsMouseTriggered(MOUSE key);
 		static bool IsMouseReleased(MOUSE key);
@@ -55,6 +55,7 @@ namespace JZEngine
 		static  std::unordered_map<int, bool> prevkeystate;
 		static  std::unordered_map<int, bool> mousestate;
 		static  std::unordered_map<int, bool> prevmousestate;
+		static Vec2f mousepos;
 
 	};
 

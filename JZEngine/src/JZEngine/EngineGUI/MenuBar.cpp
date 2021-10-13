@@ -16,6 +16,8 @@
 #include "DebugInformation.h"
 #include "EngineSettings.h"
 
+#define UNREFERENCED_PARAMETER(P)(P);
+
 namespace JZEngine {
 	float MenuBar::height_{ 0.0f };
 	MenuBar::MenuBar(float x, float y, float sx, float sy, int group) 
@@ -25,6 +27,7 @@ namespace JZEngine {
 	}
 
 	void MenuBar::Render(float dt) {
+		UNREFERENCED_PARAMETER(dt);
 		// shortcuts
 		if (InputHandler::IsKeyPressed(KEY::KEY_LEFT_SHIFT) && InputHandler::IsKeyTriggered(KEY::KEY_TAB)) {
 			GetInterface<FolderInterface>()->ToggleOnOff();
@@ -124,17 +127,17 @@ namespace JZEngine {
 		ImGui::Begin("playbar", 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 
 		ImGui::SameLine(Settings::window_width / 2.0f - (menubar_height * 1.5f));
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::texture2ds_[1].texture2d_.GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconstart")->GetRendererID()), {menubar_height * 0.8f, menubar_height * 0.8f}))
 		{
 			// start code
 		}
 		ImGui::SameLine(Settings::window_width / 2.0f);
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::texture2ds_[2].texture2d_.GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconstop")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }))
 		{
 			// stop code
 		}
 		ImGui::SameLine(Settings::window_width / 2.0f + (menubar_height * 1.5f));
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::texture2ds_[3].texture2d_.GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconpause")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }))
 		{
 			// pause code
 		}

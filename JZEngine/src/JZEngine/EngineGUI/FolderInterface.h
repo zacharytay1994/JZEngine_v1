@@ -20,11 +20,12 @@ namespace JZEngine
 		enum class DISPLAY
 		{
 			SCENES,
-			PREFAB
+			PREFAB,
+			RESOURCES_TEXTURES
 		};
 
 		ECS::ECSInstance* ecs_instance_{ nullptr };
-		SceneTree* scene_tree_;
+		SceneTree* scene_tree_{ nullptr };
 		static constexpr unsigned int display_columns_{ 5 };
 
 		FolderInterface(float x, float y, float sx, float sy, int group);
@@ -32,6 +33,7 @@ namespace JZEngine
 
 		void RenderPrefabs();
 		void RenderScenes();
+		void RenderTextures();
 
 	private:
 		DISPLAY mode{ DISPLAY::SCENES };

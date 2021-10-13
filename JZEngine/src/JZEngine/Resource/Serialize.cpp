@@ -182,9 +182,9 @@ namespace JZEngine
 		std::string line;
 		while (std::getline(file, line))
 		{
-			std::stringstream ss;
-			ss << line;
-			DeSerializeAllChildEntities(ecs, file, ss);
+			std::stringstream ss_line;
+			ss_line << line;
+			DeSerializeAllChildEntities(ecs, file, ss_line);
 		}
 		file.close();
 	}

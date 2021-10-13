@@ -26,6 +26,7 @@ namespace JZEngine
 
 	void EngineSettings::Render(float dt)
 	{
+		UNREFERENCED_PARAMETER(dt);
 		ImGui::Begin("EngineSettings", 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 		std::stringstream ss;
 		ss << Settings::engine_name << " v" << Settings::version << " Settings";

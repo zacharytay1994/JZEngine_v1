@@ -360,6 +360,7 @@
     <ClInclude Include="src\JZEngine\STL\Random.h" />
     <ClInclude Include="src\JZEngine\STL\String.h" />
     <ClInclude Include="src\JZEngine\STL\Tuple.h" />
+    <ClInclude Include="src\JZEngine\UnreferencedParam.h" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

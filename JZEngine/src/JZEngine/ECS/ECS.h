@@ -24,6 +24,8 @@
 
 #include "../GlobalSystems.h"
 
+#include "../UnreferencedParam.h"
+
 namespace JZEngine
 {
 	/*!
@@ -252,14 +254,14 @@ namespace JZEngine
 		*/
 		struct Chunk
 		{
-			ECSInstance*							ecs_instance_{ nullptr };
-			ui32									id_ = -1;						/*!< unique chunk idea in the archetype */
-			Archetype*								owning_archetype_{nullptr};		/*!< the archetype object storing this chunk */
-			std::unique_ptr<char[]>					data_{nullptr};					/*!< component data stored in bytes */
-			ubyte									number_of_entities_{ 0 };		/*!< number of entities stored in this chunk */
-			ubyte									free_ids_count_{ 0 };			/*!< number of free ids, i.e. previouly deleted entity spots */
-			std::array<ubyte, ENTITIES_PER_CHUNK>	free_ids_{ 0 };					/*!< the free id spots */
-			std::bitset<ENTITIES_PER_CHUNK>			active_flags_{ 0 };				/*!< represents which entities by id are active */
+			ECSInstance*							ecs_instance_		{ nullptr };
+			ui32									id_					= static_cast<ui32>(-1);	/*!< unique chunk idea in the archetype */
+			Archetype*								owning_archetype_	{nullptr};					/*!< the archetype object storing this chunk */
+			std::unique_ptr<char[]>					data_				{nullptr};					/*!< component data stored in bytes */
+			ubyte									number_of_entities_	{ 0 };						/*!< number of entities stored in this chunk */
+			ubyte									free_ids_count_		{ 0 };						/*!< number of free ids, i.e. previouly deleted entity spots */
+			std::array<ubyte, ENTITIES_PER_CHUNK>	free_ids_			{ 0 };						/*!< the free id spots */
+			std::bitset<ENTITIES_PER_CHUNK>			active_flags_		{ 0 };						/*!< represents which entities by id are active */
 
 			Chunk();
 			~Chunk();
@@ -410,7 +412,7 @@ namespace JZEngine
 			ui32										number_of_chunks_{ 0 };	/*!< current number of chunks in this archetype */
 			std::bitset<MAX_COMPONENTS>					mask_;					/*!< unique component combination representing this archetype */
 			std::array<Chunk, CHUNKS_PER_ARCHETYPE>		chunk_database_;		/*!< storage chunk objects */
-			std::array<ui16, MAX_COMPONENTS>			component_stride_{ 0 };	/*!< cumulative stride of each component,
+			std::array<ui32, MAX_COMPONENTS>			component_stride_{ 0 };	/*!< cumulative stride of each component,
 																				assumes that cumulative stride will not
 																				exceed 65'535 bytes. I.e. no combination
 																				of components will exceed 65'535 bytes.*/
@@ -979,14 +981,14 @@ namespace JZEngine
 		*/
 		struct Entity
 		{
-			ECSInstance*						ecs_instance_{ nullptr };
-			std::string							name_{ "Object" };				/*!< string name of the entity, not sure if const char* is better */
-			ui32								root_id_ = -1;					/*!< root id if entity is a root entity in the scene */
-			ui32								entity_id_;						/*!< unique entity id, only unique to a scene */
-			ui32								parent_;						/*!< id of the parent entity if any */
-			Chunk*								owning_chunk_{ nullptr };		/*!< chunk that holds the components for this entity */
-			ubyte								id_{ 255 };						/*!< unique id corresponding to its chunk, i.e. only unique per chunk */
-			ui32								ecs_id_;						/*!< unique ecs_id, no 2 entities can ever have the same ecs_id */
+			ECSInstance*						ecs_instance_	{ nullptr };
+			std::string							name_			{ "Object" };				/*!< string name of the entity, not sure if const char* is better */
+			ui32								root_id_		= static_cast<ui32>(-1);	/*!< root id if entity is a root entity in the scene */
+			ui32								entity_id_		= static_cast<ui32>(-1);	/*!< unique entity id, only unique to a scene */
+			ui32								parent_			= static_cast<ui32>(-1);	/*!< id of the parent entity if any */
+			Chunk*								owning_chunk_	{ nullptr };				/*!< chunk that holds the components for this entity */
+			ubyte								id_				{ 255 };					/*!< unique id corresponding to its chunk, i.e. only unique per chunk */
+			ui32								ecs_id_			= static_cast<ui32>(-1);	/*!< unique ecs_id, no 2 entities can ever have the same ecs_id */
 
 			ui32										children_count_{ 0 };
 			ui32										children_before_{ 0 };	/*!< number of children entity attached to this entity */
@@ -1179,6 +1181,8 @@ namespace JZEngine
 			typename std::enable_if<I == sizeof...(TUPLE), void>::type
 				LoopTupleAddComponent(std::tuple<TUPLE...> t, size_t i)
 			{
+				UNREFERENCED_PARAMETER(t);
+				UNREFERENCED_PARAMETER(i);
 				std::cout << "LoopTupleAddComponent::tuple size exceeded." << std::endl;
 				return;
 			}
@@ -1221,6 +1225,12 @@ namespace JZEngine
 			typename std::enable_if<I == sizeof...(TUPLE), void>::type
 				LoopTupleInitializeComponent(std::tuple<TUPLE...> t, size_t i, Chunk* newchunk, int newid, Chunk* oldchunk = nullptr, int oldid = -1)
 			{
+				UNREFERENCED_PARAMETER(t);
+				UNREFERENCED_PARAMETER(i);
+				UNREFERENCED_PARAMETER(newchunk);
+				UNREFERENCED_PARAMETER(newid);
+				UNREFERENCED_PARAMETER(oldchunk);
+				UNREFERENCED_PARAMETER(oldid);
 				std::cout << "LoopTupleRender::tuple size exceeded." << std::endl;
 				return;
 			}
@@ -1320,7 +1330,7 @@ namespace JZEngine
 				// create mask
 				((mask_[ComponentManager::component_descriptions_<COMPONENTS>.bit_] = 1), ...);
 				// fill components with max value
-				components_.fill(-1);
+				components_.fill(static_cast<ui32>(-1));
 				// fill components with components id
 				((components_[number_of_components_++] = ComponentManager::component_descriptions_<COMPONENTS>.bit_), ...);
 			}
@@ -1350,7 +1360,7 @@ namespace JZEngine
 			 * for each system.
 			 * ****************************************************************************************************
 			*/
-			virtual void FrameBegin(const float& dt) { };
+			virtual void FrameBegin(const float& dt) { UNREFERENCED_PARAMETER(dt); };
 
 			/*!
 			 * @brief ___JZEngine::ECS::System::Update()___
@@ -1367,7 +1377,7 @@ namespace JZEngine
 			 * for each system.
 			 * ****************************************************************************************************
 			*/
-			virtual void FrameEnd(const float& dt) { };
+			virtual void FrameEnd(const float& dt) { UNREFERENCED_PARAMETER(dt); };
 		};
 	}
 }
