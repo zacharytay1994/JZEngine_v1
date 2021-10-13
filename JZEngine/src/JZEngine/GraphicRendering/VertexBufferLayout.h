@@ -9,6 +9,7 @@
 
 #include <glad/glad.h>
 #include <vector>
+#include "../DebugTools/Assert.h"
 
 namespace JZEngine
 {
@@ -27,7 +28,7 @@ namespace JZEngine
 				case GL_UNSIGNED_BYTE: return 1 ;
 				default: return 0 ;
 			}
-			/*ASSERT ( false );*/
+			JZ_ASSERT ( false , "VertexBufferElement" )( type );
 			return 0 ;
 		}
 	};

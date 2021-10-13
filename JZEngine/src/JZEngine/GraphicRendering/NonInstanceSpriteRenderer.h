@@ -66,9 +66,11 @@ namespace JZEngine
 		}
 
 		virtual void FrameBegin ( const float& dt ) override
-		{}
+		{
+			UNREFERENCED_PARAMETER ( dt );
+		}
 
-		virtual void Update(const float& dt) override;
-		
+		virtual void Update ( const float& dt ) override;
+
 	};
 }

@@ -12,26 +12,28 @@
 
 namespace JZEngine
 {
-	InstanceSprite::InstanceSprite()
+	InstanceSprite::InstanceSprite ()
 	{
-		RegisterComponents<Transform, Texture, InstanceShader>();
+		RegisterComponents<Transform , Texture , InstanceShader> ();
 	}
 
-	void InstanceSprite::FrameBegin( const float& dt )
+	void InstanceSprite::FrameBegin ( const float& dt )
 	{
-		sprite_renderer_instancing_.DrawInstances();
+		UNREFERENCED_PARAMETER ( dt );
+		sprite_renderer_instancing_.DrawInstances ();
 	}
 
-	void InstanceSprite::Update( const float& dt )
+	void InstanceSprite::Update ( const float& dt )
 	{
-		Transform& transform = GetComponent<Transform>();
-		Texture& texture = GetComponent<Texture>();
-		InstanceShader& shader = GetComponent<InstanceShader>();
+		UNREFERENCED_PARAMETER ( dt );
+		Transform& transform = GetComponent<Transform> ();
+		Texture& texture = GetComponent<Texture> ();
+		InstanceShader& shader = GetComponent<InstanceShader> ();
 
-		sprite_renderer_instancing_.renderer_->AddTransform( shader.shader_id_, texture.texture_id_,
-															 Math::GetTransform(transform.position_, transform.rotation_, transform.scale_, transform.size_));
+		sprite_renderer_instancing_.renderer_->AddTransform ( shader.shader_id_ , texture.texture_id_ ,
+															  Math::GetTransform ( transform.position_ , transform.rotation_ , transform.scale_ , transform.size_ ) );
 
-		RendererDebug::DrawSpriteSquare(transform.position_, { transform.scale_.x * transform.size_.x, transform.scale_.y * transform.size_.y });
+		RendererDebug::DrawSpriteSquare ( transform.position_ , { transform.scale_.x * transform.size_.x, transform.scale_.y * transform.size_.y } );
 	}
 }
 
