@@ -14,6 +14,7 @@
 #include "Console.h"
 #include "../Resource/Serialize.h"
 #include "MenuBar.h"
+#include "../GraphicRendering/RenderQueue.h"
 
 namespace JZEngine
 {
@@ -46,8 +47,50 @@ namespace JZEngine
 		ImGui::SetNextWindowBgAlpha ( 1.0f );
 		ImGui::SetNextWindowPos ( { static_cast< float >( Settings::window_width ) * x_, MenuBar::height_ } , ImGuiCond_Always );
 		ImGui::SetNextWindowSize ( { static_cast< float >( Settings::window_width ) * sx_, static_cast<float>(Settings::window_height - MenuBar::height_) * sy_ } , ImGuiCond_Always );
-		ImGui::Begin ( "Scene Heirarchy" , 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+		ImGui::Begin ( "Scene Heirarchy" , 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_MenuBar);
 
+		if (ImGui::BeginMenuBar())
+		{
+			if (ImGui::BeginMenu("Scene"))
+			{
+				if (ImGui::MenuItem("Toggle"))
+				{
+					scene_ = true;
+				}
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Layers"))
+			{
+				if (ImGui::MenuItem("Toggle"))
+				{
+					scene_ = false;
+					// rebuild layer data
+					BuildLayerData();
+				}
+				ImGui::EndMenu();
+			}
+			ImGui::EndMenuBar();
+		}
+
+		if (scene_)
+		{
+			RenderScene();
+		}
+		else
+		{
+			RenderLayers();
+		}
+		
+
+		ImGui::End();
+
+		if (confirmation_flag_ != Confirmation::NONE) {
+			RenderConfirmation();
+		}
+	}
+
+	void SceneTree::RenderScene()
+	{
 		ImGui::Text("%s", current_scene_name_->c_str());
 		ImGui::Separator();
 		if (ImGui::Button("Save"))
@@ -61,18 +104,18 @@ namespace JZEngine
 		}
 		ImGui::Separator();
 		// render text box for input name
-		ImGui::InputText ( ": Name" , new_entity_name_ , MAX_NAME_SIZE );
+		ImGui::InputText(": Name", new_entity_name_, MAX_NAME_SIZE);
 
-		if( ImGui::Button ( "Add Default Entity" ) )
+		if (ImGui::Button("Add Default Entity"))
 		{
 			// create a new entity, pushed into EntityManager
-			unsigned int id = ecs_instance_->CreateEntity ();
+			unsigned int id = ecs_instance_->CreateEntity();
 
 			// if successful
-			if( id != -1 )
+			if (id != -1)
 			{
 				// rename it
-				ecs_instance_->GetEntity ( id ).name_ = GetName ();
+				ecs_instance_->GetEntity(id).name_ = GetName();
 			}
 		}
 		ImGui::SameLine();
@@ -80,16 +123,16 @@ namespace JZEngine
 		{
 			hide_ = !hide_;
 		}
-		ImGui::Text ( "\nCurrent Scene" );
+		ImGui::Text("\nCurrent Scene");
 
 		static ImGuiTextFilter filter;
 		// Helper class to easy setup a text filter.
 		// You may want to implement a more feature-full filtering scheme in your own application.
-		filter.Draw ( ": Filter" );
+		filter.Draw(": Filter");
 
-		ImGui::PushStyleColor ( ImGuiCol_Separator , { 0.8f,0.8f,0.8f,1.0f } );
-		ImGui::Separator ();
-		ImGui::PopStyleColor ();
+		ImGui::PushStyleColor(ImGuiCol_Separator, { 0.8f,0.8f,0.8f,1.0f });
+		ImGui::Separator();
+		ImGui::PopStyleColor();
 
 		if (!hide_)
 		{
@@ -109,12 +152,87 @@ namespace JZEngine
 				}
 			}
 		}
+	}
 
-		ImGui::End();
-
-		if (confirmation_flag_ != Confirmation::NONE) {
-			RenderConfirmation();
+	void SceneTree::RecursivelyAddChildObjectsToLayerData(ECS::Entity* entity)
+	{
+		// add to layers if has layer and texture component
+		if (entity->HasComponent(1))
+		{
+			layers_.emplace_back(entity->name_, &entity->GetComponent<SpriteLayer>().layer_, &entity->GetComponent<Texture>().texture_id_);
 		}
+		for (auto& c : entity->children_)
+		{
+			if (c != -1)
+			{
+				RecursivelyAddChildObjectsToLayerData(&ecs_instance_->entity_manager_.GetEntity(c));
+			}
+		}
+	}
+
+	void SceneTree::BuildLayerData()
+	{
+		layers_.clear();
+		for (auto& id : ecs_instance_->entity_manager_.root_ids_)
+		{
+			if (id != -1)
+			{
+				ECS::Entity* e = &ecs_instance_->entity_manager_.GetEntity(id); 
+				RecursivelyAddChildObjectsToLayerData(e);
+			}
+		}
+	}
+
+	bool CompareLayerPointer(SceneTree::LayerData a, SceneTree::LayerData b) { return (*a.layer_ < *b.layer_); }
+
+	void SceneTree::RenderLayers()
+	{
+		//ImGui::SetNextWindowBgAlpha(1.0f);
+		//ImGui::Begin("Scene Layer");
+		//float width = ImGui::GetWindowWidth();
+		ImGui::Separator();
+		ImGui::Text("Back");
+		ImGui::Separator();
+		std::stringstream ss;
+		//std::sort(RenderQueue::layers_.begin(), RenderQueue::layers_.end(), CompareLayerPointer);
+		std::sort(layers_.begin(), layers_.end(), CompareLayerPointer);
+		int i = std::numeric_limits<int>::min();
+		int uid = 0;
+		bool table_begin = false;
+		for (auto& layer : layers_)
+		{
+			if (*layer.layer_ > i)
+			{
+				/*if (table_begin)
+				{
+					ImGui::EndTable();
+					table_begin = false;
+				}*/
+				i = *layer.layer_;
+				ss.str("");
+				ss << "Layer " << *layer.layer_;
+				ImGui::Text(ss.str().c_str());
+				ImGui::Separator();
+				//table_begin = ImGui::BeginTable(ss.str().c_str(), 2);
+			}
+			//ImGui::TableNextColumn();
+			//ImGui::TableNextColumn();
+			ss.str("");
+			ss << "##layer" << uid++;
+			if (ImGui::BeginTable(ss.str().c_str(), 2))
+			{
+				ImGui::TableNextColumn();
+				ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture(*layer.texture_id_)->GetRendererID()), { 50.0f, 50.0f }, { 0,1 }, { 1,0 });
+				ImGui::TableNextColumn();
+				ImGui::InputInt(ss.str().c_str(), &*layer.layer_, 0);
+				ImGui::Text(layer.name_.c_str());
+				ImGui::EndTable();
+			}
+		}
+		ImGui::Separator();
+		ImGui::Text("Front");
+		ImGui::Separator();
+		//ImGui::End();
 	}
 
 	/*!
@@ -181,7 +299,6 @@ namespace JZEngine
 			{
 				if (new_entity_name_[0] != '\0')
 				{
-
 					entity->name_ = new_entity_name_;
 				}
 			}

@@ -160,5 +160,7 @@ namespace JZEngine
 								texture.texture_id_,
 								(Math::GetProjectionTransformNonTransposed()* EngineGUI::GetCameraTransform()* transform.model_transform_).Transpose(),
 								shader.tint);
+
+		RenderQueue::GUILayerData(&sprite_layer.layer_, texture.texture_id_);
 	}
 }

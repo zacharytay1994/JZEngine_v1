@@ -5,7 +5,7 @@
 
 namespace JZEngine {
 	std::priority_queue<RenderQueue::RenderData, std::vector<RenderQueue::RenderData>, RenderQueue::CompareRenderData> RenderQueue::render_queue_;
-	std::vector<int*> RenderQueue::layers_;
+	std::vector<RenderQueue::LayerData> RenderQueue::layers_;
 
 	void RenderQueue::Update(float dt) {
 		// flush the draw queue and render all data
@@ -32,8 +32,12 @@ namespace JZEngine {
 								int cols,
 								bool animated) 
 	{
-		layers_.emplace_back(&layer);
 		render_queue_.emplace(layer, shaderid, textureid, transform, tint, frame, rows, cols, animated);
+	}
+
+	void RenderQueue::GUILayerData(int* layer, int textureid)
+	{
+		layers_.emplace_back(layer, textureid);
 	}
 
 	void RenderQueue::DrawSprite(	int shaderid,

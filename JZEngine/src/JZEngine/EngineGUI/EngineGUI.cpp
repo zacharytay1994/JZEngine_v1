@@ -19,7 +19,6 @@
 #include "Console.h"
 #include "FolderInterface.h"
 #include "EngineSettings.h"
-#include "SceneLayerControl.h"
 #include "../Input/Input.h"
 #include "../Math/JZMath.h"
 
@@ -34,7 +33,7 @@ namespace JZEngine
 		:
 		inspector_(5.0f / 6.0f, 1.0f / 46.0f, 1.0f / 6.0f, 45.0f / 46.0f),
 		console_(1.0f / 6.0f, 3.0f / 4.0f, 4.0f / 6.0f, 1.0f / 4.0f),
-		scene_tree_(0.0f, 0.0f, 1.0f / 6.0f, 3.0f / 4.0f)
+		scene_tree_(0.0f, 0.0f, 1.0f / 6.0f, 1.0f)
 	{
 		//InitializeWithGLFW();
 	}
@@ -64,8 +63,8 @@ namespace JZEngine
 		GetInterface<FolderInterface>()->scene_tree_ =	&scene_tree_;
 		AddInterface<EngineSettings>(1.0f / 6.0f, 0.0f, 4.0f / 6.0f, 3.0f / 4.0f, 1);
 
-		AddInterface<SceneLayerControl>(0.0f, 3.0f / 4.0f, 1.0f / 6.0f, 1.0f / 4.0f);
-		GetInterface<SceneLayerControl>()->active_ = true;
+		/*AddInterface<SceneLayerControl>(0.0f, 3.0f / 4.0f, 1.0f / 6.0f, 1.0f / 4.0f);
+		GetInterface<SceneLayerControl>()->active_ = true;*/
 	}
 
 	/*!

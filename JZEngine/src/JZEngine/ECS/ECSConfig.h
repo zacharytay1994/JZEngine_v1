@@ -31,6 +31,7 @@ namespace JZEngine
 				std::tuple<
 
 				Transform ,
+				SpriteLayer,
 				Texture ,
 				NonInstanceShader ,
 				InstanceShader ,
@@ -39,8 +40,7 @@ namespace JZEngine
 				NotBackground ,
 				TextData ,
 				Animation2D ,
-				RandomMovement,
-				SpriteLayer
+				RandomMovement
 
 				>;
 
