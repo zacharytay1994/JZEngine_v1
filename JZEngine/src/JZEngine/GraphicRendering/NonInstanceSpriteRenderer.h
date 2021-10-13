@@ -63,14 +63,14 @@ namespace JZEngine
 	// sprite system
 	struct Sprite : public ECS::System
 	{
-		SpriteRenderer sprite_renderer_;
+		//SpriteRenderer sprite_renderer_;
 
 		Sprite ()
 		{
 			RegisterComponents<Transform , Texture , Animation2D , NonInstanceShader, SpriteLayer> ();
 		}
 
-		virtual void FrameEnd(const float& dt) override;
+		//virtual void FrameEnd(const float& dt) override;
 
 		virtual void Update(const float& dt) override;
 		

@@ -61,6 +61,8 @@
     <ClCompile Include="src\JZEngine\GraphicRendering\NonInstanceSpriteRenderer.cpp" />
     <ClCompile Include="src\JZEngine\Physics\PhysicsComponent.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\FloatRandom.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\RenderQueue.cpp" />
+    <ClCompile Include="src\JZEngine\EngineGUI\SceneLayerControl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
@@ -249,5 +251,7 @@
     <ClInclude Include="src\JZEngine\Physics\PhyicsDebug.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\FloatRandom.h" />
     <ClInclude Include="src\JZEngine\UnreferencedParam.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\RenderQueue.h" />
+    <ClInclude Include="src\JZEngine\EngineGUI\SceneLayerControl.h" />
   </ItemGroup>
 </Project>

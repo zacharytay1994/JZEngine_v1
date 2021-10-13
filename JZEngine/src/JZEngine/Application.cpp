@@ -18,6 +18,7 @@
 #include "GraphicRendering/RendererDebug.h"
 #include "GraphicRendering/SpriteRenderer.h"
 #include "GraphicRendering/TextRenderer.h"
+#include "GraphicRendering/RenderQueue.h"
 
 #include "Input/Input.h"
 #include "Input/DeltaTime.h"
@@ -39,14 +40,7 @@
 
 #define UNREFERENCED_PARAMETER(P)(P)
 
-
-
-
 #include "Message/Event.h"
-
-
-
-
 
 namespace JZEngine
 {
@@ -67,16 +61,18 @@ namespace JZEngine
 		global_systems_->AddSystem<Renderer> ( "Default Renderer" );
 		global_systems_->AddSystem<RendererInstancing> ( "Instance Renderer" );
 		global_systems_->AddSystem<RendererDebug> ( "Debug Renderer" );
+		global_systems_->AddSystem<RenderQueue>("Render Queue");
 		global_systems_->AddSystem<EngineGUI> ( "Engine GUI" );
 		global_systems_->AddSystem<SoundSystem> ( "Sound System" );
 		global_systems_->AddSystem<TextRenderer> ( "Text Renderer" );
 
 		global_systems_->GetSystem<GLFW_Instance>()->UpdateViewportDimensions();
+		global_systems_->GetSystem<RenderQueue>()->SetRenderer(global_systems_->GetSystem<Renderer>());
 
 		// give subsystems handle to global systems
-		global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<Sprite> ()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer> ();
+		/*global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<Sprite> ()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer> ();*/
 		global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<InstanceSprite> ()->sprite_renderer_instancing_.renderer_ = global_systems_->GetSystem<RendererInstancing> ();
-		global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<ParallaxBackground> ()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer> ();
+		//global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<ParallaxBackground> ()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer> ();
 		global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<Text> ()->text_renderer_ = global_systems_->GetSystem<TextRenderer> ();
 
 		//Create sound
