@@ -49,7 +49,8 @@ namespace JZEngine
 			std::string		name_;
 			int*			layer_;
 			int*			texture_id_;
-			LayerData(const std::string& name, int* layer, int* textureId) : name_(name), layer_(layer), texture_id_(textureId) {}
+			int				uid_;
+			LayerData(const std::string& name, int uid, int* layer, int* textureId) : name_(name), uid_(uid), layer_(layer), texture_id_(textureId) {}
 		};
 
 		SceneTree(float x, float y, float sx, float sy);

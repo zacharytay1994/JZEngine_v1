@@ -159,7 +159,7 @@ namespace JZEngine
 		// add to layers if has layer and texture component
 		if (entity->HasComponent(1))
 		{
-			layers_.emplace_back(entity->name_, &entity->GetComponent<SpriteLayer>().layer_, &entity->GetComponent<Texture>().texture_id_);
+			layers_.emplace_back(entity->name_, entity->ecs_id_, &entity->GetComponent<SpriteLayer>().layer_, &entity->GetComponent<Texture>().texture_id_);
 		}
 		for (auto& c : entity->children_)
 		{
@@ -218,14 +218,14 @@ namespace JZEngine
 			//ImGui::TableNextColumn();
 			//ImGui::TableNextColumn();
 			ss.str("");
-			ss << "##layer" << uid++;
+			ss << "##" << layer.uid_;
 			if (ImGui::BeginTable(ss.str().c_str(), 2))
 			{
 				ImGui::TableNextColumn();
 				ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture(*layer.texture_id_)->GetRendererID()), { 50.0f, 50.0f }, { 0,1 }, { 1,0 });
 				ImGui::TableNextColumn();
-				ImGui::InputInt(ss.str().c_str(), &*layer.layer_, 0);
 				ImGui::Text(layer.name_.c_str());
+				ImGui::InputInt(ss.str().c_str(), &*layer.layer_, 0);
 				ImGui::EndTable();
 			}
 		}
