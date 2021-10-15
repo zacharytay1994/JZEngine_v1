@@ -47,7 +47,7 @@ namespace JZEngine
 	struct NonInstanceShader
 	{
 		int shader_id_{ 0 };
-		Vec3f tint{ 0.0f , 0.0f ,0.0f };
+		Vec4f tint{ 0.0f , 0.0f ,0.0f , 1.0f };
 	};
 
 	struct NotBackground
@@ -67,7 +67,7 @@ namespace JZEngine
 
 		Sprite ()
 		{
-			RegisterComponents<Transform , Texture , Animation2D , NonInstanceShader, SpriteLayer> ();
+			RegisterComponents<Transform , Texture , Animation2D , NonInstanceShader , SpriteLayer> ();
 		}
 
 		// virtual void FrameBegin ( const float& dt ) override
