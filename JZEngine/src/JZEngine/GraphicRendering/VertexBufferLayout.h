@@ -21,12 +21,17 @@ namespace JZEngine
 
 		static unsigned int GetSizeOfType ( unsigned int type )
 		{
-			switch( type )
+			if( type == GL_FLOAT )
 			{
-				case GL_FLOAT: return 4;
-				case GL_UNSIGNED_INT: return 4 ;
-				case GL_UNSIGNED_BYTE: return 1 ;
-				default: return 0 ;
+				return 4 ;
+			}
+			else if( type == GL_UNSIGNED_INT )
+			{
+				return 4 ;
+			}
+			else if( type == GL_UNSIGNED_BYTE )
+			{
+				return 1 ;
 			}
 			JZ_ASSERT ( false , "VertexBufferElement" )( type );
 			return 0 ;

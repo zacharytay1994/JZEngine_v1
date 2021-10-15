@@ -11,13 +11,13 @@
 
 namespace JZEngine
 {
-	GLenum glCheckError_( const char* function, int line )
+	GLenum glCheckError_ ( const char* function , int line )
 	{
 		GLenum error_code_;
-		while ( ( error_code_ = glGetError() != GL_NO_ERROR ) )
+		while( ( error_code_ = glGetError () != GL_NO_ERROR ) )
 		{
 			std::string error_{};
-			switch ( error_code_ )
+			switch( error_code_ )
 			{
 				case GL_INVALID_ENUM:
 					error_ = "INVALID_ENUM";
@@ -51,15 +51,18 @@ namespace JZEngine
 	}
 
 	// APIENTRY is an alias for WINAPI.
-	void APIENTRY glDebugOutput( GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, const char* message, const void* userParam )
+	void APIENTRY glDebugOutput ( GLenum source , GLenum type , unsigned int id , GLenum severity , GLsizei length , const char* message , const void* userParam )
 	{
+		UNREFERENCED_PARAMETER ( userParam );
+		UNREFERENCED_PARAMETER ( length );
+
 		// ignore these non-significant error codes
-		if ( id == 131169 || id == 131185 || id == 131218 || id == 131204 ) return;
+		if( id == 131169 || id == 131185 || id == 131218 || id == 131204 ) return;
 
 		std::cout << "---------------" << std::endl;
 		std::cout << "Debug message (" << id << "): " << message << std::endl;
 
-		switch ( source )
+		switch( source )
 		{
 			case GL_DEBUG_SOURCE_API:
 				std::cout << "Source: API";
@@ -81,7 +84,7 @@ namespace JZEngine
 				break;
 		} std::cout << std::endl;
 
-		switch ( type )
+		switch( type )
 		{
 			case GL_DEBUG_TYPE_ERROR:
 				std::cout << "Type: Error";
@@ -113,7 +116,7 @@ namespace JZEngine
 		}
 		std::cout << std::endl;
 
-		switch ( severity )
+		switch( severity )
 		{
 			case GL_DEBUG_SEVERITY_HIGH:
 				std::cout << "Severity: high";
@@ -133,14 +136,14 @@ namespace JZEngine
 	}
 
 	// enable OpenGL debug context if context allows for debug context
-	void EnableOpenGLDebugging()
+	void EnableOpenGLDebugging ()
 	{
-		glEnable( GL_DEBUG_OUTPUT );
+		glEnable ( GL_DEBUG_OUTPUT );
 		// makes sure errors are displayed synchronously
 		// it tells OpenGL to directly call the callback function the moment an error occurred
-		glEnable( GL_DEBUG_OUTPUT_SYNCHRONOUS );
-		glDebugMessageCallback( glDebugOutput, nullptr );
+		glEnable ( GL_DEBUG_OUTPUT_SYNCHRONOUS );
+		glDebugMessageCallback ( glDebugOutput , nullptr );
 		// filter the type(s) of errors
-		glDebugMessageControl( GL_DEBUG_SOURCE_API, GL_DEBUG_TYPE_ERROR, GL_DEBUG_SEVERITY_HIGH, 0, nullptr, GL_TRUE );
+		glDebugMessageControl ( GL_DEBUG_SOURCE_API , GL_DEBUG_TYPE_ERROR , GL_DEBUG_SEVERITY_HIGH , 0 , nullptr , GL_TRUE );
 	}
 }
