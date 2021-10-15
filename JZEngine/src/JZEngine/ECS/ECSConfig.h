@@ -31,6 +31,7 @@ namespace JZEngine
 				std::tuple<
 
 				Transform ,
+				SpriteLayer,
 				Texture ,
 				NonInstanceShader ,
 				InstanceShader ,

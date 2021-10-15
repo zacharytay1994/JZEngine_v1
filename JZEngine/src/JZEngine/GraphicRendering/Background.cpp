@@ -9,12 +9,13 @@
 #include "Background.h"
 #include "../ECS/ECSConfig.h"
 #include "../EngineGUI/EngineGUI.h"
+#include "RenderQueue.h"
 
 namespace JZEngine
 {
 	ParallaxBackground::ParallaxBackground ()
 	{
-		RegisterComponents<Transform , Texture , Parallax , NonInstanceShader> ();
+		RegisterComponents<Transform , Texture , Parallax , NonInstanceShader, SpriteLayer> ();
 	}
 	void ParallaxBackground::Update ( const float& dt )
 	{
@@ -22,6 +23,7 @@ namespace JZEngine
 		Texture& texture = GetComponent<Texture> ();
 		Parallax& background = GetComponent<Parallax> ();
 		NonInstanceShader& shader = GetComponent<NonInstanceShader> ();
+		SpriteLayer& sprite_layer = GetComponent<SpriteLayer>();
 
 		float trans_x_ = transform.size_.x * transform.scale_.x;
 		float trans_y_ = transform.size_.y * transform.scale_.y;
@@ -53,10 +55,15 @@ namespace JZEngine
 					transform.rotation_ , transform.scale_ , transform.size_
 				);
 
-				sprite_renderer_.DrawSprite ( shader.shader_id_ ,
+				/*sprite_renderer_.DrawSprite ( shader.shader_id_ ,
 											  texture.texture_id_ ,
 											  ( Math::GetProjectionTransformNonTransposed () * EngineGUI::GetCameraTransform() * transform.model_transform_ ).Transpose () ,
-											  shader.tint );
+											  shader.tint );*/
+				RenderQueue::DrawQueue(	sprite_layer.layer_,
+										shader.shader_id_,
+										texture.texture_id_,
+										(Math::GetProjectionTransformNonTransposed() * EngineGUI::GetCameraTransform() * transform.model_transform_).Transpose(),
+										shader.tint);
 			}
 
 			for( int i = 1 ; i <= repeat_left ; ++i )
@@ -67,10 +74,15 @@ namespace JZEngine
 					transform.rotation_ , transform.scale_ , transform.size_
 				);
 
-				sprite_renderer_.DrawSprite ( shader.shader_id_ ,
+				/*sprite_renderer_.DrawSprite ( shader.shader_id_ ,
 											  texture.texture_id_ ,
 											  ( Math::GetProjectionTransformNonTransposed () * EngineGUI::GetCameraTransform() * transform.model_transform_ ).Transpose () ,
-											  shader.tint );
+											  shader.tint );*/
+				RenderQueue::DrawQueue(	sprite_layer.layer_,
+										shader.shader_id_,
+										texture.texture_id_,
+										(Math::GetProjectionTransformNonTransposed() * EngineGUI::GetCameraTransform() * transform.model_transform_).Transpose(),
+										shader.tint);
 			}
 		}
 
@@ -103,10 +115,15 @@ namespace JZEngine
 					transform.rotation_ , transform.scale_ , transform.size_
 				);
 
-				sprite_renderer_.DrawSprite ( shader.shader_id_ ,
+				/*sprite_renderer_.DrawSprite ( shader.shader_id_ ,
 											  texture.texture_id_ ,
 											  ( Math::GetProjectionTransformNonTransposed () * EngineGUI::GetCameraTransform() * transform.model_transform_ ).Transpose () ,
-											  shader.tint );
+											  shader.tint );*/
+				RenderQueue::DrawQueue(	sprite_layer.layer_,
+										shader.shader_id_,
+										texture.texture_id_,
+										(Math::GetProjectionTransformNonTransposed() * EngineGUI::GetCameraTransform() * transform.model_transform_).Transpose(),
+										shader.tint);
 
 			}
 
@@ -119,9 +136,14 @@ namespace JZEngine
 					transform.rotation_ , transform.scale_ , transform.size_
 				);
 
-				sprite_renderer_.DrawSprite ( shader.shader_id_ , texture.texture_id_ ,
+				/*sprite_renderer_.DrawSprite ( shader.shader_id_ , texture.texture_id_ ,
 											  ( Math::GetProjectionTransformNonTransposed () * EngineGUI::GetCameraTransform() * transform.model_transform_ ).Transpose () ,
-											  shader.tint );
+											  shader.tint );*/
+				RenderQueue::DrawQueue(	sprite_layer.layer_,
+										shader.shader_id_,
+										texture.texture_id_,
+										(Math::GetProjectionTransformNonTransposed()* EngineGUI::GetCameraTransform()* transform.model_transform_).Transpose(),
+										shader.tint);
 
 			}
 
@@ -129,9 +151,16 @@ namespace JZEngine
 
 		transform.model_transform_ = Math::GetModelTransformNonTransposed ( transform.position_ , transform.rotation_ , transform.scale_ , transform.size_ );
 
-		sprite_renderer_.DrawSprite ( shader.shader_id_ ,
+		/*sprite_renderer_.DrawSprite ( shader.shader_id_ ,
 									  texture.texture_id_ ,
 									  ( Math::GetProjectionTransformNonTransposed () * EngineGUI::GetCameraTransform()* transform.model_transform_ ).Transpose () ,
-									  shader.tint );
+									  shader.tint );*/
+		RenderQueue::DrawQueue(	sprite_layer.layer_,
+								shader.shader_id_,
+								texture.texture_id_,
+								(Math::GetProjectionTransformNonTransposed()* EngineGUI::GetCameraTransform()* transform.model_transform_).Transpose(),
+								shader.tint);
+
+		RenderQueue::GUILayerData(&sprite_layer.layer_, texture.texture_id_);
 	}
 }

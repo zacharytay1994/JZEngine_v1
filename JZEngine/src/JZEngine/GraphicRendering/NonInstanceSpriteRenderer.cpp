@@ -8,6 +8,7 @@
 #include <PCH.h>
 #include "NonInstanceSpriteRenderer.h"
 #include "../EngineGUI/EngineGUI.h"
+#include "RenderQueue.h"
 
 namespace JZEngine
 {
@@ -48,8 +49,18 @@ namespace JZEngine
 
 		transform.model_transform_ = Math::GetModelTransformNonTransposed(transform.position_, transform.rotation_, transform.scale_, transform.size_);
 
-		sprite_renderer_.DrawSprite(shader.shader_id_, texture.texture_id_, (Math::GetProjectionTransformNonTransposed() * EngineGUI::GetCameraTransform() * transform.model_transform_).Transpose(), shader.tint, anim2d.frame_, anim2d.rows_, anim2d.column_, anim2d.animation_check_);
+		//sprite_renderer_.DrawSpriteQueue(GetComponent<SpriteLayer>().layer_, shader.shader_id_, texture.texture_id_, (Math::GetProjectionTransformNonTransposed() * EngineGUI::GetCameraTransform() * transform.model_transform_).Transpose(), shader.tint, anim2d.frame_, anim2d.rows_, anim2d.column_, anim2d.animation_check_);
+		//sprite_renderer_.DrawSprite(shader.shader_id_, texture.texture_id_, (Math::GetProjectionTransformNonTransposed() * EngineGUI::GetCameraTransform() * transform.model_transform_).Transpose(), shader.tint, anim2d.frame_, anim2d.rows_, anim2d.column_, anim2d.animation_check_);
+		SpriteLayer& layer = GetComponent<SpriteLayer>();
+		RenderQueue::DrawQueue(layer.layer_, shader.shader_id_, texture.texture_id_, (Math::GetProjectionTransformNonTransposed() * EngineGUI::GetCameraTransform() * transform.model_transform_).Transpose(), shader.tint, anim2d.frame_, anim2d.rows_, anim2d.column_, anim2d.animation_check_);
+		RenderQueue::GUILayerData(&layer.layer_, texture.texture_id_);
 
 		RendererDebug::DrawSpriteSquare(transform.position_, { transform.scale_.x * transform.size_.x, transform.scale_.y * transform.size_.y });
 	}
+
+	/*void Sprite::FrameEnd(const float& dt)
+	{
+		UNREFERENCED_PARAMETER(dt);
+		sprite_renderer_.FlushDrawAllSprites();
+	}*/
 }

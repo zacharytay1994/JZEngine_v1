@@ -42,6 +42,16 @@ namespace JZEngine
 		char											new_entity_name_[MAX_NAME_SIZE];	/*!< buffer for custom name when creating new entities */
 		std::unordered_map<std::string, unsigned int>*	names_;								/*!< for repeated names to add an index behind */
 		bool											hide_{ false };
+		bool											scene_{ true };
+
+		struct LayerData
+		{
+			std::string		name_;
+			int*			layer_;
+			int*			texture_id_;
+			int				uid_;
+			LayerData(const std::string& name, int uid, int* layer, int* textureId) : name_(name), uid_(uid), layer_(layer), texture_id_(textureId) {}
+		};
 
 		SceneTree(float x, float y, float sx, float sy);
 		~SceneTree();
@@ -53,6 +63,12 @@ namespace JZEngine
 		 * ****************************************************************************************************
 		*/
 		void Render();
+
+		void RenderScene();
+
+		void RecursivelyAddChildObjectsToLayerData(ECS::Entity* entity);
+		void BuildLayerData();
+		void RenderLayers();
 
 		/*!
 		 * @brief ___JZEngine::SceneTree::RenderAllChildObjects()___
@@ -88,5 +104,8 @@ namespace JZEngine
 
 		Confirmation confirmation_flag_{ Confirmation::NONE };
 		void RenderConfirmation();
+
+	private:
+		std::vector<LayerData> layers_;
 	};
 }

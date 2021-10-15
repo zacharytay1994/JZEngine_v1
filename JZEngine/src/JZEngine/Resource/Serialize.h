@@ -129,6 +129,13 @@ namespace JZEngine
 				component.size_.x,
 				component.size_.y);
 		}
+
+		template <>
+		static void SerializeComponent(SpriteLayer& component, std::stringstream& stream, MODE mode)
+		{
+			SERIALIZE(stream, mode,
+				component.layer_);
+		}
 		
 		template <>
 		static void SerializeComponent(Texture& component, std::stringstream& stream, MODE mode)
