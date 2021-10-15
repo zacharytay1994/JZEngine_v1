@@ -34,7 +34,10 @@ namespace JZEngine
 		float InvMass; // 1/kg
 		float Restitution;
 		//The coefficient of Restitution [ 0.0f to 1.0f ]
-		
+
+		float StaticFriction;
+		float DynamicFriction;
+
 		bool IsStatic{ true };
 		bool IsAlive{ true };
 

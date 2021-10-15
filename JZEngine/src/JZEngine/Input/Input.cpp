@@ -199,6 +199,7 @@ namespace JZEngine
 #ifdef _DEBUG
         std::cout << "fbsize_cb getting called!!!" << std::endl;
 #endif
+        UNREFERENCED_PARAMETER(width, height);
     }
 
     bool InputHandler::IsKeyPressed(KEY key) 

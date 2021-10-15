@@ -29,6 +29,7 @@ namespace JZEngine
 
 	void PhysicsSystem::FrameBegin(const float& dt) 
 	{
+		UNREFERENCED_PARAMETER(dt);
 		for (int i = 0; i < physics_cont.size(); ++i)
 		{
 			if (physics_cont[i]->IsAlive == false)

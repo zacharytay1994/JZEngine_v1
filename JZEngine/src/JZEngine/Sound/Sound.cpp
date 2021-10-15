@@ -57,6 +57,7 @@ namespace JZEngine
     // To be called every loop
     void SoundSystem::Update(float dt)
     {
+        UNREFERENCED_PARAMETER(dt);
         fmodsystem->update();
     }
     /**

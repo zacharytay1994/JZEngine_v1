@@ -28,7 +28,9 @@ namespace JZEngine
 	InvMass{ 1.0f },
 	Restitution{ 0.5f },
 	IsStatic{ true },
-	IsAlive{ true }
+	IsAlive{ true },
+	StaticFriction{ 0.5f},
+	DynamicFriction{0.3f}
 	{}
 
 	PhysicsComponent::PhysicsComponent(const PhysicsComponent& s) { std::memcpy(this, &s, sizeof(s)); }
