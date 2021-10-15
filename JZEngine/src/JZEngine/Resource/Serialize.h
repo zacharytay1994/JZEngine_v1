@@ -52,13 +52,13 @@ namespace JZEngine
 		static void Save();
 
 		static bool SerializeEntity(ECS::ECSInstance* ecs, ECS::Entity& entity);
-		static bool LoadEntity(ECS::ECSInstance* ecs, const std::string& name);
+		static int	LoadEntity(ECS::ECSInstance* ecs, const std::string& name);
 		static bool DeserializeEntityFromFile(const std::string& name);
 		static void ListAllSceneFiles();
 		static void ListAllPrefabFiles();
 
 		template <typename STREAM>
-		static void DeSerializeAllChildEntities(ECS::ECSInstance* ecs, STREAM& file, std::stringstream& ss, unsigned int parent = -1)
+		static int DeSerializeAllChildEntities(ECS::ECSInstance* ecs, STREAM& file, std::stringstream& ss, unsigned int parent = -1)
 		{
 			// read line of file
 			// if no parent
@@ -101,6 +101,8 @@ namespace JZEngine
 				next_ss << line;
 				DeSerializeAllChildEntities(ecs, file, next_ss, id);
 			}
+
+			return id;
 		}
 
 		static void DeserializeScene(ECS::ECSInstance* ecs, const std::string& name);

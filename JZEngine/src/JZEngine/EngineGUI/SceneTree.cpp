@@ -143,7 +143,7 @@ namespace JZEngine
 				if (id != -1)
 				{
 					ECS::Entity* e = &ecs_instance_->entity_manager_.GetEntity(id);
-					if (filter.PassFilter(e->name_.c_str()))
+					if (filter.PassFilter(e->name_.c_str()) && e->persistant_)
 					{
 						RenderAllChildObjects(e, ++popup_id);
 					}
@@ -157,7 +157,7 @@ namespace JZEngine
 	void SceneTree::RecursivelyAddChildObjectsToLayerData(ECS::Entity* entity)
 	{
 		// add to layers if has layer and texture component
-		if (entity->HasComponent(1))
+		if (entity->HasComponent(1) && entity->persistant_)
 		{
 			layers_.emplace_back(entity->name_, entity->ecs_id_, &entity->GetComponent<SpriteLayer>().layer_, &entity->GetComponent<Texture>().texture_id_);
 		}
@@ -253,9 +253,9 @@ namespace JZEngine
 		// add own tree node
 		ImGui::SetNextItemOpen ( true , ImGuiCond_Once );
 		bool is_selected = false;
-		if( selected_entity_ )
+		if(	selected_entity_id_ != -1	)
 		{
-			if( entity->entity_id_ == selected_entity_->entity_id_ )
+			if( entity->entity_id_ == selected_entity_id_ )
 			{
 				is_selected = true;
 				ImGui::PushStyleColor ( ImGuiCol_Text , { 0.0f,1.0f,0.0f,1.0f } );
@@ -267,7 +267,8 @@ namespace JZEngine
 		// if a treenode is clicked, make that entity the selected_entity_
 		if( ImGui::IsItemClicked () )
 		{
-			selected_entity_ = entity;
+			//selected_entity_ = entity;
+			selected_entity_id_ = entity->entity_id_;
 		}
 		std::stringstream unique_popup_id_;
 		unique_popup_id_ << id;
@@ -293,7 +294,8 @@ namespace JZEngine
 			if( ImGui::Selectable ( "Remove Entity" ) )
 			{
 				ecs_instance_->RemoveEntity ( entity->entity_id_ );
-				selected_entity_ = nullptr;
+				//selected_entity_ = nullptr;
+				selected_entity_id_ = -1;
 			}
 			if (ImGui::Selectable("Rename"))
 			{
@@ -378,7 +380,7 @@ namespace JZEngine
 		// remove all root entities which also removes all children
 		for (int i = static_cast<int>(ecs_instance_->entity_manager_.root_ids_.size() - 1); i >= 0; --i)
 		{
-			if (ecs_instance_->entity_manager_.root_ids_[i] != -1)
+			if (ecs_instance_->entity_manager_.root_ids_[i] != -1 && ecs_instance_->GetEntity(ecs_instance_->entity_manager_.root_ids_[i]).persistant_)
 			{
 				ecs_instance_->RemoveEntity(ecs_instance_->entity_manager_.root_ids_[i]);
 			}
@@ -388,6 +390,7 @@ namespace JZEngine
 			name.second = 0;
 		}
 		*current_scene_name_ = "New Scene";
+		selected_entity_id_ = -1;
 	}
 
 	template <typename... ARGS>
@@ -488,5 +491,19 @@ namespace JZEngine
 			ImGui::EndTable();
 		}
 		ImGui::End();
+	}
+
+	void SceneTree::SetSelectedEntity(int id)
+	{
+		selected_entity_id_ = id;
+	}
+
+	ECS::Entity* SceneTree::GetSelectedEntity()
+	{
+		if (selected_entity_id_ != -1)
+		{
+			return &ecs_instance_->GetEntity(selected_entity_id_);
+		}
+		return nullptr;
 	}
 }

@@ -111,12 +111,12 @@ namespace JZEngine
 		return true;
 	}
 
-	bool Serialize::LoadEntity(ECS::ECSInstance* ecs, const std::string& name)
+	int Serialize::LoadEntity(ECS::ECSInstance* ecs, const std::string& name)
 	{
 		if (entities_.find(name) == entities_.end())
 		{
 			Log::Warning("Serialize", "Tried to load entity {} that does not exist.", name);
-			return false;
+			return -1;
 		}
 		std::stringstream file;
 		std::stringstream ss;
@@ -124,8 +124,7 @@ namespace JZEngine
 		std::string line;
 		std::getline(file, line);
 		ss << line;
-		DeSerializeAllChildEntities(ecs, file, ss);
-		return true;
+		return DeSerializeAllChildEntities(ecs, file, ss);
 	}
 
 	bool Serialize::DeserializeEntityFromFile(const std::string& name)
@@ -238,7 +237,7 @@ namespace JZEngine
 		{
 			for (auto& id : ecs->entity_manager_.root_ids_)
 			{
-				if (id != -1)
+				if (id != -1 && ecs->entity_manager_.GetEntity(id).persistant_)
 				{
 					// count number of children
 					// recursively render all children of a root entity
