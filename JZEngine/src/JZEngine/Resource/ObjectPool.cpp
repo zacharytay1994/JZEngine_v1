@@ -23,7 +23,7 @@ namespace JZEngine
 		}
 	}
 
-	int ObjectPool::ActivateEntity(ECS::ECSInstance* ecs, const std::string& prefab)
+	int ObjectPool::GetEntity(ECS::ECSInstance* ecs, const std::string& prefab)
 	{
 		JZ_ASSERT(pools_.find(prefab) != pools_.end(), "Trying to create pool entity not in pool.")(prefab);
 		auto& pool_data = pools_[prefab];
@@ -37,8 +37,7 @@ namespace JZEngine
 		// expand pool
 		Log::Warning("Main", "Not enough objects in pool {}. Expanding.", prefab);
 		CreatePool(ecs, prefab, static_cast<unsigned int>(pool_data.pool_.size() * 0.5f));
-		return ActivateEntity(ecs, prefab);
-		//return pools_[prefab].pool_[0];
+		return GetEntity(ecs, prefab);
 	}
 
 	void ObjectPool::FrameEnd(ECS::ECSInstance* ecs)
@@ -55,6 +54,24 @@ namespace JZEngine
 					pool.second.free_pool_slots_.emplace_back(eid);
 				}
 			}
+		}
+	}
+
+	void ObjectPool::UpdatePool(ECS::ECSInstance* ecs, const std::string& prefab)
+	{
+		if (pools_.find(prefab) != pools_.end())
+		{
+			int pool_size = 0;
+			// remove all objects from pool
+			for (auto& e : pools_[prefab].pool_)
+			{
+				ecs->RemoveEntity(e);
+			}
+			pool_size += pools_[prefab].pool_.capacity();
+			pools_[prefab].pool_.clear();
+			pools_[prefab].free_pool_slots_.clear();
+			// recreate pool with updated prefab
+			CreatePool(ecs, prefab, pool_size);
 		}
 	}
 }

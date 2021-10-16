@@ -14,8 +14,9 @@ namespace JZEngine
 	struct ObjectPool
 	{
 		static void		CreatePool(ECS::ECSInstance* ecs, const std::string& prefab, unsigned int count, bool persistant = false);
-		static int		ActivateEntity(ECS::ECSInstance* ecs, const std::string& prefab);
+		static int		GetEntity(ECS::ECSInstance* ecs, const std::string& prefab);
 		static void		FrameEnd(ECS::ECSInstance* ecs);
+		static void		UpdatePool(ECS::ECSInstance* ecs, const std::string& prefab);
 	private:
 		ECS::ECSInstance* ecs_instance_{ nullptr };
 		struct PoolData

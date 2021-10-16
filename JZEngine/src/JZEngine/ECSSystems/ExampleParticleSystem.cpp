@@ -22,7 +22,7 @@ namespace JZEngine
 		ExampleParticleSystemComponent& epsc = GetComponent<ExampleParticleSystemComponent>();
 		if (epsc.timer_ > 0.02f)
 		{
-			int id = ObjectPool::ActivateEntity(ecs_instance_, "TestParticle");
+			int id = ObjectPool::GetEntity(ecs_instance_, "TestParticle");
 
 			// get particle entity and sets its attributes
 			ECS::Entity& e = ecs_instance_->GetEntity(id);

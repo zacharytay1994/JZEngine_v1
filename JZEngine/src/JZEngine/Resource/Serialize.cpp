@@ -11,6 +11,7 @@
 #include "../ECS/ECS.h"
 #include "../EngineConfig.h"
 #include "../DebugTools/Log.h"
+#include "ObjectPool.h"
 
 namespace JZEngine
 {
@@ -107,6 +108,7 @@ namespace JZEngine
 			file.close();
 			Log::Info("Serialize", "- Successfully serialized entity {} as {}.", entity.name_, entity.name_);
 			DeserializeEntityFromFile(entity.name_);
+			ObjectPool::UpdatePool(ecs, entity.name_);
 		}
 		return true;
 	}
