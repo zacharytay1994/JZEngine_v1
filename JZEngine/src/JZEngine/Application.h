@@ -15,6 +15,8 @@
 #include "ECS/ECS.h"
 #include "Resource/ResourceManager.h"
 
+#include "GraphicRendering/PostProcessor.h"
+
 // jzgl should be included last as glad.h should be included after
 // any library/file that includes windows.h 
 #include "JZGL/JZ_GL.h"
@@ -61,7 +63,8 @@ namespace JZEngine
 		//JZEngine::ECS::ECSInstance*	const	ecs_instance_;		/*!< ecs_instance handling all ecs stuffs */
 		//JZEngine::EngineGUI					engine_gui_;		/*!< handles rendering and updating of engine tools gui */
 		//Renderer* const						renderer_;			/*!< renderer handles all opengl rendering */
-
+		PostProcessor pp ; 
+		
 	};
 
 	/*!

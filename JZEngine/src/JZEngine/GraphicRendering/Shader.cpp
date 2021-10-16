@@ -19,6 +19,7 @@ namespace JZEngine
 		if( GL_FALSE == FileExists ( file_name ) )
 		{
 			log_string = "File not found";
+			JZ_ASSERT ( false , log_string )( file_name );
 			return GL_FALSE;
 		}
 
@@ -28,6 +29,7 @@ namespace JZEngine
 			if( 0 == pgm_handle )
 			{
 				log_string = "Cannot create program handle";
+				JZ_ASSERT ( false , log_string )( file_name );
 				return GL_FALSE;
 			}
 		}
@@ -36,6 +38,7 @@ namespace JZEngine
 		if( !shader_file )
 		{
 			log_string = "Error opening file " + file_name;
+			JZ_ASSERT ( false , log_string )( file_name );
 			return GL_FALSE;
 		}
 
@@ -167,6 +170,26 @@ namespace JZEngine
 		glUseProgram ( 0 );
 	}
 
+	void Shader::ActiveUniformsList () const
+	{
+		GLint max_length;
+		glGetProgramiv ( pgm_handle , GL_ACTIVE_UNIFORM_MAX_LENGTH , &max_length );
+		GLchar* pname = new GLchar[ max_length ];
+		GLint num_uniforms;
+		glGetProgramiv ( pgm_handle , GL_ACTIVE_UNIFORMS , &num_uniforms );
+		std::cout << "Location : Name\n";
+		for( GLint i = 0; i < num_uniforms; ++i )
+		{
+			GLsizei written;
+			GLint size;
+			GLenum type;
+			glGetActiveUniform ( pgm_handle , i , max_length , &written , &size , &type , pname );
+			GLint loc = glGetUniformLocation ( pgm_handle , pname );
+			std::cout << loc << " : " << pname << std::endl;
+		}
+		delete [] pname;
+	}
+
 	void Shader::SetUniform ( GLchar const* name , GLboolean val )
 	{
 		GLint loc = glGetUniformLocation ( pgm_handle , name );
@@ -191,6 +214,21 @@ namespace JZEngine
 		{
 			std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
 		}
+	}
+
+	void Shader::SetUniform ( GLchar const* name , GLfloat* val )
+	{
+
+		//	GLint loc = glGetUniformLocation ( pgm_handle , name );
+		//	if( loc >= 0 )
+		//	{
+		//		glUniform1f ( loc , val );
+		//	}
+		//	else
+		//	{
+		//		std::cout << "Uniform variable " << name << " doesn't exist" << std::endl;
+		//	}
+
 	}
 
 	void Shader::SetUniform ( GLchar const* name , GLfloat val )

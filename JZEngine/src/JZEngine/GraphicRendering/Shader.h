@@ -27,9 +27,11 @@ namespace JZEngine
 
 		void Bind () const;
 		void Unbind () const;
+		void ActiveUniformsList () const;
 
 		void SetUniform ( GLchar const* name , GLboolean val );
 		void SetUniform ( GLchar const* name , GLint val );
+		void SetUniform ( GLchar const* name , GLfloat* val );
 		void SetUniform ( GLchar const* name , GLfloat val );
 		void SetUniform ( GLchar const* name , GLfloat x , GLfloat y );
 		void SetUniform ( GLchar const* name , GLfloat x , GLfloat y , GLfloat z );

@@ -16,7 +16,6 @@
 #include "GraphicRendering/Renderer.h"
 #include "GraphicRendering/RendererInstancing.h"
 #include "GraphicRendering/RendererDebug.h"
-#include "GraphicRendering/SpriteRenderer.h"
 #include "GraphicRendering/TextRenderer.h"
 #include "GraphicRendering/RenderQueue.h"
 
@@ -46,7 +45,7 @@ namespace JZEngine
 {
 	Application::Application ()
 		:
-		msgbus( new MessageBus() ),
+		msgbus ( new MessageBus () ) ,
 		global_systems_ ( new GlobalSystemsManager () )
 	{
 		/*testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
@@ -61,13 +60,13 @@ namespace JZEngine
 		global_systems_->AddSystem<Renderer> ( "Default Renderer" );
 		global_systems_->AddSystem<RendererInstancing> ( "Instance Renderer" );
 		global_systems_->AddSystem<RendererDebug> ( "Debug Renderer" );
-		global_systems_->AddSystem<RenderQueue>("Render Queue");
+		global_systems_->AddSystem<RenderQueue> ( "Render Queue" );
 		global_systems_->AddSystem<EngineGUI> ( "Engine GUI" );
 		global_systems_->AddSystem<SoundSystem> ( "Sound System" );
 		global_systems_->AddSystem<TextRenderer> ( "Text Renderer" );
 
-		global_systems_->GetSystem<GLFW_Instance>()->UpdateViewportDimensions();
-		global_systems_->GetSystem<RenderQueue>()->SetRenderer(global_systems_->GetSystem<Renderer>());
+		global_systems_->GetSystem<GLFW_Instance> ()->UpdateViewportDimensions ();
+		global_systems_->GetSystem<RenderQueue> ()->SetRenderer ( global_systems_->GetSystem<Renderer> () );
 
 		// give subsystems handle to global systems
 		/*global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<Sprite> ()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer> ();*/
@@ -84,11 +83,13 @@ namespace JZEngine
 		JZEngine::Log::Info ( "Main" , "[{}] Up and Running! v{}" , Settings::engine_name , Settings::version );
 
 		// initialize all global systems
-		global_systems_->PostInit();
+		global_systems_->PostInit ();
 		PerformanceData::Init ();
 		Serialize::Load ();
 
 		msgbus->subscribe ( global_systems_->GetSystem<SoundSystem> () , &SoundSystem::playSound );
+
+		pp.Init ( Settings::camera_width , Settings::camera_height );
 
 		//change
 		/*ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
@@ -240,10 +241,14 @@ namespace JZEngine
 			PerformanceData::FrameStart ();
 			PerformanceData::StartMark ( "Game Loop" , PerformanceData::TimerType::GLOBAL_SYSTEMS );
 
+
 			global_systems_->FrameStart ();
+			global_systems_->Update ( static_cast< float >( dt ) );
 
 
-			global_systems_->Update ( static_cast<float>(dt) );
+			pp.Bind ();
+
+			// begin rendering to postprocessing framebuffer
 
 			//DeltaTime::update_time(1.0);
 			//DeltaTime::update_deltatime(1.0);
@@ -276,6 +281,8 @@ namespace JZEngine
 			if( InputHandler::IsKeyPressed ( KEY::KEY_M ) )
 			{
 				Log::Info ( "Input" , "M press!!!" );
+				std::cout << "M press!!!" << std::endl;
+				pp.shake_ = !pp.shake_ ;
 			}
 			if( InputHandler::IsKeyReleased ( KEY::KEY_M ) )
 			{
@@ -286,10 +293,17 @@ namespace JZEngine
 				Log::Info ( "Input" , "M triggered!!!" );
 			}
 
+
+			// end rendering to postprocessing framebuffer
+			pp.Unbind ();
+			// render postprocessing quad
+			pp.Render ( dt );
+
 			InputHandler::FrameEnd ();//input handler frameend MUST be here before global system->frameend
 
 			auto end_time = std::chrono::high_resolution_clock::now ();
 			global_systems_->FrameEnd ();
+
 
 			PerformanceData::EndMark ( "Game Loop" , PerformanceData::TimerType::GLOBAL_SYSTEMS );
 			PerformanceData::FrameEnd ();
@@ -320,6 +334,7 @@ namespace JZEngine
 			Log::Info("Main", "Clamped dt: {}", clamped_dt);
 			Log::Info("Main", "Actual FPS: {}", 1.0 / actual_dt);
 			Log::Info("Main", "Clamped FPS: {}", 1.0 / clamped_dt);*/
+
 		}
 
 		//Serialize::Save();

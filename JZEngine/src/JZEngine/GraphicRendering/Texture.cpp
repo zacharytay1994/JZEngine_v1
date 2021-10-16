@@ -30,14 +30,28 @@ namespace JZEngine
 		internal_format_ = GL_RGBA8;
 		data_format_ = GL_RGBA;
 
-		glCreateTextures ( GL_TEXTURE_2D , 1 , &renderer_id_ );
+		/*glCreateTextures ( GL_TEXTURE_2D , 1 , &renderer_id_ );
 		glTextureStorage2D ( renderer_id_ , 1 , internal_format_ , width_ , height_ );
-
 		glTextureParameteri ( renderer_id_ , GL_TEXTURE_MIN_FILTER , GL_LINEAR );
 		glTextureParameteri ( renderer_id_ , GL_TEXTURE_MAG_FILTER , GL_NEAREST );
-
 		glTextureParameteri ( renderer_id_ , GL_TEXTURE_WRAP_S , GL_REPEAT );
-		glTextureParameteri ( renderer_id_ , GL_TEXTURE_WRAP_T , GL_REPEAT );
+		glTextureParameteri ( renderer_id_ , GL_TEXTURE_WRAP_T , GL_REPEAT );*/
+
+		glGenTextures ( 1 , &renderer_id_ );
+		//glCreateTextures ( GL_TEXTURE_2D , 1 , &renderer_id_ );
+		glBindTexture ( GL_TEXTURE_2D , renderer_id_ );
+
+		glTexImage2D ( GL_TEXTURE_2D , 0 , internal_format_ , width_ , height_ , 0 , data_format_ , GL_UNSIGNED_BYTE , NULL );
+		// set Texture wrap and filter modes
+		// set the texture wrapping parameters
+		glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_REPEAT );	
+		glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_REPEAT );
+		// set texture filtering parameters
+		glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR );
+		glTexParameteri ( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR );
+		// unbind texture
+		glBindTexture ( GL_TEXTURE_2D , 0 );
+
 	}
 
 	void Texture2D::Texture2DLoad ( const std::string& path )
@@ -58,7 +72,7 @@ namespace JZEngine
 		// tell stb_image.h to flip loaded texture's on the y-axis
 		stbi_set_flip_vertically_on_load ( true );
 
-		unsigned char * data = stbi_load ( path.c_str () , &width , &height , &channels , 0 );
+		unsigned char* data = stbi_load ( path.c_str () , &width , &height , &channels , 0 );
 		width_ = width;
 		height_ = height;
 

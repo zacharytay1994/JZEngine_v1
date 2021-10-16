@@ -62,6 +62,16 @@ namespace JZEngine
 			{}
 		};
 
+		struct PostProcessorShader
+		{
+			const unsigned int id_;
+			std::string name_;
+			Shader shader_program_;
+
+			PostProcessorShader ( unsigned int id , const std::string& name ) : id_ ( id ) , name_ ( name )
+			{}
+		};
+
 		struct Texture2DID
 		{
 			int id_{ -1 };
@@ -109,6 +119,8 @@ namespace JZEngine
 		static std::vector<InstancedShaderID> instanced_shader_programs_;
 		static std::vector<ShaderID> shader_programs_;
 		static std::vector<DebugShader> debug_shaders_;
+		
+		//static std::vector<PostProcessorShader> post_pro_shaders_;
 		//static std::vector<Texture2DID> texture2ds_;
 
 		ResourceManager();
@@ -118,6 +130,8 @@ namespace JZEngine
 		static unsigned int LoadInstancedShader( const std::string& name, const std::string& vspath, const std::string& fspath );
 		static unsigned int LoadShader(const std::string& name, const std::string& vspath, const std::string& fspath);
 		static unsigned int LoadDebugShader(const std::string& name, const std::string& vspath, const std::string& fspath);
+
+		//static unsigned int LoadPostProcessorShader ( const std::string& name , const std::string& vspath , const std::string& fspath );
 		//static unsigned int LoadTexture2D(const std::string& name, const std::string& path);
 
 		static unsigned int texture_unique_id_;
