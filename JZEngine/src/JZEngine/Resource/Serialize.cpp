@@ -129,6 +129,22 @@ namespace JZEngine
 		return DeSerializeAllChildEntities(ecs, file, ss);
 	}
 
+	void Serialize::ReInitializeEntity(ECS::ECSInstance* ecs, const std::string& prefab, int entityID)
+	{
+		if (entities_.find(prefab) == entities_.end())
+		{
+			Log::Warning("Serialize", "Tried to load entity {} that does not exist.", prefab);
+			return;
+		}
+		std::stringstream file;
+		std::stringstream ss;
+		file << entities_[prefab];
+		std::string line;
+		std::getline(file, line);
+		ss << line;
+		ReInitializeAllChildEntities(ecs, file, ss, entityID);
+	}
+
 	bool Serialize::DeserializeEntityFromFile(const std::string& name)
 	{
 		// open file

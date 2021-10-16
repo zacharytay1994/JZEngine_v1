@@ -12,7 +12,7 @@ namespace JZEngine
 
 	void ExampleParticleSystem::Init()
 	{
-		ObjectPool::CreatePool(ecs_instance_, "TestParticle", 10);
+		//ObjectPool::CreatePool(ecs_instance_, "TestParticle", 10);
 		//ObjectPool::CreatePool(ecs_instance_, "TestParticle", 10);
 	}
 
@@ -22,10 +22,10 @@ namespace JZEngine
 		ExampleParticleSystemComponent& epsc = GetComponent<ExampleParticleSystemComponent>();
 		if (epsc.timer_ > 0.02f)
 		{
-			int id = ObjectPool::GetEntity(ecs_instance_, "TestParticle");
+			ECS::Entity& e = ObjectPool::GetNewEntity(ecs_instance_, "TestParticle");
 
 			// get particle entity and sets its attributes
-			ECS::Entity& e = ecs_instance_->GetEntity(id);
+			//ECS::Entity& e = ecs_instance_->GetEntity(id);
 
 			// eg particle system code
 			e.GetComponent<Transform>().position_ = GetComponent<Transform>().position_;
@@ -50,6 +50,8 @@ namespace JZEngine
 	{
 		ExampleParticleComponent& epc = GetComponent<ExampleParticleComponent>();
 		GetComponent<Transform>().position_ += epc.direction_ * epc.speed_ * dt;
+		GetComponent<Transform>().scale_.x += dt;
+		GetComponent<Transform>().scale_.y += dt;
 		if (epc.lifetime_ <= 0.0f)
 		{
 			epc.lifetime_ = 3.0f;

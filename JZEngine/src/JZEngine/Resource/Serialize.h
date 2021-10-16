@@ -53,6 +53,7 @@ namespace JZEngine
 
 		static bool SerializeEntity(ECS::ECSInstance* ecs, ECS::Entity& entity);
 		static int	LoadEntity(ECS::ECSInstance* ecs, const std::string& name);
+		static void	ReInitializeEntity(ECS::ECSInstance* ecs, const std::string& prefab, int entityID);
 		static bool DeserializeEntityFromFile(const std::string& name);
 		static void ListAllSceneFiles();
 		static void ListAllPrefabFiles();
@@ -103,6 +104,58 @@ namespace JZEngine
 			}
 
 			return id;
+		}
+
+		template <typename STREAM>
+		static void ReInitializeAllChildEntities(ECS::ECSInstance* ecs, STREAM& file, std::stringstream& ss, int entityID/*, unsigned int parent = -1*/)
+		{
+			// read line of file
+			// if no parent
+			//int id;
+			//if (parent == -1)
+			//{
+			//	id = entityID;
+			//}
+			//else // else create with parent
+			//{
+			//	id = ecs->CreateEntity(parent);
+			//}
+			ECS::Entity& entity = ecs->entity_manager_.GetEntity(entityID);
+			// read data and load entity
+			ss >> entity.name_;
+			int children;
+			ss >> children;
+
+			// deserialize all components
+			char c;
+			while (ss >> c)
+			{
+				switch (c)
+				{
+				case 'c':
+					int i;
+					ss >> i;
+					DeSerializeECSConfigComponent(ECS::ECSConfig::Component(), i, entity, ss);
+					break;
+				}
+			}
+
+			// deserialize all children
+			/*for (auto& child : entity.children_)
+			{
+				if (child != -1)
+				{
+					ReInitializeAllChildEntities(ecs, file, next_ss, child);
+				}
+			}*/
+			for (int i = 0; i < children; ++i)
+			{
+				std::string line;
+				std::getline(file, line);
+				std::stringstream next_ss;
+				next_ss << line;
+				ReInitializeAllChildEntities(ecs, file, next_ss, entity.children_[i]);
+			}
 		}
 
 		static void DeserializeScene(ECS::ECSInstance* ecs, const std::string& name);
