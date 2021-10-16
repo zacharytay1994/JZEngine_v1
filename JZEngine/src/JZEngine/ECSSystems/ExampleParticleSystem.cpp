@@ -19,7 +19,8 @@ namespace JZEngine
 	// updates once per entity component per system per frame
 	void ExampleParticleSystem::Update(const float& dt)
 	{
-		if (timer_ > 0.02f)
+		ExampleParticleSystemComponent& epsc = GetComponent<ExampleParticleSystemComponent>();
+		if (epsc.timer_ > 0.02f)
 		{
 			int id = ObjectPool::ActivateEntity(ecs_instance_, "TestParticle");
 
@@ -32,11 +33,11 @@ namespace JZEngine
 			ExampleParticleComponent& epc = e.GetComponent<ExampleParticleComponent>();
 			epc.direction_ = { rand_dir_x, 1.0f };
 			epc.speed_ = static_cast<float>(10 + (rand() % 100 + 1));
-			timer_ = 0.0f;
+			epsc.timer_ = 0.0f;
 		}
 		else
 		{
-			timer_ += dt;
+			epsc.timer_ += dt;
 		}
 	}
 
@@ -68,24 +69,24 @@ namespace JZEngine
 
 	void PopiahParticleSystem::Init()
 	{
-		ObjectPool::CreatePool(ecs_instance_, "SpringRollParticle", 50);
+		//ObjectPool::CreatePool(ecs_instance_, "SpringRollParticle", 50);
 	}
 
 	// updates once per entity component per system per frame
 	void PopiahParticleSystem::Update(const float& dt) 
 	{
-		if (timer_ < 0.0f)
-		{
-			// create spring roll particle
-			int id = ObjectPool::ActivateEntity(ecs_instance_, "SpringRollParticle");
-			// set particle to this particle system position
-			ecs_instance_->GetEntity(id).GetComponent<Transform>().position_ = GetComponent<Transform>().position_;
-			// create 1 popiah per second
-			timer_ = 1.0f;
-		}
-		else
-		{
-			timer_ -= dt;
-		}
+		//if (timer_ < 0.0f)
+		//{
+		//	// create spring roll particle
+		//	int id = ObjectPool::ActivateEntity(ecs_instance_, "SpringRollParticle");
+		//	// set particle to this particle system position
+		//	ecs_instance_->GetEntity(id).GetComponent<Transform>().position_ = GetComponent<Transform>().position_;
+		//	// create 1 popiah per second
+		//	timer_ = 1.0f;
+		//}
+		//else
+		//{
+		//	timer_ -= dt;
+		//}
 	}
 }

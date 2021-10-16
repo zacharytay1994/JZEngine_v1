@@ -7,12 +7,12 @@ namespace JZEngine
 {
 	struct ExampleParticleSystemComponent
 	{
-		char flag{ '\0' };
+		float timer_{ 0.0f };
 	};
 
 	struct ExampleParticleSystem : ECS::System
 	{
-		float timer_ = 0.0f;
+		//float timer_ = 0.0f;
 
 		ExampleParticleSystem();
 

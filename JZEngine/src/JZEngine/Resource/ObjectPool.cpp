@@ -14,27 +14,29 @@ namespace JZEngine
 		JZ_ASSERT(ecs != nullptr, "Creating Pool before ECSInstance is initialized")(ecs);
 		for (int i = 0; i < count; ++i)
 		{
-			pools_[prefab].pool_.emplace_back(Serialize::LoadEntity(ecs, prefab));
-			ECS::Entity& e = ecs->GetEntity(pools_[prefab].pool_.back());
+			auto& pool_data = pools_[prefab];
+			pool_data.pool_.emplace_back(Serialize::LoadEntity(ecs, prefab));
+			ECS::Entity& e = ecs->GetEntity(pool_data.pool_.back());
 			e.FlagActive(false);
 			e.persistant_ = persistant;
-			pools_[prefab].free_pool_slots_.push_back(static_cast<int>(pools_[prefab].pool_.size()-1));
+			pool_data.free_pool_slots_.push_back(static_cast<int>(pool_data.pool_[pool_data.pool_.size() - 1]));
 		}
 	}
 
 	int ObjectPool::ActivateEntity(ECS::ECSInstance* ecs, const std::string& prefab)
 	{
 		JZ_ASSERT(pools_.find(prefab) != pools_.end(), "Trying to create pool entity not in pool.")(prefab);
+		auto& pool_data = pools_[prefab];
 		if (pools_[prefab].free_pool_slots_.size() > 0)
 		{
-			int id = pools_[prefab].free_pool_slots_.back();
-			pools_[prefab].free_pool_slots_.pop_back();
+			int id = pool_data.free_pool_slots_.back();
+			pool_data.free_pool_slots_.pop_back();
 			ecs->GetEntity(id).FlagActive(true);
 			return id;
 		}
 		// expand pool
 		Log::Warning("Main", "Not enough objects in pool {}. Expanding.", prefab);
-		CreatePool(ecs, prefab, static_cast<unsigned int>(pools_[prefab].pool_.size() * 0.5f));
+		CreatePool(ecs, prefab, static_cast<unsigned int>(pool_data.pool_.size() * 0.5f));
 		return ActivateEntity(ecs, prefab);
 		//return pools_[prefab].pool_[0];
 	}
