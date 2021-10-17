@@ -124,11 +124,18 @@ namespace JZEngine
 				pcomponent.m_square.vertices[i] = 
 					Math::GetRotatedVector((pcomponent.m_square.vertices[i] - tcomponent.position_)
 					, Math::DegToRad(tcomponent.rotation_)) + tcomponent.position_;
+				int j = i + 1 < 4 ? i + 1 : 0;
+				Vec2f edge = pcomponent.m_square.vertices[j] - pcomponent.m_square.vertices[i];
+				pcomponent.m_square.normal[i] = Vec2f{ edge.y, -edge.x };
+				pcomponent.m_square.normal[i].Normalize();
 			}
-
+			pcomponent.ModeltoWorld = Math::GetModelTransformNonTransposed(pcomponent.position, pcomponent.rotation, tcomponent.scale_, pcomponent.size);
 		}
 #ifdef PHYSICSDEBUG
 		PhysicsDebug::DebugDrawShape(pcomponent);
+
+		
+
 #endif
 		//to update physics system container of components
 		bool am_inside{ false };

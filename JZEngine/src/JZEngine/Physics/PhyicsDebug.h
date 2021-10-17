@@ -16,5 +16,7 @@ namespace JZEngine
 		void DebugDrawShape(const PhysicsComponent& pcomponent);
 
 		void DebugDrawLine(const Vec2f& p0, const Vec2f& p1);
+
+		void DebugDrawPoint(const Vec2f& p0);
 	}
 }

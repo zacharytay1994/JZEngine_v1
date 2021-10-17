@@ -34,5 +34,9 @@ namespace JZEngine
 		{
 			RendererDebug::DrawLine(p0, p1);
 		}
+		void DebugDrawPoint(const Vec2f& p0)
+		{
+			RendererDebug::DrawPoint(p0);
+		}
 	}
 }

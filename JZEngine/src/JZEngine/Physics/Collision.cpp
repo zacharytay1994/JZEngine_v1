@@ -105,7 +105,7 @@ namespace JZEngine
 		jt = jt / (componentA.InvMass + componentB.InvMass);
 
 		//to not apply minute friction
-		if (Math::Equal(jt, 0.0f))
+		if (Math::IsEqual(jt, 0.0f))
 			return;
 
 		float mu = 0.5f* (componentA.StaticFriction + componentB.StaticFriction);
@@ -252,11 +252,11 @@ namespace JZEngine
 
 		colldata.depth = std::numeric_limits<float>::max();//these values will be set
 		colldata.contact_count = 0;
+#if 0
+		int faceA;
+		float penetrationA
+#else
 
-
-
-
-		
 		for (size_t i = 0; i < squareA.vertices.size(); i++)
 		{
 			Vec2f va = squareA.vertices[i];
@@ -320,6 +320,14 @@ namespace JZEngine
 		}
 
 		return true;
+#endif
+	}
+
+	float Collision::FindAxisLeastPenetration(int& faceIndex, Square& A, Square& B)
+	{
+		float bestDistance = std::numeric_limits<float>::min();
+		int bestIndex;
+		return 0.f;
 	}
 
 	void Collision::ProjectVertices(const std::array<Vec2f,4>& vertices, const Vec2f& axis, float& min, float& max)

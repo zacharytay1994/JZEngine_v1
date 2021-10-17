@@ -22,15 +22,7 @@ namespace JZEngine
 		constexpr float PIx2 = 3.1415926535897932384626433832795f * 2.0f;
 		constexpr float EPSILON = 0.0001f;
 
-		bool Equal(float a, float b)
-		{
-			return std::abs(a - b) <= EPSILON;
-		}
 
-		float Sqr(float a)
-		{
-			return a * a;
-		}
 
 		template <typename T>
 		T RadToDeg(T val)
@@ -120,6 +112,10 @@ namespace JZEngine
 		//}
 
 		bool IsEven(int val);
+
+		bool IsEqual(float a, float b);
+
+		float Sqr(float a);
 
 		void TestMat2(const Mat2d& check = { { 1.0f,2.5f }, { 3.0f,4.0f } }, const Mat2d& against = { { 2.0f,1.0f }, { 4.0f,3.0f } });
 
