@@ -20,7 +20,7 @@ namespace JZEngine
 	velocity{ 0.f, 0.f },
 	acceleration{ 0.0f,0.0f },
 	rotation{ 0.f },
-	rotationalVelocity{ 0.f },
+	angularVelocity{ 0.f },
 	force{ 0.f,0.f },
 	Area{ 0.f },
 	Density{ 0.001f },

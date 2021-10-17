@@ -43,30 +43,38 @@ namespace JZEngine
 	//_____Updates Physic Components____//
 	void PhysicsSystem::Update(const float& dt)
 	{
-		PhysicsComponent& current_pcomponent = GetComponent<PhysicsComponent>();
-		Transform& current_transform = GetComponent<Transform>();
-		current_pcomponent.position = current_transform.position_;
-		current_pcomponent.size = current_transform.size_;
-		current_pcomponent.rotation = current_transform.rotation_;
+		PhysicsComponent& pcomponent = GetComponent<PhysicsComponent>();
+		Transform& tcomponent = GetComponent<Transform>();
+		pcomponent.position = tcomponent.position_;
+		pcomponent.size = tcomponent.size_;
+		pcomponent.rotation = tcomponent.rotation_;
 		
 		//calculate area
 		// Square = size.x * size.y;
 		// Circle = PI * radius * radius
-		
-		if (!current_pcomponent.IsStatic)
+		if (!pcomponent.IsStatic)
 		{
-			if(current_pcomponent.shapeid ==square)
-				current_pcomponent.Area = (current_transform.size_.x * current_transform.size_.y); // w * h 
-			if (current_pcomponent.shapeid == circle)
-				current_pcomponent.Area = Math::PI * current_transform.size_.x/2.f * current_transform.size_.x/2.f ; // PI * r * r
-
-			current_pcomponent.Mass = current_pcomponent.Density * current_pcomponent.Area;// Mass = Density * area (not using volume for 2D)
-			current_pcomponent.InvMass = 1.f / current_pcomponent.Mass;
+			if (pcomponent.shapeid == square)
+			{
+				pcomponent.Area = (pcomponent.size.x * pcomponent.size.y); // w * h 
+				pcomponent.Mass = pcomponent.Density * pcomponent.Area;// Mass = Density * area (not using volume for 2D)
+				pcomponent.InvMass = 1.f / pcomponent.Mass;
+				pcomponent.MomentofInertia = pcomponent.Mass * (pcomponent.size.x * pcomponent.size.x + pcomponent.size.y * pcomponent.size.y) / 12.f;// 1/12*(m*(h^2 + w^2))
+				//https://en.wikipedia.org/wiki/List_of_moments_of_inertia
+			}
+			if (pcomponent.shapeid == circle)
+			{
+				pcomponent.Area = Math::PI * pcomponent.size.x / 2.f * pcomponent.size.x / 2.f; // PI * r * r
+				pcomponent.Mass = pcomponent.Density * pcomponent.Area;// Mass = Density * area (not using volume for 2D)
+				pcomponent.InvMass = 1.f / pcomponent.Mass;
+				pcomponent.MomentofInertia = pcomponent.Mass * (pcomponent.size.x * pcomponent.size.x) / 4.f;// 1/4*(m * r^2 )
+				//https://en.wikipedia.org/wiki/List_of_moments_of_inertia
+			}
 		}
 		else
-			current_pcomponent.InvMass = 0.f;
+			pcomponent.InvMass = 0.f;
 		
-		if (current_pcomponent.player)
+		if (pcomponent.player)
 		{
 			float dx = 0.f;
 			float dy = 0.f;
@@ -85,7 +93,7 @@ namespace JZEngine
 				Vec2f forcedirection{ dx,dy };
 				forcedirection.Normalize();
 				Vec2f force = forcedirection * forcemagnitude;
-				RigidBody::AddForce(current_pcomponent, force);
+				RigidBody::AddForce(pcomponent, force);
 
 			}
 			
@@ -93,40 +101,40 @@ namespace JZEngine
 
 		if (!pause)
 		{
-			RigidBody::ApplyForces(current_pcomponent, dt);
+			RigidBody::ApplyForces(pcomponent, dt);
 		}
 
 #ifdef PHYSICSDEBUG
-		PhysicsDebug::DebugDrawLine(current_pcomponent.position,current_pcomponent.position + 0.33f * (current_pcomponent.velocity));	
+		PhysicsDebug::DebugDrawLine(pcomponent.position,pcomponent.position + 0.33f * (pcomponent.velocity));	
 #endif
 
 
 		//update shapes & vertices
-		if (current_pcomponent.shapeid == shapetype::circle)
+		if (pcomponent.shapeid == shapetype::circle)
 		{
-			current_pcomponent.m_circle.m_center = current_pcomponent.position;
-			current_pcomponent.m_circle.m_radius = 0.5f * current_pcomponent.size.x;
+			pcomponent.m_circle.m_center = pcomponent.position;
+			pcomponent.m_circle.m_radius = 0.5f * pcomponent.size.x;
 		}
-		if (current_pcomponent.shapeid == shapetype::square)
+		if (pcomponent.shapeid == shapetype::square)
 		{
-			current_pcomponent.m_square = { current_pcomponent.position,current_pcomponent.size };
+			pcomponent.m_square = { pcomponent.position,pcomponent.size };
 
 			for (int i = 0; i < 4; i++)
 			{
-				current_pcomponent.m_square.vertices[i] = 
-					Math::GetRotatedVector((current_pcomponent.m_square.vertices[i] - current_transform.position_)
-					, Math::DegToRad(current_transform.rotation_)) + current_transform.position_;
+				pcomponent.m_square.vertices[i] = 
+					Math::GetRotatedVector((pcomponent.m_square.vertices[i] - tcomponent.position_)
+					, Math::DegToRad(tcomponent.rotation_)) + tcomponent.position_;
 			}
 
 		}
 #ifdef PHYSICSDEBUG
-		PhysicsDebug::DebugDrawShape(current_pcomponent);
+		PhysicsDebug::DebugDrawShape(pcomponent);
 #endif
 		//to update physics system container of components
 		bool am_inside{ false };
 		for (int i = 0; i < physics_cont.size(); ++i)
 		{
-			if (physics_cont[i] == &current_pcomponent)
+			if (physics_cont[i] == &pcomponent)
 			{
 				am_inside = true;
 				break;
@@ -134,8 +142,8 @@ namespace JZEngine
 		}
 		if (!am_inside)
 		{
-			physics_cont.push_back(&current_pcomponent);
-			transform_cont.push_back(&current_transform);
+			physics_cont.push_back(&pcomponent);
+			transform_cont.push_back(&tcomponent);
 		}
 
 	}//__________________UPDATE_________________________//
@@ -154,10 +162,9 @@ namespace JZEngine
 			{
 				for (int i = 0; i < physics_cont.size(); ++i)
 				{
-					PhysicsComponent& current_pcomponent = *physics_cont[i];
-					RigidBody::ApplyForces(current_pcomponent, dt);
+					PhysicsComponent& pcomponent = *physics_cont[i];
+					RigidBody::ApplyForces(pcomponent, dt);
 				}
-				
 			}
 		}
 #endif
@@ -171,26 +178,25 @@ namespace JZEngine
 
 				if (componentA.IsStatic && componentB.IsStatic)
 					continue;
-
-				Vec2f normal{ 0.f,0.f };
-				float depth;
-				if (true == Collision::CheckPhysicsComponentCollision(componentA, componentB, normal, depth))
+				Manifold CollData{};
+				if (true == Collision::CheckPhysicsCollision(componentA, componentB, CollData))
 				{
+					//Fix collision
 					if (componentA.IsStatic)
 					{
-						RigidBody::Move(componentB, normal * depth );
+						RigidBody::Move(componentB, CollData.normal * CollData.depth );
 					}
 					else if (componentB.IsStatic)
 					{
-						RigidBody::Move(componentA, -normal * depth );
+						RigidBody::Move(componentA, -CollData.normal * CollData.depth );
 					}
 					else
 					{
-						
-						RigidBody::Move(componentA, -normal * depth * componentA.InvMass);
-						RigidBody::Move(componentB, normal * depth * componentB.InvMass);
+						RigidBody::Move(componentA, -CollData.normal * CollData.depth * componentA.InvMass);
+						RigidBody::Move(componentB, CollData.normal * CollData.depth * componentB.InvMass);
 					}
-					Collision::ResolvePhysicsComponentCollision(componentA, componentB, normal, depth);
+					//Apply impulses
+					Collision::ResolvePhysicsCollision(componentA, componentB, CollData.normal, CollData.depth);
 
 				}
 
@@ -199,7 +205,7 @@ namespace JZEngine
 
 		for (int i = 0; i < transform_cont.size(); ++i)
 		{
-			//Set transform component for graphics to render updated values
+			//Set transform component for graphics to render updated attributes
 			transform_cont[i]->position_ = physics_cont[i]->position;
 			transform_cont[i]->rotation_ = physics_cont[i]->rotation;
 		}

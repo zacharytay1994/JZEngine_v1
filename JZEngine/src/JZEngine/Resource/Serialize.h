@@ -187,7 +187,7 @@ namespace JZEngine
 				component.position.x,
 				component.position.y,
 				component.rotation,
-				component.rotationalVelocity,
+				component.angularVelocity,
 				component.Density,
 				component.Restitution,
 				component.IsStatic

@@ -35,8 +35,11 @@ namespace JZEngine
 		float Restitution;
 		//The coefficient of Restitution [ 0.0f to 1.0f ]
 
-		float StaticFriction;
+		float StaticFriction;  
 		float DynamicFriction;
+
+		float MomentofInertia;
+
 
 		bool IsStatic{ true };
 		bool IsAlive{ true };

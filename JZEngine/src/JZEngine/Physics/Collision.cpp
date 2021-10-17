@@ -14,12 +14,14 @@
 
 namespace JZEngine
 {
-	bool Collision::CheckPhysicsComponentCollision( const PhysicsComponent& componentA, const PhysicsComponent& componentB, Vec2f& normal, float& depth)
+
+
+	bool Collision::CheckPhysicsCollision( const PhysicsComponent& componentA, const PhysicsComponent& componentB, Manifold& colldata)
 	{
 		//circle circle
 		if (componentA.shapeid == circle && componentB.shapeid == circle)
 		{
-			if (true == Collision::IntersectCircles(componentA.m_circle, componentB.m_circle, normal, depth))
+			if (true == Collision::IntersectCircles(componentA.m_circle, componentB.m_circle, colldata))
 			{
 #ifdef COLLISIONDEBUG
 				Log::Info("Collision", "is circle-circle colliding!!!");
@@ -32,7 +34,7 @@ namespace JZEngine
 		// Circle Square
 		if (componentA.shapeid == circle && componentB.shapeid == square)
 		{
-			if (true == Collision::IntersectCirclePolygon(componentA.m_circle, componentB.m_square, normal, depth))
+			if (true == Collision::IntersectCirclePolygon(componentA.m_circle, componentB.m_square, colldata))
 			{
 #ifdef COLLISIONDEBUG
 				Log::Info("Collision", "Circle square sat");
@@ -45,12 +47,12 @@ namespace JZEngine
 		// square circle
 		if (componentA.shapeid == square && componentB.shapeid == circle)
 		{
-			if (true == Collision::IntersectCirclePolygon(componentB.m_circle, componentA.m_square, normal, depth))
+			if (true == Collision::IntersectCirclePolygon(componentB.m_circle, componentA.m_square, colldata))
 			{
 #ifdef COLLISIONDEBUG
 			Log::Info("Collision", "square circe sat");
 #endif
-				normal = -normal;
+			colldata.normal = -colldata.normal;
 				return true;
 			}
 			return false;
@@ -58,7 +60,7 @@ namespace JZEngine
 		// square square
 		if (componentA.shapeid == square && componentB.shapeid == square)
 		{
-			if (true==Collision::IntersectPolygons(componentA.m_square, componentB.m_square, normal,depth))
+			if (true==Collision::IntersectPolygons(componentA.m_square, componentB.m_square, colldata))
 			{
 #ifdef COLLISIONDEBUG
 			Log::Info("Collision", "square square");
@@ -70,7 +72,7 @@ namespace JZEngine
 		return false;
 	}
 
-	void Collision::ResolvePhysicsComponentCollision(PhysicsComponent& componentA, PhysicsComponent& componentB, const Vec2f& normal, const float& depth)
+	void Collision::ResolvePhysicsCollision(PhysicsComponent& componentA, PhysicsComponent& componentB, const Vec2f& normal, const float& depth)
 	{
 		//Based on "Physics, Part 3: Collision Response" - Feb/Mar 97 By Chris Hecker
 		//https://www.chrishecker.com/Rigid_Body_Dynamics#Physics_Articles
@@ -93,7 +95,7 @@ namespace JZEngine
 		
 		//This portion onwards is for friction
 		relativevelocity = componentB.velocity - componentA.velocity;
-		Vec2f tangent = relativevelocity - relativevelocity.Dot(normal) * normal; 
+		Vec2f tangent = relativevelocity - (relativevelocity.Dot(normal) * normal); 
 		if (tangent == Vec2f{0.0f, 0.0f})
 			return;// rejection test if relative velocity is the same vector and -normal
 		
@@ -101,6 +103,10 @@ namespace JZEngine
 		tangent.Normalize();
 		float jt = - (relativevelocity.Dot(tangent));
 		jt = jt / (componentA.InvMass + componentB.InvMass);
+
+		//to not apply minute friction
+		if (Math::Equal(jt, 0.0f))
+			return;
 
 		float mu = 0.5f* (componentA.StaticFriction + componentB.StaticFriction);
 		Vec2f frictionimpulse;
@@ -122,9 +128,9 @@ namespace JZEngine
 	bool Collision::IntersectCircles(
 		const Circle& circleA,
 		const Circle& circleB,
-		Vec2f& normal, float& depth)
+		Manifold& colldata)
 	{
-		depth = 0.f;
+		colldata.depth = 0.f;
 		float distancesq = Math::Get2DVectorDistanceSquare(circleA.m_center, circleB.m_center);
 		float radii = circleA.m_radius + circleB.m_radius;
 		float radiisq = radii * radii;
@@ -132,16 +138,16 @@ namespace JZEngine
 		{
 			return false;
 		}
-		normal = (circleB.m_center - circleA.m_center).GetNormalized();
-		depth = radii - sqrt(distancesq);
+		colldata.normal = (circleB.m_center - circleA.m_center).GetNormalized();
+		colldata.depth = radii - sqrt(distancesq);
 		return true;
 	}
 
 	//Seperating Axis Theorem for polygon circle
-	bool Collision::IntersectCirclePolygon(const Circle& circle, const Square& squareA, Vec2f& normal, float& depth)
+	bool Collision::IntersectCirclePolygon(const Circle& circle, const Square& squareA, Manifold& colldata)
 	{
 
-		depth = std::numeric_limits<float>::max();//these values will be set
+		colldata.depth = std::numeric_limits<float>::max();//these values will be set
 		float axisDepth = 0.f;
 		Vec2f axis{};
 		float minA{}, maxA{}, minB{}, maxB{};
@@ -164,10 +170,10 @@ namespace JZEngine
 
 			axisDepth = std::min(maxB - minA, maxA - minB);//min depth to resolve collision
 
-			if (axisDepth < depth)
+			if (axisDepth < colldata.depth)
 			{
-				depth = axisDepth;
-				normal = axis;
+				colldata.depth = axisDepth;
+				colldata.normal = axis;
 			}
 		}
 
@@ -185,18 +191,18 @@ namespace JZEngine
 
 		axisDepth = std::min(maxB - minA, maxA - minB);//min depth to resolve collision
 
-		if (axisDepth < depth)
+		if (axisDepth < colldata.depth)
 		{
-			depth = axisDepth;
-			normal = axis;
+			colldata.depth = axisDepth;
+			colldata.normal = axis;
 		}
 
 
 		Vec2f direction = squareA.midpoint-circle.m_center ;
 
-		if (direction.Dot(normal) < 0.f)//make sure norma is same direction as vector [AB]
+		if (direction.Dot(colldata.normal) < 0.f)//make sure norma is same direction as vector [AB]
 		{
-			normal = -normal;
+			colldata.normal = -colldata.normal;
 		}
 		return true;
 	}
@@ -241,12 +247,16 @@ namespace JZEngine
 
 
 	//Seperating Axis Theorem for polygon polygon
-	bool Collision::IntersectPolygons(const Square& squareA, const Square& squareB, Vec2f& normal, float& depth)//normal is to push the 2nd obj out of collision
+	bool Collision::IntersectPolygons(const Square& squareA, const Square& squareB, Manifold& colldata)//normal is to push the 2nd obj out of collision
 	{
 
-		depth = std::numeric_limits<float>::max();//these values will be set
+		colldata.depth = std::numeric_limits<float>::max();//these values will be set
+		colldata.contact_count = 0;
 
 
+
+
+		
 		for (size_t i = 0; i < squareA.vertices.size(); i++)
 		{
 			Vec2f va = squareA.vertices[i];
@@ -268,10 +278,10 @@ namespace JZEngine
 
 			float axisDepth = std::min(maxB - minA, maxA - minB);//min depth to resolve collision
 
-			if (axisDepth < depth)
+			if (axisDepth < colldata.depth)
 			{
-				depth = axisDepth;
-				normal = axis;
+				colldata.depth = axisDepth;
+				colldata.normal = axis;
 			}
 		}
 
@@ -295,18 +305,18 @@ namespace JZEngine
 
 			float axisDepth = std::min(maxB - minA, maxA - minB);
 
-			if (axisDepth < depth)
+			if (axisDepth < colldata.depth)
 			{
-				depth = axisDepth;
-				normal = axis;
+				colldata.depth = axisDepth;
+				colldata.normal = axis;
 			}
 		}
 
 		Vec2f direction = squareB.midpoint - squareA.midpoint;
 
-		if ( direction.Dot(normal)  < 0.f)//make sure norma is same direction as vector [AB]
+		if ( direction.Dot(colldata.normal)  < 0.f)//make sure norma is same direction as vector [AB]
 		{
-			normal = -normal;
+			colldata.normal = -colldata.normal;
 		}
 
 		return true;

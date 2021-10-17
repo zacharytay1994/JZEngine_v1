@@ -24,7 +24,7 @@ namespace JZEngine
 
 		pcomponent.acceleration = pcomponent.force / pcomponent.Mass;
 
-		pcomponent.acceleration += gravity;
+		pcomponent.acceleration += gravity;//constant accel due to gravity
 
 		pcomponent.velocity += pcomponent.acceleration * dt;
 	

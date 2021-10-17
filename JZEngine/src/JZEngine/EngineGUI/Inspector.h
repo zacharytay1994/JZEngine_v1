@@ -377,7 +377,7 @@ namespace JZEngine
 
 			ImGui::Text("Angular Velocity (degree/s)");
 			ImGui::PushItemWidth((w / 2.0f) - (spacing * 3.0f));
-			ImGui::InputFloat("##Vel", &component.rotationalVelocity);
+			ImGui::InputFloat("##Vel", &component.angularVelocity);
 			ImGui::SameLine();
 			ImGui::Text("o");
 			ImGui::PopItemWidth();
