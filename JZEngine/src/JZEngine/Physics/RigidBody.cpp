@@ -15,9 +15,12 @@ namespace JZEngine
 
 	void RigidBody::ApplyForces(PhysicsComponent& pcomponent,const float& dt)
 	{
-		pcomponent.rotation += pcomponent.rotationalVelocity * dt;
 		if (pcomponent.IsStatic)
 			return;
+		//pcomponent.angularVelocity += pcomponent.torque * (1.0f / momentofinertia) * dt;
+
+		pcomponent.rotation += pcomponent.angularVelocity * dt;
+
 
 		pcomponent.acceleration = pcomponent.force / pcomponent.Mass;
 

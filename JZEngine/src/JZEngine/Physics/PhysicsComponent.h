@@ -25,7 +25,7 @@ namespace JZEngine
 		Vec2f acceleration; // cm/s^2
 
 		float rotation;
-		float rotationalVelocity;
+		float angularVelocity;
 		Vec2f force;
 
 		float Area; // size * size (m^3)
