@@ -29,7 +29,7 @@ namespace JZEngine
 	private:
 
 		//To be implemented by MemberFunctionHandler
-		// = 0 is pure virtual function and requires to be overwritten in an derived class
+		// = 0 is pure virtual function and requires to be overwritten in a derived class
 		virtual void call(Event* event) = 0; 
 	};
 	
