@@ -44,7 +44,7 @@ namespace JZEngine
 		bool IsStatic{ true };
 		bool IsAlive{ true };
 
-		Mat3f ModeltoWorld;
+
 
 		union {
 			Circle m_circle;

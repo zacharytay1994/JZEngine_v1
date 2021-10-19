@@ -252,9 +252,9 @@ namespace JZEngine
 
 		colldata.depth = std::numeric_limits<float>::max();//these values will be set
 		colldata.contact_count = 0;
-#if 0
+#if 1
 		int faceA;
-		float penetrationA
+		float penetrationA;
 #else
 
 		for (size_t i = 0; i < squareA.vertices.size(); i++)
@@ -327,7 +327,11 @@ namespace JZEngine
 	{
 		float bestDistance = std::numeric_limits<float>::min();
 		int bestIndex;
-		return 0.f;
+		for (int i = 0; i < A.vertices.size(); ++i)
+		{
+			Vec2f normal = A.normal[i];
+			normal
+		}
 	}
 
 	void Collision::ProjectVertices(const std::array<Vec2f,4>& vertices, const Vec2f& axis, float& min, float& max)

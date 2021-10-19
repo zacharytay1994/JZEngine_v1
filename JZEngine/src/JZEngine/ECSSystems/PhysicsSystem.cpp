@@ -129,7 +129,7 @@ namespace JZEngine
 				pcomponent.m_square.normal[i] = Vec2f{ edge.y, -edge.x };
 				pcomponent.m_square.normal[i].Normalize();
 			}
-			pcomponent.ModeltoWorld = Math::GetModelTransformNonTransposed(pcomponent.position, pcomponent.rotation, tcomponent.scale_, pcomponent.size);
+			pcomponent.m_square.ModeltoWorld = Math::GetModelTransformNonTransposed(pcomponent.position, pcomponent.rotation, tcomponent.scale_, pcomponent.size);
 		}
 #ifdef PHYSICSDEBUG
 		PhysicsDebug::DebugDrawShape(pcomponent);
