@@ -1,7 +1,7 @@
 /*	__FILE HEADER__
-*	File:		Event.h
+*	File:		MessageHandler.h
 	Primary:	Yu Ching Yin
-	Date:		01/07/21
+	Date:		30/09/21
 	Brief:		Message Handler.
 */
 
@@ -42,7 +42,7 @@ namespace JZEngine
 		//This is a function pointer
 		typedef void (T::* MemberFunction)(EventType*);
 
-		MemberFunctionHandler(T* instance, MemberFunction memberFunction) : instance{ instance }, memberFunction{ memberFunction } {};
+		MemberFunctionHandler(T* instance, MemberFunction memberFunction) : instance{ instance }, memberFunction{ memberFunction } {}
 
 		void call(Event* event)
 		{
