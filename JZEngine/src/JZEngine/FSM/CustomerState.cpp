@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "State.h"
 #include "FiniteStateMachine.h"
+#include "../Input/DeltaTime.h"
 #include <iostream>
 
 namespace JZEngine
@@ -32,13 +33,16 @@ namespace JZEngine
 
 		void update()
 		{
-			if ()
+			if (DeltaTime::get_deltatime() > 4.0)
+			{
+				std::cout << "Done ordering, transition to waiting state!" << "\n";
+				mFsm.setCurrentState(CustomerStateType::WAITING);
+			}
 		}
 
 
 	private:
 		FiniteStateMachine<CustomerStateType>& mFsm;
-
 
 	};
 
