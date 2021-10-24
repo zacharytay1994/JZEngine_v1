@@ -65,7 +65,6 @@
     <ClCompile Include="src\JZEngine\EngineGUI\SceneLayerControl.cpp" />
     <ClCompile Include="src\JZEngine\Resource\ObjectPool.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\ExampleParticleSystem.cpp" />
-    <ClCompile Include="src\JZEngine\FSM\CustomerState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
@@ -260,5 +259,6 @@
     <ClInclude Include="src\JZEngine\Resource\ObjectPool.h" />
     <ClInclude Include="src\JZEngine\FSM\FiniteStateMachine.h" />
     <ClInclude Include="src\JZEngine\FSM\State.h" />
+    <ClInclude Include="src\JZEngine\FSM\CustomerState.h" />
   </ItemGroup>
 </Project>

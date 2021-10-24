@@ -1,4 +1,5 @@
-#include "PCH.h"
+#pragma once
+
 #include "State.h"
 #include "FiniteStateMachine.h"
 #include "../DebugTools/PerformanceData.h"
@@ -21,9 +22,9 @@ namespace JZEngine
 	class CustomerOrderingState : public State<CustomerStateType>
 	{
 	public:
-		CustomerOrderingState(FiniteStateMachine<CustomerStateType>& fsm) 
+		CustomerOrderingState(FiniteStateMachine<CustomerStateType>& fsm)
 			: State<CustomerStateType>(CustomerStateType::ORDERING, "Ordering")
-			, mFsm{ fsm } 
+			, mFsm{ fsm }
 		{
 
 		}
@@ -51,11 +52,11 @@ namespace JZEngine
 	class CustomerWaitingState : public State<CustomerStateType>
 	{
 	public:
-		CustomerWaitingState(FiniteStateMachine<CustomerStateType>& fsm) 
+		CustomerWaitingState(FiniteStateMachine<CustomerStateType>& fsm)
 			: State<CustomerStateType>(CustomerStateType::WAITING, "Waiting")
-			, mFsm{fsm} 
+			, mFsm{ fsm }
 		{
-		
+
 		}
 
 		void enter()
