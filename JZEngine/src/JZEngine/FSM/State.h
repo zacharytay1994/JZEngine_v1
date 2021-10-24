@@ -33,10 +33,13 @@ namespace JZEngine
 			//To be overwritten in a derived class
 		}
 
-		virtual void update()
+		virtual void update(float dt)
 		{
 			//To be overwritten in a derived class
 		}
+
+		//To delete the inherited ones (aka CustomerState), not the base class State
+		virtual ~State() = default;
 
 	private:
 		std::string mName;

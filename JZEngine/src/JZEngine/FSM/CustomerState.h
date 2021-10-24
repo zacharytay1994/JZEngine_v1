@@ -2,12 +2,13 @@
 
 #include "State.h"
 #include "FiniteStateMachine.h"
-#include "../DebugTools/PerformanceData.h"
+//#include "../DebugTools/PerformanceData.h"
 #include <iostream>
+#include "../Input/Input.h"
 
 namespace JZEngine
 {
-	float dt = 1.0f / PerformanceData::app_fps_;
+	//float dt = 1.0f / PerformanceData::app_fps_;
 
 	//Use class to make the enums strongly typed and the enums are scoped
 	//to prevent acciental misuse of constants incase there are similar names
@@ -25,27 +26,34 @@ namespace JZEngine
 		CustomerOrderingState(FiniteStateMachine<CustomerStateType>& fsm)
 			: State<CustomerStateType>(CustomerStateType::ORDERING, "Ordering")
 			, mFsm{ fsm }
+			, timer{0.0f}
 		{
 
 		}
 
-		void enter()
+		void enter() override
 		{
+			timer = 0.0f;
 			std::cout << "Customer state: ORDERING" << "\n";
 		}
 
-		void update()
+		void update(float dt) override
 		{
-			if (JZEngine::dt > 3.0f)
+			timer += dt;
+
+			if (timer > 3.0f)
 			{
 				std::cout << "Done ordering, transition to waiting state!" << "\n";
 				mFsm.setCurrentState(CustomerStateType::WAITING);
 			}
+
+			//std::cout << "timer: " << timer << "\n";
 		}
 
 
 	private:
 		FiniteStateMachine<CustomerStateType>& mFsm;
+		float timer;
 
 	};
 
@@ -55,23 +63,33 @@ namespace JZEngine
 		CustomerWaitingState(FiniteStateMachine<CustomerStateType>& fsm)
 			: State<CustomerStateType>(CustomerStateType::WAITING, "Waiting")
 			, mFsm{ fsm }
+			, timer{ 0.0f }
 		{
 
 		}
 
-		void enter()
+		void enter() override
 		{
+			isCompleted = false;
+			timer = 0.0f;
 			std::cout << "Customer state: WAITING" << "\n";
 		}
 
-		void update()
+		void update(float dt) override
 		{
-			if (JZEngine::dt > 6.0f)
+			timer += dt;
+
+			if (InputHandler::IsKeyTriggered(KEY::KEY_M))
+			{
+				isCompleted = true;
+			}
+
+			if (timer > 6.0f)
 			{
 				std::cout << "Wait too long! ANGRY!" << "\n";
 				mFsm.setCurrentState(CustomerStateType::ANGRYLEAVE);
 			}
-			else if (JZEngine::dt <= 6.0f)
+			else if (isCompleted == true)
 			{
 				std::cout << "Completed order in time! Yay!" << "\n";
 				mFsm.setCurrentState(CustomerStateType::HAPPYLEAVE);
@@ -80,7 +98,47 @@ namespace JZEngine
 
 	private:
 		FiniteStateMachine<CustomerStateType>& mFsm;
+		float timer;
+		bool isCompleted = false;
 
+	};
+
+	class CustomerAngryLeaveState : public State<CustomerStateType>
+	{
+	public:
+		CustomerAngryLeaveState(FiniteStateMachine<CustomerStateType>& fsm)
+			: State<CustomerStateType>(CustomerStateType::ANGRYLEAVE, "AngryLeave")
+			, mFsm{ fsm }
+		{
+
+		}
+
+		void enter() override
+		{
+			std::cout << "Customer state: ANGRYLEAVE" << "\n";
+		}
+
+	private:
+		FiniteStateMachine<CustomerStateType>& mFsm;
+	};
+
+	class CustomerHappyLeaveState : public State<CustomerStateType>
+	{
+	public:
+		CustomerHappyLeaveState(FiniteStateMachine<CustomerStateType>& fsm)
+			: State<CustomerStateType>(CustomerStateType::HAPPYLEAVE, "HappyLeave")
+			, mFsm{ fsm }
+		{
+
+		}
+
+		void enter() override
+		{
+			std::cout << "Customer state: HAPPYLEAVE" << "\n";
+		}
+
+	private:
+		FiniteStateMachine<CustomerStateType>& mFsm;
 	};
 
 

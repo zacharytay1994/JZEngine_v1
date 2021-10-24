@@ -18,12 +18,12 @@ namespace JZEngine
 		State<T>* mCurrentState;
 
 	public:
-		FiniteStateMachine() : mCurrentState(0) {}
+		FiniteStateMachine() : mCurrentState(nullptr) {}
 
 		//Add states
 		void add(State<T>* state)
 		{
-			if (state == 0)
+			if (state != nullptr)
 			{
 				mStates[state->getID()] = state;
 			}
@@ -49,7 +49,7 @@ namespace JZEngine
 			State<T>* state = getState(stateID);
 
 			//Abort program execution if setCurrentState calls 0 as parameter
-			assert(state != 0);
+			assert(state != nullptr&& "Abort program execution if setCurrentState calls 0 as parameter");
 
 			setCurrentState(state);
 		}
@@ -61,25 +61,35 @@ namespace JZEngine
 				return;
 			}
 
-			if (mCurrentState != 0)
+			if (mCurrentState != nullptr)
 			{
 				mCurrentState->exit();
 			}
 
 			mCurrentState = state;
 
-			if (mCurrentState != 0)
+			if (mCurrentState != nullptr)
 			{
 				mCurrentState->enter();
 			}
 		}
 
-		void update()
+		void update(float dt)
 		{
-			if (mCurrentState != 0)
+			if (mCurrentState != nullptr)
 			{
-				mCurrentState->update();
+				mCurrentState->update(dt);
 			}
+		}
+
+		~FiniteStateMachine()
+		{
+			for (const auto& state : mStates)
+			{
+				//second is State<T>*
+				delete state->second;
+			}
+		
 		}
 
 	};
