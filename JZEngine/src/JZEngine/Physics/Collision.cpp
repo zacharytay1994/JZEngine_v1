@@ -253,8 +253,40 @@ namespace JZEngine
 		colldata.depth = std::numeric_limits<float>::max();//these values will be set
 		colldata.contact_count = 0;
 #if 1
+		//check for seperating axis for A and then B
 		int faceA;
-		float penetrationA;
+		float penetrationA = FindAxisLeastPenetration(faceA, squareA, squareB);
+		if (penetrationA >= 0.0f)
+			return;
+		int faceB;
+		float penetrationB = FindAxisLeastPenetration(faceB, squareB, squareA);
+		if (penetrationB >= 0.0f)
+			return;
+
+		int referenceIndex;
+		bool flip;
+
+		Square RefPoly;
+		Square IncPoly;
+		if (Math::BiasGreaterThan(penetrationA, penetrationB))
+		{
+			RefPoly = squareA;
+			IncPoly = squareB;
+			referenceIndex = faceA;
+			flip = false;
+		}
+
+		else
+		{
+			RefPoly = squareB;
+			IncPoly = squareA;
+			referenceIndex = faceB;
+			flip = true;
+		}
+
+		// World space incident face
+		Vec2f incidentFace[2];
+		FindIncidentFace(incidentFace, RefPoly, IncPoly, referenceIndex);
 #else
 
 		for (size_t i = 0; i < squareA.vertices.size(); i++)
@@ -323,15 +355,45 @@ namespace JZEngine
 #endif
 	}
 
-	float Collision::FindAxisLeastPenetration(int& faceIndex, Square& A, Square& B)
+	Vec2f Collision::GetSupport(const Vec2f& dir, const Square& A)
+	{
+		float bestProjection = std::numeric_limits<float>::min();
+		Vec2f bestVertex;
+		for (int i = 0; i < A.vertices.size(); i++)
+		{
+			float projection = A.vertices[i].Dot(dir);
+			if (projection > bestProjection)
+			{
+				bestVertex = A.vertices[i];
+				bestProjection = projection;
+			}
+		}
+		return bestVertex;
+	}
+
+	float Collision::FindAxisLeastPenetration(int& faceIndex,const Square& A, const Square& B)
 	{
 		float bestDistance = std::numeric_limits<float>::min();
-		int bestIndex;
+		int bestIndex=0;
 		for (int i = 0; i < A.vertices.size(); ++i)
 		{
-			Vec2f normal = A.normal[i];
-			normal
+			Vec3f normal = Vec3f{ A.normal[i].x, A.normal[i].y , 1.0f };//Normal from A, in world coords
+			normal = B.ModeltoWorld.GetTranspose() * normal;// Transform into B's model space
+
+			Vec2f s = GetSupport(-normal, B);
+
+			Vec3f v = Vec3f{ A.vertices[i].x ,A.vertices[i].y,1.f };//Vertices of A, in world coords
+			v = B.ModeltoWorld.GetTranspose() * v;// Transform into B's model space
+
+			float depth = normal.Dot(s - v);
+			if (depth > bestDistance)
+			{
+				bestDistance = depth;
+				bestIndex = i;
+			}
 		}
+		faceIndex = bestIndex;
+		return bestDistance;
 	}
 
 	void Collision::ProjectVertices(const std::array<Vec2f,4>& vertices, const Vec2f& axis, float& min, float& max)

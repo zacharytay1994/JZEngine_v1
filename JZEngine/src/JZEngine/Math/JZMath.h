@@ -111,6 +111,9 @@ namespace JZEngine
 		//		|| std::fabs(a - b) < std::numeric_limits<T>::min();
 		//}
 
+
+		bool BiasGreaterThan(float a, float b);
+
 		bool IsEven(int val);
 
 		bool IsEqual(float a, float b);

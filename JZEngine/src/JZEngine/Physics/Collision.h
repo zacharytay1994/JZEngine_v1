@@ -48,7 +48,9 @@ namespace JZEngine
 
 		static bool IntersectPolygons(const Square& squareA, const Square& squareB, Manifold& colldata);
 
-		static float FindAxisLeastPenetration(int& faceIndex, Square& A, Square& B);
+		static Vec2f GetSupport(const Vec2f& dir, const Square& A);
+
+		static float FindAxisLeastPenetration(int& faceIndex, const Square& A, const Square& B);
 
 		//For now only takes in polygons with 4 vertices
 		static void ProjectVertices(const std::array<Vec2f, 4>& vertices, const Vec2f& axis, float& min, float& max);
