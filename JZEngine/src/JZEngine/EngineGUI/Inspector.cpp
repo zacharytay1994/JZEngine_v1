@@ -53,15 +53,11 @@ namespace JZEngine
 		{
 			std::stringstream ss;
 			ss << "Components of [" << entity->name_ << "] [ID: " << entity->entity_id_ << "]";
-			ImGui::Text(ss.str().c_str()); 
+			ImGui::Text(ss.str().c_str());
 			
 			// if entity has a chunk, i.e. has component before
 			if (entity->owning_chunk_)
 			{
-				bool flag = entity->GetFlag();
-				ImGui::Checkbox(": Active", &flag);
-				entity->FlagActive(flag);
-
 				bool has_component_ = false;
 				for (int i = 0; i < ECS::MAX_COMPONENTS; ++i)
 				{
@@ -157,13 +153,13 @@ namespace JZEngine
 							if (!has_component_)
 							{
 								entity->AddComponent(c.bit_);
-								//ecs_instance_->Print();
+								ecs_instance_->Print();
 							}
 							// else remove it
 							else
 							{
 								entity->RemoveComponent(c.bit_);
-								//ecs_instance_->Print();
+								ecs_instance_->Print();
 							}
 						}
 						if (has_component_)
@@ -208,7 +204,7 @@ namespace JZEngine
 							if (!has_system_)
 							{
 								entity->AddSystem(s.id_);
-								//ecs_instance_->Print();
+								ecs_instance_->Print();
 							}
 						}
 						if (has_system_)

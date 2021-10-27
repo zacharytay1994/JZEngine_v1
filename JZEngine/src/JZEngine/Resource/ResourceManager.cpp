@@ -41,7 +41,7 @@ namespace JZEngine
 		//LoadTexture2D ( "Star" , "Assets/Textures/SpriteSheet_Star.png" );//9
 		//LoadTexture2D ( "Springroll", "Assets/Textures/springroll.png");//9
 		//LoadTexture2D ( "Fishball", "Assets/Textures/fishball.png");//9
-		LoadAllTexturesInFolder();
+
 
 
 		// load shaders

@@ -23,7 +23,6 @@
 #include "Input/Input.h"
 #include "Input/DeltaTime.h"
 #include "Resource/Serialize.h"
-#include "Resource/ObjectPool.h"
 
 #include "STL/Random.h"
 #include "STL/Tuple.h"
@@ -55,19 +54,17 @@ namespace JZEngine
 		testsystem.setChannelGroupVolume(1.0f,"main");*/
 		//InputHandler::
 		Settings::LoadFromConfigFile ();
-		Serialize::Load();
-
 		// add and initialize global systems
-		global_systems_->AddSystem<GLFW_Instance>		( "GLFW Instance" , Settings::window_width , Settings::window_height );
-		global_systems_->AddSystem<ResourceManager>		( "Resource Manager" );
-		global_systems_->AddSystem<ECS::ECSInstance>	( "ECS Instance" );
-		global_systems_->AddSystem<Renderer>			( "Default Renderer" );
-		global_systems_->AddSystem<RendererInstancing>	( "Instance Renderer" );
-		global_systems_->AddSystem<RendererDebug>		( "Debug Renderer" );
-		global_systems_->AddSystem<RenderQueue>			( "Render Queue" );
-		global_systems_->AddSystem<EngineGUI>			( "Engine GUI" );
-		global_systems_->AddSystem<SoundSystem>			( "Sound System" );
-		global_systems_->AddSystem<TextRenderer>		( "Text Renderer" );
+		global_systems_->AddSystem<GLFW_Instance> ( "GLFW Instance" , Settings::window_width , Settings::window_height );
+		global_systems_->AddSystem<ResourceManager> ( "Resource Manager" );
+		global_systems_->AddSystem<ECS::ECSInstance> ( "ECS Instance" );
+		global_systems_->AddSystem<Renderer> ( "Default Renderer" );
+		global_systems_->AddSystem<RendererInstancing> ( "Instance Renderer" );
+		global_systems_->AddSystem<RendererDebug> ( "Debug Renderer" );
+		global_systems_->AddSystem<RenderQueue>("Render Queue");
+		global_systems_->AddSystem<EngineGUI> ( "Engine GUI" );
+		global_systems_->AddSystem<SoundSystem> ( "Sound System" );
+		global_systems_->AddSystem<TextRenderer> ( "Text Renderer" );
 
 		global_systems_->GetSystem<GLFW_Instance>()->UpdateViewportDimensions();
 		global_systems_->GetSystem<RenderQueue>()->SetRenderer(global_systems_->GetSystem<Renderer>());
@@ -89,6 +86,7 @@ namespace JZEngine
 		// initialize all global systems
 		global_systems_->PostInit();
 		PerformanceData::Init ();
+		Serialize::Load ();
 
 		msgbus->subscribe ( global_systems_->GetSystem<SoundSystem> () , &SoundSystem::playSound );
 
@@ -292,7 +290,6 @@ namespace JZEngine
 
 			auto end_time = std::chrono::high_resolution_clock::now ();
 			global_systems_->FrameEnd ();
-			ObjectPool::FrameEnd(global_systems_->GetSystem<ECS::ECSInstance>());
 
 			PerformanceData::EndMark ( "Game Loop" , PerformanceData::TimerType::GLOBAL_SYSTEMS );
 			PerformanceData::FrameEnd ();

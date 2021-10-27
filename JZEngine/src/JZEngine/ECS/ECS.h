@@ -72,7 +72,7 @@ namespace JZEngine
 		constexpr ui32 MAX_COMPONENTS			{ 256 };			/*!< arbitrary number */
 		constexpr ui32 MAX_ARCHETYPES			{ 128 };			/*!< arbitrary number */
 		constexpr ui32 CHUNKS_PER_ARCHETYPE		{ 256 };			/*!< arbitrary number */
-		constexpr ui32 ENTITIES_RESERVE			{ 1000 };			/*!< arbitrary number*/
+		constexpr ui32 ENTITIES_RESERVE			{ 256 };			/*!< arbitrary number*/
 		constexpr ui32 ENTITY_MAX_CHILDREN		{ 10 };				/*!< arbitrary number*/
 
 		constexpr ui32 ENTITIES_PER_CHUNK		{ 255 };			/*!< not to be changed entity ids only go up to 255
@@ -701,10 +701,8 @@ namespace JZEngine
 				{
 					system_database_.emplace_back(std::make_shared<SYSTEM>());
 					system_database_.back()->name_ = typeid(SYSTEM).name();
-					system_database_.back()->ecs_instance_ = ecs_instance_;
 					system_registered_[typeid(SYSTEM).name()] = 1;
 					registered_systems_.push_back({ typeid(SYSTEM).name(), number_of_systems_++ });
-					system_database_.back()->Init();
 				}
 				else
 				{
@@ -833,8 +831,8 @@ namespace JZEngine
 		{
 			ComponentManager	component_manager_;		/*!< holds all registered components  */
 			ArchetypeManager	archetype_manager_;		/*!< holds all unique archetypes, i.e. component combinations */
-			EntityManager		entity_manager_;		/*!< holds all entities created */
 			SystemManager		system_manager_;		/*!< holds all registered systems */
+			EntityManager		entity_manager_;		/*!< holds all entities created */
 
 
 			/*!
@@ -991,8 +989,6 @@ namespace JZEngine
 			Chunk*								owning_chunk_	{ nullptr };				/*!< chunk that holds the components for this entity */
 			ubyte								id_				{ 255 };					/*!< unique id corresponding to its chunk, i.e. only unique per chunk */
 			ui32								ecs_id_			= static_cast<ui32>(-1);	/*!< unique ecs_id, no 2 entities can ever have the same ecs_id */
-			//bool								active_			{ true };
-			bool								persistant_		{ true };
 
 			ui32										children_count_{ 0 };
 			ui32										children_before_{ 0 };	/*!< number of children entity attached to this entity */
@@ -1285,10 +1281,6 @@ namespace JZEngine
 			 * ****************************************************************************************************
 			*/
 			Entity& AddSystem(int systemid);
-
-			void FlagActive(bool flag);
-
-			bool GetFlag();
 		};
 
 		/* ____________________________________________________________________________________________________
@@ -1314,7 +1306,6 @@ namespace JZEngine
 			JZEngine::ECS::SystemComponents components_{};				/*!< ID of all registered components that this system acts on
 																			 Essentially does what mask_ does, but does not require iteration,
 																			 over the bits. [Write a function to get all flagged bits of a bitset] */
-			ECSInstance* ecs_instance_{ nullptr };
 
 			System() {}
 			virtual ~System() = default;
@@ -1361,10 +1352,6 @@ namespace JZEngine
 				assert(current_chunk_);
 				return current_chunk_->GetComponent<COMPONENT>(current_id_);
 			}
-
-			void ToggleActiveFlag(bool flag);
-
-			virtual void Init() {};
 
 			/*!
 			 * @brief ___JZEngine::ECS::System::FrameBegin()___

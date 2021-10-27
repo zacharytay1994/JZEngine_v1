@@ -35,8 +35,7 @@ namespace JZEngine
 
 		static constexpr unsigned int					MAX_NAME_SIZE = 50;					/*!< maximum length a custom name can be */
 
-		//ECS::Entity*									selected_entity_{ nullptr };		/*!< the currently selected entity */
-		int												selected_entity_id_{ -1 };
+		ECS::Entity*									selected_entity_{ nullptr };		/*!< the currently selected entity */
 		std::string*									default_entity_name_{ nullptr };	/*!< the default entity name if no name is specified */
 		std::string*									current_scene_name_{ nullptr };
 		char											reset_name_[MAX_NAME_SIZE]{ '\0' };
@@ -105,10 +104,6 @@ namespace JZEngine
 
 		Confirmation confirmation_flag_{ Confirmation::NONE };
 		void RenderConfirmation();
-
-		void SetSelectedEntity(int id);
-
-		ECS::Entity* GetSelectedEntity();
 
 	private:
 		std::vector<LayerData> layers_;
