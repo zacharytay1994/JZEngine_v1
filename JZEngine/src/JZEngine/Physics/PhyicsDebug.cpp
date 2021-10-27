@@ -11,7 +11,7 @@ namespace JZEngine
 {
 	namespace PhysicsDebug
 	{
-		void DebugDrawShape(const PhysicsComponent& pcomponent)
+		void DebugDrawShape(const CollisionComponent& pcomponent)
 		{
 			if (pcomponent.shapeid == shapetype::circle)
 			{

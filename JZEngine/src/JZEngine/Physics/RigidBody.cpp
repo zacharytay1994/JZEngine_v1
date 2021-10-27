@@ -11,7 +11,7 @@
 
 namespace JZEngine
 {
-	Vec2f RigidBody::gravity{ 0.f, -38.1f };
+	Vec2f RigidBody::gravity{ 0.f, -398.1f };
 
 	void RigidBody::ApplyForces(PhysicsComponent& pcomponent,const float& dt)
 	{

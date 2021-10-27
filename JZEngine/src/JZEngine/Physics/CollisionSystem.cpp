@@ -6,9 +6,10 @@
 */
 
 #include "PCH.h"
-#include "../Physics/Collision.h"
-#include "../Physics/PhysicsComponent.h"
+#include "../Physics/CollisionSystem.h"
 
+#include "../Physics/PhysicsComponent.h"
+#include "../Physics/CollisionComponent.h"
 #include <limits> 
 
 
@@ -16,7 +17,7 @@ namespace JZEngine
 {
 
 
-	bool Collision::CheckPhysicsCollision( const PhysicsComponent& componentA, const PhysicsComponent& componentB, Manifold& colldata)
+	bool Collision::CheckPhysicsCollision( const CollisionComponent& componentA, const CollisionComponent& componentB, Manifold& colldata)
 	{
 		//circle circle
 		if (componentA.shapeid == circle && componentB.shapeid == circle)
@@ -251,7 +252,7 @@ namespace JZEngine
 	{
 
 		colldata.depth = std::numeric_limits<float>::max();//these values will be set
-		colldata.contact_count = 0;
+
 #if 0
 		int faceA;
 		float penetrationA

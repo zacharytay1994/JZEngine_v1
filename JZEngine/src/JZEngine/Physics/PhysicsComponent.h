@@ -8,7 +8,7 @@
 #pragma once
 
 #include "../Math/JZMath.h"
-#include "../Physics/PhysicsShapes.h"
+
 
 namespace JZEngine
 {
@@ -16,7 +16,7 @@ namespace JZEngine
 	struct PhysicsComponent
 	{
 		bool player{ false };
-		int shapeid{};
+
 
 		Vec2f size; // cm
 		Vec2f position;
@@ -46,10 +46,7 @@ namespace JZEngine
 
 		Mat3f ModeltoWorld;
 
-		union {
-			Circle m_circle;
-			Square m_square;
-		};
+
 		PhysicsComponent();
 		PhysicsComponent(const PhysicsComponent& s);
 		~PhysicsComponent();

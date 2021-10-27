@@ -238,7 +238,7 @@ namespace JZEngine
 		{
 			SERIALIZE(stream, mode,
 				component.player,
-				component.shapeid,
+				
 				component.position.x,
 				component.position.y,
 				component.rotation,

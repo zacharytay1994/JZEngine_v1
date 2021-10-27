@@ -14,7 +14,8 @@
 #include "../ECS/ECS.h"
 #include "../ECS/ECSConfig.h"
 #include "../Physics/PhysicsComponent.h"
-#include "../Physics/Collision.h"
+#include "../Physics/CollisionComponent.h"
+#include "../Physics/CollisionSystem.h"
 
 #include "../Physics/RigidBody.h"
 
@@ -33,6 +34,8 @@ namespace JZEngine
 	private:
 		std::vector<PhysicsComponent*> physics_cont;
 		std::vector<Transform*> transform_cont;
+		std::vector<CollisionComponent*> collision_cont;
+
 		bool pause{ false };
 		bool stepbystep{ false };
 	};

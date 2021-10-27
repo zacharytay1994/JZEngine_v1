@@ -10,7 +10,8 @@
 #include "PCH.h"
 #include "../ECS/ECS.h"
 #include "../ECS/ECSConfig.h"
-#include "../Physics/Collision.h"
+
+
 #include "../Physics/PhyicsDebug.h"
 #include "PhysicsSystem.h"
 #include "../Input/Input.h"
@@ -24,7 +25,7 @@ namespace JZEngine
 
 	PhysicsSystem::PhysicsSystem()
 	{
-		RegisterComponents<PhysicsComponent, Transform>();
+		RegisterComponents<PhysicsComponent, Transform, CollisionComponent>();
 	}
 
 	void PhysicsSystem::FrameBegin(const float& dt) 
@@ -36,6 +37,7 @@ namespace JZEngine
 			{
 				physics_cont.erase(physics_cont.begin() + i);
 				transform_cont.erase(transform_cont.begin() + i);
+				collision_cont.erase(collision_cont.begin() + i);
 			}
 		}
 	}
@@ -45,6 +47,8 @@ namespace JZEngine
 	{
 		PhysicsComponent& pcomponent = GetComponent<PhysicsComponent>();
 		Transform& tcomponent = GetComponent<Transform>();
+		CollisionComponent& ccomponent = GetComponent<CollisionComponent>();
+
 		pcomponent.position = tcomponent.position_;
 		pcomponent.size = tcomponent.size_;
 		pcomponent.rotation = tcomponent.rotation_;
@@ -54,7 +58,7 @@ namespace JZEngine
 		// Circle = PI * radius * radius
 		if (!pcomponent.IsStatic)
 		{
-			if (pcomponent.shapeid == square)
+			if (ccomponent.shapeid == square)
 			{
 				pcomponent.Area = (pcomponent.size.x * pcomponent.size.y); // w * h 
 				pcomponent.Mass = pcomponent.Density * pcomponent.Area;// Mass = Density * area (not using volume for 2D)
@@ -62,7 +66,7 @@ namespace JZEngine
 				pcomponent.MomentofInertia = pcomponent.Mass * (pcomponent.size.x * pcomponent.size.x + pcomponent.size.y * pcomponent.size.y) / 12.f;// 1/12*(m*(h^2 + w^2))
 				//https://en.wikipedia.org/wiki/List_of_moments_of_inertia
 			}
-			if (pcomponent.shapeid == circle)
+			if (ccomponent.shapeid == circle)
 			{
 				pcomponent.Area = Math::PI * pcomponent.size.x / 2.f * pcomponent.size.x / 2.f; // PI * r * r
 				pcomponent.Mass = pcomponent.Density * pcomponent.Area;// Mass = Density * area (not using volume for 2D)
@@ -80,7 +84,7 @@ namespace JZEngine
 			float dy = 0.f;
 			float forcemagnitude = 1500.f;
 			if (InputHandler::IsKeyPressed(KEY::KEY_W))
-				++dy;
+				++++++dy;
 			if (InputHandler::IsKeyPressed(KEY::KEY_A))
 				--dx;
 			if (InputHandler::IsKeyPressed(KEY::KEY_S))
@@ -110,29 +114,26 @@ namespace JZEngine
 
 
 		//update shapes & vertices
-		if (pcomponent.shapeid == shapetype::circle)
+		if (ccomponent.shapeid == shapetype::circle)
 		{
-			pcomponent.m_circle.m_center = pcomponent.position;
-			pcomponent.m_circle.m_radius = 0.5f * pcomponent.size.x;
+			ccomponent.m_circle.m_center = pcomponent.position;
+			ccomponent.m_circle.m_radius = 0.5f * pcomponent.size.x;
 		}
-		if (pcomponent.shapeid == shapetype::square)
+		if (ccomponent.shapeid == shapetype::square)
 		{
-			pcomponent.m_square = { pcomponent.position,pcomponent.size };
+			ccomponent.m_square = { pcomponent.position,pcomponent.size };
 
 			for (int i = 0; i < 4; i++)
 			{
-				pcomponent.m_square.vertices[i] = 
-					Math::GetRotatedVector((pcomponent.m_square.vertices[i] - tcomponent.position_)
+				ccomponent.m_square.vertices[i] =
+					Math::GetRotatedVector((ccomponent.m_square.vertices[i] - tcomponent.position_)
 					, Math::DegToRad(tcomponent.rotation_)) + tcomponent.position_;
-				int j = i + 1 < 4 ? i + 1 : 0;
-				Vec2f edge = pcomponent.m_square.vertices[j] - pcomponent.m_square.vertices[i];
-				pcomponent.m_square.normal[i] = Vec2f{ edge.y, -edge.x };
-				pcomponent.m_square.normal[i].Normalize();
+
 			}
-			pcomponent.ModeltoWorld = Math::GetModelTransformNonTransposed(pcomponent.position, pcomponent.rotation, tcomponent.scale_, pcomponent.size);
+			//pcomponent.ModeltoWorld = Math::GetModelTransformNonTransposed(pcomponent.position, pcomponent.rotation, tcomponent.scale_, pcomponent.size);
 		}
 #ifdef PHYSICSDEBUG
-		PhysicsDebug::DebugDrawShape(pcomponent);
+		PhysicsDebug::DebugDrawShape(ccomponent);
 
 		
 
@@ -151,6 +152,7 @@ namespace JZEngine
 		{
 			physics_cont.push_back(&pcomponent);
 			transform_cont.push_back(&tcomponent);
+			collision_cont.push_back(&ccomponent);
 		}
 
 	}//__________________UPDATE_________________________//
@@ -179,14 +181,18 @@ namespace JZEngine
 		for (int i = 0; i < (int)physics_cont.size() - 1; ++i)
 		{
 			PhysicsComponent& componentA = *physics_cont[i];
+			CollisionComponent& CcomponentA = *collision_cont[i];
+
 			for (int j = i+1; j < physics_cont.size(); ++j)
 			{
 				PhysicsComponent& componentB = *physics_cont[j];
+				CollisionComponent& CcomponentB = *collision_cont[j];
 
 				if (componentA.IsStatic && componentB.IsStatic)
 					continue;
+
 				Manifold CollData{};
-				if (true == Collision::CheckPhysicsCollision(componentA, componentB, CollData))
+				if (true == Collision::CheckPhysicsCollision(CcomponentA, CcomponentB, CollData))
 				{
 					//Fix collision
 					if (componentA.IsStatic)

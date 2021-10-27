@@ -9,7 +9,8 @@
 
 #include "../Math/JZMath.h"
 #include "../Physics/PhysicsComponent.h"
-
+#include "../Physics/CollisionComponent.h"
+#include "PhysicsShapes.h"
 
 
 namespace JZEngine
@@ -18,6 +19,7 @@ namespace JZEngine
 	{
 		float depth;
 		Vec2f normal;
+		/*
 		Vec2f contacts[2];
 		int contact_count;
 		Manifold()
@@ -26,12 +28,13 @@ namespace JZEngine
 			for (auto i : contacts)
 				i = { 0.0f,0.0f };
 		}
+		*/
 	};
 
 	class Collision
 	{
 	public:
-		static bool CheckPhysicsCollision(const PhysicsComponent& componentA, const PhysicsComponent& componentB, Manifold& colldata);
+		static bool CheckPhysicsCollision(const CollisionComponent& componentA, const CollisionComponent& componentB, Manifold& colldata);
 
 		static void ResolvePhysicsCollision(PhysicsComponent& componentA, PhysicsComponent& componentB, const Vec2f& normal, const float& depth);
 		

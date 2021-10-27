@@ -350,16 +350,26 @@ namespace JZEngine
 		}
 
 		template <>
+		void RenderComponent(CollisionComponent& component)
+		{
+			// General data
+			ImGuiStyle& style = ImGui::GetStyle();
+			float w = ImGui::CalcItemWidth();
+			float spacing = style.ItemInnerSpacing.x;
+			
+			ImGui::Text("Shape");
+
+			ImGui::SliderInt("ID", &component.shapeid, 0, 2);
+		}
+		template <>
 		void RenderComponent ( PhysicsComponent& component )
 		{
 			// General data
 			ImGuiStyle& style = ImGui::GetStyle ();
 			float w = ImGui::CalcItemWidth ();
 			float spacing = style.ItemInnerSpacing.x;
-			//float button_sz = ImGui::GetFrameHeight ();
-			ImGui::Text ( "Shape" );
+			
 
-			ImGui::SliderInt ( "ID" , &component.shapeid , 0 , 2 );
 
 			ImGui::Checkbox ( "Static" , &component.IsStatic );
 			ImGui::Checkbox("Player", &component.player);

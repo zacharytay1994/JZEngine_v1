@@ -13,7 +13,7 @@ namespace JZEngine
 	PhysicsComponent::PhysicsComponent()
 	:
 	player{ false },
-	shapeid{ 0 },
+
 	size{ 1.f,1.f },
 	position{ 0.f, 0.f },
 	posnex{ 0.f, 0.f },

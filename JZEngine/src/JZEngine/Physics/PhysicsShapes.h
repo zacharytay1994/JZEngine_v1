@@ -14,7 +14,8 @@ namespace JZEngine {
 	{
 		circle = 0,
 		aabb = 1,
-		square = 2
+		square = 2,
+		point =3
 	
 	};
 

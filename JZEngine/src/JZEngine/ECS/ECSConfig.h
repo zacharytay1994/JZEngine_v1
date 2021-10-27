@@ -36,6 +36,7 @@ namespace JZEngine
 				Texture ,
 				NonInstanceShader ,
 				InstanceShader ,
+				CollisionComponent,
 				PhysicsComponent ,
 				Parallax ,
 				NotBackground ,
@@ -45,6 +46,7 @@ namespace JZEngine
 				ExampleParticleSystemComponent ,
 				ExampleParticleComponent ,
 				PopiahPSFlag
+		
 
 				>;
 

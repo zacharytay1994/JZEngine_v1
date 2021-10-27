@@ -51,7 +51,7 @@
     <ClCompile Include="src\JZEngine\GraphicRendering\Text.cpp" />
     <ClCompile Include="src\JZEngine\STL\String.cpp" />
     <ClCompile Include="src\JZEngine\Math\JZMath.cpp" />
-    <ClCompile Include="src\JZEngine\Physics\Collision.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\CollisionSystem.cpp" />
     <ClCompile Include="src\JZEngine\Input\Input.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\RendererDebug.cpp" />
     <ClCompile Include="src\JZEngine\EngineConfig.cpp" />
@@ -65,6 +65,7 @@
     <ClCompile Include="src\JZEngine\EngineGUI\SceneLayerControl.cpp" />
     <ClCompile Include="src\JZEngine\Resource\ObjectPool.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\ExampleParticleSystem.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\CollisionComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
@@ -206,7 +207,7 @@
     <ClInclude Include="src\JZEngine\Math\Vec4.h" />
     <ClInclude Include="src\JZEngine\PCH.h" />
     <ClInclude Include="src\JZEngine\BuildDefinitions.h" />
-    <ClInclude Include="src\JZEngine\Physics\Collision.h" />
+    <ClInclude Include="src\JZEngine\Physics\CollisionSystem.h" />
     <ClInclude Include="src\JZEngine\Resource\ResourceManager.h" />
     <ClInclude Include="src\JZEngine\Sound\Sound.h" />
     <ClInclude Include="src\JZEngine\STL\Random.h" />
@@ -258,5 +259,6 @@
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleParticleSystem.h" />
     <ClInclude Include="src\JZEngine\Resource\ObjectPool.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\TransformComponent.h" />
+    <ClInclude Include="src\JZEngine\Physics\CollisionComponent.h" />
   </ItemGroup>
 </Project>
