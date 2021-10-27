@@ -93,16 +93,17 @@ namespace JZEngine
 		// render all engine gui parts
 		console_.Render();
 		scene_tree_.Render();
-		inspector_.Render(scene_tree_.selected_entity_);
+		inspector_.Render(scene_tree_.GetSelectedEntity());
 
 		for (auto& interface : imgui_interfaces_) {
 			interface.second.interface_->RenderInterface(dt);
 		}
 
-		if (scene_tree_.selected_entity_)
+		ECS::Entity* selected_entity = scene_tree_.GetSelectedEntity();
+		if (selected_entity)
 		{
 			// for now hardcoded as if has transform
-			if (scene_tree_.selected_entity_->HasComponent(0))
+			if (selected_entity->HasComponent(0))
 			{
 				ImGuizmo::SetOrthographic(true);
 				//ImGuiIO& io = ImGui::GetIO();
@@ -110,7 +111,7 @@ namespace JZEngine
 				Mat4f projection = static_cast<Mat4f>(Math::GetProjectionTransformNonTransposed()).Transpose();
 				Mat4f view = Mat4f::Translate(-camera_position_.x, -camera_position_.y, 0.0f).Transpose();
 
-				Transform& transform = scene_tree_.selected_entity_->GetComponent<Transform>();
+				Transform& transform = selected_entity->GetComponent<Transform>();
 				Mat4f m4_translation = Mat4f::Translate(transform.position_.x, transform.position_.y, 0.0f);
 				Mat4f m4_rotation = Mat4f::RotateZ(Math::DegToRad(transform.rotation_));
 				Mat4f m4_scale = Mat4f::Scale(transform.scale_.x, transform.scale_.y, 1.0f);
@@ -240,7 +241,8 @@ namespace JZEngine
 					// check if mouse point within it
 					if (!(mouse_world_position_.x < left || mouse_world_position_.x > right || mouse_world_position_.y > top || mouse_world_position_.y < bottom))
 					{
-						scene_tree_.selected_entity_ = &e;
+						//scene_tree_.selected_entity_ = &e;
+						scene_tree_.SetSelectedEntity(e.entity_id_);
 					}
 				}
 			}

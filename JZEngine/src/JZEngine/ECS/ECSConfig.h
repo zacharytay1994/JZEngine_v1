@@ -19,6 +19,7 @@
 #include "../GraphicRendering/Background.h"
 #include "../GraphicRendering/Text.h"
 #include "../ECSSystems/FloatRandom.h"
+#include "../ECSSystems/ExampleParticleSystem.h"
 
 namespace JZEngine
 { 
@@ -40,7 +41,10 @@ namespace JZEngine
 				NotBackground ,
 				TextData ,
 				Animation2D ,
-				RandomMovement
+				RandomMovement ,
+				ExampleParticleSystemComponent ,
+				ExampleParticleComponent ,
+				PopiahPSFlag
 
 				>;
 
@@ -53,7 +57,10 @@ namespace JZEngine
 				InstanceSprite ,
 				PhysicsSystem ,
 				Text ,
-				FloatRandom
+				FloatRandom ,
+				ExampleParticleSystem ,
+				ExampleParticle ,
+				PopiahParticleSystem
 
 				>;
 		};

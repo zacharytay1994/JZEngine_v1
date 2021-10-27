@@ -984,6 +984,18 @@ namespace JZEngine
 			return *this;
 		}
 
+		void Entity::FlagActive(bool flag)
+		{
+			assert(owning_chunk_ != nullptr);
+			owning_chunk_->active_flags_[id_] = flag;
+		}
+
+		bool Entity::GetFlag()
+		{
+			assert(owning_chunk_ != nullptr);
+			return owning_chunk_->active_flags_[id_];
+		}
+
 		//Entity& Entity::AddComponent(const ECS::SystemComponents& components)
 		//{
 		//	// check if this entity had a chunk before
@@ -1040,5 +1052,14 @@ namespace JZEngine
 
 		//	return *this;
 		//}
+
+
+		void System::ToggleActiveFlag(bool flag)
+		{
+			if (current_chunk_)
+			{
+				current_chunk_->active_flags_[static_cast<int>(current_id_)] = flag;
+			}
+		}
 	}
 }
