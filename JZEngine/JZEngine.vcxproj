@@ -150,6 +150,7 @@
     <ClCompile Include="src\JZEngine\Application.cpp" />
     <ClCompile Include="src\JZEngine\DebugTools\Log.cpp" />
     <ClCompile Include="src\JZEngine\DebugTools\PerformanceData.cpp" />
+    <ClCompile Include="src\JZEngine\ECSSystems\ExampleParticleSystem.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\FloatRandom.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\PhysicsSystem.cpp" />
@@ -276,6 +277,7 @@
     <ClCompile Include="src\JZEngine\Physics\PhyicsDebug.cpp" />
     <ClCompile Include="src\JZEngine\Physics\PhysicsComponent.cpp" />
     <ClCompile Include="src\JZEngine\Physics\RigidBody.cpp" />
+    <ClCompile Include="src\JZEngine\Resource\ObjectPool.cpp" />
     <ClCompile Include="src\JZEngine\Resource\ResourceManager.cpp" />
     <ClCompile Include="src\JZEngine\STL\String.cpp" />
     <ClCompile Include="src\JZEngine\Resource\Serialize.cpp" />
@@ -289,6 +291,7 @@
     <ClInclude Include="src\JZEngine\DebugTools\DebugNew.h" />
     <ClInclude Include="src\JZEngine\DebugTools\Log.h" />
     <ClInclude Include="src\JZEngine\DebugTools\PerformanceData.h" />
+    <ClInclude Include="src\JZEngine\ECSSystems\ExampleParticleSystem.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\FloatRandom.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\SceneLayerControl.h" />
@@ -358,6 +361,7 @@
     <ClInclude Include="src\JZEngine\Physics\Collision.h" />
     <ClInclude Include="src\JZEngine\Physics\PhysicsShapes.h" />
     <ClInclude Include="src\JZEngine\Physics\RigidBody.h" />
+    <ClInclude Include="src\JZEngine\Resource\ObjectPool.h" />
     <ClInclude Include="src\JZEngine\Resource\ResourceManager.h" />
     <ClInclude Include="src\JZEngine\Resource\Serialize.h" />
     <ClInclude Include="src\JZEngine\Sound\Sound.h" />

@@ -11,6 +11,7 @@
 #include "../ECS/ECS.h"
 #include "../EngineConfig.h"
 #include "../DebugTools/Log.h"
+#include "ObjectPool.h"
 
 namespace JZEngine
 {
@@ -107,16 +108,17 @@ namespace JZEngine
 			file.close();
 			Log::Info("Serialize", "- Successfully serialized entity {} as {}.", entity.name_, entity.name_);
 			DeserializeEntityFromFile(entity.name_);
+			ObjectPool::UpdatePool(ecs, entity.name_);
 		}
 		return true;
 	}
 
-	bool Serialize::LoadEntity(ECS::ECSInstance* ecs, const std::string& name)
+	int Serialize::LoadEntity(ECS::ECSInstance* ecs, const std::string& name)
 	{
 		if (entities_.find(name) == entities_.end())
 		{
 			Log::Warning("Serialize", "Tried to load entity {} that does not exist.", name);
-			return false;
+			return -1;
 		}
 		std::stringstream file;
 		std::stringstream ss;
@@ -124,8 +126,23 @@ namespace JZEngine
 		std::string line;
 		std::getline(file, line);
 		ss << line;
-		DeSerializeAllChildEntities(ecs, file, ss);
-		return true;
+		return DeSerializeAllChildEntities(ecs, file, ss);
+	}
+
+	void Serialize::ReInitializeEntity(ECS::ECSInstance* ecs, const std::string& prefab, int entityID)
+	{
+		if (entities_.find(prefab) == entities_.end())
+		{
+			Log::Warning("Serialize", "Tried to load entity {} that does not exist.", prefab);
+			return;
+		}
+		std::stringstream file;
+		std::stringstream ss;
+		file << entities_[prefab];
+		std::string line;
+		std::getline(file, line);
+		ss << line;
+		ReInitializeAllChildEntities(ecs, file, ss, entityID);
 	}
 
 	bool Serialize::DeserializeEntityFromFile(const std::string& name)
@@ -238,7 +255,7 @@ namespace JZEngine
 		{
 			for (auto& id : ecs->entity_manager_.root_ids_)
 			{
-				if (id != -1)
+				if (id != -1 && ecs->entity_manager_.GetEntity(id).persistant_)
 				{
 					// count number of children
 					// recursively render all children of a root entity
