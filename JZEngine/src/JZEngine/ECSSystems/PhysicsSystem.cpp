@@ -20,7 +20,7 @@
 
 namespace JZEngine
 {
-	std::vector<Transform*> transform_cont;
+
 
 	PhysicsSystem::PhysicsSystem()
 	{

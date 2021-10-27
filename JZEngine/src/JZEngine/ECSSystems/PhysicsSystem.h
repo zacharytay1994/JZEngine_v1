@@ -8,6 +8,7 @@
 */
 
 #pragma once
+#include "../GraphicRendering/TransformComponent.h"
 
 #include "../DebugTools/Log.h"
 #include "../ECS/ECS.h"
@@ -31,8 +32,10 @@ namespace JZEngine
 		virtual void FrameEnd(const float& dt) override;
 	private:
 		std::vector<PhysicsComponent*> physics_cont;
-
+		std::vector<Transform*> transform_cont;
 		bool pause{ false };
 		bool stepbystep{ false };
 	};
+
+
 }
