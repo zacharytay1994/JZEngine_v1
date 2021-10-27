@@ -14,6 +14,7 @@
 #include "../EngineConfig.h"
 #include "../ECS/ECS.h"
 #include "SceneTree.h"
+#include "../SceneLogic/SceneLogic.h"
 
 namespace JZEngine
 {
@@ -132,6 +133,9 @@ namespace JZEngine
 							scene_tree_->RemoveAllEntities();
 							Serialize::DeserializeScene(ecs_instance_, s.first);
 							*scene_tree_->current_scene_name_ = s.first;
+							SceneLogic::Instance().SetCurrentSceneName(s.first);
+							SceneLogic::Instance().BuildEntityMap();
+							SceneLogic::Instance().InitSceneLogic();
 						}
 						if (ImGui::Selectable("Append To Scene"))
 						{

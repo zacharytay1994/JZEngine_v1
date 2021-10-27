@@ -26,7 +26,6 @@ namespace JZEngine
 
 		//RendererDebug::DrawSpriteSquare(transform.position_, { transform.scale_.x * transform.size_.x, transform.scale_.y * transform.size_.y });
 
-
 		Transform& transform = GetComponent<Transform>();
 		Texture& texture = GetComponent<Texture>();
 		NonInstanceShader& shader = GetComponent<NonInstanceShader>();

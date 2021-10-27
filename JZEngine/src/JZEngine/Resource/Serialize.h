@@ -178,6 +178,8 @@ namespace JZEngine
 			SERIALIZE(stream, mode,
 				component.position_.x,
 				component.position_.y,
+				component.child_position_.x,
+				component.child_position_.y,
 				component.rotation_,
 				component.scale_.x,
 				component.scale_.y,

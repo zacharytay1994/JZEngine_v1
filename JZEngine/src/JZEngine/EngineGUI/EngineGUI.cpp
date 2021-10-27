@@ -126,6 +126,11 @@ namespace JZEngine
 				ImGuizmo::DecomposeMatrixToComponents(m4_transform.data_[0], translation, rotation, scale);
 
 				transform.position_ = { translation[0], translation[1] };
+				// if has parent with transform, set its child position as well
+				if (selected_entity->parent_ != static_cast<ECS::ui32>(-1) && ecs_instance_->GetEntity(selected_entity->parent_).HasComponent(0))
+				{
+					transform.child_position_ = transform.position_ - ecs_instance_->GetEntity(selected_entity->parent_).GetComponent<Transform>().position_;
+				}
 				transform.rotation_ = rotation[2];
 				transform.scale_ = { scale[0], scale[1] };
 			}

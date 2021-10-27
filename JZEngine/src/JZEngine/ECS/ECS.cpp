@@ -676,6 +676,23 @@ namespace JZEngine
 		void ECSInstance::Update(float dt)
 		{
 			system_manager_.Update(dt);
+
+			// hardcode temp/maybe not measure
+			// if entity has parent, pair its position with the parent
+			for (auto& e : entity_manager_.entities_)
+			{
+				if (e.entity_id_ != static_cast<ui32>(-1)
+					&& e.parent_ != static_cast<ui32>(-1))
+				{
+					Entity& parent = GetEntity(e.parent_);
+					if (e.HasComponent(0) && parent.HasComponent(0))
+					{
+						Transform& transform = GetEntity(e.entity_id_).GetComponent<Transform>();
+						transform.position_
+							= parent.GetComponent<Transform>().position_ + transform.child_position_;
+					}
+				}
+			}
 		}
 
 		ui32 ECSInstance::CreateEntity(ui32 parent)

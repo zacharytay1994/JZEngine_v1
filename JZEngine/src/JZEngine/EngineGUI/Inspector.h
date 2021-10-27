@@ -115,6 +115,18 @@ namespace JZEngine
 			ImGui::Text ( "Y" );
 			ImGui::PopItemWidth ();
 
+			// Child Position
+			ImGui::Text("Relative Position");
+			ImGui::PushItemWidth((w / 2.0f) - spacing);
+			ImGui::InputFloat("##RPosX", &component.child_position_.x);
+			ImGui::SameLine();
+			ImGui::Text("X");
+			ImGui::SameLine();
+			ImGui::InputFloat("##RPosY", &component.child_position_.y);
+			ImGui::SameLine();
+			ImGui::Text("Y");
+			ImGui::PopItemWidth();
+
 			// Rotation
 			ImGui::Text ( "Rotation" );
 			ImGui::PushItemWidth ( w - ( button_sz * 2.0f ) + ( spacing * 2.0f ) );

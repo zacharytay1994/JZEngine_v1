@@ -31,7 +31,7 @@ namespace JZEngine
 			using Component =
 				std::tuple<
 
-				Transform ,
+				Transform ,	// transform must always be the first component, for hardcode reasons sorry pls dont change it
 				SpriteLayer,
 				Texture ,
 				NonInstanceShader ,
