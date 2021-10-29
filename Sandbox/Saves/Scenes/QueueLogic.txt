@@ -1,6 +1,0 @@
-Queue 5 c 0 0 0 0 0 0 1 1 50 50 c 1 0 c 2 iconstop c 3 0 0 0 0 c 9 0 0.910992 1 1 0 1 1 
-Customer 0 c 0 0 0 0 0 0 8 8 50 50 c 1 0 c 2 character c 3 0 0 0 0 c 9 0 0.960993 1 1 0 1 1 
-Customer 0 c 0 0 0 0 0 0 8 8 50 50 c 1 0 c 2 character c 3 0 0 0 0 c 9 0 0.660991 1 1 0 1 1 
-Customer 0 c 0 0 0 0 0 0 8 8 50 50 c 1 0 c 2 character c 3 0 0 0 0 c 9 0 0.394318 1 1 0 1 1 
-Customer 0 c 0 0 0 0 0 0 8 8 50 50 c 1 0 c 2 character c 3 0 0 0 0 c 9 0 0.18974 1 1 0 1 1 
-Customer 0 c 0 0 0 0 0 0 8 8 50 50 c 1 0 c 2 character c 3 0 0 0 0 c 9 0 0.394318 1 1 0 1 1 
