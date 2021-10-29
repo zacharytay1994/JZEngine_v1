@@ -66,6 +66,7 @@
     <ClCompile Include="src\JZEngine\Resource\ObjectPool.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\ExampleParticleSystem.cpp" />
     <ClCompile Include="src\JZEngine\Physics\CollisionComponent.cpp" />
+    <ClCompile Include="src\JZEngine\SceneLogic\SceneLogic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
@@ -260,5 +261,6 @@
     <ClInclude Include="src\JZEngine\Resource\ObjectPool.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\TransformComponent.h" />
     <ClInclude Include="src\JZEngine\Physics\CollisionComponent.h" />
+    <ClInclude Include="src\JZEngine\SceneLogic\SceneLogic.h" />
   </ItemGroup>
 </Project>

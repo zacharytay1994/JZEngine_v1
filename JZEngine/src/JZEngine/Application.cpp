@@ -12,6 +12,7 @@
 #include "EngineConfig.h"
 #include "DebugTools/Log.h"
 #include "Sound/Sound.h"
+#include "SceneLogic/SceneLogic.h"
 
 #include "GraphicRendering/Renderer.h"
 #include "GraphicRendering/RendererInstancing.h"
@@ -68,6 +69,8 @@ namespace JZEngine
 		global_systems_->AddSystem<EngineGUI>			( "Engine GUI" );
 		global_systems_->AddSystem<SoundSystem>			( "Sound System" );
 		global_systems_->AddSystem<TextRenderer>		( "Text Renderer" );
+
+		SceneLogic::Instance().SetECS(global_systems_->GetSystem<ECS::ECSInstance>());
 
 		global_systems_->GetSystem<GLFW_Instance>()->UpdateViewportDimensions();
 		global_systems_->GetSystem<RenderQueue>()->SetRenderer(global_systems_->GetSystem<Renderer>());
@@ -246,6 +249,8 @@ namespace JZEngine
 
 
 			global_systems_->Update ( static_cast<float>(dt) );
+			SceneLogic::Instance().BuildEntityMap();
+			SceneLogic::Instance().UpdateSceneLogic(static_cast<float>(dt));
 
 			//DeltaTime::update_time(1.0);
 			//DeltaTime::update_deltatime(1.0);
