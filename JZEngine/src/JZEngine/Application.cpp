@@ -321,6 +321,7 @@ namespace JZEngine
 			{
 				time += dt;
 			}
+			PerformanceData::time_elapsed_ = time;
 
 			PerformanceData::app_fps_ = static_cast< unsigned int >( 1.0 / dt );
 			/*Log::Info("Main", "Time Elapsed: {}", time);

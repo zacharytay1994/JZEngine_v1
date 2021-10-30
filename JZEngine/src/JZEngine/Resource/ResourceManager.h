@@ -29,6 +29,14 @@ namespace JZEngine
 			Shader shader_program_;
 
 			ShaderID(unsigned int id, const std::string& name) : id_(id), name_(name) {}
+
+			template <typename...PARAMS>
+			void BindUniforms(std::initializer_list<std::string> uniformnames, PARAMS...params)
+			{
+				int i{ 0 };
+				//shader_program_.SetUniform(uniformnames[i], i);
+				((shader_program_.SetUniform(uniformnames[i++], params)), ...);
+			}
 		};
 
 		struct InstancedShaderID
