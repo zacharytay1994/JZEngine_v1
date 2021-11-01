@@ -10,8 +10,10 @@
 #include "../Math/JZMath.h"
 #include "../Physics/PhysicsComponent.h"
 #include "../Physics/CollisionComponent.h"
-#include "PhysicsShapes.h"
 
+
+#include "PhysicsShapes.h"
+#include <limits> 
 
 namespace JZEngine
 {
@@ -34,7 +36,9 @@ namespace JZEngine
 	class Collision
 	{
 	public:
-		static bool CheckPhysicsCollision(const CollisionComponent& componentA, const CollisionComponent& componentB, Manifold& colldata);
+
+
+		static bool CheckCollision(const CollisionComponent& componentA, const CollisionComponent& componentB, Manifold& colldata);
 
 		static void ResolvePhysicsCollision(PhysicsComponent& componentA, PhysicsComponent& componentB, const Vec2f& normal, const float& depth);
 		

@@ -371,7 +371,29 @@ namespace JZEngine
 			
 			ImGui::Text("Shape");
 
-			ImGui::SliderInt("ID", &component.shapeid, 0, 2);
+			ImGui::SliderInt("ID", &component.shapeid, 0, 3);
+
+			ImGui::Text("Offset");
+			ImGui::PushItemWidth((w / 2.0f) - (spacing * 3.0f));
+			ImGui::InputFloat("##OffSetX", &component.offset.x);
+			ImGui::SameLine();
+			ImGui::Text("X");
+			ImGui::SameLine();
+			ImGui::InputFloat("##OffSetY", &component.offset.y);
+			ImGui::SameLine();
+			ImGui::Text("Y");
+			ImGui::PopItemWidth();
+
+			ImGui::Text("Collision Size (cm)");
+			ImGui::PushItemWidth((w / 3.0f) - spacing);
+			ImGui::InputFloat("##SizeW", &component.size.x);
+			ImGui::SameLine();
+			ImGui::Text("X or Radius");
+	
+			ImGui::InputFloat("##SizeY", &component.size.y);
+			ImGui::SameLine();
+			ImGui::Text("Y");
+			ImGui::PopItemWidth();
 		}
 		template <>
 		void RenderComponent ( PhysicsComponent& component )
@@ -410,8 +432,14 @@ namespace JZEngine
 			ImGui::SliderFloat ( "kg/cm^2" , &component.Density , 0.001f , 1.f );
 			ImGui::Text ( "Mass" );
 			ImGui::SliderFloat ( "kg" , &component.Mass , component.Mass - 10.0f , component.Mass + 10.0f );
-			ImGui::Text ( "Restitution" );
+			ImGui::Text ( "Restitution (Bounciness)" );
 			ImGui::SliderFloat ( "##PhysicsComponentRestitution" , &component.Restitution , 0.0f , 1.0f );
+
+			ImGui::Text("Static Friction");
+			ImGui::SliderFloat("##PhysicsComponentStaticFriction", &component.StaticFriction, 0.0f, 1.5f);
+
+			ImGui::Text("Dynamic Friction");
+			ImGui::SliderFloat("##PhysicsComponentDynamicFriction", &component.DynamicFriction, 0.0f, 1.5f);
 		}
 
 		template <>

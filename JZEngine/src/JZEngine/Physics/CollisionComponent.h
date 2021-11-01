@@ -8,10 +8,13 @@ namespace JZEngine
 
 	struct CollisionComponent
 	{
-		int shapeid{};
+		int shapeid;
+		Vec2f size;
+		Vec2f offset;
 		union {
 			Circle m_circle;
 			Square m_square;
+			AABB m_aabb;
 		};
 
 		CollisionComponent();

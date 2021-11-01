@@ -29,6 +29,12 @@ namespace JZEngine
 				}
 				RendererDebug::DrawPoint(pcomponent.m_square.midpoint);
 			}
+			if (pcomponent.shapeid == shapetype::aabb)
+			{
+				RendererDebug::DrawPoint(pcomponent.m_aabb.min);
+				RendererDebug::DrawPoint(pcomponent.m_aabb.max);
+				RendererDebug::DrawPoint(pcomponent.m_circle.m_center);
+			}
 		}
 		void DebugDrawLine(const Vec2f& p0, const Vec2f& p1)
 		{

@@ -16,8 +16,10 @@
 #include "../Physics/PhysicsComponent.h"
 #include "../Physics/CollisionComponent.h"
 #include "../Physics/CollisionSystem.h"
-
+#include "../Physics/ResolveSystem.h"
+#include "../Input/Input.h"
 #include "../Physics/RigidBody.h"
+
 
 namespace JZEngine
 {

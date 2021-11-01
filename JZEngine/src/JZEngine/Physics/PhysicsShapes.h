@@ -13,8 +13,8 @@ namespace JZEngine {
 	enum shapetype
 	{
 		circle = 0,
-		aabb = 1,
-		square = 2,
+		square = 1,
+		aabb = 2,
 		point =3
 	
 	};

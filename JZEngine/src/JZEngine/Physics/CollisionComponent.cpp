@@ -3,7 +3,8 @@
 
 
 namespace JZEngine {
-	CollisionComponent::CollisionComponent() = default;
+	CollisionComponent::CollisionComponent() : shapeid{ 0 }, offset{ 0.0f, 0.0f }, size{ 50.0f, 50.0f }
+	{}
 
 	CollisionComponent::CollisionComponent(const CollisionComponent& s)
 	{
