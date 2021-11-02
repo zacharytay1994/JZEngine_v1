@@ -13,6 +13,7 @@
 #include "../ECSSystems/ExampleSingleHeader.h"
 #include "../ECSSystems/ExampleSplitHeaderSource.h"
 
+#include "../ECSSystems/CollisionShapeSystem.h"
 #include "../ECSSystems/PhysicsSystem.h"
 #include "../GraphicRendering/NonInstanceSpriteRenderer.h"
 #include "../GraphicRendering/InstanceSpriteRenderer.h"
@@ -53,11 +54,11 @@ namespace JZEngine
 			// add your structs/classes here that you want to be treated as Systems
 			using System =
 				std::tuple<
-
 				ParallaxBackground ,
-				Sprite ,
-				InstanceSprite ,
-				PhysicsSystem ,
+				CollisionShapeSystem,
+				PhysicsSystem,
+				Sprite,
+				InstanceSprite,
 				Text ,
 				FloatRandom ,
 				ExampleParticleSystem ,
