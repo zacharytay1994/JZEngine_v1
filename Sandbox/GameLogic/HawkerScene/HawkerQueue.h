@@ -24,10 +24,10 @@ void InitHawkerQueue() {
 	hawker_queue = std::queue<Customers>();
 
 	// Get queue entity
-	JZEngine::ECS::Entity& e = Scene().GetEntity("Queue");
+	JZEngine::ECS::Entity* e = Scene().GetEntity("Queue");
 	int queue_layer = Scene().GetComponent<JZEngine::SpriteLayer>("Queue")->layer_;
 	//int queue_y = e.GetComponentEX<JZEngine::Transform>().position_.y;
-	for (int i = 0; i < static_cast<int>(e.children_count_); ++i)
+	for (int i = 0; i < static_cast<int>(e->children_count_); ++i)
 	{
 		// set customer layer offset from the queue layer
 		Scene().GetComponent<JZEngine::SpriteLayer>("Customer", i)->layer_ = queue_layer - i;

@@ -64,6 +64,14 @@ namespace JZEngine
 		}
 	}
 
+	void SceneLogic::EntityFlagActive(const std::string& name, bool flag)
+	{
+		if (ECS::Entity* e = GetEntity(name))
+		{
+			e->FlagActive(flag);
+		}
+	}
+
 	SceneLogic& SceneLogic::Instance()
 	{
 		static SceneLogic instance;
@@ -122,13 +130,14 @@ namespace JZEngine
 		}
 	}
 
-	ECS::Entity& SceneLogic::GetEntity(const std::string& name, unsigned int id)
+	ECS::Entity* SceneLogic::GetEntity(const std::string& name, unsigned int id)
 	{
-		if (entity_map_ || entity_map_->find(name) == entity_map_->end())
+		if (!entity_map_ || entity_map_->find(name) == entity_map_->end())
 		{
 			Log::Warning("Main", "Trying to get entity [{}] from scene that does not exist", name);
+			return nullptr;
 		}
-		return (*(*entity_map_)[name][id]);
+		return (*entity_map_)[name][id];
 	}
 
 	/*ECS::Entity& SceneLogic::GetEntity(const std::string& name, unsigned int id)

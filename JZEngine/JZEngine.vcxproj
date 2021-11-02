@@ -154,6 +154,7 @@
     <ClCompile Include="src\JZEngine\ECSSystems\ExampleParticleSystem.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\FloatRandom.cpp" />
+    <ClCompile Include="src\JZEngine\ECSSystems\FollowMouseCursor.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\MouseEvent.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\PhysicsSystem.cpp" />
     <ClCompile Include="src\JZEngine\ECS\ECS.cpp">
@@ -301,6 +302,7 @@
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleParticleSystem.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\FloatRandom.h" />
+    <ClInclude Include="src\JZEngine\ECSSystems\FollowMouseCursor.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\MouseEvent.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\SceneLayerControl.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Camera.h" />
