@@ -10,8 +10,8 @@ public:
 		:
 		Application ()
 	{
-		Scene().RegisterSceneInit("NewHawkerScene", HawkerSceneInit);
-		Scene().RegisterSceneLogic("NewHawkerScene", HawkerSceneUpdate);
+		Scene().RegisterSceneInit("HawkerV2", HawkerSceneInit);
+		Scene().RegisterSceneLogic("HawkerV2", HawkerSceneUpdate);
 	}
 };
 

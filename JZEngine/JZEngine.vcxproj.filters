@@ -70,6 +70,7 @@
     <ClCompile Include="src\JZEngine\GraphicRendering\Camera.cpp" />
     <ClCompile Include="src\JZEngine\Physics\ResolveSystem.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\CollisionShapeSystem.cpp" />
+    <ClCompile Include="src\JZEngine\ECSSystems\MouseEvent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
@@ -266,5 +267,6 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\Camera.h" />
     <ClInclude Include="src\JZEngine\Physics\ResolveSystem.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\CollisionShapeSystem.h" />
+    <ClInclude Include="src\JZEngine\ECSSystems\MouseEvent.h" />
   </ItemGroup>
 </Project>

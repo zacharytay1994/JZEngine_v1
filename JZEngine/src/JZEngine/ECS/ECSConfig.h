@@ -21,6 +21,7 @@
 #include "../GraphicRendering/Text.h"
 #include "../ECSSystems/FloatRandom.h"
 #include "../ECSSystems/ExampleParticleSystem.h"
+#include "../ECSSystems/MouseEvent.h"
 
 namespace JZEngine
 { 
@@ -46,7 +47,8 @@ namespace JZEngine
 				RandomMovement ,
 				ExampleParticleSystemComponent ,
 				ExampleParticleComponent ,
-				PopiahPSFlag
+				PopiahPSFlag,
+				MouseEvent
 		
 
 				>;
@@ -63,7 +65,8 @@ namespace JZEngine
 				FloatRandom ,
 				ExampleParticleSystem ,
 				ExampleParticle ,
-				PopiahParticleSystem
+				PopiahParticleSystem,
+				MouseEventSystem
 
 				>;
 		};

@@ -30,13 +30,14 @@ namespace JZEngine
 		void InitSceneLogic();
 		void BuildEntityMap();
 		template <typename T>
-		T& GetComponent(const std::string& name, unsigned int id = 0)
+		T* GetComponent(const std::string& name, unsigned int id = 0)
 		{
-			if (entity_map_ || entity_map_->find(name) == entity_map_->end())
+			if (!entity_map_ || entity_map_->find(name) == entity_map_->end())
 			{
-				Log::Warning("Error", "Trying to get entity [{}] from scene that does not exist", name);
+				//Log::Warning("Error", "Trying to get entity [{}] from scene that does not exist", name);
+				return nullptr;
 			}
-			return (*(*entity_map_)[name][id]).GetComponentEX<T>();
+			return &((*entity_map_)[name][id])->GetComponentEX<T>();
 		}
 		ECS::Entity& GetEntity(const std::string& name, unsigned int id = 0);
 		void AddPrefab(const std::string& name, const std::string& parent = "default");

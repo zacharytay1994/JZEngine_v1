@@ -65,8 +65,8 @@ namespace JZEngine
 		global_systems_->AddSystem<ECS::ECSInstance>	( "ECS Instance" );
 		global_systems_->AddSystem<Renderer>			( "Default Renderer" );
 		global_systems_->AddSystem<RendererInstancing>	( "Instance Renderer" );
-		global_systems_->AddSystem<RendererDebug>		( "Debug Renderer" );
 		global_systems_->AddSystem<RenderQueue>			( "Render Queue" );
+		global_systems_->AddSystem<RendererDebug>		( "Debug Renderer" );
 		global_systems_->AddSystem<EngineGUI>			( "Engine GUI" );
 		global_systems_->AddSystem<SoundSystem>			( "Sound System" );
 		global_systems_->AddSystem<TextRenderer>		( "Text Renderer" );
@@ -234,10 +234,10 @@ namespace JZEngine
 
 		while( global_systems_->GetSystem<GLFW_Instance> ()->Active () )
 		{
-			if( InputHandler::IsKeyTriggered ( KEY::KEY_L ) )
+			/*if( InputHandler::IsKeyTriggered ( KEY::KEY_L ) )
 			{
 				limit_frames = !limit_frames;
-			}
+			}*/
 
 			auto start_time = std::chrono::high_resolution_clock::now ();
 
@@ -325,6 +325,7 @@ namespace JZEngine
 			{
 				time += dt;
 			}
+			//Log::Info("Main", "Sleep Time: {}", sleep_time);
 			PerformanceData::time_elapsed_ = time;
 
 			PerformanceData::app_fps_ = static_cast< unsigned int >( 1.0 / dt );
