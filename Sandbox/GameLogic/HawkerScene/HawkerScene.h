@@ -1,6 +1,36 @@
 #pragma once
 #include <JZEngine.h>
 #include "HawkerQueue.h"
+#include <string>
+
+/*!
+ * **********************************************************************
+ * @brief CURSOR CODE - START
+*/
+enum class CursorState
+{
+	Nothing,
+	EmptyTongs,
+	Scizzors,
+	Plate,
+	TongsWanton,
+	TongsSeaweedChicken,
+	TongsSpringroll,
+	TongsCarrotCake
+};
+
+std::string cursor_object_names[] = {
+	"Nothing",
+	"EmptyTongs",
+	"ScizzorsCursor",
+	"PlateCursor",
+	"TongsDumpling",
+	"TongsSeaweedChicken",
+	"TongsSpringroll",
+	"TongsCarrotCake"
+};
+
+CursorState cursor_state = CursorState::Nothing;
 
 void FlagAllCursorsFalse()
 {
@@ -11,6 +41,260 @@ void FlagAllCursorsFalse()
 	Scene().EntityFlagActive("TongsSpringroll", false);
 	Scene().EntityFlagActive("ScizzorsCursor", false);
 	Scene().EntityFlagActive("PlateCursor", false);
+	cursor_state = CursorState::Nothing;
+}
+
+void FlagCursorState(CursorState state)
+{
+	FlagAllCursorsFalse();
+	cursor_state = state;
+	Scene().EntityFlagActive(cursor_object_names[static_cast<int>(cursor_state)], true);
+}
+
+bool CheckCursorState(CursorState state)
+{
+	return state == cursor_state;
+}
+
+void ResetCursors();
+
+/*!
+ * @brief CURSOR CODE - END
+ * **********************************************************************
+*/
+
+/*!
+ * **********************************************************************
+ * @brief TRAY CODE - START
+*/
+bool plate_on_tray{ false };
+bool plate_on_hand{ false };
+JZEngine::Vec2f original_plate_position_{ 0.0f,0.0f };
+
+enum class TrayPlateState
+{
+	Nothing,
+	Wanton,
+	SeaweedChicken,
+	SpringRoll,
+	CarrotCake,
+};
+
+std::string plate_food_object_names[] = {
+	"Nothing",
+	"tray_wanton",
+	"tray_seaweedchicken",
+	"tray_springroll",
+	"tray_carrotcake",
+};
+
+TrayPlateState tray_plate_state = TrayPlateState::Nothing;
+
+void FlagAllTrayItemsFalse()
+{
+	Scene().EntityFlagActive("tray_plate", false);
+	plate_on_tray = false;
+	Scene().EntityFlagActive("tray_wanton", false);
+	Scene().EntityFlagActive("tray_seaweedchicken", false);
+	Scene().EntityFlagActive("tray_springroll", false);
+	Scene().EntityFlagActive("tray_carrotcake", false);
+	tray_plate_state = TrayPlateState::Nothing;
+}
+
+void FlagPlateState(bool flag)
+{
+	Scene().EntityFlagActive("tray_plate", flag);
+	plate_on_tray = true;
+}
+
+void SetPlateFood(TrayPlateState state)
+{
+	// if no plate on the tray, cannot put food
+	if (!plate_on_tray)
+	{
+		return;
+	}
+	tray_plate_state = state;
+	Scene().EntityFlagActive(plate_food_object_names[static_cast<int>(tray_plate_state)], true);
+}
+
+/*!
+ * @brief TRAY CODE - END
+ * **********************************************************************
+*/
+void HawkerSceneInit()
+{
+	InitHawkerQueue();
+
+	// initialize cursors
+	ResetCursors();
+
+	// inititalize tray items
+	original_plate_position_ = Scene().GetComponent<JZEngine::Transform>("tray_plate")->position_;
+	FlagAllTrayItemsFalse();
+
+	JZEngine::Log::Info("Main", "Hawker Scene Initialized.");
+}
+
+void HawkerSceneUpdate(float dt)
+{
+	UpdateHawkerQueue(dt);
+
+	// process click inputs
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_springroll"))
+	{
+		if (e->on_click_)
+		{
+			if (CheckCursorState(CursorState::EmptyTongs))
+			{
+				JZEngine::Log::Info("Main", "SpringRoll Selected");
+				FlagCursorState(CursorState::TongsSpringroll);
+			}
+			else if (CheckCursorState(CursorState::TongsSpringroll))
+			{
+				JZEngine::Log::Info("Main", "SpringRoll Returned");
+				FlagCursorState(CursorState::EmptyTongs);
+			}
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_wanton"))
+	{
+		if (e->on_click_)
+		{
+			if (CheckCursorState(CursorState::EmptyTongs))
+			{
+				JZEngine::Log::Info("Main", "Wanton Selected");
+				FlagCursorState(CursorState::TongsWanton);
+			}
+			else if (CheckCursorState(CursorState::TongsWanton))
+			{
+				JZEngine::Log::Info("Main", "Wanton Returned");
+				FlagCursorState(CursorState::EmptyTongs);
+			}
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_seaweedchicken"))
+	{
+		if (e->on_click_)
+		{
+			if (CheckCursorState(CursorState::EmptyTongs))
+			{
+				JZEngine::Log::Info("Main", "SeaweedChicken Selected");
+				FlagCursorState(CursorState::TongsSeaweedChicken);
+			}
+			else if (CheckCursorState(CursorState::TongsSeaweedChicken))
+			{
+				JZEngine::Log::Info("Main", "SeaweedChicken Returned");
+				FlagCursorState(CursorState::EmptyTongs);
+			}
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_carrotcake"))
+	{
+		if (e->on_click_)
+		{
+			if (CheckCursorState(CursorState::EmptyTongs))
+			{
+				JZEngine::Log::Info("Main", "CarrotCake Selected");
+				FlagCursorState(CursorState::TongsCarrotCake);
+			}
+			else if (CheckCursorState(CursorState::TongsCarrotCake))
+			{
+				JZEngine::Log::Info("Main", "CarrotCake Returned");
+				FlagCursorState(CursorState::EmptyTongs);
+			}
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_plate"))
+	{
+		if (e->on_click_)
+		{
+			JZEngine::Log::Info("Main", "Plate Selected");
+			FlagCursorState(CursorState::Plate);
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_tongs"))
+	{
+		if (e->on_click_)
+		{
+			JZEngine::Log::Info("Main", "Tongs Selected");
+			FlagCursorState(CursorState::EmptyTongs);
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_scizzors"))
+	{
+		if (e->on_click_)
+		{
+			JZEngine::Log::Info("Main", "Scizzors Selected");
+			FlagCursorState(CursorState::Scizzors);
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_trashbin"))
+	{
+		if (e->on_click_)
+		{
+			JZEngine::Log::Info("Main", "Trashbin Selected");
+			ResetCursors();
+			if (CheckCursorState(CursorState::EmptyTongs))
+			{
+				Scene().EntityFlagActive("EmptyTongs", true);
+			}
+			if (CheckCursorState(CursorState::Scizzors))
+			{
+				Scene().EntityFlagActive("ScizzorsCursor", true);
+			}
+			if (plate_on_hand)
+			{
+				plate_on_hand = false;
+				// make invisible all tray items
+				FlagAllTrayItemsFalse();
+				// place plate back on tray
+				Scene().GetComponent<JZEngine::Transform>("tray_plate")->position_ = original_plate_position_;
+			}
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_tray"))
+	{
+		// if tray was clicked and plate has nothing on it
+		if (e->on_click_)
+		{
+			if (plate_on_tray && tray_plate_state == TrayPlateState::Nothing)
+			{
+				switch (cursor_state)
+				{
+				case CursorState::TongsCarrotCake:
+					SetPlateFood(TrayPlateState::CarrotCake);
+					FlagAllCursorsFalse();
+					break;
+				case CursorState::TongsSeaweedChicken:
+					SetPlateFood(TrayPlateState::SeaweedChicken);
+					FlagAllCursorsFalse();
+					break;
+				case CursorState::TongsSpringroll:
+					SetPlateFood(TrayPlateState::SpringRoll);
+					FlagAllCursorsFalse();
+					break;
+				case CursorState::TongsWanton:
+					SetPlateFood(TrayPlateState::Wanton);
+					FlagAllCursorsFalse();
+					break;
+				}
+			}
+			else if (!plate_on_tray && CheckCursorState(CursorState::Plate))
+			{
+				FlagPlateState(true);
+				FlagAllCursorsFalse();
+			}
+			else if (plate_on_tray && tray_plate_state != TrayPlateState::Nothing)
+			{
+				plate_on_hand = true;
+			}
+		}
+	}
+	if (plate_on_hand)
+	{
+		Scene().GetComponent<JZEngine::Transform>("tray_plate")->position_ = JZEngine::Camera::mouse_world_position_;
+	}
 }
 
 void ResetCursors()
@@ -44,113 +328,4 @@ void ResetCursors()
 		cursor->child_position_ = { 0.0f, 0.0f };
 	}
 	FlagAllCursorsFalse();
-}
-
-bool has_tongs_{ false };
-bool has_scizzors_{ false };
-
-void ResetCursorFlags()
-{
-	has_tongs_ = false;
-	has_scizzors_ = false;
-}
-
-void HawkerSceneInit()
-{
-	InitHawkerQueue();
-
-	// initialize cursors
-	ResetCursors();
-
-	JZEngine::Log::Info("Main", "Hawker Scene Initialized.");
-}
-
-void HawkerSceneUpdate(float dt)
-{
-	UpdateHawkerQueue(dt);
-
-	// process click inputs
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_springroll"))
-	{
-		if (e->on_click_ && has_tongs_)
-		{
-			JZEngine::Log::Info("Main", "SpringRoll Selected");
-			ResetCursors();
-			Scene().EntityFlagActive("TongsSpringroll", true);
-		}
-	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_wanton"))
-	{
-		if (e->on_click_ && has_tongs_)
-		{
-			JZEngine::Log::Info("Main", "Wanton Selected");
-			ResetCursors();
-			Scene().EntityFlagActive("TongsDumpling", true);
-		}
-	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_seaweedchicken"))
-	{
-		if (e->on_click_ && has_tongs_)
-		{
-			JZEngine::Log::Info("Main", "SeaweedChicken Selected");
-			ResetCursors();
-			Scene().EntityFlagActive("TongsSeaweedChicken", true);
-		}
-	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_carrotcake"))
-	{
-		if (e->on_click_ && has_tongs_)
-		{
-			JZEngine::Log::Info("Main", "CarrotCake Selected");
-			ResetCursors();
-			Scene().EntityFlagActive("TongsCarrotCake", true);
-		}
-	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_plate"))
-	{
-		if (e->on_click_)
-		{
-			JZEngine::Log::Info("Main", "Plate Selected");
-			ResetCursors();
-			Scene().EntityFlagActive("PlateCursor", true);
-		}
-	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_tongs"))
-	{
-		if (e->on_click_)
-		{
-			JZEngine::Log::Info("Main", "Tongs Selected");
-			ResetCursors();
-			Scene().EntityFlagActive("EmptyTongs", true);
-			ResetCursorFlags();
-			has_tongs_ = true;
-		}
-	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_scizzors"))
-	{
-		if (e->on_click_)
-		{
-			JZEngine::Log::Info("Main", "Scizzors Selected");
-			ResetCursors();
-			Scene().EntityFlagActive("ScizzorsCursor", true);
-			ResetCursorFlags();
-			has_scizzors_ = true;
-		}
-	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_trashbin"))
-	{
-		if (e->on_click_)
-		{
-			JZEngine::Log::Info("Main", "Trashbin Selected");
-			ResetCursors();
-			if (has_tongs_)
-			{
-				Scene().EntityFlagActive("EmptyTongs", true);
-			}
-			if (has_scizzors_)
-			{
-				Scene().EntityFlagActive("ScizzorsCursor", true);
-			}
-		}
-	}
 }
