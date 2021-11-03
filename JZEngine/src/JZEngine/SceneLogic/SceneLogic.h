@@ -43,7 +43,7 @@ namespace JZEngine
 		void AddPrefab(const std::string& name, const std::string& parent = "default");
 		void SetECS(ECS::ECSInstance* ecs);
 		void SetCurrentSceneName(const std::string& name);
-		void EntityFlagActive(const std::string& name, bool flag);
+		void EntityFlagActive(const std::string& name, bool flag, int id = 0);
 	private:
 		ECS::ECSInstance* ecs_instance_{ nullptr };
 		std::unordered_map<std::string, fpSceneInit>* scene_inits_{ nullptr };

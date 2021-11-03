@@ -64,9 +64,9 @@ namespace JZEngine
 		}
 	}
 
-	void SceneLogic::EntityFlagActive(const std::string& name, bool flag)
+	void SceneLogic::EntityFlagActive(const std::string& name, bool flag, int id)
 	{
-		if (ECS::Entity* e = GetEntity(name))
+		if (ECS::Entity* e = GetEntity(name, id))
 		{
 			e->FlagActive(flag);
 		}
