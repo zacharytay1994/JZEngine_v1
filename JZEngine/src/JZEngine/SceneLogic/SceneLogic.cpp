@@ -3,6 +3,7 @@
 #include "../DebugTools/Log.h"
 #include "../ECS/ECS.h"
 #include "../Resource/Serialize.h"
+#include "../Resource/ResourceManager.h"
 
 namespace JZEngine
 {
@@ -70,6 +71,11 @@ namespace JZEngine
 		{
 			e->FlagActive(flag);
 		}
+	}
+
+	int SceneLogic::GetTexture(const std::string& name)
+	{
+		return ResourceManager::GetTextureID(name);
 	}
 
 	SceneLogic& SceneLogic::Instance()

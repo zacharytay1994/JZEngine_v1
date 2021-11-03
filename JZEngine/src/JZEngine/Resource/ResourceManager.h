@@ -134,5 +134,6 @@ namespace JZEngine
 		static void LoadAllTexturesInFolder(const std::string& folder = "Assets/Textures/");
 		static Texture2D* GetTexture(int id);
 		static Texture2D* GetTexture(const std::string& name);
+		static int GetTextureID(const std::string& name);
 	};
 }

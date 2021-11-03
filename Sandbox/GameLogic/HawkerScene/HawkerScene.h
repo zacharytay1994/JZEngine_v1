@@ -71,24 +71,25 @@ bool plate_on_tray{ false };
 bool plate_on_hand{ false };
 JZEngine::Vec2f original_plate_position_{ 0.0f,0.0f };
 
-enum class TrayPlateState
-{
-	Nothing,
-	Wanton,
-	SeaweedChicken,
-	SpringRoll,
-	CarrotCake,
-};
+//enum class TrayPlateState
+//{
+//	Nothing,
+//	Wanton,
+//	SeaweedChicken,
+//	SpringRoll,
+//	CarrotCake,
+//};
 
 std::string plate_food_object_names[] = {
-	"Nothing",
 	"tray_wanton",
 	"tray_seaweedchicken",
 	"tray_springroll",
 	"tray_carrotcake",
+	"Nothing"
 };
 
-TrayPlateState tray_plate_state = TrayPlateState::Nothing;
+//TrayPlateState tray_plate_state = TrayPlateState::Nothing;
+CustomerOrder current_order = CustomerOrder::Nothing;
 
 void FlagAllTrayItemsFalse()
 {
@@ -98,7 +99,7 @@ void FlagAllTrayItemsFalse()
 	Scene().EntityFlagActive("tray_seaweedchicken", false);
 	Scene().EntityFlagActive("tray_springroll", false);
 	Scene().EntityFlagActive("tray_carrotcake", false);
-	tray_plate_state = TrayPlateState::Nothing;
+	current_order = CustomerOrder::Nothing;
 }
 
 void FlagPlateState(bool flag)
@@ -107,15 +108,15 @@ void FlagPlateState(bool flag)
 	plate_on_tray = true;
 }
 
-void SetPlateFood(TrayPlateState state)
+void SetPlateFood(CustomerOrder state)
 {
 	// if no plate on the tray, cannot put food
 	if (!plate_on_tray)
 	{
 		return;
 	}
-	tray_plate_state = state;
-	Scene().EntityFlagActive(plate_food_object_names[static_cast<int>(tray_plate_state)], true);
+	current_order = state;
+	Scene().EntityFlagActive(plate_food_object_names[static_cast<int>(current_order)], true);
 }
 
 /*!
@@ -258,24 +259,24 @@ void HawkerSceneUpdate(float dt)
 		// if tray was clicked and plate has nothing on it
 		if (e->on_click_)
 		{
-			if (plate_on_tray && tray_plate_state == TrayPlateState::Nothing)
+			if (plate_on_tray && current_order == CustomerOrder::Nothing)
 			{
 				switch (cursor_state)
 				{
 				case CursorState::TongsCarrotCake:
-					SetPlateFood(TrayPlateState::CarrotCake);
+					SetPlateFood(CustomerOrder::CarrotCake);
 					FlagAllCursorsFalse();
 					break;
 				case CursorState::TongsSeaweedChicken:
-					SetPlateFood(TrayPlateState::SeaweedChicken);
+					SetPlateFood(CustomerOrder::SeaweedChicken);
 					FlagAllCursorsFalse();
 					break;
 				case CursorState::TongsSpringroll:
-					SetPlateFood(TrayPlateState::SpringRoll);
+					SetPlateFood(CustomerOrder::SpringRoll);
 					FlagAllCursorsFalse();
 					break;
 				case CursorState::TongsWanton:
-					SetPlateFood(TrayPlateState::Wanton);
+					SetPlateFood(CustomerOrder::Wanton);
 					FlagAllCursorsFalse();
 					break;
 				}
@@ -285,15 +286,37 @@ void HawkerSceneUpdate(float dt)
 				FlagPlateState(true);
 				FlagAllCursorsFalse();
 			}
-			else if (plate_on_tray && tray_plate_state != TrayPlateState::Nothing)
+			else if (plate_on_tray && current_order != CustomerOrder::Nothing)
 			{
 				plate_on_hand = true;
 			}
 		}
 	}
+
 	if (plate_on_hand)
 	{
 		Scene().GetComponent<JZEngine::Transform>("tray_plate")->position_ = JZEngine::Camera::mouse_world_position_;
+	}
+
+	// give customer food
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_customer"))
+	{
+		if (e->on_click_)
+		{
+			if (InteractWithQueue(plate_on_hand, current_order))
+			{
+				if (plate_on_hand)
+				{
+					plate_on_hand = false;
+					// make invisible all tray items
+					FlagAllTrayItemsFalse();
+					// place plate back on tray
+					Scene().GetComponent<JZEngine::Transform>("tray_plate")->position_ = original_plate_position_;
+				}
+			}
+			/*Customer& customer = *customers.begin();
+			SetCustomerAnimation(customer.animation_pack_, AnimationStates::Ordering, customer.scene_object_id_);*/
+		}
 	}
 }
 
