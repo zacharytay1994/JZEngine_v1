@@ -2,15 +2,19 @@
 #include "PostProcessor.h"
 
 
+
 namespace JZEngine
 {
-	void PostProcessor::Init (/* Shader shader ,*/ unsigned int width , unsigned int height )
-		/*:
-		shader_program_ ( shader ) ,
-		width_ ( width ) ,
-		height_ ( height )*/
-	{
+	PostProcessor::PostProcessor ()
+		:
+		MSFBO ( 0 ) ,
+		FBO ( 0 ) ,
+		RBO ( 0 ) ,
+		vb ( vertices.data () , static_cast< unsigned int >( vertices.size () * sizeof ( float ) ) )
+	{}
 
+	void PostProcessor::Init ( unsigned int width , unsigned int height )
+	{
 		width_ = width ;
 		height_ = height ;
 
@@ -25,14 +29,9 @@ namespace JZEngine
 		glFramebufferRenderbuffer ( GL_FRAMEBUFFER , GL_COLOR_ATTACHMENT0 , GL_RENDERBUFFER , RBO ); // attach MS render buffer object to framebuffer
 		if( glCheckFramebufferStatus ( GL_FRAMEBUFFER ) != GL_FRAMEBUFFER_COMPLETE )
 			std::cout << "ERROR::POSTPROCESSOR: Failed to initialize MSFBO" << std::endl;
-		
-		
-		
+
 		// also initialize the FBO/texture to blit multisampled color-buffer to; used for shader operations (for postprocessing effects)
 		glBindFramebuffer ( GL_FRAMEBUFFER , FBO );
-
-
-
 
 		texture_.Texture2DLoad ( width_ , height_ );
 
@@ -47,11 +46,9 @@ namespace JZEngine
 		initRenderData ();
 
 		shader_program_.Bind ();
-		//texture_.Bind ();
 
 		shader_program_.SetUniform ( "scene" , 0 );
 		float offset = 1.0f / 300.0f;
-		//std::array <JZEngine::Vec2,9> offsets=
 		float offsets[ 9 ][ 2 ] =
 		{
 			{ -offset,  offset  },  // top-left
@@ -65,8 +62,6 @@ namespace JZEngine
 			{  offset, -offset  }   // bottom-right    
 		};
 
-		//shader_program_.SetUniform 
-
 		glUniform2fv ( glGetUniformLocation ( shader_program_.ShaderHandle () , "offsets" ) , 9 , ( float* ) offsets );
 
 		int edge_kernel[ 9 ] = {
@@ -74,9 +69,11 @@ namespace JZEngine
 			-1,  8, -1,
 			-1, -1, -1
 		};
+
 		glUniform1iv ( glGetUniformLocation ( shader_program_.ShaderHandle () , "edge_kernel" ) , 9 , edge_kernel );
 
-		float blur_kernel[ 9 ] = {
+		float blur_kernel[ 9 ] = 
+		{
 			1.0f / 16.0f, 2.0f / 16.0f, 1.0f / 16.0f,
 			2.0f / 16.0f, 4.0f / 16.0f, 2.0f / 16.0f,
 			1.0f / 16.0f, 2.0f / 16.0f, 1.0f / 16.0f
@@ -91,7 +88,6 @@ namespace JZEngine
 		glBindFramebuffer ( GL_FRAMEBUFFER , MSFBO );
 		glClearColor ( 0.0f , 0.0f , 0.0f , 1.0f );
 		glClear ( GL_COLOR_BUFFER_BIT );
-
 	}
 
 	void PostProcessor::Unbind ()
@@ -110,56 +106,21 @@ namespace JZEngine
 		shader_program_.SetUniform ( "chaos" , chaos_ );
 		shader_program_.SetUniform ( "shake" , shake_ );
 		// render textured quad
-		//glActiveTexture ( GL_TEXTURE0 );
 		texture_.Bind ();
-		glBindVertexArray ( VAO );
+		va.Bind ();
 		glDrawArrays ( GL_TRIANGLES , 0 , 6 );
-		glBindVertexArray ( 0 );
+		va.Unbind ();
+		//glBindVertexArray ( 0 );
 	}
 
 	void PostProcessor::initRenderData ()
 	{
 		// configure VAO/VBO
-		unsigned int VBO;
-
-		float vertices [] = {
-			// pos        // tex
-			-1.0f, -1.0f, 0.0f, 0.0f,
-			 1.0f,  1.0f, 1.0f, 1.0f,
-			-1.0f,  1.0f, 0.0f, 1.0f,
-
-			-1.0f, -1.0f, 0.0f, 0.0f,
-			 1.0f, -1.0f, 1.0f, 0.0f,
-			 1.0f,  1.0f, 1.0f, 1.0f
-		};
-
-
-
-
-		//float vertices [] = 
-		//{
-		//	// positions		// textures
-		//	-0.5f,  0.5f,		0.0f, 1.0f,
-		//	 0.5f, -0.5f,		1.0f, 0.0f,
-		//	-0.5f, -0.5f,		0.0f, 0.0f,
-
-		//	-0.5f,  0.5f,		0.0f, 1.0f,
-		//	 0.5f, -0.5f,		1.0f, 0.0f,
-		//	 0.5f,  0.5f,		1.0f, 1.0f
-		//};
-
-		glGenVertexArrays ( 1 , &VAO );
-		glGenBuffers ( 1 , &VBO );
-
-		glBindBuffer ( GL_ARRAY_BUFFER , VBO );
-		glBufferData ( GL_ARRAY_BUFFER , sizeof ( vertices ) , vertices , GL_STATIC_DRAW );
-
-		glBindVertexArray ( VAO );
-		glEnableVertexAttribArray ( 0 );
-		glVertexAttribPointer ( 0 , 4 , GL_FLOAT , GL_FALSE , 4 * sizeof ( float ) , ( void* ) 0 );
-		glBindBuffer ( GL_ARRAY_BUFFER , 0 );
-		glBindVertexArray ( 0 );
-
+		VertexBufferLayout layout;
+		layout.Push<float> ( 4 );
+		va.AddBuffer ( vb , layout );
+		va.Unbind ();
+		vb.Unbind ();
 
 		shader_program_.CompileShaderFromFile ( GL_VERTEX_SHADER , "Assets/Shaders/Vertex/VS_Post_Processing.vs" );
 		shader_program_.CompileShaderFromFile ( GL_FRAGMENT_SHADER , "Assets/Shaders/Fragment/FS_Post_Processing.fs" );

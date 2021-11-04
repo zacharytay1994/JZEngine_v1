@@ -23,8 +23,6 @@ namespace JZEngine
 
 	struct ParallaxBackground : public ECS::System
 	{
-		//SpriteRenderer sprite_renderer_;
-
 		ParallaxBackground ();
 		virtual void Update ( const float& dt ) override;
 

@@ -14,9 +14,6 @@
 #include "../EngineConfig.h"
 #include "../Math/JZMatrix.h"
 
-
-#define PI 3.14159265359f
-
 namespace JZEngine
 {
 	SpriteRenderer::SpriteRenderer ()
@@ -64,27 +61,27 @@ namespace JZEngine
 		renderer_->Unbind ();
 	}
 
-	void SpriteRenderer::DrawSpriteQueue(	int layer,
-											int shaderid,
-											int textureid,
-											const Mat3f& transform,
-											const JZEngine::Vec3f& tint,
-											int frame,
-											int rows,
-											int cols,
-											bool animated)
+	void SpriteRenderer::DrawSpriteQueue ( int layer ,
+										   int shaderid ,
+										   int textureid ,
+										   const Mat3f& transform ,
+										   const JZEngine::Vec3f& tint ,
+										   int frame ,
+										   int rows ,
+										   int cols ,
+										   bool animated )
 	{
-		draw_queue_.emplace(layer, shaderid, textureid, transform, tint, frame, rows, cols, animated);
+		draw_queue_.emplace ( layer , shaderid , textureid , transform , tint , frame , rows , cols , animated );
 	}
 
 
-	void SpriteRenderer::FlushDrawAllSprites()
+	void SpriteRenderer::FlushDrawAllSprites ()
 	{
-		while (draw_queue_.size() > 0)
+		while( draw_queue_.size () > 0 )
 		{
-			const SpriteLayer& sl = draw_queue_.top();
-			DrawSprite(sl.shader_id_, sl.texture_id_, sl.transform_, sl.tint_, sl.frame_, sl.rows_, sl.cols_, sl.animated_);
-			draw_queue_.pop();
+			const SpriteLayer& sl = draw_queue_.top ();
+			DrawSprite ( sl.shader_id_ , sl.texture_id_ , sl.transform_ , sl.tint_ , sl.frame_ , sl.rows_ , sl.cols_ , sl.animated_ );
+			draw_queue_.pop ();
 		}
 	}
 }

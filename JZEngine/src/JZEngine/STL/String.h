@@ -1,5 +1,5 @@
 /*	__FILE HEADER__
-*	File:		Sound.h
+*	File:		String.h
 	Primary:	Jee Jia Min
 	Date:		01/07/21
 	Brief:		Custom string class.

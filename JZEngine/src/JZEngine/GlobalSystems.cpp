@@ -11,76 +11,78 @@
 
 namespace JZEngine
 {
-	void GlobalSystem::SetGSM(GlobalSystemsManager* gsm)
+	void GlobalSystem::SetGSM ( GlobalSystemsManager* gsm )
 	{
 		global_systems_manager_ = gsm;
 	}
 
-	GlobalSystemsManager::GlobalSystemsManager()
-	{
+	GlobalSystemsManager::GlobalSystemsManager ()
+	{}
 
-	}
-
-	GlobalSystemsManager::~GlobalSystemsManager()
+	GlobalSystemsManager::~GlobalSystemsManager ()
 	{
-		for (auto& system : global_systems_vec_)
+		for( auto& system : global_systems_vec_ )
 		{
-			if (system)
+			if( system )
 			{
 				delete system;
 			}
 		}
 	}
 
-	void GlobalSystemsManager::Init()
+	void GlobalSystemsManager::Init ()
 	{
-		for (auto& system : global_systems_vec_)
+		for( auto& system : global_systems_vec_ )
 		{
-			system->Init();
+			system->Init ();
+		}
+
+	}
+
+	void GlobalSystemsManager::PostInit ()
+	{
+		for( auto& system : global_systems_vec_ )
+		{
+			system->PostInit ();
+		}
+
+	}
+
+	void GlobalSystemsManager::FrameStart ()
+	{
+		for( auto& system : global_systems_vec_ )
+		{
+			system->FrameStart ();
 		}
 	}
 
-	void GlobalSystemsManager::PostInit()
+	void GlobalSystemsManager::Update ( float dt )
 	{
-		for (auto& system : global_systems_vec_)
+		for( auto& system : global_systems_vec_ )
 		{
-			system->PostInit();
+			PerformanceData::StartMark ( system->name_ , PerformanceData::TimerType::GLOBAL_SYSTEMS );
+
+			system->Update ( dt );
+
+			PerformanceData::EndMark ( system->name_ , PerformanceData::TimerType::GLOBAL_SYSTEMS );
 		}
 	}
 
-	void GlobalSystemsManager::FrameStart()
+	void GlobalSystemsManager::FrameEnd ()
 	{
-		for (auto& system : global_systems_vec_)
+		for( auto& system : global_systems_vec_ )
 		{
-			system->FrameStart();
+			system->FrameEnd ();
 		}
 	}
 
-	void GlobalSystemsManager::Update(float dt)
+	void GlobalSystemsManager::Free ()
 	{
-		for (auto& system : global_systems_vec_)
+		for( auto& system : global_systems_vec_ )
 		{
-			PerformanceData::StartMark(system->name_, PerformanceData::TimerType::GLOBAL_SYSTEMS);
-			system->Update(dt);
-			PerformanceData::EndMark(system->name_, PerformanceData::TimerType::GLOBAL_SYSTEMS);
-		}
-	}
-
-	void GlobalSystemsManager::FrameEnd()
-	{
-		for (auto& system : global_systems_vec_)
-		{
-			system->FrameEnd();
-		}
-	}
-
-	void GlobalSystemsManager::Free()
-	{
-		for (auto& system : global_systems_vec_)
-		{
-			if (system)
+			if( system )
 			{
-				system->Free();
+				system->Free ();
 			}
 		}
 	}

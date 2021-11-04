@@ -29,12 +29,12 @@ namespace JZEngine
 		glBufferData ( GL_ARRAY_BUFFER , size , vertices , GL_STATIC_DRAW );
 	}
 
-	VertexBuffer::VertexBuffer( const void* vertices, unsigned int size )
-		: size_( size )
+	VertexBuffer::VertexBuffer ( const void* vertices , unsigned int size )
+		: size_ ( size )
 	{
-		glGenBuffers( 1, &renderer_id_ );
-		glBindBuffer( GL_ARRAY_BUFFER, renderer_id_ );
-		glBufferData( GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW );
+		glGenBuffers ( 1 , &renderer_id_ );
+		glBindBuffer ( GL_ARRAY_BUFFER , renderer_id_ );
+		glBufferData ( GL_ARRAY_BUFFER , size , vertices , GL_STATIC_DRAW );
 	}
 
 	VertexBuffer::~VertexBuffer ()
@@ -62,7 +62,7 @@ namespace JZEngine
 
 	/////////////////////////////////////////////////////////////////////////////
 	// [START] Index Buffer
-	IndexBuffer::IndexBuffer ( unsigned int* indices , unsigned int count ) 
+	IndexBuffer::IndexBuffer ( unsigned int* indices , unsigned int count )
 		:
 		data_ ( indices ) ,
 		count_ ( count )

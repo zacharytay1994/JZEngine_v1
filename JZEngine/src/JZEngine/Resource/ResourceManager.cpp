@@ -127,32 +127,6 @@ namespace JZEngine
 		return 1;
 	}
 
-	/*unsigned int ResourceManager::LoadPostProcessorShader ( const std::string& name , const std::string& vspath , const std::string& fspath )
-	{
-		post_pro_shaders_.emplace_back ( static_cast< unsigned int >( post_pro_shaders_.size () ) , name );
-		Shader& shader = post_pro_shaders_.back ().shader_program_;
-		shader.CompileShaderFromFile ( GL_VERTEX_SHADER , vspath );
-		shader.CompileShaderFromFile ( GL_FRAGMENT_SHADER , fspath );
-		shader.Link ();
-
-		if( GL_FALSE == shader.IsLinked () )
-		{
-			std::cout << "Unable to compile/link/validate shader programs" << "\n";
-			std::cout << shader.GetLog () << std::endl;
-			std::exit ( EXIT_FAILURE );
-		}
-		return 1;
-	}*/
-
-	/*unsigned int ResourceManager::LoadTexture2D ( const std::string& name , const std::string& path )
-	{
-		texture2ds_.emplace_back ( static_cast< unsigned int >( texture2ds_.size () ) , name );
-		Texture2D& texture = texture2ds_.back ().texture2d_;
-		texture.Texture2DLoad ( path );
-
-		return 1;
-	}*/
-
 	void ResourceManager::LoadFont ( std::string font , unsigned int fontSize , const std::string& name , const std::string& vspath , const std::string& fspath )
 	{
 		font_shader_programs_.emplace_back ( static_cast< unsigned int >( font_shader_programs_.size () ) , name );

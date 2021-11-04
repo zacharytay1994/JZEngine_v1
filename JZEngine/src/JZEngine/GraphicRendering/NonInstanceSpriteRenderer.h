@@ -33,6 +33,13 @@ namespace JZEngine
 		int texture_id_{ 0 };
 	};
 
+	struct PostProcessing
+	{
+		bool confuse_{ false };
+		bool chaos_{ false };
+		bool shake_{ false };
+	};
+
 	struct Animation2D
 	{
 		int frame_{ 0 };
@@ -63,20 +70,10 @@ namespace JZEngine
 	// sprite system
 	struct Sprite : public ECS::System
 	{
-		//SpriteRenderer sprite_renderer_;
-
 		Sprite ()
 		{
 			RegisterComponents<Transform , Texture , Animation2D , NonInstanceShader , SpriteLayer> ();
 		}
-
-		// virtual void FrameBegin ( const float& dt ) override
-		// {
-		// 	UNREFERENCED_PARAMETER ( dt );
-		// }
-
 		virtual void Update ( const float& dt ) override;
-		//virtual void FrameEnd(const float& dt) override;
-
 	};
 }

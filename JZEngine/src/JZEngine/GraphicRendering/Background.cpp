@@ -55,10 +55,6 @@ namespace JZEngine
 					transform.rotation_ , transform.scale_ , transform.size_
 				);
 
-				/*sprite_renderer_.DrawSprite ( shader.shader_id_ ,
-											  texture.texture_id_ ,
-											  ( Math::GetProjectionTransformNonTransposed () * EngineGUI::GetCameraTransform() * transform.model_transform_ ).Transpose () ,
-											  shader.tint );*/
 				RenderQueue::DrawQueue(	sprite_layer.layer_,
 										shader.shader_id_,
 										texture.texture_id_,
@@ -74,10 +70,6 @@ namespace JZEngine
 					transform.rotation_ , transform.scale_ , transform.size_
 				);
 
-				/*sprite_renderer_.DrawSprite ( shader.shader_id_ ,
-											  texture.texture_id_ ,
-											  ( Math::GetProjectionTransformNonTransposed () * EngineGUI::GetCameraTransform() * transform.model_transform_ ).Transpose () ,
-											  shader.tint );*/
 				RenderQueue::DrawQueue(	sprite_layer.layer_,
 										shader.shader_id_,
 										texture.texture_id_,
@@ -115,10 +107,7 @@ namespace JZEngine
 					transform.rotation_ , transform.scale_ , transform.size_
 				);
 
-				/*sprite_renderer_.DrawSprite ( shader.shader_id_ ,
-											  texture.texture_id_ ,
-											  ( Math::GetProjectionTransformNonTransposed () * EngineGUI::GetCameraTransform() * transform.model_transform_ ).Transpose () ,
-											  shader.tint );*/
+			
 				RenderQueue::DrawQueue(	sprite_layer.layer_,
 										shader.shader_id_,
 										texture.texture_id_,
@@ -136,9 +125,6 @@ namespace JZEngine
 					transform.rotation_ , transform.scale_ , transform.size_
 				);
 
-				/*sprite_renderer_.DrawSprite ( shader.shader_id_ , texture.texture_id_ ,
-											  ( Math::GetProjectionTransformNonTransposed () * EngineGUI::GetCameraTransform() * transform.model_transform_ ).Transpose () ,
-											  shader.tint );*/
 				RenderQueue::DrawQueue(	sprite_layer.layer_,
 										shader.shader_id_,
 										texture.texture_id_,
@@ -151,10 +137,6 @@ namespace JZEngine
 
 		transform.model_transform_ = Math::GetModelTransformNonTransposed ( transform.position_ , transform.rotation_ , transform.scale_ , transform.size_ );
 
-		/*sprite_renderer_.DrawSprite ( shader.shader_id_ ,
-									  texture.texture_id_ ,
-									  ( Math::GetProjectionTransformNonTransposed () * EngineGUI::GetCameraTransform()* transform.model_transform_ ).Transpose () ,
-									  shader.tint );*/
 		RenderQueue::DrawQueue(	sprite_layer.layer_,
 								shader.shader_id_,
 								texture.texture_id_,
