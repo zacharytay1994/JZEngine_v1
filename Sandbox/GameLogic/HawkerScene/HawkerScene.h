@@ -123,6 +123,107 @@ void SetPlateFood(CustomerOrder state)
  * @brief TRAY CODE - END
  * **********************************************************************
 */
+
+/*!
+ * **********************************************************************
+ * @brief UI - START
+*/
+
+float display_time_{ 4.0f };
+float timer_{ display_time_ };
+float display_up_{ false };
+
+void UnDisplayOrder()
+{
+	// flag board
+	Scene().EntityFlagActive("OrderBoard", false);
+	Scene().EntityFlagActive("EmptyBar", false);
+	Scene().EntityFlagActive("GreenBar", false);
+	Scene().EntityFlagActive("RedBar", false);
+	// flag off on all foods
+	Scene().EntityFlagActive("OrderWanton", false);
+	Scene().EntityFlagActive("OrderSeaweed", false);
+	Scene().EntityFlagActive("OrderSpringroll", false);
+	Scene().EntityFlagActive("OrderCarrotcake", false);
+	// reset flags
+	display_up_ = false;
+	timer_ = display_time_;
+	display_up_ = false;
+}
+
+void DisplayOrder(CustomerOrder order)
+{
+	//// flag board
+	Scene().EntityFlagActive("OrderBoard", true);
+	Scene().EntityFlagActive("EmptyBar", true);
+	Scene().EntityFlagActive("GreenBar", true);
+	Scene().EntityFlagActive("RedBar", true);
+	display_up_ = true;
+	switch (order)
+	{
+	case CustomerOrder::Wanton:
+		Scene().EntityFlagActive("OrderWanton", true);
+		break;
+	case CustomerOrder::SeaweedChicken:
+		Scene().EntityFlagActive("OrderSeaweed", true);
+		break;
+	case CustomerOrder::SpringRoll:
+		Scene().EntityFlagActive("OrderSpringroll", true);
+		break;
+	case CustomerOrder::CarrotCake:
+		Scene().EntityFlagActive("OrderCarrotcake", true);
+		break;
+	}
+	//// flag off on all foods
+	//Scene().EntityFlagActive("OrderWanton", false);
+	//Scene().EntityFlagActive("OrderSeaweed", false);
+	//Scene().EntityFlagActive("OrderSpringroll", false);
+	//Scene().EntityFlagActive("OrderCarrotcake", false);
+	//display_up_ = flag;
+	//// more customized flag the food
+	//if (!flag)
+	//{
+	//	timer_ = display_time_;
+	//	display_up_ = false;
+	//}
+	//else
+	//{
+	//	switch (order)
+	//	{
+	//	case CustomerOrder::Wanton:
+	//		Scene().EntityFlagActive("OrderWanton", true);
+	//		break;
+	//	case CustomerOrder::SeaweedChicken:
+	//		Scene().EntityFlagActive("OrderSeaweed", true);
+	//		break;
+	//	case CustomerOrder::SpringRoll:
+	//		Scene().EntityFlagActive("OrderSpringroll", true);
+	//		break;
+	//	case CustomerOrder::CarrotCake:
+	//		Scene().EntityFlagActive("OrderCarrotcake", true);
+	//		break;
+	//	}
+	//}
+}
+
+void DisplayUpdate(float dt)
+{
+	if (display_up_ && timer_ > 0.0f)
+	{
+		timer_ -= dt;
+	}
+	else
+	{
+		UnDisplayOrder();
+		//DisplayOrder(current_order, false);
+	}
+}
+
+/*!
+ * @brief UI - END
+ * **********************************************************************
+*/
+
 void HawkerSceneInit()
 {
 	InitHawkerQueue();
@@ -133,6 +234,10 @@ void HawkerSceneInit()
 	// inititalize tray items
 	original_plate_position_ = Scene().GetComponent<JZEngine::Transform>("tray_plate")->position_;
 	FlagAllTrayItemsFalse();
+
+	// turn off order ui
+	//DisplayOrder(current_order, false);
+	UnDisplayOrder();
 
 	JZEngine::Log::Info("Main", "Hawker Scene Initialized.");
 }
@@ -303,6 +408,10 @@ void HawkerSceneUpdate(float dt)
 	{
 		if (e->on_click_)
 		{
+			if (!plate_on_hand)
+			{
+				DisplayOrder(GetNextCustomerOrder());
+			}
 			if (InteractWithQueue(plate_on_hand, current_order))
 			{
 				if (plate_on_hand)
@@ -312,12 +421,18 @@ void HawkerSceneUpdate(float dt)
 					FlagAllTrayItemsFalse();
 					// place plate back on tray
 					Scene().GetComponent<JZEngine::Transform>("tray_plate")->position_ = original_plate_position_;
+					// turn off order ui
+					//DisplayOrder(current_order, false);
+					UnDisplayOrder();
 				}
 			}
 			/*Customer& customer = *customers.begin();
 			SetCustomerAnimation(customer.animation_pack_, AnimationStates::Ordering, customer.scene_object_id_);*/
 		}
 	}
+
+	// process order ui
+	DisplayUpdate(dt);
 }
 
 void ResetCursors()

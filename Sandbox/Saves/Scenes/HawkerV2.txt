@@ -1,33 +1,33 @@
-LeaveTest 0 c 0 0 0 0 0 0 57.4393 19.682 50 50 c 1 -20 c 2 bg_hawker_leaves2 c 3 2 0 0 0 c 10 0 0.135761 1 1 0 1 1 
-Sky 0 c 0 0 0 0 0 0 31.9285 18.5829 50 50 c 1 -100 c 2 bg_skypan c 3 0 0 0 0 c 10 0 0.135761 1 1 0 1 1 
-Clouds 0 c 0 -1351.33 127.12 0 0 0 31.6 12.918 50 50 c 1 -30 c 2 bg_hawker_clouds c 3 0 0 0 0 c 7 0 10 0 c 10 0 0.135761 1 1 0 1 1 
-Middlegroud 0 c 0 1.24998 -8.89828 0 0 0 32.4999 21.2414 50 50 c 1 -10 c 2 bg_hawker_misc c 3 0 0 0 0 c 10 0 0.135761 1 1 0 1 1 
-Shrubs 0 c 0 0 0 0 0 0 33.4683 16.6447 50 50 c 1 -7 c 2 bg_hawker_shrubs c 3 2 0 0 0 c 10 0 0.135761 1 1 0 1 1 
-HawkerStalls 0 c 0 18.75 -19.0678 0 0 0 39.4162 21.4432 50 50 c 1 -9 c 2 bg_hawker_stalls c 3 0 0 0 0 c 10 0 0.135761 1 1 0 1 1 
-HawkerStalls2 0 c 0 0 0 0 0 0 35.3333 17.6752 50 50 c 1 -8 c 2 bg_hawker_stalls2 c 3 0 0 0 0 c 10 0 1.00377 1 1 0 1 1 
-Table 0 c 0 -3.75004 -222.458 0 0 0 32.64 9.49811 50 50 c 1 20 c 2 Table c 3 0 0 0 0 c 10 0 0.135761 1 1 0 1 1 
-Branches 0 c 0 0 0 0 0 0 52.7273 19.6342 50 50 c 1 -19 c 2 bg_hawker_branch3 c 3 0 0 0 0 c 10 0 0.135761 1 1 0 1 1 
-Branches2 0 c 0 0 0 0 0 0 42.1716 19.4337 50 50 c 1 -18 c 2 bg_hawker_branch1 c 3 0 0 0 0 c 10 0 0.135761 1 1 0 1 1 
-LeftFrontLeave 0 c 0 0 0 0 0 0 33.815 18.5542 50 50 c 1 0 c 2 bg_hawker_leaves4 c 3 2 0 0 0 c 10 0 0.783396 1 1 0 1 1 
-LeavesTopRight 0 c 0 0 0 0 0 0 46.4708 18.8395 50 50 c 1 -11 c 2 bg_hawker_leaves3 c 3 2 0 0 0 c 10 0 0.783396 1 1 0 1 1 
-HawkerTables 0 c 0 0 0 0 0 0 32.5218 18.4372 50 50 c 1 -5 c 2 bg_hawker_tables c 3 0 0 0 0 c 10 0 0.515063 1 1 0 1 1 
-HawkerUmbrella 0 c 0 0 0 0 0 0 32.8695 18.2935 50 50 c 1 -4 c 2 bg_hawker_umbrellas c 3 0 0 0 0 c 10 0 0.783396 1 1 0 1 1 
-Queue 5 c 0 -262.5 74.2852 0 0 0 1 1 50 50 c 1 10 c 2 emptyimage c 3 0 0 0 0 c 10 0 0.515063 1 1 0 1 1 
-Customer 0 c 0 -1062.5 94.1169 -800 19.8317 0 6 6 50 50 c 1 8 c 2 character c 3 0 0 0 0 c 10 1 0.128588 0.1 12 0 12 1 
-Customer 0 c 0 -1062.5 103.928 -800 29.6423 0 6 6 50 50 c 1 7 c 2 character c 3 0 0 0 0 c 10 1 0.859902 0.1 12 0 12 1 
-Customer 0 c 0 -1062.5 74.2852 -800 0 0 6 6 50 50 c 1 10 c 2 ahma_angry c 3 0 0 0 0 c 10 1 0 0.1 18 3 18 1 
-Customer 0 c 0 -254.988 74.2852 7.51217 0 0 6 6 50 50 c 1 9 c 2 ahma_idle c 3 0 0 0 0 c 10 1 0.0685248 0.1 12 6 12 1 
-Customer 0 c 0 -248.098 74.2852 14.4018 0 0 6 6 50 50 c 1 10 c 2 ahma_angry c 3 0 0 0 0 c 10 1 0.0685248 0.1 18 13 18 1 
-FoodTray 0 c 0 197.5 -25.4237 0 0 0 16.3254 10.3283 50 50 c 1 25 c 2 dryfood c 3 0 0 0 0 c 10 0 0.515063 1 1 0 1 1 
-SideTray 0 c 0 733.75 -7.6271 0 0 0 10.6739 10.6739 50 50 c 1 24 c 2 BigSteamer c 3 0 0 0 0 c 10 0 0.515063 1 1 0 1 1 
-Plate 0 c 0 -322.5 -329.237 0 0 0 4.91771 2.8 50 50 c 1 25 c 2 Plate c 3 0 0 0 0 c 10 0 0.135761 1 1 0 1 1 
-Tongs 0 c 0 -86.2501 -338.136 0 0 -14.7989 4.69173 3.27 50 50 c 1 25 c 2 Tongs c 3 0 0 0 0 c 10 0 0.783396 1 1 0 1 1 
-Scizzors 0 c 0 156.25 -344.492 0 0 -179.416 5.27791 4.02933 50 50 c 1 25 c 2 Scissors c 3 0 0 0 0 c 10 0 0.515063 1 1 0 1 1 
-Trashbin 0 c 0 468.751 -326.694 0 0 0 2.98 3.01108 50 50 c 1 25 c 2 trashbin c 3 0 0 0 0 c 10 0 0.783396 1 1 0 1 1 
-RoundSteamer 0 c 0 -851.249 -72.4565 0 0 0 8.57423 8.1718 50 50 c 1 25 c 2 RoundSteamers c 3 0 0 0 0 c 10 0 1.00377 1 1 0 1 1 
-Tray 0 c 0 -381.25 -127.119 0 0 0 12.8308 6.61906 50 50 c 1 24 c 2 Tray c 3 0 0 0 0 c 10 0 0.783396 1 1 0 1 1 
-Pepper 0 c 0 -601.249 -99.1514 0 0 0 1.9 2.37502 50 50 c 1 24 c 2 ChillPowder c 3 0 0 0 0 c 10 0 0.515063 1 1 0 1 1 
-SpringOnion 0 c 0 -549.999 -49.575 0 0 0 4.54539 2.9306 50 50 c 1 23 c 2 SpringOnions c 3 0 0 0 0 c 10 0 1.00377 1 1 0 1 1 
+LeaveTest 0 c 0 0 0 0 0 0 57.4393 19.682 50 50 c 1 -20 c 2 bg_hawker_leaves2 c 3 2 0 0 0 c 10 0 0.355363 1 1 0 1 1 
+Sky 0 c 0 0 0 0 0 0 31.9285 18.5829 50 50 c 1 -100 c 2 bg_skypan c 3 0 0 0 0 c 10 0 0.355363 1 1 0 1 1 
+Clouds 0 c 0 -388.715 127.12 0 0 0 31.6 12.918 50 50 c 1 -30 c 2 bg_hawker_clouds c 3 0 0 0 0 c 7 0 10 0 c 10 0 0.355363 1 1 0 1 1 
+Middlegroud 0 c 0 1.24998 -8.89828 0 0 0 32.4999 21.2414 50 50 c 1 -10 c 2 bg_hawker_misc c 3 0 0 0 0 c 10 0 0.355363 1 1 0 1 1 
+Shrubs 0 c 0 0 0 0 0 0 33.4683 16.6447 50 50 c 1 -7 c 2 bg_hawker_shrubs c 3 2 0 0 0 c 10 0 0.355363 1 1 0 1 1 
+HawkerStalls 0 c 0 18.75 -19.0678 0 0 0 39.4162 21.4432 50 50 c 1 -9 c 2 bg_hawker_stalls c 3 0 0 0 0 c 10 0 0.355363 1 1 0 1 1 
+HawkerStalls2 0 c 0 0 0 0 0 0 35.3333 17.6752 50 50 c 1 -8 c 2 bg_hawker_stalls2 c 3 0 0 0 0 c 10 0 0.133334 1 1 0 1 1 
+Table 0 c 0 -3.75004 -222.458 0 0 0 32.64 9.49811 50 50 c 1 20 c 2 Table c 3 0 0 0 0 c 10 0 0.355363 1 1 0 1 1 
+Branches 0 c 0 0 0 0 0 0 52.7273 19.6342 50 50 c 1 -19 c 2 bg_hawker_branch3 c 3 0 0 0 0 c 10 0 0.355363 1 1 0 1 1 
+Branches2 0 c 0 0 0 0 0 0 42.1716 19.4337 50 50 c 1 -18 c 2 bg_hawker_branch1 c 3 0 0 0 0 c 10 0 0.355363 1 1 0 1 1 
+LeftFrontLeave 0 c 0 0 0 0 0 0 33.815 18.5542 50 50 c 1 0 c 2 bg_hawker_leaves4 c 3 2 0 0 0 c 10 0 0.819238 1 1 0 1 1 
+LeavesTopRight 0 c 0 0 0 0 0 0 46.4708 18.8395 50 50 c 1 -11 c 2 bg_hawker_leaves3 c 3 2 0 0 0 c 10 0 0.819238 1 1 0 1 1 
+HawkerTables 0 c 0 0 0 0 0 0 32.5218 18.4372 50 50 c 1 -5 c 2 bg_hawker_tables c 3 0 0 0 0 c 10 0 0.42901 1 1 0 1 1 
+HawkerUmbrella 0 c 0 0 0 0 0 0 32.8695 18.2935 50 50 c 1 -4 c 2 bg_hawker_umbrellas c 3 0 0 0 0 c 10 0 0.819238 1 1 0 1 1 
+Queue 5 c 0 -262.5 74.2852 0 0 0 1 1 50 50 c 1 10 c 2 emptyimage c 3 0 0 0 0 c 10 0 0.42901 1 1 0 1 1 
+Customer 0 c 0 -256.949 74.2852 5.55143 0 0 7 11 50 50 c 1 6 c 2 tallguy_idle c 3 0 0 0 0 c 10 1 0.1 0.1 13 0 13 1 
+Customer 0 c 0 -262.498 74.2852 0.00215912 0 0 7 7 50 50 c 1 7 c 2 ahma_idle c 3 0 0 0 0 c 10 1 0.0333334 0.1 12 11 12 1 
+Customer 0 c 0 -262.498 74.2852 0.00237656 0 0 7 7 50 50 c 1 8 c 2 bigguy_idle c 3 0 0 0 0 c 10 1 0.0166667 0.1 12 6 12 1 
+Customer 0 c 0 -262.48 74.2852 0.0201721 0 0 7 7 50 50 c 1 9 c 2 bigguy_angry c 3 0 0 0 0 c 10 1 0.0333334 0.1 15 5 15 1 
+Customer 0 c 0 -262.446 74.2852 0.0537949 0 0 7 11 50 50 c 1 10 c 2 tallguy_angry c 3 0 0 0 0 c 10 1 0.0333334 0.1 17 12 17 1 
+FoodTray 0 c 0 197.5 -25.4237 0 0 0 16.3254 10.3283 50 50 c 1 25 c 2 dryfood c 3 0 0 0 0 c 10 0 0.42901 1 1 0 1 1 
+SideTray 0 c 0 733.75 -7.6271 0 0 0 10.6739 10.6739 50 50 c 1 24 c 2 BigSteamer c 3 0 0 0 0 c 10 0 0.42901 1 1 0 1 1 
+Plate 0 c 0 -322.5 -329.237 0 0 0 4.91771 2.8 50 50 c 1 25 c 2 Plate c 3 0 0 0 0 c 10 0 0.355363 1 1 0 1 1 
+Tongs 0 c 0 -86.2501 -338.136 0 0 -14.7989 4.69173 3.27 50 50 c 1 25 c 2 Tongs c 3 0 0 0 0 c 10 0 0.819238 1 1 0 1 1 
+Scizzors 0 c 0 156.25 -344.492 0 0 -179.416 5.27791 4.02933 50 50 c 1 25 c 2 Scissors c 3 0 0 0 0 c 10 0 0.42901 1 1 0 1 1 
+Trashbin 0 c 0 468.751 -326.694 0 0 0 2.98 3.01108 50 50 c 1 25 c 2 trashbin c 3 0 0 0 0 c 10 0 0.819238 1 1 0 1 1 
+RoundSteamer 0 c 0 -851.249 -72.4565 0 0 0 8.57423 8.1718 50 50 c 1 25 c 2 RoundSteamers c 3 0 0 0 0 c 10 0 0.133334 1 1 0 1 1 
+Tray 0 c 0 -381.25 -127.119 0 0 0 12.8308 6.61906 50 50 c 1 24 c 2 Tray c 3 0 0 0 0 c 10 0 0.819238 1 1 0 1 1 
+Pepper 0 c 0 -601.249 -99.1514 0 0 0 1.9 2.37502 50 50 c 1 24 c 2 ChillPowder c 3 0 0 0 0 c 10 0 0.42901 1 1 0 1 1 
+SpringOnion 0 c 0 -549.999 -49.575 0 0 0 4.54539 2.9306 50 50 c 1 23 c 2 SpringOnions c 3 0 0 0 0 c 10 0 0.133334 1 1 0 1 1 
 bb_springroll 0 c 0 16.2499 -59.7457 0 0 0 1 1 50 50 c 15 100 40 
 bb_wanton 0 c 0 17.5001 -153.814 0 0 0 1 1 50 50 c 15 120 40 
 bb_seaweedchicken 0 c 0 273.75 -58.4746 0 0 0 1 1 50 50 c 15 100 40 
@@ -36,18 +36,27 @@ bb_plate 0 c 0 -325 -329.237 0 0 0 1 1 50 50 c 15 60 50
 bb_tongs 0 c 0 -88.7501 -340.678 0 0 0 1 1 50 50 c 15 90 50 
 bb_scizzors 0 c 0 165 -340.678 0 0 0 1 1 50 50 c 15 100 60 
 bb_trashbin 0 c 0 470.001 -326.694 0 0 0 1 1 50 50 c 15 60 60 
-Cursor 7 c 0 -166.25 -90.2543 0 0 0 1 1 50 50 c 16 
-EmptyTongs 0 c 0 -166.25 -90.2543 0 0 0 3 3 50 50 c 1 50 c 2 tongs_cursor c 3 0 0 0 0 c 10 0 0.666668 1 1 0 1 1 
-TongsCarrotCake 0 c 0 -166.25 -90.2543 0 0 0 3 3 50 50 c 1 50 c 2 tongs_carrotcake c 3 0 0 0 0 c 10 0 0.116667 1 1 0 1 1 
-TongsDumpling 0 c 0 -166.25 -90.2543 0 0 0 3 3 50 50 c 1 50 c 2 tongs_dumplings c 3 0 0 0 0 c 10 0 0.566669 1 1 0 1 1 
-TongsSeaweedChicken 0 c 0 -166.25 -90.2543 0 0 0 3 3 50 50 c 1 50 c 2 tongs_seaweedchicken c 3 0 0 0 0 c 10 0 0.650002 1 1 0 1 1 
-TongsSpringroll 0 c 0 -166.25 -90.2543 0 0 0 3 3 50 50 c 1 50 c 2 tongs_springroll c 3 0 0 0 0 c 10 0 0.416668 1 1 0 1 1 
-ScizzorsCursor 0 c 0 -166.25 -90.2543 0 0 0 3 3 50 50 c 1 50 c 2 scissors_cursor c 3 0 0 0 0 c 10 0 0.566669 1 1 0 1 1 
-PlateCursor 0 c 0 -166.25 -90.2543 0 0 0 4.2 2.8 50 50 c 1 50 c 2 food_plate c 3 0 0 0 0 c 10 0 0.552149 1 1 0 1 1 
+Cursor 7 c 0 -238.75 -91.5254 0 0 0 1 1 50 50 c 16 
+EmptyTongs 0 c 0 -238.75 -91.5254 0 0 0 3 3 50 50 c 1 50 c 2 tongs_cursor c 3 0 0 0 0 c 10 0 0.333335 1 1 0 1 1 
+TongsCarrotCake 0 c 0 -238.75 -91.5254 0 0 0 3 3 50 50 c 1 50 c 2 tongs_carrotcake c 3 0 0 0 0 c 10 0 0.116667 1 1 0 1 1 
+TongsDumpling 0 c 0 -238.75 -91.5254 0 0 0 3 3 50 50 c 1 50 c 2 tongs_dumplings c 3 0 0 0 0 c 10 0 0.566669 1 1 0 1 1 
+TongsSeaweedChicken 0 c 0 -238.75 -91.5254 0 0 0 3 3 50 50 c 1 50 c 2 tongs_seaweedchicken c 3 0 0 0 0 c 10 0 0.30001 1 1 0 1 1 
+TongsSpringroll 0 c 0 -238.75 -91.5254 0 0 0 3 3 50 50 c 1 50 c 2 tongs_springroll c 3 0 0 0 0 c 10 0 0.416668 1 1 0 1 1 
+ScizzorsCursor 0 c 0 -238.75 -91.5254 0 0 0 3 3 50 50 c 1 50 c 2 scissors_cursor c 3 0 0 0 0 c 10 0 0.566669 1 1 0 1 1 
+PlateCursor 0 c 0 -238.75 -91.5254 0 0 0 4.2 2.8 50 50 c 1 50 c 2 food_plate c 3 0 0 0 0 c 10 0 0.968838 1 1 0 1 1 
 bb_tray 0 c 0 -355 -146.186 0 0 0 1 1 50 50 c 15 180 70 
-tray_plate 4 c 0 -326.25 -151.271 0 0 0 4.29039 2.48812 50 50 c 1 26 c 2 food_plate c 3 0 0 0 0 c 10 0 0.0166667 1 1 0 1 1 
+tray_plate 4 c 0 -326.25 -151.271 0 0 0 4.29039 2.48812 50 50 c 1 26 c 2 food_plate c 3 0 0 0 0 c 10 0 0.783345 1 1 0 1 1 
 tray_wanton 0 c 0 -325 -146.186 1.25 5.08479 0 2.08 2.08 50 50 c 1 27 c 2 food_frieddumpling c 3 0 0 0 0 c 10 0 0 1 1 0 1 1 
-tray_seaweedchicken 0 c 0 -327.5 -146.186 -1.25006 5.08466 0 2.21 2.21 50 50 c 1 27 c 2 food_seaweedchicken c 3 0 0 0 0 c 10 0 0.116667 1 1 0 1 1 
-tray_springroll 0 c 0 -335 -148.729 -8.75006 2.54231 0 1 1 50 50 c 1 27 c 2 angry c 3 0 0 0 0 c 10 0 0.983507 1 1 0 1 1 
-tray_carrotcake 0 c 0 -328.75 -150 -2.50006 1.27115 0 1 1 50 50 c 1 27 c 2 angry c 3 0 0 0 0 c 10 0 0.616807 1 1 0 1 1 
+tray_seaweedchicken 0 c 0 -327.5 -146.186 -1.25006 5.08466 0 2.21 2.21 50 50 c 1 27 c 2 food_seaweedchicken c 3 0 0 0 0 c 10 0 0.466677 1 1 0 1 1 
+tray_springroll 0 c 0 -335 -148.729 -8.75006 2.54231 0 2 1 50 50 c 1 27 c 2 food_springroll c 3 0 0 0 0 c 10 0 0.983507 1 1 0 1 1 
+tray_carrotcake 0 c 0 475 -327.966 801.25 -176.695 0 2 1 50 50 c 1 27 c 2 food_carrotcake c 3 0 0 0 0 c 10 0 0.616807 1 1 0 1 1 
 bb_customer 0 c 0 -281.25 169.068 0 0 0 1 1 50 50 c 15 100 200 
+OrderUI 8 c 0 -18.7499 319.068 0 0 0 1 1 50 50 
+OrderBoard 0 c 0 -33.7499 301.271 -15 -17.7967 0 3.58858 2.7993 50 50 c 1 50 c 2 ui_foodboard c 3 0 0 0 0 c 10 0 0.766674 1 1 0 1 1 
+EmptyBar 0 c 0 5.0001 322.882 23.75 3.81354 0 3.094 2.69445 50 50 c 1 50 c 2 ui_emptybar c 3 0 0 0 0 c 10 0 0.1 1 1 0 1 1 
+GreenBar 0 c 0 -42.4999 324.153 -23.75 5.08475 0 5.31854 3.02681 50 50 c 1 52 c 2 ui_greenbar c 3 0 0 0 0 c 10 0 0.633335 1 1 0 1 1 
+RedBar 0 c 0 -46.2498 324.153 -27.4999 5.08475 0 5.53752 3.0256 50 50 c 1 51 c 2 ui_redbar c 3 0 0 0 0 c 10 0 0.783341 1 1 0 1 1 
+OrderWanton 0 c 0 -35.0002 308.898 -16.2503 -10.1698 0 2 2 50 50 c 1 51 c 2 food_frieddumpling c 3 0 0 0 0 c 10 0 0.450007 1 1 0 1 1 
+OrderSeaweed 0 c 0 -33.7501 312.712 -15.0002 -6.3562 0 2 2 50 50 c 1 51 c 2 food_seaweedchicken c 3 0 0 0 0 c 10 0 0.566668 1 1 0 1 1 
+OrderSpringroll 0 c 0 -41.25 303.814 -22.5001 -15.2545 0 2 1 50 50 c 1 51 c 2 food_springroll c 3 0 0 0 0 c 10 0 0.816675 1 1 0 1 1 
+OrderCarrotcake 0 c 0 -32.5 313.983 -13.7501 -5.0849 0 2 1 50 50 c 1 51 c 2 food_carrotcake c 3 0 0 0 0 c 10 0 0.450007 1 1 0 1 1 

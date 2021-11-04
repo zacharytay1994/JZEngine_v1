@@ -154,18 +154,18 @@ enum class AnimationStates
 };
 
 std::unordered_map<std::string, CustomerSpriteData> customer_animations {
-	{"ahma_idle",		{6.0f, 6.0f, 1, 12, 12, 0.1f} },
-	{"ahma_angry",		{6.0f, 6.0f, 1, 18, 18, 0.1f} },
-	{"ahma_ordering",	{6.0f, 6.0f, 1, 21, 21, 0.1f} },
-	{"ahma_success",	{6.0f, 6.0f, 1, 9, 9, 0.1f}	  },
-	{"bigguy_idle",		{6.0f, 6.0f, 1, 12, 12, 0.1f} },
-	{"bigguy_angry",	{6.0f, 6.0f, 1, 15, 15, 0.1f} },
-	{"bigguy_ordering",	{6.0f, 6.0f, 1, 9, 9, 0.1f} },
-	{"bigguy_success",	{6.0f, 6.0f, 1, 8, 8, 0.1f} },
-	{"tallguy_idle",	{6.0f, 10.0f, 1, 13, 13, 0.1f} },
-	{"tallguy_angry",	{6.0f, 10.0f, 1, 17, 17, 0.1f} },
-	{"tallguy_ordering",{6.0f, 10.0f, 1, 18, 18, 0.1f} },
-	{"tallguy_success",	{6.0f, 10.0f, 1, 9, 9, 0.1f} }
+	{"ahma_idle",		{7.0f, 7.0f, 1, 12, 12, 0.1f} },
+	{"ahma_angry",		{7.0f, 7.0f, 1, 18, 18, 0.1f} },
+	{"ahma_ordering",	{7.0f, 7.0f, 1, 21, 21, 0.1f} },
+	{"ahma_success",	{7.0f, 7.0f, 1, 9, 9, 0.1f}	  },
+	{"bigguy_idle",		{7.0f, 7.0f, 1, 12, 12, 0.1f} },
+	{"bigguy_angry",	{7.0f, 7.0f, 1, 15, 15, 0.1f} },
+	{"bigguy_ordering",	{7.0f, 7.0f, 1, 9, 9, 0.1f} },
+	{"bigguy_success",	{7.0f, 7.0f, 1, 8, 8, 0.1f} },
+	{"tallguy_idle",	{7.0f, 11.0f, 1, 13, 13, 0.1f} },
+	{"tallguy_angry",	{7.0f, 11.0f, 1, 17, 17, 0.1f} },
+	{"tallguy_ordering",{7.0f, 11.0f, 1, 18, 18, 0.1f} },
+	{"tallguy_success",	{7.0f, 11.0f, 1, 9, 9, 0.1f} }
 };
 
 struct AnimationPack
@@ -418,11 +418,21 @@ bool InteractWithQueue(bool food, CustomerOrder order)
 		return;
 	}
 	JZEngine::Log::Info("Main", "Trying to give food to nobody.");*/
-	if (customers.size() > 0)
+	// find next customer that has not been successfully served
+	Customer* p_customer{ nullptr };
+	for (int i = 0; i < customers.size(); ++i)
+	{
+		if (customers[i].state_ != CustomerState::Success && customers[i].state_ != CustomerState::WalkingOut)
+		{
+			p_customer = &customers[i];
+			break;
+		}
+	}
+	if (p_customer)
 	{
 		if (food)
 		{
-			Customer& customer = *customers.begin();
+			Customer& customer = *p_customer;
 			if (order == customer.order_)
 			{
 				// success
@@ -435,7 +445,7 @@ bool InteractWithQueue(bool food, CustomerOrder order)
 		else
 		{
 			// display order
-			Customer& customer = *customers.begin();
+			Customer& customer = *p_customer;
 			SetCustomerAnimation(customer.animation_pack_, AnimationStates::Ordering, customer.scene_object_id_);
 
 			// debug code
@@ -457,6 +467,24 @@ bool InteractWithQueue(bool food, CustomerOrder order)
 		}
 	}
 	return false;
+}
+
+CustomerOrder GetNextCustomerOrder()
+{
+	Customer* p_customer{ nullptr };
+	for (int i = 0; i < customers.size(); ++i)
+	{
+		if (customers[i].state_ != CustomerState::Success && customers[i].state_ != CustomerState::WalkingOut)
+		{
+			p_customer = &customers[i];
+			break;
+		}
+	}
+	if (p_customer)
+	{
+		return p_customer->order_;
+	}
+	return CustomerOrder::Nothing;
 }
 
 void InitHawkerQueue()
