@@ -20,6 +20,7 @@
 #include "../Input/Input.h"
 #include "../Physics/QuadTree.h"
 #include "../Physics/RigidBody.h"
+#include "../EngineConfig.h"
 
 
 namespace JZEngine
@@ -39,7 +40,8 @@ namespace JZEngine
 		std::vector<Transform*> transform_cont;
 		std::vector<CollisionComponent*> collision_cont;
 
-	
+
+
 		bool pause{ false };
 		bool stepbystep{ false };
 	};

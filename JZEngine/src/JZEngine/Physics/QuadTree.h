@@ -216,10 +216,10 @@ namespace JZEngine
 
 		};
 	public:
-		Quadtree(float size)
+		Quadtree(float sizex, float sizey)
 			:
-			rootNode(std::make_unique<QtNode<T>>(Rect(Vec2f(0.0f, 0.0f), size, size))),
-			size(size)
+			rootNode(std::make_unique<QtNode<T>>(Rect(Vec2f(0.0f, 0.0f), sizex, sizey))),
+			size{ sizex, sizey }
 		{}
 
 		// inserts element into root node, i.e. start the recursive ball rolling of inserting into inner nodes
@@ -236,7 +236,7 @@ namespace JZEngine
 		// this is done per frame to refresh the quadtree for updated referencing
 		void Reset() 
 		{
-			rootNode.reset(new QtNode<T>(Rect(Vec2f(0.0f, 0.0f), size, size)));
+			rootNode.reset(new QtNode<T>(Rect(Vec2f(0.0f, 0.0f), size.x, size.y)));
 			//ss << "root reset" << std::endl;
 		}
 		// queries the quadtree recursively through the nodes, and does stuff to elements that falls within range
@@ -261,7 +261,7 @@ namespace JZEngine
 	private:
 		std::unique_ptr<QtNode<T>> rootNode;
 		// size of root boundary, i.e. the span of the quadtree in world/model size, centered on world position (0,0,0)
-		float size;
+		Vec2f size;
 
 	};
 }
