@@ -71,15 +71,6 @@ bool plate_on_tray{ false };
 bool plate_on_hand{ false };
 JZEngine::Vec2f original_plate_position_{ 0.0f,0.0f };
 
-//enum class TrayPlateState
-//{
-//	Nothing,
-//	Wanton,
-//	SeaweedChicken,
-//	SpringRoll,
-//	CarrotCake,
-//};
-
 std::string plate_food_object_names[] = {
 	"tray_wanton",
 	"tray_seaweedchicken",
@@ -153,7 +144,7 @@ void UnDisplayOrder()
 
 void DisplayOrder(CustomerOrder order)
 {
-	//// flag board
+	// flag board
 	Scene().EntityFlagActive("OrderBoard", true);
 	Scene().EntityFlagActive("EmptyBar", true);
 	Scene().EntityFlagActive("GreenBar", true);
@@ -174,36 +165,6 @@ void DisplayOrder(CustomerOrder order)
 		Scene().EntityFlagActive("OrderCarrotcake", true);
 		break;
 	}
-	//// flag off on all foods
-	//Scene().EntityFlagActive("OrderWanton", false);
-	//Scene().EntityFlagActive("OrderSeaweed", false);
-	//Scene().EntityFlagActive("OrderSpringroll", false);
-	//Scene().EntityFlagActive("OrderCarrotcake", false);
-	//display_up_ = flag;
-	//// more customized flag the food
-	//if (!flag)
-	//{
-	//	timer_ = display_time_;
-	//	display_up_ = false;
-	//}
-	//else
-	//{
-	//	switch (order)
-	//	{
-	//	case CustomerOrder::Wanton:
-	//		Scene().EntityFlagActive("OrderWanton", true);
-	//		break;
-	//	case CustomerOrder::SeaweedChicken:
-	//		Scene().EntityFlagActive("OrderSeaweed", true);
-	//		break;
-	//	case CustomerOrder::SpringRoll:
-	//		Scene().EntityFlagActive("OrderSpringroll", true);
-	//		break;
-	//	case CustomerOrder::CarrotCake:
-	//		Scene().EntityFlagActive("OrderCarrotcake", true);
-	//		break;
-	//	}
-	//}
 }
 
 void DisplayUpdate(float dt)
@@ -215,7 +176,6 @@ void DisplayUpdate(float dt)
 	else
 	{
 		UnDisplayOrder();
-		//DisplayOrder(current_order, false);
 	}
 }
 
@@ -226,7 +186,16 @@ void DisplayUpdate(float dt)
 
 void HawkerSceneInit()
 {
+	// initialize scene
 	InitHawkerQueue();
+	cursor_state = CursorState::Nothing;
+	plate_on_tray = false;
+	plate_on_hand = false;
+	original_plate_position_ = { 0.0f, 0.0f };
+	current_order = CustomerOrder::Nothing;
+	display_time_ = 4.0f;
+	timer_ = display_time_;
+	display_up_ = false;
 
 	// initialize cursors
 	ResetCursors();
@@ -236,7 +205,6 @@ void HawkerSceneInit()
 	FlagAllTrayItemsFalse();
 
 	// turn off order ui
-	//DisplayOrder(current_order, false);
 	UnDisplayOrder();
 
 	JZEngine::Log::Info("Main", "Hawker Scene Initialized.");
@@ -422,12 +390,9 @@ void HawkerSceneUpdate(float dt)
 					// place plate back on tray
 					Scene().GetComponent<JZEngine::Transform>("tray_plate")->position_ = original_plate_position_;
 					// turn off order ui
-					//DisplayOrder(current_order, false);
 					UnDisplayOrder();
 				}
 			}
-			/*Customer& customer = *customers.begin();
-			SetCustomerAnimation(customer.animation_pack_, AnimationStates::Ordering, customer.scene_object_id_);*/
 		}
 	}
 
