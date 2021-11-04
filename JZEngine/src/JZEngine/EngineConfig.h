@@ -26,7 +26,6 @@ namespace JZEngine
 		constexpr const char*		scenes_dir		= "Scenes/";
 		constexpr const char*		prefabs_dir		= "Prefabs/";
 	}*/
-
 	struct Settings
 	{
 		static std::string	engine_name;

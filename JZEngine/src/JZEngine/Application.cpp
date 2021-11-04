@@ -13,6 +13,7 @@
 #include "DebugTools/Log.h"
 #include "Sound/Sound.h"
 #include "SceneLogic/SceneLogic.h"
+#include "GraphicRendering/Camera.h"
 
 #include "GraphicRendering/Renderer.h"
 #include "GraphicRendering/RendererInstancing.h"
@@ -247,6 +248,9 @@ namespace JZEngine
 
 			global_systems_->FrameStart ();
 
+			// after this call all mouse world positions will be calculated
+			//InputHandler::CalculateMouseWorldPosition(global_systems_->GetSystem<GLFW_Instance>()->window_, MenuBar::height_);
+			Camera::CalculateMouseWorldPosition(global_systems_->GetSystem<GLFW_Instance>()->window_);
 
 			global_systems_->Update ( static_cast<float>(dt) );
 			SceneLogic::Instance().BuildEntityMap();

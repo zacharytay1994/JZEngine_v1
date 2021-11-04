@@ -20,6 +20,7 @@ namespace JZEngine
 	{
 		int group_{ -1 };
 		bool active_{ true };
+		float gui_alpha_{ 0.8f };
 		float x_, y_, sx_, sy_;		/*!< position and scale of the ImGui interface */
 
 		ImGuiInterface(float x, float y, float sx, float sy, int group = -1);

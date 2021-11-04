@@ -21,7 +21,8 @@
 
 namespace JZEngine
 {
-	Quadtree<CollisionComponent> Qtree{ 1000.f };
+
+	Quadtree<CollisionComponent> Qtree{ static_cast<float>(Settings::window_width), static_cast<float>(Settings::window_height) };
 
 	PhysicsSystem::PhysicsSystem()
 	{

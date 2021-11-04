@@ -56,6 +56,7 @@ namespace JZEngine
 		static  std::unordered_map<int, bool> mousestate;
 		static  std::unordered_map<int, bool> prevmousestate;
 		static Vec2f mousepos;
+		//static Vec2f mouse_world_position_;
 
 	};
 

@@ -75,7 +75,7 @@ namespace JZEngine
 		ImGuizmo::OPERATION operation_{ ImGuizmo::OPERATION::TRANSLATE };
 
 		static Mat3f GetCameraTransform();
-		float camera_zoom_{ 1.0f };
+		//float camera_zoom_{ 1.0f };
 
 	private:
 		Inspector	inspector_;		/*!< engine inspector */
@@ -84,12 +84,12 @@ namespace JZEngine
 
 		ECS::ECSInstance* ecs_instance_{ nullptr };
 		// scene camera
-		Vec2f camera_position_{ 0.0f, 0.0f };
-		static Mat3f camera_transform_;
+		//Vec2f camera_position_{ 0.0f, 0.0f };
+		//static Mat3f camera_transform_;
 		bool camera_locked{ false };
 		Vec2f camera_record_world_;
 		Vec2f camera_record_screen_;
-		Vec2f mouse_world_position_;
+		//Vec2f mouse_world_position_;
 		void ProcessCameraInput();
 		
 		struct InterfaceGroup {
