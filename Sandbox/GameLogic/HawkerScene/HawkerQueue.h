@@ -120,8 +120,8 @@ float out_queue_position_{ -800.0f };
 struct Customer
 {
 	int scene_object_id_{ -1 };			// the scene object it will be controlling
-	float max_wait_time_{ 30.0f };		// will only wait for 30 secs
-	float angry_wait_time_{ 10.0f };	// angry when 13 secs left
+	float max_wait_time_{ 10.0f };		// will only wait for 30 secs
+	float angry_wait_time_{ 5.0f };	// angry when 13 secs left
 	float wait_time_{ 0.0f };			// countdown to how long it has waited
 	bool angry_{ false };
 	bool active_{ true };
@@ -242,7 +242,7 @@ struct Customer
 int queue_layer{ 0 };
 int number_of_customers{ 5 };
 std::vector<Customer> customers;
-float customer_delay_{ 5.0f };
+float customer_delay_{ 3.0f };
 float queue_timer_{ customer_delay_};
 
 bool NewCustomer()

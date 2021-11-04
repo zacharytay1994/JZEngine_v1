@@ -93,6 +93,7 @@ namespace JZEngine
 		// initialize all global systems
 		global_systems_->PostInit();
 		PerformanceData::Init ();
+		SceneLogic::Instance().SetSceneTree(global_systems_->GetSystem<EngineGUI>()->GetSceneTree());
 
 		msgbus->subscribe ( global_systems_->GetSystem<SoundSystem> () , &SoundSystem::playSound );
 

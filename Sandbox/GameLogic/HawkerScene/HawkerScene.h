@@ -123,6 +123,7 @@ void SetPlateFood(CustomerOrder state)
 float display_time_{ 4.0f };
 float timer_{ display_time_ };
 float display_up_{ false };
+float greenbar_original_scale_y{ 1.0f };
 
 void UnDisplayOrder()
 {
@@ -172,6 +173,7 @@ void DisplayUpdate(float dt)
 	if (display_up_ && timer_ > 0.0f)
 	{
 		timer_ -= dt;
+		Scene().GetComponent<JZEngine::Transform>("GreenBar")->scale_.y = timer_ / display_time_ * greenbar_original_scale_y;
 	}
 	else
 	{
@@ -179,10 +181,39 @@ void DisplayUpdate(float dt)
 	}
 }
 
+int target_coins{ 5 };
+int current_coins{ 0 };
+//int max_angry_customers{ 5 };
+//int current_angry_customers{ 0 };
+float total_time{ 60.0f };
+float current_time{ 0.0f };
+bool win{ false };
+bool lose{ false };
+float initial_progress_scale{ 1.0f };
+
+void UpdateCoinProgressBar()
+{
+	Scene().GetComponent<JZEngine::Transform>("ui_coin_progress")->scale_.x 
+		= static_cast<float>(current_coins) / static_cast<float>(target_coins) * initial_progress_scale;
+}
+
+void UpdateGoalProgressBar(float dt)
+{
+	current_time += dt;
+	Scene().GetComponent<JZEngine::Transform>("ui_goal_progress")->scale_.x
+		= current_time / total_time * initial_progress_scale;
+
+	if (current_time > total_time)
+	{
+		Scene().ChangeScene("MainMenu");
+	}
+}
+
 /*!
  * @brief UI - END
  * **********************************************************************
 */
+
 
 void HawkerSceneInit()
 {
@@ -196,6 +227,20 @@ void HawkerSceneInit()
 	display_time_ = 4.0f;
 	timer_ = display_time_;
 	display_up_ = false;
+	greenbar_original_scale_y = Scene().GetComponent<JZEngine::Transform>("GreenBar")->scale_.y;
+
+	target_coins = 5;
+	current_coins = 0;
+	total_time = 60.0f;
+	current_time = 0.0f;
+	//current_angry_customers = 0;
+	win = false;
+	lose = false;
+
+	// set scale of coin bar and angry customer bar to 0
+	initial_progress_scale = 6.4f;
+	Scene().GetComponent<JZEngine::Transform>("ui_coin_progress")->scale_.x = 0.0f;
+	Scene().GetComponent<JZEngine::Transform>("ui_goal_progress")->scale_.x = 0.0f;
 
 	// initialize cursors
 	ResetCursors();
@@ -213,6 +258,7 @@ void HawkerSceneInit()
 void HawkerSceneUpdate(float dt)
 {
 	UpdateHawkerQueue(dt);
+	UpdateGoalProgressBar(dt);
 
 	// process click inputs
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_springroll"))
@@ -391,6 +437,15 @@ void HawkerSceneUpdate(float dt)
 					Scene().GetComponent<JZEngine::Transform>("tray_plate")->position_ = original_plate_position_;
 					// turn off order ui
 					UnDisplayOrder();
+					// if successfully served customer increment coins
+					++current_coins;
+					UpdateCoinProgressBar();
+					if (current_coins == target_coins)
+					{
+						win = true;
+						JZEngine::Log::Info("Main", "You have won the game!");
+						Scene().ChangeScene("MainMenu");
+					}
 				}
 			}
 		}
