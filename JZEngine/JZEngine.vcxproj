@@ -369,6 +369,8 @@
     <ClInclude Include="src\JZEngine\BuildDefinitions.h" />
     <ClInclude Include="src\JZEngine\Physics\CollisionSystem.h" />
     <ClInclude Include="src\JZEngine\Physics\PhysicsShapes.h" />
+    <ClInclude Include="src\JZEngine\Physics\QuadTree.h" />
+    <ClInclude Include="src\JZEngine\Physics\Rect.h" />
     <ClInclude Include="src\JZEngine\Physics\ResolveSystem.h" />
     <ClInclude Include="src\JZEngine\Physics\RigidBody.h" />
     <ClInclude Include="src\JZEngine\Resource\ObjectPool.h" />

@@ -21,7 +21,7 @@
 
 namespace JZEngine
 {
-
+	Quadtree<CollisionComponent> Qtree{ 1000.f };
 
 	PhysicsSystem::PhysicsSystem()
 	{
@@ -135,6 +135,8 @@ namespace JZEngine
 			collision_cont.push_back(&ccomponent);
 		}
 
+		Qtree.InsertElement(&ccomponent);
+
 	}//__________________UPDATE_________________________//
 
 
@@ -157,6 +159,7 @@ namespace JZEngine
 			}
 		}
 #endif
+#if 0 
 		//optimised double for loop for collision & response
 		for (int i = 0; i < (int)physics_cont.size() - 1; ++i)
 		{
@@ -170,6 +173,7 @@ namespace JZEngine
 
 				if (componentA.IsStatic && componentB.IsStatic)
 					continue;
+
 
 				Manifold CollData{};
 				if (true == Collision::CheckCollision(CcomponentA, CcomponentB, CollData))
@@ -196,6 +200,60 @@ namespace JZEngine
 			}
 		}
 
+
+#endif
+		for (int i = 0; i < (int)physics_cont.size(); ++i)
+		{
+			CollisionComponent& CcomponentA = *collision_cont[i];
+			CcomponentA.index = i;
+		}
+
+		for (int i = 0; i < (int)physics_cont.size(); ++i)
+		{
+			PhysicsComponent& componentA = *physics_cont[i];
+			CollisionComponent& CcomponentA = *collision_cont[i];
+
+			std::vector<CollisionComponent*> possiblecollision;
+			possiblecollision.reserve(10);
+			possiblecollision = Qtree.GetElements(CcomponentA.boundingrect, &CcomponentA);
+			if (possiblecollision.size() == 0)
+				continue;
+
+			for (int j = 0; j < possiblecollision.size(); ++j)
+			{
+				CollisionComponent& CcomponentB = *possiblecollision[j];
+				PhysicsComponent& componentB = *physics_cont[CcomponentB.index];
+
+
+				if (componentA.IsStatic && componentB.IsStatic)
+					continue;
+
+				Manifold CollData{};
+				if (true == Collision::CheckCollision(CcomponentA, CcomponentB, CollData))
+				{
+					//Fix collision
+					if (componentA.IsStatic)
+					{
+						RigidBody::Move(componentB, CollData.normal * CollData.depth);
+					}
+					else if (componentB.IsStatic)
+					{
+						RigidBody::Move(componentA, -CollData.normal * CollData.depth);
+					}
+					else
+					{
+						RigidBody::Move(componentA, -CollData.normal * CollData.depth * componentA.InvMass);
+						RigidBody::Move(componentB, CollData.normal * CollData.depth * componentB.InvMass);
+					}
+					//Apply impulses
+					Resolve::ResolvePhysicsCollision(componentA, componentB, CollData.normal, CollData.depth);
+				}
+			}
+		}
+#ifdef PHYSICSDEBUG
+		Qtree.DrawQt();
+#endif
+		Qtree.Reset();
 		for (int i = 0; i < transform_cont.size(); ++i)
 		{
 			//Set transform component for graphics to render updated attributes

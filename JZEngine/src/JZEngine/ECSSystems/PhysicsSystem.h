@@ -18,6 +18,7 @@
 #include "../Physics/CollisionSystem.h"
 #include "../Physics/ResolveSystem.h"
 #include "../Input/Input.h"
+#include "../Physics/QuadTree.h"
 #include "../Physics/RigidBody.h"
 
 
@@ -38,6 +39,7 @@ namespace JZEngine
 		std::vector<Transform*> transform_cont;
 		std::vector<CollisionComponent*> collision_cont;
 
+	
 		bool pause{ false };
 		bool stepbystep{ false };
 	};
