@@ -116,6 +116,9 @@ namespace JZEngine
 		static bool DynamicCollision_AABB(const AABB& aabb1, const Vec2f& vel1,
 			const AABB& aabb2, const Vec2f& vel2);
 
+		static bool StaticCollision_AABB(const AABB& aabb1,
+			const AABB& aabb2);
+
 		static bool StaticCollision_PointAABB(const Vec2f& point,
 			const AABB& aabb2);
 

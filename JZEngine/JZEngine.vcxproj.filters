@@ -264,5 +264,7 @@
     <ClInclude Include="src\JZEngine\SceneLogic\SceneLogic.h" />
     <ClInclude Include="src\JZEngine\Physics\ResolveSystem.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\CollisionShapeSystem.h" />
+    <ClInclude Include="src\JZEngine\Physics\QuadTree.h" />
+    <ClInclude Include="src\JZEngine\Physics\Rect.h" />
   </ItemGroup>
 </Project>

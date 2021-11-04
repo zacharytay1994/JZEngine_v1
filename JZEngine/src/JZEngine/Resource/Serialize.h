@@ -252,6 +252,18 @@ namespace JZEngine
 		}
 		
 		template <>
+		static void SerializeComponent(CollisionComponent& component, std::stringstream& stream, MODE mode)
+		{
+			SERIALIZE(stream, mode,
+				component.offset.x,
+				component.offset.y,
+				component.shapeid,
+				component.size.x,
+				component.size.y
+			);
+		}
+
+		template <>
 		static void SerializeComponent(InstanceShader& component, std::stringstream& stream, MODE mode)
 		{
 			SERIALIZE(stream, mode,

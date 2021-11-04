@@ -402,6 +402,11 @@ namespace JZEngine
 		}
 	}
 
+	bool StaticCollision_AABB(const AABB& aabb1,const AABB& aabb2)
+	{
+		return !( (aabb1.max.x < aabb2.min.x) || (aabb1.max.y < aabb2.min.y) || (aabb1.min.x > aabb2.max.x) || (aabb1.min.y > aabb2.max.y) ) ;
+			
+	}
 	//	Static Point AABB Collision
 	// Use this for UI button press
 	bool Collision::StaticCollision_PointAABB(const Vec2f& point,

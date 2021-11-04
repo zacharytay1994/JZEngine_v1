@@ -4,6 +4,7 @@
 
 #include "../Physics/PhyicsDebug.h"
 
+
 #include "CollisionShapeSystem.h"
 
 #define COLLISIONDEBUG 
@@ -16,6 +17,7 @@ namespace JZEngine
 
 	void CollisionShapeSystem::FrameBegin(const float& dt)
 	{
+	
 	}
 
 	//update shapes & vertices according to a offset for the collision
@@ -28,6 +30,7 @@ namespace JZEngine
 		if (ccomponent.shapeid == shapetype::circle)
 		{
 			ccomponent.m_circle.m_center = tcomponent.position_ + ccomponent.offset;
+			ccomponent.size.y = ccomponent.size.x;
 			ccomponent.m_circle.m_radius = 0.5f * ccomponent.size.x;
 		}
 		if (ccomponent.shapeid == shapetype::square)
@@ -43,10 +46,9 @@ namespace JZEngine
 			}
 			//pcomponent.ModeltoWorld = Math::GetModelTransformNonTransposed(pcomponent.position, pcomponent.rotation, tcomponent.scale_, pcomponent.size);
 		}
-		if (ccomponent.shapeid == shapetype::aabb)
-		{
-			ccomponent.m_aabb = { tcomponent.position_ + ccomponent.offset , ccomponent.size };
-		}
+		ccomponent.pos = tcomponent.position_ + ccomponent.offset;
+		ccomponent.boundingrect = { tcomponent.position_ + ccomponent.offset , ccomponent.size *1.2f };
+		
 
 
 
