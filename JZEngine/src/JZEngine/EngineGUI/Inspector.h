@@ -371,7 +371,7 @@ namespace JZEngine
 			
 			ImGui::Text("Shape");
 
-			ImGui::SliderInt("ID", &component.shapeid, 0, 3);
+			ImGui::SliderInt("ID", &component.shapeid, 0, 1);
 
 			ImGui::Text("Offset");
 			ImGui::PushItemWidth((w / 2.0f) - (spacing * 3.0f));

@@ -160,49 +160,6 @@ namespace JZEngine
 			}
 		}
 #endif
-#if 0 
-		//optimised double for loop for collision & response
-		for (int i = 0; i < (int)physics_cont.size() - 1; ++i)
-		{
-			PhysicsComponent& componentA = *physics_cont[i];
-			CollisionComponent& CcomponentA = *collision_cont[i];
-
-			for (int j = i+1; j < physics_cont.size(); ++j)
-			{
-				PhysicsComponent& componentB = *physics_cont[j];
-				CollisionComponent& CcomponentB = *collision_cont[j];
-
-				if (componentA.IsStatic && componentB.IsStatic)
-					continue;
-
-
-				Manifold CollData{};
-				if (true == Collision::CheckCollision(CcomponentA, CcomponentB, CollData))
-				{
-					//Fix collision
-					if (componentA.IsStatic)
-					{
-						RigidBody::Move(componentB, CollData.normal * CollData.depth );
-					}
-					else if (componentB.IsStatic)
-					{
-						RigidBody::Move(componentA, -CollData.normal * CollData.depth );
-					}
-					else
-					{
-						RigidBody::Move(componentA, -CollData.normal * CollData.depth * componentA.InvMass);
-						RigidBody::Move(componentB, CollData.normal * CollData.depth * componentB.InvMass);
-					}
-					//Apply impulses
-					Resolve::ResolvePhysicsCollision(componentA, componentB, CollData.normal, CollData.depth);
-
-				}
-
-			}
-		}
-
-
-#endif
 		//Update index of every obj
 		for (int i = 0; i < (int)physics_cont.size(); ++i)
 		{
