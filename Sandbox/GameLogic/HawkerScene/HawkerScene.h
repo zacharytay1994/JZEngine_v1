@@ -2,6 +2,7 @@
 #include <JZEngine.h>
 #include "HawkerQueue.h"
 #include <string>
+#include <sstream>
 
 /*!
  * **********************************************************************
@@ -123,7 +124,7 @@ void SetPlateFood(CustomerOrder state)
 float display_time_{ 4.0f };
 float timer_{ display_time_ };
 float display_up_{ false };
-float greenbar_original_scale_y{ 1.0f };
+float greenbar_original_scale_y{ 4.25f };
 
 void UnDisplayOrder()
 {
@@ -141,6 +142,7 @@ void UnDisplayOrder()
 	display_up_ = false;
 	timer_ = display_time_;
 	display_up_ = false;
+	Scene().GetComponent<JZEngine::Transform>("GreenBar")->scale_.y = greenbar_original_scale_y;
 }
 
 void DisplayOrder(CustomerOrder order)
@@ -181,10 +183,9 @@ void DisplayUpdate(float dt)
 	}
 }
 
-int target_coins{ 5 };
+int target_coins{ 500 };
 int current_coins{ 0 };
-//int max_angry_customers{ 5 };
-//int current_angry_customers{ 0 };
+int coin_increment{ 100 };
 float total_time{ 60.0f };
 float current_time{ 0.0f };
 bool win{ false };
@@ -209,6 +210,22 @@ void UpdateGoalProgressBar(float dt)
 	}
 }
 
+template <typename...T>
+void SetCoinText(T...text)
+{
+	std::stringstream ss;
+	((ss << text), ...);
+	Scene().GetComponent<JZEngine::TextData>("ui_coin_text")->text = JZEngine::String(ss.str().c_str());
+}
+
+template <typename...T>
+void SetGoalText(T...text)
+{
+	std::stringstream ss;
+	((ss << text), ...);
+	Scene().GetComponent<JZEngine::TextData>("ui_goal_text")->text = JZEngine::String(ss.str().c_str());
+}
+
 /*!
  * @brief UI - END
  * **********************************************************************
@@ -229,7 +246,7 @@ void HawkerSceneInit()
 	display_up_ = false;
 	greenbar_original_scale_y = Scene().GetComponent<JZEngine::Transform>("GreenBar")->scale_.y;
 
-	target_coins = 5;
+	target_coins = 500;
 	current_coins = 0;
 	total_time = 60.0f;
 	current_time = 0.0f;
@@ -252,13 +269,16 @@ void HawkerSceneInit()
 	// turn off order ui
 	UnDisplayOrder();
 
+	SetCoinText("$", current_coins);
+	SetGoalText("$", target_coins);
+
 	JZEngine::Log::Info("Main", "Hawker Scene Initialized.");
 }
 
 void HawkerSceneUpdate(float dt)
 {
 	UpdateHawkerQueue(dt);
-	UpdateGoalProgressBar(dt);
+	//UpdateGoalProgressBar(dt);
 
 	// process click inputs
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_springroll"))
@@ -438,9 +458,10 @@ void HawkerSceneUpdate(float dt)
 					// turn off order ui
 					UnDisplayOrder();
 					// if successfully served customer increment coins
-					++current_coins;
+					current_coins += coin_increment;
+					SetCoinText("$", current_coins);
 					UpdateCoinProgressBar();
-					if (current_coins == target_coins)
+					if (current_coins >= target_coins)
 					{
 						win = true;
 						JZEngine::Log::Info("Main", "You have won the game!");
