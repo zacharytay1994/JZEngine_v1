@@ -203,12 +203,14 @@ namespace JZEngine
 
 
 #endif
+		//Update index of every obj
 		for (int i = 0; i < (int)physics_cont.size(); ++i)
 		{
 			CollisionComponent& CcomponentA = *collision_cont[i];
 			CcomponentA.index = i;
 		}
 
+		//Collision check for every component using Quadtree
 		for (int i = 0; i < (int)physics_cont.size(); ++i)
 		{
 			PhysicsComponent& componentA = *physics_cont[i];
@@ -232,22 +234,10 @@ namespace JZEngine
 				Manifold CollData{};
 				if (true == Collision::CheckCollision(CcomponentA, CcomponentB, CollData))
 				{
-					//Fix collision
-					if (componentA.IsStatic)
-					{
-						RigidBody::Move(componentB, CollData.normal * CollData.depth);
-					}
-					else if (componentB.IsStatic)
-					{
-						RigidBody::Move(componentA, -CollData.normal * CollData.depth);
-					}
-					else
-					{
-						RigidBody::Move(componentA, -CollData.normal * CollData.depth * componentA.InvMass);
-						RigidBody::Move(componentB, CollData.normal * CollData.depth * componentB.InvMass);
-					}
+					//Resolve collision
+					Resolve::ResolveCollision(componentA, componentB, CollData);
 					//Apply impulses
-					Resolve::ResolvePhysicsCollision(componentA, componentB, CollData.normal, CollData.depth);
+					Resolve::ApplyImpulse(componentA, componentB, CollData);
 				}
 			}
 		}

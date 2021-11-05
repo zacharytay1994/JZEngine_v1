@@ -1,0 +1,8 @@
+Cursor 7 c 0 -170 -82.6272 0 0 0 1 1 50 50 c 16 
+EmptyTongs 0 c 0 -1123.75 -214.83 -953.75 -132.203 0 2 2 50 50 c 1 50 c 2 tongs_cursor c 3 0 0 0 0 c 10 0 0.600001 1 1 0 1 1 
+TongsCarrotCake 0 c 0 -1053.75 -213.559 -883.75 -130.932 0 2 2 50 50 c 1 50 c 2 tongs_carrotcake c 3 0 0 0 0 c 10 0 0.550001 1 1 0 1 1 
+TongsDumpling 0 c 0 -1038.75 -214.83 -868.75 -132.203 0 2 2 50 50 c 1 50 c 2 tongs_dumplings c 3 0 0 0 0 c 10 0 1 1 1 0 1 1 
+TongsSeaweedChicken 0 c 0 -1040 -213.559 -870 -130.932 0 2 2 50 50 c 1 50 c 2 tongs_seaweedchicken c 3 0 0 0 0 c 10 0 0.0666668 1 1 0 1 1 
+TongsSpringroll 0 c 0 -1077.5 -211.017 -907.5 -128.39 0 2 2 50 50 c 1 50 c 2 tongs_springroll c 3 0 0 0 0 c 10 0 0.850002 1 1 0 1 1 
+ScizzorsCursor 0 c 0 -1086.25 -214.83 -916.25 -132.203 0 2 2 50 50 c 1 50 c 2 scissors_cursor c 3 0 0 0 0 c 10 0 1 1 1 0 1 1 
+PlateCursor 0 c 0 -1067.5 -212.288 -897.5 -129.661 0 2 2 50 50 c 1 50 c 2 food_plate c 3 0 0 0 0 c 10 0 0.983336 1 1 0 1 1 

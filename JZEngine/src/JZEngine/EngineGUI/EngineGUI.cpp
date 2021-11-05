@@ -215,6 +215,11 @@ namespace JZEngine
 		return Camera::camera_transform_;
 	}
 
+	SceneTree* EngineGUI::GetSceneTree()
+	{
+		return &scene_tree_;
+	}
+
 	void EngineGUI::ProcessCameraInput()
 	{
 		GLFWwindow* window = GetSystem<GLFW_Instance>()->window_;

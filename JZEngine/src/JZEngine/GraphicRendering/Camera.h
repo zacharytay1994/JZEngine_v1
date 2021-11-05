@@ -1,11 +1,12 @@
 #pragma once
 
+#include "../BuildDefinitions.h"
 #include "../Math/JZMath.h"
 
 struct GLFWwindow;
 namespace JZEngine
 {
-	struct Camera
+	struct JZENGINE_API Camera
 	{
 		static bool fullscreen;
 		static float camera_zoom_;

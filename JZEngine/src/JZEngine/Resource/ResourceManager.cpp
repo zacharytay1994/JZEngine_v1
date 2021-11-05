@@ -311,4 +311,14 @@ namespace JZEngine
 	{
 		return GetTexture(umap_texture2ds_[name]);
 	}
+
+	int ResourceManager::GetTextureID(const std::string& name)
+	{
+		if (umap_texture2ds_.find(name) != umap_texture2ds_.end())
+		{
+			return umap_texture2ds_[name];
+		}
+		Log::Warning("Warning", "Getting texture that does not exist: {}.", name);
+		return -1;
+	}
 }

@@ -77,6 +77,7 @@ namespace JZEngine
 		static Mat3f GetCameraTransform();
 		//float camera_zoom_{ 1.0f };
 
+		SceneTree* GetSceneTree();
 	private:
 		Inspector	inspector_;		/*!< engine inspector */
 		Console		console_;		/*!< engine console */
