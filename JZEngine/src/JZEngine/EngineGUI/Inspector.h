@@ -595,6 +595,13 @@ namespace JZEngine
 			ImGui::InputInt(": Layer", &component.layer_);
 		}
 
+		template <>
+		void RenderComponent(MouseEvent& component)
+		{
+			ImGui::InputFloat("##MEX", &component.bounding_half_width_);
+			ImGui::InputFloat("##MEY", &component.bounding_half_height_);
+		}
+
 		/*!
 		 * @brief ___JZEngine::LoopTupleRender___
 		 * ****************************************************************************************************

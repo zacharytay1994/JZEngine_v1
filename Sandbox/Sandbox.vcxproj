@@ -158,6 +158,7 @@
   <ItemGroup>
     <ClInclude Include="GameLogic\HawkerScene\HawkerQueue.h" />
     <ClInclude Include="GameLogic\HawkerScene\HawkerScene.h" />
+    <ClInclude Include="GameLogic\MainMenu\MainMenu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

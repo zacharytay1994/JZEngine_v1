@@ -1,5 +1,6 @@
 #include <JZEngine.h>
 #include "GameLogic/HawkerScene/HawkerScene.h"
+#include "GameLogic/MainMenu/MainMenu.h"
 
 #include <iostream>
 
@@ -10,8 +11,11 @@ public:
 		:
 		Application ()
 	{
-		Scene().RegisterSceneInit("NewHawkerScene", HawkerSceneInit);
-		Scene().RegisterSceneLogic("NewHawkerScene", HawkerSceneUpdate);
+		Scene().RegisterSceneInit("MainMenu", InitMainMenu);
+		Scene().RegisterSceneLogic("MainMenu", UpdateMainMenu);
+
+		Scene().RegisterSceneInit("HawkerV2", HawkerSceneInit);
+		Scene().RegisterSceneLogic("HawkerV2", HawkerSceneUpdate);
 	}
 };
 
