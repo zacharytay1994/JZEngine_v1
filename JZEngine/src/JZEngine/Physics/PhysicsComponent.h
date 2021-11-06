@@ -8,7 +8,7 @@
 #pragma once
 
 #include "../Math/JZMath.h"
-#include "../Physics/PhysicsShapes.h"
+
 
 namespace JZEngine
 {
@@ -16,7 +16,7 @@ namespace JZEngine
 	struct PhysicsComponent
 	{
 		bool player{ false };
-		int shapeid{};
+
 
 		Vec2f size; // cm
 		Vec2f position;
@@ -25,7 +25,7 @@ namespace JZEngine
 		Vec2f acceleration; // cm/s^2
 
 		float rotation;
-		float rotationalVelocity;
+		float angularVelocity;
 		Vec2f force;
 
 		float Area; // size * size (m^3)
@@ -34,14 +34,19 @@ namespace JZEngine
 		float InvMass; // 1/kg
 		float Restitution;
 		//The coefficient of Restitution [ 0.0f to 1.0f ]
-		
+
+		float StaticFriction;  
+		float DynamicFriction;
+
+		float MomentofInertia;
+
+
 		bool IsStatic{ true };
 		bool IsAlive{ true };
 
-		union {
-			Circle m_circle;
-			Square m_square;
-		};
+		Mat3f ModeltoWorld;
+
+
 		PhysicsComponent();
 		PhysicsComponent(const PhysicsComponent& s);
 		~PhysicsComponent();

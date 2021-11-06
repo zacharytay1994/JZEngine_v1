@@ -56,6 +56,8 @@ namespace JZEngine
 		static unsigned int average_app_fps_;
 		static unsigned int accumulated_app_fps_;
 
+		static float time_elapsed_;
+
 		static std::unordered_map<std::string, Timer> global_system_timers_;
 		static std::unordered_map<std::string, Timer> ecs_system_timers_;
 		static std::unordered_map<std::string, Timer> default_timers_;

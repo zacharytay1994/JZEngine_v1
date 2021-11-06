@@ -13,6 +13,7 @@
 #include "../GraphicRendering/OpenGLDebug.h"
 #include "../DebugTools/Log.h"
 #include "../EngineGUI/MenuBar.h"
+#include "../GraphicRendering/Camera.h"
 
 namespace JZEngine
 {
@@ -139,7 +140,14 @@ namespace JZEngine
 	bool GLFW_Instance::dimensions_updated{ false };
 	void GLFW_Instance::UpdateViewportDimensions()
 	{
-		glViewport(static_cast<GLsizei>(1.0 / 6.0 * Settings::window_width), static_cast<GLsizei>(1.0 / 4.0 * (Settings::window_height - MenuBar::height_)), static_cast<GLsizei>(4.0 / 6.0 * Settings::window_width), static_cast<GLsizei>(3.0 / 4.0 * (Settings::window_height - MenuBar::height_)));
+		if (Camera::fullscreen)
+		{
+			glViewport(0.0f, 0.0f, Settings::window_width, Settings::window_height);
+		}
+		else 
+		{
+			glViewport(static_cast<GLsizei>(1.0 / 6.0 * Settings::window_width), static_cast<GLsizei>(1.0 / 4.0 * (Settings::window_height - MenuBar::height_)), static_cast<GLsizei>(4.0 / 6.0 * Settings::window_width), static_cast<GLsizei>(3.0 / 4.0 * (Settings::window_height - MenuBar::height_)));
+		}
 	}
 
 	void JZEngine::FramebufferSizeCallback( GLFWwindow* window, int width, int height )

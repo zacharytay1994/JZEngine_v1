@@ -121,6 +121,7 @@ namespace JZEngine
 			ECSInstance* const ecs_instance_;
 			template <typename COMPONENT>
 			static ComponentDescription				component_descriptions_;	/*!< template variable holding all the different component descriptions registered */
+			std::unordered_map<std::string, ComponentDescription> exported_descriptions_;
 			std::array<ui32, MAX_COMPONENTS>		component_sizes_{ 0 };		/*!< a way to access component sizes through their id */
 
 			struct ComponentNameID
@@ -181,6 +182,11 @@ namespace JZEngine
 					// flag it as registered
 					component_descriptions_<COMPONENT>.registered_ = 1;
 					registered_components_.push_back({ typeid(COMPONENT).name(), component_descriptions_<COMPONENT>.bit_ });
+
+					exported_descriptions_[typeid(COMPONENT).name()].bit_ = component_descriptions_<COMPONENT>.bit_;
+					exported_descriptions_[typeid(COMPONENT).name()].name_ = component_descriptions_<COMPONENT>.name_;
+					exported_descriptions_[typeid(COMPONENT).name()].size_ = component_descriptions_<COMPONENT>.size_;
+					exported_descriptions_[typeid(COMPONENT).name()].registered_ = component_descriptions_<COMPONENT>.registered_;
 
 					// debug information
 					std::cout << "Registered Component: " << typeid(COMPONENT).name() << ", Bit: " << component_descriptions_<COMPONENT>.bit_ << std::endl;
@@ -293,6 +299,9 @@ namespace JZEngine
 			*/
 			template <typename COMPONENT>
 			COMPONENT& GetComponent(ui32 id);
+
+			template <typename COMPONENT>
+			COMPONENT& GetComponentEX(ui32 id);
 
 			/*!
 			 * @brief ___JZEngine::ECS::Chunk::AddEntity()___
@@ -969,6 +978,20 @@ namespace JZEngine
 			return *(reinterpret_cast<COMPONENT*>(data));
 		}
 
+		template<typename COMPONENT>
+		COMPONENT& Chunk::GetComponentEX(ui32 id)
+		{
+			assert(("Getting component that does not exist in Entity.",
+				owning_archetype_->mask_[ecs_instance_->component_manager_.exported_descriptions_[typeid(COMPONENT).name()].bit_] == 1));
+
+			// navigates to location of data
+			char* data = data_.get() + (size_t)id * (size_t)owning_archetype_->entity_stride_ +
+				(size_t)owning_archetype_->component_stride_[ecs_instance_->component_manager_.exported_descriptions_[typeid(COMPONENT).name()].bit_];
+
+			// cast to type and return reference
+			return *(reinterpret_cast<COMPONENT*>(data));
+		}
+
 		/* ____________________________________________________________________________________________________
 		*																					ENTITY DECLARATION
 		   ____________________________________________________________________________________________________*/
@@ -1054,6 +1077,18 @@ namespace JZEngine
 			{
 				return owning_chunk_->GetComponent<COMPONENT>(id_);
 			}
+			
+			template <typename COMPONENT>
+			COMPONENT& GetComponentEX()
+			{
+				return owning_chunk_->GetComponentEX<COMPONENT>(id_);
+			}
+
+			/*template <typename COMPONENT>
+			COMPONENT& GetComponentEX()
+			{
+				return owning_chunk_->GetComponent<COMPONENT>(id_);
+			}*/
 
 			/*!
 			 * @brief ___JZEngine::ECS::Entity::HasComponent()___

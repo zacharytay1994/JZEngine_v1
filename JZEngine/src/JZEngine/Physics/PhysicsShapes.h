@@ -13,8 +13,9 @@ namespace JZEngine {
 	enum shapetype
 	{
 		circle = 0,
-		aabb = 1,
-		square = 2
+		square = 1,
+		aabb = 2,
+		point =3
 	
 	};
 
@@ -32,10 +33,12 @@ namespace JZEngine {
 	{
 		Vec2f midpoint;
 		std::array<Vec2f,4> vertices;
+		std::array<Vec2f, 4> normal;
 
 		Square() = default;
 		Square(Vec2f midpt, Vec2f scale) : midpoint{ midpt }
 		{
+			//ccw
 			vertices[0] = midpt - (scale / 2.0f);//botleft
 			vertices[1] = { vertices[0].x + scale.x,vertices[0].y };//bot right
 			vertices[2] = vertices[0] + scale;//top right

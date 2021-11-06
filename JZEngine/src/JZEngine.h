@@ -9,6 +9,9 @@
 
 #include "JZEngine/Application.h"
 #include "JZEngine/DebugTools/Log.h"
+#include "JZEngine/SceneLogic/SceneLogic.h"
+#include "JZEngine/ECS/ECSConfig.h"
+#include "JZEngine/GraphicRendering/Camera.h"
 
 //---Entry Point------------------
 #include "JZEngine/EntryPoint.h"
@@ -18,3 +21,9 @@
 #include "JZEngine/EntryPoint.h"
 
 #include "JZEngine/Sound/Sound.h"
+
+// shortcuts
+JZEngine::SceneLogic& Scene()
+{
+	return JZEngine::SceneLogic::Instance();
+}

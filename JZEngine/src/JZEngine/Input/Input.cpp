@@ -12,6 +12,9 @@
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
+
+#include "../EngineConfig.h"
+#include "../GraphicRendering/Camera.h"
 namespace JZEngine
 {
     /*                                                   objects with file scope
@@ -22,6 +25,7 @@ namespace JZEngine
     std::unordered_map<int, bool> InputHandler::mousestate;
     std::unordered_map<int, bool> InputHandler::prevmousestate;
     Vec2f InputHandler::mousepos;
+    //Vec2f InputHandler::mouse_world_position_;
     int InputHandler::mouse_scrolled_{ 0 };
     
 
@@ -199,6 +203,7 @@ namespace JZEngine
 #ifdef _DEBUG
         std::cout << "fbsize_cb getting called!!!" << std::endl;
 #endif
+        UNREFERENCED_PARAMETER(width, height);
     }
 
     bool InputHandler::IsKeyPressed(KEY key) 
@@ -262,5 +267,4 @@ namespace JZEngine
 
         else return false;
     }
-
 }//JZEngine

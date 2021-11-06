@@ -9,12 +9,14 @@
 #include "MenuBar.h"
 #include "EngineGUI.h"
 #include "../Input/Input.h"
+#include "../JZGL/JZ_GL.h"
 
 #include "../GraphicRendering/RendererDebug.h"
 #include "../DebugTools/PerformanceData.h"
 #include "FolderInterface.h"
 #include "DebugInformation.h"
 #include "EngineSettings.h"
+#include "../GraphicRendering/Camera.h"
 
 #define UNREFERENCED_PARAMETER(P)(P);
 
@@ -116,6 +118,13 @@ namespace JZEngine {
 					engine_gui_->operation_ = ImGuizmo::OPERATION::SCALE;
 				}
 				ImGui::EndMenu();
+			}
+
+			if (ImGui::Button("Fullscreen"))
+			{
+				Camera::fullscreen = !Camera::fullscreen;
+				GLFW_Instance::UpdateViewportDimensions();
+				Log::Info("Main", "Toggle fullscreen: {}", Camera::fullscreen);
 			}
 
 			ImGui::EndMainMenuBar();

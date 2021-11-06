@@ -13,6 +13,7 @@
 #include "../ECSSystems/ExampleSingleHeader.h"
 #include "../ECSSystems/ExampleSplitHeaderSource.h"
 
+#include "../ECSSystems/CollisionShapeSystem.h"
 #include "../ECSSystems/PhysicsSystem.h"
 #include "../GraphicRendering/NonInstanceSpriteRenderer.h"
 #include "../GraphicRendering/InstanceSpriteRenderer.h"
@@ -20,6 +21,8 @@
 #include "../GraphicRendering/Text.h"
 #include "../ECSSystems/FloatRandom.h"
 #include "../ECSSystems/ExampleParticleSystem.h"
+#include "../ECSSystems/MouseEvent.h"
+#include "../ECSSystems/FollowMouseCursor.h"
 
 namespace JZEngine
 { 
@@ -31,11 +34,12 @@ namespace JZEngine
 			using Component =
 				std::tuple<
 
-				Transform ,
+				Transform ,	// transform must always be the first component, for hardcode reasons sorry pls dont change it
 				SpriteLayer,
 				Texture ,
 				NonInstanceShader ,
 				InstanceShader ,
+				CollisionComponent,
 				PhysicsComponent ,
 				Parallax ,
 				NotBackground ,
@@ -44,23 +48,28 @@ namespace JZEngine
 				RandomMovement ,
 				ExampleParticleSystemComponent ,
 				ExampleParticleComponent ,
-				PopiahPSFlag
+				PopiahPSFlag,
+				MouseEvent,
+				FollowMouseCursor
+		
 
 				>;
 
 			// add your structs/classes here that you want to be treated as Systems
 			using System =
 				std::tuple<
-
 				ParallaxBackground ,
-				Sprite ,
-				InstanceSprite ,
-				PhysicsSystem ,
+				CollisionShapeSystem,
+				PhysicsSystem,
+				Sprite,
+				InstanceSprite,
 				Text ,
 				FloatRandom ,
 				ExampleParticleSystem ,
 				ExampleParticle ,
-				PopiahParticleSystem
+				PopiahParticleSystem,
+				MouseEventSystem,
+				FollowMouseCursorSystem
 
 				>;
 		};

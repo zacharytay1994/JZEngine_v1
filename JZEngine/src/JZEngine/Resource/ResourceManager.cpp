@@ -23,26 +23,8 @@ namespace JZEngine
 
 	ResourceManager::ResourceManager ()
 	{
-		//add below so existing code dont need edit hehe
 		// load textures
-		//LoadTexture2D ( "TextFile" , "Assets/Textures/textfileicon.png" );
-		//LoadTexture2D (	"StartIcon", "Assets/Textures/iconstart.png" );
-		//LoadTexture2D (	"StopIcon", "Assets/Textures/iconstop.png" );
-		//LoadTexture2D (	"PauseIcon", "Assets/Textures/iconpause.png" );
-		//LoadTexture2D ( "Unicorn" , "Assets/Textures/cute-unicorn.png" );//1
-		//LoadTexture2D ( "Square" , "Assets/Textures/square.jpg" );
-		//LoadTexture2D ( "TempB1" , "Assets/Textures/TempBackground-01.png" );
-		//LoadTexture2D ( "TempB2" , "Assets/Textures/TempBackground-02.png" );
-		//LoadTexture2D ( "TempB3" , "Assets/Textures/TempBackground-03.png" );
-		//LoadTexture2D ( "TempB4" , "Assets/Textures/TempBackground-04.png" );
-		//LoadTexture2D ( "Circle" , "Assets/Textures/circle.png" );	//7
-		//LoadTexture2D ( "CircleRed" , "Assets/Textures/squarered.png" );	//8
-		//LoadTexture2D ( "Anrgy" , "Assets/Textures/angry.png" );//9
-		//LoadTexture2D ( "Star" , "Assets/Textures/SpriteSheet_Star.png" );//9
-		//LoadTexture2D ( "Springroll", "Assets/Textures/springroll.png");//9
-		//LoadTexture2D ( "Fishball", "Assets/Textures/fishball.png");//9
 		LoadAllTexturesInFolder();
-
 
 		// load shaders
 		LoadShader ( "Default" ,
@@ -51,6 +33,10 @@ namespace JZEngine
 		LoadShader ( "Black White" ,
 					 "Assets/Shaders/Vertex/VS_Sprite2D.vs" ,
 					 "Assets/Shaders/Fragment/FS_BlackWhite.fs" );
+
+		LoadShader ( "Leaf Shader",
+					 "Assets/Shaders/Vertex/VS_Sprite2D.vs",
+					 "Assets/Shaders/Fragment/FS_TexSway.fs" );
 
 		// load font shaders
 		LoadFont ( "Assets/Fonts/Weather Sunday.otf" , 100 , "Font1" , "Assets/Shaders/Vertex/VS_Font.vs" , "Assets/Shaders/Fragment/FS_Font.fs" );
@@ -324,5 +310,15 @@ namespace JZEngine
 	Texture2D* ResourceManager::GetTexture(const std::string& name)
 	{
 		return GetTexture(umap_texture2ds_[name]);
+	}
+
+	int ResourceManager::GetTextureID(const std::string& name)
+	{
+		if (umap_texture2ds_.find(name) != umap_texture2ds_.end())
+		{
+			return umap_texture2ds_[name];
+		}
+		Log::Warning("Warning", "Getting texture that does not exist: {}.", name);
+		return -1;
 	}
 }

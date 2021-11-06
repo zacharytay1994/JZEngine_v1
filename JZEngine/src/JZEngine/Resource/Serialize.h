@@ -178,6 +178,8 @@ namespace JZEngine
 			SERIALIZE(stream, mode,
 				component.position_.x,
 				component.position_.y,
+				component.child_position_.x,
+				component.child_position_.y,
 				component.rotation_,
 				component.scale_.x,
 				component.scale_.y,
@@ -238,17 +240,29 @@ namespace JZEngine
 		{
 			SERIALIZE(stream, mode,
 				component.player,
-				component.shapeid,
+				
 				component.position.x,
 				component.position.y,
 				component.rotation,
-				component.rotationalVelocity,
+				component.angularVelocity,
 				component.Density,
 				component.Restitution,
 				component.IsStatic
 				);
 		}
 		
+		template <>
+		static void SerializeComponent(CollisionComponent& component, std::stringstream& stream, MODE mode)
+		{
+			SERIALIZE(stream, mode,
+				component.offset.x,
+				component.offset.y,
+				component.shapeid,
+				component.size.x,
+				component.size.y
+			);
+		}
+
 		template <>
 		static void SerializeComponent(InstanceShader& component, std::stringstream& stream, MODE mode)
 		{
@@ -284,6 +298,14 @@ namespace JZEngine
 			SERIALIZE(stream, mode,
 				component.direction_.x,
 				component.direction_.y);
+		}
+
+		template <>
+		static void SerializeComponent(MouseEvent& component, std::stringstream& stream, MODE mode)
+		{
+			SERIALIZE(stream, mode,
+				component.bounding_half_width_,
+				component.bounding_half_height_);
 		}
 
 		/*!_______________________________________________________________________________________________________*/

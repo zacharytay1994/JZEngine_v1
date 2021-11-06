@@ -1,0 +1,6 @@
+Queue 5 c 0 0 0 0 0 0 1 1 50 50 c 1 0 c 2 emptyimage c 3 0 0 0 0 c 10 0 0.916669 1 1 0 1 1 
+Customer 0 c 0 0 0 0 0 0 6 6 50 50 c 1 0 c 2 character c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
+Customer 0 c 0 0 0 0 0 0 6 6 50 50 c 1 0 c 2 character c 3 0 0 0 0 c 10 0 0.766668 1 1 0 1 1 
+Customer 0 c 0 0 0 0 0 0 6 6 50 50 c 1 0 c 2 character c 3 0 0 0 0 c 10 0 0.883335 1 1 0 1 1 
+Customer 0 c 0 0 0 0 0 0 6 6 50 50 c 1 0 c 2 character c 3 0 0 0 0 c 10 0 0.883335 1 1 0 1 1 
+Customer 0 c 0 0 0 0 0 0 6 6 50 50 c 1 0 c 2 character c 3 0 0 0 0 c 10 0 0.800002 1 1 0 1 1 

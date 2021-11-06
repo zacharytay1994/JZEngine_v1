@@ -13,14 +13,14 @@ namespace JZEngine
 	PhysicsComponent::PhysicsComponent()
 	:
 	player{ false },
-	shapeid{ 0 },
+
 	size{ 1.f,1.f },
 	position{ 0.f, 0.f },
 	posnex{ 0.f, 0.f },
 	velocity{ 0.f, 0.f },
 	acceleration{ 0.0f,0.0f },
 	rotation{ 0.f },
-	rotationalVelocity{ 0.f },
+	angularVelocity{ 0.f },
 	force{ 0.f,0.f },
 	Area{ 0.f },
 	Density{ 0.001f },
@@ -28,7 +28,9 @@ namespace JZEngine
 	InvMass{ 1.0f },
 	Restitution{ 0.5f },
 	IsStatic{ true },
-	IsAlive{ true }
+	IsAlive{ true },
+	StaticFriction{ 0.5f},
+	DynamicFriction{0.3f}
 	{}
 
 	PhysicsComponent::PhysicsComponent(const PhysicsComponent& s) { std::memcpy(this, &s, sizeof(s)); }

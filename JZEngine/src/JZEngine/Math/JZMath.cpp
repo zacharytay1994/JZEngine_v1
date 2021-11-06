@@ -18,6 +18,16 @@ namespace JZEngine
 {
 	namespace Math
 	{
+		bool IsEqual(float a, float b)
+		{
+			return std::abs(a - b) <= EPSILON;
+		}
+
+		float Sqr(float a)
+		{
+			return a * a;
+		}
+
 		bool IsEven(int val)
 		{
 			return val % 2 == 0;

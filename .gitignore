@@ -33,6 +33,8 @@ bld/
 bin/
 bin-int/
 Sandbox/Logs/
+Sandbox/imgui.ini
+Sandbox/Saves/config.txt
 >>>>>>> main
 **/OutputFiles
 

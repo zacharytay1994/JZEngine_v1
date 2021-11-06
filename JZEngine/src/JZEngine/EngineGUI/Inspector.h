@@ -115,6 +115,18 @@ namespace JZEngine
 			ImGui::Text ( "Y" );
 			ImGui::PopItemWidth ();
 
+			// Child Position
+			ImGui::Text("Relative Position");
+			ImGui::PushItemWidth((w / 2.0f) - spacing);
+			ImGui::InputFloat("##RPosX", &component.child_position_.x);
+			ImGui::SameLine();
+			ImGui::Text("X");
+			ImGui::SameLine();
+			ImGui::InputFloat("##RPosY", &component.child_position_.y);
+			ImGui::SameLine();
+			ImGui::Text("Y");
+			ImGui::PopItemWidth();
+
 			// Rotation
 			ImGui::Text ( "Rotation" );
 			ImGui::PushItemWidth ( w - ( button_sz * 2.0f ) + ( spacing * 2.0f ) );
@@ -350,16 +362,48 @@ namespace JZEngine
 		}
 
 		template <>
+		void RenderComponent(CollisionComponent& component)
+		{
+			// General data
+			ImGuiStyle& style = ImGui::GetStyle();
+			float w = ImGui::CalcItemWidth();
+			float spacing = style.ItemInnerSpacing.x;
+			
+			ImGui::Text("Shape");
+
+			ImGui::SliderInt("ID", &component.shapeid, 0, 1);
+
+			ImGui::Text("Offset");
+			ImGui::PushItemWidth((w / 2.0f) - (spacing * 3.0f));
+			ImGui::InputFloat("##OffSetX", &component.offset.x);
+			ImGui::SameLine();
+			ImGui::Text("X");
+			ImGui::SameLine();
+			ImGui::InputFloat("##OffSetY", &component.offset.y);
+			ImGui::SameLine();
+			ImGui::Text("Y");
+			ImGui::PopItemWidth();
+
+			ImGui::Text("Collision Size (cm)");
+			ImGui::PushItemWidth((w / 3.0f) - spacing);
+			ImGui::InputFloat("##SizeW", &component.size.x);
+			ImGui::SameLine();
+			ImGui::Text("X or Radius");
+	
+			ImGui::InputFloat("##SizeY", &component.size.y);
+			ImGui::SameLine();
+			ImGui::Text("Y");
+			ImGui::PopItemWidth();
+		}
+		template <>
 		void RenderComponent ( PhysicsComponent& component )
 		{
 			// General data
 			ImGuiStyle& style = ImGui::GetStyle ();
 			float w = ImGui::CalcItemWidth ();
 			float spacing = style.ItemInnerSpacing.x;
-			//float button_sz = ImGui::GetFrameHeight ();
-			ImGui::Text ( "Shape" );
+			
 
-			ImGui::SliderInt ( "ID" , &component.shapeid , 0 , 2 );
 
 			ImGui::Checkbox ( "Static" , &component.IsStatic );
 			ImGui::Checkbox("Player", &component.player);
@@ -377,7 +421,7 @@ namespace JZEngine
 
 			ImGui::Text("Angular Velocity (degree/s)");
 			ImGui::PushItemWidth((w / 2.0f) - (spacing * 3.0f));
-			ImGui::InputFloat("##Vel", &component.rotationalVelocity);
+			ImGui::InputFloat("##Vel", &component.angularVelocity);
 			ImGui::SameLine();
 			ImGui::Text("o");
 			ImGui::PopItemWidth();
@@ -388,8 +432,14 @@ namespace JZEngine
 			ImGui::SliderFloat ( "kg/cm^2" , &component.Density , 0.001f , 1.f );
 			ImGui::Text ( "Mass" );
 			ImGui::SliderFloat ( "kg" , &component.Mass , component.Mass - 10.0f , component.Mass + 10.0f );
-			ImGui::Text ( "Restitution" );
+			ImGui::Text ( "Restitution (Bounciness)" );
 			ImGui::SliderFloat ( "##PhysicsComponentRestitution" , &component.Restitution , 0.0f , 1.0f );
+
+			ImGui::Text("Static Friction");
+			ImGui::SliderFloat("##PhysicsComponentStaticFriction", &component.StaticFriction, 0.0f, 1.5f);
+
+			ImGui::Text("Dynamic Friction");
+			ImGui::SliderFloat("##PhysicsComponentDynamicFriction", &component.DynamicFriction, 0.0f, 1.5f);
 		}
 
 		template <>
@@ -543,6 +593,13 @@ namespace JZEngine
 		void RenderComponent(SpriteLayer& component)
 		{
 			ImGui::InputInt(": Layer", &component.layer_);
+		}
+
+		template <>
+		void RenderComponent(MouseEvent& component)
+		{
+			ImGui::InputFloat("##MEX", &component.bounding_half_width_);
+			ImGui::InputFloat("##MEY", &component.bounding_half_height_);
 		}
 
 		/*!

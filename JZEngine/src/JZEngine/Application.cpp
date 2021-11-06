@@ -12,6 +12,8 @@
 #include "EngineConfig.h"
 #include "DebugTools/Log.h"
 #include "Sound/Sound.h"
+#include "SceneLogic/SceneLogic.h"
+#include "GraphicRendering/Camera.h"
 
 #include "GraphicRendering/Renderer.h"
 #include "GraphicRendering/RendererInstancing.h"
@@ -64,11 +66,13 @@ namespace JZEngine
 		global_systems_->AddSystem<ECS::ECSInstance>	( "ECS Instance" );
 		global_systems_->AddSystem<Renderer>			( "Default Renderer" );
 		global_systems_->AddSystem<RendererInstancing>	( "Instance Renderer" );
-		global_systems_->AddSystem<RendererDebug>		( "Debug Renderer" );
 		global_systems_->AddSystem<RenderQueue>			( "Render Queue" );
+		global_systems_->AddSystem<RendererDebug>		( "Debug Renderer" );
 		global_systems_->AddSystem<EngineGUI>			( "Engine GUI" );
 		global_systems_->AddSystem<SoundSystem>			( "Sound System" );
 		global_systems_->AddSystem<TextRenderer>		( "Text Renderer" );
+
+		SceneLogic::Instance().SetECS(global_systems_->GetSystem<ECS::ECSInstance>());
 
 		global_systems_->GetSystem<GLFW_Instance>()->UpdateViewportDimensions();
 		global_systems_->GetSystem<RenderQueue>()->SetRenderer(global_systems_->GetSystem<Renderer>());
@@ -90,6 +94,7 @@ namespace JZEngine
 		// initialize all global systems
 		global_systems_->PostInit();
 		PerformanceData::Init ();
+		SceneLogic::Instance().SetSceneTree(global_systems_->GetSystem<EngineGUI>()->GetSceneTree());
 
 		msgbus->subscribe ( global_systems_->GetSystem<SoundSystem> () , &SoundSystem::playSound );
 
@@ -247,10 +252,10 @@ namespace JZEngine
 		{
 			fsm->update(dt);
 
-			if( InputHandler::IsKeyTriggered ( KEY::KEY_L ) )
+			/*if( InputHandler::IsKeyTriggered ( KEY::KEY_L ) )
 			{
 				limit_frames = !limit_frames;
-			}
+			}*/
 
 			auto start_time = std::chrono::high_resolution_clock::now ();
 
@@ -261,8 +266,13 @@ namespace JZEngine
 
 			global_systems_->FrameStart ();
 
+			// after this call all mouse world positions will be calculated
+			//InputHandler::CalculateMouseWorldPosition(global_systems_->GetSystem<GLFW_Instance>()->window_, MenuBar::height_);
+			Camera::CalculateMouseWorldPosition(global_systems_->GetSystem<GLFW_Instance>()->window_);
 
 			global_systems_->Update ( static_cast<float>(dt) );
+			SceneLogic::Instance().BuildEntityMap();
+			SceneLogic::Instance().UpdateSceneLogic(static_cast<float>(dt));
 
 			//DeltaTime::update_time(1.0);
 			//DeltaTime::update_deltatime(1.0);
@@ -333,6 +343,8 @@ namespace JZEngine
 			{
 				time += dt;
 			}
+			//Log::Info("Main", "Sleep Time: {}", sleep_time);
+			PerformanceData::time_elapsed_ = time;
 
 			PerformanceData::app_fps_ = static_cast< unsigned int >( 1.0 / dt );
 			/*Log::Info("Main", "Time Elapsed: {}", time);

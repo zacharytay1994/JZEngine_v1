@@ -25,7 +25,7 @@ namespace JZEngine
 	{
 		if (active_)
 		{
-			ImGui::SetNextWindowBgAlpha(0.8f);
+			ImGui::SetNextWindowBgAlpha(gui_alpha_);
 			ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x_, MenuBar::height_ + static_cast<float>(Settings::window_height - MenuBar::height_) * y_ }, ImGuiCond_Always);
 			ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx_, static_cast<float>(Settings::window_height - MenuBar::height_) * sy_ }, ImGuiCond_Always);
 

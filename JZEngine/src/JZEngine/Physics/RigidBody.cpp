@@ -11,17 +11,20 @@
 
 namespace JZEngine
 {
-	Vec2f RigidBody::gravity{ 0.f, -38.1f };
+	Vec2f RigidBody::gravity{ 0.f, -398.1f };
 
 	void RigidBody::ApplyForces(PhysicsComponent& pcomponent,const float& dt)
 	{
-		pcomponent.rotation += pcomponent.rotationalVelocity * dt;
 		if (pcomponent.IsStatic)
 			return;
+		//pcomponent.angularVelocity += pcomponent.torque * (1.0f / momentofinertia) * dt;
+
+		pcomponent.rotation += pcomponent.angularVelocity * dt;
+
 
 		pcomponent.acceleration = pcomponent.force / pcomponent.Mass;
 
-		pcomponent.acceleration += gravity;
+		pcomponent.acceleration += gravity;//constant accel due to gravity
 
 		pcomponent.velocity += pcomponent.acceleration * dt;
 	

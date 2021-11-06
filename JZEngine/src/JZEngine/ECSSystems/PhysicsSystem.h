@@ -8,14 +8,20 @@
 */
 
 #pragma once
+#include "../GraphicRendering/TransformComponent.h"
 
 #include "../DebugTools/Log.h"
 #include "../ECS/ECS.h"
 #include "../ECS/ECSConfig.h"
 #include "../Physics/PhysicsComponent.h"
-#include "../Physics/Collision.h"
-
+#include "../Physics/CollisionComponent.h"
+#include "../Physics/CollisionSystem.h"
+#include "../Physics/ResolveSystem.h"
+#include "../Input/Input.h"
+#include "../Physics/QuadTree.h"
 #include "../Physics/RigidBody.h"
+#include "../EngineConfig.h"
+
 
 namespace JZEngine
 {
@@ -31,8 +37,14 @@ namespace JZEngine
 		virtual void FrameEnd(const float& dt) override;
 	private:
 		std::vector<PhysicsComponent*> physics_cont;
+		std::vector<Transform*> transform_cont;
+		std::vector<CollisionComponent*> collision_cont;
+
+
 
 		bool pause{ false };
 		bool stepbystep{ false };
 	};
+
+
 }

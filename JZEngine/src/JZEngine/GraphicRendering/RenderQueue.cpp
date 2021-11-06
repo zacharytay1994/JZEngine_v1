@@ -2,6 +2,7 @@
 #include "RenderQueue.h"
 #include "Renderer.h"
 #include "OpenGLDebug.h"
+#include "../DebugTools/PerformanceData.h"
 
 namespace JZEngine {
 	std::priority_queue<RenderQueue::RenderData, std::vector<RenderQueue::RenderData>, RenderQueue::CompareRenderData> RenderQueue::render_queue_;
@@ -63,6 +64,8 @@ namespace JZEngine {
 		// set shader uniforms
 		renderer_->GetShaderProgram(shaderid).SetUniform("transform", transform);
 		renderer_->GetShaderProgram(shaderid).SetUniform("tint", tint);
+		//Log::Info("Main", "{}", PerformanceData::time_elapsed_);
+		renderer_->GetShaderProgram(shaderid).SetUniform("time", PerformanceData::time_elapsed_);
 		glCheckError();
 
 		if (animated)

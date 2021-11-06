@@ -31,6 +31,8 @@ namespace JZEngine
 	unsigned int PerformanceData::average_app_fps_;
 	unsigned int PerformanceData::accumulated_app_fps_;
 
+	float PerformanceData::time_elapsed_;
+
 	std::unordered_map<std::string, PerformanceData::Timer> PerformanceData::default_timers_;
 	std::unordered_map<std::string, PerformanceData::Timer> PerformanceData::global_system_timers_;
 	std::unordered_map<std::string, PerformanceData::Timer> PerformanceData::ecs_system_timers_;

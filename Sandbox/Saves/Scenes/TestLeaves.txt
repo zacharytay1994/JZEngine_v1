@@ -1,0 +1,14 @@
+LeaveTest 0 c 0 0 0 0 0 0 57.4393 19.682 50 50 c 1 -20 c 2 bg_hawker_leaves2 c 3 2 0 0 0 c 10 0 0.799268 1 1 0 1 1 
+Sky 0 c 0 0 0 0 0 0 31.9285 18.5829 50 50 c 1 -100 c 2 bg_skypan c 3 0 0 0 0 c 10 0 0.799268 1 1 0 1 1 
+Clouds 0 c 0 -827.122 127.12 0 0 0 31.6 12.918 50 50 c 1 -30 c 2 bg_hawker_clouds c 3 0 0 0 0 c 7 0 10 0 c 10 0 0.799268 1 1 0 1 1 
+Middlegroud 0 c 0 1.24998 -8.89828 0 0 0 32.4999 21.2414 50 50 c 1 -10 c 2 bg_hawker_misc c 3 0 0 0 0 c 10 0 0.799268 1 1 0 1 1 
+Shrubs 0 c 0 0 0 0 0 0 33.4683 16.6447 50 50 c 1 -7 c 2 bg_hawker_shrubs c 3 2 0 0 0 c 10 0 0.799268 1 1 0 1 1 
+HawkerStalls 0 c 0 18.75 -19.0678 0 0 0 39.4162 21.4432 50 50 c 1 -9 c 2 bg_hawker_stalls c 3 0 0 0 0 c 10 0 0.799268 1 1 0 1 1 
+HawkerStalls2 0 c 0 0 0 0 0 0 35.3333 17.6752 50 50 c 1 -8 c 2 bg_hawker_stalls2 c 3 0 0 0 0 c 10 0 0.72445 1 1 0 1 1 
+Table 0 c 0 -3.75004 -222.458 0 0 0 32.64 9.49811 50 50 c 1 0 c 2 Table c 3 0 0 0 0 c 10 0 0.799268 1 1 0 1 1 
+Branches 0 c 0 0 0 0 0 0 52.7273 19.6342 50 50 c 1 -19 c 2 bg_hawker_branch3 c 3 0 0 0 0 c 10 0 0.799268 1 1 0 1 1 
+Branches2 0 c 0 0 0 0 0 0 42.1716 19.4337 50 50 c 1 -18 c 2 bg_hawker_branch1 c 3 0 0 0 0 c 10 0 0.799268 1 1 0 1 1 
+LeftFrontLeave 0 c 0 0 0 0 0 0 33.815 18.5542 50 50 c 1 0 c 2 bg_hawker_leaves4 c 3 2 0 0 0 c 10 0 0.70408 1 1 0 1 1 
+LeavesTopRight 0 c 0 0 0 0 0 0 46.4708 18.8395 50 50 c 1 -11 c 2 bg_hawker_leaves3 c 3 2 0 0 0 c 10 0 0.556665 1 1 0 1 1 
+HawkerTables 0 c 0 0 0 0 0 0 32.5218 18.4372 50 50 c 1 -5 c 2 bg_hawker_tables c 3 0 0 0 0 c 10 0 0.114068 1 1 0 1 1 
+HawkerUmbrella 0 c 0 0 0 0 0 0 32.8695 18.2935 50 50 c 1 -4 c 2 bg_hawker_umbrellas c 3 0 0 0 0 c 10 0 0.318234 1 1 0 1 1 

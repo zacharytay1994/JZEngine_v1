@@ -21,6 +21,7 @@
 #include "EngineSettings.h"
 #include "../Input/Input.h"
 #include "../Math/JZMath.h"
+#include "../GraphicRendering/Camera.h"
 
 
 namespace JZEngine
@@ -28,7 +29,7 @@ namespace JZEngine
 	//Mat4f view;
 	//Mat4f projection;
 	//Mat4f transform; //{ {100, 0, 0, 0}, { 0,100,0,0 }, { 0,0,1,0 }, { 0,0,0,1 }};
-	Mat3f EngineGUI::camera_transform_;
+	//Mat3f EngineGUI::camera_transform_;
 	EngineGUI::EngineGUI()
 		:
 		inspector_(5.0f / 6.0f, 1.0f / 46.0f, 1.0f / 6.0f, 45.0f / 46.0f),
@@ -91,12 +92,28 @@ namespace JZEngine
 		}*/
 
 		// render all engine gui parts
-		console_.Render();
-		scene_tree_.Render();
-		inspector_.Render(scene_tree_.GetSelectedEntity());
 
-		for (auto& interface : imgui_interfaces_) {
-			interface.second.interface_->RenderInterface(dt);
+		if (!Camera::fullscreen)
+		{
+			console_.Render();
+			scene_tree_.Render();
+			inspector_.Render(scene_tree_.GetSelectedEntity());
+
+			for (auto& interface : imgui_interfaces_)
+			{
+				interface.second.interface_->RenderInterface(dt);
+			}
+		}
+		else
+		{
+			for (auto& interface : imgui_interfaces_)
+			{
+				// just render menu bar
+				if (interface.second.group_ == 0)
+				{
+					interface.second.interface_->RenderInterface(dt);
+				}
+			}
 		}
 
 		ECS::Entity* selected_entity = scene_tree_.GetSelectedEntity();
@@ -107,9 +124,16 @@ namespace JZEngine
 			{
 				ImGuizmo::SetOrthographic(true);
 				//ImGuiIO& io = ImGui::GetIO();
-				ImGuizmo::SetRect(static_cast<float>(1.0 / 6.0 * Settings::window_width), MenuBar::height_, static_cast<float>(4.0 / 6.0 * Settings::window_width), static_cast<float>(3.0 / 4.0 * (Settings::window_height - MenuBar::height_)));
+				if (Camera::fullscreen)
+				{
+					ImGuizmo::SetRect(0.0f, 0.0f, Settings::window_width, Settings::window_height);
+				}
+				else 
+				{
+					ImGuizmo::SetRect(static_cast<float>(1.0 / 6.0 * Settings::window_width), MenuBar::height_, static_cast<float>(4.0 / 6.0 * Settings::window_width), static_cast<float>(3.0 / 4.0 * (Settings::window_height - MenuBar::height_)));
+				}
 				Mat4f projection = static_cast<Mat4f>(Math::GetProjectionTransformNonTransposed()).Transpose();
-				Mat4f view = Mat4f::Translate(-camera_position_.x, -camera_position_.y, 0.0f).Transpose();
+				Mat4f view = Mat4f::Translate(-Camera::camera_position_.x, -Camera::camera_position_.y, 0.0f).Transpose();
 
 				Transform& transform = selected_entity->GetComponent<Transform>();
 				Mat4f m4_translation = Mat4f::Translate(transform.position_.x, transform.position_.y, 0.0f);
@@ -126,6 +150,11 @@ namespace JZEngine
 				ImGuizmo::DecomposeMatrixToComponents(m4_transform.data_[0], translation, rotation, scale);
 
 				transform.position_ = { translation[0], translation[1] };
+				// if has parent with transform, set its child position as well
+				if (selected_entity->parent_ != static_cast<ECS::ui32>(-1) && ecs_instance_->GetEntity(selected_entity->parent_).HasComponent(0))
+				{
+					transform.child_position_ = transform.position_ - ecs_instance_->GetEntity(selected_entity->parent_).GetComponent<Transform>().position_;
+				}
 				transform.rotation_ = rotation[2];
 				transform.scale_ = { scale[0], scale[1] };
 			}
@@ -142,7 +171,9 @@ namespace JZEngine
 
 		ProcessCameraInput();
 
-		camera_transform_ = Math::GetModelTransformNonTransposed(-camera_position_, 0.0f, { camera_zoom_, camera_zoom_ }, { 1.0f, 1.0f });
+		Camera::camera_transform_ = Math::GetModelTransformNonTransposed(-Camera::camera_position_, 0.0f, { Camera::camera_zoom_, Camera::camera_zoom_ }, { 1.0f, 1.0f });
+
+		//InputHandler::CalculateMouseWorldPosition(GetSystem<GLFW_Instance>()->window_, MenuBar::height_);
 	}
 
 	void EngineGUI::CloseAllGroupedInterface(int group) {
@@ -181,7 +212,12 @@ namespace JZEngine
 
 	Mat3f EngineGUI::GetCameraTransform()
 	{
-		return camera_transform_;
+		return Camera::camera_transform_;
+	}
+
+	SceneTree* EngineGUI::GetSceneTree()
+	{
+		return &scene_tree_;
 	}
 
 	void EngineGUI::ProcessCameraInput()
@@ -196,7 +232,7 @@ namespace JZEngine
 		Vec2f screen_position_ = { static_cast<float>(x), static_cast<float>(y) };
 		if (InputHandler::IsMouseTriggered(MOUSE::MOUSE_BUTTON_2))
 		{
-			camera_record_world_ = camera_position_;
+			camera_record_world_ = Camera::camera_position_;
 			camera_record_screen_ = screen_position_;
 			camera_locked = true;
 		}
@@ -206,7 +242,7 @@ namespace JZEngine
 			offset.x = (offset.x / Settings::window_width) * Settings::camera_width * 1.5f;
 			//offset.y = (offset.y / Settings::window_height) * Settings::camera_height * 1.5f;
 			offset.y = -(((offset.y / Settings::window_height)) / (0.375f * (1.0f - (MenuBar::height_ / Settings::window_height)))) * 0.5f * Settings::camera_height;
-			camera_position_ = camera_record_world_ - offset;
+			Camera::camera_position_ = camera_record_world_ - offset;
 		}
 		if (InputHandler::IsMouseReleased(MOUSE::MOUSE_BUTTON_2))
 		{
@@ -214,13 +250,16 @@ namespace JZEngine
 		}
 
 		// convert mouse into world coordinates
-		mouse_world_position_.x = ((screen_position_.x / Settings::window_width) - 0.5f) * Settings::camera_width * 1.5f;
-		float percent = (MenuBar::height_ / Settings::window_height) + (0.375f * (1.0f - (MenuBar::height_ / Settings::window_height)));
-		mouse_world_position_.y = (-(((screen_position_.y / Settings::window_height) - percent) / (0.375f * (1.0f - (MenuBar::height_ / Settings::window_height)))) * 0.5f) * Settings::camera_height;
-		//Log::Info("MousePress", "y: {}", mouse_world_position_.y);
-		//mouse_world_position_.y = (screen_position_.y / Settings::window_height)
-		mouse_world_position_.x += camera_position_.x;
-		mouse_world_position_.y += camera_position_.y;
+		//Settings::mouse_world_position_.x = ((screen_position_.x / Settings::window_width) - 0.5f) * Settings::camera_width * 1.5f;
+		//float percent = (MenuBar::height_ / Settings::window_height) + (0.375f * (1.0f - (MenuBar::height_ / Settings::window_height)));
+		//mouse_world_position_.y = (-(((screen_position_.y / Settings::window_height) - percent) / (0.375f * (1.0f - (MenuBar::height_ / Settings::window_height)))) * 0.5f) * Settings::camera_height;
+		////Log::Info("MousePress", "y: {}", mouse_world_position_.y);
+		////mouse_world_position_.y = (screen_position_.y / Settings::window_height)
+		//mouse_world_position_.x += camera_position_.x;
+		//mouse_world_position_.y += camera_position_.y;
+
+		Vec2f mouse_world_position = Camera::mouse_world_position_;
+
 		//Log::Info("MousePress", "x: {}, y: {}", mouse_world_position_.x, mouse_world_position_.y);
 
 		// check all entities with transforms
@@ -239,7 +278,7 @@ namespace JZEngine
 					float top = transform.position_.y + half_height;
 					float bottom = transform.position_.y - half_height;
 					// check if mouse point within it
-					if (!(mouse_world_position_.x < left || mouse_world_position_.x > right || mouse_world_position_.y > top || mouse_world_position_.y < bottom))
+					if (!(mouse_world_position.x < left || mouse_world_position.x > right || mouse_world_position.y > top || mouse_world_position.y < bottom))
 					{
 						//scene_tree_.selected_entity_ = &e;
 						scene_tree_.SetSelectedEntity(e.entity_id_);
