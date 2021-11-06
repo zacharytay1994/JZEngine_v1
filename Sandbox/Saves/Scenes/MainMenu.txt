@@ -1,15 +1,53 @@
-Background 0 c 0 1.2499 3.05176e-05 0 0 0 32.7231 19.6134 50 50 c 1 0 c 2 mm_background c 3 0 0 0 0 c 10 0 0.250024 1 1 0 1 1 
-Baozi 0 c 0 328.75 -44.4916 0 0 0 6.39386 6.39386 50 50 c 1 0 c 2 mm_baozi c 3 0 0 0 0 c 10 1 0 0.01 21 18 22 1 
-Play 0 c 0 -200 -94 0 0 0 4.4 1.9 50 50 c 1 1 c 2 button_play_clicked c 3 0 0 0 0 c 10 0 0 1 1 0 1 1 
-Options 0 c 0 -200 -176.695 0 0 0 4.96221 1.86283 50 50 c 1 1 c 2 button_options c 3 0 0 0 0 c 10 0 0.383357 1 1 0 1 1 
-bb_play 0 c 0 -200 -95.3391 0 0 0 1 1 50 50 c 15 100 35 
-Credits 0 c 0 -200 -254.237 0 0 0 3.90322 1.80974 50 50 c 1 1 c 2 button_credits c 3 0 0 0 0 c 10 0 0.550024 1 1 0 1 1 
-Quit 0 c 0 -200 -340.678 0 0 0 5.25148 2.12008 50 50 c 1 1 c 2 button_quit c 3 0 0 0 0 c 10 0 0.966718 1 1 0 1 1 
-bb_options 0 c 0 -198.75 -179.237 0 0 0 1 1 50 50 c 15 120 35 
-bb_credits 0 c 0 -201.25 -256.78 0 0 0 1 1 50 50 c 15 100 35 
-bb_quit 0 c 0 -202.5 -339.407 0 0 0 1 1 50 50 c 15 120 35 
-Lantern 0 c 0 -333.75 172.881 0 0 0 4.02 4.02 50 50 c 1 1 c 2 mm_lantern c 3 0 0 0 0 c 10 1 0.0833335 0.1 22 8 21 1 
-LeftTree 0 c 0 -687.499 -3.81228 0 0 0 12.4201 19.872 50 50 c 1 1 c 2 mm_treeL c 3 0 0 0 0 c 10 1 0.1 0.1 22 16 22 1 
-LeftLeaves 0 c 0 -634.999 -311.44 0 0 0 7.764 7.764 50 50 c 1 2 c 2 mm_leavesL c 3 0 0 0 0 c 10 1 0.0166667 0.1 20 8 20 1 
-RightTree 0 c 0 742.501 15.2554 0 0 0 10.6624 21.168 50 50 c 1 1 c 2 mm_treeR c 3 0 0 0 0 c 10 1 0 0.1 22 18 22 1 
-RightLeaves 0 c 0 653.751 -291.1 0 0 0 7.14269 7.14269 50 50 c 1 2 c 2 mm_leavesR c 3 0 0 0 0 c 10 1 0.0833335 0.1 20 13 20 1 
+Background 0 c 0 -3.75004 -24.1527 0 0 0 32.7231 19.2381 50 50 c 1 0 c 2 mm_background c 3 0 0 0 0 c 10 0 0.266674 1 1 0 1 1 
+Baozi 0 c 0 292.5 -191.949 0 0 0 9.09783 11.5567 50 50 c 1 0 c 2 mm_baozi c 3 0 0 0 0 c 10 1 0.0166734 0.01 10 7 64 7 
+Play 0 c 0 -201 -110 0 0 0 7.88229 2.508 50 50 c 1 1 c 2 button_play c 3 0 0 0 0 c 10 0 1.00003 1 1 0 1 1 
+Options 0 c 0 -201 -212.288 0 0 0 5.2 2.1 50 50 c 1 1 c 2 button_options_highlight c 3 0 0 0 0 c 10 0 0.400008 1 1 0 1 1 
+bb_play 0 c 0 -201.25 -109.322 0 0 0 1 1 50 50 c 15 180 50 
+Credits 0 c 0 -201 -303.526 0 0 0 5.2 2.1 50 50 c 1 1 c 2 button_credits c 3 0 0 0 0 c 10 0 0.650014 1 1 0 1 1 
+Quit 0 c 0 -201 -395.339 0 0 0 5.2 2.1 50 50 c 1 1 c 2 button_quit c 3 0 0 0 0 c 10 0 1.00003 1 1 0 1 1 
+bb_options 0 c 0 -198.75 -211.016 0 0 0 1 1 50 50 c 15 120 40 
+bb_credits 0 c 0 -201.25 -300 0 0 0 1 1 50 50 c 15 120 40 
+bb_quit 0 c 0 -203.75 -392.797 0 0 0 1 1 50 50 c 15 120 35 
+Lantern 0 c 0 668.751 127.119 0 0 0 5.9094 8.00793 50 50 c 1 1 c 2 mm_lantern c 3 0 0 0 0 c 10 1 0.0500068 0.1 10 25 64 7 
+LeftTree 0 c 0 -687.499 -3.81228 0 0 0 12.4201 19.872 50 50 c 1 -1 c 2 mm_treeL c 3 0 0 0 0 c 10 1 0.0500068 0.1 10 48 64 7 
+LeftLeaves 0 c 0 -651.249 -322.881 0 0 0 7.764 7.764 50 50 c 1 2 c 2 mm_leavesL c 3 0 0 0 0 c 10 1 0.0500068 0.1 10 50 64 7 
+RightTree 0 c 0 715.001 -1.27001 0 0 0 10.6624 21.168 50 50 c 1 -1 c 2 mm_treeR c 3 0 0 0 0 c 10 1 0.0500068 0.1 10 17 64 7 
+RightLeaves 0 c 0 666.251 -313.981 0 0 0 7.14269 7.14269 50 50 c 1 2 c 2 mm_leavesR c 3 0 0 0 0 c 10 1 0.0500068 0.1 10 39 64 7 
+Option_background 0 c 0 0 0 0 0 0 25 16 50 50 c 1 10 c 2 mmo_background c 3 0 0 0 0 c 10 0 0.383341 1 1 0 1 1 
+Option_title 0 c 0 -11.25 275.847 0 0 0 7.68274 2.838 50 50 c 1 11 c 2 button_options c 3 0 0 0 0 c 10 0 0.383341 1 1 0 1 1 
+Option_soundline 0 c 0 -11.2499 -55.9322 0 0 0 19.2164 9.33347 50 50 c 1 11 c 2 mmo_soundline c 3 0 0 0 0 c 10 0 0.0666735 1 1 0 1 1 
+Option_sound 0 c 0 -10 156.356 0 0 0 3.70695 1.47 50 50 c 1 12 c 2 mmo_sound c 3 0 0 0 0 c 10 0 0.683347 1 1 0 1 1 
+Option_master 0 c 0 -320 58.4746 0 0 0 2.28 1.16 50 50 c 1 12 c 2 mmo_master c 3 0 0 0 0 c 10 0 0.883364 1 1 0 1 1 
+Option_music 0 c 0 -320 -62.2882 0 0 0 1.61905 1 50 50 c 1 12 c 2 mmo_music c 3 0 0 0 0 c 10 0 0.250007 1 1 0 1 1 
+Option_sfx 0 c 0 -322.5 -181.78 0 0 0 1.2412 1.07 50 50 c 1 12 c 2 mmo_sfx c 3 0 0 0 0 c 10 0 0 1 1 0 1 1 
+Option_master_speaker 0 c 0 -208 57 0 0 0 1 1 50 50 c 1 12 c 2 mmo_speaker c 3 0 0 0 0 c 10 0 0.266674 1 1 0 1 1 
+Option_master_speaker_off 0 c 0 -208 57 0 0 0 1 1 50 50 c 1 12 c 2 mmo_speaker_mute c 3 0 0 0 0 c 10 0 0.0500001 1 1 0 1 1 
+Option_music_speaker 0 c 0 -208 -62 0 0 0 1 1 50 50 c 1 12 c 2 mmo_speaker c 3 0 0 0 0 c 10 0 0.283341 1 1 0 1 1 
+Option_music_speaker_off 0 c 0 -208 -62 0 0 0 1 1 50 50 c 1 12 c 2 mmo_speaker_mute c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
+Option_sfx_speaker 0 c 0 -208 -180 0 0 0 1 1 50 50 c 1 12 c 2 mmo_speaker c 3 0 0 0 0 c 10 0 0.383341 1 1 0 1 1 
+Option_sfx_speaker_off 0 c 0 -208 -180 0 0 0 1 1 50 50 c 1 12 c 2 mmo_speaker_mute c 3 0 0 0 0 c 10 0 0.866669 1 1 0 1 1 
+Option_master_blackbar 0 c 0 120 57 0 0 0 10 1 50 50 c 1 12 c 2 mmo_blackbar c 3 0 0 0 0 c 10 0 0.550008 1 1 0 1 1 
+Option_master_brownbar 0 c 0 -128 57 0 0 0 20 1 50 50 c 1 13 c 2 mmo_brownbar c 3 0 0 0 0 c 10 0 0.950031 1 1 0 1 1 
+Option_master_bb 0 c 0 121.25 58 0 0 0 1 1 50 50 c 15 250 40 
+Option_master_pau 0 c 0 372 57 0 0 0 2 2 50 50 c 1 15 c 2 mmo_dumpling c 3 0 0 0 0 c 10 0 0.23334 1 1 0 1 1 
+Option_music_blackbar 0 c 0 120 -62 0 0 0 10 1 50 50 c 1 12 c 2 mmo_blackbar c 3 0 0 0 0 c 10 0 0.366674 1 1 0 1 1 
+Option_music_brownbar 0 c 0 -128 -62 0 0 0 20 1 50 50 c 1 13 c 2 mmo_brownbar c 3 0 0 0 0 c 10 0 0.683347 1 1 0 1 1 
+Option_music_bb 0 c 0 121.25 -61 0 0 0 1 1 50 50 c 15 250 40 
+Option_music_pau 0 c 0 372 -62 0 0 0 2 2 50 50 c 1 15 c 2 mmo_dumpling c 3 0 0 0 0 c 10 0 0.0833402 1 1 0 1 1 
+Option_sfx_blackbar 0 c 0 120 -180 0 0 0 10 1 50 50 c 1 12 c 2 mmo_blackbar c 3 0 0 0 0 c 10 0 0.383341 1 1 0 1 1 
+Option_sfx_brownbar 0 c 0 -128 -180 0 0 0 20 1 50 50 c 1 13 c 2 mmo_brownbar c 3 0 0 0 0 c 10 0 0.650014 1 1 0 1 1 
+Option_sfx_bb 0 c 0 121.25 -180 0 0 0 1 1 50 50 c 15 250 40 
+Option_sfx_pau 0 c 0 372 -180 0 0 0 2 2 50 50 c 1 15 c 2 mmo_dumpling c 3 0 0 0 0 c 10 0 0.71668 1 1 0 1 1 
+Option_master_blackbar_border 0 c 0 120 57 0 0 0 10 1 50 50 c 1 14 c 2 mmo_blackbar_hollow c 3 0 0 0 0 c 10 0 0.71668 1 1 0 1 1 
+Option_music_blackbar_border 0 c 0 120 -62 0 0 0 10 1 50 50 c 1 14 c 2 mmo_blackbar_hollow c 3 0 0 0 0 c 10 0 0.333341 1 1 0 1 1 
+Option_sfx_blackbar_border 0 c 0 120 -180 0 0 0 10 1 50 50 c 1 14 c 2 mmo_blackbar_hollow c 3 0 0 0 0 c 10 0 0.683347 1 1 0 1 1 
+Option_x 0 c 0 555.001 334.323 0 0 0 1.48 1.48 50 50 c 1 12 c 2 button_x c 3 0 0 0 0 c 10 0 0.900031 1 1 0 1 1 
+Option_quit_bb 0 c 0 555.001 335.594 0 0 0 0.720924 1 50 50 c 15 30 30 
+Sky 0 c 0 0 0 0 0 0 33.8965 18.252 50 50 c 1 -2 c 2 mm_sky c 3 0 0 0 0 c 10 0 0.683347 1 1 0 1 1 
+Smoke 0 c 0 32.4999 123.305 0 0 0 2.63 2.63 50 50 c 1 2 c 2 mm_smoke c 3 0 0 0 0 c 10 1 0.0500068 0.1 12 2 12 1 
+Quit_background 0 c 0 0 0 0 0 0 25 16 50 50 c 1 10 c 2 Quit_background c 3 0 0 0 0 c 10 0 0.0500001 1 1 0 1 1 
+Quit_title 0 c 0 1.25009 122.034 0 0 0 10.861 4.95132 50 50 c 1 11 c 2 Quit_title c 3 0 0 0 0 c 10 0 0.0500001 1 1 0 1 1 
+Quit_yes 0 c 0 -236.25 -183 0 0 0 6.4 3.5 50 50 c 1 11 c 2 Quit_yes c 3 0 0 0 0 c 10 0 0.750043 1 1 0 1 1 
+Quit_no 0 c 0 172.499 -183 0 0 0 6.5 3.4 50 50 c 1 11 c 2 Quit_no_highlight c 3 0 0 0 0 c 10 0 0.650043 1 1 0 1 1 
+Quit_yes_bb 0 c 0 -237.5 -184.322 0 0 0 1 1 50 50 c 15 100 50 
+Quit_no_bb 0 c 0 172.5 -176.695 0 0 0 1 1 50 50 c 15 100 50 
