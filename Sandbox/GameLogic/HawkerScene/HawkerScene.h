@@ -4,6 +4,15 @@
 #include <string>
 #include <sstream>
 
+#include "../ButtonLogic.h"
+
+enum class HawkerSceneState
+{
+	Main,
+	Win
+};
+HawkerSceneState current_hawker_scene_state = HawkerSceneState::Main;
+
 /*!
  * **********************************************************************
  * @brief CURSOR CODE - START
@@ -231,51 +240,69 @@ void SetGoalText(T...text)
  * **********************************************************************
 */
 
+/*!
+ * **********************************************************************
+ * @brief WIN - START
+*/
 
-void HawkerSceneInit()
+void ToggleWin(bool toggle)
 {
-	// initialize scene
-	InitHawkerQueue();
-	cursor_state = CursorState::Nothing;
-	plate_on_tray = false;
-	plate_on_hand = false;
-	original_plate_position_ = { 0.0f, 0.0f };
-	current_order = CustomerOrder::Nothing;
-	display_time_ = 4.0f;
-	timer_ = display_time_;
-	display_up_ = false;
-	greenbar_original_scale_y = Scene().GetComponent<JZEngine::Transform>("GreenBar")->scale_.y;
-
-	target_coins = 500;
-	current_coins = 0;
-	total_time = 60.0f;
-	current_time = 0.0f;
-	//current_angry_customers = 0;
-	win = false;
-	lose = false;
-
-	// set scale of coin bar and angry customer bar to 0
-	initial_progress_scale = 6.4f;
-	Scene().GetComponent<JZEngine::Transform>("ui_coin_progress")->scale_.x = 0.0f;
-	Scene().GetComponent<JZEngine::Transform>("ui_goal_progress")->scale_.x = 0.0f;
-
-	// initialize cursors
-	ResetCursors();
-
-	// inititalize tray items
-	original_plate_position_ = Scene().GetComponent<JZEngine::Transform>("tray_plate")->position_;
-	FlagAllTrayItemsFalse();
-
-	// turn off order ui
-	UnDisplayOrder();
-
-	SetCoinText("$", current_coins);
-	SetGoalText("$", target_coins);
-
-	JZEngine::Log::Info("Main", "Hawker Scene Initialized.");
+	Scene().EntityFlagActive("Win_background", toggle);
+	Scene().EntityFlagActive("Win_restart", toggle);
+	Scene().EntityFlagActive("Win_exit", toggle);
+	Scene().EntityFlagActive("Win_title", toggle);
+	Scene().EntityFlagActive("Win_words", toggle);
+	Scene().EntityFlagActive("Win_words2", toggle);
 }
 
-void HawkerSceneUpdate(float dt)
+void UpdateWinScreen(float dt)
+{
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Win_restart_bb"))
+	{
+		if (e->on_released_)
+		{
+			Scene().ChangeScene("HawkerV2");
+		}
+		if (e->on_held_)
+		{
+			ToggleButton("Win_restart", ButtonState::Clicked);
+		}
+		else if (e->on_hover_)
+		{
+			ToggleButton("Win_restart", ButtonState::Hover);
+		}
+		else
+		{
+			ToggleButton("Win_restart", ButtonState::Normal);
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Win_exit_bb"))
+	{
+		if (e->on_released_)
+		{
+			Scene().ChangeScene("MainMenu");
+		}
+		if (e->on_held_)
+		{
+			ToggleButton("Win_exit", ButtonState::Clicked);
+		}
+		else if (e->on_hover_)
+		{
+			ToggleButton("Win_exit", ButtonState::Hover);
+		}
+		else
+		{
+			ToggleButton("Win_exit", ButtonState::Normal);
+		}
+	}
+}
+
+/*!
+ * @brief WIN - END
+ * **********************************************************************
+*/
+
+void UpdateMainScene(float dt)
 {
 	UpdateHawkerQueue(dt);
 	//UpdateGoalProgressBar(dt);
@@ -465,7 +492,9 @@ void HawkerSceneUpdate(float dt)
 					{
 						win = true;
 						JZEngine::Log::Info("Main", "You have won the game!");
-						Scene().ChangeScene("MainMenu");
+						//Scene().ChangeScene("MainMenu");
+						ToggleWin(true);
+						current_hawker_scene_state = HawkerSceneState::Win;
 					}
 				}
 			}
@@ -474,6 +503,66 @@ void HawkerSceneUpdate(float dt)
 
 	// process order ui
 	DisplayUpdate(dt);
+}
+
+void HawkerSceneInit()
+{
+	// initialize scene
+	current_hawker_scene_state = HawkerSceneState::Main;
+
+	ToggleWin(false);
+
+	InitHawkerQueue();
+	cursor_state = CursorState::Nothing;
+	plate_on_tray = false;
+	plate_on_hand = false;
+	original_plate_position_ = { 0.0f, 0.0f };
+	current_order = CustomerOrder::Nothing;
+	display_time_ = 4.0f;
+	timer_ = display_time_;
+	display_up_ = false;
+	greenbar_original_scale_y = Scene().GetComponent<JZEngine::Transform>("GreenBar")->scale_.y;
+
+	target_coins = 500;
+	current_coins = 0;
+	total_time = 60.0f;
+	current_time = 0.0f;
+	//current_angry_customers = 0;
+	win = false;
+	lose = false;
+
+	// set scale of coin bar and angry customer bar to 0
+	initial_progress_scale = 6.4f;
+	Scene().GetComponent<JZEngine::Transform>("ui_coin_progress")->scale_.x = 0.0f;
+	Scene().GetComponent<JZEngine::Transform>("ui_goal_progress")->scale_.x = 0.0f;
+
+	// initialize cursors
+	ResetCursors();
+
+	// inititalize tray items
+	original_plate_position_ = Scene().GetComponent<JZEngine::Transform>("tray_plate")->position_;
+	FlagAllTrayItemsFalse();
+
+	// turn off order ui
+	UnDisplayOrder();
+
+	SetCoinText("$", current_coins);
+	SetGoalText("$", target_coins);
+
+	JZEngine::Log::Info("Main", "Hawker Scene Initialized.");
+}
+
+void HawkerSceneUpdate(float dt)
+{
+	switch (current_hawker_scene_state)
+	{
+	case HawkerSceneState::Main:
+		UpdateMainScene(dt);
+		break;
+	case HawkerSceneState::Win:
+		UpdateWinScreen(dt);
+		break;
+	}
 }
 
 void ResetCursors()

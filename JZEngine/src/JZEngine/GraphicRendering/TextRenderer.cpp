@@ -80,7 +80,7 @@ namespace JZEngine
 		}
 
 		offset_x = temp_offset_x > offset_x ? temp_offset_x : offset_x;
-		offset_x = -offset_x * scale ;
+		offset_x = -offset_x * scale;
 
 
 		offset_y = -Characters[ 'H' ].size_.y / 2 * scale ;

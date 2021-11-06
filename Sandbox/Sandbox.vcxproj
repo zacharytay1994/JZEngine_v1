@@ -156,6 +156,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameLogic\ButtonLogic.h" />
     <ClInclude Include="GameLogic\HawkerScene\HawkerQueue.h" />
     <ClInclude Include="GameLogic\HawkerScene\HawkerScene.h" />
     <ClInclude Include="GameLogic\MainMenu\MainMenu.h" />

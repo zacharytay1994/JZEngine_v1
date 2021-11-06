@@ -3,51 +3,16 @@
 #include <string>
 #include <unordered_map>
 
+#include "../ButtonLogic.h"
+
 enum class MainMenuState
 {
 	Main,
 	Options,
+	Credits,
 	Quit
 };
 MainMenuState current_main_menu_state = MainMenuState::Main;
-
-enum class ButtonState
-{
-	Normal,
-	Hover,
-	Clicked
-};
-
-struct ButtonTextures
-{
-	std::string texture_names_[3];
-	ButtonTextures() = default;
-	ButtonTextures(const std::string& normal, const std::string& hover, const std::string& clicked)
-	{
-		texture_names_[0] = normal;
-		texture_names_[1] = hover;
-		texture_names_[2] = clicked;
-	}
-	std::string const& operator[](int i)
-	{
-		return texture_names_[i];
-	}
-};
-
-std::unordered_map<std::string, ButtonTextures> button_textures {
-	{ "Play",		{ "button_play"		, "button_play_highlight"		, "button_play_clicked" } },
-	{ "Options",	{ "button_options"	, "button_options_highlight"	, "button_options_clicked" } },
-	{ "Credits",	{ "button_credits"	, "button_credits_highlight"	, "button_credits_clicked" } },
-	{ "Quit",		{ "button_quit"		, "button_quit_highlight"		, "button_quit_clicked" } },
-	{ "Quit_yes",	{ "Quit_yes"		, "Quit_yes_highlight"			, "Quit_yes_clicked"}},
-	{ "Quit_no",	{ "Quit_no"			, "Quit_no_highlight"			, "Quit_no_clicked"}}
-};
-
-void ToggleButton(const std::string& name, ButtonState state)
-{
-	Scene().GetComponent<JZEngine::Texture>(name)->texture_id_ 
-		= Scene().GetTexture(button_textures[name][static_cast<int>(state)]);
-}
 
 float master_volume_{ 1.0f };
 float music_volume_{ 1.0f };
@@ -186,13 +151,20 @@ void ToggleQuit(bool toggle)
 	Scene().EntityFlagActive("Quit_no", toggle);
 }
 
+void ToggleCredits(bool toggle)
+{
+	// active/inactive option objects
+	Scene().EntityFlagActive("Credits_background", toggle);
+	Scene().EntityFlagActive("Credits_x", toggle);
+}
+
 void UpdateMainScreen(float dt)
 {
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_play"))
 	{
 		if (e->on_released_)
 		{
-			//Scene().ChangeScene("HawkerV2");
+			Scene().ChangeScene("HawkerV2");
 		}
 		if (e->on_held_)
 		{
@@ -231,6 +203,8 @@ void UpdateMainScreen(float dt)
 	{
 		if (e->on_released_)
 		{
+			ToggleCredits(true);
+			current_main_menu_state = MainMenuState::Credits;
 		}
 		if (e->on_held_)
 		{
@@ -324,10 +298,27 @@ void UpdateQuitMenu(float dt)
 	}
 }
 
+void UpdateCreditsMenu(float dt)
+{
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Credits_x_bb"))
+	{
+		if (e->on_released_)
+		{
+			ToggleCredits(false);
+			current_main_menu_state = MainMenuState::Main;
+		}
+	}
+}
+
 void InitMainMenu()
 {
+	current_main_menu_state = MainMenuState::Main;
+	/*Scene().GetComponent<JZEngine::TextData>("Win_words")->text = JZEngine::String("I knew you had it in you Baozi,");
+	Scene().GetComponent<JZEngine::TextData>("Win_word2")->text = JZEngine::String("continue to the next level?");*/
+
 	ToggleOptions(false);
 	ToggleQuit(false);
+	ToggleCredits(false);
 }
 
 void UpdateMainMenu(float dt)
@@ -339,6 +330,9 @@ void UpdateMainMenu(float dt)
 		break;
 	case MainMenuState::Options:
 		UpdateOptionsMenu(dt);
+		break;
+	case MainMenuState::Credits:
+		UpdateCreditsMenu(dt);
 		break;
 	case MainMenuState::Quit:
 		UpdateQuitMenu(dt);
