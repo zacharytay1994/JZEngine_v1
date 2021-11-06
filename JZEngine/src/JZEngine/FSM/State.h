@@ -5,7 +5,7 @@
 namespace JZEngine
 {
 	template <typename T>
-	class State
+	class State : public ECS::System
 	{
 	public:
 
@@ -33,7 +33,7 @@ namespace JZEngine
 			//To be overwritten in a derived class
 		}
 
-		virtual void update(float dt)
+		virtual void Update(const float& dt)
 		{
 			//To be overwritten in a derived class
 		}

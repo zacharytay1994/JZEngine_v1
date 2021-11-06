@@ -7,7 +7,7 @@
 namespace JZEngine
 {
 	template <typename T>
-	class FiniteStateMachine
+	class FiniteStateMachine : public ECS::System
 	{
 	protected:
 
@@ -74,11 +74,11 @@ namespace JZEngine
 			}
 		}
 
-		void update(float dt)
+		void Update(const float& dt)
 		{
 			if (mCurrentState != nullptr)
 			{
-				mCurrentState->update(dt);
+				mCurrentState->Update(dt);
 			}
 		}
 
@@ -87,7 +87,7 @@ namespace JZEngine
 			for (const auto& state : mStates)
 			{
 				//second is State<T>*
-				delete state->second;
+				delete state.second;
 			}
 		
 		}
