@@ -22,6 +22,8 @@
 
 #include "JZEngine/Sound/Sound.h"
 
+#include "JZEngine/STL/String.h"
+
 // shortcuts
 JZEngine::SceneLogic& Scene()
 {

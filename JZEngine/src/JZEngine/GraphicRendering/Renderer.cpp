@@ -37,7 +37,7 @@ namespace JZEngine
 	{
 		// calculate x width
 		int x_offset = frame % col;
-		int y_offset = row - ( frame / row ) - 1;
+		int y_offset = row - ( frame / col ) - 1;
 
 		float width = 1.0f / col;
 		float height = 1.0f / row;

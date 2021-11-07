@@ -80,7 +80,7 @@ namespace JZEngine
 		}
 
 		offset_x = temp_offset_x > offset_x ? temp_offset_x : offset_x;
-		offset_x = -offset_x * scale ;
+		offset_x = -offset_x * scale;
 
 
 		offset_y = -Characters[ 'H' ].size_.y / 2 * scale ;
@@ -129,7 +129,10 @@ namespace JZEngine
 				{ {2.0f / Settings::camera_width, 0.0f, 0.0f},
 				  {0.0f, -2.0f / Settings::camera_height, 0.0f},
 				  {0.0f, 0.0f, 1.0f} };
-				GetSystem<ResourceManager>()->font_shader_programs_[0].shader_program_.SetUniform("projection", (camwin_to_ndc_xform * EngineGUI::GetCameraTransform()).Transpose());
+				Mat3f cam_transform = EngineGUI::GetCameraTransform();
+				// need to invert y for some reason, mysterious
+				cam_transform[1][2] *= -1;
+				GetSystem<ResourceManager>()->font_shader_programs_[0].shader_program_.SetUniform("projection", (camwin_to_ndc_xform * cam_transform).Transpose());
 				// render quad
 				glDrawArrays ( GL_TRIANGLES , 0 , 6 );
 				// now advance cursors for next glyph
