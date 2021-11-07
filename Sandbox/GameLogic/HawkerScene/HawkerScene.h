@@ -156,6 +156,7 @@ void UnDisplayOrder()
 
 void DisplayOrder(CustomerOrder order)
 {
+	UnDisplayOrder();
 	// flag board
 	Scene().EntityFlagActive("OrderBoard", true);
 	Scene().EntityFlagActive("EmptyBar", true);
@@ -374,7 +375,7 @@ void UpdateMainScene(float dt)
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_plate"))
 	{
-		if (e->on_click_)
+		if (e->on_click_ && !plate_on_hand)
 		{
 			JZEngine::Log::Info("Main", "Plate Selected");
 			FlagCursorState(CursorState::Plate);
@@ -382,7 +383,7 @@ void UpdateMainScene(float dt)
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_tongs"))
 	{
-		if (e->on_click_)
+		if (e->on_click_ && !plate_on_hand)
 		{
 			JZEngine::Log::Info("Main", "Tongs Selected");
 			FlagCursorState(CursorState::EmptyTongs);
@@ -390,7 +391,7 @@ void UpdateMainScene(float dt)
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_scizzors"))
 	{
-		if (e->on_click_)
+		if (e->on_click_ && !plate_on_hand)
 		{
 			JZEngine::Log::Info("Main", "Scizzors Selected");
 			FlagCursorState(CursorState::Scizzors);
@@ -447,14 +448,15 @@ void UpdateMainScene(float dt)
 					break;
 				}
 			}
+			else if (plate_on_tray && current_order != CustomerOrder::Nothing)
+			{
+				plate_on_hand = true;
+				FlagAllCursorsFalse();
+			}
 			else if (!plate_on_tray && CheckCursorState(CursorState::Plate))
 			{
 				FlagPlateState(true);
 				FlagAllCursorsFalse();
-			}
-			else if (plate_on_tray && current_order != CustomerOrder::Nothing)
-			{
-				plate_on_hand = true;
 			}
 		}
 	}

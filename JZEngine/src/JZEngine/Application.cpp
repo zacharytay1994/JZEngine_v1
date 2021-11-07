@@ -213,6 +213,9 @@ namespace JZEngine
 		int e = ecs->CreateEntity();
 		test = &ecs->entity_manager_.GetEntity(e);
 		test->AddSystem(0);*/
+		
+		/*Camera::fullscreen = true;
+		SceneLogic::Instance().ChangeScene("MainMenu");*/
 	}
 
 	void Application::Free ()
