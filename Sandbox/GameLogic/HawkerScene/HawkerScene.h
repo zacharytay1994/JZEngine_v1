@@ -552,7 +552,7 @@ void HawkerSceneInit()
 	SetGoalText("$", target_coins);
 
 	Scene().GetComponent<JZEngine::TextData>("Win_words")->text = JZEngine::String("I knew you had it in you Baozi,");
-	Scene().GetComponent<JZEngine::TextData>("Win_words2")->text = JZEngine::String("continue to the next level?");
+	Scene().GetComponent<JZEngine::TextData>("Win_words2")->text = JZEngine::String("    continue to the next level?    ");
 
 	JZEngine::Log::Info("Main", "Hawker Scene Initialized.");
 }
