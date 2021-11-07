@@ -313,8 +313,6 @@ void UpdateCreditsMenu(float dt)
 void InitMainMenu()
 {
 	current_main_menu_state = MainMenuState::Main;
-	/*Scene().GetComponent<JZEngine::TextData>("Win_words")->text = JZEngine::String("I knew you had it in you Baozi,");
-	Scene().GetComponent<JZEngine::TextData>("Win_word2")->text = JZEngine::String("continue to the next level?");*/
 
 	ToggleOptions(false);
 	ToggleQuit(false);
