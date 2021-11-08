@@ -39,7 +39,8 @@ namespace JZEngine
 					 "Assets/Shaders/Fragment/FS_TexSway.fs" );
 
 		// load font shaders
-		LoadFont ( "Assets/Fonts/Weather Sunday.otf" , 100 , "Font1" , "Assets/Shaders/Vertex/VS_Font.vs" , "Assets/Shaders/Fragment/FS_Font.fs" );
+		//LoadFont ( "Assets/Fonts/Weather Sunday.otf" , 100 , "Font1" , "Assets/Shaders/Vertex/VS_Font.vs" , "Assets/Shaders/Fragment/FS_Font.fs" );
+		LoadFont("Assets/Fonts/arlrdbd.ttf", 100, "Font1", "Assets/Shaders/Vertex/VS_Font.vs", "Assets/Shaders/Fragment/FS_Font.fs");
 
 		// load debug shaders
 		LoadDebugShader ( "Point2D" ,
