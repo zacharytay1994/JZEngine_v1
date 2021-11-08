@@ -16,6 +16,7 @@ namespace JZEngine
 	{
 		mouse_pressed_ = InputHandler::IsMouseTriggered(MOUSE::MOUSE_BUTTON_1);
 		mouse_down_ = InputHandler::IsMousePressed(MOUSE::MOUSE_BUTTON_1);
+		mouse_released_ = InputHandler::IsMouseReleased(MOUSE::MOUSE_BUTTON_1);
 
 		mouse_position_ = Camera::mouse_world_position_;
 	}
@@ -33,6 +34,10 @@ namespace JZEngine
 		me.on_click_ = mouse_pressed_ && me.on_hover_;
 
 		me.on_held_ = mouse_down_ && me.on_hover_;
+
+		me.on_drag_ = me.on_click_ && (mouse_position_ == transform.position_);
+
+		me.on_drop_ = mouse_released_;
 
 		RendererDebug::DrawSquare(transform.position_, Vec2f(me.bounding_half_width_*2.0f, me.bounding_half_height_*2.0f));
 	}
