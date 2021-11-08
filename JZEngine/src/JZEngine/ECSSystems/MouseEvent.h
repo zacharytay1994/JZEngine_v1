@@ -13,8 +13,6 @@ namespace JZEngine
 		bool on_click_{ false };	// returns if mouse was clicked within the bounding area
 		bool on_held_{ false };		// returns if the mouse is still within the bounding area and mouse is down
 		bool on_hover_{ false };	// returns if the mouse if within the bounding area
-		bool on_drag_{ false };
-		//bool on_drop_{ false };
 		bool on_released_{ false };
 	};
 

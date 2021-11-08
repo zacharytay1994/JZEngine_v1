@@ -324,6 +324,14 @@ void UpdateMainScene(float dt)
 				FlagCursorState(CursorState::EmptyTongs);
 			}
 		}
+		else if (e->on_released_)
+		{
+			if (!CheckCursorState(CursorState::EmptyTongs))
+			{
+				JZEngine::Log::Info("Main", "SpringRoll Returned");
+				FlagCursorState(CursorState::EmptyTongs);
+			}
+		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_wanton"))
 	{
@@ -335,6 +343,14 @@ void UpdateMainScene(float dt)
 				FlagCursorState(CursorState::TongsWanton);
 			}
 			else if (CheckCursorState(CursorState::TongsWanton))
+			{
+				JZEngine::Log::Info("Main", "Wanton Returned");
+				FlagCursorState(CursorState::EmptyTongs);
+			}
+		}
+		else if (e->on_released_)
+		{
+			if (!CheckCursorState(CursorState::EmptyTongs))
 			{
 				JZEngine::Log::Info("Main", "Wanton Returned");
 				FlagCursorState(CursorState::EmptyTongs);
@@ -356,6 +372,14 @@ void UpdateMainScene(float dt)
 				FlagCursorState(CursorState::EmptyTongs);
 			}
 		}
+		else if (e->on_released_)
+		{
+			if (!CheckCursorState(CursorState::EmptyTongs))
+			{
+				JZEngine::Log::Info("Main", "SeaweedChicken Returned");
+				FlagCursorState(CursorState::EmptyTongs);
+			}
+		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_carrotcake"))
 	{
@@ -367,6 +391,14 @@ void UpdateMainScene(float dt)
 				FlagCursorState(CursorState::TongsCarrotCake);
 			}
 			else if (CheckCursorState(CursorState::TongsCarrotCake))
+			{
+				JZEngine::Log::Info("Main", "CarrotCake Returned");
+				FlagCursorState(CursorState::EmptyTongs);
+			}
+		}
+		else if (e->on_released_)
+		{
+			if (!CheckCursorState(CursorState::EmptyTongs))
 			{
 				JZEngine::Log::Info("Main", "CarrotCake Returned");
 				FlagCursorState(CursorState::EmptyTongs);
@@ -411,6 +443,10 @@ void UpdateMainScene(float dt)
 			{
 				Scene().EntityFlagActive("ScizzorsCursor", true);
 			}
+			
+		}
+		else if (e->on_released_)
+		{
 			if (plate_on_hand)
 			{
 				plate_on_hand = false;
@@ -424,7 +460,7 @@ void UpdateMainScene(float dt)
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_tray"))
 	{
 		// if tray was clicked and plate has nothing on it
-		if (e->on_click_)
+		if (e->on_released_)
 		{
 			if (plate_on_tray && current_order == CustomerOrder::Nothing)
 			{
@@ -459,6 +495,14 @@ void UpdateMainScene(float dt)
 				FlagAllCursorsFalse();
 			}
 		}
+		else if (e->on_click_)
+		{
+			if (plate_on_tray && current_order != CustomerOrder::Nothing)
+			{
+				plate_on_hand = true;
+				FlagAllCursorsFalse();
+			}
+		}
 	}
 
 	if (plate_on_hand)
@@ -469,7 +513,7 @@ void UpdateMainScene(float dt)
 	// give customer food
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_customer"))
 	{
-		if (e->on_click_)
+		if (e->on_released_)
 		{
 			if (!plate_on_hand)
 			{

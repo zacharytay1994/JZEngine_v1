@@ -35,9 +35,6 @@ namespace JZEngine
 
 		me.on_held_ = mouse_down_ && me.on_hover_;
 
-		me.on_drag_ = me.on_click_ && (mouse_position_ == transform.position_);
-
-		//me.on_drop_ = mouse_released_;
 		me.on_released_ = mouse_released_ && me.on_hover_;
 
 		RendererDebug::DrawSquare(transform.position_, Vec2f(me.bounding_half_width_*2.0f, me.bounding_half_height_*2.0f));
