@@ -581,11 +581,11 @@ namespace JZEngine
 
 				ImGui::Text ( "Rows" );
 				ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
-				ImGui::SliderInt ( "##AnimationRows" , &component.rows_ , 1 , 30 );
+				ImGui::SliderInt ( "##AnimationRows" , &component.rows_ , 1 , 100 );
 
 				ImGui::Text ( "Columns" );
 				ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
-				ImGui::SliderInt ( "##AnimationColumns" , &component.column_ , 1 , 30 );
+				ImGui::SliderInt ( "##AnimationColumns" , &component.column_ , 1 , 100 );
 			}
 		}
 

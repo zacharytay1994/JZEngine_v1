@@ -106,14 +106,14 @@ namespace JZEngine
 		}
 		else
 		{
-			for (auto& interface : imgui_interfaces_)
-			{
-				// just render menu bar
-				if (interface.second.group_ == 0)
-				{
-					interface.second.interface_->RenderInterface(dt);
-				}
-			}
+			//for (auto& interface : imgui_interfaces_)
+			//{
+			//	// just render menu bar
+			//	if (interface.second.group_ == 0)
+			//	{
+			//		interface.second.interface_->RenderInterface(dt);
+			//	}
+			//}
 		}
 
 		ECS::Entity* selected_entity = scene_tree_.GetSelectedEntity();
