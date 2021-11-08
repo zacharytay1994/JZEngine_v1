@@ -253,7 +253,7 @@ namespace JZEngine
 
 		while( global_systems_->GetSystem<GLFW_Instance> ()->Active () )
 		{
-			fsm->Update(dt);
+			fsm->update(dt);
 
 			/*if( InputHandler::IsKeyTriggered ( KEY::KEY_L ) )
 			{

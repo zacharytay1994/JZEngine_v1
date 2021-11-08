@@ -7,7 +7,7 @@
 namespace JZEngine
 {
 	template <typename T>
-	class FiniteStateMachine : public ECS::System
+	class FiniteStateMachine
 	{
 	protected:
 
@@ -74,11 +74,11 @@ namespace JZEngine
 			}
 		}
 
-		void Update(const float& dt)
+		void update(float dt)
 		{
 			if (mCurrentState != nullptr)
 			{
-				mCurrentState->Update(dt);
+				mCurrentState->update(dt);
 			}
 		}
 

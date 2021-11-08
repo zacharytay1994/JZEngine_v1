@@ -37,7 +37,7 @@ namespace JZEngine
 			std::cout << "Customer state: ORDERING" << "\n";
 		}
 
-		void Update(const float& dt) override
+		void update(float dt) override
 		{
 			timer += dt;
 
@@ -75,7 +75,7 @@ namespace JZEngine
 			std::cout << "Customer state: WAITING" << "\n";
 		}
 
-		void Update(const float& dt) override
+		void update(float dt) override
 		{
 			timer += dt;
 
