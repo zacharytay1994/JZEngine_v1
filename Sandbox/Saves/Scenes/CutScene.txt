@@ -1,0 +1,5 @@
+Background 0 c 0 0 0 0 0 0 32 18 50 50 c 1 0 c 2 Phone_screen_bg c 3 0 0 0 0 c 10 0 0.583356 1 1 0 1 1 
+Phone_app_bg 0 c 0 0 -4 0 0 0 9.9 16.4 50 50 c 1 1 c 2 Phone_app_background c 3 0 0 0 0 c 10 0 0 1 1 0 1 1 
+Phone_top 0 c 0 2 320.5 0 0 0 8.73 2 50 50 c 1 2 c 2 Phone_app_dad_time_battery c 3 0 0 0 0 c 10 0 1.00002 1 1 0 1 1 
+Skip 0 c 0 675.08 -376 0 0 0 5.5 1.8 50 50 c 1 1 c 2 Skip c 3 0 0 0 0 c 10 0 0.0166667 1 1 0 1 1 
+black_bg 0 c 0 0 0 0 0 0 32 18 50 50 c 1 0 c 2 cs_black_bg c 3 0 0 0 0 c 10 0 0.266688 1 1 0 1 1 

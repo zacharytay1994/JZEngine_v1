@@ -32,5 +32,8 @@
     <ClInclude Include="GameLogic\ButtonLogic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameLogic\CutScene\CutScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
