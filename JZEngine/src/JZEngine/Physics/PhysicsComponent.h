@@ -38,13 +38,14 @@ namespace JZEngine
 		float StaticFriction;  
 		float DynamicFriction;
 
-		float MomentofInertia;
+		//float MomentofInertia;
 
 
 		bool IsStatic{ true };
 		bool IsAlive{ true };
+		bool IsResting{ false };
 
-		Mat3f ModeltoWorld;
+		//Mat3f ModeltoWorld;
 
 
 		PhysicsComponent();

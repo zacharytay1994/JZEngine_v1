@@ -21,10 +21,11 @@ namespace JZEngine
 
 		pcomponent.rotation += pcomponent.angularVelocity * dt;
 
+		pcomponent.force += pcomponent.Mass * gravity;//force caused by gravity
 
 		pcomponent.acceleration = pcomponent.force / pcomponent.Mass;
 
-		pcomponent.acceleration += gravity;//constant accel due to gravity
+		//pcomponent.acceleration += gravity;//constant accel due to gravity
 
 		pcomponent.velocity += pcomponent.acceleration * dt;
 	
@@ -32,10 +33,11 @@ namespace JZEngine
 
 		pcomponent.force = { 0.0f,0.0f };
 	}
+
 	void RigidBody::AddForce(PhysicsComponent& pcomponent, const Vec2f& force)
 	{
 
-		pcomponent.force = force;
+		pcomponent.force += force;
 	}
 
 	void RigidBody::Move(PhysicsComponent& pcomponent,const  Vec2f& moveby)
