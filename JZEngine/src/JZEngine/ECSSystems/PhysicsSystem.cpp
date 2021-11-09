@@ -160,11 +160,14 @@ namespace JZEngine
 			}
 		}
 #endif
+
 		//Update index of every obj
 		for (int i = 0; i < (int)physics_cont.size(); ++i)
 		{
-			CollisionComponent& CcomponentA = *collision_cont[i];
-			CcomponentA.index = i;
+			CollisionComponent& Ccomponent = *collision_cont[i];
+			PhysicsComponent& pcomponent = *physics_cont[i];
+			Ccomponent.index = i;
+			pcomponent.IsResting = false;
 		}
 
 		//Collision check for every component using Quadtree

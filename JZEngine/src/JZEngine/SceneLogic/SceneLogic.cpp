@@ -132,22 +132,19 @@ namespace JZEngine
 
 	void SceneLogic::UpdateSceneLogic(float dt)
 	{
+		if (scene_to_be_changed_)
+		{
+			scene_to_be_changed_ = false;
+			scene_tree_->RemoveAllEntities();
+			Serialize::DeserializeScene(ecs_instance_, *scene_to_change_to_);
+			*scene_tree_->current_scene_name_ = *scene_to_change_to_;
+			SceneLogic::Instance().SetCurrentSceneName(*scene_to_change_to_);
+			SceneLogic::Instance().BuildEntityMap();
+			SceneLogic::Instance().InitSceneLogic();
+		}
 		if (scene_updates_ && scene_updates_->find(*current_scene_name_) != scene_updates_->end())
 		{
-			if (scene_to_be_changed_)
-			{
-				scene_to_be_changed_ = false;
-				scene_tree_->RemoveAllEntities();
-				Serialize::DeserializeScene(ecs_instance_, *scene_to_change_to_);
-				*scene_tree_->current_scene_name_ = *scene_to_change_to_;
-				SceneLogic::Instance().SetCurrentSceneName(*scene_to_change_to_);
-				SceneLogic::Instance().BuildEntityMap();
-				SceneLogic::Instance().InitSceneLogic();
-			}
-			else
-			{
-				(*scene_updates_)[*current_scene_name_](dt);
-			}
+			(*scene_updates_)[*current_scene_name_](dt);
 		}
 	}
 

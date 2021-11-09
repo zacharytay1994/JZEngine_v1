@@ -60,6 +60,49 @@ namespace JZEngine
 			float leading_y = { 2.0f }
 		);
 
+		struct RenderTextData
+		{
+			std::string text_;
+			float x_;
+			float y_;
+			float scale_;
+			Vec3f color_;
+			float tracking_x_;
+			float leading_y_;
+			RenderTextData(const std::string& text, float x, float y, float scale, const Vec3f color, float tracking_x, float leading_y)
+				:
+				text_(text),
+				x_(x),
+				y_(y),
+				scale_(scale),
+				color_(color),
+				tracking_x_(tracking_x),
+				leading_y_(leading_y)
+			{}
+		};
+		std::vector<RenderTextData> render_text_data_;
+
+		void RenderTextQueue(
+			std::string text,
+			float x,
+			float y,
+			float scale,
+			JZEngine::Vec3f color = { 1.0f , 1.0f , 1.0f },
+			float tracking_x = { 1.0f },
+			float leading_y = { 2.0f })
+		{
+			render_text_data_.emplace_back(text, x, y, scale, color, tracking_x, leading_y);
+		}
+
+		virtual void Update(float dt) override
+		{
+			for (auto& data : render_text_data_)
+			{
+				RenderText(data.text_, data.x_, data.y_, data.scale_, data.color_, data.tracking_x_, data.leading_y_);
+			}
+			render_text_data_.clear();
+		}
+
 		void Alignment ( Paragraph aligment = Paragraph::AlignLeft )
 		{
 			aligning_text_ = aligment;

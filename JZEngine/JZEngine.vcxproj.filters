@@ -262,6 +262,9 @@
     <ClInclude Include="src\JZEngine\EngineGUI\SceneLayerControl.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleParticleSystem.h" />
     <ClInclude Include="src\JZEngine\Resource\ObjectPool.h" />
+    <ClInclude Include="src\JZEngine\FSM\FiniteStateMachine.h" />
+    <ClInclude Include="src\JZEngine\FSM\State.h" />
+    <ClInclude Include="src\JZEngine\FSM\CustomerState.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\TransformComponent.h" />
     <ClInclude Include="src\JZEngine\Physics\CollisionComponent.h" />
     <ClInclude Include="src\JZEngine\SceneLogic\SceneLogic.h" />

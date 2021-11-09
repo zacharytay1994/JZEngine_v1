@@ -305,6 +305,9 @@
     <ClInclude Include="src\JZEngine\ECSSystems\FollowMouseCursor.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\MouseEvent.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\SceneLayerControl.h" />
+    <ClInclude Include="src\JZEngine\FSM\CustomerState.h" />
+    <ClInclude Include="src\JZEngine\FSM\FiniteStateMachine.h" />
+    <ClInclude Include="src\JZEngine\FSM\State.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Camera.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\RenderQueue.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\TransformComponent.h" />

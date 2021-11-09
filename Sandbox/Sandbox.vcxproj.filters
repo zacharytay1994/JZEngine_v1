@@ -29,5 +29,8 @@
     <ClInclude Include="GameLogic\MainMenu\MainMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameLogic\ButtonLogic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
