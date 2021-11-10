@@ -3,6 +3,7 @@
 #include "../FSM/State.h"
 #include <map>
 #include <cassert>
+#include "../DebugTools/DebugNew.h"
 
 namespace JZEngine
 {

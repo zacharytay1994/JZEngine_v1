@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "../DebugTools/DebugNew.h"
 
 namespace JZEngine
 {

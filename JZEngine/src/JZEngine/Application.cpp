@@ -45,6 +45,7 @@
 
 #include "Message/Event.h"
 #include "FSM/CustomerState.h"
+#include "DebugTools/DebugNew.h"
 
 namespace JZEngine
 {

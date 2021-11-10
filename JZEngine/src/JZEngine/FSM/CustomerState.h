@@ -5,6 +5,7 @@
 //#include "../DebugTools/PerformanceData.h"
 #include <iostream>
 #include "../Input/Input.h"
+#include "../DebugTools/DebugNew.h"
 
 namespace JZEngine
 {
