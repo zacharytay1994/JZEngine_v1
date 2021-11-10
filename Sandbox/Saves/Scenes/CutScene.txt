@@ -1,5 +1,8 @@
-Background 0 c 0 0 0 0 0 0 32 18 50 50 c 1 0 c 2 Phone_screen_bg c 3 0 0 0 0 c 10 0 0.583356 1 1 0 1 1 
-Phone_app_bg 0 c 0 0 -4 0 0 0 9.9 16.4 50 50 c 1 1 c 2 Phone_app_background c 3 0 0 0 0 c 10 0 0 1 1 0 1 1 
-Phone_top 0 c 0 2 320.5 0 0 0 8.73 2 50 50 c 1 2 c 2 Phone_app_dad_time_battery c 3 0 0 0 0 c 10 0 1.00002 1 1 0 1 1 
-Skip 0 c 0 675.08 -376 0 0 0 5.5 1.8 50 50 c 1 1 c 2 Skip c 3 0 0 0 0 c 10 0 0.0166667 1 1 0 1 1 
-black_bg 0 c 0 0 0 0 0 0 32 18 50 50 c 1 0 c 2 cs_black_bg c 3 0 0 0 0 c 10 0 0.266688 1 1 0 1 1 
+Background 0 c 0 0 0 0 0 0 32 18 50 50 c 1 0 c 2 cs_phone_screen_bg c 3 0 0 0 0 c 10 0 0.650015 1 1 0 1 1 
+Phone_app_bg 0 c 0 0 -4 0 0 0 9.9 16.4 50 50 c 1 1 c 2 cs_phone_app_bg c 3 0 0 0 0 c 10 0 0.783349 1 1 0 1 1 
+Phone_top 0 c 0 2 320.5 0 0 0 8.73 2 50 50 c 1 2 c 2 cs_phone_app_dad_time_battery c 3 0 0 0 0 c 10 0 0.783349 1 1 0 1 1 
+Skip 0 c 0 675.08 -376 0 0 0 5.5 1.8 50 50 c 1 1 c 2 Skip c 3 0 0 0 0 c 10 0 0.1 1 1 0 1 1 
+black_bg 0 c 0 0 0 0 0 0 32 18 50 50 c 1 0 c 2 cs_black_bg c 3 0 0 0 0 c 10 0 0.350002 1 1 0 1 1 
+1st_msg_bg 2 c 0 -211.25 -234 0 0 0 10 2.3 50 50 c 1 2 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 0.350002 1 1 0 1 1 
+1st_msg_emoji 0 c 0 -398.75 -234 -187.5 0 0 1.8 1.8 50 50 c 1 2 c 2 cs_app_Dad_pain_emoji c 3 0 0 0 0 c 10 0 0.0833335 1 1 0 1 1 
+1st_msg_text 0 c 0 -11.2498 -234 200 0 0 1 1 50 50 c 9 1.2 
