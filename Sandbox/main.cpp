@@ -1,6 +1,7 @@
 #include <JZEngine.h>
 #include "GameLogic/HawkerScene/HawkerScene.h"
 #include "GameLogic/MainMenu/MainMenu.h"
+#include "GameLogic/CutScene/CutScene.h"
 
 #include <iostream>
 
@@ -16,6 +17,9 @@ public:
 
 		Scene().RegisterSceneInit("HawkerV2", HawkerSceneInit);
 		Scene().RegisterSceneLogic("HawkerV2", HawkerSceneUpdate);
+
+		Scene().RegisterSceneInit("CutScene", CutSceneInit);
+		Scene().RegisterSceneLogic("CutScene", CutSceneUpdate);
 	}
 };
 
