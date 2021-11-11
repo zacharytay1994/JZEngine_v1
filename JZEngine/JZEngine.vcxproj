@@ -279,6 +279,7 @@
     </ClCompile>
     <ClCompile Include="src\JZEngine\Physics\CollisionComponent.cpp" />
     <ClCompile Include="src\JZEngine\Physics\CollisionSystem.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\Force.cpp" />
     <ClCompile Include="src\JZEngine\Physics\PhyicsDebug.cpp" />
     <ClCompile Include="src\JZEngine\Physics\PhysicsComponent.cpp" />
     <ClCompile Include="src\JZEngine\Physics\ResolveSystem.cpp" />
@@ -312,6 +313,7 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\RenderQueue.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\TransformComponent.h" />
     <ClInclude Include="src\JZEngine\Physics\CollisionComponent.h" />
+    <ClInclude Include="src\JZEngine\Physics\Force.h" />
     <ClInclude Include="src\JZEngine\Physics\PhyicsDebug.h" />
     <ClInclude Include="src\JZEngine\Physics\PhysicsComponent.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\PhysicsSystem.h" />

@@ -100,7 +100,7 @@ namespace JZEngine
 				Vec2f forcedirection{ dx,dy };
 				forcedirection.Normalize();
 				Vec2f force = forcedirection * forcemagnitude;
-				RigidBody::AddForce(pcomponent, force);
+				ForcesManager::AddForce(pcomponent, force);
 
 			}
 			
@@ -108,7 +108,8 @@ namespace JZEngine
 
 		if (!pause)
 		{
-			RigidBody::ApplyForces(pcomponent, dt);
+			ForcesManager::ApplyGravity(pcomponent);
+			RigidBody::Update(pcomponent, dt);
 		}
 
 #ifdef PHYSICSDEBUG
@@ -155,16 +156,19 @@ namespace JZEngine
 				for (int i = 0; i < physics_cont.size(); ++i)
 				{
 					PhysicsComponent& pcomponent = *physics_cont[i];
-					RigidBody::ApplyForces(pcomponent, dt);
+					RigidBody::Update(pcomponent, dt);
 				}
 			}
 		}
 #endif
+
 		//Update index of every obj
 		for (int i = 0; i < (int)physics_cont.size(); ++i)
 		{
-			CollisionComponent& CcomponentA = *collision_cont[i];
-			CcomponentA.index = i;
+			CollisionComponent& Ccomponent = *collision_cont[i];
+			PhysicsComponent& pcomponent = *physics_cont[i];
+			Ccomponent.index = i;
+			pcomponent.IsResting = false;
 		}
 
 		//Collision check for every component using Quadtree

@@ -12,7 +12,7 @@
 namespace JZEngine
 {
     SoundSystem::SoundSystem() : mutebool{ false }, fmodsystem{ nullptr }, mainchannelgrp{ nullptr }
-    {}
+    { }
     SoundSystem::~SoundSystem()
     {
         for (auto i : sound_cont)
@@ -28,6 +28,7 @@ namespace JZEngine
      */
     void SoundSystem::Init()
     {
+        mastervolume = 1.0f;
         FMOD_RESULT result = FMOD_OK;
         result = FMOD::System_Create(&fmodsystem);
        
@@ -90,6 +91,7 @@ namespace JZEngine
      */
     int SoundSystem::playSound(std::string const& name, bool bLoop, float volume)
     {
+        volume *= mastervolume;
         if (!bLoop)
             sound_cont[name]->setMode(FMOD_LOOP_OFF);
         else
@@ -124,7 +126,7 @@ namespace JZEngine
     void SoundSystem::playSound(SoundEvent* msg)
     {
         //this just calls the normal playSound function
-        playSound(msg->name, false, 0.1f);
+        playSound(msg->name, false, 0.5f);
     }
 
     /**
@@ -178,6 +180,11 @@ namespace JZEngine
     void SoundSystem::setChannelGroupVolume(float x, std::string const& name)
     {
         channelgroup_cont[name]->setVolume(x);
+    }
+
+    void SoundSystem::setMasterVolume(float volume)
+    {
+        mastervolume = volume;
     }
 
     // Mute toggle for sound system

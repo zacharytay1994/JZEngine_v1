@@ -33,7 +33,6 @@ namespace JZEngine {
 	{
 		Vec2f midpoint;
 		std::array<Vec2f,4> vertices;
-		std::array<Vec2f, 4> normal;
 
 		Square() = default;
 		Square(Vec2f midpt, Vec2f scale) : midpoint{ midpt }

@@ -155,10 +155,7 @@ namespace JZEngine
     mouse scroll wheel, being vertical, provides offsets only along the Y-axis.
     */
     void InputHandler::mousescroll_cb(GLFWwindow* pwin, double xoffset, double yoffset) {
-#ifdef _DEBUG
-        std::cout << "Mouse scroll wheel offset: ("
-            << xoffset << ", " << yoffset << ")" << std::endl;
-#endif
+
         mouse_scrolled_ = static_cast<int>(yoffset);
     }
 
