@@ -6,7 +6,7 @@
 */
 
 #pragma once
-#if 1
+
 #include "../Math/JZMath.h"
 #include "../Physics/PhysicsComponent.h"
 
@@ -17,20 +17,18 @@ namespace JZEngine
 	{
 	
 	public:
-		static void ApplyForces(PhysicsComponent& pcomponent, const float& dt);
+		static void Update(PhysicsComponent& pcomponent, const float& dt);
 
-		static void ApplyContactForce(PhysicsComponent& pcomponent);
-
-		static void AddForce(PhysicsComponent& pcomponent, const Vec2f& force);
+		
 
 		static void Move(PhysicsComponent& pcomponent, const Vec2f& moveby);
 
-	private:
-		static Vec2f gravity;// m / s*s
+
+
 
 	};
 
 
 }
 
-#endif
+

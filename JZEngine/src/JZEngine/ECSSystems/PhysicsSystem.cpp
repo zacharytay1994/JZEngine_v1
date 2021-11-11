@@ -100,7 +100,7 @@ namespace JZEngine
 				Vec2f forcedirection{ dx,dy };
 				forcedirection.Normalize();
 				Vec2f force = forcedirection * forcemagnitude;
-				RigidBody::AddForce(pcomponent, force);
+				ForcesManager::AddForce(pcomponent, force);
 
 			}
 			
@@ -108,7 +108,8 @@ namespace JZEngine
 
 		if (!pause)
 		{
-			RigidBody::ApplyForces(pcomponent, dt);
+			ForcesManager::ApplyGravity(pcomponent);
+			RigidBody::Update(pcomponent, dt);
 		}
 
 #ifdef PHYSICSDEBUG
@@ -155,7 +156,7 @@ namespace JZEngine
 				for (int i = 0; i < physics_cont.size(); ++i)
 				{
 					PhysicsComponent& pcomponent = *physics_cont[i];
-					RigidBody::ApplyForces(pcomponent, dt);
+					RigidBody::Update(pcomponent, dt);
 				}
 			}
 		}

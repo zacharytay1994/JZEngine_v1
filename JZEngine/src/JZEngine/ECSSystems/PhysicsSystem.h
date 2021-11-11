@@ -17,6 +17,7 @@
 #include "../Physics/CollisionComponent.h"
 #include "../Physics/CollisionSystem.h"
 #include "../Physics/ResolveSystem.h"
+#include "../Physics/Force.h"
 #include "../Input/Input.h"
 #include "../Physics/QuadTree.h"
 #include "../Physics/RigidBody.h"
