@@ -24,7 +24,9 @@ namespace JZEngine
 		Rect(const Vec2f& topleft, const Vec2f& topright, const Vec2f& bottomleft, const Vec2f& bottomright)
 			:
 			Rect(Vec2f(topleft.x + (topright.x - topleft.x) / 2, topleft.y + (bottomleft.y - topleft.y) / 2), topright.x - topleft.x, bottomleft.y - topleft.y)
-		{}
+		{
+			UNREFERENCED_PARAMETER(bottomright);
+		}
 		Rect(const Rect& rect)
 			:
 			Rect(rect.rectCenter, rect.width, rect.height)
