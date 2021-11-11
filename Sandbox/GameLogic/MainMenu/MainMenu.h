@@ -59,10 +59,10 @@ void UpdateVolumeSlider()
 				ratio = 1.0f;
 			}
 			master_volume_ = ratio;
-
+			
 			//JZEngine::global_systems_->GetSystem<SoundSystem>()->setMastervolume(master_volume_);
 			
-
+			Scene().GetSoundSystem()->setMasterVolume(master_volume_);
 			Scene().GetComponent<JZEngine::Transform>("Option_master_brownbar")->scale_.x = ratio * initial_bar_scale_;
 			Scene().GetComponent<JZEngine::Transform>("Option_master_pau")->position_.x = initial_bar_position_ + ratio * 500.0f;
 		}
@@ -101,6 +101,7 @@ void UpdateVolumeSlider()
 				ratio = 1.0f;
 			}
 			sfx_volume_ = ratio;
+
 			Scene().GetComponent<JZEngine::Transform>("Option_sfx_brownbar")->scale_.x = ratio * initial_bar_scale_;
 			Scene().GetComponent<JZEngine::Transform>("Option_sfx_pau")->position_.x = initial_bar_position_ + ratio * 500.0f;
 		}

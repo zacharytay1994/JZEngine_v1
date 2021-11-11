@@ -8,6 +8,7 @@
 #include "../BuildDefinitions.h"
 #include "../ECS/ECS.h"
 #include "../DebugTools/Log.h"
+#include "../Sound/Sound.h"
 
 namespace JZEngine
 {
@@ -44,16 +45,21 @@ namespace JZEngine
 		void AddPrefab(const std::string& name, const std::string& parent = "default");
 		void SetECS(ECS::ECSInstance* ecs);
 		void SetSceneTree(SceneTree* sceneTree);
+		void SetSoundSystem(SoundSystem* soundsys);
+		SoundSystem* GetSoundSystem();
 		void SetCurrentSceneName(const std::string& name);
 		void EntityFlagActive(const std::string& name, bool flag, int id = 0);
 		int GetTexture(const std::string& name);
 		void ChangeScene(const std::string& name);
 
 	private:
+
+
 		std::string* scene_to_change_to_{ nullptr };
 		bool scene_to_be_changed_{ false };
 		ECS::ECSInstance* ecs_instance_{ nullptr };
 		SceneTree* scene_tree_{ nullptr };
+		SoundSystem* soundsys{ nullptr };
 		std::unordered_map<std::string, fpSceneInit>* scene_inits_{ nullptr };
 		std::unordered_map<std::string, fpSceneUpdate>* scene_updates_{ nullptr };
 		std::unordered_map<std::string, std::vector<ECS::Entity*>>* entity_map_{ nullptr };

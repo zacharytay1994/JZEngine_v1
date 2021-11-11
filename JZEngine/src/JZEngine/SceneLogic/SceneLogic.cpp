@@ -64,6 +64,7 @@ namespace JZEngine
 		}
 	}
 
+
 	void SceneLogic::SetSceneTree(SceneTree* sceneTree)
 	{
 
@@ -76,6 +77,25 @@ namespace JZEngine
 		{
 			scene_tree_ = sceneTree;
 		}
+	}
+
+	void SceneLogic::SetSoundSystem(SoundSystem* ptr)
+	{
+
+		if (soundsys)
+		{
+			Log::Warning("Main", "Trying to set sound system again");
+			return;
+		}
+		else
+		{
+			soundsys = ptr;
+		}
+	}
+
+	SoundSystem* SceneLogic::GetSoundSystem()
+	{
+		return soundsys;
 	}
 
 	void SceneLogic::SetCurrentSceneName(const std::string& name)
