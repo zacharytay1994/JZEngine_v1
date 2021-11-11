@@ -1,11 +1,45 @@
-Background 0 c 0 0 0 0 0 0 32 18 50 50 c 1 0 c 2 cs_phone_screen_bg c 3 0 0 0 0 c 10 0 0.966677 1 1 0 1 1 
-Phone_app_bg 0 c 0 0 -4 0 0 0 9.9 16.4 50 50 c 1 1 c 2 cs_phone_app_bg c 3 0 0 0 0 c 10 0 0.0833337 1 1 0 1 1 c 15 100 50 
-Phone_top 0 c 0 2 320.5 0 0 0 8.73 2 50 50 c 1 2 c 2 cs_phone_app_dad_time_battery c 3 0 0 0 0 c 10 0 0.0833337 1 1 0 1 1 
-Skip 0 c 0 675.08 -376 0 0 0 5.5 1.8 50 50 c 1 1 c 2 Skip c 3 0 0 0 0 c 10 0 0.416668 1 1 0 1 1 
-black_bg 0 c 0 0 0 0 0 0 32 18 50 50 c 1 0 c 2 cs_black_bg c 3 0 0 0 0 c 10 0 0.650008 1 1 0 1 1 
-1st_msg_bg 2 c 0 -211.25 -234 0 0 0 10 2.3 50 50 c 1 2 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 0.0666669 1 1 0 1 1 
-1st_msg_emoji 0 c 0 -398.75 -234 -187.5 0 0 1.8 1.8 50 50 c 1 3 c 2 cs_app_Dad_pain_emoji c 3 0 0 0 0 c 10 0 0.983344 1 1 0 1 1 
+Background 0 c 0 0 0 0 0 0 32 18 50 50 c 1 0 c 2 cs_phone_screen_bg c 3 0 0 0 0 c 10 0 0.459568 1 1 0 1 1 
+Phone_app_bg 0 c 0 0 -4 0 0 0 9.9 16.4 50 50 c 1 1 c 2 cs_phone_app_bg c 3 0 0 0 0 c 10 0 0.459568 1 1 0 1 1 c 15 300 200 
+Phone_top 0 c 0 2 320.5 0 0 0 8.73 2 50 50 c 1 2 c 2 cs_phone_app_dad_time_battery c 3 0 0 0 0 c 10 0 0.459568 1 1 0 1 1 
+Skip 0 c 0 640 -376 0 0 0 5.5 1.8 50 50 c 1 1 c 2 Skip c 3 0 0 0 0 c 10 0 0.876237 1 1 0 1 1 
+black_bg 0 c 0 0 0 0 0 0 32 18 50 50 c 1 0 c 2 cs_black_bg c 3 0 0 0 0 c 10 0 0.0333336 1 1 0 1 1 
+1st_msg_bg 2 c 0 -211.25 -234 0 0 0 10 2.3 50 50 c 1 2 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 0.0500003 1 1 0 1 1 
+1st_msg_emoji 0 c 0 -398.75 -234 -187.5 0 0 1.8 1.8 50 50 c 1 3 c 2 cs_app_Dad_pain_emoji c 3 0 0 0 0 c 10 0 0.809395 1 1 0 1 1 
 1st_msg_text 0 c 0 -11.25 -234 200 0 0 1 1 50 50 c 9 1.2 
-2nd_msg_bg 2 c 0 223.75 -234 0 0 0 10 2.3 50 50 c 1 2 c 2 cs_phone_baozi_msg_bg c 3 0 0 0 0 c 10 0 0.100001 1 1 0 1 1 
-2nd_msg_emoji 0 c 0 401.252 -234 177.502 0 0 1.8 1.8 50 50 c 1 3 c 2 cs_app_Mc_Tired_emoji c 3 0 0 0 0 c 10 0 0.383335 1 1 0 1 1 
+2nd_msg_bg 2 c 0 223.75 -234 0 0 0 10 2.3 50 50 c 1 2 c 2 cs_phone_baozi_msg_bg c 3 0 0 0 0 c 10 0 0.583337 1 1 0 1 1 
+2nd_msg_emoji 0 c 0 401.25 -234 177.5 0 0 1.8 1.8 50 50 c 1 3 c 2 cs_app_Mc_Tired_emoji c 3 0 0 0 0 c 10 0 0.483336 1 1 0 1 1 
 2nd_msg_text 0 c 0 330 -234 106.25 0 0 1 1 50 50 c 9 1.2 
+3rd_msg_bg 2 c 0 -211.25 -234 0 0 0 10 2.3 50 50 c 1 2 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 0.850004 1 1 0 1 1 
+3rd_msg_emoji 0 c 0 -398.75 -234 -187.5 0 0 1.8 1.8 50 50 c 1 3 c 2 cs_app_Dad_pain_emoji c 3 0 0 0 0 c 10 0 0.766671 1 1 0 1 1 
+3rd_msg_text 0 c 0 -80 -234 131.25 0 0 1 1 50 50 c 9 1.2 
+4th_msg_bg 2 c 0 223.75 -200 0 0 0 10 3 50 50 c 1 2 c 2 cs_phone_baozi_msg_bg c 3 0 0 0 0 c 10 0 0.300001 1 1 0 1 1 
+4th_msg_emoji 0 c 0 401.25 -200 177.5 0 0 1.8 1.8 50 50 c 1 3 c 2 cs_app_Mc_Shock_emoji c 3 0 0 0 0 c 10 0 0.583336 1 1 0 1 1 
+4th_msg_text 0 c 0 330 -186 106.25 14 0 1 1 50 50 c 9 1.2 
+5th_msg_bg 2 c 0 -211.25 -200 0 0 0 10 3.5 50 50 c 1 2 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 0.816671 1 1 0 1 1 
+5th_msg_emoji 0 c 0 -398.75 -210 -187.5 -10 0 1.8 1.8 50 50 c 1 3 c 2 cs_app_Dad_pain_emoji c 3 0 0 0 0 c 10 0 0.366669 1 1 0 1 1 
+5th_msg_text 0 c 0 -26.25 -150.5 185 49.5 0 1 1 50 50 c 9 1.2 
+6th_msg_bg 2 c 0 -211.25 -205 0 0 0 10 2.3 50 50 c 1 2 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 0.550003 1 1 0 1 1 
+6th_msg_emoji 0 c 0 -398.75 -205 -187.5 0 0 1.8 1.8 50 50 c 1 3 c 2 cs_app_Dad_pain_emoji c 3 0 0 0 0 c 10 0 0.900012 1 1 0 1 1 
+6th_msg_text 0 c 0 26.25 -188 237.5 17 0 1 1 50 50 c 9 1.2 
+7th_msg_bg 2 c 0 -211.25 -155 0 0 0 10 2.8 50 50 c 1 2 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 1.00001 1 1 0 1 1 
+7th_msg_emoji 0 c 0 -398.75 -155 -187.5 0 0 1.8 1.8 50 50 c 1 3 c 2 cs_app_Dad_pain_emoji c 3 0 0 0 0 c 10 0 0.116667 1 1 0 1 1 
+7th_msg_text 0 c 0 -50 -120 161.25 35 0 1 1 50 50 c 9 1.2 
+8th_msg_bg 2 c 0 -211.25 -150 0 0 0 10 3.2 50 50 c 1 2 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 0.316687 1 1 0 1 1 
+8th_msg_emoji 0 c 0 -398.75 -155 -187.5 -5 0 1.8 1.8 50 50 c 1 3 c 2 cs_app_Dad_pain_emoji c 3 0 0 0 0 c 10 0 0.933375 1 1 0 1 1 
+8th_msg_text 0 c 0 10 -115 221.25 35 0 1 1 50 50 c 9 1.2 
+9th_msg_bg 2 c 0 223.75 -220 0 0 0 10 2.3 50 50 c 1 2 c 2 cs_phone_baozi_msg_bg c 3 0 0 0 0 c 10 0 0.41667 1 1 0 1 1 
+9th_msg_emoji 0 c 0 401.25 -220 177.5 0 0 1.8 1.8 50 50 c 1 3 c 2 cs_app_Mc_Shock_emoji c 3 0 0 0 0 c 10 0 0.850006 1 1 0 1 1 
+9th_msg_text 0 c 0 335 -205 111.25 15 0 1 1 50 50 c 9 1.2 
+10th_msg_bg 2 c 0 223.75 -195 0 0 0 10 2.3 50 50 c 1 2 c 2 cs_phone_baozi_msg_bg c 3 0 0 0 0 c 10 0 0.566691 1 1 0 1 1 
+10th_msg_emoji 0 c 0 401.25 -195 177.5 0 0 1.8 1.8 50 50 c 1 3 c 2 cs_app_Mc_Tired_emoji c 3 0 0 0 0 c 10 0 0.583358 1 1 0 1 1 
+10th_msg_text 0 c 0 337.5 -180 113.75 15 0 1 1 50 50 c 9 1.2 
+11th_msg_bg 2 c 0 -211.25 -225 0 0 0 10 2.6 50 50 c 1 2 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 0.540878 1 1 0 1 1 
+11th_msg_emoji 0 c 0 -398.75 -225 -187.5 0 0 1.8 1.8 50 50 c 1 3 c 2 cs_app_Dad_pain_emoji c 3 0 0 0 0 c 10 0 0.607545 1 1 0 1 1 
+11th_msg_text 0 c 0 -11.25 -191 200 34 0 1 1 50 50 c 9 1.2 
+12th_msg_bg 2 c 0 -211.25 -170 0 0 0 10 2.6 50 50 c 1 2 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 0.849455 1 1 0 1 1 
+12th_msg_emoji 0 c 0 -398.75 -170 -187.5 0 0 1.8 1.8 50 50 c 1 3 c 2 cs_app_Dad_pain_emoji c 3 0 0 0 0 c 10 0 0.749454 1 1 0 1 1 
+12th_msg_text 0 c 0 -60 -150 151.25 20 0 1 1 50 50 c 9 1.2 
+13th_msg_bg 2 c 0 223.75 -200 0 0 0 10 2.3 50 50 c 1 2 c 2 cs_phone_baozi_msg_bg c 3 0 0 0 0 c 10 0 0.279406 1 1 0 1 1 
+13th_msg_emoji 0 c 0 401.25 -200 177.5 0 0 1.8 1.8 50 50 c 1 3 c 2 cs_app_Mc_Tired_emoji c 3 0 0 0 0 c 10 0 0.0960723 1 1 0 1 1 
+13th_msg_text 0 c 0 340 -180 116.25 20 0 1 1 50 50 c 9 1.2 
+mouse_event_skip 0 c 0 645 -375 0 0 0 1 1 50 50 c 15 25 25 
