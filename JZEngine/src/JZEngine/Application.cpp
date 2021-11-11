@@ -239,7 +239,7 @@ namespace JZEngine
 		std::cout << "-----------------------------" << "\n";
 		std::cout << "Demo for Finite State Machine" << "\n";
 		std::cout << "-----------------------------" << "\n";
-
+		/**/
 		JZEngine::FiniteStateMachine<JZEngine::CustomerStateType>* fsm = new JZEngine::FiniteStateMachine<JZEngine::CustomerStateType>();
 
 		fsm->add(new JZEngine::CustomerOrderingState(*fsm));
@@ -292,31 +292,6 @@ namespace JZEngine
 				msgbus->publish ( &event );
 			}
 
-			//test code for input system, can be removed
-			if( InputHandler::IsMouseTriggered ( MOUSE::MOUSE_BUTTON_1 ) )
-			{
-				Log::Info ( "Input" , "Mouse Triggered!!!" );
-			}
-			if( InputHandler::IsMouseReleased ( MOUSE::MOUSE_BUTTON_1 ) )
-			{
-				Log::Info ( "Input" , "Mouse Release!!!" );
-			}
-			if( InputHandler::IsMousePressed ( MOUSE::MOUSE_BUTTON_1 ) )
-			{
-				Log::Info ( "Input" , "Mouse PRess!!!" );
-			}
-			if( InputHandler::IsKeyPressed ( KEY::KEY_M ) )
-			{
-				Log::Info ( "Input" , "M press!!!" );
-			}
-			if( InputHandler::IsKeyReleased ( KEY::KEY_M ) )
-			{
-				Log::Info ( "Input" , "M release!!!" );
-			}
-			if( InputHandler::IsKeyTriggered ( KEY::KEY_M ) )
-			{
-				Log::Info ( "Input" , "M triggered!!!" );
-			}
 
 			InputHandler::FrameEnd ();//input handler frameend MUST be here before global system->frameend
 

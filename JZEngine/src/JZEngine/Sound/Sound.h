@@ -10,11 +10,7 @@
 #include "fmod.hpp"
 #include "fmod_errors.h"
 
-#include <string>
-
-#include <map>
-#include <vector>
-
+#include "../BuildDefinitions.h"
 #include "../Message/Event.h"
 #include "../GlobalSystems.h"
 
@@ -23,7 +19,7 @@ namespace JZEngine
 {
 
 
-	class SoundSystem : public GlobalSystem
+	class JZENGINE_API SoundSystem : public GlobalSystem
 	{
 	public:
 		SoundSystem();
@@ -42,11 +38,13 @@ namespace JZEngine
 		void stopChannelGroup(std::string const& name);
 		void setChannelGroupVolume(float x, std::string const& name);
 
+		void setMasterVolume(float volume);
 		void toggleMute();
 	
 
 
 	private:
+		float mastervolume;
 		bool mutebool;
 		FMOD::System* fmodsystem; 
 		FMOD::ChannelGroup* mainchannelgrp;
