@@ -21,8 +21,6 @@
 constexpr int MAX_CHANNELS = 36;
 namespace JZEngine
 {
-
-
 	class SoundSystem : public GlobalSystem
 	{
 	public:

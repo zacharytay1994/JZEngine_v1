@@ -1,3 +1,4 @@
+
 /*	__FILE HEADER__
 *	File:		Application.cpp
 	Primary:	Deon Khong, Jee Jia Min, Yu Ching Yin, Zachary Tay
@@ -52,10 +53,6 @@ namespace JZEngine
 		msgbus( new MessageBus() ),
 		global_systems_ ( new GlobalSystemsManager () )
 	{
-		/*testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
-		testsystem.playSound("testsound", true, 0.4f);
-		testsystem.setChannelGroupVolume(1.0f,"main");*/
-		//InputHandler::
 		Settings::LoadFromConfigFile ();
 		Serialize::Load();
 
@@ -96,122 +93,7 @@ namespace JZEngine
 
 		msgbus->subscribe ( global_systems_->GetSystem<SoundSystem> () , &SoundSystem::playSound );
 
-		//change
-		/*ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
-		for (int i = 0; i < 2500; ++i)
-		{
-			int id = ecs->CreateEntity();
-			ECS::Entity& e = ecs->entity_manager_.GetEntity(id);
-			e.AddSystem(2);
-			e.AddComponent<RandomMovement>();
-			e.GetComponent<RandomMovement>().direction_ = { static_cast<float>(rand() % 50 + 1), static_cast<float>(rand() % 50 + 1) };
-		}*/
-
-		// test code
-		/*global_systems_->GetSystem<SoundSystem>()->createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
-		global_systems_->GetSystem<SoundSystem>()->playSound("testsound", true, 0.4f);
-		global_systems_->GetSystem<SoundSystem>()->setChannelGroupVolume(1.0f, "main");
-		InputHandler::IsMousePressed(MOUSEBUTTON::MOUSE_BUTTON_LEFT);*/
-		/*
-		#if 1 // 0 to not run physics stuff
-				ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
-				int id = ecs->CreateEntity();
-				ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
-				entity.AddSystem(1);
-				entity.AddComponent<PhysicsComponent>();
-				entity.GetComponent<Texture>().texture_id_ = 2;
-				entity.GetComponent<PhysicsComponent>().shapeid = 2;
-				entity.GetComponent<Transform>().size_.x = 800;
-				entity.GetComponent<Transform>().position_.y = -200;
-
-				id = ecs->CreateEntity();
-				ECS::Entity& entity1 = ecs->entity_manager_.GetEntity(id);
-				entity1.AddSystem(1);
-				entity1.AddComponent<PhysicsComponent>();
-				entity1.GetComponent<Texture>().texture_id_ = 2;
-				entity1.GetComponent<PhysicsComponent>().shapeid = 2;
-				entity1.GetComponent<Transform>().size_.x = 800;
-				entity1.GetComponent<Transform>().position_.y = 400;
-
-				id = ecs->CreateEntity();
-				ECS::Entity& entity3 = ecs->entity_manager_.GetEntity(id);
-				entity3.AddSystem(1);
-				entity3.AddComponent<PhysicsComponent>();
-				entity3.GetComponent<Texture>().texture_id_ = 2;
-				entity3.GetComponent<PhysicsComponent>().shapeid = 2;
-				entity3.GetComponent<Transform>().size_.y = 800;
-				entity3.GetComponent<Transform>().position_.x = 400;
-
-				id = ecs->CreateEntity();
-				ECS::Entity& entity4 = ecs->entity_manager_.GetEntity(id);
-				entity4.AddSystem(1);
-				entity4.AddComponent<PhysicsComponent>();
-				entity4.GetComponent<Texture>().texture_id_ = 2;
-				entity4.GetComponent<PhysicsComponent>().shapeid = 2;
-				entity4.GetComponent<Transform>().size_.y = 800;
-				entity4.GetComponent<Transform>().position_.x = -400;
-
-				id = ecs->CreateEntity();//line in middle
-				ECS::Entity& entity5 = ecs->entity_manager_.GetEntity(id);
-				entity5.AddSystem(1);
-				entity5.AddComponent<PhysicsComponent>();
-				entity5.GetComponent<Texture>().texture_id_ = 2;
-				entity5.GetComponent<PhysicsComponent>().shapeid = 2;
-				entity5.GetComponent<Transform>().size_.x = 400;
-				entity5.GetComponent<Transform>().size_.y = 10;
-
-
-
-				for (int i = 0; i < 50; ++i)
-				{
-					 int id3 = ecs->CreateEntity();
-					 ECS::Entity& entity2 = ecs->entity_manager_.GetEntity(id3);
-					 entity2.AddSystem(1);
-					 entity2.AddComponent<PhysicsComponent>();
-					 entity2.GetComponent<Transform>().position_ = { random<float>(-300.0f, 300.0f),random<float>(-100.0f, 300.0f) };
-					 entity2.GetComponent<Texture>().texture_id_ = 7;
-					 entity2.GetComponent<PhysicsComponent>().shapeid = 0;
-					 float speed =  random<float>(10.0f, 100.0f) ;
-					 entity2.GetComponent<Transform>().size_.x = 20;
-					 entity2.GetComponent<Transform>().size_.y = 20;
-					 entity2.GetComponent<PhysicsComponent>().speed = speed;
-					 entity2.GetComponent<PhysicsComponent>().mass = 20 * 20;
-					 entity2.GetComponent<PhysicsComponent>().velocity = { speed*cosf( random<float>(-3.14f, 3.14f) ) , speed * sinf( random<float>(-3.14f, 3.14f) ) };//dir
-				}
-				for (int i = 0; i < 50; ++i)
-				{
-					int id3 = ecs->CreateEntity();
-					ECS::Entity& entity2 = ecs->entity_manager_.GetEntity(id3);
-					entity2.AddSystem(1);
-					entity2.AddComponent<PhysicsComponent>();
-					entity2.GetComponent<Transform>().position_ = { random<float>(-300.0f, 300.0f),random<float>(-100.0f, 300.0f) };
-					entity2.GetComponent<Texture>().texture_id_ = 7;
-					entity2.GetComponent<PhysicsComponent>().shapeid = 0;
-					float speed = random<float>(10.0f, 100.0f) ;
-					entity2.GetComponent<Transform>().size_.x = 35;
-					entity2.GetComponent<Transform>().size_.y = 35;
-					entity2.GetComponent<PhysicsComponent>().speed = speed;
-					entity2.GetComponent<PhysicsComponent>().mass = 35 * 35;
-					entity2.GetComponent<PhysicsComponent>().velocity = { speed * cosf(random<float>(-3.14f, 3.14f)) , speed * sinf(random<float>(-3.14f, 3.14f)) };//dir
-				}
-		#endif
-		*/
-		/*ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
-		for (int i = 0; i < 100; ++i) {
-			int id = ecs->CreateEntity();
-			ECS::Entity& entity = ecs->entity_manager_.GetEntity(id);
-			entity.AddSystem(1);
-			entity.AddComponent<IsUnicorn>();
-			float x = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-			float y = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-			entity.GetComponent<Transform>().position_ = { x * -600.0f, y * -300.0f };
-		}*/
-
-
-		/*ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
-		int e = ecs->CreateEntity();
-		test = &ecs->entity_manager_.GetEntity(e);
-		test->AddSystem(0);*/
+		//int* p = new int ( 7 );
 	}
 
 	void Application::Free ()

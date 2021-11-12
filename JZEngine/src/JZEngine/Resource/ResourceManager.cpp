@@ -19,12 +19,12 @@ namespace JZEngine
 
 	unsigned int ResourceManager::texture_unique_id_{ 0 };
 	std::vector<ResourceManager::Texture2DID> ResourceManager::texture2ds_;
-	std::unordered_map<std::string, int> ResourceManager::umap_texture2ds_;
+	std::unordered_map<std::string , int> ResourceManager::umap_texture2ds_;
 
 	ResourceManager::ResourceManager ()
 	{
 		// load textures
-		LoadAllTexturesInFolder();
+		LoadAllTexturesInFolder ();
 
 		// load shaders
 		LoadShader ( "Default" ,
@@ -34,8 +34,8 @@ namespace JZEngine
 					 "Assets/Shaders/Vertex/VS_Sprite2D.vs" ,
 					 "Assets/Shaders/Fragment/FS_BlackWhite.fs" );
 
-		LoadShader ( "Leaf Shader",
-					 "Assets/Shaders/Vertex/VS_Sprite2D.vs",
+		LoadShader ( "Leaf Shader" ,
+					 "Assets/Shaders/Vertex/VS_Sprite2D.vs" ,
 					 "Assets/Shaders/Fragment/FS_TexSway.fs" );
 
 		// load font shaders
@@ -56,9 +56,9 @@ namespace JZEngine
 							  "Assets/Shaders/Fragment/FS_Instancing.fs" );
 	}
 
-	void ResourceManager::PostInit()
+	void ResourceManager::PostInit ()
 	{
-		LoadAllTexturesInFolder();
+		LoadAllTexturesInFolder ();
 	}
 
 	unsigned int ResourceManager::LoadInstancedShader ( const std::string& name , const std::string& vspath , const std::string& fspath )
@@ -238,7 +238,7 @@ namespace JZEngine
 				texture,
 				JZEngine::Vec2f ( static_cast< float >( face->glyph->bitmap.width ),  static_cast< float >( face->glyph->bitmap.rows ) ),
 				JZEngine::Vec2f ( static_cast< float >( face->glyph->bitmap_left ),  static_cast< float >( face->glyph->bitmap_top ) ),
-				static_cast<unsigned int>(face->glyph->advance.x)
+				static_cast< unsigned int >( face->glyph->advance.x )
 			};
 
 			characters.insert ( std::pair<char , Character> ( c , character ) );
@@ -249,66 +249,111 @@ namespace JZEngine
 		FT_Done_FreeType ( ft );
 	}
 
-	void ResourceManager::LoadAllTexturesInFolder(const std::string& folder)
+	void ResourceManager::LoadAllTexturesInFolder ( const std::string& folder )
 	{
 		// check if folder exists else create it
-		if (!std::filesystem::is_directory(folder))
+		if( !std::filesystem::is_directory ( folder ) )
 		{
-			std::filesystem::create_directory(folder);
+			std::filesystem::create_directory ( folder );
 		}
 		std::string path;
 		std::string texture_name;
 		size_t dash;
-		std::unordered_map<std::string, bool> check;
+		std::unordered_map<std::string , bool> check;
 		// create temp
-		for (auto& c : umap_texture2ds_)
+		for( auto& c : umap_texture2ds_ )
 		{
-			check[c.first] = false;
+			check[ c.first ] = false;
 		}
 		// read files
-		Log::Info("Resources", "\n Reading textures from {}:", folder);
-		for (const auto& file : std::filesystem::directory_iterator(folder))
+		Log::Info ( "Resources" , "\n Reading textures from {}:" , folder );
+		for( const auto& file : std::filesystem::directory_iterator ( folder ) )
 		{
-			path = file.path().string();
-			dash = path.find_last_of('/');
-			texture_name = path.substr(dash + 1, path.find_last_of('.') - dash - 1);
+			path = file.path ().string ();
+			dash = path.find_last_of ( '/' );
+			texture_name = path.substr ( dash + 1 , path.find_last_of ( '.' ) - dash - 1 );
 			// check if texture already loaded
-			if (umap_texture2ds_.find(texture_name) == umap_texture2ds_.end())
+			if( umap_texture2ds_.find ( texture_name ) == umap_texture2ds_.end () )
 			{
-				texture2ds_.emplace_back(static_cast<int>(texture2ds_.size()));
-				texture2ds_.back().texture2d_.Texture2DLoad(file.path().string());
-				umap_texture2ds_[texture_name] = texture2ds_.back().id_; 
+				texture2ds_.emplace_back ( static_cast< int >( texture2ds_.size () ) );
+				texture2ds_.back ().texture2d_.Texture2DLoad ( file.path ().string () );
+				umap_texture2ds_[ texture_name ] = texture2ds_.back ().id_;
 				/*umap_texture2ds_[texture_name].id_ = static_cast<int>(vec_texture2ds_.size());
 				umap_texture2ds_[texture_name].texture2d_.Texture2DLoad(file.path().string());*/
-				Log::Info("Resources", "- Read [{}].", file.path().string());
+				Log::Info ( "Resources" , "- Read [{}]." , file.path ().string () );
 			}
-			check[texture_name] = true;
+			check[ texture_name ] = true;
 		}
 		// check if already removed
 		// erased textures will no longer be able to be assigned to entities
 		// however are still cached and will continue working for existing entities on the same session
 		// once the app refreshes however, the image will cease to exists and display a missing image icon instead.
-		for (auto& c : check)
+		for( auto& c : check )
 		{
-			if (!c.second)
+			if( !c.second )
 			{
 				/*vec_texture2ds_[umap_texture2ds_[c.first].id_] = nullptr;*/
-				umap_texture2ds_.erase(c.first);
+				umap_texture2ds_.erase ( c.first );
 			}
 		}
 	}
 
-	Texture2D* ResourceManager::GetTexture(int id)
+	void ResourceManager::LoadAllSoundsInFolder ( const std::string& folder )
 	{
-		if (id < texture2ds_.size() && id >= 0)
+	//	if( !std::filesystem::is_directory ( folder ) )
+	//	{
+	//		std::filesystem::create_directory ( folder );
+	//	}
+	//	//std::string path;
+	//	//std::string sound_name;
+	//	//size_t dash;
+	//	std::unordered_map<std::string , bool> check;
+	//	// create temp
+	//	for( auto& c : umap_sound_ids_ )
+	//	{
+	//		check[ c.first ] = false;
+	//	}
+	//	// read files
+	//	Log::Info ( "Resources" , "\n Reading sounds from {}:" , folder );
+
+		//for( const auto& file : std::filesystem::directory_iterator ( folder ) )
+		//{
+		//	path = file.path ().string ();
+		//	dash = path.find_last_of ( '/' );
+		//	sound_name = path.substr ( dash + 1 , path.find_last_of ( '.' ) - dash - 1 );
+		//	// check if texture already loaded
+		//	//if( umap_texture2ds_.find ( sound_name ) == umap_texture2ds_.end () )
+		//	//{
+		//	//	sound_ids.emplace_back ( static_cast< int >( sound_ids.size () ) );
+		//	//	const char* file_path = file.path ().string ().c_str ();
+		//	//	//sound_ids.back ().sound_system_.createSound ( sound_name , file_path );
+		//	//	umap_sound_ids[ sound_name ] = sound_ids.back ().id_;
+		//	//	Log::Info ( "Resources" , "- Read [{}]." , file.path ().string () );
+		//	//}
+		//	check[ sound_name ] = true;
+		//}
+
+		///*for( auto& c : check )
+		//{
+		//	if( !c.second )
+		//	{
+		//		umap_sound_ids.erase ( c.first );
+		//	}
+		//}*/
+
+	}
+
+	Texture2D* ResourceManager::GetTexture ( int id )
+	{
+		if( id < texture2ds_.size () && id >= 0 )
 		{
-			return &texture2ds_[id].texture2d_;
+			return &texture2ds_[ id ].texture2d_;
 		}
 		return nullptr;
 	}
 
-	Texture2D* ResourceManager::GetTexture(const std::string& name)
+	Texture2D* ResourceManager::GetTexture ( const std::string& name )
 	{
-		return GetTexture(umap_texture2ds_[name]);
+		return GetTexture ( umap_texture2ds_[ name ] );
 	}
 }

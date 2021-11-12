@@ -17,6 +17,7 @@
 #include "../GlobalSystems.h"
 #include "../GraphicRendering/Shader.h"
 #include "../GraphicRendering/Texture.h"
+#include "../Sound/Sound.h"
 
 namespace JZEngine
 {
@@ -90,6 +91,20 @@ namespace JZEngine
 		};
 
 
+		struct SoundID
+		{
+			int id_;
+			std::string name_;
+			SoundSystem sound_system_;
+
+			SoundID ( unsigned int id , const std::string& name ) : id_ ( id ) , name_ ( name )
+			{}
+		};
+
+
+
+
+
 		std::vector<FontShaderID> font_shader_programs_;
 		std::vector<FontID> text_;
 
@@ -126,7 +141,6 @@ namespace JZEngine
 		static unsigned int LoadInstancedShader( const std::string& name, const std::string& vspath, const std::string& fspath );
 		static unsigned int LoadShader(const std::string& name, const std::string& vspath, const std::string& fspath);
 		static unsigned int LoadDebugShader(const std::string& name, const std::string& vspath, const std::string& fspath);
-		//static unsigned int LoadTexture2D(const std::string& name, const std::string& path);
 
 		static unsigned int texture_unique_id_;
 		static std::vector<Texture2DID> texture2ds_;
@@ -134,5 +148,11 @@ namespace JZEngine
 		static void LoadAllTexturesInFolder(const std::string& folder = "Assets/Textures/");
 		static Texture2D* GetTexture(int id);
 		static Texture2D* GetTexture(const std::string& name);
+
+
+		// for sound system
+		static std::vector<SoundID> sound_ids_;
+		static std::unordered_map<std::string , int> umap_sound_ids_;
+		static void LoadAllSoundsInFolder ( const std::string& folder = "Assets/Sounds/" );
 	};
 }
