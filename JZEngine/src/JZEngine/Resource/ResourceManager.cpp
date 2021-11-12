@@ -39,7 +39,8 @@ namespace JZEngine
 					 "Assets/Shaders/Fragment/FS_TexSway.fs" );
 
 		// load font shaders
-		LoadFont ( "Assets/Fonts/Weather Sunday.otf" , 100 , "Font1" , "Assets/Shaders/Vertex/VS_Font.vs" , "Assets/Shaders/Fragment/FS_Font.fs" );
+		//LoadFont ( "Assets/Fonts/Weather Sunday.otf" , 100 , "Font1" , "Assets/Shaders/Vertex/VS_Font.vs" , "Assets/Shaders/Fragment/FS_Font.fs" );
+		LoadFont("Assets/Fonts/arlrdbd.ttf", 100, "Font1", "Assets/Shaders/Vertex/VS_Font.vs", "Assets/Shaders/Fragment/FS_Font.fs");
 
 		// load debug shaders
 		LoadDebugShader ( "Point2D" ,
@@ -355,5 +356,15 @@ namespace JZEngine
 	Texture2D* ResourceManager::GetTexture ( const std::string& name )
 	{
 		return GetTexture ( umap_texture2ds_[ name ] );
+	}
+
+	int ResourceManager::GetTextureID(const std::string& name)
+	{
+		if (umap_texture2ds_.find(name) != umap_texture2ds_.end())
+		{
+			return umap_texture2ds_[name];
+		}
+		Log::Warning("Warning", "Getting texture that does not exist: {}.", name);
+		return -1;
 	}
 }

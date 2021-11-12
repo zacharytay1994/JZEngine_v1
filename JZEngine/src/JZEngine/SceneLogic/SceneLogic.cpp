@@ -3,11 +3,15 @@
 #include "../DebugTools/Log.h"
 #include "../ECS/ECS.h"
 #include "../Resource/Serialize.h"
+#include "../Resource/ResourceManager.h"
+#include "../Resource/Serialize.h"
+#include "../EngineGUI/SceneTree.h"
 
 namespace JZEngine
 {
 	SceneLogic::SceneLogic()
 	{
+		scene_to_change_to_ = new std::string("non");
 		scene_inits_ = new std::unordered_map<std::string, fpSceneInit>();
 		scene_updates_ = new std::unordered_map<std::string, fpSceneUpdate>();
 		entity_map_ = new std::unordered_map<std::string, std::vector<ECS::Entity*>>();
@@ -16,6 +20,10 @@ namespace JZEngine
 
 	SceneLogic::~SceneLogic()
 	{
+		if (scene_to_change_to_)
+		{
+			delete scene_to_change_to_;
+		}
 		if (scene_inits_)
 		{
 			delete scene_inits_;
@@ -56,11 +64,67 @@ namespace JZEngine
 		}
 	}
 
+
+	void SceneLogic::SetSceneTree(SceneTree* sceneTree)
+	{
+
+		if (scene_tree_)
+		{
+			Log::Warning("Main", "Trying to set scene tree for SceneLogic again.");
+			return;
+		}
+		else
+		{
+			scene_tree_ = sceneTree;
+		}
+	}
+
+	void SceneLogic::SetSoundSystem(SoundSystem* ptr)
+	{
+
+		if (soundsys)
+		{
+			Log::Warning("Main", "Trying to set sound system again");
+			return;
+		}
+		else
+		{
+			soundsys = ptr;
+		}
+	}
+
+	SoundSystem* SceneLogic::GetSoundSystem()
+	{
+		return soundsys;
+	}
+
 	void SceneLogic::SetCurrentSceneName(const std::string& name)
 	{
 		if (current_scene_name_)
 		{
 			*current_scene_name_ = name;
+		}
+	}
+
+	void SceneLogic::EntityFlagActive(const std::string& name, bool flag, int id)
+	{
+		if (ECS::Entity* e = GetEntity(name, id))
+		{
+			e->FlagActive(flag);
+		}
+	}
+
+	int SceneLogic::GetTexture(const std::string& name)
+	{
+		return ResourceManager::GetTextureID(name);
+	}
+
+	void SceneLogic::ChangeScene(const std::string& name)
+	{
+		if (Serialize::scenes_.find(name) != Serialize::scenes_.end())
+		{
+			*scene_to_change_to_ = name;
+			scene_to_be_changed_ = true;
 		}
 	}
 
@@ -88,6 +152,16 @@ namespace JZEngine
 
 	void SceneLogic::UpdateSceneLogic(float dt)
 	{
+		if (scene_to_be_changed_)
+		{
+			scene_to_be_changed_ = false;
+			scene_tree_->RemoveAllEntities();
+			Serialize::DeserializeScene(ecs_instance_, *scene_to_change_to_);
+			*scene_tree_->current_scene_name_ = *scene_to_change_to_;
+			SceneLogic::Instance().SetCurrentSceneName(*scene_to_change_to_);
+			SceneLogic::Instance().BuildEntityMap();
+			SceneLogic::Instance().InitSceneLogic();
+		}
 		if (scene_updates_ && scene_updates_->find(*current_scene_name_) != scene_updates_->end())
 		{
 			(*scene_updates_)[*current_scene_name_](dt);
@@ -122,13 +196,14 @@ namespace JZEngine
 		}
 	}
 
-	ECS::Entity& SceneLogic::GetEntity(const std::string& name, unsigned int id)
+	ECS::Entity* SceneLogic::GetEntity(const std::string& name, unsigned int id)
 	{
-		if (entity_map_ || entity_map_->find(name) == entity_map_->end())
+		if (!entity_map_ || entity_map_->find(name) == entity_map_->end())
 		{
 			Log::Warning("Main", "Trying to get entity [{}] from scene that does not exist", name);
+			return nullptr;
 		}
-		return (*(*entity_map_)[name][id]);
+		return (*entity_map_)[name][id];
 	}
 
 	/*ECS::Entity& SceneLogic::GetEntity(const std::string& name, unsigned int id)

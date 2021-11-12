@@ -300,6 +300,21 @@ namespace JZEngine
 				component.direction_.y);
 		}
 
+		template <>
+		static void SerializeComponent(MouseEvent& component, std::stringstream& stream, MODE mode)
+		{
+			SERIALIZE(stream, mode,
+				component.bounding_half_width_,
+				component.bounding_half_height_);
+		}
+
+		template <>
+		static void SerializeComponent(TextData& component, std::stringstream& stream, MODE mode)
+		{
+			SERIALIZE(stream, mode,
+				component.font_size_);
+		}
+
 		/*!_______________________________________________________________________________________________________*/
 		/* STOP HERE GO NO FURTHER! */ // WHY NOT
 		/*!_______________________________________________________________________________________________________*/

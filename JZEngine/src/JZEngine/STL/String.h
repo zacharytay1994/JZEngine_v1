@@ -6,11 +6,12 @@
 */
 
 #pragma once
+#include "../BuildDefinitions.h"
 
 namespace JZEngine
 {
 	inline constexpr int MAX_STRING_SIZE{ 200 };
-	struct String
+	struct JZENGINE_API String
 	{
 		char data[ MAX_STRING_SIZE ];
 		unsigned int length{ 0 };

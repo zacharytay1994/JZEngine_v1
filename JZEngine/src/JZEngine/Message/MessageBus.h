@@ -1,7 +1,7 @@
 /*	__FILE HEADER__
-*	File:		Event.h
+*	File:		MessageBus.h
 	Primary:	Yu Ching Yin
-	Date:		01/07/21
+	Date:		30/09/21
 	Brief:		Message Bus.
 */
 
@@ -59,17 +59,17 @@ namespace JZEngine
 
 		~MessageBus()
 		{
-			for (const auto& [key, value]: subscribers)
-			{
-				for (auto& handler : *value)
-				{
-					//delete everything inside the list
-					delete handler;
-				}
+			//for (const auto& [key, value]: subscribers)
+			//{
+			//	for (auto& handler : *value)
+			//	{
+			//		//delete everything inside the list
+			//		delete handler;
+			//	}
 
-				//delete the HandlerList pointer itself
-				delete value;
-			}
+			//	//delete the HandlerList pointer itself
+			//	delete value;
+			//}
 		}
 
 	private:

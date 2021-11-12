@@ -142,7 +142,7 @@ namespace JZEngine
 	{
 		if (Camera::fullscreen)
 		{
-			glViewport(0.0f, 0.0f, Settings::window_width, Settings::window_height);
+			glViewport(0, 0, Settings::window_width, Settings::window_height);
 		}
 		else 
 		{

@@ -197,8 +197,8 @@ namespace JZEngine
 		//std::sort(RenderQueue::layers_.begin(), RenderQueue::layers_.end(), CompareLayerPointer);
 		std::sort(layers_.begin(), layers_.end(), CompareLayerPointer);
 		int i = std::numeric_limits<int>::min();
-		int uid = 0;
-		bool table_begin = false;
+		//int uid = 0;
+		//bool table_begin = false;
 		for (auto& layer : layers_)
 		{
 			if (*layer.layer_ > i)
@@ -255,7 +255,7 @@ namespace JZEngine
 		bool is_selected = false;
 		if(	selected_entity_id_ != -1	)
 		{
-			if( entity->entity_id_ == selected_entity_id_ )
+			if( entity->entity_id_ == static_cast<ECS::ui32>(selected_entity_id_) )
 			{
 				is_selected = true;
 				ImGui::PushStyleColor ( ImGuiCol_Text , { 0.0f,1.0f,0.0f,1.0f } );

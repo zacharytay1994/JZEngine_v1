@@ -80,6 +80,9 @@ namespace JZEngine
     When the ESC key is pressed, the close flag of the window is set.
     */
     void InputHandler::key_cb(GLFWwindow* pwin, int key, int scancode, int action, int mod) {
+        UNREFERENCED_PARAMETER(pwin);
+        UNREFERENCED_PARAMETER(scancode);
+        UNREFERENCED_PARAMETER(mod);
         if (GLFW_PRESS == action || GLFW_REPEAT == action)
             keystate[key] = true;
         else if (GLFW_RELEASE == action)
@@ -109,6 +112,8 @@ namespace JZEngine
     This function is called when mouse buttons are pressed.
     */
     void InputHandler::mousebutton_cb(GLFWwindow* pwin, int button, int action, int mod) {
+        UNREFERENCED_PARAMETER(mod);
+        UNREFERENCED_PARAMETER(pwin);
         if(GLFW_PRESS == action || GLFW_REPEAT == action)
             mousestate[button] = true;
         else if (GLFW_RELEASE == action)
@@ -133,6 +138,7 @@ namespace JZEngine
     relative to the top-left corner of the window client area.
     */
     void InputHandler::mousepos_cb(GLFWwindow* pwin, double xpos, double ypos) {
+        UNREFERENCED_PARAMETER(pwin);
         mousepos = { static_cast<float>(xpos),static_cast<float>(ypos) };
     }
 
@@ -155,10 +161,9 @@ namespace JZEngine
     mouse scroll wheel, being vertical, provides offsets only along the Y-axis.
     */
     void InputHandler::mousescroll_cb(GLFWwindow* pwin, double xoffset, double yoffset) {
-#ifdef _DEBUG
-        std::cout << "Mouse scroll wheel offset: ("
-            << xoffset << ", " << yoffset << ")" << std::endl;
-#endif
+
+        UNREFERENCED_PARAMETER(pwin);
+        UNREFERENCED_PARAMETER(xoffset);
         mouse_scrolled_ = static_cast<int>(yoffset);
     }
 
@@ -178,6 +183,7 @@ namespace JZEngine
     */
     void InputHandler::error_cb(int error, char const* description) {
 #ifdef _DEBUG
+        UNREFERENCED_PARAMETER(error);
         std::cerr << "GLFW error: " << description << std::endl;
 #endif
     }
@@ -203,7 +209,9 @@ namespace JZEngine
 #ifdef _DEBUG
         std::cout << "fbsize_cb getting called!!!" << std::endl;
 #endif
-        UNREFERENCED_PARAMETER(width, height);
+        UNREFERENCED_PARAMETER(ptr_win);
+        UNREFERENCED_PARAMETER(width);
+        UNREFERENCED_PARAMETER(height);
     }
 
     bool InputHandler::IsKeyPressed(KEY key) 

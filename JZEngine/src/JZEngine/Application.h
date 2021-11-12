@@ -54,7 +54,7 @@ namespace JZEngine
 		void Run();
 
 	private:
-		JZEngine::MessageBus*               msgbus{};
+		//JZEngine::MessageBus*               msgbus{};
 		GlobalSystemsManager*				global_systems_;
 		//JZEngine::GLFW_Instance				gl_instance_;		/*!< glfw instance, abstracts creation of opengl instance using glfw */
 		//JZEngine::ResourceManager			resource_manager_;	/*!< resource manager loads all resources from files */

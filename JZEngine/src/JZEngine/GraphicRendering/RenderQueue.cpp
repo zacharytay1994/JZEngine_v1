@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		RenderQueue.cpp
+	Primary:	Jee Jia Min, Zachary Tay
+	Date:		19/06/21
+	Brief:		Helps render sprites back to front.
+*/
+
 #include <PCH.h>
 #include "RenderQueue.h"
 #include "Renderer.h"
@@ -9,6 +16,7 @@ namespace JZEngine {
 	std::vector<RenderQueue::LayerData> RenderQueue::layers_;
 
 	void RenderQueue::Update(float dt) {
+		UNREFERENCED_PARAMETER(dt);
 		// flush the draw queue and render all data
 		if (renderer_) {
 			while (render_queue_.size() > 0) {

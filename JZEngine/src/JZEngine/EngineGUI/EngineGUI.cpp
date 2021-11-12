@@ -106,14 +106,14 @@ namespace JZEngine
 		}
 		else
 		{
-			for (auto& interface : imgui_interfaces_)
-			{
-				// just render menu bar
-				if (interface.second.group_ == 0)
-				{
-					interface.second.interface_->RenderInterface(dt);
-				}
-			}
+			//for (auto& interface : imgui_interfaces_)
+			//{
+			//	// just render menu bar
+			//	if (interface.second.group_ == 0)
+			//	{
+			//		interface.second.interface_->RenderInterface(dt);
+			//	}
+			//}
 		}
 
 		ECS::Entity* selected_entity = scene_tree_.GetSelectedEntity();
@@ -126,7 +126,7 @@ namespace JZEngine
 				//ImGuiIO& io = ImGui::GetIO();
 				if (Camera::fullscreen)
 				{
-					ImGuizmo::SetRect(0.0f, 0.0f, Settings::window_width, Settings::window_height);
+					ImGuizmo::SetRect(0.0f, 0.0f, static_cast<float>(Settings::window_width), static_cast<float>(Settings::window_height));
 				}
 				else 
 				{
@@ -213,6 +213,11 @@ namespace JZEngine
 	Mat3f EngineGUI::GetCameraTransform()
 	{
 		return Camera::camera_transform_;
+	}
+
+	SceneTree* EngineGUI::GetSceneTree()
+	{
+		return &scene_tree_;
 	}
 
 	void EngineGUI::ProcessCameraInput()

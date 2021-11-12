@@ -14,7 +14,7 @@ namespace JZEngine
 	GLenum glCheckError_( const char* function, int line )
 	{
 		GLenum error_code_;
-		while ( ( error_code_ = glGetError() != GL_NO_ERROR ) )
+		while ( ( (error_code_ = glGetError()) != GL_NO_ERROR ) )
 		{
 			std::string error_{};
 			switch ( error_code_ )
@@ -53,6 +53,8 @@ namespace JZEngine
 	// APIENTRY is an alias for WINAPI.
 	void APIENTRY glDebugOutput( GLenum source, GLenum type, unsigned int id, GLenum severity, GLsizei length, const char* message, const void* userParam )
 	{
+		UNREFERENCED_PARAMETER(userParam);
+		UNREFERENCED_PARAMETER(length);
 		// ignore these non-significant error codes
 		if ( id == 131169 || id == 131185 || id == 131218 || id == 131204 ) return;
 

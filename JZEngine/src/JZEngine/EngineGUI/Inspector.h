@@ -91,6 +91,7 @@ namespace JZEngine
 		template <typename COMPONENT>
 		void RenderComponent ( COMPONENT& component )
 		{
+			UNREFERENCED_PARAMETER(component);
 			ImGui::Text ( "Oops nothing here..." );
 		}
 
@@ -371,7 +372,7 @@ namespace JZEngine
 			
 			ImGui::Text("Shape");
 
-			ImGui::SliderInt("ID", &component.shapeid, 0, 3);
+			ImGui::SliderInt("ID", &component.shapeid, 0, 1);
 
 			ImGui::Text("Offset");
 			ImGui::PushItemWidth((w / 2.0f) - (spacing * 3.0f));
@@ -581,11 +582,11 @@ namespace JZEngine
 
 				ImGui::Text ( "Rows" );
 				ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
-				ImGui::SliderInt ( "##AnimationRows" , &component.rows_ , 1 , 30 );
+				ImGui::SliderInt ( "##AnimationRows" , &component.rows_ , 1 , 100 );
 
 				ImGui::Text ( "Columns" );
 				ImGui::SetNextItemWidth ( w + ( spacing * 4.0f ) );
-				ImGui::SliderInt ( "##AnimationColumns" , &component.column_ , 1 , 30 );
+				ImGui::SliderInt ( "##AnimationColumns" , &component.column_ , 1 , 100 );
 			}
 		}
 
@@ -593,6 +594,13 @@ namespace JZEngine
 		void RenderComponent(SpriteLayer& component)
 		{
 			ImGui::InputInt(": Layer", &component.layer_);
+		}
+
+		template <>
+		void RenderComponent(MouseEvent& component)
+		{
+			ImGui::InputFloat("##MEX", &component.bounding_half_width_);
+			ImGui::InputFloat("##MEY", &component.bounding_half_height_);
 		}
 
 		/*!
