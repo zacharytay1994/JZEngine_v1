@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		State.h
+	Primary:	Ching Yin
+	Date:		19/06/21
+	Brief:		State of statemachine.
+*/
+
 #pragma once
 
 #include <string>

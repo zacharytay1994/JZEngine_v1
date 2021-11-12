@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		HawkerQueue.h
+	Primary:	Zachary Tay
+	Date:		19/06/21
+	Brief:		Queue logic.
+*/
+
 #pragma once
 
 #include <vector>

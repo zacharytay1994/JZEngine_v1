@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		RenderQueue.cpp
+	Primary:	Jee Jia Min, Zachary Tay
+	Date:		19/06/21
+	Brief:		Helps render sprites back to front.
+*/
+
 #pragma once
 
 #include "../GlobalSystems.h"

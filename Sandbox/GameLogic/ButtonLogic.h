@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		ButtonLogic.h
+	Primary:	Zachary Tay
+	Date:		19/06/21
+	Brief:		Button logic.
+*/
+
 #pragma once
 #include <JZEngine.h>
 #include <string>

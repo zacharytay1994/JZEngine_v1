@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		CutScene.h
+	Primary:	Zachary Tay
+	Date:		19/06/21
+	Brief:		Cutscene logic.
+*/
+
 #pragma once
 
 #include <JZEngine.h>

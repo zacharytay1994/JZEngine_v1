@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		HawkerScene.h
+	Primary:	Zachary Tay
+	Date:		19/06/21
+	Brief:		Hawker scene logic.
+*/
+
 #pragma once
 #include <JZEngine.h>
 #include "HawkerQueue.h"

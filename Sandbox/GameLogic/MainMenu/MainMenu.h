@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		MainMenu.h
+	Primary:	Zachary Tay
+	Date:		19/06/21
+	Brief:		Main Menu logic.
+*/
+
 #pragma once
 #include <JZEngine.h>
 #include <string>
