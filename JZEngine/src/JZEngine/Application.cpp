@@ -50,7 +50,7 @@ namespace JZEngine
 {
 	Application::Application ()
 		:
-		msgbus( new MessageBus() ),
+		//msgbus( new MessageBus() ),
 		global_systems_ ( new GlobalSystemsManager () )
 	{
 		/*testsystem.createSound("testsound", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
@@ -97,7 +97,7 @@ namespace JZEngine
 		SceneLogic::Instance().SetSceneTree(global_systems_->GetSystem<EngineGUI>()->GetSceneTree());
 		SceneLogic::Instance().SetSoundSystem(global_systems_->GetSystem<SoundSystem>());
 
-		msgbus->subscribe ( global_systems_->GetSystem<SoundSystem> () , &SoundSystem::playSound );
+		//msgbus->subscribe ( global_systems_->GetSystem<SoundSystem> () , &SoundSystem::playSound );
 
 		//change
 		/*ECS::ECSInstance* ecs = global_systems_->GetSystem<ECS::ECSInstance>();
@@ -224,7 +224,7 @@ namespace JZEngine
 	{
 		Log::Instance ().Free ();
 		global_systems_->Free ();
-		delete msgbus;
+		//delete msgbus;
 		delete global_systems_;
 	}
 
@@ -254,7 +254,7 @@ namespace JZEngine
 
 		while( global_systems_->GetSystem<GLFW_Instance> ()->Active () )
 		{
-			fsm->update(dt);
+			fsm->update(static_cast<float>(dt));
 
 			/*if( InputHandler::IsKeyTriggered ( KEY::KEY_L ) )
 			{
@@ -290,7 +290,7 @@ namespace JZEngine
 			{
 				SoundEvent event{};
 				event.name = "mellau__button-click-1.wav";
-				msgbus->publish ( &event );
+				//msgbus->publish ( &event );
 			}
 
 
@@ -323,7 +323,7 @@ namespace JZEngine
 				time += dt;
 			}
 			//Log::Info("Main", "Sleep Time: {}", sleep_time);
-			PerformanceData::time_elapsed_ = time;
+			PerformanceData::time_elapsed_ = static_cast<float>(time);
 
 			PerformanceData::app_fps_ = static_cast< unsigned int >( 1.0 / dt );
 			/*Log::Info("Main", "Time Elapsed: {}", time);
@@ -335,5 +335,6 @@ namespace JZEngine
 
 		//Serialize::Save();
 		Settings::SaveToConfigFile ();
+		delete fsm;
 	}
 }

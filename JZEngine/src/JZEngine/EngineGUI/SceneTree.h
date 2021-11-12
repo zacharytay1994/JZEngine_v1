@@ -28,7 +28,7 @@ namespace JZEngine
 	 * Able to add and remove entities from the scene.
 	 * ****************************************************************************************************
 	*/
-	struct JZENGINE_API SceneTree
+	struct SceneTree
 	{
 		ECS::ECSInstance* ecs_instance_{nullptr};
 		float x_, y_, sx_, sy_;		/*!< position and scale of ImGui window */

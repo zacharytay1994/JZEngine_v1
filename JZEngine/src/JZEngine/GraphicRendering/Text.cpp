@@ -18,6 +18,7 @@ namespace JZEngine
 
 	void Text::Update ( const float& dt )
 	{
+		UNREFERENCED_PARAMETER(dt);
 		if( text_renderer_ )
 		{
 			Transform& transform = GetComponent<Transform> ();

@@ -26,7 +26,7 @@ copy "$(SolutionDir)vendors\FreeType\dll\win64\freetype.dll" "$(TargetDir)freety
       <PreprocessorDefinitions>JZENGINE_PLATFORM_WINDOWS;JZENGINE_BUILD_DLL;GLFW_INCLUDE_NONE;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)JZEngine\vendor\spdlog\include;$(SolutionDir)JZEngine\vendor\stb_image;$(SolutionDir)JZEngine\vendor\</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
-      <DisableSpecificWarnings>4005;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4005;4251;4099;4275;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />

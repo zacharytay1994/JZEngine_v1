@@ -49,7 +49,7 @@ void UpdateVolumeSlider()
 		if (e->on_held_)
 		{
 			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_) / 500.0f;
-			std::clamp(ratio, 0.0f, 1.0f);
+			ratio = std::clamp(ratio, 0.0f, 1.0f);
 			if (ratio < mute_threshold)
 			{
 				ratio = 0.0f;
@@ -72,7 +72,7 @@ void UpdateVolumeSlider()
 		if (e->on_held_)
 		{
 			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_) / 500.0f;
-			std::clamp(ratio, 0.0f, 1.0f);
+			ratio = std::clamp(ratio, 0.0f, 1.0f);
 			if (ratio < mute_threshold)
 			{
 				ratio = 0.0f;
@@ -91,7 +91,7 @@ void UpdateVolumeSlider()
 		if (e->on_held_)
 		{
 			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_) / 500.0f;
-			std::clamp(ratio, 0.0f, 1.0f);
+			ratio = std::clamp(ratio, 0.0f, 1.0f);
 			if (ratio < mute_threshold)
 			{
 				ratio = 0.0f;
@@ -166,6 +166,7 @@ void ToggleCredits(bool toggle)
 
 void UpdateMainScreen(float dt)
 {
+	UNREFERENCED_PARAMETER(dt);
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_play"))
 	{
 		if (e->on_released_)
@@ -249,6 +250,7 @@ void UpdateMainScreen(float dt)
 
 void UpdateOptionsMenu(float dt)
 {
+	UNREFERENCED_PARAMETER(dt);
 	UpdateVolumeSlider(); 
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Option_quit_bb"))
 	{
@@ -262,6 +264,7 @@ void UpdateOptionsMenu(float dt)
 
 void UpdateQuitMenu(float dt)
 {
+	UNREFERENCED_PARAMETER(dt);
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Quit_yes_bb"))
 	{
 		if (e->on_released_)
@@ -306,6 +309,7 @@ void UpdateQuitMenu(float dt)
 
 void UpdateCreditsMenu(float dt)
 {
+	UNREFERENCED_PARAMETER(dt);
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Credits_x_bb"))
 	{
 		if (e->on_released_)

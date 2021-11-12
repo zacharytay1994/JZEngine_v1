@@ -96,6 +96,7 @@ namespace JZEngine
 
 		virtual void Update(float dt) override
 		{
+			UNREFERENCED_PARAMETER(dt);
 			for (auto& data : render_text_data_)
 			{
 				RenderText(data.text_, data.x_, data.y_, data.scale_, data.color_, data.tracking_x_, data.leading_y_);

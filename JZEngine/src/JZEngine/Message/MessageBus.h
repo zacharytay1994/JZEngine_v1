@@ -59,17 +59,17 @@ namespace JZEngine
 
 		~MessageBus()
 		{
-			for (const auto& [key, value]: subscribers)
-			{
-				for (auto& handler : *value)
-				{
-					//delete everything inside the list
-					delete handler;
-				}
+			//for (const auto& [key, value]: subscribers)
+			//{
+			//	for (auto& handler : *value)
+			//	{
+			//		//delete everything inside the list
+			//		delete handler;
+			//	}
 
-				//delete the HandlerList pointer itself
-				delete value;
-			}
+			//	//delete the HandlerList pointer itself
+			//	delete value;
+			//}
 		}
 
 	private:

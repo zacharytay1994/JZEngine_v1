@@ -30,7 +30,10 @@ namespace JZEngine {
 			int*	layer_			{ nullptr };
 			int		texture_id_		{ 0 };
 
-			LayerData(int* layer, int textureId, bool isBackground = false) : layer_(layer), texture_id_(textureId) {}
+			LayerData(int* layer, int textureId, bool isBackground = false) : layer_(layer), texture_id_(textureId) 
+			{
+				UNREFERENCED_PARAMETER(isBackground);
+			}
 		};
 
 		class CompareRenderData

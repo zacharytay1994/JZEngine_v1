@@ -126,7 +126,7 @@ namespace JZEngine
 				//ImGuiIO& io = ImGui::GetIO();
 				if (Camera::fullscreen)
 				{
-					ImGuizmo::SetRect(0.0f, 0.0f, Settings::window_width, Settings::window_height);
+					ImGuizmo::SetRect(0.0f, 0.0f, static_cast<float>(Settings::window_width), static_cast<float>(Settings::window_height));
 				}
 				else 
 				{

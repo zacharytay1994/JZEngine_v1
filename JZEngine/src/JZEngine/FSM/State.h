@@ -35,6 +35,7 @@ namespace JZEngine
 
 		virtual void update(float dt)
 		{
+			UNREFERENCED_PARAMETER(dt);
 			//To be overwritten in a derived class
 		}
 

@@ -202,6 +202,7 @@ void CutSceneInit()
 
 void CutSceneUpdate(float dt)
 {
+	UNREFERENCED_PARAMETER(dt);
 	//if the mouse event phone app background exist
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Phone_app_bg"))
 	{

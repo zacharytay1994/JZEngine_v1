@@ -9,6 +9,7 @@ namespace JZEngine {
 	std::vector<RenderQueue::LayerData> RenderQueue::layers_;
 
 	void RenderQueue::Update(float dt) {
+		UNREFERENCED_PARAMETER(dt);
 		// flush the draw queue and render all data
 		if (renderer_) {
 			while (render_queue_.size() > 0) {

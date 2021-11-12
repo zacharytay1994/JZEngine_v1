@@ -273,8 +273,12 @@ namespace JZEngine
 
 	float Collision::FindAxisLeastPenetration(int& faceIndex, Square& A, Square& B)
 	{
-		float bestDistance = std::numeric_limits<float>::min();
-		int bestIndex;
+		//float bestDistance = std::numeric_limits<float>::min();
+		/*int bestIndex;
+		UNREFERENCED_PARAMETER(bestIndex);*/
+		UNREFERENCED_PARAMETER(faceIndex);
+		UNREFERENCED_PARAMETER(A);
+		UNREFERENCED_PARAMETER(B);
 		return 0.f;
 	}
 

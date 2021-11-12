@@ -106,12 +106,12 @@ void SetCustomerAnimation(AnimationPack& animPack, AnimationStates state, int id
 		JZEngine::Transform* transform = Scene().GetComponent<JZEngine::Transform>("Customer", id);
 		transform->scale_.x = customer_animations[animation].x_scale_;
 		transform->scale_.y = customer_animations[animation].y_scale_;
-		JZEngine::Animation2D* animation = Scene().GetComponent<JZEngine::Animation2D>("Customer", id);
-		animation->column_ = csd.cols_;
-		animation->rows_ = csd.rows_;
-		animation->max_frames_ = csd.max_frames_;
-		animation->animation_speed_ = csd.animation_speed_;
-		animation->frame_ = 0;
+		JZEngine::Animation2D* anim = Scene().GetComponent<JZEngine::Animation2D>("Customer", id);
+		anim->column_ = csd.cols_;
+		anim->rows_ = csd.rows_;
+		anim->max_frames_ = csd.max_frames_;
+		anim->animation_speed_ = csd.animation_speed_;
+		anim->frame_ = 0;
 	}
 }
 

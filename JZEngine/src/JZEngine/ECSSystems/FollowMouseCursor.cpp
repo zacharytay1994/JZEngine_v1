@@ -12,6 +12,7 @@ namespace JZEngine
 
 	void FollowMouseCursorSystem::Update(const float& dt)
 	{
+		UNREFERENCED_PARAMETER(dt);
 		GetComponent<Transform>().position_ = Camera::mouse_world_position_;
 	}
 }

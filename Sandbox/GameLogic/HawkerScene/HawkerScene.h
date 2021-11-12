@@ -258,6 +258,7 @@ void ToggleWin(bool toggle)
 
 void UpdateWinScreen(float dt)
 {
+	UNREFERENCED_PARAMETER(dt);
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Win_restart_bb"))
 	{
 		if (e->on_released_)

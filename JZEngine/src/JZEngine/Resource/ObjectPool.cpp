@@ -12,7 +12,7 @@ namespace JZEngine
 	void ObjectPool::CreatePool(ECS::ECSInstance* ecs, const std::string& prefab, unsigned int count, bool persistant)
 	{
 		JZ_ASSERT(ecs != nullptr, "Creating Pool before ECSInstance is initialized")(ecs);
-		for (int i = 0; i < count; ++i)
+		for (unsigned int i = 0; i < count; ++i)
 		{
 			auto& pool_data = pools_[prefab];
 			pool_data.pool_.emplace_back(Serialize::LoadEntity(ecs, prefab));
@@ -31,13 +31,13 @@ namespace JZEngine
 		{
 			int id = pool_data.free_pool_slots_.back();
 			pool_data.free_pool_slots_.pop_back();
-			ECS::Entity& e = ecs->GetEntity(id);
+			//ECS::Entity& e = ecs->GetEntity(id);
 			
 			ecs->GetEntity(id).FlagActive(true);
 			return ecs->GetEntity(id);
 		}
 		// expand pool
-		int initial_size = pool_data.pool_.size();
+		int initial_size = static_cast<int>(pool_data.pool_.size());
 		if (pool_data.pool_.size() == 0)
 		{
 			CreatePool(ecs, prefab, 10, persistant);
@@ -58,14 +58,14 @@ namespace JZEngine
 		{
 			int id = pool_data.free_pool_slots_.back();
 			pool_data.free_pool_slots_.pop_back();
-			ECS::Entity& e = ecs->GetEntity(id);
+			//ECS::Entity& e = ecs->GetEntity(id);
 
 			ecs->GetEntity(id).FlagActive(true);
 			Serialize::ReInitializeEntity(ecs, prefab, id);
 			return ecs->GetEntity(id);
 		}
 		// expand pool
-		int initial_size = pool_data.pool_.size();
+		int initial_size = static_cast<int>(pool_data.pool_.size());
 		if (pool_data.pool_.size() == 0)
 		{
 			CreatePool(ecs, prefab, 10, persistant);
@@ -105,7 +105,7 @@ namespace JZEngine
 			{
 				ecs->RemoveEntity(e);
 			}
-			pool_size += pools_[prefab].pool_.capacity();
+			pool_size += static_cast<int>(pools_[prefab].pool_.capacity());
 			pools_[prefab].pool_.clear();
 			pools_[prefab].free_pool_slots_.clear();
 			// recreate pool with updated prefab
@@ -118,7 +118,7 @@ namespace JZEngine
 		int i = 0;
 		for (auto& pool : pools_)
 		{
-			i += pool.second.pool_.size();
+			i += static_cast<int>(pool.second.pool_.size());
 		}
 		return i;
 	}
@@ -128,7 +128,7 @@ namespace JZEngine
 		int i = 0;
 		for (auto& pool : pools_)
 		{
-			i += pool.second.pool_.size() - pool.second.free_pool_slots_.size();
+			i += static_cast<int>(pool.second.pool_.size() - pool.second.free_pool_slots_.size());
 		}
 		return i;
 	}

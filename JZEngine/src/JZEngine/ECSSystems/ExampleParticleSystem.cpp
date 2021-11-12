@@ -77,6 +77,7 @@ namespace JZEngine
 	// updates once per entity component per system per frame
 	void PopiahParticleSystem::Update(const float& dt) 
 	{
+		UNREFERENCED_PARAMETER(dt);
 		//if (timer_ < 0.0f)
 		//{
 		//	// create spring roll particle

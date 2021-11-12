@@ -28,7 +28,7 @@ namespace JZEngine
 				default: return 0 ;
 			}
 			/*ASSERT ( false );*/
-			return 0 ;
+			//return 0 ;
 		}
 	};
 

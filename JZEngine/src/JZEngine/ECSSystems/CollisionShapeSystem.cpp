@@ -17,13 +17,13 @@ namespace JZEngine
 
 	void CollisionShapeSystem::FrameBegin(const float& dt)
 	{
-	
+		UNREFERENCED_PARAMETER(dt);
 	}
 
 	//update shapes & vertices according to a offset for the collision
 	void CollisionShapeSystem::Update(const float& dt)
 	{
-
+		UNREFERENCED_PARAMETER(dt);
 		Transform& tcomponent = GetComponent<Transform>();
 		CollisionComponent& ccomponent = GetComponent<CollisionComponent>();
 
@@ -59,6 +59,7 @@ namespace JZEngine
 
 	void CollisionShapeSystem::FrameEnd(const float& dt)
 	{
+		UNREFERENCED_PARAMETER(dt);
 	}
 
 }

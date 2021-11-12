@@ -19,11 +19,13 @@ namespace JZEngine
 
 	void InstanceSprite::FrameBegin( const float& dt )
 	{
+		UNREFERENCED_PARAMETER(dt);
 		sprite_renderer_instancing_.DrawInstances();
 	}
 
 	void InstanceSprite::Update( const float& dt )
 	{
+		UNREFERENCED_PARAMETER(dt);
 		Transform& transform = GetComponent<Transform>();
 		Texture& texture = GetComponent<Texture>();
 		InstanceShader& shader = GetComponent<InstanceShader>();

@@ -91,6 +91,7 @@ namespace JZEngine
 		template <typename COMPONENT>
 		void RenderComponent ( COMPONENT& component )
 		{
+			UNREFERENCED_PARAMETER(component);
 			ImGui::Text ( "Oops nothing here..." );
 		}
 

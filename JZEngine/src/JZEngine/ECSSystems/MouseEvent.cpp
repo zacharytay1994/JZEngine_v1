@@ -14,6 +14,7 @@ namespace JZEngine
 
 	void MouseEventSystem::FrameBegin(const float& dt)
 	{
+		UNREFERENCED_PARAMETER(dt);
 		mouse_pressed_ = InputHandler::IsMouseTriggered(MOUSE::MOUSE_BUTTON_1);
 		mouse_down_ = InputHandler::IsMousePressed(MOUSE::MOUSE_BUTTON_1);
 		mouse_released_ = InputHandler::IsMouseReleased(MOUSE::MOUSE_BUTTON_1);
@@ -23,6 +24,7 @@ namespace JZEngine
 
 	void MouseEventSystem::Update(const float& dt)
 	{
+		UNREFERENCED_PARAMETER(dt);
 		Transform& transform = GetComponent<Transform>();
 		MouseEvent& me = GetComponent<MouseEvent>();
 		// check if mouse is over component
