@@ -128,11 +128,21 @@ namespace JZEngine
 		static unsigned int LoadDebugShader(const std::string& name, const std::string& vspath, const std::string& fspath);
 		//static unsigned int LoadTexture2D(const std::string& name, const std::string& path);
 
+		struct FolderData
+		{
+			std::string					path_;
+			std::string					name_;
+			std::vector<std::string>	files_;
+			std::vector<FolderData>		folders_;
+		};
+		static FolderData texture_folder_data_;
+		static std::unordered_map<std::string, std::vector<std::string>> texture_folders_;
+
 		static unsigned int texture_unique_id_;
 		static std::vector<Texture2DID> texture2ds_;
 		static std::unordered_map<std::string, int> umap_texture2ds_;
 		static void LoadAllTexturesInFolder(const std::string& folder = "Assets/Textures/");
-		static void RecursivelyLoadTexture(const std::string& folder);
+		static void RecursivelyLoadTexture(const std::string& folder, FolderData& folderData);
 		static Texture2D* GetTexture(int id);
 		static Texture2D* GetTexture(const std::string& name);
 		static int GetTextureID(const std::string& name);

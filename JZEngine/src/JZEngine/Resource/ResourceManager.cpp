@@ -21,6 +21,9 @@ namespace JZEngine
 	std::vector<ResourceManager::Texture2DID> ResourceManager::texture2ds_;
 	std::unordered_map<std::string, int> ResourceManager::umap_texture2ds_;
 
+	ResourceManager::FolderData ResourceManager::texture_folder_data_;
+	std::unordered_map<std::string, std::vector<std::string>> ResourceManager::texture_folders_;
+
 	ResourceManager::ResourceManager ()
 	{
 		// load textures
@@ -55,6 +58,8 @@ namespace JZEngine
 		LoadInstancedShader ( "Default" ,
 							  "Assets/Shaders/Vertex/VS_Instancing.vs" ,
 							  "Assets/Shaders/Fragment/FS_Instancing.fs" );
+
+		texture_folder_data_.name_ = "Textures";
 	}
 
 	void ResourceManager::PostInit()
@@ -258,7 +263,11 @@ namespace JZEngine
 			std::filesystem::create_directory(folder);
 		}
 
-		RecursivelyLoadTexture(folder);
+		texture_folder_data_ = ResourceManager::FolderData();
+		texture_folder_data_.path_ = "Assets/Textures";
+		texture_folder_data_.name_ = "Textures";
+		texture_folders_ = std::unordered_map<std::string, std::vector<std::string>>();
+		RecursivelyLoadTexture(folder, texture_folder_data_);
 		/*for (const auto& entry : std::filesystem::directory_iterator(folder))
 		{
 			std::cout << entry.path() << std::endl;
@@ -273,11 +282,10 @@ namespace JZEngine
 		}*/
 	}
 
-	void ResourceManager::RecursivelyLoadTexture(const std::string& folder)
+	void ResourceManager::RecursivelyLoadTexture(const std::string& folder, FolderData& folderData)
 	{
 		std::string path;
 		std::string texture_name;
-		size_t dash;
 		std::unordered_map<std::string, bool> check;
 		// create temp
 		/*for (auto& c : umap_texture2ds_)
@@ -306,8 +314,12 @@ namespace JZEngine
 
 			if (std::filesystem::is_directory(file.path()))
 			{
+				folderData.folders_.emplace_back();
+				folderData.folders_.back().path_ = file.path().string();
+				folderData.folders_.back().name_ = file.path().filename().string();
+				//texture_folders_[folderData.folders_.back().name_] = &folderData.files_;
 				std::cout << file.path().string() << std::endl;
-				RecursivelyLoadTexture(file.path().string());
+				RecursivelyLoadTexture(file.path().string(), folderData.folders_.back());
 			}
 			else
 			{
@@ -317,6 +329,8 @@ namespace JZEngine
 				texture_name = file.path().filename().string();
 				texture_name = texture_name.substr(0, texture_name.find_last_of('.'));
 				std::cout << texture_name << std::endl;
+				folderData.files_.emplace_back(texture_name);
+				texture_folders_[folderData.name_].emplace_back(texture_name);
 				// check if texture already loaded
 				if (umap_texture2ds_.find(texture_name) == umap_texture2ds_.end())
 				{

@@ -28,6 +28,8 @@ namespace JZEngine
 
 		void RenderInterface(float dt);
 
+		void SetNextWindowDimensions(float start_x, float start_y, float width, float height);
+
 		virtual void Render(float dt) { UNREFERENCED_PARAMETER(dt); };
 
 		void SetEngineGUI(EngineGUI* enginegui);

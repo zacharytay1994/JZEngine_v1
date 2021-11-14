@@ -33,6 +33,14 @@ namespace JZEngine
 		}
 	}
 
+	void ImGuiInterface::SetNextWindowDimensions(float start_x, float start_y, float width, float height)
+	{
+		ImGui::SetNextWindowBgAlpha(gui_alpha_);
+		ImGui::SetNextWindowPos({ static_cast<float>(Settings::window_width) * x_ + (start_x * static_cast<float>(Settings::window_width) * sx_),
+			MenuBar::height_ + static_cast<float>(Settings::window_height - MenuBar::height_) * y_ + (start_y * static_cast<float>(Settings::window_height - MenuBar::height_) * sy_) }, ImGuiCond_Always);
+		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx_ * width, static_cast<float>(Settings::window_height - MenuBar::height_) * sy_ * height }, ImGuiCond_Always);
+	}
+
 	void ImGuiInterface::SetEngineGUI(EngineGUI* enginegui) {
 		engine_gui_ = enginegui;
 	}
