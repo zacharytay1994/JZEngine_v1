@@ -31,6 +31,7 @@ namespace JZEngine
 		length ( 1 )
 	{
 		data[ 0 ] = c;
+		data[ 1 ] = '\0';
 	}
 
 	String::String ( const char* c )
@@ -49,6 +50,7 @@ namespace JZEngine
 			{
 				data[ j ] = c[ j ];
 			}
+			data[ n ] = '\0';
 		}
 		else
 		{
@@ -65,6 +67,7 @@ namespace JZEngine
 		{
 			data[ j ] = s[ j ];
 		}
+		data[ length ] = '\0';
 	}
 
 	String::~String ()
@@ -99,6 +102,7 @@ namespace JZEngine
 	void String::clear ()
 	{
 		length = 0 ;
+		std::memset ( data , 0 , static_cast<size_t>(MAX_STRING_SIZE) );
 	}
 
 	void String::upcase ( unsigned first , unsigned last )

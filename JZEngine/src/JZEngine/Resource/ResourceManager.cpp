@@ -299,8 +299,8 @@ namespace JZEngine
 		}
 	}
 
-	void ResourceManager::LoadAllSoundsInFolder ( const std::string& folder )
-	{
+	//void ResourceManager::LoadAllSoundsInFolder ( const std::string& folder )
+	//{
 	//	if( !std::filesystem::is_directory ( folder ) )
 	//	{
 	//		std::filesystem::create_directory ( folder );
@@ -342,7 +342,7 @@ namespace JZEngine
 		//	}
 		//}*/
 
-	}
+	//}
 
 	Texture2D* ResourceManager::GetTexture ( int id )
 	{

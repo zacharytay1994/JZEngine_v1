@@ -45,6 +45,10 @@ float message_move_up_medium{135.0f};
 float message_move_up_small{-40.0f};
 float text_leading{3.0f};
 
+// relative position of the text in message box
+float message_left_position_x { -130.0f }; //
+float message_right_position_y{ -220.0f }; //
+
 
 void Flag1stMsg(bool flag)
 {
@@ -167,11 +171,13 @@ void CutSceneInit()
 	Flag11thMsg(false);
 	Flag12thMsg(false);
 	Flag13thMsg(false);
+
 	Scene().GetComponent<JZEngine::TextData>("1st_msg_text")->text = JZEngine::String("Baozi, are you still up?");
 	Scene().GetComponent<JZEngine::TextData>("2nd_msg_text")->text = JZEngine::String("Yea, what’s up?");
 	Scene().GetComponent<JZEngine::TextData>("2nd_msg_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	Scene().GetComponent<JZEngine::TextData>("3rd_msg_text")->text = JZEngine::String("I'm in the hospital.");
-	Scene().GetComponent<JZEngine::TextData>("4th_msg_text")->text = JZEngine::String("WHAT! WHY? ARE \n            YOU HURT?");
+	Scene().GetComponent<JZEngine::TextData>("4th_msg_text")->text = 
+	JZEngine::String ( "WHAT! WHY? ARE\nYOU HURT?" ); 
 	Scene().GetComponent<JZEngine::TextData>("4th_msg_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	Scene().GetComponent<JZEngine::TextData>("4th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("5th_msg_text")->text = 
@@ -187,11 +193,11 @@ void CutSceneInit()
 	JZEngine::String("Baozi, do you think you\ncan help me open my\nhawker business today?");
 	Scene().GetComponent<JZEngine::TextData>("8th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("9th_msg_text")->text = 
-	JZEngine::String("Ai yo... I told you many\n     times to be careful!");
+	JZEngine::String ( "Ai yo... I told you many\ntimes to be careful!" );
 	Scene().GetComponent<JZEngine::TextData>("9th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("9th_msg_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	Scene().GetComponent<JZEngine::TextData>("10th_msg_text")->text = 
-	JZEngine::String("      Do I have to? I've\nnever done it before.");
+	JZEngine::String ( "Do I have to? I've\nnever done it before." );
 	Scene().GetComponent<JZEngine::TextData>("10th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("10th_msg_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	Scene().GetComponent<JZEngine::TextData>("11th_msg_text")->text = 
@@ -200,7 +206,7 @@ void CutSceneInit()
 	Scene().GetComponent<JZEngine::TextData>("12th_msg_text")->text = JZEngine::String("I will text you if you\nneed guidance!");
 	Scene().GetComponent<JZEngine::TextData>("12th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("13th_msg_text")->text = 
-	JZEngine::String("   Okay okayyy. Let me\nsleep for an hour first.");
+	JZEngine::String ( "Okay okayyy. Let me\nsleep for an hour first." );
 	Scene().GetComponent<JZEngine::TextData>("13th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("13th_msg_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	
@@ -213,6 +219,23 @@ void CutSceneUpdate(float dt)
 	//if the mouse event phone app background exist
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Phone_app_bg"))
 	{
+		// Align the text for left pop up messages
+		Scene ().GetComponent<JZEngine::Transform> ( "1st_msg_text" )->child_position_.x = message_left_position_x; //
+		Scene ().GetComponent<JZEngine::Transform> ( "3rd_msg_text" )->child_position_.x = message_left_position_x; //
+		Scene ().GetComponent<JZEngine::Transform> ( "5th_msg_text" )->child_position_.x = message_left_position_x; //
+		Scene ().GetComponent<JZEngine::Transform> ( "6th_msg_text" )->child_position_.x = message_left_position_x; //
+		Scene ().GetComponent<JZEngine::Transform> ( "7th_msg_text" )->child_position_.x = message_left_position_x; //
+		Scene ().GetComponent<JZEngine::Transform> ( "8th_msg_text" )->child_position_.x = message_left_position_x; //
+		Scene ().GetComponent<JZEngine::Transform> ( "11th_msg_text" )->child_position_.x = message_left_position_x; //
+		Scene ().GetComponent<JZEngine::Transform> ( "12th_msg_text" )->child_position_.x = message_left_position_x; //
+																												 
+		// Align the text for right pop up messages
+		Scene ().GetComponent<JZEngine::Transform> ( "2nd_msg_text" )->child_position_.x = message_right_position_y; //
+		Scene ().GetComponent<JZEngine::Transform> ( "4th_msg_text" )->child_position_.x = message_right_position_y; //
+		Scene ().GetComponent<JZEngine::Transform> ( "9th_msg_text" )->child_position_.x = message_right_position_y; //
+		Scene ().GetComponent<JZEngine::Transform> ( "10th_msg_text" )->child_position_.x = message_right_position_y; //
+		Scene ().GetComponent<JZEngine::Transform> ( "13th_msg_text" )->child_position_.x = message_right_position_y; //
+
 		if (e->on_click_)
 		{
 			if (message_state == MessageState::Nothing)

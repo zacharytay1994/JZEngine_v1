@@ -58,32 +58,11 @@ namespace JZEngine
 
 
 		std::string::const_iterator c;
+		auto& Characters = GetSystem<ResourceManager> ()->font_characters_[ 0 ];
 
 		float start_x{ x };
 		float offset_x{ 0 };
-		float offset_y{ 0 };
-		float temp_offset_x{ 0 };
-		auto& Characters = GetSystem<ResourceManager> ()->font_characters_[ 0 ];
-
-		for( c = text.begin (); c != text.end (); c++ )
-		{
-			ResourceManager::Character ch = Characters[ *c ];
-			if( *c != '\n' )
-			{
-				temp_offset_x += ( ch.advance >> 6 );
-			}
-			else
-			{
-				offset_x = temp_offset_x > offset_x ? temp_offset_x : offset_x;
-				temp_offset_x = 0 ;
-			}
-		}
-
-		offset_x = temp_offset_x > offset_x ? temp_offset_x : offset_x;
-		offset_x = -offset_x * scale;
-
-
-		offset_y = -Characters[ 'H' ].size_.y / 2 * scale ;
+		float offset_y = -Characters[ 'H' ].size_.y / 2 * scale ;
 
 		// iterate through all characters
 		for( c = text.begin (); c != text.end (); c++ )
@@ -126,21 +105,26 @@ namespace JZEngine
 				vb.Unbind ();
 
 				JZEngine::Mat3f camwin_to_ndc_xform =
-				{ {2.0f / Settings::camera_width, 0.0f, 0.0f},
-				  {0.0f, -2.0f / Settings::camera_height, 0.0f},
-				  {0.0f, 0.0f, 1.0f} };
-				Mat3f cam_transform = EngineGUI::GetCameraTransform();
+				{
+					{2.0f / Settings::camera_width, 0.0f, 0.0f},
+					{0.0f, -2.0f / Settings::camera_height, 0.0f},
+					{0.0f, 0.0f, 1.0f}
+				};
+
+				Mat3f cam_transform = EngineGUI::GetCameraTransform ();
 				// need to invert y for some reason, mysterious
-				cam_transform[1][2] *= -1;
-				GetSystem<ResourceManager>()->font_shader_programs_[0].shader_program_.SetUniform("projection", (camwin_to_ndc_xform * cam_transform).Transpose());
+
+				cam_transform[ 1 ][ 2 ] *= -1;
+
+				GetSystem<ResourceManager> ()->font_shader_programs_[ 0 ].shader_program_.SetUniform ( "projection" , ( camwin_to_ndc_xform * cam_transform ).Transpose () );
 				// render quad
+
 				glDrawArrays ( GL_TRIANGLES , 0 , 6 );
 				// now advance cursors for next glyph
 				x += ( ch.advance >> 6 ) * scale * tracking_x  ; // bitshift by 6 to get value in pixels (1/64th times 2^6 = 64)
 			}
 
 		}
-
 		va.Unbind ();
 		glBindTexture ( GL_TEXTURE_2D , 0 );
 		glCheckError ();

@@ -17,37 +17,38 @@ namespace JZEngine
 	{
 	public:
 
-		Shader();
-		GLboolean CompileShaderFromFile( GLenum shader_type, std::string const& file_name );
-		GLboolean CompileShaderFromString( GLenum shader_type, std::string const& shader_src );
-		GLboolean Link();
-		GLboolean IsLinked() const;
-		GLuint ShaderHandle() const;
-		std::string GetLog() const;
+		Shader ();
+		GLboolean CompileShaderFromFile ( GLenum shader_type , std::string const& file_name );
+		GLboolean CompileShaderFromString ( GLenum shader_type , std::string const& shader_src );
+		GLboolean Link ();
+		GLboolean IsLinked () const;
+		GLuint ShaderHandle () const;
+		std::string GetLog () const;
 
-		void Bind() const;
-		void Unbind() const;
+		void Bind () const;
+		void Unbind () const;
 
-		void SetUniform( GLchar const* name, GLboolean val );
-		void SetUniform( GLchar const* name, GLint val );
-		void SetUniform( GLchar const* name, GLfloat val );
-		void SetUniform( GLchar const* name, GLfloat x, GLfloat y );
-		void SetUniform( GLchar const* name, GLfloat x, GLfloat y, GLfloat z );
-		void SetUniform( GLchar const* name, GLfloat x, GLfloat y, GLfloat z, GLfloat w );
-		void SetUniform( GLchar const* name, JZEngine::Vec2f const& val );
-		void SetUniform( GLchar const* name, JZEngine::Vec3f const& val );
-		void SetUniform( GLchar const* name, JZEngine::Mat3f const& val );
-		void SetUniform( GLchar const* name, JZEngine::Mat4f const& val );
+		void SetUniform ( GLchar const* name , GLboolean val );
+		void SetUniform ( GLchar const* name , GLint val );
+		void SetUniform ( GLchar const* name , GLfloat val );
+		void SetUniform ( GLchar const* name , GLfloat x , GLfloat y );
+		void SetUniform ( GLchar const* name , GLfloat x , GLfloat y , GLfloat z );
+		void SetUniform ( GLchar const* name , GLfloat x , GLfloat y , GLfloat z , GLfloat w );
+		void SetUniform ( GLchar const* name , JZEngine::Vec2f const& val );
+		void SetUniform ( GLchar const* name , JZEngine::Vec3f const& val );
+		void SetUniform ( GLchar const* name , JZEngine::Vec4f const& val );
+		void SetUniform ( GLchar const* name , JZEngine::Mat3f const& val );
+		void SetUniform ( GLchar const* name , JZEngine::Mat4f const& val );
 
 	private:
 
 		enum ShaderType
 		{
-			VERTEX_SHADER = GL_VERTEX_SHADER,
-			FRAGMENT_SHADER = GL_FRAGMENT_SHADER,
-			GEOMETRY_SHADER = GL_GEOMETRY_SHADER,
-			TESS_CONTROL_SHADER = GL_TESS_CONTROL_SHADER,
-			TESS_EVALUATION_SHADER = GL_TESS_EVALUATION_SHADER,
+			VERTEX_SHADER = GL_VERTEX_SHADER ,
+			FRAGMENT_SHADER = GL_FRAGMENT_SHADER ,
+			GEOMETRY_SHADER = GL_GEOMETRY_SHADER ,
+			TESS_CONTROL_SHADER = GL_TESS_CONTROL_SHADER ,
+			TESS_EVALUATION_SHADER = GL_TESS_EVALUATION_SHADER ,
 		};
 
 		GLuint pgm_handle = 0;  // handle to linked shader program object
@@ -56,6 +57,6 @@ namespace JZEngine
 
 	private:
 
-		GLboolean FileExists( std::string const& file_name );
+		GLboolean FileExists ( std::string const& file_name );
 	};
 }

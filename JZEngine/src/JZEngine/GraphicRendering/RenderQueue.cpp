@@ -11,86 +11,93 @@
 #include "OpenGLDebug.h"
 #include "../DebugTools/PerformanceData.h"
 
-namespace JZEngine {
-	std::priority_queue<RenderQueue::RenderData, std::vector<RenderQueue::RenderData>, RenderQueue::CompareRenderData> RenderQueue::render_queue_;
+namespace JZEngine
+{
+	std::priority_queue<RenderQueue::RenderData , std::vector<RenderQueue::RenderData> , RenderQueue::CompareRenderData> RenderQueue::render_queue_;
 	std::vector<RenderQueue::LayerData> RenderQueue::layers_;
 
-	void RenderQueue::Update(float dt) {
-		UNREFERENCED_PARAMETER(dt);
+	void RenderQueue::Update ( float dt )
+	{
+		UNREFERENCED_PARAMETER ( dt );
 		// flush the draw queue and render all data
-		if (renderer_) {
-			while (render_queue_.size() > 0) {
-				const RenderData& sl = render_queue_.top();
-				DrawSprite(sl.shader_id_, sl.texture_id_, sl.transform_, sl.tint_, sl.frame_, sl.rows_, sl.cols_, sl.animated_);
-				render_queue_.pop();
+		if( renderer_ )
+		{
+			while( render_queue_.size () > 0 )
+			{
+				const RenderData& sl = render_queue_.top ();
+				DrawSprite ( sl.shader_id_ , sl.texture_id_ , sl.transform_ , sl.tint_ , sl.frame_ , sl.rows_ , sl.cols_ , sl.animated_ );
+				render_queue_.pop ();
 			}
 		}
 	}
 
-	void RenderQueue::FrameEnd() {
-		layers_.clear();
-	}
-
-	void RenderQueue::DrawQueue(int layer,
-								int shaderid,
-								int textureid,
-								const Mat3f& transform,
-								const JZEngine::Vec3f& tint,
-								int frame,
-								int rows,
-								int cols,
-								bool animated) 
+	void RenderQueue::FrameEnd ()
 	{
-		render_queue_.emplace(layer, shaderid, textureid, transform, tint, frame, rows, cols, animated);
+		layers_.clear ();
 	}
 
-	void RenderQueue::GUILayerData(int* layer, int textureid)
+	void RenderQueue::DrawQueue ( int layer ,
+								  int shaderid ,
+								  int textureid ,
+								  const Mat3f& transform ,
+								  const JZEngine::Vec4f& tint ,
+								  int frame ,
+								  int rows ,
+								  int cols ,
+								  bool animated )
 	{
-		layers_.emplace_back(layer, textureid);
+		render_queue_.emplace ( layer , shaderid , textureid , transform , tint , frame , rows , cols , animated );
 	}
 
-	void RenderQueue::DrawSprite(	int shaderid,
-									int textureid,
-									const Mat3f& transform,
-									JZEngine::Vec3f tint,
-									int frame,
-									int rows,
-									int cols,
-									bool animated) {
+	void RenderQueue::GUILayerData ( int* layer , int textureid )
+	{
+		layers_.emplace_back ( layer , textureid );
+	}
+
+	void RenderQueue::DrawSprite ( int shaderid ,
+								   int textureid ,
+								   const Mat3f& transform ,
+								   JZEngine::Vec4f tint ,
+								   int frame ,
+								   int rows ,
+								   int cols ,
+								   bool animated )
+	{
 		// bind buffer data
-		renderer_->Bind();
-		glCheckError();
+		renderer_->Bind ();
+		glCheckError ();
 
 		// use shader program
-		renderer_->BindShader(shaderid);
-		glCheckError();
+		renderer_->BindShader ( shaderid );
+		glCheckError ();
 
 		// bind texture data
-		renderer_->BindTexture(textureid);
-		glCheckError();
+		renderer_->BindTexture ( textureid );
+		glCheckError ();
 
 		// set shader uniforms
-		renderer_->GetShaderProgram(shaderid).SetUniform("transform", transform);
-		renderer_->GetShaderProgram(shaderid).SetUniform("tint", tint);
+		renderer_->GetShaderProgram ( shaderid ).SetUniform ( "transform" , transform );
+		renderer_->GetShaderProgram ( shaderid ).SetUniform ( "tint" , tint );
 		//Log::Info("Main", "{}", PerformanceData::time_elapsed_);
-		renderer_->GetShaderProgram(shaderid).SetUniform("time", PerformanceData::time_elapsed_);
-		glCheckError();
+		renderer_->GetShaderProgram ( shaderid ).SetUniform ( "time" , PerformanceData::time_elapsed_ );
+		glCheckError ();
 
-		if (animated)
+		if( animated )
 		{
 			// draw animated sprite
-			renderer_->Draw(frame, rows, cols);
+			renderer_->Draw ( frame , rows , cols );
 		}
 		else
 		{
-			renderer_->Draw();
+			renderer_->Draw ();
 		}
 
 		// unbind buffer data
-		renderer_->Unbind();
+		renderer_->Unbind ();
 	}
 
-	void RenderQueue::SetRenderer(Renderer* renderer) {
+	void RenderQueue::SetRenderer ( Renderer* renderer )
+	{
 		renderer_ = renderer;
 	}
 }

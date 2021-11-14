@@ -91,7 +91,7 @@ namespace JZEngine
 		template <typename COMPONENT>
 		void RenderComponent ( COMPONENT& component )
 		{
-			UNREFERENCED_PARAMETER(component);
+			UNREFERENCED_PARAMETER ( component );
 			ImGui::Text ( "Oops nothing here..." );
 		}
 
@@ -117,16 +117,16 @@ namespace JZEngine
 			ImGui::PopItemWidth ();
 
 			// Child Position
-			ImGui::Text("Relative Position");
-			ImGui::PushItemWidth((w / 2.0f) - spacing);
-			ImGui::InputFloat("##RPosX", &component.child_position_.x);
-			ImGui::SameLine();
-			ImGui::Text("X");
-			ImGui::SameLine();
-			ImGui::InputFloat("##RPosY", &component.child_position_.y);
-			ImGui::SameLine();
-			ImGui::Text("Y");
-			ImGui::PopItemWidth();
+			ImGui::Text ( "Relative Position" );
+			ImGui::PushItemWidth ( ( w / 2.0f ) - spacing );
+			ImGui::InputFloat ( "##RPosX" , &component.child_position_.x );
+			ImGui::SameLine ();
+			ImGui::Text ( "X" );
+			ImGui::SameLine ();
+			ImGui::InputFloat ( "##RPosY" , &component.child_position_.y );
+			ImGui::SameLine ();
+			ImGui::Text ( "Y" );
+			ImGui::PopItemWidth ();
 
 			// Rotation
 			ImGui::Text ( "Rotation" );
@@ -198,9 +198,9 @@ namespace JZEngine
 			// button event to display all texture options
 			// if no texture is found, meaning deleted, it will display as deleted
 			std::string current_texture{ "Deleted" };
-			for (auto& texture : resource_manager_->umap_texture2ds_)
+			for( auto& texture : resource_manager_->umap_texture2ds_ )
 			{
-				if (texture.second == component.texture_id_)
+				if( texture.second == component.texture_id_ )
 				{
 					current_texture = texture.first;
 				}
@@ -211,6 +211,7 @@ namespace JZEngine
 			ImGui::SameLine ();
 			ImGui::Text ( "Texture" );
 		}
+
 
 		template <>
 		void RenderComponent ( NonInstanceShader& component )
@@ -237,15 +238,12 @@ namespace JZEngine
 
 			////////////////////////////////////////////////////////////
 			// Making of color pallette starts here .
-			static ImVec4 color{ 0,0,0,1 };
 			const char* memo
 			{
 				"Click on the color square to open a color picker.\n"
 				"Click and hold to use drag and drop.\n"
 				"Right-click on the color square to show options.\n"
 				"CTRL+click on individual component to input value.\n"
-				"! Alpha is not integrated at this moment.\n"
-				"Thank you for your patience !"
 			};
 
 			ImGui::Text ( "Tint" );
@@ -261,6 +259,8 @@ namespace JZEngine
 				ImGui::EndTooltip ();
 			}
 
+			ImVec4 temp_color = { component.tint.x, component.tint.y, component.tint.z, component.tint.w };
+
 			// Generate a default palette. The palette will persist and can be edited.
 			static bool saved_palette_init = true;
 			// Palette are divided by 4 rows and 8 column
@@ -272,40 +272,35 @@ namespace JZEngine
 					ImGui::ColorConvertHSVtoRGB ( n / 31.0f , 0.8f , 0.8f ,
 												  saved_palette[ n ].x , saved_palette[ n ].y , saved_palette[ n ].z );
 					// Default alpha ( we will do changeable alpha soon !)
-					saved_palette[ n ].w = 1.0f; // Alpha
+					saved_palette[ n ].w = temp_color.w; // Alpha
 				}
 				saved_palette_init = false;
 			}
 
-			// At this moment we are not using alpha yet .
-			// We will definitely add it in the future !
-			component.tint.x = 1.0f * color.x ;
-			component.tint.y = 1.0f * color.y ;
-			component.tint.z = 1.0f * color.z ;
-			// Stay tune people and stay vigilant !
 
 			static ImVec4 backup_color;
-			bool open_popup = ImGui::ColorButton ( "MyColor##3b" , color );
+			bool open_popup = ImGui::ColorButton ( "MyColor##3b" , temp_color );
+
 			ImGui::SameLine ( 0 , ImGui::GetStyle ().ItemInnerSpacing.x );
 			open_popup |= ImGui::Button ( "Palette" );
 			if( open_popup )
 			{
 				ImGui::OpenPopup ( "mypicker" );
-				backup_color = color;
+				backup_color = temp_color;
 			}
 			if( ImGui::BeginPopup ( "mypicker" ) )
 			{
 				ImGui::Text ( "CUSTOM COLOR PALETTE!" );
 				ImGui::Separator ();
-				ImGui::ColorPicker4 ( "##picker" , ( float* ) &color , ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoSmallPreview );
+				ImGui::ColorPicker4 ( "##picker" , ( float* ) &temp_color , ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoSmallPreview );
 				ImGui::SameLine ();
 
 				ImGui::BeginGroup (); // Lock X position
 				ImGui::Text ( "Current" );
-				ImGui::ColorButton ( "##current" , color , ImGuiColorEditFlags_NoPicker | ImGuiColorEditFlags_AlphaPreviewHalf , ImVec2 ( 60 , 40 ) );
+				ImGui::ColorButton ( "##current" , temp_color , ImGuiColorEditFlags_NoPicker | ImGuiColorEditFlags_AlphaPreviewHalf , ImVec2 ( 60 , 40 ) );
 				ImGui::Text ( "Previous" );
 				if( ImGui::ColorButton ( "##previous" , backup_color , ImGuiColorEditFlags_NoPicker | ImGuiColorEditFlags_AlphaPreviewHalf , ImVec2 ( 60 , 40 ) ) )
-					color = backup_color;
+					temp_color = backup_color;
 				ImGui::Separator ();
 				ImGui::Text ( "Palette" );
 				for( int n = 0; n < IM_ARRAYSIZE ( saved_palette ); n++ )
@@ -316,10 +311,12 @@ namespace JZEngine
 
 					ImGuiColorEditFlags palette_button_flags = ImGuiColorEditFlags_NoAlpha | ImGuiColorEditFlags_NoPicker | ImGuiColorEditFlags_NoTooltip;
 					if( ImGui::ColorButton ( "##palette" , saved_palette[ n ] , palette_button_flags , ImVec2 ( 20 , 20 ) ) )
-						color = ImVec4 ( saved_palette[ n ].x , saved_palette[ n ].y , saved_palette[ n ].z , color.w ); // Preserve alpha!
+						//temp_color = ImVec4 ( saved_palette[ n ].x , saved_palette[ n ].y , saved_palette[ n ].z , temp_color.w ); // Preserve alpha!
 
-					// Allow user to drop colors into each palette entry. Note that ColorButton() is already a
-					// drag source by default, unless specifying the ImGuiColorEditFlags_NoDragDrop flag.
+						temp_color = ImVec4 ( saved_palette[ n ].x , saved_palette[ n ].y , saved_palette[ n ].z , saved_palette[ n ].w ); // Preserve alpha!
+
+						// Allow user to drop colors into each palette entry. Note that ColorButton() is already a
+						// drag source by default, unless specifying the ImGuiColorEditFlags_NoDragDrop flag.
 					if( ImGui::BeginDragDropTarget () )
 					{
 						if( const ImGuiPayload* payload = ImGui::AcceptDragDropPayload ( IMGUI_PAYLOAD_TYPE_COLOR_3F ) )
@@ -332,11 +329,13 @@ namespace JZEngine
 				}
 				ImGui::EndGroup ();
 				ImGui::EndPopup ();
-			}
 
+			}
+			component.tint = { temp_color.x, temp_color.y, temp_color.z , temp_color.w };
 			//  End of color pallette making !
 			////////////////////////////////////////////////////////////
 		}
+
 
 		template <>
 		void RenderComponent ( InstanceShader& component )
@@ -363,38 +362,38 @@ namespace JZEngine
 		}
 
 		template <>
-		void RenderComponent(CollisionComponent& component)
+		void RenderComponent ( CollisionComponent& component )
 		{
 			// General data
-			ImGuiStyle& style = ImGui::GetStyle();
-			float w = ImGui::CalcItemWidth();
+			ImGuiStyle& style = ImGui::GetStyle ();
+			float w = ImGui::CalcItemWidth ();
 			float spacing = style.ItemInnerSpacing.x;
-			
-			ImGui::Text("Shape");
 
-			ImGui::SliderInt("ID", &component.shapeid, 0, 1);
+			ImGui::Text ( "Shape" );
 
-			ImGui::Text("Offset");
-			ImGui::PushItemWidth((w / 2.0f) - (spacing * 3.0f));
-			ImGui::InputFloat("##OffSetX", &component.offset.x);
-			ImGui::SameLine();
-			ImGui::Text("X");
-			ImGui::SameLine();
-			ImGui::InputFloat("##OffSetY", &component.offset.y);
-			ImGui::SameLine();
-			ImGui::Text("Y");
-			ImGui::PopItemWidth();
+			ImGui::SliderInt ( "ID" , &component.shapeid , 0 , 1 );
 
-			ImGui::Text("Collision Size (cm)");
-			ImGui::PushItemWidth((w / 3.0f) - spacing);
-			ImGui::InputFloat("##SizeW", &component.size.x);
-			ImGui::SameLine();
-			ImGui::Text("X or Radius");
-	
-			ImGui::InputFloat("##SizeY", &component.size.y);
-			ImGui::SameLine();
-			ImGui::Text("Y");
-			ImGui::PopItemWidth();
+			ImGui::Text ( "Offset" );
+			ImGui::PushItemWidth ( ( w / 2.0f ) - ( spacing * 3.0f ) );
+			ImGui::InputFloat ( "##OffSetX" , &component.offset.x );
+			ImGui::SameLine ();
+			ImGui::Text ( "X" );
+			ImGui::SameLine ();
+			ImGui::InputFloat ( "##OffSetY" , &component.offset.y );
+			ImGui::SameLine ();
+			ImGui::Text ( "Y" );
+			ImGui::PopItemWidth ();
+
+			ImGui::Text ( "Collision Size (cm)" );
+			ImGui::PushItemWidth ( ( w / 3.0f ) - spacing );
+			ImGui::InputFloat ( "##SizeW" , &component.size.x );
+			ImGui::SameLine ();
+			ImGui::Text ( "X or Radius" );
+
+			ImGui::InputFloat ( "##SizeY" , &component.size.y );
+			ImGui::SameLine ();
+			ImGui::Text ( "Y" );
+			ImGui::PopItemWidth ();
 		}
 		template <>
 		void RenderComponent ( PhysicsComponent& component )
@@ -403,11 +402,11 @@ namespace JZEngine
 			ImGuiStyle& style = ImGui::GetStyle ();
 			float w = ImGui::CalcItemWidth ();
 			float spacing = style.ItemInnerSpacing.x;
-			
+
 
 
 			ImGui::Checkbox ( "Static" , &component.IsStatic );
-			ImGui::Checkbox("Player", &component.player);
+			ImGui::Checkbox ( "Player" , &component.player );
 
 			ImGui::Text ( "Velocity (cm/s)" );
 			ImGui::PushItemWidth ( ( w / 2.0f ) - ( spacing * 3.0f ) );
@@ -420,12 +419,12 @@ namespace JZEngine
 			ImGui::Text ( "Y" );
 			ImGui::PopItemWidth ();
 
-			ImGui::Text("Angular Velocity (degree/s)");
-			ImGui::PushItemWidth((w / 2.0f) - (spacing * 3.0f));
-			ImGui::InputFloat("##Vel", &component.angularVelocity);
-			ImGui::SameLine();
-			ImGui::Text("o");
-			ImGui::PopItemWidth();
+			ImGui::Text ( "Angular Velocity (degree/s)" );
+			ImGui::PushItemWidth ( ( w / 2.0f ) - ( spacing * 3.0f ) );
+			ImGui::InputFloat ( "##Vel" , &component.angularVelocity );
+			ImGui::SameLine ();
+			ImGui::Text ( "o" );
+			ImGui::PopItemWidth ();
 
 			ImGui::Text ( "Area" );
 			ImGui::SliderFloat ( "cm^2" , &component.Area , component.Area , component.Area );
@@ -436,11 +435,11 @@ namespace JZEngine
 			ImGui::Text ( "Restitution (Bounciness)" );
 			ImGui::SliderFloat ( "##PhysicsComponentRestitution" , &component.Restitution , 0.0f , 1.0f );
 
-			ImGui::Text("Static Friction");
-			ImGui::SliderFloat("##PhysicsComponentStaticFriction", &component.StaticFriction, 0.0f, 1.5f);
+			ImGui::Text ( "Static Friction" );
+			ImGui::SliderFloat ( "##PhysicsComponentStaticFriction" , &component.StaticFriction , 0.0f , 1.5f );
 
-			ImGui::Text("Dynamic Friction");
-			ImGui::SliderFloat("##PhysicsComponentDynamicFriction", &component.DynamicFriction, 0.0f, 1.5f);
+			ImGui::Text ( "Dynamic Friction" );
+			ImGui::SliderFloat ( "##PhysicsComponentDynamicFriction" , &component.DynamicFriction , 0.0f , 1.5f );
 		}
 
 		template <>
@@ -455,12 +454,12 @@ namespace JZEngine
 			//float button_sz = ImGui::GetFrameHeight ();
 			ImGui::PushItemWidth ( ( w / 2.0f ) - spacing );
 
-			if( ImGui::BeginCombo ( "##custom combo" , current_item.c_str() , ImGuiComboFlags_NoArrowButton ) )
+			if( ImGui::BeginCombo ( "##custom combo" , current_item.c_str () , ImGuiComboFlags_NoArrowButton ) )
 			{
 				for( int n = 0; n < IM_ARRAYSIZE ( items ); n++ )
 				{
 					bool is_selected = ( current_item == items[ n ] );
-					if( ImGui::Selectable ( items[ n ].c_str() , is_selected ) )
+					if( ImGui::Selectable ( items[ n ].c_str () , is_selected ) )
 						current_item = items[ n ];
 					if( is_selected )
 						ImGui::SetItemDefaultFocus ();
@@ -591,16 +590,16 @@ namespace JZEngine
 		}
 
 		template <>
-		void RenderComponent(SpriteLayer& component)
+		void RenderComponent ( SpriteLayer& component )
 		{
-			ImGui::InputInt(": Layer", &component.layer_);
+			ImGui::InputInt ( ": Layer" , &component.layer_ );
 		}
 
 		template <>
-		void RenderComponent(MouseEvent& component)
+		void RenderComponent ( MouseEvent& component )
 		{
-			ImGui::InputFloat("##MEX", &component.bounding_half_width_);
-			ImGui::InputFloat("##MEY", &component.bounding_half_height_);
+			ImGui::InputFloat ( "##MEX" , &component.bounding_half_width_ );
+			ImGui::InputFloat ( "##MEY" , &component.bounding_half_height_ );
 		}
 
 		/*!
@@ -620,9 +619,9 @@ namespace JZEngine
 		typename std::enable_if<I == sizeof...( TUPLE ) , void>::type
 			LoopTupleRender ( std::tuple<TUPLE...> t , size_t i , ECS::Entity& entity )
 		{
-			UNREFERENCED_PARAMETER(t);
-			UNREFERENCED_PARAMETER(i);
-			UNREFERENCED_PARAMETER(entity);
+			UNREFERENCED_PARAMETER ( t );
+			UNREFERENCED_PARAMETER ( i );
+			UNREFERENCED_PARAMETER ( entity );
 			std::cout << "LoopTupleRender::tuple size exceeded." << std::endl;
 			return;
 		}
