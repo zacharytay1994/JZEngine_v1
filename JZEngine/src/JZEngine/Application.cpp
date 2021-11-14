@@ -241,20 +241,20 @@ namespace JZEngine
 		std::cout << "Demo for Finite State Machine" << "\n";
 		std::cout << "-----------------------------" << "\n";
 		/**/
-		JZEngine::FiniteStateMachine<JZEngine::CustomerStateType>* fsm = new JZEngine::FiniteStateMachine<JZEngine::CustomerStateType>();
+		/*JZEngine::FiniteStateMachine<JZEngine::CustomerStateType>* fsm = new JZEngine::FiniteStateMachine<JZEngine::CustomerStateType>();
 
 		fsm->add(new JZEngine::CustomerOrderingState(*fsm));
 		fsm->add(new JZEngine::CustomerWaitingState(*fsm));
 		fsm->add(new JZEngine::CustomerAngryLeaveState(*fsm));
 		fsm->add(new JZEngine::CustomerHappyLeaveState(*fsm));
 
-		fsm->setCurrentState(JZEngine::CustomerStateType::ORDERING);
+		fsm->setCurrentState(JZEngine::CustomerStateType::ORDERING);*/
 
 		//fsm->update(1.0f/ JZEngine::PerformanceData::app_fps_);
 
 		while( global_systems_->GetSystem<GLFW_Instance> ()->Active () )
 		{
-			fsm->update(static_cast<float>(dt));
+			//fsm->update(static_cast<float>(dt));
 
 			/*if( InputHandler::IsKeyTriggered ( KEY::KEY_L ) )
 			{
@@ -335,6 +335,6 @@ namespace JZEngine
 
 		//Serialize::Save();
 		Settings::SaveToConfigFile ();
-		delete fsm;
+		//delete fsm;
 	}
 }

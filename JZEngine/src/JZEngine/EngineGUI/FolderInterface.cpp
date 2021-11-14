@@ -21,7 +21,9 @@ namespace JZEngine
 	FolderInterface::FolderInterface(float x, float y, float sx, float sy, int group)
 		:
 		ImGuiInterface(x, y, sx, sy, group)
-	{}
+	{
+		//GetAllDirectories("Assets");
+	}
 
 	void FolderInterface::Render(float dt)
 	{
@@ -175,6 +177,22 @@ namespace JZEngine
 				}
 			}
 			ImGui::EndTable();
+		}
+	}
+
+	void FolderInterface::GetAllDirectories(const std::string& path)
+	{
+		for (const auto& entry : std::filesystem::directory_iterator(path))
+		{
+			std::cout << entry.path() << std::endl;
+			if (std::filesystem::is_directory(entry.path()))
+			{
+				GetAllDirectories(entry.path().u8string());
+			}
+			else
+			{
+				std::cout << entry.path().filename() << std::endl;
+			}
 		}
 	}
 }

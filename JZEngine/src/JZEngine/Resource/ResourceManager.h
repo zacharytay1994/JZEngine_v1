@@ -132,6 +132,7 @@ namespace JZEngine
 		static std::vector<Texture2DID> texture2ds_;
 		static std::unordered_map<std::string, int> umap_texture2ds_;
 		static void LoadAllTexturesInFolder(const std::string& folder = "Assets/Textures/");
+		static void RecursivelyLoadTexture(const std::string& folder);
 		static Texture2D* GetTexture(int id);
 		static Texture2D* GetTexture(const std::string& name);
 		static int GetTextureID(const std::string& name);

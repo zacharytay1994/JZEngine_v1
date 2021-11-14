@@ -35,6 +35,8 @@ namespace JZEngine
 		void RenderScenes();
 		void RenderTextures();
 
+		void GetAllDirectories(std::string const& path);
+
 	private:
 		DISPLAY mode{ DISPLAY::SCENES };
 	};
