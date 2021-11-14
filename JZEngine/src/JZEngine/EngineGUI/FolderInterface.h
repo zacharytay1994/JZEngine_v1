@@ -26,7 +26,7 @@ namespace JZEngine
 
 		ECS::ECSInstance* ecs_instance_{ nullptr };
 		SceneTree* scene_tree_{ nullptr };
-		static constexpr unsigned int display_columns_{ 5 };
+		static constexpr unsigned int display_columns_{ 4 };
 
 		FolderInterface(float x, float y, float sx, float sy, int group);
 		virtual void Render(float dt) override;
@@ -35,7 +35,13 @@ namespace JZEngine
 		void RenderScenes();
 		void RenderTextures();
 
+		void RecursivelyRenderFolders(ResourceManager::FolderData const& folder);
+		void GetAllDirectories(std::string const& path);
+
 	private:
 		DISPLAY mode{ DISPLAY::SCENES };
+
+		std::string selected_texture_path{ "" };
+		std::string selected_texture_directory{ "Textures" };
 	};
 }
