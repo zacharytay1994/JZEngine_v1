@@ -39,7 +39,7 @@ namespace JZEngine
 		void GetAllDirectories(std::string const& path);
 
 	private:
-		DISPLAY mode{ DISPLAY::SCENES };
+		DISPLAY mode{ DISPLAY::RESOURCES_TEXTURES };
 
 		std::string selected_texture_path{ "" };
 		std::string selected_texture_directory{ "Textures" };

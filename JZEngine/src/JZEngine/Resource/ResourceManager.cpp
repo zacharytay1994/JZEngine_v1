@@ -296,22 +296,6 @@ namespace JZEngine
 		Log::Info ( "Resources" , "\n Reading textures from {}:" , folder );
 		for( const auto& file : std::filesystem::directory_iterator ( folder ) )
 		{
-			//if (!std::filesystem::is_directory(file.path()))
-			//{
-			//	texture_name = file.path().filename().string();
-			//}
-			//// check if texture already loaded
-			//if (umap_texture2ds_.find(texture_name) == umap_texture2ds_.end())
-			//{
-			//	texture2ds_.emplace_back(static_cast<int>(texture2ds_.size()));
-			//	texture2ds_.back().texture2d_.Texture2DLoad(file.path().string());
-			//	umap_texture2ds_[texture_name] = texture2ds_.back().id_;
-			//	/*umap_texture2ds_[texture_name].id_ = static_cast<int>(vec_texture2ds_.size());
-			//	umap_texture2ds_[texture_name].texture2d_.Texture2DLoad(file.path().string());*/
-			//	Log::Info("Resources", "- Read [{}].", file.path().string());
-			//}
-			//check[texture_name] = true;
-
 			if (std::filesystem::is_directory(file.path()))
 			{
 				folderData.folders_.emplace_back();
@@ -323,9 +307,6 @@ namespace JZEngine
 			}
 			else
 			{
-				/*path = file.path().string();
-				dash = path.find_last_of('/');
-				texture_name = path.substr(dash + 1, path.find_last_of('.') - dash - 1);*/
 				texture_name = file.path().filename().string();
 				texture_name = texture_name.substr(0, texture_name.find_last_of('.'));
 				std::cout << texture_name << std::endl;
@@ -337,8 +318,6 @@ namespace JZEngine
 					texture2ds_.emplace_back(static_cast<int>(texture2ds_.size()));
 					texture2ds_.back().texture2d_.Texture2DLoad(file.path().string());
 					umap_texture2ds_[texture_name] = texture2ds_.back().id_;
-					/*umap_texture2ds_[texture_name].id_ = static_cast<int>(vec_texture2ds_.size());
-					umap_texture2ds_[texture_name].texture2d_.Texture2DLoad(file.path().string());*/
 					Log::Info("Resources", "- Read [{}].", file.path().string());
 				}
 				check[texture_name] = true;

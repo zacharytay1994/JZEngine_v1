@@ -27,7 +27,17 @@ namespace JZEngine
 	void EngineSettings::Render(float dt)
 	{
 		UNREFERENCED_PARAMETER(dt);
-		ImGui::Begin("EngineSettings", 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
+		ImGui::Begin("EngineSettings", 0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
+		if (ImGui::BeginMenuBar())
+		{
+			float button_size = Settings::window_width * sx_ * 0.01f;
+			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconx")->GetRendererID()), { button_size, button_size }))
+			{
+				ToggleOnOff();
+			}
+			ImGui::EndMenuBar();
+		}
+		ImGui::Separator();
 		std::stringstream ss;
 		ss << Settings::engine_name << " v" << Settings::version << " Settings";
 		ImGui::Text(ss.str().c_str());

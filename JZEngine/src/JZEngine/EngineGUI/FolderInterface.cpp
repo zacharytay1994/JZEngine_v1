@@ -26,8 +26,10 @@ namespace JZEngine
 
 	void FolderInterface::RecursivelyRenderFolders(ResourceManager::FolderData const& folder)
 	{
-		ImGui::SetNextItemOpen(true);
-		bool open = ImGui::TreeNodeEx(folder.name_.c_str(), ImGuiTreeNodeFlags_Bullet);
+		//ImGui::SetNextItemOpen(true);
+		ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconfolder")->GetRendererID()), { 11.0f, 11.0f }, { 0,1 }, { 1,0 });
+		ImGui::SameLine();
+		bool open = ImGui::TreeNodeEx(folder.name_.c_str(), ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick);
 		if (ImGui::IsItemClicked())
 		{
 			selected_texture_path = folder.path_;
@@ -48,7 +50,18 @@ namespace JZEngine
 		UNREFERENCED_PARAMETER(dt);
 
 		SetNextWindowDimensions(0.0f, 0.0f, 0.2f, 1.0f);
-		ImGui::Begin("Folders", 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
+		ImGui::Begin("Folders", 0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
+		if (ImGui::BeginMenuBar())
+		{
+			float button_size = Settings::window_width * sx_ * 0.01f;
+			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconx")->GetRendererID()), { button_size, button_size }))
+			{
+				ToggleOnOff();
+			}
+			ImGui::EndMenuBar();
+		}
+
+		ImGui::Separator();
 		ImGui::Text("Directories");
 		ImGui::Separator();
 		switch (mode)
@@ -67,6 +80,10 @@ namespace JZEngine
 		ImGui::Begin("Directory", 0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 		if (ImGui::BeginMenuBar())
 		{
+			if (ImGui::Button("Textures"))
+			{
+				mode = DISPLAY::RESOURCES_TEXTURES;
+			}
 			if (ImGui::Button("Scenes"))
 			{
 				mode = DISPLAY::SCENES;
@@ -75,12 +92,9 @@ namespace JZEngine
 			{
 				mode = DISPLAY::PREFAB;
 			}
-			if (ImGui::Button("Textures"))
-			{
-				mode = DISPLAY::RESOURCES_TEXTURES;
-			}
 			ImGui::EndMenuBar();
 		}
+		ImGui::Separator();
 		// render display
 		switch (mode)
 		{

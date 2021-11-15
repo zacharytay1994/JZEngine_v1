@@ -21,12 +21,22 @@ namespace JZEngine
 		ImGuiInterface(x, y, sx, sy, group)
 	{
 		target_fps_ = Settings::max_fps;
+		float test = sx_;
 	}
 
 	void DebugInformation::Render(float dt) 
 	{
 		ImGui::Begin("Performance Visualizer", 0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
-
+		if (ImGui::BeginMenuBar())
+		{
+			float button_size = Settings::window_width * sx_ * 0.01f;
+			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconx")->GetRendererID()), { button_size, button_size }))
+			{
+				ToggleOnOff();
+			}
+			ImGui::EndMenuBar();
+		}
+		ImGui::Separator();
 		ImGui::SetNextItemWidth(100.0f);
 		ImGui::InputInt("Target FPS |", &target_fps_);
 		if (target_fps_ < 30)
