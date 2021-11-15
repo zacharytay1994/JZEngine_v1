@@ -128,7 +128,11 @@ namespace JZEngine
         //this just calls the normal playSound function
         playSound(msg->name, false, 0.5f);
     }
+    void SoundSystem::stopSound(int id)
+    {
+        channel_cont[id]->stop();
 
+    }
     /**
      * Releases a sound specified by name.
      * 
