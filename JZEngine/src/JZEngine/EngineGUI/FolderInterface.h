@@ -41,7 +41,14 @@ namespace JZEngine
 	private:
 		DISPLAY mode{ DISPLAY::RESOURCES_TEXTURES };
 
-		std::string selected_texture_path{ "" };
+		/*!
+		 * TEXTURE VARIABLES
+		*/
+		std::string selected_texture_path{ "Assets/Textures" };
 		std::string selected_texture_directory{ "Textures" };
+		bool texture_preview_{ false };
+		std::string selected_preview_texture{ "" };
+
+		void DisplayTexturePreview();
 	};
 }

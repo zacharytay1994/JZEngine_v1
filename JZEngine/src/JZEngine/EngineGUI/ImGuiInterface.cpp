@@ -52,4 +52,18 @@ namespace JZEngine
 			active_ = !temp;
 		}
 	}
+
+	void ImGuiInterface::CloseButtonMenuBar()
+	{
+		if (ImGui::BeginMenuBar())
+		{
+			float button_size = Settings::window_width * sx_ * 0.01f;
+			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconx")->GetRendererID()), { button_size, button_size }))
+			{
+				ToggleOnOff();
+			}
+			ImGui::EndMenuBar();
+		}
+		ImGui::Separator();
+	}
 }

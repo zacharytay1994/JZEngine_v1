@@ -312,7 +312,7 @@ namespace JZEngine
 				std::cout << texture_name << std::endl;
 				folderData.files_.emplace_back(texture_name);
 				texture_folders_[folderData.name_].emplace_back(texture_name);
-				// check if texture already loaded
+				// check if texture not already loaded
 				if (umap_texture2ds_.find(texture_name) == umap_texture2ds_.end())
 				{
 					texture2ds_.emplace_back(static_cast<int>(texture2ds_.size()));

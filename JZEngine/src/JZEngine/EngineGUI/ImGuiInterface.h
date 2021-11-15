@@ -36,6 +36,8 @@ namespace JZEngine
 
 		void ToggleOnOff();
 
+		void CloseButtonMenuBar();
+
 	protected:
 		template <typename INTERFACE>
 		std::shared_ptr<INTERFACE> GetInterface() {

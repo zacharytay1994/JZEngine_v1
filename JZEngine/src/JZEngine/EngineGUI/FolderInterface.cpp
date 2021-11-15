@@ -51,24 +51,27 @@ namespace JZEngine
 
 		SetNextWindowDimensions(0.0f, 0.0f, 0.2f, 1.0f);
 		ImGui::Begin("Folders", 0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
-		if (ImGui::BeginMenuBar())
-		{
-			float button_size = Settings::window_width * sx_ * 0.01f;
-			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconx")->GetRendererID()), { button_size, button_size }))
-			{
-				ToggleOnOff();
-			}
-			ImGui::EndMenuBar();
-		}
+		CloseButtonMenuBar();
 
-		ImGui::Separator();
 		ImGui::Text("Directories");
 		ImGui::Separator();
 		switch (mode)
 		{
 		case (DISPLAY::SCENES):
+			ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconfolder")->GetRendererID()), { 11.0f, 11.0f }, { 0,1 }, { 1,0 });
+			ImGui::SameLine();
+			if (ImGui::TreeNodeEx("Scenes", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick))
+			{
+				ImGui::TreePop();
+			}
 			break;
 		case(DISPLAY::PREFAB):
+			ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconfolder")->GetRendererID()), { 11.0f, 11.0f }, { 0,1 }, { 1,0 });
+			ImGui::SameLine();
+			if (ImGui::TreeNodeEx("Prefabs", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick))
+			{
+				ImGui::TreePop();
+			}
 			break;
 		case(DISPLAY::RESOURCES_TEXTURES):
 			RecursivelyRenderFolders(ResourceManager::texture_folder_data_);
@@ -99,12 +102,12 @@ namespace JZEngine
 		switch (mode)
 		{
 		case (DISPLAY::SCENES):
-			ImGui::Text("Scenes");
+			ImGui::Text("Folder: Saves/Scenes");
 			ImGui::Separator();
 			RenderScenes();
 			break;
 		case(DISPLAY::PREFAB):
-			ImGui::Text("Prefabs");
+			ImGui::Text("Folder: Saves/Prefabs");
 			ImGui::Separator();
 			RenderPrefabs();
 			break;
@@ -113,7 +116,14 @@ namespace JZEngine
 			ss << "Folder: " << selected_texture_path;
 			ImGui::Text(ss.str().c_str());
 			ImGui::Separator();
-			RenderTextures();
+			if (texture_preview_)
+			{
+				DisplayTexturePreview();
+			}
+			else
+			{
+				RenderTextures();
+			}
 			break;
 		}
 
@@ -216,7 +226,21 @@ namespace JZEngine
 						if (filter.PassFilter(texture.first.c_str()))
 						{
 							ImGui::TableNextColumn();
-							ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture(texture.second)->GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f }, { 0,1 }, { 1,0 }, { 1, 1, 1, 1 }, { 0.5, 0.5, 0.5, 1 });
+							if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture(texture.second)->GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f }, { 0,1 }, { 1,0 }, -1, { 1, 0, 1, 0.5 }, { 1, 1, 1, 1 }))
+							{
+							}
+							if (ImGui::BeginPopupContextItem(texture.first.c_str(), ImGuiPopupFlags_MouseButtonLeft))
+							{
+								if (ImGui::Selectable("Preview"))
+								{
+									texture_preview_ = true;
+									selected_preview_texture = texture.first.c_str();
+								}
+								if (ImGui::Selectable("Select"))
+								{
+								}
+								ImGui::EndPopup();
+							}
 							ImGui::Text(texture.first.c_str());
 						}
 					}
@@ -265,5 +289,20 @@ namespace JZEngine
 				std::cout << entry.path().filename() << std::endl;
 			}
 		}
+	}
+
+	void FolderInterface::DisplayTexturePreview()
+	{
+		float button_size = Settings::window_width * sx_ * 0.01f;
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconback")->GetRendererID()), { button_size, button_size }))
+		{
+			texture_preview_ = false;
+		}
+		ImGui::Separator();
+		JZEngine::Texture2D* tex2d = ResourceManager::GetTexture(selected_preview_texture);
+		unsigned long long id = static_cast<unsigned long long>(tex2d->GetRendererID());
+		float width = static_cast<float>(Settings::window_width) * sx_ * 0.7f;
+		float height = width * tex2d->GetHeight() / tex2d->GetWidth();
+		ImGui::Image((void*)id, { width , height }, { 0,1 }, { 1,0 }, { 1, 1, 1, 1 }, { 0.5, 0.5, 0.5, 1 });
 	}
 }
