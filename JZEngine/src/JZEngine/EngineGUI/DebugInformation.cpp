@@ -26,6 +26,7 @@ namespace JZEngine
 
 	void DebugInformation::Render(float dt) 
 	{
+		ImGui::PushStyleColor(ImGuiCol_MenuBarBg, { 0, 0, 0, 1 });
 		ImGui::Begin("Performance Visualizer", 0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 		if (ImGui::BeginMenuBar())
 		{
@@ -36,7 +37,6 @@ namespace JZEngine
 			}
 			ImGui::EndMenuBar();
 		}
-		ImGui::Separator();
 		ImGui::SetNextItemWidth(100.0f);
 		ImGui::InputInt("Target FPS |", &target_fps_);
 		if (target_fps_ < 30)
@@ -151,5 +151,6 @@ namespace JZEngine
 		}
 
 		ImGui::End();
+		ImGui::PopStyleColor();
 	}
 }

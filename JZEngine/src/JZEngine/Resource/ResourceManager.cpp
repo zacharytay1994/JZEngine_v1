@@ -264,7 +264,7 @@ namespace JZEngine
 		}
 
 		texture_folder_data_ = ResourceManager::FolderData();
-		texture_folder_data_.path_ = "Assets/Textures";
+		texture_folder_data_.path_ = "All Textures";
 		texture_folder_data_.name_ = "Textures";
 		texture_folders_ = std::unordered_map<std::string, std::vector<std::string>>();
 		RecursivelyLoadTexture(folder, texture_folder_data_);

@@ -64,6 +64,5 @@ namespace JZEngine
 			}
 			ImGui::EndMenuBar();
 		}
-		ImGui::Separator();
 	}
 }

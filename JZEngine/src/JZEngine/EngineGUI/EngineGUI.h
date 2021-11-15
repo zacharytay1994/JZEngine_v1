@@ -42,6 +42,7 @@ namespace JZEngine
 		~EngineGUI();
 
 		virtual void Init() override;
+		virtual void PostInit() override;
 
 		/*!
 		 * @brief ___JZEngine::ToolsGUI::Update()___

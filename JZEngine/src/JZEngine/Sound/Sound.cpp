@@ -129,6 +129,11 @@ namespace JZEngine
         playSound(msg->name, false, 0.5f);
     }
 
+    void SoundSystem::stopSound(int id)
+    {
+        channel_cont[id]->stop();
+    }
+
     /**
      * Releases a sound specified by name.
      * 
@@ -194,6 +199,57 @@ namespace JZEngine
         mainchannelgrp->setMute(mutebool);
     }
 
+    void SoundSystem::RecursivelyLoadSounds(const std::string& folder, FolderData& folderData)
+    {
+        std::string path;
+        std::string sound_name;
+        std::unordered_map<std::string, bool> check;
+        //Log::Info("Resources", "\n Reading textures from {}:", folder);
+        for (const auto& file : std::filesystem::directory_iterator(folder))
+        {
+            if (std::filesystem::is_directory(file.path()))
+            {
+                folderData.folders_.emplace_back();
+                folderData.folders_.back().path_ = file.path().string();
+                folderData.folders_.back().name_ = file.path().filename().string();
+                //texture_folders_[folderData.folders_.back().name_] = &folderData.files_;
+                std::cout << file.path().string() << std::endl;
+                RecursivelyLoadSounds(file.path().string(), folderData.folders_.back());
+            }
+            else
+            {
+                sound_name = file.path().filename().string();
+                sound_name = sound_name.substr(0, sound_name.find_last_of('.'));
+                folderData.files_.emplace_back(sound_name);
+                sound_folders_[folderData.name_].emplace_back(sound_name);
+                std::cout << sound_name << std::endl;
+                std::cout << file.path().string() << std::endl;
+                createSound(sound_name, file.path().string().c_str());
+                // check if texture not already loaded
+                /*if (umap_texture2ds_.find(texture_name) == umap_texture2ds_.end())
+                {
+                    texture2ds_.emplace_back(static_cast<int>(texture2ds_.size()));
+                    texture2ds_.back().texture2d_.Texture2DLoad(file.path().string());
+                    umap_texture2ds_[texture_name] = texture2ds_.back().id_;
+                    Log::Info("Resources", "- Read [{}].", file.path().string());
+                }
+                check[texture_name] = true;*/
+            }
+        }
+    }
 
+    void SoundSystem::LoadAllSoundsInFolder(const std::string& soundFolder)
+    {
+        if (!std::filesystem::is_directory(soundFolder))
+        {
+            std::filesystem::create_directory(soundFolder);
+        }
+
+        sound_folder_data_ = FolderData();
+        sound_folders_ = std::unordered_map<std::string, std::vector<std::string>>();
+        sound_folder_data_.path_ = "All Sounds";
+        sound_folder_data_.name_ = "Sounds";
+        RecursivelyLoadSounds(soundFolder, sound_folder_data_);
+    }
 
 }

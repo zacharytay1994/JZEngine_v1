@@ -15,32 +15,39 @@ namespace JZEngine
 		struct ECSInstance;
 	}
 	struct SceneTree;
+	struct SoundSystem;
 	struct FolderInterface : public ImGuiInterface
 	{
 		enum class DISPLAY
 		{
 			SCENES,
 			PREFAB,
-			RESOURCES_TEXTURES
+			RESOURCES_TEXTURES,
+			RESOURCES_AUDIO
 		};
 
 		ECS::ECSInstance* ecs_instance_{ nullptr };
 		SceneTree* scene_tree_{ nullptr };
+		SoundSystem* sound_system_{ nullptr };
 		static constexpr unsigned int display_columns_{ 4 };
 
 		FolderInterface(float x, float y, float sx, float sy, int group);
 		virtual void Render(float dt) override;
+		virtual void CloseAction() override;
 
 		void RenderPrefabs();
 		void RenderScenes();
 		void RenderTextures();
+		void RenderAudio();
 
 		void RecursivelyRenderFolders(ResourceManager::FolderData const& folder);
+		void RecursivelyRenderAudioFolders(SoundSystem::FolderData const& folder);
 		void GetAllDirectories(std::string const& path);
 
 	private:
 		DISPLAY mode{ DISPLAY::RESOURCES_TEXTURES };
 
+		void ResetAllPreviews();
 		/*!
 		 * TEXTURE VARIABLES
 		*/
@@ -50,5 +57,17 @@ namespace JZEngine
 		std::string selected_preview_texture{ "" };
 
 		void DisplayTexturePreview();
+		
+		/*!
+		 * SOUND VARIABLES
+		*/
+		std::string selected_audio_path{ "Assets/Sounds" };
+		std::string selected_audio_directory{ "Sounds" };
+		std::string selected_audio{ "" };
+		bool audio_preview_{ false };
+		std::string selected_preview_audio{ "" };
+		int audio_clip_preview_id_{ -1 };
+
+		void DisplayAudioPreview();
 	};
 }

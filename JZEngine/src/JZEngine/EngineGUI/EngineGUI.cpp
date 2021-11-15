@@ -68,6 +68,11 @@ namespace JZEngine
 		GetInterface<SceneLayerControl>()->active_ = true;*/
 	}
 
+	void EngineGUI::PostInit()
+	{
+		GetInterface<FolderInterface>()->sound_system_ = GetSystem<SoundSystem>();
+	}
+
 	/*!
 	 * @brief ___JZEngine::ToolsGUI::Update()___
 	 * ****************************************************************************************************
@@ -179,6 +184,7 @@ namespace JZEngine
 	void EngineGUI::CloseAllGroupedInterface(int group) {
 		for (auto& i : imgui_interfaces_) {
 			if (i.second.group_ == group) {
+				i.second.interface_->CloseAction();
 				i.second.interface_->active_ = false;
 			}
 		}

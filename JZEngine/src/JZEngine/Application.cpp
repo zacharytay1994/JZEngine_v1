@@ -81,8 +81,10 @@ namespace JZEngine
 
 		//Create sound
 		//global_systems_->GetSystem<SoundSystem>()->createSound("LOST CIVILIZATION - NewAge MSCNEW2_41.wav", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
-		global_systems_->GetSystem<SoundSystem>()->createSound("mellau__button-click-1.wav", "../JZEngine/Resources/mellau__button-click-1.wav");
-
+		//global_systems_->GetSystem<SoundSystem>()->createSound("mellau__button-click-1.wav", "../JZEngine/Resources/mellau__button-click-1.wav");
+		
+		global_systems_->GetSystem<SoundSystem>()->LoadAllSoundsInFolder("Assets/Sounds/");
+		//global_systems_->GetSystem<SoundSystem>()->playSound("lost_civ");
 		// give singleton logger handle to the engine console
 		Log::Instance().Initialize(global_systems_->GetSystem<EngineGUI>()->GetConsole());
 		JZEngine::Log::Info("Main", "[{}] Up and Running! v{}", Settings::engine_name, Settings::version);
