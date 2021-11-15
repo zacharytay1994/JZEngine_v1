@@ -18,11 +18,14 @@
 #include "../GraphicRendering/Shader.h"
 #include "../GraphicRendering/Texture.h"
 #include "../Sound/Sound.h"
+#include "../LoadingScreen/LoadScreenMain.h"
 
 namespace JZEngine
 {
 	struct ResourceManager : public GlobalSystem
 	{
+		LoadScreenMain load_screen_main_;
+
 		struct ShaderID
 		{
 			const unsigned int id_;

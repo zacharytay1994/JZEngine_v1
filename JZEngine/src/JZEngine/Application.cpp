@@ -58,6 +58,9 @@ namespace JZEngine
 
 		// add and initialize global systems
 		global_systems_->AddSystem<GLFW_Instance>("GLFW Instance", Settings::window_width, Settings::window_height);
+		
+		std::cout << "After GLFW Instance" << std::endl ;
+
 		global_systems_->AddSystem<ResourceManager>("Resource Manager");
 		global_systems_->AddSystem<ECS::ECSInstance>("ECS Instance");
 		global_systems_->AddSystem<Renderer>("Default Renderer");

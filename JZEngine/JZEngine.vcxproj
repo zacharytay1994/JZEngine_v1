@@ -261,6 +261,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="src\JZEngine\JZGL\JZ_GL.cpp" />
+    <ClCompile Include="src\JZEngine\LoadingScreen\LoadScreenMain.cpp" />
     <ClCompile Include="src\JZEngine\Math\JZMath.cpp" />
     <ClCompile Include="src\JZEngine\Math\Math.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -313,6 +314,7 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\Camera.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\RenderQueue.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\TransformComponent.h" />
+    <ClInclude Include="src\JZEngine\LoadingScreen\LoadScreenMain.h" />
     <ClInclude Include="src\JZEngine\Physics\CollisionComponent.h" />
     <ClInclude Include="src\JZEngine\Physics\Force.h" />
     <ClInclude Include="src\JZEngine\Physics\PhyicsDebug.h" />
