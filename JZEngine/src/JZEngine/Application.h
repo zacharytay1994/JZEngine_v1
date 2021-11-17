@@ -6,7 +6,6 @@
 				See Application.h for more information on the class.
 */
 
-
 #pragma once
 
 #include "BuildDefinitions.h"
@@ -18,8 +17,6 @@
 // jzgl should be included last as glad.h should be included after
 // any library/file that includes windows.h 
 #include "JZGL/JZ_GL.h"
-
-#include "Message/MessageBus.h"
 
 namespace JZEngine
 {	
@@ -54,13 +51,7 @@ namespace JZEngine
 		void Run();
 
 	private:
-		//JZEngine::MessageBus*               msgbus{};
 		GlobalSystemsManager*				global_systems_;
-		//JZEngine::GLFW_Instance				gl_instance_;		/*!< glfw instance, abstracts creation of opengl instance using glfw */
-		//JZEngine::ResourceManager			resource_manager_;	/*!< resource manager loads all resources from files */
-		//JZEngine::ECS::ECSInstance*	const	ecs_instance_;		/*!< ecs_instance handling all ecs stuffs */
-		//JZEngine::EngineGUI					engine_gui_;		/*!< handles rendering and updating of engine tools gui */
-		//Renderer* const						renderer_;			/*!< renderer handles all opengl rendering */
 
 	};
 
