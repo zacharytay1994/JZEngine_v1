@@ -17,9 +17,9 @@ namespace JZEngine
 		instance_vb ( sizeof ( JZEngine::Mat3f )* MAX_BUFFER_TRANSFORMS )
 	{}
 
-	void RendererInstancing::Init ()
+	void RendererInstancing::Initialize ()
 	{
-		resource_manager_ = GetSystem<ResourceManager> ();
+		//resource_manager_ = GetSystem<ResourceManager> ();
 		VertexBuffer vb ( vertices.data () , static_cast< unsigned int >( vertices.size () * sizeof ( float ) ) );
 
 		VertexBufferLayout layout;
@@ -44,13 +44,13 @@ namespace JZEngine
 		instance_vb.Unbind ();
 	}
 
-	void RendererInstancing::Draw ()
+	void RendererInstancing::Draw (ResourceManager* rm)
 	{
 		Bind ();
 		for( auto& gp : geometry_packets_ )
 		{
-			resource_manager_->instanced_shader_programs_[ gp.first.first ].shader_program_.Bind ();
-			resource_manager_->texture2ds_[ gp.first.second ].texture2d_.Bind ();
+			rm->instanced_shader_programs_[ gp.first.first ].shader_program_.Bind ();
+			rm->texture2ds_[ gp.first.second ].texture2d_.Bind ();
 			GeometryPacket& geometry = gp.second;
 			// bind transforms MAX_BUFFER_TRANSFORMS at a time
 			for( int start = 0; start < geometry.transforms_.size (); start += MAX_BUFFER_TRANSFORMS )
@@ -60,7 +60,7 @@ namespace JZEngine
 				instance_vb.SetData ( geometry.transforms_.data () + start , size * sizeof ( JZEngine::Mat3f ) );
 				glDrawArraysInstanced ( GL_TRIANGLES , 0 , 6 , size ); // 100 triangles of 6 vertices each
 			}
-			resource_manager_->instanced_shader_programs_[ gp.first.first ].shader_program_.Unbind ();
+			rm->instanced_shader_programs_[ gp.first.first ].shader_program_.Unbind ();
 		}
 		instance_vb.Unbind ();
 		Unbind ();

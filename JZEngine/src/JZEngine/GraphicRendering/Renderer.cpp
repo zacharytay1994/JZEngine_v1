@@ -14,15 +14,15 @@ namespace JZEngine
 	Renderer::Renderer ()
 		:
 		ib ( indices.data () , static_cast < unsigned int > ( indices.size () ) ) ,
-		vb ( vertices.data () , static_cast< unsigned int >( vertices.size () * sizeof ( float ) ) )
+		vb ( vertices.data () , static_cast < unsigned int > ( vertices.size () * sizeof ( float ) ) )
 	{
 		// load all texture images
-		//textures_["unicorn"].Texture2DLoad("Assets/Textures/cute-unicorn.png");
+		// textures_["unicorn"].Texture2DLoad("Assets/Textures/cute-unicorn.png");
 	};
 
-	void Renderer::Init ()
+	void Renderer::Initialize()
 	{
-		resource_manager_ = GetSystem<ResourceManager> ();
+		//resource_manager_ = GetSystem<ResourceManager> ();
 		VertexBufferLayout layout;
 		layout.Push<float> ( 3 );
 		layout.Push<float> ( 3 );
@@ -99,7 +99,7 @@ namespace JZEngine
 		ib.Unbind ();
 	}
 
-	Shader& Renderer::GetShaderProgram ( int shaderid )
+	Shader& Renderer::GetShaderProgram ( ResourceManager* resource_manager_, int shaderid )
 	{
 		return resource_manager_->shader_programs_[ shaderid ].shader_program_;
 	}
@@ -109,17 +109,17 @@ namespace JZEngine
 		textures_[ name ].Bind ();
 	}
 
-	void Renderer::BindTexture ( int textureid )
+	void Renderer::BindTexture ( ResourceManager* resource_manager_, int textureid )
 	{
 		resource_manager_->texture2ds_[ textureid ].texture2d_.Bind ();
 	}
 
-	void Renderer::BindShader ( int shaderid )
+	void Renderer::BindShader ( ResourceManager* resource_manager_, int shaderid )
 	{
 		resource_manager_->shader_programs_[ shaderid ].shader_program_.Bind ();
 	}
 
-	void Renderer::UnbindShader ( int shaderid )
+	void Renderer::UnbindShader ( ResourceManager* resource_manager_, int shaderid )
 	{
 		resource_manager_->shader_programs_[ shaderid ].shader_program_.Unbind ();
 	}

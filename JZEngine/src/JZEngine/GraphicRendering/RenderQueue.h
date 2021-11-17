@@ -16,7 +16,8 @@
 namespace JZEngine
 {
 	class Renderer;
-	struct RenderQueue : public GlobalSystem
+	struct ResourceManager;
+	struct RenderQueue
 	{
 		struct RenderData
 		{
@@ -55,9 +56,9 @@ namespace JZEngine
 			}
 		};
 
-		virtual void Update ( float dt ) override;
+		void Update ( ResourceManager* rm );
 
-		virtual void FrameEnd () override;
+		void FrameEnd ();
 
 		static void DrawQueue ( int layer ,
 								int shaderid ,
@@ -79,7 +80,8 @@ namespace JZEngine
 		Renderer* renderer_{ nullptr };
 		static std::priority_queue<RenderData , std::vector<RenderData> , CompareRenderData> render_queue_;
 
-		void DrawSprite ( int shaderid ,
+		void DrawSprite ( ResourceManager* rm,
+						  int shaderid ,
 						  int textureid ,
 						  const Mat3f& transform ,
 						  const JZEngine::Vec4f tint = { 0.0f , 0.0f , 0.0f ,1.0f } ,

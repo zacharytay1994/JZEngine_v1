@@ -33,35 +33,35 @@ namespace JZEngine
 									  int cols ,
 									  bool animated )
 	{
-		// bind buffer data
-		renderer_->Bind ();
-		glCheckError ();
+		//// bind buffer data
+		//renderer_->Bind ();
+		//glCheckError ();
 
-		// use shader program
-		renderer_->BindShader ( shaderid );
-		glCheckError ();
+		//// use shader program
+		//renderer_->BindShader ( shaderid );
+		//glCheckError ();
 
-		// bind texture data
-		renderer_->BindTexture ( textureid );
-		glCheckError ();
+		//// bind texture data
+		//renderer_->BindTexture ( textureid );
+		//glCheckError ();
 
-		// set shader uniforms
-		renderer_->GetShaderProgram ( shaderid ).SetUniform ( "transform" , transform );
-		renderer_->GetShaderProgram ( shaderid ).SetUniform ( "tint" , tint );
-		glCheckError ();
+		//// set shader uniforms
+		//renderer_->GetShaderProgram ( shaderid ).SetUniform ( "transform" , transform );
+		//renderer_->GetShaderProgram ( shaderid ).SetUniform ( "tint" , tint );
+		//glCheckError ();
 
-		if( animated )
-		{
-			// draw animated sprite
-			renderer_->Draw ( frame , rows , cols );
-		}
-		else
-		{
-			renderer_->Draw ();
-		}
+		//if( animated )
+		//{
+		//	// draw animated sprite
+		//	renderer_->Draw ( frame , rows , cols );
+		//}
+		//else
+		//{
+		//	renderer_->Draw ();
+		//}
 
-		// unbind buffer data
-		renderer_->Unbind ();
+		//// unbind buffer data
+		//renderer_->Unbind ();
 	}
 
 	void SpriteRenderer::DrawSpriteQueue(	int layer,

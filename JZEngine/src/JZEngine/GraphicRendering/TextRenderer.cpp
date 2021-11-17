@@ -10,7 +10,7 @@
 #include "OpenGLDebug.h"
 #include "TextRenderer.h"
 #include "../EngineConfig.h"
-#include "../Resource/ResourceManager.h"
+//#include "../Resource/ResourceManager.h"
 #include "VertexBufferLayout.h"
 #include "../EngineGUI/EngineGUI.h"
 
@@ -47,18 +47,18 @@ namespace JZEngine
 	 * @param color
 	 * Default colour is white { 1.0f , 1.0f , 1.0f };
 	*/
-	void TextRenderer::RenderText ( std::string text , float x , float y , float scale , JZEngine::Vec3f color , float tracking_x , float leading_y )
+	void TextRenderer::RenderText ( ResourceManager* rm, std::string text , float x , float y , float scale , JZEngine::Vec3f color , float tracking_x , float leading_y )
 	{
 		scale = scale / 10.0f;
 
 		// activate corresponding render state
-		GetSystem<ResourceManager> ()->font_shader_programs_[ 0 ].shader_program_.Bind ();
-		GetSystem<ResourceManager> ()->font_shader_programs_[ 0 ].shader_program_.SetUniform ( "textColor" , color );
+		rm->font_shader_programs_[ 0 ].shader_program_.Bind ();
+		rm->font_shader_programs_[ 0 ].shader_program_.SetUniform ( "textColor" , color );
 		va.Bind ();
 
 
 		std::string::const_iterator c;
-		auto& Characters = GetSystem<ResourceManager> ()->font_characters_[ 0 ];
+		auto& Characters = rm->font_characters_[ 0 ];
 
 		float start_x{ x };
 		float offset_x{ 0 };
@@ -116,7 +116,7 @@ namespace JZEngine
 
 				cam_transform[ 1 ][ 2 ] *= -1;
 
-				GetSystem<ResourceManager> ()->font_shader_programs_[ 0 ].shader_program_.SetUniform ( "projection" , ( camwin_to_ndc_xform * cam_transform ).Transpose () );
+				rm->font_shader_programs_[ 0 ].shader_program_.SetUniform ( "projection" , ( camwin_to_ndc_xform * cam_transform ).Transpose () );
 				// render quad
 
 				glDrawArrays ( GL_TRIANGLES , 0 , 6 );

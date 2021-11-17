@@ -21,6 +21,6 @@ namespace JZEngine
 
 		void DrawInstances();
 
-		RendererInstancing* renderer_{ nullptr };
+		//RendererInstancing* renderer_{ nullptr };
 	};
 }

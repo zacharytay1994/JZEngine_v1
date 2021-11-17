@@ -23,9 +23,9 @@ namespace JZEngine
 
 	void SpriteRendererInstancing::DrawInstances()
 	{
-		if ( renderer_ )
+		/*if ( renderer_ )
 		{
 			renderer_->Draw();
-		}
+		}*/
 	}
 }

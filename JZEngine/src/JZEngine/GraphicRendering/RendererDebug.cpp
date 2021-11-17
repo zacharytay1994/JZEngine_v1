@@ -8,6 +8,7 @@
 #include <PCH.h>
 #include "RendererDebug.h"
 #include "../EngineGUI/EngineGUI.h"
+#include "../Resource/ResourceManager.h"
 
 namespace JZEngine
 {
@@ -36,13 +37,13 @@ namespace JZEngine
 		vb_lines_.Unbind();
 	}
 
-	void RendererDebug::Init()
+	void RendererDebug::Initialize()
 	{
-		resource_manager_ = GetSystem<ResourceManager>();
+		//resource_manager_ = GetSystem<ResourceManager>();
 		initialized_ = true;
 	}
 
-	void RendererDebug::Update(float dt)
+	void RendererDebug::Update(ResourceManager* rm, float dt)
 	{
 		UNREFERENCED_PARAMETER(dt);
 		if (initialized_)

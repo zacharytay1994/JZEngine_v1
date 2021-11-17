@@ -27,10 +27,11 @@
 #include "VertexArray.h"
 #include "../Math/JZMath.h"
 #include "../Resource/ResourceManager.h"
+#include "BaseRenderer.h"
 
 namespace JZEngine
 {
-	class RendererInstancing : public GlobalSystem
+	class RendererInstancing
 	{
 		Shader shader_program;
 		VertexArray va;
@@ -82,15 +83,15 @@ namespace JZEngine
 	public:
 		RendererInstancing();
 		
-		virtual void Init() override;
-		void Draw();
+		virtual void Initialize();
+		virtual void Draw(ResourceManager* rm);
 		void Bind();
 		void Unbind();
 
 		Shader GetShaderProgram();
 		void AddTransform( int shader, int texture, const JZEngine::Mat3f& transform );
 
-		ResourceManager* resource_manager_{ nullptr };
+		//ResourceManager* resource_manager_{ nullptr };
 	};
 
 }

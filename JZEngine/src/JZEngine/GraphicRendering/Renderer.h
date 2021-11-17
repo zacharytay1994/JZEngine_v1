@@ -19,10 +19,12 @@
 #include "Texture.h"
 #include <unordered_map>
 
+#include "BaseRenderer.h"
+
 
 namespace JZEngine
 {
-	class Renderer : public GlobalSystem
+	class Renderer
 	{
 	private:
 
@@ -53,19 +55,19 @@ namespace JZEngine
 
 		Renderer ();
 
-		virtual void Init () override;
+		void Initialize ();
 		void Draw ();
 		void Draw ( int frame , int row , int col );
 		void Bind ();
 		void Unbind ();
 		void Clear ();
 
-		Shader& GetShaderProgram ( int shaderid );
+		Shader& GetShaderProgram ( ResourceManager* resource_manager_, int shaderid );
 		void BindTexture ( const std::string& name );
-		void BindTexture ( int textureid );
-		void BindShader ( int shaderid );
-		void UnbindShader ( int shaderid );
+		void BindTexture ( ResourceManager* resource_manager_, int textureid );
+		void BindShader ( ResourceManager* resource_manager_, int shaderid );
+		void UnbindShader ( ResourceManager* resource_manager_, int shaderid );
 
-		ResourceManager* resource_manager_{ nullptr };
+		//ResourceManager* resource_manager_{ nullptr };
 	};
 }

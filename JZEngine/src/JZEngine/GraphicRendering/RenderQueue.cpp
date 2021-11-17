@@ -10,22 +10,23 @@
 #include "Renderer.h"
 #include "OpenGLDebug.h"
 #include "../DebugTools/PerformanceData.h"
+#include "../Resource/ResourceManager.h"
 
 namespace JZEngine
 {
 	std::priority_queue<RenderQueue::RenderData , std::vector<RenderQueue::RenderData> , RenderQueue::CompareRenderData> RenderQueue::render_queue_;
 	std::vector<RenderQueue::LayerData> RenderQueue::layers_;
 
-	void RenderQueue::Update ( float dt )
+	void RenderQueue::Update (ResourceManager* rm)
 	{
-		UNREFERENCED_PARAMETER ( dt );
+		//UNREFERENCED_PARAMETER ( dt );
 		// flush the draw queue and render all data
 		if( renderer_ )
 		{
 			while( render_queue_.size () > 0 )
 			{
 				const RenderData& sl = render_queue_.top ();
-				DrawSprite ( sl.shader_id_ , sl.texture_id_ , sl.transform_ , sl.tint_ , sl.frame_ , sl.rows_ , sl.cols_ , sl.animated_ );
+				DrawSprite ( rm, sl.shader_id_ , sl.texture_id_ , sl.transform_ , sl.tint_ , sl.frame_ , sl.rows_ , sl.cols_ , sl.animated_ );
 				render_queue_.pop ();
 			}
 		}
@@ -54,7 +55,8 @@ namespace JZEngine
 		layers_.emplace_back ( layer , textureid );
 	}
 
-	void RenderQueue::DrawSprite ( int shaderid ,
+	void RenderQueue::DrawSprite ( ResourceManager* rm,
+								   int shaderid ,
 								   int textureid ,
 								   const Mat3f& transform ,
 								   JZEngine::Vec4f tint ,
@@ -68,18 +70,18 @@ namespace JZEngine
 		glCheckError ();
 
 		// use shader program
-		renderer_->BindShader ( shaderid );
+		renderer_->BindShader ( rm, shaderid );
 		glCheckError ();
 
 		// bind texture data
-		renderer_->BindTexture ( textureid );
+		renderer_->BindTexture ( rm, textureid );
 		glCheckError ();
 
 		// set shader uniforms
-		renderer_->GetShaderProgram ( shaderid ).SetUniform ( "transform" , transform );
-		renderer_->GetShaderProgram ( shaderid ).SetUniform ( "tint" , tint );
+		renderer_->GetShaderProgram ( rm, shaderid ).SetUniform ( "transform" , transform );
+		renderer_->GetShaderProgram ( rm, shaderid ).SetUniform ( "tint" , tint );
 		//Log::Info("Main", "{}", PerformanceData::time_elapsed_);
-		renderer_->GetShaderProgram ( shaderid ).SetUniform ( "time" , PerformanceData::time_elapsed_ );
+		renderer_->GetShaderProgram ( rm, shaderid ).SetUniform ( "time" , PerformanceData::time_elapsed_ );
 		glCheckError ();
 
 		if( animated )

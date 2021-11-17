@@ -20,7 +20,7 @@ namespace JZEngine
 	// sprite system
 	struct InstanceSprite : public ECS::System
 	{
-		SpriteRendererInstancing sprite_renderer_instancing_;
+		//SpriteRendererInstancing sprite_renderer_instancing_;
 
 		InstanceSprite();
 

@@ -173,6 +173,7 @@
     <ClCompile Include="src\JZEngine\EngineGUI\MenuBar.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\SceneLayerControl.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Camera.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\GlobalRenderer.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\NonInstanceSpriteRenderer.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\SceneTree.cpp" />
     <ClCompile Include="src\JZEngine\GlobalSystems.cpp" />
@@ -310,7 +311,9 @@
     <ClInclude Include="src\JZEngine\FSM\CustomerState.h" />
     <ClInclude Include="src\JZEngine\FSM\FiniteStateMachine.h" />
     <ClInclude Include="src\JZEngine\FSM\State.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\BaseRenderer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Camera.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\GlobalRenderer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\RenderQueue.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\TransformComponent.h" />
     <ClInclude Include="src\JZEngine\Physics\CollisionComponent.h" />

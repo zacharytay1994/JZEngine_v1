@@ -17,7 +17,7 @@
 #include "GraphicRendering/Camera.h"
 
 #include "GraphicRendering/Renderer.h"
-#include "GraphicRendering/RendererInstancing.h"
+//#include "GraphicRendering/RendererInstancing.h"
 #include "GraphicRendering/RendererDebug.h"
 #include "GraphicRendering/SpriteRenderer.h"
 #include "GraphicRendering/TextRenderer.h"
@@ -47,37 +47,41 @@
 #include "Message/Event.h"
 #include "FSM/CustomerState.h"
 
+#include "GraphicRendering/GlobalRenderer.h"
+
 namespace JZEngine
 {
 	Application::Application()
 		: //msgbus( new MessageBus() ),
 		  global_systems_(new GlobalSystemsManager())
 	{
+
 		Settings::LoadFromConfigFile();
 		Serialize::Load();
 
 		// add and initialize global systems
 		global_systems_->AddSystem<GLFW_Instance>("GLFW Instance", Settings::window_width, Settings::window_height);
+		GlobalRenderer::Instance().Initialize();
 		global_systems_->AddSystem<ResourceManager>("Resource Manager");
 		global_systems_->AddSystem<ECS::ECSInstance>("ECS Instance");
-		global_systems_->AddSystem<Renderer>("Default Renderer");
-		global_systems_->AddSystem<RendererInstancing>("Instance Renderer");
-		global_systems_->AddSystem<RenderQueue>("Render Queue");
-		global_systems_->AddSystem<RendererDebug>("Debug Renderer");
+		//global_systems_->AddSystem<Renderer>("Default Renderer");
+		//global_systems_->AddSystem<RendererInstancing>("Instance Renderer");
+		//global_systems_->AddSystem<RenderQueue>("Render Queue");
+		//global_systems_->AddSystem<RendererDebug>("Debug Renderer");
 		global_systems_->AddSystem<EngineGUI>("Engine GUI");
 		global_systems_->AddSystem<SoundSystem>("Sound System");
-		global_systems_->AddSystem<TextRenderer>("Text Renderer");
-
+		//global_systems_->AddSystem<TextRenderer>("Text Renderer");
+		GlobalRenderer::Instance().SetResourceManager(global_systems_->GetSystem<ResourceManager>());
 		SceneLogic::Instance().SetECS(global_systems_->GetSystem<ECS::ECSInstance>());
 
 		global_systems_->GetSystem<GLFW_Instance>()->UpdateViewportDimensions();
-		global_systems_->GetSystem<RenderQueue>()->SetRenderer(global_systems_->GetSystem<Renderer>());
+		//global_systems_->GetSystem<RenderQueue>()->SetRenderer(global_systems_->GetSystem<Renderer>());
 
 		// give subsystems handle to global systems
 		/*global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<Sprite> ()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer> ();*/
-		global_systems_->GetSystem<ECS::ECSInstance>()->GetSystemInefficient<InstanceSprite>()->sprite_renderer_instancing_.renderer_ = global_systems_->GetSystem<RendererInstancing>();
+		//global_systems_->GetSystem<ECS::ECSInstance>()->GetSystemInefficient<InstanceSprite>()->sprite_renderer_instancing_.renderer_ = &GlobalRenderer::Instance().renderer_instance_;s
 		//global_systems_->GetSystem<ECS::ECSInstance> ()->GetSystemInefficient<ParallaxBackground> ()->sprite_renderer_.renderer_ = global_systems_->GetSystem<Renderer> ();
-		global_systems_->GetSystem<ECS::ECSInstance>()->GetSystemInefficient<Text>()->text_renderer_ = global_systems_->GetSystem<TextRenderer>();
+		//global_systems_->GetSystem<ECS::ECSInstance>()->GetSystemInefficient<Text>()->text_renderer_ = global_systems_->GetSystem<TextRenderer>();
 
 		//Create sound
 		//global_systems_->GetSystem<SoundSystem>()->createSound("LOST CIVILIZATION - NewAge MSCNEW2_41.wav", "../JZEngine/Resources/LOST CIVILIZATION - NewAge MSCNEW2_41.wav");
@@ -155,7 +159,12 @@ namespace JZEngine
 			//InputHandler::CalculateMouseWorldPosition(global_systems_->GetSystem<GLFW_Instance>()->window_, MenuBar::height_);
 			Camera::CalculateMouseWorldPosition(global_systems_->GetSystem<GLFW_Instance>()->window_);
 
+			// draw global renderer
+			GlobalRenderer::Instance().Update(static_cast<float>(dt));
+
 			global_systems_->Update(static_cast<float>(dt));
+
+
 			SceneLogic::Instance().BuildEntityMap();
 			SceneLogic::Instance().UpdateSceneLogic(static_cast<float>(dt));
 
@@ -173,6 +182,8 @@ namespace JZEngine
 				event.name = "mellau__button-click-1.wav";
 				//msgbus->publish ( &event );
 			}
+
+			GlobalRenderer::Instance().FrameEnd();
 
 			InputHandler::FrameEnd(); //input handler frameend MUST be here before global system->frameend
 

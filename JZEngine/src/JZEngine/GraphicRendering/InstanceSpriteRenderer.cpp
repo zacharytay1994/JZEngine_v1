@@ -9,6 +9,7 @@
 #include "InstanceSpriteRenderer.h"
 #include "NonInstanceSpriteRenderer.h"
 #include "RendererDebug.h"
+#include "GlobalRenderer.h"
 
 namespace JZEngine
 {
@@ -20,7 +21,7 @@ namespace JZEngine
 	void InstanceSprite::FrameBegin( const float& dt )
 	{
 		UNREFERENCED_PARAMETER(dt);
-		sprite_renderer_instancing_.DrawInstances();
+		//sprite_renderer_instancing_.DrawInstances();
 	}
 
 	void InstanceSprite::Update( const float& dt )
@@ -30,7 +31,7 @@ namespace JZEngine
 		Texture& texture = GetComponent<Texture>();
 		InstanceShader& shader = GetComponent<InstanceShader>();
 
-		sprite_renderer_instancing_.renderer_->AddTransform( shader.shader_id_, texture.texture_id_,
+		GlobalRenderer::Instance().renderer_instance_.AddTransform( shader.shader_id_, texture.texture_id_,
 															 Math::GetTransform(transform.position_, transform.rotation_, transform.scale_, transform.size_));
 
 		RendererDebug::DrawSpriteSquare(transform.position_, { transform.scale_.x * transform.size_.x, transform.scale_.y * transform.size_.y });

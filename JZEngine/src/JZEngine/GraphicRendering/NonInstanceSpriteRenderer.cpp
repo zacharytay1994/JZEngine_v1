@@ -9,6 +9,7 @@
 #include "NonInstanceSpriteRenderer.h"
 #include "../EngineGUI/EngineGUI.h"
 #include "RenderQueue.h"
+#include "../GraphicRendering/GlobalRenderer.h"
 
 namespace JZEngine
 {
@@ -38,8 +39,8 @@ namespace JZEngine
 		transform.model_transform_ = Math::GetModelTransformNonTransposed(transform.position_, transform.rotation_, transform.scale_, transform.size_);
 
 		SpriteLayer& layer = GetComponent<SpriteLayer>();
-		RenderQueue::DrawQueue(layer.layer_, shader.shader_id_, texture.texture_id_, (Math::GetProjectionTransformNonTransposed() * EngineGUI::GetCameraTransform() * transform.model_transform_).Transpose(), shader.tint, anim2d.frame_, anim2d.rows_, anim2d.column_, anim2d.animation_check_);
-		RenderQueue::GUILayerData(&layer.layer_, texture.texture_id_);
+		GlobalRenderer::Instance().render_queue_.DrawQueue(layer.layer_, shader.shader_id_, texture.texture_id_, (Math::GetProjectionTransformNonTransposed() * EngineGUI::GetCameraTransform() * transform.model_transform_).Transpose(), shader.tint, anim2d.frame_, anim2d.rows_, anim2d.column_, anim2d.animation_check_);
+		GlobalRenderer::Instance().render_queue_.GUILayerData(&layer.layer_, texture.texture_id_);
 
 		RendererDebug::DrawSpriteSquare(transform.position_, { transform.scale_.x * transform.size_.x, transform.scale_.y * transform.size_.y });
 	}

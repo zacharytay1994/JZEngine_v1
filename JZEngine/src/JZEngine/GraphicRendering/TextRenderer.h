@@ -17,7 +17,9 @@
 #include "Buffer.h"
 #include "Shader.h"
 #include "../GlobalSystems.h"
+#include "../Resource/ResourceManager.h"
 
+//struct ResourceManager;
 namespace JZEngine
 {
 	// Holds all state information relevant to a character as loaded using FreeType
@@ -39,7 +41,7 @@ namespace JZEngine
 	// A renderer class for rendering text displayed by a font loaded using the 
 	// FreeType library. A single font is loaded, processed into a list of Character
 	// items for later rendering.
-	struct TextRenderer : public GlobalSystem
+	struct TextRenderer
 	{
 		TextRenderer ();
 		// holds a list of pre-compiled Characters
@@ -51,6 +53,7 @@ namespace JZEngine
 		// renders a string of text using the precompiled list of characters
 		void RenderText
 		(
+			ResourceManager* rm,
 			std::string text ,
 			float x ,
 			float y ,
@@ -94,12 +97,12 @@ namespace JZEngine
 			render_text_data_.emplace_back(text, x, y, scale, color, tracking_x, leading_y);
 		}
 
-		virtual void Update(float dt) override
+		void Update(ResourceManager* rm, float dt)
 		{
 			UNREFERENCED_PARAMETER(dt);
 			for (auto& data : render_text_data_)
 			{
-				RenderText(data.text_, data.x_, data.y_, data.scale_, data.color_, data.tracking_x_, data.leading_y_);
+				RenderText(rm, data.text_, data.x_, data.y_, data.scale_, data.color_, data.tracking_x_, data.leading_y_);
 			}
 			render_text_data_.clear();
 		}

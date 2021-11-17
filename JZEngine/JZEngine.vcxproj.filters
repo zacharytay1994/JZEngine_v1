@@ -74,6 +74,7 @@
     <ClCompile Include="src\JZEngine\ECSSystems\MouseEvent.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\FollowMouseCursor.cpp" />
     <ClCompile Include="src\JZEngine\Physics\Force.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\GlobalRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
@@ -279,5 +280,7 @@
     <ClInclude Include="src\JZEngine\ECSSystems\MouseEvent.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\FollowMouseCursor.h" />
     <ClInclude Include="src\JZEngine\Physics\Force.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\GlobalRenderer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\BaseRenderer.h" />
   </ItemGroup>
 </Project>

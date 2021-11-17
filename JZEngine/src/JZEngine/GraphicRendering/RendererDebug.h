@@ -19,7 +19,7 @@
 
 namespace JZEngine
 {
-	struct RendererDebug : public GlobalSystem
+	struct RendererDebug
 	{
 		bool							initialized_		{ false };
 		static constexpr unsigned int	MAX_POINTS			{ 1000 };
@@ -40,8 +40,8 @@ namespace JZEngine
 
 		RendererDebug();
 
-		virtual void Init() override;
-		virtual void Update(float dt) override;
+		void Initialize();
+		void Update(ResourceManager* rm, float dt);
 
 		static void DrawPoint(const Vec2f& p1);
 		static void DrawLine(const Vec2f& p1, const Vec2f& p2);
