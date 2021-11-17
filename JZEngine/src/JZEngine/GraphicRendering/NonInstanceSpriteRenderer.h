@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include "SpriteRenderer.h"
 #include "TransformComponent.h"
 #include "../ECS/ECS.h"
 #include "../Math/JZMath.h"

@@ -8,7 +8,6 @@
 #pragma once
 
 #include "../ECS/ECS.h"
-#include "SpriteRendererInstancing.h"
 
 namespace JZEngine
 {

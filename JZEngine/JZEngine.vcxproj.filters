@@ -17,12 +17,10 @@
     <ClCompile Include="src\JZEngine\GraphicRendering\Background.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Buffer.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\OpenGLDebug.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Renderer.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\RendererInstancing.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Shader.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\SpriteRenderer.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\TextRenderer.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Texture.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\VertexArray.cpp" />
@@ -174,7 +172,6 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\Background.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Buffer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\OpenGLDebug.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Renderer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Shader.h" />
@@ -183,7 +180,6 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\Renderer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\RendererInstancing.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Shader.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\SpriteRenderer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\TextRenderer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Texture.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\VertexArray.h" />

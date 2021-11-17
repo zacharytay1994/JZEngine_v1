@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include "SpriteRenderer.h"
 #include "../EngineConfig.h"
 #include "../ECS/ECS.h"
 
