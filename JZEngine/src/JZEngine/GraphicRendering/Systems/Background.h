@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include "../EngineConfig.h"
-#include "../ECS/ECS.h"
+#include "../../EngineConfig.h"
+#include "../../ECS/ECS.h"
 
 
 namespace JZEngine

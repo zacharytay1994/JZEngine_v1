@@ -7,8 +7,8 @@
 
 #include <PCH.h>
 #include "RendererDebug.h"
-#include "../EngineGUI/EngineGUI.h"
-#include "../Resource/ResourceManager.h"
+#include "../../EngineGUI/EngineGUI.h"
+#include "../../Resource/ResourceManager.h"
 
 namespace JZEngine
 {
@@ -43,9 +43,8 @@ namespace JZEngine
 		initialized_ = true;
 	}
 
-	void RendererDebug::Update(ResourceManager* rm, float dt)
+	void RendererDebug::Update(ResourceManager* rm)
 	{
-		UNREFERENCED_PARAMETER(dt);
 		if (initialized_)
 		{
 			if (sprite_outline_)

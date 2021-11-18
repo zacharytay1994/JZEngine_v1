@@ -8,8 +8,8 @@
 #include <PCH.h>
 #include "InstanceSpriteRenderer.h"
 #include "NonInstanceSpriteRenderer.h"
-#include "RendererDebug.h"
-#include "GlobalRenderer.h"
+#include "../Renderers/RendererDebug.h"
+#include "../Renderers/GlobalRenderer.h"
 
 namespace JZEngine
 {

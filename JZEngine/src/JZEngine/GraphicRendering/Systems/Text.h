@@ -7,9 +7,9 @@
 
 #pragma once
 
-#include "../ECS/ECS.h"
-#include "TextRenderer.h"
-#include "../STL/String.h"
+#include "../../ECS/ECS.h"
+#include "../Renderers/RendererText.h"
+#include "../../STL/String.h"
 
 
 namespace JZEngine

@@ -9,7 +9,7 @@
 
 #include "Texture.h"
 #include "stb_image.h"
-#include "OpenGLDebug.h"
+#include "../OpenGLDebug.h"
 
 namespace JZEngine
 {

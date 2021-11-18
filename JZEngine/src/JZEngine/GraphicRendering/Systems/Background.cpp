@@ -7,9 +7,9 @@
 
 #include <PCH.h>
 #include "Background.h"
-#include "../ECS/ECSConfig.h"
-#include "../EngineGUI/EngineGUI.h"
-#include "RenderQueue.h"
+#include "../../ECS/ECSConfig.h"
+#include "../../EngineGUI/EngineGUI.h"
+#include "../Renderers/RenderQueue.h"
 
 namespace JZEngine
 {

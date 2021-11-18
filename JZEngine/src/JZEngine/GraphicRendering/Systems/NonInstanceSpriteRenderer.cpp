@@ -7,9 +7,9 @@
 
 #include <PCH.h>
 #include "NonInstanceSpriteRenderer.h"
-#include "../EngineGUI/EngineGUI.h"
-#include "RenderQueue.h"
-#include "../GraphicRendering/GlobalRenderer.h"
+#include "../../EngineGUI/EngineGUI.h"
+#include "../Renderers/RenderQueue.h"
+#include "../Renderers/GlobalRenderer.h"
 
 namespace JZEngine
 {

@@ -10,7 +10,7 @@
 #include "Renderer.h"
 #include "RendererInstancing.h"
 #include "RendererDebug.h"
-#include "TextRenderer.h"
+#include "RendererText.h"
 #include "RenderQueue.h"
 /*! graphics includes - END */
 

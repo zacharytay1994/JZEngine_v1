@@ -8,9 +8,9 @@
 #include <PCH.h>
 #include "RenderQueue.h"
 #include "Renderer.h"
-#include "OpenGLDebug.h"
-#include "../DebugTools/PerformanceData.h"
-#include "../Resource/ResourceManager.h"
+#include "../OpenGLDebug.h"
+#include "../../DebugTools/PerformanceData.h"
+#include "../../Resource/ResourceManager.h"
 
 namespace JZEngine
 {
