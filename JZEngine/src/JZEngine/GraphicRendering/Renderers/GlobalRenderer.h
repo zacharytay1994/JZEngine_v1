@@ -10,9 +10,14 @@
 #include "Renderer.h"
 #include "RendererInstancing.h"
 #include "RendererDebug.h"
-#include "TextRenderer.h"
+#include "RendererText.h"
 #include "RenderQueue.h"
 /*! graphics includes - END */
+
+/*! engine includes - START */
+#include "../../Math/JZMath.h"
+#include "../../DebugTools/Assert.h"
+/*! engine includes - END */
 
 namespace JZEngine
 {
@@ -77,5 +82,41 @@ namespace JZEngine
 		ResourceManager* resource_manager_{ nullptr };
 
 		GlobalRenderer();
+	};
+
+	struct ShaderManager
+	{
+		/*! SHADER TYPES 
+			- Shader types are structs that holds the uniform structure for various shaders.
+		*/
+		struct DefaultShaderUniforms
+		{
+			Mat3f transform_;
+			Vec4f tint_;
+			float time_;
+		};
+
+		struct AnotherShaderUniform
+		{
+			Mat3f transform_;
+			float ft;
+		};
+
+		template <typename SHADERTYPE>
+		static std::vector<SHADERTYPE> shader_container_;
+
+		template <typename SHADERTYPE>
+		int RegisterShaderUniform()
+		{
+			shader_container_<SHADERTYPE>.emplace_back();
+			return shader_container_<SHADERTYPE>.size() - 1;
+		}
+
+		template <typename SHADERTYPE>
+		SHADERTYPE& GetShaderUniform(int i)
+		{
+			JZ_ASSERT((i < shader_container_<SHADERTYPE>.size()), "Accessing shader uniform out of bounds.") (i);
+			return shader_container_<SHADERTYPE>[i];
+		}
 	};
 }

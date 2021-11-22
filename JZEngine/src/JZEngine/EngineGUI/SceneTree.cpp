@@ -14,7 +14,7 @@
 #include "Console.h"
 #include "../Resource/Serialize.h"
 #include "MenuBar.h"
-#include "../GraphicRendering/RenderQueue.h"
+#include "../GraphicRendering/Renderers/RenderQueue.h"
 
 namespace JZEngine
 {
@@ -157,7 +157,7 @@ namespace JZEngine
 	void SceneTree::RecursivelyAddChildObjectsToLayerData(ECS::Entity* entity)
 	{
 		// add to layers if has layer and texture component
-		if (entity->HasComponent(1) && entity->persistant_)
+		if (entity->HasComponent(1) && entity->HasComponent(2) && entity->persistant_)
 		{
 			layers_.emplace_back(entity->name_, entity->ecs_id_, &entity->GetComponent<SpriteLayer>().layer_, &entity->GetComponent<Texture>().texture_id_);
 		}

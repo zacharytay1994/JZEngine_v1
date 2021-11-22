@@ -7,12 +7,12 @@
 
 #include "PCH.h"
 
-#include "OpenGLDebug.h"
-#include "TextRenderer.h"
-#include "../EngineConfig.h"
-//#include "../Resource/ResourceManager.h"
-#include "VertexBufferLayout.h"
-#include "../EngineGUI/EngineGUI.h"
+#include "../OpenGLDebug.h"
+#include "RendererText.h"
+#include "../../EngineConfig.h"
+//#include "../../Resource/ResourceManager.h"
+#include "../GLObjects/VertexBufferLayout.h"
+#include "../../EngineGUI/EngineGUI.h"
 
 namespace JZEngine
 {

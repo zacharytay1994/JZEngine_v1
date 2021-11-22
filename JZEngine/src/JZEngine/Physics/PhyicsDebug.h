@@ -6,7 +6,7 @@
 */
 
 #pragma once
-#include "../GraphicRendering/RendererDebug.h"
+#include "../GraphicRendering/Renderers/RendererDebug.h"
 #include "../Physics/CollisionComponent.h"
 namespace JZEngine
 {

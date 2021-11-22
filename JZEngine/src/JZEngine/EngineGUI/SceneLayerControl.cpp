@@ -1,6 +1,6 @@
 #include <PCH.h>
 #include "SceneLayerControl.h"
-#include "../GraphicRendering/RenderQueue.h"
+#include "../GraphicRendering/Renderers/RenderQueue.h"
 #include "../Resource/ResourceManager.h"
 
 //namespace JZEngine {

@@ -7,8 +7,8 @@
 
 #include <PCH.h>
 #include "RendererInstancing.h"
-#include "../Math/JZMath.h"
-#include "VertexBufferLayout.h"
+#include "../../Math/JZMath.h"
+#include "../GLObjects/VertexBufferLayout.h"
 
 namespace JZEngine
 {
@@ -44,7 +44,7 @@ namespace JZEngine
 		instance_vb.Unbind ();
 	}
 
-	void RendererInstancing::Draw (ResourceManager* rm)
+	void RendererInstancing::Update (ResourceManager* rm)
 	{
 		Bind ();
 		for( auto& gp : geometry_packets_ )

@@ -9,13 +9,13 @@
 
 #include <initializer_list>
 
-#include "../GlobalSystems.h"
-#include "../Math/JZMath.h"
+#include "../../GlobalSystems.h"
+#include "../../Math/JZMath.h"
 
-#include "VertexArray.h"
-#include "VertexBufferLayout.h"
+#include "../GLObjects/VertexArray.h"
+#include "../GLObjects/VertexBufferLayout.h"
 
-#include "../Resource/ResourceManager.h"
+#include "../../Resource/ResourceManager.h"
 
 namespace JZEngine
 {
@@ -41,7 +41,7 @@ namespace JZEngine
 		RendererDebug();
 
 		void Initialize();
-		void Update(ResourceManager* rm, float dt);
+		void Update(ResourceManager* rm);
 
 		static void DrawPoint(const Vec2f& p1);
 		static void DrawLine(const Vec2f& p1, const Vec2f& p2);

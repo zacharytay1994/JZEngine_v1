@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include "../GlobalSystems.h"
-#include "../Math/JZMath.h"
+#include "../../GlobalSystems.h"
+#include "../../Math/JZMath.h"
 
 #include <queue>
 #include <vector>
@@ -76,18 +76,18 @@ namespace JZEngine
 
 		static std::vector<LayerData> layers_;
 
+		static std::priority_queue<RenderData, std::vector<RenderData>, CompareRenderData> render_queue_;
+
+		void DrawSprite(ResourceManager* rm,
+			int shaderid,
+			int textureid,
+			const Mat3f& transform,
+			const JZEngine::Vec4f tint = { 0.0f , 0.0f , 0.0f ,1.0f },
+			int frame = 0,
+			int rows = 1,
+			int cols = 1,
+			bool animated = false);
 	private:
 		Renderer* renderer_{ nullptr };
-		static std::priority_queue<RenderData , std::vector<RenderData> , CompareRenderData> render_queue_;
-
-		void DrawSprite ( ResourceManager* rm,
-						  int shaderid ,
-						  int textureid ,
-						  const Mat3f& transform ,
-						  const JZEngine::Vec4f tint = { 0.0f , 0.0f , 0.0f ,1.0f } ,
-						  int frame = 0 ,
-						  int rows = 1 ,
-						  int cols = 1 ,
-						  bool animated = false );
 	};
 }

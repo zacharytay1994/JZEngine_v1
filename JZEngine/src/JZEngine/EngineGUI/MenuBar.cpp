@@ -11,7 +11,7 @@
 #include "../Input/Input.h"
 #include "../JZGL/JZ_GL.h"
 
-#include "../GraphicRendering/RendererDebug.h"
+#include "../GraphicRendering/Renderers/RendererDebug.h"
 #include "../DebugTools/PerformanceData.h"
 #include "FolderInterface.h"
 #include "DebugInformation.h"

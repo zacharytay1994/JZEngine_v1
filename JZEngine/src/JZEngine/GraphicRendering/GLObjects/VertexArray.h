@@ -26,5 +26,7 @@ namespace JZEngine
 
 		void AddBuffer( const VertexBuffer& vb, const VertexBufferLayout& layout );
 		void AddBuffer( const int index , const VertexBuffer& vb, const VertexBufferLayout& layout );
+
+		void BindBufferLayout( const VertexBuffer& vb, const VertexBufferLayout& layout );
 	};
 }

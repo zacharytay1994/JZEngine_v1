@@ -9,7 +9,7 @@
 
 #include <string>
 #include <glad/glad.h>
-#include "../Math/JZMath.h"
+#include "../../Math/JZMath.h"
 
 namespace JZEngine
 {

@@ -15,8 +15,8 @@
 #include <string>
 
 #include "../GlobalSystems.h"
-#include "../GraphicRendering/Shader.h"
-#include "../GraphicRendering/Texture.h"
+#include "../GraphicRendering/GLObjects/Shader.h"
+#include "../GraphicRendering/GLObjects/Texture.h"
 #include "../Sound/Sound.h"
 
 namespace JZEngine

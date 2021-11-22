@@ -9,17 +9,14 @@
 
 #include <memory>
 #include <array>
-#include "../GlobalSystems.h"
-#include "Buffer.h"
-#include "Shader.h"
-#include "VertexArray.h"
-#include "VertexBufferLayout.h"
-#include "../Resource/ResourceManager.h"
+#include "../GLObjects/Buffer.h"
+#include "../GLObjects/Shader.h"
+#include "../GLObjects/VertexArray.h"
+#include "../GLObjects/VertexBufferLayout.h"
+#include "../../Resource/ResourceManager.h"
 
-#include "Texture.h"
+#include "../GLObjects/Texture.h"
 #include <unordered_map>
-
-#include "BaseRenderer.h"
 
 
 namespace JZEngine

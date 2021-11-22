@@ -8,11 +8,11 @@
 #pragma once
 
 #include "TransformComponent.h"
-#include "../ECS/ECS.h"
-#include "../Math/JZMath.h"
-#include "Texture.h"
+#include "../../ECS/ECS.h"
+#include "../../Math/JZMath.h"
+#include "../GLObjects/Texture.h"
 
-#include "RendererDebug.h"
+#include "../Renderers/RendererDebug.h"
 
 namespace JZEngine
 {

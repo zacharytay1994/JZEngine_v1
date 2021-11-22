@@ -21,13 +21,12 @@
 #include <assert.h>
 #include <unordered_map>
 
-#include "../GlobalSystems.h"
-#include "Shader.h"
-#include "Buffer.h"
-#include "VertexArray.h"
-#include "../Math/JZMath.h"
-#include "../Resource/ResourceManager.h"
-#include "BaseRenderer.h"
+#include "../../GlobalSystems.h"
+#include "../GLObjects/Shader.h"
+#include "../GLObjects/Buffer.h"
+#include "../GLObjects/VertexArray.h"
+#include "../../Math/JZMath.h"
+#include "../../Resource/ResourceManager.h"
 
 namespace JZEngine
 {
@@ -83,8 +82,8 @@ namespace JZEngine
 	public:
 		RendererInstancing();
 		
-		virtual void Initialize();
-		virtual void Draw(ResourceManager* rm);
+		void Initialize();
+		void Update(ResourceManager* rm);
 		void Bind();
 		void Unbind();
 

@@ -8,7 +8,7 @@
 */
 
 #pragma once
-#include "../GraphicRendering/TransformComponent.h"
+#include "../GraphicRendering/Systems/TransformComponent.h"
 
 #include "../DebugTools/Log.h"
 #include "../ECS/ECS.h"

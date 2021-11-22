@@ -9,6 +9,8 @@
 
 #define UNREFERENCED_PARAMETER(P)(P)
 
+#include <algorithm>
+
 // containers
 #include <string>
 #include <array>

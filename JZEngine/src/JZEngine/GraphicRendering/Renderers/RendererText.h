@@ -12,12 +12,11 @@
 
 #include <map>
 
-#include "../Math/JZMath.h"
-#include "VertexArray.h"
-#include "Buffer.h"
-#include "Shader.h"
-#include "../GlobalSystems.h"
-#include "../Resource/ResourceManager.h"
+#include "../../Math/JZMath.h"
+#include "../GLObjects/VertexArray.h"
+#include "../GLObjects/Buffer.h"
+#include "../GLObjects/Shader.h"
+#include "../../Resource/ResourceManager.h"
 
 //struct ResourceManager;
 namespace JZEngine
@@ -65,6 +64,7 @@ namespace JZEngine
 
 		struct RenderTextData
 		{
+			int layer_;
 			std::string text_;
 			float x_;
 			float y_;
@@ -72,8 +72,9 @@ namespace JZEngine
 			Vec3f color_;
 			float tracking_x_;
 			float leading_y_;
-			RenderTextData(const std::string& text, float x, float y, float scale, const Vec3f color, float tracking_x, float leading_y)
+			RenderTextData(int layer, const std::string& text, float x, float y, float scale, const Vec3f color, float tracking_x, float leading_y)
 				:
+				layer_(layer),
 				text_(text),
 				x_(x),
 				y_(y),
@@ -86,6 +87,7 @@ namespace JZEngine
 		std::vector<RenderTextData> render_text_data_;
 
 		void RenderTextQueue(
+			int layer,
 			std::string text,
 			float x,
 			float y,
@@ -94,12 +96,11 @@ namespace JZEngine
 			float tracking_x = { 1.0f },
 			float leading_y = { 2.0f })
 		{
-			render_text_data_.emplace_back(text, x, y, scale, color, tracking_x, leading_y);
+			render_text_data_.emplace_back(layer, text, x, y, scale, color, tracking_x, leading_y);
 		}
 
-		void Update(ResourceManager* rm, float dt)
+		void Update(ResourceManager* rm)
 		{
-			UNREFERENCED_PARAMETER(dt);
 			for (auto& data : render_text_data_)
 			{
 				RenderText(rm, data.text_, data.x_, data.y_, data.scale_, data.color_, data.tracking_x_, data.leading_y_);

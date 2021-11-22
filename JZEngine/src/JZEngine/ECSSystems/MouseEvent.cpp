@@ -3,7 +3,7 @@
 #include "MouseEvent.h"
 #include "../Input/Input.h"
 #include "../GraphicRendering/Camera.h"
-#include "../GraphicRendering/RendererDebug.h"
+#include "../GraphicRendering/Renderers/RendererDebug.h"
 
 namespace JZEngine
 {

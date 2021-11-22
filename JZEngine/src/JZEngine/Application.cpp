@@ -20,7 +20,7 @@
 #include "Resource/Serialize.h"
 #include "Resource/ObjectPool.h"
 #include "DebugTools/PerformanceData.h"
-#include "GraphicRendering/GlobalRenderer.h"
+#include "GraphicRendering/Renderers/GlobalRenderer.h"
 /*! GAME ENGINE INCLUDES - END */
 
 namespace JZEngine
