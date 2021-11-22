@@ -1,8 +1,6 @@
 #pragma once
 
 #include <string>
-#include <chrono>
-#include <thread>
 
 #include "../GraphicRendering/Buffer.h"
 #include "../GraphicRendering/Shader.h"
@@ -12,18 +10,6 @@
 
 namespace JZEngine
 {
-
-	using FloatingPointMicroseconds = std::chrono::duration< double , std::micro >;
-
-	struct ProfileResult
-	{
-		std::string Name;
-
-		FloatingPointMicroseconds Start;
-		std::chrono::microseconds ElapsedTime;
-		std::thread::id ThreadID;
-	};
-
 	class LoadScreenMain
 	{
 	private:
@@ -51,10 +37,10 @@ namespace JZEngine
 		std::string texpath1{ "Assets/Textures/LoadingScreen/Jump0_BlackLogo-01.png" };
 		std::string texpath2{ "Assets/Textures/LoadingScreen/Jump0_BlackLogo-02.png" };
 
-		Shader shader_program;
 		VertexArray va;
 		VertexBuffer vb;
 		IndexBuffer ib;
+		Shader shader_program;
 		Texture2D tex2d_path1;
 		Texture2D tex2d_path2;
 
