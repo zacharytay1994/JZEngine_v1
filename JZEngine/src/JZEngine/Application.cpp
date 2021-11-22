@@ -68,6 +68,7 @@ namespace JZEngine
 		SceneLogic::Instance().SetECS(global_systems_->GetSystem<ECS::ECSInstance>());
 		SceneLogic::Instance().SetSceneTree(global_systems_->GetSystem<EngineGUI>()->GetSceneTree());
 		SceneLogic::Instance().SetSoundSystem(global_systems_->GetSystem<SoundSystem>());
+	
 	}
 
 	/*!

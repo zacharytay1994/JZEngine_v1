@@ -8,10 +8,11 @@
 #include "PCH.h"
 #include "Sound.h"
 #include "../Message/MessageHandler.h"
+#include "../DebugTools/Log.h"
 
 namespace JZEngine
 {
-    SoundSystem::SoundSystem() : mutebool{ false }, fmodsystem{ nullptr }, mainchannelgrp{ nullptr }
+    SoundSystem::SoundSystem() : mutebool{ false }, fmodsystem{ nullptr }, sfxchannelgrp{ nullptr }, bgmchannelgrp{ nullptr }
     { }
     SoundSystem::~SoundSystem()
     {
@@ -28,7 +29,10 @@ namespace JZEngine
      */
     void SoundSystem::Init()
     {
-        mastervolume = 1.0f;
+        mastervolume = 0.33f;
+        mainvolume = 0.2f;
+        bgmvolume = 0.2f;
+
         FMOD_RESULT result = FMOD_OK;
         result = FMOD::System_Create(&fmodsystem);
        
@@ -50,10 +54,13 @@ namespace JZEngine
         // Initialize with 36 Channels
        
         fmodsystem->init(MAX_CHANNELS, FMOD_INIT_NORMAL, nullptr);
-        fmodsystem->createChannelGroup(0, &mainchannelgrp);
-        channelgroup_cont["main"] = mainchannelgrp;
+        fmodsystem->createChannelGroup(0, &sfxchannelgrp);
+        fmodsystem->createChannelGroup(0, &bgmchannelgrp);
+        channelgroup_cont["sfx"] = sfxchannelgrp;
+        channelgroup_cont["bgm"] = bgmchannelgrp;
         channel_cont.resize(MAX_CHANNELS);
     
+        setMasterVolume(mastervolume);
     }
     // To be called every loop
     void SoundSystem::Update(float dt)
@@ -91,7 +98,7 @@ namespace JZEngine
      */
     int SoundSystem::playSound(std::string const& name, bool bLoop, float volume)
     {
-        volume *= mastervolume;
+        
         if (!bLoop)
             sound_cont[name]->setMode(FMOD_LOOP_OFF);
         else
@@ -102,8 +109,16 @@ namespace JZEngine
 
         FMOD::Channel* fchannel;
         FMOD_RESULT result = FMOD_OK;
-        result = fmodsystem->playSound(sound_cont[name], mainchannelgrp, false, &fchannel);
-        fchannel->setVolume(volume);
+        if (name == "bgm")
+        {
+            result = fmodsystem->playSound(sound_cont[name], bgmchannelgrp, false, &fchannel);
+            Log::Info("Sound", "bgm cg");
+        }
+        else
+        {
+            result = fmodsystem->playSound(sound_cont[name], sfxchannelgrp, false, &fchannel);
+            Log::Info("Sound", "main cg");
+        }
 
         if (result != FMOD_OK)
         {
@@ -112,6 +127,7 @@ namespace JZEngine
         }
         for (int i{ 0 }; i < MAX_CHANNELS; i++)
         {
+          
             bool playing;
             channel_cont[i]->isPlaying(&playing);
             if (playing == false)
@@ -123,11 +139,11 @@ namespace JZEngine
         return 0;
     }
 
-    void SoundSystem::playSound(SoundEvent* msg)
-    {
-        //this just calls the normal playSound function
-        playSound(msg->name, false, 0.5f);
-    }
+    //void SoundSystem::playSound(SoundEvent* msg)
+    //{
+    //    //this just calls the normal playSound function
+    //    playSound(msg->name, false, 0.5f);
+    //}
 
     void SoundSystem::stopSound(int id)
     {
@@ -143,10 +159,49 @@ namespace JZEngine
     {
         sound_cont[name]->release();
     }
+
+
+    /**
+     * Set the volume of the main channel group.
+     *
+     * \param volume ... Range [0.0f - 1.0f]
+     */
+    void SoundSystem::setEffectsChannelGroupVolume(float volume)
+    {
+        Log::Info("Sound", "setting effects vol");
+        mainvolume = volume;
+        sfxchannelgrp->setVolume(mainvolume *mastervolume);
+    }
+    /**
+     * Set the volume of the BGM channel group.
+     *
+     * \param volume ... Range [0.0f - 1.0f]
+     */
+    void SoundSystem::setBGMChannelGroupVolume(float volume)
+    {
+        Log::Info("Sound", "setting bgm vol");
+        bgmvolume = volume;
+        bgmchannelgrp->setVolume(bgmvolume * mastervolume);
+    }
+
+    /**
+     * Set the volume of the master volume.
+     *
+     * \param volume ... Range [0.0f - 1.0f]
+     */
+    void SoundSystem::setMasterVolume(float volume)
+    {
+        Log::Info("Sound", "setting master vol {} ", volume);
+        mastervolume = volume;
+        Log::Info("Sound", "setting bgmchannelgrp vol {} ", bgmvolume * mastervolume);
+        bgmchannelgrp->setVolume(bgmvolume * mastervolume);
+        sfxchannelgrp->setVolume(mainvolume * mastervolume);
+    }
+
     /**
      * Create a new channel group which will be stored in the Channel Group container.
      * Channels can be added to Channel Groups using setChannelGroup(..) function
-     * 
+     *
      * \param name
      */
     void SoundSystem::createChannelGroup(std::string const& name)
@@ -159,7 +214,7 @@ namespace JZEngine
      * Sets a channel as a part of a channelgroup.
      * It is necessary to get the ID of channel that is currently playing(can be paused)
      * before setting as channels are gone when the sound ends.
-     * 
+     *
      * \param channelgroupname
      * \param fchannel
      */
@@ -169,7 +224,7 @@ namespace JZEngine
     }
     /**
      * Stops the sound of a channel group specified by name.
-     * 
+     *
      * \param name  the name of the channel group
      */
     void SoundSystem::stopChannelGroup(std::string const& name)
@@ -178,7 +233,7 @@ namespace JZEngine
     }
     /**
      * Set the volume of a channel group.
-     * 
+     *
      * \param x
      * \param name
      */
@@ -187,16 +242,12 @@ namespace JZEngine
         channelgroup_cont[name]->setVolume(x);
     }
 
-    void SoundSystem::setMasterVolume(float volume)
-    {
-        mastervolume = volume;
-    }
-
     // Mute toggle for sound system
     void SoundSystem::toggleMute()
     {
         mutebool = !mutebool;
-        mainchannelgrp->setMute(mutebool);
+        sfxchannelgrp->setMute(mutebool);
+        bgmchannelgrp->setMute(mutebool);
     }
 
     void SoundSystem::RecursivelyLoadSounds(const std::string& folder, FolderData& folderData)

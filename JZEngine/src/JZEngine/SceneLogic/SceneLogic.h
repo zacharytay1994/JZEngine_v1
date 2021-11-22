@@ -47,10 +47,13 @@ namespace JZEngine
 		void SetSceneTree(SceneTree* sceneTree);
 		void SetSoundSystem(SoundSystem* soundsys);
 		SoundSystem* GetSoundSystem();
+		void PlaySound(const std::string& name);
+
 		void SetCurrentSceneName(const std::string& name);
 		void EntityFlagActive(const std::string& name, bool flag, int id = 0);
 		int GetTexture(const std::string& name);
 		void ChangeScene(const std::string& name);
+
 
 	private:
 

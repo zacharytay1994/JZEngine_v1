@@ -17,15 +17,12 @@
 #include "../GraphicRendering/Camera.h"
 namespace JZEngine
 {
-    /*                                                   objects with file scope
-    ----------------------------------------------------------------------------- */
-    // static data members declared in GLHelper
+    // static data members declared in InputHandler
     std::unordered_map<int, bool> InputHandler::keystate;
     std::unordered_map<int, bool> InputHandler::prevkeystate;
     std::unordered_map<int, bool> InputHandler::mousestate;
     std::unordered_map<int, bool> InputHandler::prevmousestate;
     Vec2f InputHandler::mousepos;
-    //Vec2f InputHandler::mouse_world_position_;
     int InputHandler::mouse_scrolled_{ 0 };
     
 

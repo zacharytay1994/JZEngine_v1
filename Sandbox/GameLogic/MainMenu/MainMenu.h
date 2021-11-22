@@ -22,9 +22,9 @@ enum class MainMenuState
 };
 MainMenuState current_main_menu_state = MainMenuState::Main;
 
-float master_volume_{ 1.0f };
-float music_volume_{ 1.0f };
-float sfx_volume_{ 1.0f };
+float master_volume_{ 0.33f };
+float music_volume_{ 0.2f };
+float sfx_volume_{ 0.2f };
 float mute_threshold{ 0.05f };
 
 float initial_bar_scale_{ 20.0f };
@@ -67,7 +67,6 @@ void UpdateVolumeSlider()
 			}
 			master_volume_ = ratio;
 			
-			//JZEngine::global_systems_->GetSystem<SoundSystem>()->setMastervolume(master_volume_);
 			
 			Scene().GetSoundSystem()->setMasterVolume(master_volume_);
 			Scene().GetComponent<JZEngine::Transform>("Option_master_brownbar")->scale_.x = ratio * initial_bar_scale_;
@@ -89,6 +88,7 @@ void UpdateVolumeSlider()
 				ratio = 1.0f;
 			}
 			music_volume_ = ratio;
+			Scene().GetSoundSystem()->setBGMChannelGroupVolume(music_volume_);
 			Scene().GetComponent<JZEngine::Transform>("Option_music_brownbar")->scale_.x = ratio * initial_bar_scale_;
 			Scene().GetComponent<JZEngine::Transform>("Option_music_pau")->position_.x = initial_bar_position_ + ratio * 500.0f;
 		}
@@ -108,7 +108,7 @@ void UpdateVolumeSlider()
 				ratio = 1.0f;
 			}
 			sfx_volume_ = ratio;
-
+			Scene().GetSoundSystem()->setEffectsChannelGroupVolume(sfx_volume_);
 			Scene().GetComponent<JZEngine::Transform>("Option_sfx_brownbar")->scale_.x = ratio * initial_bar_scale_;
 			Scene().GetComponent<JZEngine::Transform>("Option_sfx_pau")->position_.x = initial_bar_position_ + ratio * 500.0f;
 		}
@@ -331,6 +331,7 @@ void InitMainMenu()
 {
 	current_main_menu_state = MainMenuState::Main;
 
+	Scene().PlaySound("bgm");
 	ToggleOptions(false);
 	ToggleQuit(false);
 	ToggleCredits(false);
@@ -338,6 +339,9 @@ void InitMainMenu()
 
 void UpdateMainMenu(float dt)
 {
+	if (JZEngine::InputHandler::IsMouseTriggered(JZEngine::MOUSE::MOUSE_BUTTON_1))
+		Scene().PlaySound("click");
+
 	switch (current_main_menu_state)
 	{
 	case MainMenuState::Main:
