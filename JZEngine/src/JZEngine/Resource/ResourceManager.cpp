@@ -85,6 +85,8 @@ namespace JZEngine
 							  "Assets/Shaders/Fragment/FS_Instancing.fs" );
 
 		texture_folder_data_.name_ = "Textures";
+
+		pool_load_folder_tex.Free ();
 	}
 
 	void ResourceManager::PostInit ()

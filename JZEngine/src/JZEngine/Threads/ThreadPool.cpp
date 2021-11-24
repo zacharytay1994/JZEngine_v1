@@ -5,10 +5,12 @@
 	Brief:		Thread pool implementation.
 */
 
+
 #include <PCH.h>
 #include "ThreadPool.h"
 #include <stdlib.h>		/* exit, EXIT_FAILURE (to be replaced with JZAssert) */
 #include <string>		/* string */
+
 
 namespace JZEngine
 {
@@ -60,30 +62,7 @@ namespace JZEngine
 	}
 
 	ThreadPool::~ThreadPool ()
-	{
-		{
-			std::unique_lock <std::mutex> locker ( lock_mutex_ );
-			is_thread_pool_in_destruction_ = true ;
-
-			while( !tasks_queue_.empty () )
-			{
-				tasks_queue_.pop ();
-			}
-		}
-
-		// notify all the threads about the closing
-		event_obj_.notify_all ();
-
-		// bind eof of threads to main thread
-		for( std::thread& th : threads_ )
-		{
-			th.join ();
-		}
-
-#ifdef ThreadPoolDebug
-		std::cout << "ThreadPool ~ThreadPool() - Tasks Queue Size : " << tasks_queue_.size () << std::endl;
-#endif
-	}
+	{}
 
 	void ThreadPool::TaskConsumer ( ThreadPool* pool )
 	{
@@ -123,6 +102,7 @@ namespace JZEngine
 			// execute task
 			task () ;
 		}
+
 	}
 
 	ThreadPool& ThreadPool::Instance ()
@@ -132,16 +112,43 @@ namespace JZEngine
 		return pool;
 	}
 
+	void ThreadPool::Free ()
+	{
+		{
+			std::unique_lock <std::mutex> locker ( lock_mutex_ );
+			is_thread_pool_in_destruction_ = true ;
+
+			while( !tasks_queue_.empty () )
+			{
+				tasks_queue_.pop ();
+			}
+		}
+
+		// notify all the threads about the closing
+		event_obj_.notify_all ();
+
+		// bind eof of threads to main thread
+		for( std::thread& th : threads_ )
+		{
+			th.join ();
+		}
+
+#ifdef ThreadPoolDebug
+		std::cout << "ThreadPool ~ThreadPool() - Tasks Queue Size : " << tasks_queue_.size () << std::endl;
+#endif
+
+	}
+
 	size_t ThreadPool::ThreadCapacity ()
 	{
-		// lock guard
+		//lock guard
 		std::unique_lock < std::mutex > locker ( lock_mutex_ );
 		return threads_.size ();
 	}
 
 	size_t ThreadPool::ThreadQueueTaskCount ()
 	{
-		std::unique_lock < std::mutex > locker ( lock_mutex_ );
-		return tasks_queue_.size ();
+		std::unique_lock<std::mutex> locker ( this->lock_mutex_ ); // lock guard
+		return this->tasks_queue_.size ();
 	}
 }

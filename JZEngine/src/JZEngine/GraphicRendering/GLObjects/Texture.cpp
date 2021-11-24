@@ -118,6 +118,7 @@ namespace JZEngine
 			glTexImage2D ( GL_TEXTURE_2D , 0 , internal_format_ , width_ , height_ , 0 , data_format_ , GL_UNSIGNED_BYTE , data );
 			glGenerateMipmap ( GL_TEXTURE_2D );
 			Unbind ();
+			FreeData ();
 		}
 		else
 		{

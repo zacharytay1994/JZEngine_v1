@@ -24,14 +24,14 @@
 	pool.async(&foo::bar, &obj, 2, 3);
 
 * Example 3 :
-	class foo 
-	{ 
-	public : 
+	class foo
+	{
+	public :
 		void bar()
 		{
 			thread_pool& pool = thread_pool::instance();
 			pool.async(&foo::bar, *this , 2, 3);
-		} 
+		}
 	}
 */
 
@@ -104,7 +104,7 @@ namespace JZEngine
 		* @brief
 		* This is a private constructor.
 		*/
-		explicit ThreadPool ( const size_t threads_count = 6 );
+		explicit ThreadPool ( const size_t threads_count = 2 );
 
 		/**
 		 * @brief
@@ -126,6 +126,13 @@ namespace JZEngine
 		 * return thread pool instance
 		*/
 		static ThreadPool& Instance ();
+
+
+		/**
+		 * @brief
+		 * free all threads 
+		*/
+		void Free ();
 
 		/**
 		 * @brief
@@ -178,7 +185,7 @@ namespace JZEngine
 			this->event_obj_.notify_one ();
 
 			// return future result
-			return res; 
+			return res;
 		}
 
 

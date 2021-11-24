@@ -46,9 +46,11 @@ namespace JZEngine
 		shader_program.CompileShaderFromFile ( GL_VERTEX_SHADER , vspath );
 		shader_program.CompileShaderFromFile ( GL_FRAGMENT_SHADER , fspath );
 		shader_program.Link ();
+
 #ifdef LSMainDebug
 		shader_program.ActiveUniformsList ();
 #endif
+
 		if( GL_FALSE == shader_program.IsLinked () )
 		{
 			std::cout << "Unable to compile/link/validate shader programs" << "\n";
