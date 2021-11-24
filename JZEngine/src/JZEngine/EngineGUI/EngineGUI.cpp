@@ -90,6 +90,8 @@ namespace JZEngine
 		ImGui::NewFrame();
 		ImGuizmo::BeginFrame();
 
+		ImGui::PushFont(editor_font_);
+		ImGui::PopFont();
 		// engine gui shortcuts
 		/*if (InputHandler::IsKeyPressed(KEY::KEY_TAB))
 		{
@@ -119,6 +121,18 @@ namespace JZEngine
 			//		interface.second.interface_->RenderInterface(dt);
 			//	}
 			//}
+			ImGui::SetNextWindowBgAlpha(0.0f);
+			ImGui::SetNextWindowPos({ 0.0f, 0.0f }, ImGuiCond_Always);
+			ImGui::SetNextWindowSize({ 10.0f, 10.0f }, ImGuiCond_Always);
+			bool open = true;
+			ImGui::Begin("FullscreenOff", &open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
+			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("fullscreenicon")->GetRendererID()), { 10.0f, 10.0f }))
+			{
+				Camera::fullscreen = !Camera::fullscreen;
+				GLFW_Instance::UpdateViewportDimensions();
+				Log::Info("Main", "Toggle fullscreen: {}", Camera::fullscreen);
+			}
+			ImGui::End();
 		}
 
 		ECS::Entity* selected_entity = scene_tree_.GetSelectedEntity();
@@ -179,6 +193,7 @@ namespace JZEngine
 		Camera::camera_transform_ = Math::GetModelTransformNonTransposed(-Camera::camera_position_, 0.0f, { Camera::camera_zoom_, Camera::camera_zoom_ }, { 1.0f, 1.0f });
 
 		//InputHandler::CalculateMouseWorldPosition(GetSystem<GLFW_Instance>()->window_, MenuBar::height_);
+
 	}
 
 	void EngineGUI::CloseAllGroupedInterface(int group) {
@@ -209,6 +224,26 @@ namespace JZEngine
 		ImGui_ImplGlfw_InitForOpenGL(glfwwindow, true);
 		ImGui_ImplOpenGL3_Init("#version 330");
 		ImGui::StyleColorsDark();
+
+		ImGuiStyle& style = ImGui::GetStyle();
+
+		style.Colors[ImGuiCol_Button]			= ImVec4(0.6f, 0.6f, 0.6f, 0.6f);
+		style.Colors[ImGuiCol_MenuBarBg]		= ImVec4(0.6f, 0.6f, 0.6f, 0.6f);
+		style.Colors[ImGuiCol_ButtonHovered]	= ImVec4(0.8f, 0.8f, 0.8f, 1.0f);
+		style.Colors[ImGuiCol_WindowBg]			= ImVec4(0.8f, 0.8f, 0.8f, 1.0f);
+		style.Colors[ImGuiCol_Border]			= ImVec4(0.5f, 0.5f, 0.5f, 1.0f);
+		style.Colors[ImGuiCol_Text]				= ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
+		style.Colors[ImGuiCol_TitleBg]			= ImVec4(0.9f, 0.9f, 0.9f, 1.0f);
+		style.Colors[ImGuiCol_TitleBgActive]	= ImVec4(0.9f, 0.9f, 0.9f, 1.0f);
+		style.Colors[ImGuiCol_PopupBg]			= ImVec4(0.8f, 0.8f, 0.8f, 1.0f);
+		style.Colors[ImGuiCol_FrameBg]			= ImVec4(0.6f, 0.6f, 0.6f, 1.0f);
+		style.Colors[ImGuiCol_Separator]		= ImVec4(0.6f, 0.6f, 0.6f, 1.0f);
+
+		editor_font_ = ImGui::GetIO().Fonts->AddFontFromFileTTF("Assets/Fonts/arlrdbd.ttf", 15.0f);
+		/*if (editor_font_ == nullptr)
+		{
+			std::cout << "wrong" << std::endl;
+		}*/
 	}
 
 	Console* EngineGUI::GetConsole()

@@ -85,7 +85,7 @@ namespace JZEngine
 	{
 		ImGui::Text("%s", current_scene_name_->c_str());
 		ImGui::Separator();
-		if (ImGui::Button("Save"))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("saveicon")->GetRendererID()), { 15.0f, 15.0f }))
 		{
 			confirmation_flag_ = Confirmation::SAVE;
 		}
@@ -98,7 +98,7 @@ namespace JZEngine
 		// render text box for input name
 		ImGui::InputText(": Name", new_entity_name_, MAX_NAME_SIZE);
 
-		if (ImGui::Button("Add Default Entity"))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("addicon")->GetRendererID()), { 15.0f, 15.0f }))
 		{
 			// create a new entity, pushed into EntityManager
 			unsigned int id = ecs_instance_->CreateEntity();
@@ -122,9 +122,7 @@ namespace JZEngine
 		// You may want to implement a more feature-full filtering scheme in your own application.
 		filter.Draw(": Filter");
 
-		ImGui::PushStyleColor(ImGuiCol_Separator, { 0.8f,0.8f,0.8f,1.0f });
 		ImGui::Separator();
-		ImGui::PopStyleColor();
 
 		if (!hide_)
 		{

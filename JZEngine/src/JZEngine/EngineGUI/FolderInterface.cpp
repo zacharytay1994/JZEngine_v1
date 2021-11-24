@@ -81,7 +81,6 @@ namespace JZEngine
 		UNREFERENCED_PARAMETER(dt);
 
 		SetNextWindowDimensions(0.0f, 0.0f, 0.2f, 1.0f);
-		ImGui::PushStyleColor(ImGuiCol_MenuBarBg, { 0, 0, 0, 1 });
 		ImGui::Begin("Folders", 0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 		CloseButtonMenuBar();
 
@@ -116,10 +115,8 @@ namespace JZEngine
 			break;
 		}
 		ImGui::End();
-		ImGui::PopStyleColor();
 
 		SetNextWindowDimensions(0.2f, 0.0f, 0.8f, 1.0f);
-		ImGui::PushStyleColor(ImGuiCol_MenuBarBg, { 0, 0, 0, 1 });
 		ImGui::Begin("Directory", 0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 		if (ImGui::BeginMenuBar())
 		{
@@ -188,7 +185,6 @@ namespace JZEngine
 		}
 
 		ImGui::End();
-		ImGui::PopStyleColor();
 	}
 
 	void FolderInterface::CloseAction()

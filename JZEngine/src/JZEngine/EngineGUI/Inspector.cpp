@@ -44,9 +44,7 @@ namespace JZEngine
 
 		// renders all registered components and systems 
 		TreeNodeComponentsAndSystems(entity);
-		ImGui::PushStyleColor(ImGuiCol_Separator, { 0.8f,0.8f,0.8f,1.0f });
 		ImGui::Separator();
-		ImGui::PopStyleColor();
 
 		// if there is selected entity
 		if (entity)

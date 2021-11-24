@@ -75,8 +75,6 @@ namespace JZEngine {
 				{
 					GetInterface<EngineSettings>()->temp_width_ = Settings::window_width;
 					GetInterface<EngineSettings>()->temp_height_ = Settings::window_height;
-					/*GetInterface<EngineSettings>()->temp_cam_x = Settings::camera_width;
-					GetInterface<EngineSettings>()->temp_cam_y = Settings::camera_height;*/
 					GetInterface<EngineSettings>()->ToggleOnOff();
 				}
 				ImGui::EndMenu();
@@ -120,13 +118,6 @@ namespace JZEngine {
 				ImGui::EndMenu();
 			}
 
-			if (ImGui::Button("Fullscreen"))
-			{
-				Camera::fullscreen = !Camera::fullscreen;
-				GLFW_Instance::UpdateViewportDimensions();
-				Log::Info("Main", "Toggle fullscreen: {}", Camera::fullscreen);
-			}
-
 			ImGui::EndMainMenuBar();
 		}
 
@@ -137,8 +128,31 @@ namespace JZEngine {
 
 		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("textfileicon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }))
 		{
-			// start code
+			GetInterface<FolderInterface>()->ToggleOnOff();
 		}
+
+		ImGui::SameLine();
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("barcharticon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }))
+		{
+			GetInterface<DebugInformation>()->ToggleOnOff();
+		}
+		
+		ImGui::SameLine();
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("settingicon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }))
+		{
+			GetInterface<EngineSettings>()->temp_width_ = Settings::window_width;
+			GetInterface<EngineSettings>()->temp_height_ = Settings::window_height;
+			GetInterface<EngineSettings>()->ToggleOnOff();
+		}
+
+		ImGui::SameLine();
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("fullscreenicon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }))
+		{
+			Camera::fullscreen = !Camera::fullscreen;
+			GLFW_Instance::UpdateViewportDimensions();
+			Log::Info("Main", "Toggle fullscreen: {}", Camera::fullscreen);
+		}
+
 		ImGui::SameLine(Settings::window_width / 2.0f - (menubar_height * 1.5f));
 		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconstart")->GetRendererID()), {menubar_height * 0.8f, menubar_height * 0.8f}))
 		{

@@ -38,7 +38,7 @@ namespace JZEngine
 
 	void GLFW_Instance::FrameStart ()
 	{
-		glClearColor( 0.5f, 0.5f, 0.5f, 1.0f );
+		glClearColor( 0.2f, 0.2f, 0.6f, 0.5f );
 		glClear( GL_COLOR_BUFFER_BIT );
 	}
 

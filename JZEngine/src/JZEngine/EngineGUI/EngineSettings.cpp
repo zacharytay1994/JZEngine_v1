@@ -27,7 +27,6 @@ namespace JZEngine
 	void EngineSettings::Render(float dt)
 	{
 		UNREFERENCED_PARAMETER(dt);
-		ImGui::PushStyleColor(ImGuiCol_MenuBarBg, { 0, 0, 0, 1 });
 		ImGui::Begin("EngineSettings", 0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 		if (ImGui::BeginMenuBar())
 		{
@@ -93,6 +92,5 @@ namespace JZEngine
 
 
 		ImGui::End();
-		ImGui::PopStyleColor();
 	}
 }

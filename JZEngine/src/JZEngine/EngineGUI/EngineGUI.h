@@ -84,6 +84,8 @@ namespace JZEngine
 		Console		console_;		/*!< engine console */
 		SceneTree	scene_tree_;	/*!< engine console */
 
+		ImFont* editor_font_;
+
 		ECS::ECSInstance* ecs_instance_{ nullptr };
 		// scene camera
 		//Vec2f camera_position_{ 0.0f, 0.0f };
