@@ -135,6 +135,10 @@ namespace JZEngine {
 		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width), menubar_height * 2.0f }, ImGuiCond_Always);
 		ImGui::Begin("playbar", 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("textfileicon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }))
+		{
+			// start code
+		}
 		ImGui::SameLine(Settings::window_width / 2.0f - (menubar_height * 1.5f));
 		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconstart")->GetRendererID()), {menubar_height * 0.8f, menubar_height * 0.8f}))
 		{
