@@ -98,6 +98,11 @@ namespace JZEngine
 		return soundsys;
 	}
 
+	void SceneLogic::PlaySound(const std::string& name)
+	{
+		soundsys->playSound(name);
+	}
+
 	void SceneLogic::SetCurrentSceneName(const std::string& name)
 	{
 		if (current_scene_name_)
