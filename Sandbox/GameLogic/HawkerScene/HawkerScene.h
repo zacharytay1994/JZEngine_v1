@@ -8,6 +8,7 @@
 #pragma once
 #include <JZEngine.h>
 #include "HawkerQueue.h"
+#include "HawkerApp.h"
 #include <string>
 #include <sstream>
 
@@ -16,7 +17,8 @@
 enum class HawkerSceneState
 {
 	Main,
-	Win
+	Win,
+	App
 };
 HawkerSceneState current_hawker_scene_state = HawkerSceneState::Main;
 
@@ -474,6 +476,15 @@ void UpdateMainScene(float dt)
 		Scene().GetComponent<JZEngine::Transform>("tray_plate")->position_ = JZEngine::Camera::mouse_world_position_;
 	}
 
+	//if clicked on phone, change the state to App
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("PhoneOptions"))
+	{
+		if (e->on_click_)
+		{
+			current_hawker_scene_state = HawkerSceneState::App;
+		}
+	}
+
 	// give customer food
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_customer"))
 	{
@@ -574,6 +585,9 @@ void HawkerSceneUpdate(float dt)
 		break;
 	case HawkerSceneState::Win:
 		UpdateWinScreen(dt);
+		break;
+	case HawkerSceneState::App:
+		UpdatePhoneScreen(dt);
 		break;
 	}
 }
