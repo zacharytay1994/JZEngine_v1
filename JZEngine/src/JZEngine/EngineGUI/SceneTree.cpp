@@ -51,23 +51,15 @@ namespace JZEngine
 
 		if (ImGui::BeginMenuBar())
 		{
-			if (ImGui::BeginMenu("Scene"))
+			if (ImGui::Button("Scene"))
 			{
-				if (ImGui::MenuItem("Toggle"))
-				{
-					scene_ = true;
-				}
-				ImGui::EndMenu();
+				scene_ = true;
 			}
-			if (ImGui::BeginMenu("Layers"))
+			if (ImGui::Button("Layers"))
 			{
-				if (ImGui::MenuItem("Toggle"))
-				{
-					scene_ = false;
-					// rebuild layer data
-					BuildLayerData();
-				}
-				ImGui::EndMenu();
+				scene_ = false;
+				// rebuild layer data
+				BuildLayerData();
 			}
 			ImGui::EndMenuBar();
 		}
