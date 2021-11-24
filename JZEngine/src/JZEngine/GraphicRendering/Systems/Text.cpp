@@ -24,7 +24,6 @@ namespace JZEngine
 		Transform& transform = GetComponent<Transform>();
 		TextData& text_data = GetComponent<TextData>();
 
-		//text_renderer_->RenderText ( text_data.text.data , transform.position_.x , transform.position_.y , text_data.font_size_ , text_data.color_ , text_data.tracking_x_ , text_data.leading_y_);
 		GlobalRenderer::Instance().renderer_text_.RenderTextQueue(GetComponent<SpriteLayer>().layer_, text_data.text.data, transform.position_.x, transform.position_.y, text_data.font_size_, text_data.color_, text_data.tracking_x_, text_data.leading_y_);
 	}
 }

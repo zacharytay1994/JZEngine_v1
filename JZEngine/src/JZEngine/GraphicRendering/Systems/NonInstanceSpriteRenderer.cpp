@@ -15,7 +15,6 @@ namespace JZEngine
 {
 	void Sprite::Update(const float& dt)
 	{
-		
 		Transform& transform = GetComponent<Transform>();
 		Texture& texture = GetComponent<Texture>();
 		NonInstanceShader& shader = GetComponent<NonInstanceShader>();
@@ -44,10 +43,4 @@ namespace JZEngine
 
 		RendererDebug::DrawSpriteSquare(transform.position_, { transform.scale_.x * transform.size_.x, transform.scale_.y * transform.size_.y });
 	}
-
-	/*void Sprite::FrameEnd(const float& dt)
-	{
-		UNREFERENCED_PARAMETER(dt);
-		sprite_renderer_.FlushDrawAllSprites();
-	}*/
 }

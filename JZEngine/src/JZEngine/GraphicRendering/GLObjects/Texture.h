@@ -22,9 +22,11 @@ namespace JZEngine
 		void Texture2DLoad ( GLuint width , GLuint height );
 		void Texture2DLoad ( const std::string& path );
 
-		void SetData ( void* data , unsigned int size );
 		void Bind ();
 		void Unbind ();
+		void FreeData ();
+		void InitOpenGL ();
+		void SetData ( void* data , unsigned int size );
 
 		GLuint GetWidth () const
 		{
@@ -40,11 +42,8 @@ namespace JZEngine
 		{
 			return renderer_id_;
 		}
-
-
-	private:
-
-		//std::string path_{};
+		
+		unsigned char* data{ nullptr };
 
 		GLuint renderer_id_{};
 		GLuint width_{};

@@ -277,7 +277,7 @@ namespace JZEngine
 		ImGui::SameLine();
 		if (ImGui::Button("Refresh"))
 		{
-			ResourceManager::LoadAllTexturesInFolder();
+			//ResourceManager::LoadAllTexturesInFolder();
 		}
 		ImGui::Separator();
 		if (selected_texture_directory != "Nothing Selected")
@@ -365,7 +365,7 @@ namespace JZEngine
 		ImGui::SameLine();
 		if (ImGui::Button("Refresh"))
 		{
-			ResourceManager::LoadAllTexturesInFolder();
+			//ResourceManager::LoadAllTexturesInFolder();
 		}
 		ImGui::Separator();
 		if (!sound_system_)

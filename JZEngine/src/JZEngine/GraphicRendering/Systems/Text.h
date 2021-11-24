@@ -30,8 +30,6 @@ namespace JZEngine
 	// sprite system
 	struct Text : public ECS::System
 	{
-		//TextRenderer* text_renderer_{ nullptr };
-
 		Text ();
 		virtual void Update ( const float& dt ) override;
 	};

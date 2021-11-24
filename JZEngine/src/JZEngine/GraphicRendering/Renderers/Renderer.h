@@ -65,6 +65,5 @@ namespace JZEngine
 		void BindShader ( ResourceManager* resource_manager_, int shaderid );
 		void UnbindShader ( ResourceManager* resource_manager_, int shaderid );
 
-		//ResourceManager* resource_manager_{ nullptr };
 	};
 }
