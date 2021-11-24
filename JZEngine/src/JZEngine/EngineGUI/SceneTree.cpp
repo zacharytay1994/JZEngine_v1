@@ -85,20 +85,8 @@ namespace JZEngine
 	{
 		ImGui::Text("%s", current_scene_name_->c_str());
 		ImGui::Separator();
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("saveicon")->GetRendererID()), { 15.0f, 15.0f }))
-		{
-			confirmation_flag_ = Confirmation::SAVE;
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("Remove All"))
-		{
-			RemoveAllEntities();
-		}
-		ImGui::Separator();
-		// render text box for input name
-		ImGui::InputText(": Name", new_entity_name_, MAX_NAME_SIZE);
 
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("addicon")->GetRendererID()), { 15.0f, 15.0f }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("addicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
 		{
 			// create a new entity, pushed into EntityManager
 			unsigned int id = ecs_instance_->CreateEntity();
@@ -110,17 +98,72 @@ namespace JZEngine
 				ecs_instance_->GetEntity(id).name_ = GetName();
 			}
 		}
-		ImGui::SameLine();
-		if (ImGui::Button("Hide"))
+		if (ImGui::IsItemHovered())
 		{
-			hide_ = !hide_;
+			ImGui::BeginTooltip();
+			ImGui::Text("Add a new object to the scene.");
+			ImGui::EndTooltip();
 		}
-		ImGui::Text("\nCurrent Scene");
+		ImGui::SameLine();
+		if (hide_)
+		{
+			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("hideicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
+			{
+				hide_ = !hide_;
+			}
+			if (ImGui::IsItemHovered())
+			{
+				ImGui::BeginTooltip();
+				ImGui::Text("Show objects in scene hierarchy.");
+				ImGui::EndTooltip();
+			}
+		}
+		else
+		{
+			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("showicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
+			{
+				hide_ = !hide_;
+			}
+			if (ImGui::IsItemHovered())
+			{
+				ImGui::BeginTooltip();
+				ImGui::Text("Hide objects in scene hierarchy.");
+				ImGui::EndTooltip();
+			}
+		}
+		ImGui::SameLine();
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("saveicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
+		{
+			confirmation_flag_ = Confirmation::SAVE;
+		}
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::Text("Save the scene.");
+			ImGui::EndTooltip();
+		}
+
+		float window_width = ImGui::GetWindowWidth();
+		ImGui::SameLine(window_width - 45.0f);
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("deleteicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
+		{
+			RemoveAllEntities();
+		}
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::Text("Remove all objects from scene.");
+			ImGui::EndTooltip();
+		}
+
+		ImGui::Separator();
+		// render text box for input name
+		ImGui::InputText(" Name", new_entity_name_, MAX_NAME_SIZE);
 
 		static ImGuiTextFilter filter;
 		// Helper class to easy setup a text filter.
 		// You may want to implement a more feature-full filtering scheme in your own application.
-		filter.Draw(": Filter");
+		filter.Draw(" Filter");
 
 		ImGui::Separator();
 
