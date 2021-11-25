@@ -59,13 +59,44 @@ namespace JZEngine
 				component_view_ = false;
 			}
 
+			ImGui::SameLine(ImGui::GetWindowWidth() - 45.0f);
+			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("saveicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
+			{
+				if (entity)
+				{
+					confirmation_flag_ = Confirmation::SERIALIZE;
+				}
+			}
+			if (ImGui::IsItemHovered())
+			{
+				ImGui::BeginTooltip();
+				ImGui::Text("Save selected object as prefab.");
+				ImGui::EndTooltip();
+			}
+
 			ImGui::EndMenuBar();
 		}
+
+		/*if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("saveicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
+		{
+			if (entity)
+			{
+				confirmation_flag_ = Confirmation::SERIALIZE;
+			}
+		}
+		ImGui::Separator();*/
 
 		// renders all registered components and systems 
 		if (!component_view_)
 		{
-			ImGui::Text("Select a system to add.");
+			if (entity)
+			{
+				ImGui::Text("Select a system to add.");
+			}
+			else
+			{
+				ImGui::Text("First select an object.");
+			}
 			ImGui::Separator();
 			TreeNodeComponentsAndSystems(entity);
 		}
@@ -74,9 +105,11 @@ namespace JZEngine
 			// if there is selected entity
 			if (entity)
 			{
-				std::stringstream ss;
+				/*std::stringstream ss;
 				ss << "Components of [" << entity->name_ << "] [ID: " << entity->entity_id_ << "]";
-				ImGui::Text(ss.str().c_str());
+				ImGui::Text(ss.str().c_str());*/
+				ImGui::Text("Edit component properties here.");
+				ImGui::Separator();
 
 				// if entity has a chunk, i.e. has component before
 				if (entity->owning_chunk_)
@@ -100,39 +133,37 @@ namespace JZEngine
 					}
 					if (!has_component_)
 					{
-						ImGui::Separator();
-						ImGui::Text("Oops entity has no components...");
-						ImGui::Text("Try adding some at the top...");
+						ImGui::Text("No components found...");
+						ImGui::Text("Try adding some systems...");
 					}
 				}
 				else
 				{
-					ImGui::Separator();
-					ImGui::Text("Oops entity is new...");
-					ImGui::Text("Try adding some at the top...");
+					ImGui::Text("No components found...");
+					ImGui::Text("Try adding some systems...");
 				}
 			}
 			else
 			{
-				ImGui::Text("Components of [] [ID: ]\n");
+				ImGui::Text("Edit component properties here.\n");
 				ImGui::Separator();
-				ImGui::Text("Oops no entity selected...");
+				ImGui::Text("No object selected...");
 			}
 		}
 
-		ImGui::NewLine();
-		ImGui::SameLine(ImGui::GetWindowWidth() / 2 - 50.0f);
-		if (ImGui::Button("Serialize", ImVec2(100.0f, 0.0f)))
-		{
-			if (entity)
-			{
-				/*if (!Serialize::SerializeEntity(*entity))
-				{
-					Log::Warning("Resource", "Serializing failed!");
-				}*/
-				confirmation_flag_ = Confirmation::SERIALIZE;
-			}
-		}
+		//ImGui::NewLine();
+		//ImGui::SameLine(ImGui::GetWindowWidth() / 2 - 50.0f);
+		//if (ImGui::Button("Serialize", ImVec2(100.0f, 0.0f)))
+		//{
+		//	if (entity)
+		//	{
+		//		/*if (!Serialize::SerializeEntity(*entity))
+		//		{
+		//			Log::Warning("Resource", "Serializing failed!");
+		//		}*/
+		//		confirmation_flag_ = Confirmation::SERIALIZE;
+		//	}
+		//}
 		ImGui::End();
 
 		if (confirmation_flag_ == Confirmation::SERIALIZE)

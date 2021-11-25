@@ -208,7 +208,7 @@ namespace JZEngine
 				{
 					ImGui::TableNextColumn();
 					ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("textfileicon")->GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f }, {0,1}, {1,0});
-					if (ImGui::BeginPopupContextItem(e.first.c_str()))
+					if (ImGui::BeginPopupContextItem(e.first.c_str(), ImGuiPopupFlags_MouseButtonLeft))
 					{
 						if (ImGui::Selectable("Add To Scene"))
 						{
@@ -239,7 +239,7 @@ namespace JZEngine
 				{
 					ImGui::TableNextColumn();
 					ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("textfileicon")->GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f }, { 0,1 }, { 1,0 });
-					if (ImGui::BeginPopupContextItem(s.first.c_str()))
+					if (ImGui::BeginPopupContextItem(s.first.c_str(), ImGuiPopupFlags_MouseButtonLeft))
 					{
 						if (ImGui::Selectable("Load Scene"))
 						{
@@ -249,10 +249,12 @@ namespace JZEngine
 							SceneLogic::Instance().SetCurrentSceneName(s.first);
 							SceneLogic::Instance().BuildEntityMap();
 							SceneLogic::Instance().InitSceneLogic();
+							ToggleOnOff();
 						}
 						if (ImGui::Selectable("Append To Scene"))
 						{
 							Serialize::DeserializeScene(ecs_instance_, s.first);
+							ToggleOnOff();
 						}
 						ImGui::EndPopup();
 					}

@@ -286,16 +286,18 @@ namespace JZEngine
 		// add own tree node
 		ImGui::SetNextItemOpen ( true , ImGuiCond_Once );
 		bool is_selected = false;
+		ImGuiTreeNodeFlags tree_node_flag = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 		if(	selected_entity_id_ != -1	)
 		{
 			if( entity->entity_id_ == static_cast<ECS::ui32>(selected_entity_id_) )
 			{
 				is_selected = true;
-				ImGui::PushStyleColor ( ImGuiCol_Text , { 0.0f,1.0f,0.0f,1.0f } );
+				//ImGui::PushStyleColor ( ImGuiCol_TextSelectedBg , { 0.5f,0.5f,0.5f,1.0f } );
+				tree_node_flag |= ImGuiTreeNodeFlags_Selected;
 			}
 		}
 
-		bool open = ImGui::TreeNodeEx ( ss.str ().c_str () , ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick );
+		bool open = ImGui::TreeNodeEx ( ss.str ().c_str () ,  tree_node_flag );
 
 		// if a treenode is clicked, make that entity the selected_entity_
 		if( ImGui::IsItemClicked () )
@@ -342,7 +344,7 @@ namespace JZEngine
 		}
 		if( is_selected )
 		{
-			ImGui::PopStyleColor ();
+			//ImGui::PopStyleColor ();
 		}
 
 		// end own tree node
