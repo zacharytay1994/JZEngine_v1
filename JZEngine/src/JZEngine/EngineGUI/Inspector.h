@@ -23,6 +23,8 @@
 
 namespace JZEngine
 {
+	void PrintSystemAffected(std::string const& name);
+
 	/*!
 	 * @brief ___JZEngine::Inspector___
 	 * ****************************************************************************************************
@@ -36,6 +38,7 @@ namespace JZEngine
 		ECS::ECSInstance* ecs_instance_{ nullptr };
 		ResourceManager* resource_manager_{ nullptr };
 		float x_ , y_ , sx_ , sy_;		/*!< position and scale of the ImGui window */
+		bool component_view_{ true };
 
 		Inspector ( float x , float y , float sx , float sy );
 
@@ -61,7 +64,7 @@ namespace JZEngine
 		*/
 		void TreeNodeComponentsAndSystems ( ECS::Entity* const entity );
 
-		int TrimName ( const std::string& name );
+		static int TrimName ( const std::string& name );
 
 		enum class Confirmation
 		{
@@ -636,6 +639,25 @@ namespace JZEngine
 				if( ImGui::TreeNodeEx ( typeid( COMPONENT ).name () , ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_Framed ) )
 				{
 					RenderComponent ( entity.GetComponent<std::remove_reference_t<COMPONENT>> () );
+					ImGui::SetCursorPosX(ImGui::GetWindowWidth() - 45.0f);
+					if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("deleteicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
+					{
+						entity.RemoveComponent(i);
+					}
+					if (ImGui::IsItemHovered())
+					{
+						ImGui::BeginTooltip();
+						ImGui::Text("Remove this component.");
+						ImGui::Separator();
+						ImGui::Text("These systems will no longer update this entity:");
+						ImGui::Separator();
+						ImGui::NewLine();
+
+						ECS::ECSConfig::System systems;
+						std::apply([&i, &entity](auto&...systems) { (systems.NotifyInspectorMissingComponent(i, PrintSystemAffected, entity.owning_chunk_->owning_archetype_->mask_), ...); }, systems);
+
+						ImGui::EndTooltip();
+					}
 					ImGui::TreePop ();
 				}
 				return;

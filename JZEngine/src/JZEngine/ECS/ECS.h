@@ -1321,6 +1321,8 @@ namespace JZEngine
 			*/
 			Entity& AddSystem(int systemid);
 
+			Entity& RemoveSystem(int systemid);
+
 			void FlagActive(bool flag);
 
 			bool GetFlag();
@@ -1377,6 +1379,9 @@ namespace JZEngine
 				components_.fill(static_cast<ui32>(-1));
 				// fill components with components id
 				((components_[number_of_components_++] = ComponentManager::component_descriptions_<COMPONENTS>.bit_), ...);
+
+				// set name of derived
+				name_ = typeid(*this).name();
 			}
 
 			/*!
@@ -1426,6 +1431,11 @@ namespace JZEngine
 			 * ****************************************************************************************************
 			*/
 			virtual void FrameEnd(const float& dt) { UNREFERENCED_PARAMETER(dt); };
+
+			// delete component notification in inspector
+			void NotifyInspectorMissingComponent(int i, void(*ImGuiFunction)(std::string const&), std::bitset<ECS::MAX_COMPONENTS> const& mask);
+
+			void AppendMaskDetails(std::bitset<MAX_COMPONENTS>& mask, std::array<int, MAX_COMPONENTS>& systemComponents);
 		};
 	}
 }

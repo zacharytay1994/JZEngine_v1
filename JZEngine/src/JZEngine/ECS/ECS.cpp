@@ -1001,6 +1001,40 @@ namespace JZEngine
 			return *this;
 		}
 
+		Entity& Entity::RemoveSystem(int systemid)
+		{
+			SystemComponents& components = ecs_instance_->system_manager_.system_database_[systemid]->components_;
+			std::array<int, MAX_COMPONENTS> system_component_flags{ 0 };
+			/*for (auto const& component : components)
+			{
+				if (component == -1)
+				{
+					break;
+				}
+				++system_component_flags[component];
+			}*/
+
+			// check all systems that use the component
+			ECSConfig::System systems;
+			std::apply( [&system_component_flags, this](auto&...system) { (system.AppendMaskDetails(owning_chunk_->owning_archetype_->mask_, system_component_flags), ...); },
+						systems);
+
+			for (auto const& component : components)
+			{
+				if (component == -1)
+				{
+					break;
+				}
+				// if only this system handles the component, remove it
+				if (system_component_flags[component] == 1)
+				{
+					RemoveComponent(component);
+				}
+			}
+
+			return *this;
+		}
+
 		void Entity::FlagActive(bool flag)
 		{
 			assert(owning_chunk_ != nullptr);
@@ -1076,6 +1110,46 @@ namespace JZEngine
 			if (current_chunk_)
 			{
 				current_chunk_->active_flags_[static_cast<int>(current_id_)] = flag;
+			}
+		}
+
+		void System::NotifyInspectorMissingComponent(int i, void(*ImGuiFunction)(std::string const&), std::bitset<ECS::MAX_COMPONENTS> const& mask)
+		{
+			if (mask_[i] == 1)
+			{
+				if ((mask & mask_) == mask_)
+				{
+					ImGuiFunction(name_);
+				}
+			}
+		}
+
+
+		void System::AppendMaskDetails(std::bitset<MAX_COMPONENTS>& mask, std::array<int, MAX_COMPONENTS>& systemComponents)
+		{
+			bool in_entity_{ true };
+			for (auto const& component : components_)
+			{
+				if (component == -1)
+				{
+					break;
+				}
+				if (mask[component] != 1)
+				{
+					in_entity_ = false;
+					break;
+				}
+			}
+			if (in_entity_)
+			{
+				for (auto const& component : components_)
+				{
+					if (component == -1)
+					{
+						break;
+					}
+					++systemComponents[component];
+				}
 			}
 		}
 	}

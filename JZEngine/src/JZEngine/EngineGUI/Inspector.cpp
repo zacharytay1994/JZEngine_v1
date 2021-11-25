@@ -17,6 +17,11 @@
 
 namespace JZEngine
 {
+	void PrintSystemAffected(std::string const& name)
+	{
+		ImGui::Text(name.c_str() + Inspector::TrimName(name));
+	}
+
 	Inspector::Inspector(float x, float y, float sx, float sy)
 		:
 		x_(x), y_(y), sx_(sx), sy_(sy)
@@ -40,58 +45,79 @@ namespace JZEngine
 		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width) * sx_, static_cast<float>(Settings::window_height - MenuBar::height_)}, ImGuiCond_Always);
 
 		// start rendering the inspector
-		ImGui::Begin("Inspector", 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+		ImGui::Begin("Inspector", 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_MenuBar);
+
+		if (ImGui::BeginMenuBar())
+		{
+			if (ImGui::Button("Components"))
+			{
+				component_view_ = true;
+			}
+
+			if (ImGui::Button("Add Systems"))
+			{
+				component_view_ = false;
+			}
+
+			ImGui::EndMenuBar();
+		}
 
 		// renders all registered components and systems 
-		TreeNodeComponentsAndSystems(entity);
-		ImGui::Separator();
-
-		// if there is selected entity
-		if (entity)
+		if (!component_view_)
 		{
-			std::stringstream ss;
-			ss << "Components of [" << entity->name_ << "] [ID: " << entity->entity_id_ << "]";
-			ImGui::Text(ss.str().c_str()); 
-			
-			// if entity has a chunk, i.e. has component before
-			if (entity->owning_chunk_)
+			ImGui::Text("Select a system to add.");
+			ImGui::Separator();
+			TreeNodeComponentsAndSystems(entity);
+		}
+		else
+		{
+			// if there is selected entity
+			if (entity)
 			{
-				bool flag = entity->GetFlag();
-				ImGui::Checkbox(": Active", &flag);
-				entity->FlagActive(flag);
+				std::stringstream ss;
+				ss << "Components of [" << entity->name_ << "] [ID: " << entity->entity_id_ << "]";
+				ImGui::Text(ss.str().c_str());
 
-				bool has_component_ = false;
-				for (int i = 0; i < ECS::MAX_COMPONENTS; ++i)
+				// if entity has a chunk, i.e. has component before
+				if (entity->owning_chunk_)
 				{
-					if (entity->owning_chunk_->owning_archetype_->mask_[i])
+					bool flag = entity->GetFlag();
+					ImGui::Checkbox(": Active", &flag);
+					entity->FlagActive(flag);
+
+					bool has_component_ = false;
+					for (int i = 0; i < ECS::MAX_COMPONENTS; ++i)
 					{
-						has_component_ = true;
-						ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-						
-						// renders all components using their specialization
-						LoopTupleRender(ECS::ECSConfig::Component(), i, *entity);
+						if (entity->owning_chunk_->owning_archetype_->mask_[i])
+						{
+							has_component_ = true;
+							ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+
+							// renders all components using their specialization
+							LoopTupleRender(ECS::ECSConfig::Component(), i, *entity);
+							ImGui::Separator();
+						}
+					}
+					if (!has_component_)
+					{
 						ImGui::Separator();
+						ImGui::Text("Oops entity has no components...");
+						ImGui::Text("Try adding some at the top...");
 					}
 				}
-				if (!has_component_)
+				else
 				{
 					ImGui::Separator();
-					ImGui::Text("Oops entity has no components...");
+					ImGui::Text("Oops entity is new...");
 					ImGui::Text("Try adding some at the top...");
 				}
 			}
 			else
 			{
+				ImGui::Text("Components of [] [ID: ]\n");
 				ImGui::Separator();
-				ImGui::Text("Oops entity is new...");
-				ImGui::Text("Try adding some at the top...");
+				ImGui::Text("Oops no entity selected...");
 			}
-		}
-		else
-		{
-			ImGui::Text("Components of [] [ID: ]\n");
-			ImGui::Separator();
-			ImGui::Text("Oops no entity selected...");
 		}
 
 		ImGui::NewLine();
@@ -126,132 +152,116 @@ namespace JZEngine
 	*/
 	void Inspector::TreeNodeComponentsAndSystems(ECS::Entity* const entity)
 	{
-		//ImGui::PushStyleColor(ImGuiCol_Separator, { 1.0f,1.0f,1.0f,1.0f });
-		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-		if (ImGui::TreeNodeEx("Engine Components and Systems", ImGuiTreeNodeFlags_Framed))
+		if (entity)
 		{
-			if (entity)
+			//if (ImGui::BeginListBox("##[Sys]", { 0, ImGui::GetWindowHeight() / 3.0f }))
+			//{
+			//	// render all registered systems in a listbox
+			//	for (auto& s : ecs_instance_->system_manager_.registered_systems_)
+			//	{
+			//		bool has_system_ = true;
+
+			//		// check if the selected entity has the components of the system already added, if so mark green
+			//		for (auto& c : ecs_instance_->system_manager_.system_database_[s.id_]->components_)
+			//		{
+			//			if (c != -1)
+			//			{
+			//				has_system_ = has_system_ ? entity->HasComponent(c) : false;
+			//			}
+			//			else
+			//			{
+			//				break;
+			//			}
+			//		}
+			//		//if (has_system_)
+			//		//{
+			//		//	ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f,1.0f,0.0f,1.0f });
+			//		//}
+
+			//		//// if system selected
+			//		//if (ImGui::Selectable(s.name_.c_str() + TrimName(s.name_), true))
+			//		//{
+			//		//	// add the system components to the selected entity is any are missing
+			//		//	if (!has_system_)
+			//		//	{
+			//		//		entity->AddSystem(s.id_);
+			//		//		//ecs_instance_->Print();
+			//		//	}
+			//		//}
+			//		//if (has_system_)
+			//		//{
+			//		//	has_system_ = false;
+			//		//	ImGui::PopStyleColor(1);
+			//		//}
+
+			//		ImGui::Checkbox(s.name_.c_str() + TrimName(s.name_), &has_system_);
+			//		if (has_system_)
+			//		{
+			//			has_system_ = false;
+			//		}
+			//	}
+			//	ImGui::EndListBox();
+			//}
+			// render all registered systems in a listbox
+			for (auto& s : ecs_instance_->system_manager_.registered_systems_)
 			{
-				ImGui::Text("Components:");
-				if (ImGui::BeginListBox("[Com]", { 0.0f, 100.0f }))
+				bool has_system_ = true;
+
+				// check if the selected entity has the components of the system already added, if so mark green
+				for (auto& c : ecs_instance_->system_manager_.system_database_[s.id_]->components_)
 				{
-					// renders all registered components in a listbox
-					for (auto& c : ecs_instance_->component_manager_.registered_components_)
+					if (c != -1)
 					{
-						bool has_component_ = false;
-
-						// if the selected entity has the component, color it green
-						if (entity->HasComponent(c.bit_))
-						{
-							has_component_ = true;
-							ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f,1.0f,0.0f,1.0f });
-						}
-
-						// if component is selected
-						if (ImGui::Selectable(c.name_.c_str() + TrimName(c.name_), true))
-						{
-
-							// if selected entity does not have component, add it in
-							if (!has_component_)
-							{
-								entity->AddComponent(c.bit_);
-								//ecs_instance_->Print();
-							}
-							// else remove it
-							else
-							{
-								entity->RemoveComponent(c.bit_);
-								//ecs_instance_->Print();
-							}
-						}
-						if (has_component_)
-						{
-							has_component_ = false;
-							ImGui::PopStyleColor(1);
-						}
+						has_system_ = has_system_ ? entity->HasComponent(c) : false;
 					}
-					ImGui::EndListBox();
+					else
+					{
+						break;
+					}
 				}
 
-				ImGui::Separator();
-				ImGui::Text("Systems:");
-				if (ImGui::BeginListBox("[Sys]", { 0.0f, 100.0f }))
+				bool temp{ has_system_ };
+				ImGui::Checkbox(s.name_.c_str() + TrimName(s.name_), &temp);
+				if (temp != has_system_)
 				{
-					// render all registered systems in a listbox
-					for (auto& s : ecs_instance_->system_manager_.registered_systems_)
+					if (temp)
 					{
-						bool has_system_ = true;
-
-						// check if the selected entity has the components of the system already added, if so mark green
-						for (auto& c : ecs_instance_->system_manager_.system_database_[s.id_]->components_)
-						{
-							if (c != -1)
-							{
-								has_system_ = has_system_ ? entity->HasComponent(c) : false;
-							}
-							else
-							{
-								break;
-							}
-						}
-						if (has_system_)
-						{
-							ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f,1.0f,0.0f,1.0f });
-						}
-
-						// if system selected
-						if (ImGui::Selectable(s.name_.c_str() + TrimName(s.name_), true))
-						{
-							// add the system components to the selected entity is any are missing
-							if (!has_system_)
-							{
-								entity->AddSystem(s.id_);
-								//ecs_instance_->Print();
-							}
-						}
-						if (has_system_)
-						{
-							has_system_ = false;
-							ImGui::PopStyleColor(1);
-						}
+						entity->AddSystem(s.id_);
 					}
-					ImGui::EndListBox();
+					else
+					{
+						entity->RemoveSystem(s.id_);
+					}
+				}
+				if (has_system_)
+				{
+					has_system_ = false;
 				}
 			}
-			// if no selected entity case, print default messages
-			else
-			{
-				ImGui::Separator();
-				ImGui::Text("Components:");
-				if (ImGui::BeginListBox("[Com]", { 0.0f, 100.0f }))
-				{
-					for (auto& c : ecs_instance_->component_manager_.registered_components_)
-					{
-						if (ImGui::Selectable(c.name_.c_str() + TrimName(c.name_), true))
-						{
-							//Console::Log("Oops please select an entity before adding...");
-						}
-					}
-					ImGui::EndListBox();
-				}
-
-				ImGui::Separator();
-				ImGui::Text("Systems:");
-				if (ImGui::BeginListBox("[Sys]", { 0.0f, 100.0f }))
-				{
-					for (auto& s : ecs_instance_->system_manager_.registered_systems_)
-					{
-						if (ImGui::Selectable(s.name_.c_str() + TrimName(s.name_), true))
-						{
-							//Console::Log("Oops please select an entity before adding...");
-						}
-					}
-					ImGui::EndListBox();
-				}
-			}
-			ImGui::TreePop();
 		}
-		//ImGui::PopStyleColor();
+		// if no selected entity case, print default messages
+		else
+		{
+			//if (ImGui::BeginListBox("##[Sys]", { 0, ImGui::GetWindowHeight() / 3.0f }))
+			//{
+			//	for (auto& s : ecs_instance_->system_manager_.registered_systems_)
+			//	{
+			//		if (ImGui::Selectable(s.name_.c_str() + TrimName(s.name_), true))
+			//		{
+			//			//Console::Log("Oops please select an entity before adding...");
+			//		}
+
+			//		bool temp = false;
+			//		ImGui::Checkbox(s.name_.c_str() + TrimName(s.name_), &temp);
+			//	}
+			//	ImGui::EndListBox();
+			//}
+			for (auto& s : ecs_instance_->system_manager_.registered_systems_)
+			{
+				bool temp = false;
+				ImGui::Checkbox(s.name_.c_str() + TrimName(s.name_), &temp);
+			}
+		}
 	}
 
 	int Inspector::TrimName(const std::string& name)
