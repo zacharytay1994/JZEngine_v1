@@ -482,6 +482,7 @@ void UpdateMainScene(float dt)
 		if (e->on_click_)
 		{
 			current_hawker_scene_state = HawkerSceneState::App;
+			Scene().EntityFlagActive("PhoneOptions", false);
 		}
 	}
 
@@ -534,6 +535,7 @@ void HawkerSceneInit()
 	ToggleWin(false);
 
 	InitHawkerQueue();
+	InitPhoneScreen();
 	cursor_state = CursorState::Nothing;
 	plate_on_tray = false;
 	plate_on_hand = false;
