@@ -102,6 +102,32 @@ namespace JZEngine
 
 		if (!Camera::fullscreen)
 		{
+			std::shared_ptr<FolderInterface> folder_interface = GetInterface<FolderInterface>();
+			if (folder_interface->selected_texture_ != "")
+			{
+				inspector_.requested_texture_ = folder_interface->selected_texture_;
+				//inspector_.requesting_texture_ = false;
+				folder_interface->selected_texture_ = "";
+			}
+
+			if (inspector_.requesting_texture_)
+			{
+				if (!folder_interface->active_)
+				{
+					folder_interface->ToggleOnOff();
+					folder_interface->select_enabled_ = true;
+					folder_interface->mode = FolderInterface::DISPLAY::RESOURCES_TEXTURES;
+					folder_interface->ResetAllPreviews();
+				}
+				else
+				{
+					folder_interface->select_enabled_ = true;
+					folder_interface->mode = FolderInterface::DISPLAY::RESOURCES_TEXTURES;
+					folder_interface->ResetAllPreviews();
+				}
+				inspector_.requesting_texture_ = false;
+			}
+
 			console_.Render();
 			scene_tree_.Render();
 			inspector_.Render(scene_tree_.GetSelectedEntity());
@@ -109,6 +135,30 @@ namespace JZEngine
 			for (auto& interface : imgui_interfaces_)
 			{
 				interface.second.interface_->RenderInterface(dt);
+			}
+
+			// check if inspector is requesting texture, open folder interface
+			//if (inspector_.requesting_texture_)
+			//{
+			//	std::shared_ptr<FolderInterface> folder_interface = GetInterface<FolderInterface>();
+			//	if (!folder_interface->active_)
+			//	{
+			//		folder_interface->ToggleOnOff();
+			//	}
+
+			//	// if folder interface selected texture != "", pass it to inspector
+			//	if (folder_interface->selected_texture_ != "")
+			//	{
+			//		inspector_.requested_texture_ = folder_interface->selected_texture_;
+			//		inspector_.requesting_texture_ = false;
+			//		folder_interface->selected_texture_ = "";
+			//	}
+			//}
+
+			// if folder interface selected texture != "", pass it to inspector
+			if (inspector_.requested_texture_ != "")
+			{
+				inspector_.requested_texture_ = "";
 			}
 		}
 		else

@@ -189,6 +189,7 @@ namespace JZEngine
 
 	void FolderInterface::CloseAction()
 	{
+		select_enabled_ = false;
 		ResetAllPreviews();
 	}
 
@@ -267,6 +268,11 @@ namespace JZEngine
 
 	void FolderInterface::RenderTextures()
 	{
+		/*if (selected_texture_ != "")
+		{
+			selected_texture_ = "";
+		}*/
+
 		ImGui::Separator();
 		ImGui::Text("Textures |");
 		ImGui::SameLine();
@@ -300,8 +306,14 @@ namespace JZEngine
 									texture_preview_ = true;
 									selected_preview_texture = texture.first.c_str();
 								}
-								if (ImGui::Selectable("Select"))
+								if (select_enabled_)
 								{
+									if (ImGui::Selectable("Select"))
+									{
+										selected_texture_ = texture.first;
+										select_enabled_ = false;
+										ToggleOnOff();
+									}
 								}
 								ImGui::EndPopup();
 							}
@@ -326,8 +338,14 @@ namespace JZEngine
 									texture_preview_ = true;
 									selected_preview_texture = texture.c_str();
 								}
-								if (ImGui::Selectable("Select"))
+								if (select_enabled_)
 								{
+									if (ImGui::Selectable("Select"))
+									{
+										selected_texture_ = texture;
+										select_enabled_ = false;
+										ToggleOnOff();
+									}
 								}
 								ImGui::EndPopup();
 							}

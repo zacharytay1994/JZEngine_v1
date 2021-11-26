@@ -39,6 +39,10 @@ namespace JZEngine
 		ResourceManager* resource_manager_{ nullptr };
 		float x_ , y_ , sx_ , sy_;		/*!< position and scale of the ImGui window */
 		bool component_view_{ true };
+		
+		bool		requesting_texture_{ false };
+		std::string requested_texture_{ "" };
+
 
 		Inspector ( float x , float y , float sx , float sy );
 
@@ -208,8 +212,18 @@ namespace JZEngine
 					current_texture = texture.first;
 				}
 			}
-			if( ImGui::Button ( current_texture.c_str () , ImVec2 ( 168.0f , 0.0f ) ) )
-				ImGui::OpenPopup ( "Textures" );
+			if (ImGui::Button(current_texture.c_str(), ImVec2(168.0f, 0.0f)))
+			{
+				//ImGui::OpenPopup ( "Textures" );
+				requesting_texture_ = true;
+			}
+
+			if (requested_texture_ != "")
+			{
+				current_texture = requested_texture_;
+				component.texture_id_ = resource_manager_->umap_texture2ds_[current_texture];
+				requested_texture_ = "";
+			}
 
 			ImGui::SameLine ();
 			ImGui::Text ( "Texture" );
