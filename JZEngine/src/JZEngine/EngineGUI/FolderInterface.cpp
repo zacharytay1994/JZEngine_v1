@@ -159,6 +159,11 @@ namespace JZEngine
 		case(DISPLAY::RESOURCES_TEXTURES):
 			ss << "Folder: " << selected_texture_path;
 			ImGui::Text(ss.str().c_str());
+			if (select_enabled_)
+			{
+				ImGui::Separator();
+				ImGui::Text("[Selection] Select a texture to change the current object's texture.");
+			}
 			ImGui::Separator();
 			if (texture_preview_)
 			{
@@ -199,7 +204,7 @@ namespace JZEngine
 		ImGui::Text("Prefabs |");
 		ImGui::SameLine();
 		static ImGuiTextFilter filter;
-		filter.Draw(": Filter");
+		filter.Draw(" Filter");
 		ImGui::Separator();
 		if (ImGui::BeginTable("prefab_table", display_columns_))
 		{
@@ -230,7 +235,7 @@ namespace JZEngine
 		ImGui::Text("Scenes |");
 		ImGui::SameLine();
 		static ImGuiTextFilter filter;
-		filter.Draw(": Filter");
+		filter.Draw(" Filter");
 		ImGui::Separator();
 		if (ImGui::BeginTable("scene_table", display_columns_))
 		{
@@ -277,11 +282,15 @@ namespace JZEngine
 		ImGui::Text("Textures |");
 		ImGui::SameLine();
 		static ImGuiTextFilter filter;
-		filter.Draw(": Filter");
-		ImGui::SameLine();
-		if (ImGui::Button("Refresh"))
+		filter.Draw(" Filter");
+		//ImGui::SameLine();
+		//if (ImGui::Button("Refresh"))
+		//{
+		//	//ResourceManager::LoadAllTexturesInFolder();
+		//}
+		ImGui::SameLine(ImGui::GetWindowWidth() - 45.0f);
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("refreshicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
 		{
-			//ResourceManager::LoadAllTexturesInFolder();
 		}
 		ImGui::Separator();
 		if (selected_texture_directory != "Nothing Selected")
@@ -377,11 +386,14 @@ namespace JZEngine
 		ImGui::Text("Audio |");
 		ImGui::SameLine();
 		static ImGuiTextFilter filter;
-		filter.Draw(": Filter");
-		ImGui::SameLine();
-		if (ImGui::Button("Refresh"))
+		filter.Draw(" Filter");
+		//if (ImGui::Button("Refresh"))
+		//{
+		//	//ResourceManager::LoadAllTexturesInFolder();
+		//}
+		ImGui::SameLine(ImGui::GetWindowWidth() - 45.0f);
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("refreshicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
 		{
-			//ResourceManager::LoadAllTexturesInFolder();
 		}
 		ImGui::Separator();
 		if (!sound_system_)
