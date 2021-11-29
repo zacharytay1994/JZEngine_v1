@@ -15,6 +15,9 @@ public:
 		
 		Scene().RegisterSceneInit("MainMenu", InitMainMenu);
 		Scene().RegisterSceneLogic("MainMenu", UpdateMainMenu);
+
+		Scene ().RegisterSceneInit ( "S_MainMenu" , InitMainMenu );
+		Scene ().RegisterSceneLogic ( "S_MainMenu" , UpdateMainMenu );
 		
 		Scene().RegisterSceneInit("HawkerV2", HawkerSceneInit);
 		Scene().RegisterSceneLogic("HawkerV2", HawkerSceneUpdate);

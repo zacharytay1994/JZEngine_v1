@@ -189,7 +189,24 @@ namespace JZEngine
 		}
 	}
 
-	void Serialize::DeserializeScene(ECS::ECSInstance* ecs, const std::string& name)
+	void Serialize::DeserializeScene ( ECS::ECSInstance* ecs , const std::string& name )
+	{
+		// open file
+		std::stringstream ss;
+		ss << Settings::saves_directory << Settings::scenes_directory << name << ".txt";
+		std::ifstream file ( ss.str () );
+
+		std::string line;
+		while ( std::getline ( file , line ) )
+		{
+			std::stringstream ss_line;
+			ss_line << line;
+			DeSerializeAllChildEntities ( ecs , file , ss_line );
+		}
+		file.close ();
+	}
+
+	void Serialize::DeserializeScene2 (ECS::ECSInstance* ecs, const std::string& name)
 	{
 		// open file
 		std::stringstream ss;
@@ -197,11 +214,18 @@ namespace JZEngine
 		std::ifstream file(ss.str());
 
 		std::string line;
+		std::stringstream ss_line;
 		while (std::getline(file, line))
 		{
-			std::stringstream ss_line;
-			ss_line << line;
-			DeSerializeAllChildEntities(ecs, file, ss_line);
+			if ( line[ 0 ] == '!' )
+			{
+				DeSerializeAllChildEntities2 ( ecs , file , ss_line );
+				ss_line = std::stringstream ();
+			}
+			else
+			{
+				ss_line << line;
+			}
 		}
 		file.close();
 	}
@@ -209,28 +233,59 @@ namespace JZEngine
 	void Serialize::SerializeAllChildEntities(ECS::ECSInstance* ecs, std::ofstream& file, ECS::Entity& entity)
 	{
 		file << entity.name_ << " " << entity.children_count_ << " ";
-		if (entity.owning_chunk_)
+		if ( entity.owning_chunk_ )
 		{
 			auto& mask = entity.owning_chunk_->owning_archetype_->mask_;
 			// serialize all components
 			std::stringstream ss;
-			for (int i = 0; i < mask.size(); ++i)
+			for ( int i = 0; i < mask.size (); ++i )
 			{
 				// if has that component
-				if (mask[i])
+				if ( mask[ i ] )
 				{
 					ss << "c " << i << " ";
-					SerializeECSConfigComponent(ECS::ECSConfig::Component(), i, entity, ss);
+					SerializeECSConfigComponent ( ECS::ECSConfig::Component () , i , entity , ss );
 				}
 			}
-			file << ss.str();
+			file << ss.str ();
 		}
 		file << '\n';
-		for (auto& child : entity.children_)
+		for ( auto& child : entity.children_ )
 		{
-			if (child != -1)
+			if ( child != -1 )
 			{
-				SerializeAllChildEntities(ecs, file, ecs->entity_manager_.GetEntity(child));
+				SerializeAllChildEntities ( ecs , file , ecs->entity_manager_.GetEntity ( child ) );
+			}
+		}
+		return;
+	}
+
+	void Serialize::SerializeAllChildEntities2 ( ECS::ECSInstance* ecs , std::ofstream& file , ECS::Entity& entity )
+	{
+		file << entity.name_ << " " << entity.children_count_ << " ";
+		if ( entity.owning_chunk_ )
+		{
+			auto& mask = entity.owning_chunk_->owning_archetype_->mask_;
+			// serialize all components
+			std::stringstream ss;
+			for ( int i = 0; i < mask.size (); ++i )
+			{
+				// if has that component
+				if ( mask[ i ] )
+				{
+					ss << "\n\tc " << i << " " << ecs->component_manager_.registered_components_[ i ].name_ << "\n\t\t";
+					SerializeECSConfigComponent ( ECS::ECSConfig::Component () , i , entity , ss );
+				}
+			}
+			ss << "\n!";
+			file << ss.str ();
+		}
+		file << '\n';
+		for ( auto& child : entity.children_ )
+		{
+			if ( child != -1 )
+			{
+				SerializeAllChildEntities ( ecs , file , ecs->entity_manager_.GetEntity ( child ) );
 			}
 		}
 		return;
@@ -268,6 +323,43 @@ namespace JZEngine
 		else
 		{
 			Log::Error("Serialize", "Unable to open {} to save Scene [{}].", ss.str(), name);
+			return false;
+		}
+		return true;
+	}
+
+	bool Serialize::SerializeScene2 ( ECS::ECSInstance* ecs , const std::string& name )
+	{
+		// open file
+		std::stringstream ss;
+		ss << Settings::saves_directory << Settings::scenes_directory;
+
+		// create the log directory if it isn't there
+		if ( !std::filesystem::is_directory ( ss.str () ) )
+		{
+			std::filesystem::create_directory ( ss.str () );
+		}
+
+		ss << name << ".txt";
+		std::ofstream file ( ss.str () );
+
+		if ( file.is_open () )
+		{
+			for ( auto& id : ecs->entity_manager_.root_ids_ )
+			{
+				if ( id != -1 && ecs->entity_manager_.GetEntity ( id ).persistant_ )
+				{
+					// count number of children
+					// recursively render all children of a root entity
+					ECS::Entity& entity = ecs->entity_manager_.GetEntity ( id );
+					SerializeAllChildEntities2 ( ecs , file , entity );
+				}
+			}
+			file.close ();
+		}
+		else
+		{
+			Log::Error ( "Serialize" , "Unable to open {} to save Scene [{}]." , ss.str () , name );
 			return false;
 		}
 		return true;

@@ -257,6 +257,16 @@ namespace JZEngine
 							SceneLogic::Instance().InitSceneLogic();
 							ToggleOnOff();
 						}
+						if ( ImGui::Selectable ( "Load Scene 2" ) )
+						{
+							scene_tree_->RemoveAllEntities ();
+							Serialize::DeserializeScene2 ( ecs_instance_ , s.first );
+							*scene_tree_->current_scene_name_ = s.first;
+							SceneLogic::Instance ().SetCurrentSceneName ( s.first );
+							SceneLogic::Instance ().BuildEntityMap ();
+							SceneLogic::Instance ().InitSceneLogic ();
+							ToggleOnOff ();
+						}
 						if (ImGui::Selectable("Append To Scene"))
 						{
 							Serialize::DeserializeScene(ecs_instance_, s.first);
