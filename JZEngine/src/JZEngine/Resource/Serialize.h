@@ -170,7 +170,7 @@ namespace JZEngine
 					next_ss << line;
 					std::getline ( file , line );
 				}
-				DeSerializeAllChildEntities(ecs, file, next_ss, id);
+				DeSerializeAllChildEntities2(ecs, file, next_ss, id);
 			}
 
 			return id;

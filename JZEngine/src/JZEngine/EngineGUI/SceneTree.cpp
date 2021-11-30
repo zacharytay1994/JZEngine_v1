@@ -147,6 +147,7 @@ namespace JZEngine
 		ImGui::SameLine(window_width - 45.0f);
 		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("deleteicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
 		{
+			MenuBar::play_ = false;
 			RemoveAllEntities();
 		}
 		if (ImGui::IsItemHovered())

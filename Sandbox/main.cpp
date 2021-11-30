@@ -18,12 +18,18 @@ public:
 
 		Scene ().RegisterSceneInit ( "S_MainMenu" , InitMainMenu );
 		Scene ().RegisterSceneLogic ( "S_MainMenu" , UpdateMainMenu );
+
+		Scene ().RegisterSceneInit ( "S_MainMenu2" , InitMainMenu );
+		Scene ().RegisterSceneLogic ( "S_MainMenu2" , UpdateMainMenu );
 		
 		Scene().RegisterSceneInit("HawkerV2", HawkerSceneInit);
 		Scene().RegisterSceneLogic("HawkerV2", HawkerSceneUpdate);
 
 		Scene().RegisterSceneInit("CutScene", CutSceneInit);
 		Scene().RegisterSceneLogic("CutScene", CutSceneUpdate);
+
+		Scene ().RegisterSceneInit ( "S_Cutscene" , CutSceneInit );
+		Scene ().RegisterSceneLogic ( "S_Cutscene" , CutSceneUpdate );
 	}
 };
 

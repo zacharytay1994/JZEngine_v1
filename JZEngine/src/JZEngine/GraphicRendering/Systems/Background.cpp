@@ -16,6 +16,7 @@ namespace JZEngine
 	ParallaxBackground::ParallaxBackground ()
 	{
 		RegisterComponents<Transform , Texture , Parallax , NonInstanceShader, SpriteLayer> ();
+		update_on_pause_ = true;
 	}
 	void ParallaxBackground::Update ( const float& dt )
 	{

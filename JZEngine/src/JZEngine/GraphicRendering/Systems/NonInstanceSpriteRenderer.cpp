@@ -21,18 +21,21 @@ namespace JZEngine
 		Animation2D& anim2d = GetComponent<Animation2D>();
 
 		// update animation
-		if (anim2d.animation_counter_ < anim2d.animation_speed_)
+		if ( play_ )
 		{
-			anim2d.animation_counter_ += dt;
-		}
-		else
-		{
-			++anim2d.frame_;
-			if (anim2d.frame_ >= anim2d.max_frames_)
+			if ( anim2d.animation_counter_ < anim2d.animation_speed_ )
 			{
-				anim2d.frame_ = 0;
+				anim2d.animation_counter_ += dt;
 			}
-			anim2d.animation_counter_ = 0.0f;
+			else
+			{
+				++anim2d.frame_;
+				if ( anim2d.frame_ >= anim2d.max_frames_ )
+				{
+					anim2d.frame_ = 0;
+				}
+				anim2d.animation_counter_ = 0.0f;
+			}
 		}
 
 		transform.model_transform_ = Math::GetModelTransformNonTransposed(transform.position_, transform.rotation_, transform.scale_, transform.size_);

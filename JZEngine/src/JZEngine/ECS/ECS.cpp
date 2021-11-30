@@ -14,6 +14,8 @@
 #include "ECSconfig.h"
 #include "../DebugTools/PerformanceData.h"
 
+#include "../EngineGUI/MenuBar.h"
+
 #include <iostream>
 
 namespace JZEngine
@@ -545,32 +547,36 @@ namespace JZEngine
 			ArchetypeManager& am = ecs_instance_->archetype_manager_;
 			for (auto& system : system_database_)
 			{
-				PerformanceData::StartMark(system->name_, PerformanceData::TimerType::ECS_SYSTEMS);
-				system->FrameBegin(dt);
-				for (ui32 j = 0; j < am.number_of_archetypes_; ++j)
+				system->play_ = MenuBar::play_;
+				if ( MenuBar::play_ || system->update_on_pause_ )
 				{
-					// if system mask matches archetype mask, means archetype holds entities of interest
-					if ((system->mask_ & am.archetype_database_[j].mask_) == system->mask_)
+					PerformanceData::StartMark ( system->name_ , PerformanceData::TimerType::ECS_SYSTEMS );
+					system->FrameBegin ( dt );
+					for ( ui32 j = 0; j < am.number_of_archetypes_; ++j )
 					{
-						// loop through archetype chunks
-						for (ui32 h = 0; h < am.archetype_database_[j].number_of_chunks_; ++h)
+						// if system mask matches archetype mask, means archetype holds entities of interest
+						if ( ( system->mask_ & am.archetype_database_[ j ].mask_ ) == system->mask_ )
 						{
-							system->current_chunk_ = &am.archetype_database_[j].chunk_database_[h];
-							// for each entity in a chunk
-							for (ubyte i = 0; i < system->current_chunk_->number_of_entities_; ++i)
+							// loop through archetype chunks
+							for ( ui32 h = 0; h < am.archetype_database_[ j ].number_of_chunks_; ++h )
 							{
-								// if it is marked active, i.e. exists 
-								if (system->current_chunk_->active_flags_[i])
+								system->current_chunk_ = &am.archetype_database_[ j ].chunk_database_[ h ];
+								// for each entity in a chunk
+								for ( ubyte i = 0; i < system->current_chunk_->number_of_entities_; ++i )
 								{
-									system->current_id_ = i;
-									system->Update(dt);
+									// if it is marked active, i.e. exists 
+									if ( system->current_chunk_->active_flags_[ i ] )
+									{
+										system->current_id_ = i;
+										system->Update ( dt );
+									}
 								}
 							}
 						}
 					}
+					system->FrameEnd ( dt );
+					PerformanceData::EndMark ( system->name_ , PerformanceData::TimerType::ECS_SYSTEMS );
 				}
-				system->FrameEnd(dt);
-				PerformanceData::EndMark(system->name_, PerformanceData::TimerType::ECS_SYSTEMS);
 			}
 		}
 

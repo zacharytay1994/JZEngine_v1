@@ -12,6 +12,7 @@
 
 namespace JZEngine {
 	struct MenuBar : public ImGuiInterface {
+		static bool play_;
 		static float height_;
 		static bool	light_theme_;
 		bool more_info_{ false };

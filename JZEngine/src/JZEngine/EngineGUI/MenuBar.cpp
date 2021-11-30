@@ -21,6 +21,7 @@
 #define UNREFERENCED_PARAMETER(P)(P);
 
 namespace JZEngine {
+	bool MenuBar::play_ { false };
 	float MenuBar::height_{ 0.0f };
 	bool MenuBar::light_theme_{ true };
 	MenuBar::MenuBar(float x, float y, float sx, float sy, int group) 
@@ -224,10 +225,24 @@ namespace JZEngine {
 			ImGui::EndTooltip();
 		}
 
+		ImVec4 play_color;
+		ImVec4 pause_color;
+		if ( play_ )
+		{
+			play_color = { 0.8f, 0.8f, 0.8f, 1.0f };
+			pause_color = { 0.0f, 0.0f, 0.0f, 0.0f };
+		}
+		else
+		{
+			play_color =  { 0.0f , 0.0f , 0.0f , 0.0f };
+			pause_color = { 0.8f, 0.8f, 0.8f, 1.0f };
+		}
+
 		ImGui::SameLine(Settings::window_width / 2.0f - (menubar_height * 1.5f));
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconstart")->GetRendererID()), {menubar_height * 0.8f, menubar_height * 0.8f}, { 0,1 }, { 1,0 }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconstart")->GetRendererID()), {menubar_height * 0.8f, menubar_height * 0.8f}, { 0,1 }, { 1,0 }, -1, play_color))
 		{
 			// start code
+			play_ = true;
 		}
 		if (ImGui::IsItemHovered())
 		{
@@ -239,6 +254,8 @@ namespace JZEngine {
 		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconstop")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 }))
 		{
 			// stop code
+			MenuBar::play_ = false;
+			engine_gui_->GetInterface<FolderInterface> ()->ReloadScene ();
 		}
 		if (ImGui::IsItemHovered())
 		{
@@ -247,9 +264,10 @@ namespace JZEngine {
 			ImGui::EndTooltip();
 		}
 		ImGui::SameLine(Settings::window_width / 2.0f + (menubar_height * 1.5f));
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconpause")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconpause")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 }, -1, pause_color))
 		{
 			// pause code
+			play_ = false;
 		}
 		if (ImGui::IsItemHovered())
 		{

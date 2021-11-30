@@ -285,7 +285,7 @@ namespace JZEngine
 		{
 			if ( child != -1 )
 			{
-				SerializeAllChildEntities ( ecs , file , ecs->entity_manager_.GetEntity ( child ) );
+				SerializeAllChildEntities2 ( ecs , file , ecs->entity_manager_.GetEntity ( child ) );
 			}
 		}
 		return;

@@ -16,6 +16,7 @@
 #include "SceneTree.h"
 #include "../SceneLogic/SceneLogic.h"
 #include "../Sound/Sound.h"
+#include "MenuBar.h"
 
 namespace JZEngine
 {
@@ -249,6 +250,7 @@ namespace JZEngine
 					{
 						if (ImGui::Selectable("Load Scene"))
 						{
+							MenuBar::play_ = false;
 							scene_tree_->RemoveAllEntities();
 							Serialize::DeserializeScene(ecs_instance_, s.first);
 							*scene_tree_->current_scene_name_ = s.first;
@@ -504,6 +506,17 @@ namespace JZEngine
 			audio_preview_ = false;
 			sound_system_->stopSound(audio_clip_preview_id_);
 		}
+	}
+
+	void FolderInterface::ReloadScene ()
+	{
+		std::string same_scene = *scene_tree_->current_scene_name_;
+		scene_tree_->RemoveAllEntities ();
+		Serialize::DeserializeScene ( ecs_instance_ , same_scene );
+		*scene_tree_->current_scene_name_ = same_scene;
+		SceneLogic::Instance ().SetCurrentSceneName ( same_scene );
+		SceneLogic::Instance ().BuildEntityMap ();
+		SceneLogic::Instance ().InitSceneLogic ();
 	}
 
 	void FolderInterface::DisplayTexturePreview()
