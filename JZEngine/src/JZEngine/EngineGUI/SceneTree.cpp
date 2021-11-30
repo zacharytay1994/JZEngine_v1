@@ -515,16 +515,23 @@ namespace JZEngine
 					}*/
 					confirmation_flag_ = Confirmation::NONE;
 				}
-				ImGui::SameLine(ImGui::GetWindowSize().x / 4 * 3 - 50.0f);
-				if (ImGui::Button("Cancel", ImVec2(100.0f, 0.0f))) {
-					confirmation_flag_ = Confirmation::NONE;
-				}
-				if ( ImGui::Button ( "Confirm2" ) )
+				ImGui::SameLine ();
+				if ( ImGui::ImageButton ( ( void* )static_cast< unsigned long long >( ResourceManager::GetTexture ( "tempicon" )->GetRendererID () ) , { 10.0f, 10.0f } ) )
 				{
 					Serialize::SerializeScene2 ( ecs_instance_ , ss.str () );
 					Serialize::scenes_[ ss.str () ];
 					confirmation_flag_ = Confirmation::NONE;
 				}
+				ImGui::SameLine(ImGui::GetWindowSize().x / 4 * 3 - 50.0f);
+				if (ImGui::Button("Cancel", ImVec2(100.0f, 0.0f))) {
+					confirmation_flag_ = Confirmation::NONE;
+				}
+				/*if ( ImGui::Button ( "Confirm2" ) )
+				{
+					Serialize::SerializeScene2 ( ecs_instance_ , ss.str () );
+					Serialize::scenes_[ ss.str () ];
+					confirmation_flag_ = Confirmation::NONE;
+				}*/
 				break;
 			case Confirmation::REMOVE:
 				break;

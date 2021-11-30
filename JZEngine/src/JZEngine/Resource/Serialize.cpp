@@ -224,7 +224,7 @@ namespace JZEngine
 			}
 			else
 			{
-				ss_line << line;
+				ss_line << line << "\n";
 			}
 		}
 		file.close();

@@ -35,16 +35,31 @@ namespace JZEngine
 			WRITE = 1
 		};
 
-		template <typename STREAM, typename...ARGS>
-		static void SERIALIZE(STREAM& stream, MODE mode, ARGS&&... args)
+		template <typename STREAM, typename ARG>
+		static void StreamToArg ( STREAM& stream , ARG& arg )
 		{
-			if (mode == MODE::READ)
+			if ( stream.peek () != 'c' )
 			{
-				((stream >> args), ...);
+				stream >> arg;
+				std::cout << arg << std::endl;
 			}
 			else
 			{
-				((stream << args << " "), ...);
+				arg = ARG ();
+				std::cout <<  "c detected" << stream.peek () << std::endl;
+			}
+		}
+
+		template <typename STREAM, typename...ARGS>
+		static void SERIALIZE(STREAM& stream, MODE mode, ARGS&&... args)
+		{
+			if ( mode == MODE::READ )
+			{
+				( ( stream >> args ) , ... );
+			}
+			else
+			{
+				( ( stream << args << " " ) , ... );
 			}
 		}
 

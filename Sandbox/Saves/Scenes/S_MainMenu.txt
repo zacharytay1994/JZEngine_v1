@@ -1,10 +1,10 @@
 Background 0 
 	c 0 struct JZEngine::Transform
-		-3.75004 -24.1527 0 0 0 32.7231 19.2381 50 50 
+		-3.75004 -24.1527 0 0 0 32.7231 19.2381 50 50
 	c 1 struct JZEngine::SpriteLayer
 		0 
 	c 2 struct JZEngine::Texture
-		mm_background 
+		mm_background 	
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
