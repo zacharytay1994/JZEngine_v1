@@ -60,7 +60,7 @@ namespace JZEngine
 			}
 
 			ImGui::SameLine(ImGui::GetWindowWidth() - 45.0f);
-			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("saveicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
+			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("saveicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , EngineGUI::icon_col_ ))
 			{
 				if (entity)
 				{

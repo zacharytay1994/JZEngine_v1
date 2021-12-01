@@ -30,6 +30,7 @@ namespace JZEngine
 	//Mat4f projection;
 	//Mat4f transform; //{ {100, 0, 0, 0}, { 0,100,0,0 }, { 0,0,1,0 }, { 0,0,0,1 }};
 	//Mat3f EngineGUI::camera_transform_;
+	ImVec4 EngineGUI::icon_col_ { 0,0,0,1 };
 	EngineGUI::EngineGUI()
 		:
 		inspector_(5.0f / 6.0f, 1.0f / 46.0f, 1.0f / 6.0f, 45.0f / 46.0f),
@@ -99,6 +100,7 @@ namespace JZEngine
 		}*/
 
 		// render all engine gui parts
+		UpdateTheme ( dt );
 
 		if (!Camera::fullscreen)
 		{
@@ -277,23 +279,76 @@ namespace JZEngine
 
 		ImGuiStyle& style = ImGui::GetStyle();
 
-		style.Colors[ImGuiCol_Button]			= ImVec4(0.6f, 0.6f, 0.6f, 0.6f);
-		style.Colors[ImGuiCol_MenuBarBg]		= ImVec4(0.6f, 0.6f, 0.6f, 0.6f);
-		style.Colors[ImGuiCol_ButtonHovered]	= ImVec4(0.8f, 0.8f, 0.8f, 1.0f);
-		style.Colors[ImGuiCol_WindowBg]			= ImVec4(0.8f, 0.8f, 0.8f, 1.0f);
-		style.Colors[ImGuiCol_Border]			= ImVec4(0.5f, 0.5f, 0.5f, 1.0f);
-		style.Colors[ImGuiCol_Text]				= ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
-		style.Colors[ImGuiCol_TitleBg]			= ImVec4(0.9f, 0.9f, 0.9f, 1.0f);
-		style.Colors[ImGuiCol_TitleBgActive]	= ImVec4(0.9f, 0.9f, 0.9f, 1.0f);
-		style.Colors[ImGuiCol_PopupBg]			= ImVec4(0.8f, 0.8f, 0.8f, 1.0f);
-		style.Colors[ImGuiCol_FrameBg]			= ImVec4(0.6f, 0.6f, 0.6f, 1.0f);
-		style.Colors[ImGuiCol_Separator]		= ImVec4(0.6f, 0.6f, 0.6f, 1.0f);
+		style.Colors[ImGuiCol_Button]			= ImVec4( curr_col1.x , curr_col1.y , curr_col1.z , curr_col1.w );
+		style.Colors[ImGuiCol_MenuBarBg]		= ImVec4( curr_col1.x , curr_col1.y , curr_col1.z , curr_col1.w );
+		style.Colors[ImGuiCol_ButtonHovered]	= ImVec4( curr_col2.x , curr_col2.y , curr_col2.z , curr_col2.w );
+		style.Colors[ImGuiCol_WindowBg]			= ImVec4( curr_col2.x , curr_col2.y , curr_col2.z , curr_col2.w );
+		style.Colors[ImGuiCol_Border]			= ImVec4( curr_col3.x , curr_col3.y , curr_col3.z , curr_col3.w );
+		style.Colors[ImGuiCol_Text]				= ImVec4( curr_col4.x , curr_col4.y , curr_col4.z , curr_col4.w );
+		style.Colors[ImGuiCol_TitleBg]			= ImVec4( curr_col5.x , curr_col5.y , curr_col5.z , curr_col5.w );
+		style.Colors[ImGuiCol_TitleBgActive]	= ImVec4( curr_col5.x , curr_col5.y , curr_col5.z , curr_col5.w );
+		style.Colors[ImGuiCol_PopupBg]			= ImVec4( curr_col2.x , curr_col2.y , curr_col2.z , curr_col2.w );
+		style.Colors[ImGuiCol_FrameBg]			= ImVec4( curr_col1.x , curr_col1.y , curr_col1.z , curr_col1.w );
+		style.Colors[ImGuiCol_Separator]		= ImVec4( curr_col1.x , curr_col1.y , curr_col1.z , curr_col1.w );
 
 		editor_font_ = ImGui::GetIO().Fonts->AddFontFromFileTTF("Assets/Fonts/arlrdbd.ttf", 15.0f);
 		/*if (editor_font_ == nullptr)
 		{
 			std::cout << "wrong" << std::endl;
 		}*/
+	}
+
+	void EngineGUI::UpdateTheme ( float dt )
+	{
+		if ( light_theme_ )
+		{
+			TransitionColor ( curr_col1 , light_col1 , dt );
+			TransitionColor ( curr_col2 , light_col2 , dt );
+			TransitionColor ( curr_col3 , light_col3 , dt );
+			TransitionColor ( curr_col4 , light_col4 , dt );
+			TransitionColor ( curr_col5 , light_col5 , dt );
+
+			TransitionColor ( curr_icon_col , light_icon_col , dt );
+		}
+		else
+		{
+			TransitionColor ( curr_col1 , dark_col1 , dt );
+			TransitionColor ( curr_col2 , dark_col2 , dt );
+			TransitionColor ( curr_col3 , dark_col3 , dt );
+			TransitionColor ( curr_col4 , dark_col4 , dt );
+			TransitionColor ( curr_col5 , dark_col5 , dt );
+
+			TransitionColor ( curr_icon_col , dark_icon_col , dt );
+		}
+
+		icon_col_ = { curr_icon_col.x, curr_icon_col.y, curr_icon_col.z, curr_icon_col.w };
+
+		ImGuiStyle& style = ImGui::GetStyle ();
+
+		style.Colors[ ImGuiCol_Button ]			= ImVec4 ( curr_col1.x , curr_col1.y , curr_col1.z , curr_col1.w );
+		style.Colors[ ImGuiCol_MenuBarBg ]		= ImVec4 ( curr_col1.x , curr_col1.y , curr_col1.z , curr_col1.w );
+		style.Colors[ ImGuiCol_ButtonHovered ]	= ImVec4 ( curr_col2.x , curr_col2.y , curr_col2.z , curr_col2.w );
+		style.Colors[ ImGuiCol_WindowBg ]		= ImVec4 ( curr_col2.x , curr_col2.y , curr_col2.z , curr_col2.w );
+		style.Colors[ ImGuiCol_Border ]			= ImVec4 ( curr_col3.x , curr_col3.y , curr_col3.z , curr_col3.w );
+		style.Colors[ ImGuiCol_Text ]			= ImVec4 ( curr_col4.x , curr_col4.y , curr_col4.z , curr_col4.w );
+		style.Colors[ ImGuiCol_TitleBg ]		= ImVec4 ( curr_col5.x , curr_col5.y , curr_col5.z , curr_col5.w );
+		style.Colors[ ImGuiCol_TitleBgActive ]	= ImVec4 ( curr_col5.x , curr_col5.y , curr_col5.z , curr_col5.w );
+		style.Colors[ ImGuiCol_PopupBg ]		= ImVec4 ( curr_col2.x , curr_col2.y , curr_col2.z , curr_col2.w );
+		style.Colors[ ImGuiCol_FrameBg ]		= ImVec4 ( curr_col1.x , curr_col1.y , curr_col1.z , curr_col1.w );
+		style.Colors[ ImGuiCol_Separator ]		= ImVec4 ( curr_col1.x , curr_col1.y , curr_col1.z , curr_col1.w );
+	}
+
+	void EngineGUI::TransitionColor ( Vec4f& curr , Vec4f theme, float dt )
+	{
+		if ( ( theme - curr ).LenSq () < threshold_ )
+		{
+			curr = theme;
+		}
+		else
+		{
+			curr += ( theme - curr ) * dt * transition_speed_;
+		}
+		//curr += ( theme - curr ) * transition_speed_ * dt;
 	}
 
 	Console* EngineGUI::GetConsole()
