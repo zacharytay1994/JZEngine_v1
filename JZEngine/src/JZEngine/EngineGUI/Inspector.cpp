@@ -49,14 +49,40 @@ namespace JZEngine
 
 		if (ImGui::BeginMenuBar())
 		{
-			if (ImGui::Button("Components"))
+			if (ImGui::Button("Properties"))
 			{
-				component_view_ = true;
+				view_ = VIEW::PROPERTY;
+				//component_view_ = true;
+			}
+			if ( ImGui::IsItemHovered () )
+			{
+				ImGui::BeginTooltip ();
+				ImGui::Text ( "Edit properties of the selected object." );
+				ImGui::EndTooltip ();
 			}
 
-			if (ImGui::Button("Add Systems"))
+			if (ImGui::Button("Systems"))
 			{
-				component_view_ = false;
+				view_ = VIEW::SYSTEM;
+				//component_view_ = false;
+			}
+			if ( ImGui::IsItemHovered () )
+			{
+				ImGui::BeginTooltip ();
+				ImGui::Text ( "Add and remove systems of the selected object." );
+				ImGui::EndTooltip ();
+			}
+
+			if ( ImGui::Button ( "Components" ) )
+			{
+				view_ = VIEW::COMPONENT;
+				//component_view_ = false;
+			}
+			if ( ImGui::IsItemHovered () )
+			{
+				ImGui::BeginTooltip ();
+				ImGui::Text ( "Add and remove components of the selected object." );
+				ImGui::EndTooltip ();
 			}
 
 			ImGui::SameLine(ImGui::GetWindowWidth() - 45.0f);
@@ -87,69 +113,90 @@ namespace JZEngine
 		ImGui::Separator();*/
 
 		// renders all registered components and systems 
-		if (!component_view_)
+
+		switch ( view_ )
 		{
-			if (entity)
-			{
-				ImGui::Text("Select a system to add.");
-			}
-			else
-			{
-				ImGui::Text("First select an object.");
-			}
-			ImGui::Separator();
-			TreeNodeComponentsAndSystems(entity);
-		}
-		else
-		{
+		case VIEW::PROPERTY:
 			// if there is selected entity
-			if (entity)
+			if ( entity )
 			{
 				/*std::stringstream ss;
 				ss << "Components of [" << entity->name_ << "] [ID: " << entity->entity_id_ << "]";
 				ImGui::Text(ss.str().c_str());*/
-				ImGui::Text("Edit component properties here.");
-				ImGui::Separator();
+				ImGui::Text ( "Edit component properties here." );
+				ImGui::Separator ();
 
 				// if entity has a chunk, i.e. has component before
-				if (entity->owning_chunk_)
+				if ( entity->owning_chunk_ )
 				{
-					bool flag = entity->GetFlag();
-					ImGui::Checkbox(": Active", &flag);
-					entity->FlagActive(flag);
+					bool flag = entity->GetFlag ();
+					ImGui::Checkbox ( ": Active" , &flag );
+					entity->FlagActive ( flag );
 
 					bool has_component_ = false;
-					for (int i = 0; i < ECS::MAX_COMPONENTS; ++i)
+					for ( int i = 0; i < ECS::MAX_COMPONENTS; ++i )
 					{
-						if (entity->owning_chunk_->owning_archetype_->mask_[i])
+						if ( entity->owning_chunk_->owning_archetype_->mask_[ i ] )
 						{
 							has_component_ = true;
-							ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+							ImGui::SetNextItemOpen ( true , ImGuiCond_Once );
 
 							// renders all components using their specialization
-							LoopTupleRender(ECS::ECSConfig::Component(), i, *entity);
-							ImGui::Separator();
+							LoopTupleRender ( ECS::ECSConfig::Component () , i , *entity );
+							ImGui::Separator ();
 						}
 					}
-					if (!has_component_)
+					if ( !has_component_ )
 					{
-						ImGui::Text("No components found...");
-						ImGui::Text("Try adding some systems...");
+						ImGui::Text ( "No components found..." );
+						ImGui::Text ( "Try adding some systems..." );
 					}
 				}
 				else
 				{
-					ImGui::Text("No components found...");
-					ImGui::Text("Try adding some systems...");
+					ImGui::Text ( "No components found..." );
+					ImGui::Text ( "Try adding some systems..." );
 				}
 			}
 			else
 			{
-				ImGui::Text("Edit component properties here.\n");
-				ImGui::Separator();
-				ImGui::Text("No object selected...");
+				ImGui::Text ( "Edit component properties here.\n" );
+				ImGui::Separator ();
+				ImGui::Text ( "No object selected..." );
 			}
+			break;
+		case VIEW::SYSTEM:
+			if ( entity )
+			{
+				ImGui::Text ( "Select a system to add." );
+			}
+			else
+			{
+				ImGui::Text ( "First select an object." );
+			}
+			ImGui::Separator ();
+			TreeNodeComponentsAndSystems ( entity );
+			break;
+		case VIEW::COMPONENT:
+			if ( entity )
+			{
+				ImGui::Text ( "Select a component to add." );
+			}
+			else
+			{
+				ImGui::Text ( "First select an object." );
+			}
+			ImGui::Separator ();
+			TreeNodeComponents ( entity );
+			break;
 		}
+
+		/*if (!component_view_)
+		{
+		}
+		else
+		{
+		}*/
 
 		//ImGui::NewLine();
 		//ImGui::SameLine(ImGui::GetWindowWidth() / 2 - 50.0f);
@@ -169,6 +216,48 @@ namespace JZEngine
 		if (confirmation_flag_ == Confirmation::SERIALIZE)
 		{
 			RenderConfirmation(entity);
+		}
+	}
+
+	void Inspector::TreeNodeComponents ( ECS::Entity* const entity )
+	{
+		if ( entity )
+		{
+			for ( auto& c : ecs_instance_->component_manager_.registered_components_ )
+			{
+				bool has_component_ = false;
+
+				// if the selected entity has the component, color it green
+				if ( entity->HasComponent ( c.bit_ ) )
+				{
+					has_component_ = true;
+					//ImGui::PushStyleColor ( ImGuiCol_Text , { 0.0f,1.0f,0.0f,1.0f } );
+				}
+
+				// if component is selected
+				bool temp { has_component_ };
+				ImGui::Checkbox ( c.name_.c_str () + TrimName ( c.name_ ) , &temp );
+				if ( temp != has_component_ )
+				{
+					if ( temp )
+					{
+						//entity->AddSystem ( c.id_ );
+						entity->AddComponent ( c.bit_ );
+					}
+					else
+					{
+						entity->RemoveComponent ( c.bit_ );
+						//entity->RemoveSystem ( c.id_ );
+					}
+				}
+				if ( has_component_ )
+				{
+					has_component_ = false;
+				}
+			}
+		}
+		else
+		{
 		}
 	}
 

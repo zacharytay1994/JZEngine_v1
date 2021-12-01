@@ -5,6 +5,23 @@
 
 #include <iostream>
 
+struct CustomDataTest
+{
+	float a { 10 } , b;
+};
+
+void MoveRight ( float const& dt , JZEngine::EntityPacket& ep )
+{
+	CustomDataTest& cdt = Scene ().GetCustomComponent<CustomDataTest> ( ep );
+	cdt.a += 5.0f * dt;
+	Scene ().GetComponent<JZEngine::Transform> ( ep ).position_.x += (float)cdt.a * dt;
+}
+
+void MoveUp ( float const& dt , JZEngine::EntityPacket& ep )
+{
+	Scene ().GetComponent<JZEngine::Transform> ( ep ).position_.y += 10.0f * dt;
+}
+
 class Sandbox : public JZEngine::Application
 {
 public:
@@ -30,6 +47,9 @@ public:
 
 		Scene ().RegisterSceneInit ( "S_Cutscene" , CutSceneInit );
 		Scene ().RegisterSceneLogic ( "S_Cutscene" , CutSceneUpdate );
+
+		Scene ().RegisterLogic ( "MoveRight" , MoveRight );
+		Scene ().RegisterLogic ( "MoveUp" , MoveUp );
 	}
 };
 

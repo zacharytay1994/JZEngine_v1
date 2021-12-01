@@ -134,6 +134,11 @@ namespace JZEngine
 		}
 	}
 
+	void SceneLogic::RegisterLogic ( std::string const& name , JZUpdate function )
+	{
+		LogicContainer::Instance ().Register ( name , function );
+	}
+
 	SceneLogic& SceneLogic::Instance()
 	{
 		static SceneLogic instance;

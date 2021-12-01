@@ -38,6 +38,16 @@ namespace JZEngine
 		ECS::ECSInstance* ecs_instance_{ nullptr };
 		ResourceManager* resource_manager_{ nullptr };
 		float x_ , y_ , sx_ , sy_;		/*!< position and scale of the ImGui window */
+
+		enum class VIEW
+		{
+			PROPERTY,
+			SYSTEM,
+			COMPONENT
+		};
+
+		VIEW view_ = VIEW::PROPERTY;
+
 		bool component_view_{ true };
 		
 		bool		requesting_texture_{ false };
@@ -56,6 +66,8 @@ namespace JZEngine
 		 * ****************************************************************************************************
 		*/
 		void Render ( ECS::Entity* const entity = nullptr );
+
+		void TreeNodeComponents ( ECS::Entity* const entity );
 
 		/*!
 		 * @brief ___JZEngine::ToolsGUI::TreeNodeComponentAndSystems()___
@@ -617,6 +629,72 @@ namespace JZEngine
 		{
 			ImGui::InputFloat ( "##MEX" , &component.bounding_half_width_ );
 			ImGui::InputFloat ( "##MEY" , &component.bounding_half_height_ );
+		}
+
+		int current_id = 0;
+		template<>
+		void RenderComponent ( CustomLogicContainer& component )
+		{
+			// display selection for all the functions
+			if ( ImGui::BeginPopup ( "Updates" ) )
+			{
+				if ( ImGui::Selectable ( "Remove" ) )
+				{
+					component.updates[ current_id ] = 0;
+				}
+				for ( auto& update : LogicContainer::Instance ().GetUpdates () )
+				{
+					if ( update.first != "Remove" )
+					{
+						if ( ImGui::Selectable ( update.first.c_str () ) )
+						{
+							component.updates[ current_id ] = update.second;
+						}
+					}
+				};
+				ImGui::EndPopup ();
+			};
+
+			int next_slot = -1;
+			float button_width = ImGui::GetWindowWidth () * 0.8f;
+			for ( int i = 0; i < MAX_LOGIC_PER_ENTITY; ++i )
+			{
+				if ( component.updates[ i ] != 0 )
+				{
+					if ( ImGui::Button ( LogicContainer::Instance ().GetUpdateName ( component.updates[ i ] ).c_str () , { button_width, 0 } ) )
+					{
+						current_id = i;
+						ImGui::OpenPopup ( "Updates" );
+					}
+				}
+				else
+				{
+					next_slot = i;
+				}
+			}
+			if ( next_slot != -1 )
+			{
+				if ( ImGui::Button ( "- Select -" , { button_width, 0 } ) )
+				{
+					current_id = next_slot;
+					ImGui::OpenPopup ( "Updates" );
+				}
+			}
+			else
+			{
+				ImGui::Text ( "Max functions stored." );
+			}
+		}
+
+		struct TestType
+		{
+			int a , b;
+		};
+
+		template<>
+		void RenderComponent ( CustomDataContainer& component )
+		{
+			ImGui::Text ( "Unable to display custom data." );
 		}
 
 		/*!

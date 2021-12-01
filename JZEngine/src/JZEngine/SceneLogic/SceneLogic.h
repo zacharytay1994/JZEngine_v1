@@ -10,6 +10,9 @@
 #include "../DebugTools/Log.h"
 #include "../Sound/Sound.h"
 
+#include "LogicContainer.h"
+#include "DataContainer.h"
+
 namespace JZEngine
 {
 	namespace ECS
@@ -31,6 +34,7 @@ namespace JZEngine
 		void UpdateSceneLogic(float dt);
 		void InitSceneLogic();
 		void BuildEntityMap();
+
 		template <typename T>
 		T* GetComponent(const std::string& name, unsigned int id = 0)
 		{
@@ -41,6 +45,25 @@ namespace JZEngine
 			}
 			return &((*entity_map_)[name][id])->GetComponentEX<T>();
 		}
+
+		template <typename T>
+		T& GetComponent ( EntityPacket& entityPacket )
+		{
+			return entityPacket.chunk_->GetComponentEX <T> ( entityPacket.id_ );
+		}
+
+		template <typename T>
+		T& GetCustomComponent ( EntityPacket& entityPacket )
+		{
+			CustomDataContainer& cdc = GetComponent<CustomDataContainer> ( entityPacket );
+			if ( !cdc.initialized )
+			{
+				cdc.initialized = true;
+				return *reinterpret_cast< T* >( cdc.data ) = T ();
+			}
+			return *reinterpret_cast< T* >( cdc.data );
+		}
+
 		ECS::Entity* GetEntity(const std::string& name, unsigned int id = 0);
 		void AddPrefab(const std::string& name, const std::string& parent = "default");
 		void SetECS(ECS::ECSInstance* ecs);
@@ -51,8 +74,20 @@ namespace JZEngine
 
 		void SetCurrentSceneName(const std::string& name);
 		void EntityFlagActive(const std::string& name, bool flag, int id = 0);
-		int GetTexture(const std::string& name);
+		int	GetTexture(const std::string& name);
 		void ChangeScene(const std::string& name);
+
+		/*! LOGIC CONTAINER */
+		void RegisterLogic ( std::string const& name , JZUpdate function);
+
+		template <typename T>
+		void RegisterData ()
+		{
+			if ( ecs_instance_ )
+			{
+				ecs_instance_->RegisterComponent<T> ();
+			}
+		}
 
 
 	private:

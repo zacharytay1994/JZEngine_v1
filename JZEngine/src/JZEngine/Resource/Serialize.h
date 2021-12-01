@@ -389,6 +389,54 @@ namespace JZEngine
 				component.font_size_);
 		}
 
+		template <>
+		static void SerializeComponent ( CustomLogicContainer& component , std::stringstream& stream , MODE mode )
+		{
+			if ( mode == MODE::WRITE )
+			{
+				// get string representation of texture_id
+				for ( int i = 0; i < MAX_LOGIC_PER_ENTITY; ++i )
+				{
+					SERIALIZE ( stream , mode , LogicContainer::Instance ().GetUpdateName ( component.updates[ i ] ) );
+				}
+			}
+			else if ( mode == MODE::READ )
+			{
+				// get string representation of texture_id
+				for ( int i = 0; i < MAX_LOGIC_PER_ENTITY; ++i )
+				{
+					std::string name;
+					SERIALIZE ( stream , mode , name );
+					component.updates[ i ] = LogicContainer::Instance ().GetUpdateID(name);
+				}
+			}
+		}
+
+		template <>
+		static void SerializeComponent ( CustomDataContainer& component , std::stringstream& stream , MODE mode )
+		{
+			if ( mode == MODE::WRITE )
+			{
+				// serialize initialized flag
+				SERIALIZE ( stream , mode , component.initialized );
+				// serialize data
+				for ( int i = 0; i < CustomDataContainer::CUSTOM_DATA_SIZE; ++i )
+				{
+					SERIALIZE ( stream , mode , component.data[ i ] );
+				}
+			}
+			else if ( mode == MODE::READ )
+			{
+				// deserialize initialized flag
+				SERIALIZE ( stream , mode , component.initialized );
+				// deserialize data
+				for ( int i = 0; i < CustomDataContainer::CUSTOM_DATA_SIZE; ++i )
+				{
+					SERIALIZE ( stream , mode , component.data[ i ] );
+				}
+			}
+		}
+
 		/*!_______________________________________________________________________________________________________*/
 		/* STOP HERE GO NO FURTHER! */ // WHY NOT
 		/*!_______________________________________________________________________________________________________*/

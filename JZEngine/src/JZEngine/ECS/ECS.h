@@ -26,6 +26,8 @@
 
 #include "../UnreferencedParam.h"
 
+#include "../DebugTools/Log.h"
+
 namespace JZEngine
 {
 	/*!
@@ -981,15 +983,16 @@ namespace JZEngine
 		template<typename COMPONENT>
 		COMPONENT& Chunk::GetComponentEX(ui32 id)
 		{
-			assert(("Getting component that does not exist in Entity.",
-				owning_archetype_->mask_[ecs_instance_->component_manager_.exported_descriptions_[typeid(COMPONENT).name()].bit_] == 1));
-
+			if ( !(owning_archetype_->mask_[ ecs_instance_->component_manager_.exported_descriptions_[ typeid( COMPONENT ).name () ].bit_ ] == 1 ) )
+			{
+				Log::Error ( "Main" , "Getting component [{}] that does not exist in Entity. Undefined Behaviour!" , typeid( COMPONENT ).name () );
+			}
 			// navigates to location of data
-			char* data = data_.get() + (size_t)id * (size_t)owning_archetype_->entity_stride_ +
-				(size_t)owning_archetype_->component_stride_[ecs_instance_->component_manager_.exported_descriptions_[typeid(COMPONENT).name()].bit_];
+			char* data = data_.get () + ( size_t ) id * ( size_t ) owning_archetype_->entity_stride_ +
+				( size_t ) owning_archetype_->component_stride_[ ecs_instance_->component_manager_.exported_descriptions_[ typeid( COMPONENT ).name () ].bit_ ];
 
 			// cast to type and return reference
-			return *(reinterpret_cast<COMPONENT*>(data));
+			return *( reinterpret_cast< COMPONENT* >( data ) );
 		}
 
 		/* ____________________________________________________________________________________________________
