@@ -34,7 +34,7 @@ namespace JZEngine
 
 	enum class Paragraph
 	{
-		AlignLeft , AlignCenter , AlignRight /*, JustifyLeft , JustifyCenter , JustifyRight , JustifyFull*/
+		AlignLeft , AlignCenter , AlignRight 
 	};
 
 	// A renderer class for rendering text displayed by a font loaded using the 
@@ -59,7 +59,8 @@ namespace JZEngine
 			float scale ,
 			JZEngine::Vec3f color = { 1.0f , 1.0f , 1.0f } ,
 			float tracking_x = { 1.0f },
-			float leading_y = { 2.0f }
+			float leading_y = { 2.0f },
+			Paragraph alignment = Paragraph::AlignLeft
 		);
 
 		struct RenderTextData

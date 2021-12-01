@@ -9,14 +9,17 @@
 #include "ResourceManager.h"
 #include "../EngineConfig.h"
 #include "../DebugTools/Log.h"
+
 #include "../Threads/ThreadPool.h"
 
 #include <atomic>
 
 namespace JZEngine
 {
-	// 
-	std::atomic<bool> is_thread_pool_done_ ( false );
+	
+	std::string thread_load_string;
+	std::atomic<std::string*> thread_load_string_pointer = &thread_load_string;
+	std::atomic<bool> thread_is_pool_done_ ( false );
 
 	std::vector<ResourceManager::InstancedShaderID> ResourceManager::instanced_shader_programs_;
 	std::vector<ResourceManager::ShaderID> ResourceManager::shader_programs_;
@@ -31,6 +34,8 @@ namespace JZEngine
 
 
 	ResourceManager::ResourceManager ()
+		:
+		load_screen_main_ ( this )
 	{
 		// intialised loading screen
 		load_screen_main_.PreDraw ();
@@ -42,9 +47,14 @@ namespace JZEngine
 		}
 
 		// draw loading screen if pool_load_folder_tex is not done yet
-		while( !is_thread_pool_done_ )
+		double dt{ 0.0 };
+		while( !thread_is_pool_done_ )
 		{
-			load_screen_main_.Draw ();
+			auto start_time = std::chrono::high_resolution_clock::now ();
+			load_screen_main_.Draw ( *thread_load_string_pointer );
+			auto end_time = std::chrono::high_resolution_clock::now ();
+			std::chrono::duration<double , std::milli> milli_dt = end_time - start_time;
+			dt = milli_dt.count () / 1000.0;
 		}
 
 		// uninitialised loading screen
@@ -286,7 +296,7 @@ namespace JZEngine
 		RecursivelyLoadTexture ( folder , texture_folder_data_ );
 
 		// informed loading screen to stop drawing after texture is done loaded
-		is_thread_pool_done_ = true;
+		thread_is_pool_done_ = true;
 	}
 
 	void ResourceManager::RecursivelyLoadTexture ( const std::string& folder , FolderData& folderData )
@@ -325,7 +335,9 @@ namespace JZEngine
 					texture2ds_.emplace_back ( static_cast< int >( texture2ds_.size () ) );
 					texture2ds_.back ().texture2d_.Texture2DLoad ( file.path ().string () );
 					umap_texture2ds_[ texture_name ] = texture2ds_.back ().id_;
+					//ThreadDataShare <std::string>::SaveTemperoryData ( texture_name );
 					Log::Info ( "Resources" , "- Read [{}]." , file.path ().string () );
+					*thread_load_string_pointer = file.path ().string ();
 				}
 				check[ texture_name ] = true;
 			}

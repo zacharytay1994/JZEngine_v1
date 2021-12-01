@@ -11,12 +11,16 @@
 #include "../GLObjects/Shader.h"
 #include "../GLObjects/Texture.h"
 #include "../GLObjects/VertexArray.h"
+#include <memory>
 
 // Uncomment the following define for debugging
 #define LSMainDebug 
 
 namespace JZEngine
 {
+	struct ResourceManager;
+	struct TextRenderer;
+
 	class LSMain
 	{
 	private:
@@ -44,20 +48,33 @@ namespace JZEngine
 		Shader shader_program;
 		Texture2D tex2d_path1;
 		Texture2D tex2d_path2;
+		Texture2D tex2d_path3;
 
 		bool draw_load_screen_{ true };
 		float myAlpha{ 0.0f };
+		float myAlpha1{ 0.0f };
+
+		bool reverse_dot_{ false };
+		float dot_1_alpha_ = 1.0f;
+		float dot_2_alpha_ = 0.0f;
+		float dot_3_alpha_ = 0.0f;
+
+		
 
 		std::string fspath{ "Assets/Shaders/Fragment/FS_BasicTex.fs" };
 		std::string vspath{ "Assets/Shaders/Vertex/VS_BasicTex.vs" };
 		std::string texpath1{ "Assets/Textures/LoadingScreen/Jump0_BlackLogo-01.png" };
 		std::string texpath2{ "Assets/Textures/LoadingScreen/Jump0_BlackLogo-02.png" };
+		std::string texpath3{ "Assets/Textures/LoadingScreen/Jump0_BlackLogo-03.png" };
 
+
+		ResourceManager* resource_manager_{ nullptr };
+		std::unique_ptr< TextRenderer> renderer_text_{nullptr};
 	public:
-		LSMain ();
+		LSMain ( ResourceManager* ResourceManager);
 		~LSMain ();
 		void PreDraw ();
-		void Draw () ;
+		void Draw (std::string Information) ;
 		void PostDraw ();
 	};
 }

@@ -47,7 +47,7 @@ namespace JZEngine
 	 * @param color
 	 * Default colour is white { 1.0f , 1.0f , 1.0f };
 	*/
-	void TextRenderer::RenderText ( ResourceManager* rm, std::string text , float x , float y , float scale , JZEngine::Vec3f color , float tracking_x , float leading_y )
+	void TextRenderer::RenderText ( ResourceManager* rm , std::string text , float x , float y , float scale , JZEngine::Vec3f color , float tracking_x , float leading_y, Paragraph alignment )
 	{
 		scale = scale / 10.0f;
 
@@ -56,30 +56,113 @@ namespace JZEngine
 		rm->font_shader_programs_[ 0 ].shader_program_.SetUniform ( "textColor" , color );
 		va.Bind ();
 
+	
+		std::queue <float> line_offset_x ;
 
-		std::string::const_iterator c;
-		auto& Characters = rm->font_characters_[ 0 ];
-
-		float start_x{ x };
 		float offset_x{ 0 };
-		float offset_y = -Characters[ 'H' ].size_.y / 2 * scale ;
+		float offset_y{ 0 };
+
+		float offset_x_temp{ 0 };
+		float offset_x_past{ 0 };
+		float offset_x_start{ x };
+
+		auto& Characters = rm->font_characters_[ 0 ];
+		std::string::const_iterator c;
+
+		for( c = text.begin (); c != text.end (); c++ )
+		{
+			ResourceManager::Character ch = Characters[ *c ];
+			if( *c != '\n' )
+			{
+				offset_x_temp += ( ch.advance >> 6 );
+			}
+			else
+			{
+				line_offset_x.push ( offset_x_temp );
+				offset_x_temp = 0 ;
+			}
+		}
+		line_offset_x.push ( offset_x_temp );
+		offset_x_temp = 0 ;
+
+		switch( alignment )
+		{
+			case Paragraph::AlignLeft:
+				offset_x = 0;
+				break;
+			case Paragraph::AlignCenter:
+				if( line_offset_x.empty () )
+				{
+					x = -( offset_x_temp / 2.0f ) * scale ;
+				}
+				else
+				{
+					x = -( line_offset_x.front () / 2.0f ) * scale ;
+					line_offset_x.pop ();
+				}
+				break;
+			case Paragraph::AlignRight:
+				if( line_offset_x.empty () )
+				{
+					x = -offset_x_temp * scale ;
+				}
+				else
+				{
+					x = -line_offset_x.front () * scale ;
+					offset_x_past = x ;
+					line_offset_x.pop ();
+				}
+				break;
+		}
+
+		offset_y = -Characters[ 'H' ].size_.y / 2 * scale ;
 
 		// iterate through all characters
 		for( c = text.begin (); c != text.end (); c++ )
 		{
 			if( *c == '\n' )
 			{
-				x = start_x;
+				switch( alignment )
+				{
+					case Paragraph::AlignLeft:
+						x = offset_x_start;
+						break;
+					case Paragraph::AlignCenter:
+						if( !line_offset_x.empty () )
+						{
+							x = -( line_offset_x.front () / 2.0f ) * scale ;
+							line_offset_x.pop ();
+						}
+						else
+						{
+							x = offset_x_start;
+						}
+						break;
+					case Paragraph::AlignRight:
+						if( !line_offset_x.empty () )
+						{
+							x = -line_offset_x.front () * scale ;
+							offset_x_past = x;
+							line_offset_x.pop ();
+						}
+						else
+						{
+							x = ( offset_x_past + offset_x_start ) / 2.0f;
+						}
+
+						break;
+
+				}
+
+
 				y += offset_y * leading_y;
 			}
 			else
 			{
 				ResourceManager::Character ch = Characters[ *c ];
-
 				float xpos = offset_x + x + ch.bearing_.x * scale;
 				// edited (-) infront of y axis
 				float ypos = offset_y + -y + ( Characters[ 'H' ].bearing_.y - ch.bearing_.y ) * scale;
-
 				float w = ch.size_.x * scale;
 				float h = ch.size_.y * scale;
 				// update VBO for each character
@@ -122,6 +205,7 @@ namespace JZEngine
 				glDrawArrays ( GL_TRIANGLES , 0 , 6 );
 				// now advance cursors for next glyph
 				x += ( ch.advance >> 6 ) * scale * tracking_x  ; // bitshift by 6 to get value in pixels (1/64th times 2^6 = 64)
+
 			}
 
 		}

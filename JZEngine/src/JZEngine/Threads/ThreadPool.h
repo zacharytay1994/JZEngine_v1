@@ -210,6 +210,5 @@ namespace JZEngine
 			// return value contained in future value object
 			return future_value.get ();
 		}
-
 	};
 }
