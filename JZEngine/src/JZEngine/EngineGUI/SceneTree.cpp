@@ -86,7 +86,7 @@ namespace JZEngine
 		ImGui::Text("%s", current_scene_name_->c_str());
 		ImGui::Separator();
 
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("addicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("addicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , EngineGUI::icon_col_ ))
 		{
 			// create a new entity, pushed into EntityManager
 			unsigned int id = ecs_instance_->CreateEntity();
@@ -107,7 +107,7 @@ namespace JZEngine
 		ImGui::SameLine();
 		if (hide_)
 		{
-			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("hideicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
+			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("hideicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , EngineGUI::icon_col_ ))
 			{
 				hide_ = !hide_;
 			}
@@ -120,7 +120,7 @@ namespace JZEngine
 		}
 		else
 		{
-			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("showicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
+			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("showicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , EngineGUI::icon_col_ ))
 			{
 				hide_ = !hide_;
 			}
@@ -132,7 +132,7 @@ namespace JZEngine
 			}
 		}
 		ImGui::SameLine();
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("saveicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
+		if ( ImGui::ImageButton ( ( void* )static_cast< unsigned long long >( ResourceManager::GetTexture ( "saveicon" )->GetRendererID () ) , { 15.0f, 15.0f } , { 0,1 } , { 1,0 } , -1 , { 0,0,0,0 }, EngineGUI::icon_col_ ) )
 		{
 			confirmation_flag_ = Confirmation::SAVE;
 		}
@@ -145,8 +145,9 @@ namespace JZEngine
 
 		float window_width = ImGui::GetWindowWidth();
 		ImGui::SameLine(window_width - 45.0f);
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("deleteicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("deleteicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , EngineGUI::icon_col_ ))
 		{
+			MenuBar::play_ = false;
 			RemoveAllEntities();
 		}
 		if (ImGui::IsItemHovered())

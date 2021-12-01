@@ -48,6 +48,8 @@ namespace JZEngine
 
 		DISPLAY mode{ DISPLAY::RESOURCES_TEXTURES };
 		void ResetAllPreviews();
+
+		void ReloadScene ();
 	private:
 
 		/*!

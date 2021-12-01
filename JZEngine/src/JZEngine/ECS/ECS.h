@@ -1353,6 +1353,9 @@ namespace JZEngine
 																			 over the bits. [Write a function to get all flagged bits of a bitset] */
 			ECSInstance* ecs_instance_{ nullptr };
 
+			bool update_on_pause_ { false };
+			bool play_ { false };
+
 			System() {}
 			virtual ~System() = default;
 

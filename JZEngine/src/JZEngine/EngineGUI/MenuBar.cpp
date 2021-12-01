@@ -21,6 +21,7 @@
 #define UNREFERENCED_PARAMETER(P)(P);
 
 namespace JZEngine {
+	bool MenuBar::play_ { false };
 	float MenuBar::height_{ 0.0f };
 	bool MenuBar::light_theme_{ true };
 	MenuBar::MenuBar(float x, float y, float sx, float sy, int group) 
@@ -134,7 +135,7 @@ namespace JZEngine {
 		ImGui::SetNextWindowSize({ static_cast<float>(Settings::window_width), menubar_height * 2.0f }, ImGuiCond_Always);
 		ImGui::Begin("playbar", 0, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("textfileicon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconfolder")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , engine_gui_->icon_col_ ))
 		{
 			GetInterface<FolderInterface>()->ToggleOnOff();
 		}
@@ -146,7 +147,7 @@ namespace JZEngine {
 		}
 
 		ImGui::SameLine();
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("barcharticon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("barcharticon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , engine_gui_->icon_col_ ))
 		{
 			GetInterface<DebugInformation>()->ToggleOnOff();
 		}
@@ -158,7 +159,7 @@ namespace JZEngine {
 		}
 		
 		ImGui::SameLine();
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("settingicon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("settingicon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , engine_gui_->icon_col_ ))
 		{
 			GetInterface<EngineSettings>()->temp_width_ = Settings::window_width;
 			GetInterface<EngineSettings>()->temp_height_ = Settings::window_height;
@@ -172,7 +173,7 @@ namespace JZEngine {
 		}
 
 		ImGui::SameLine();
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("fullscreenicon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("fullscreenicon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , engine_gui_->icon_col_ ))
 		{
 			Camera::fullscreen = !Camera::fullscreen;
 			GLFW_Instance::UpdateViewportDimensions();
@@ -189,7 +190,7 @@ namespace JZEngine {
 		ImGui::Text("|");
 
 		ImGui::SameLine();
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("translateicon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("translateicon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , engine_gui_->icon_col_ ))
 		{
 			engine_gui_->operation_ = ImGuizmo::OPERATION::TRANSLATE;
 		}
@@ -201,7 +202,7 @@ namespace JZEngine {
 		}
 
 		ImGui::SameLine();
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("scaleicon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("scaleicon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , engine_gui_->icon_col_ ))
 		{
 			engine_gui_->operation_ = ImGuizmo::OPERATION::SCALE;
 		}
@@ -213,7 +214,7 @@ namespace JZEngine {
 		}
 
 		ImGui::SameLine();
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("rotateicon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("rotateicon")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , engine_gui_->icon_col_ ))
 		{
 			engine_gui_->operation_ = ImGuizmo::OPERATION::ROTATE_Z;
 		}
@@ -224,10 +225,24 @@ namespace JZEngine {
 			ImGui::EndTooltip();
 		}
 
+		ImVec4 play_color;
+		ImVec4 pause_color;
+		if ( play_ )
+		{
+			play_color = { 1.0f - engine_gui_->icon_col_.x, 1.0f - engine_gui_->icon_col_.y, 1.0f - engine_gui_->icon_col_.y, 1.0f };
+			pause_color = { 0.0f, 0.0f, 0.0f, 0.0f };
+		}
+		else
+		{
+			play_color =  { 0.0f , 0.0f , 0.0f , 0.0f };
+			pause_color = { 1.0f - engine_gui_->icon_col_.x, 1.0f - engine_gui_->icon_col_.y, 1.0f - engine_gui_->icon_col_.y, 1.0f };
+		}
+
 		ImGui::SameLine(Settings::window_width / 2.0f - (menubar_height * 1.5f));
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconstart")->GetRendererID()), {menubar_height * 0.8f, menubar_height * 0.8f}, { 0,1 }, { 1,0 }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconstart")->GetRendererID()), {menubar_height * 0.8f, menubar_height * 0.8f}, { 0,1 }, { 1,0 }, -1, play_color, engine_gui_->icon_col_))
 		{
 			// start code
+			play_ = true;
 		}
 		if (ImGui::IsItemHovered())
 		{
@@ -236,9 +251,11 @@ namespace JZEngine {
 			ImGui::EndTooltip();
 		}
 		ImGui::SameLine(Settings::window_width / 2.0f);
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconstop")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 }))
+		if ( ImGui::ImageButton ( ( void* )static_cast< unsigned long long >( ResourceManager::GetTexture ( "iconstop" )->GetRendererID () ) , { menubar_height * 0.8f, menubar_height * 0.8f } , { 0,1 } , { 1,0 } , -1 , { 0,0,0,0 } , engine_gui_->icon_col_ ) )
 		{
 			// stop code
+			MenuBar::play_ = false;
+			engine_gui_->GetInterface<FolderInterface> ()->ReloadScene ();
 		}
 		if (ImGui::IsItemHovered())
 		{
@@ -247,9 +264,10 @@ namespace JZEngine {
 			ImGui::EndTooltip();
 		}
 		ImGui::SameLine(Settings::window_width / 2.0f + (menubar_height * 1.5f));
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconpause")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconpause")->GetRendererID()), { menubar_height * 0.8f, menubar_height * 0.8f }, { 0,1 }, { 1,0 }, -1, pause_color , engine_gui_->icon_col_ ))
 		{
 			// pause code
+			play_ = false;
 		}
 		if (ImGui::IsItemHovered())
 		{
@@ -258,7 +276,7 @@ namespace JZEngine {
 			ImGui::EndTooltip();
 		}
 
-		ToggleButton("testtogglebutton", &light_theme_);
+		ToggleButton("testtogglebutton", &engine_gui_->light_theme_);
 
 		ImGui::End();
 
@@ -267,7 +285,10 @@ namespace JZEngine {
 
 	void MenuBar::ToggleButton(const char* str_id, bool* v)
 	{
-		ImGui::SameLine(Settings::window_width - 40.0f);
+		float menubar_height = ImGui::GetWindowHeight ();
+		ImGui::SameLine ( Settings::window_width - 90.0f );
+		ImGui::Image ( ( void* )static_cast< unsigned long long >( ResourceManager::GetTexture ( "lightdarkicon" )->GetRendererID () ) , { menubar_height * 0.5f, menubar_height * 0.5f } , { 0,1 } , { 1,0 }, engine_gui_->icon_col_ );
+		ImGui::SameLine ();
 		ImVec2 p = ImGui::GetCursorScreenPos();
 		ImDrawList* draw_list = ImGui::GetWindowDrawList();
 
@@ -279,9 +300,9 @@ namespace JZEngine {
 			*v = !*v;
 		ImU32 col_bg;
 		if (ImGui::IsItemHovered())
-			col_bg = *v ? IM_COL32(218 - 20, 218 - 20, 218 - 20, 255) : IM_COL32(145 + 20, 68, 211 + 20, 255);
+			col_bg = *v ? IM_COL32(218 - 20, 218 - 20, 218 - 20, 255) : IM_COL32( 50 + 20, 50 + 20 , 50 + 20, 255);
 		else
-			col_bg = *v ? IM_COL32(218, 218, 218, 255) : IM_COL32(145, 68, 211, 255);
+			col_bg = *v ? IM_COL32(218, 218, 218, 255) : IM_COL32(50, 50 , 50 , 255);
 
 		draw_list->AddRectFilled(p, ImVec2(p.x + width, p.y + height), col_bg, height * 0.5f);
 		draw_list->AddCircleFilled(ImVec2(*v ? (p.x + width - radius) : (p.x + radius), p.y + radius), radius - 1.5f, IM_COL32(255, 255, 255, 255));
