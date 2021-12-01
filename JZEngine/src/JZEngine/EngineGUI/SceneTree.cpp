@@ -16,6 +16,8 @@
 #include "MenuBar.h"
 #include "../GraphicRendering/Renderers/RenderQueue.h"
 
+#include "../SceneLogic/SceneLogic.h"
+
 namespace JZEngine
 {
 	SceneTree::SceneTree ( float x , float y , float sx , float sy )
@@ -53,25 +55,44 @@ namespace JZEngine
 		{
 			if (ImGui::Button("Scene"))
 			{
+				view_ = VIEW::SCENE;
 				scene_ = true;
 			}
 			if (ImGui::Button("Layers"))
 			{
+				view_ = VIEW::LAYER;
 				scene_ = false;
 				// rebuild layer data
 				BuildLayerData();
 			}
+			if ( ImGui::Button ( "Logic" ) )
+			{
+				view_ = VIEW::LOGIC;
+			}
 			ImGui::EndMenuBar();
 		}
 
-		if (scene_)
+		switch ( view_ )
+		{
+		case VIEW::SCENE:
+			RenderScene ();
+			break;
+		case VIEW::LAYER:
+			RenderLayers ();
+			break;
+		case VIEW::LOGIC:
+			RenderLogic ();
+			break;
+		}
+
+		/*if (scene_)
 		{
 			RenderScene();
 		}
 		else
 		{
 			RenderLayers();
-		}
+		}*/
 		
 
 		ImGui::End();
@@ -267,6 +288,72 @@ namespace JZEngine
 		ImGui::Text("Front");
 		ImGui::Separator();
 		//ImGui::End();
+	}
+
+	void SceneTree::RenderLogic ()
+	{
+		// display selection for all the functions
+		if ( ImGui::BeginPopup ( "Inits" ) )
+		{
+			for ( auto& init : *SceneLogic::Instance().init_functions_ )
+			{
+				if ( ImGui::Selectable ( init.first.c_str () ) )
+				{
+					( *SceneLogic::Instance ().scene_inits_ )[ *current_scene_name_ ] = init.second;
+					( *SceneLogic::Instance ().scene_inits_names_ )[ *current_scene_name_ ] = init.first;
+				}
+			};
+			ImGui::EndPopup ();
+		};
+
+		if ( ImGui::BeginPopup ( "Updates" ) )
+		{
+			for ( auto& update : *SceneLogic::Instance ().update_functions_ )
+			{
+				if ( ImGui::Selectable ( update.first.c_str () ) )
+				{
+					( *SceneLogic::Instance ().scene_updates_ )[ *current_scene_name_ ] = update.second;
+					( *SceneLogic::Instance ().scene_updates_names_ )[ *current_scene_name_ ] = update.first;
+				}
+			};
+			ImGui::EndPopup ();
+		};
+
+		ImGui::Text ( "Scene Logic" );
+		ImGui::Separator ();
+
+		ImGui::Text ( "Init:" );
+		if ( ( *SceneLogic::Instance ().scene_inits_ ).find ( *current_scene_name_ ) != ( *SceneLogic::Instance ().scene_inits_ ).end () )
+		{
+			if ( ImGui::Button ( ( *SceneLogic::Instance ().scene_inits_names_ )[ *current_scene_name_ ].c_str () , { ImGui::GetWindowWidth () * 0.9f, 0 } ) )
+			{
+				ImGui::OpenPopup ( "Inits" );
+			}
+		}
+		else
+		{
+			if ( ImGui::Button ( "- Select -" , { ImGui::GetWindowWidth () * 0.9f, 0 } ) )
+			{
+				ImGui::OpenPopup ( "Inits" );
+			}
+		}
+
+		ImGui::Text ( "Update:" );
+		if ( ( *SceneLogic::Instance ().scene_updates_ ).find ( *current_scene_name_ ) != ( *SceneLogic::Instance ().scene_updates_ ).end () )
+		{
+			if ( ImGui::Button ( ( *SceneLogic::Instance ().scene_updates_names_ )[ *current_scene_name_ ].c_str() , { ImGui::GetWindowWidth () * 0.9f, 0 } ) )
+			{
+				ImGui::OpenPopup ( "Updates" );
+			}
+		}
+		else
+		{
+			if ( ImGui::Button ( "- Select -" , { ImGui::GetWindowWidth () * 0.9f, 0 } ) )
+			{
+				ImGui::OpenPopup ( "Updates" );
+			}
+		}
+
 	}
 
 	/*!

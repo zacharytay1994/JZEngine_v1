@@ -43,6 +43,15 @@ namespace JZEngine
 		char											new_entity_name_[MAX_NAME_SIZE];	/*!< buffer for custom name when creating new entities */
 		std::unordered_map<std::string, unsigned int>*	names_;								/*!< for repeated names to add an index behind */
 		bool											hide_{ false };
+
+		enum class VIEW
+		{
+			SCENE,
+			LAYER,
+			LOGIC
+		};
+
+		VIEW view_ = VIEW::SCENE;
 		bool											scene_{ true };
 
 		struct LayerData
@@ -70,6 +79,8 @@ namespace JZEngine
 		void RecursivelyAddChildObjectsToLayerData(ECS::Entity* entity);
 		void BuildLayerData();
 		void RenderLayers();
+
+		void RenderLogic ();
 
 		/*!
 		 * @brief ___JZEngine::SceneTree::RenderAllChildObjects()___

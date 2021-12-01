@@ -13,8 +13,12 @@ namespace JZEngine
 	SceneLogic::SceneLogic()
 	{
 		scene_to_change_to_ = new std::string("non");
+		init_functions_ = new std::unordered_map<std::string , fpSceneInit> ();
+		update_functions_ = new std::unordered_map<std::string , fpSceneUpdate> ();
 		scene_inits_ = new std::unordered_map<std::string, fpSceneInit>();
 		scene_updates_ = new std::unordered_map<std::string, fpSceneUpdate>();
+		scene_inits_names_ = new std::unordered_map<std::string , std::string> ();
+		scene_updates_names_ = new std::unordered_map<std::string , std::string> ();
 		entity_map_ = new std::unordered_map<std::string, std::vector<ECS::Entity*>>();
 		current_scene_name_ = new std::string("non");
 	}
@@ -33,6 +37,14 @@ namespace JZEngine
 		{
 			delete scene_updates_;
 		}
+		if ( scene_inits_names_ )
+		{
+			delete scene_inits_names_;
+		}
+		if ( scene_updates_names_ )
+		{
+			delete scene_updates_names_;
+		}
 		if (entity_map_)
 		{
 			delete entity_map_;
@@ -40,6 +52,14 @@ namespace JZEngine
 		if (current_scene_name_)
 		{
 			delete current_scene_name_;
+		}
+		if ( init_functions_ )
+		{
+			delete init_functions_;
+		}
+		if ( update_functions_ )
+		{
+			delete update_functions_;
 		}
 	}
 
@@ -145,19 +165,27 @@ namespace JZEngine
 		return instance;
 	}
 
-	void SceneLogic::RegisterSceneInit(const std::string& name, fpSceneInit function)
+	void SceneLogic::RegisterSceneInit(const std::string& sceneName, std::string const& funcName, fpSceneInit function)
 	{
 		if (scene_inits_)
 		{
-			(*scene_inits_)[name] = function;
+			(*scene_inits_)[ sceneName ] = function;
+		}
+		if ( scene_inits_names_ )
+		{
+			( *scene_inits_names_ )[ sceneName ] = funcName;
 		}
 	}
 
-	void SceneLogic::RegisterSceneLogic(const std::string& name, fpSceneUpdate function)
+	void SceneLogic::RegisterSceneLogic(const std::string& sceneName , std::string const& funcName , fpSceneUpdate function)
 	{
 		if (scene_updates_)
 		{
-			(*scene_updates_)[name] = function;
+			(*scene_updates_)[ sceneName ] = function;
+		}
+		if ( scene_updates_names_ )
+		{
+			( *scene_updates_names_ )[ sceneName ] = funcName;
 		}
 	}
 
@@ -224,4 +252,13 @@ namespace JZEngine
 	{
 
 	}*/
+
+	void SceneLogic::RegisterSceneLogic ( std::string const& initName , fpSceneInit init , std::string const& updateName , fpSceneUpdate update )
+	{
+		if ( init_functions_ && update_functions_ )
+		{
+			(*init_functions_)[ initName ] = init;
+			(*update_functions_)[ updateName ] = update;
+		}
+	}
 }

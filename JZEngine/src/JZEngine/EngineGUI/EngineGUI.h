@@ -128,7 +128,7 @@ namespace JZEngine
 		Vec4f light_icon_col = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 		/*! dark theme */
-		Vec4f dark_col1 = { 0.3f, 0.3f, 0.3f, 1.0f };
+		Vec4f dark_col1 = { 0.25f, 0.25f, 0.25f, 1.0f };
 		Vec4f dark_col2 = { 0.0f, 0.0f, 0.0f, 1.0f };
 		Vec4f dark_col3 = { 0.2f, 0.2f, 0.2f, 1.0f };
 		Vec4f dark_col4 = { 0.9f, 0.9f, 0.9f, 1.0f };
@@ -137,11 +137,16 @@ namespace JZEngine
 		Vec4f dark_icon_col = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 		/*! current theme */
-		Vec4f curr_col1 = { 0.6f, 0.6f, 0.6f, 1.0f };
+		/*Vec4f curr_col1 = { 0.6f, 0.6f, 0.6f, 1.0f };
 		Vec4f curr_col2 = { 0.8f, 0.8f, 0.8f, 1.0f };
 		Vec4f curr_col3 = { 0.5f, 0.5f, 0.5f, 1.0f };
 		Vec4f curr_col4 = { 0.0f, 0.0f, 0.0f, 1.0f };
-		Vec4f curr_col5 = { 0.9f, 0.9f, 0.9f, 1.0f };
+		Vec4f curr_col5 = { 0.9f, 0.9f, 0.9f, 1.0f };*/
+		Vec4f curr_col1 = { 0,0,0,1 };
+		Vec4f curr_col2 = { 0,0,0,1 };
+		Vec4f curr_col3 = { 0,0,0,1 };
+		Vec4f curr_col4 = { 0,0,0,1 };
+		Vec4f curr_col5 = { 0,0,0,1 };
 
 		Vec4f curr_icon_col = { 0.9f, 0.9f, 0.9f, 1.0f };
 

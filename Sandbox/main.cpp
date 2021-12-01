@@ -29,27 +29,31 @@ public:
 		:
 		Application ()
 	{
-		
-		Scene().RegisterSceneInit("MainMenu", InitMainMenu);
-		Scene().RegisterSceneLogic("MainMenu", UpdateMainMenu);
-
-		Scene ().RegisterSceneInit ( "S_MainMenu" , InitMainMenu );
-		Scene ().RegisterSceneLogic ( "S_MainMenu" , UpdateMainMenu );
-
-		Scene ().RegisterSceneInit ( "S_MainMenu2" , InitMainMenu );
-		Scene ().RegisterSceneLogic ( "S_MainMenu2" , UpdateMainMenu );
-		
-		Scene().RegisterSceneInit("HawkerV2", HawkerSceneInit);
-		Scene().RegisterSceneLogic("HawkerV2", HawkerSceneUpdate);
-
-		Scene().RegisterSceneInit("CutScene", CutSceneInit);
-		Scene().RegisterSceneLogic("CutScene", CutSceneUpdate);
-
-		Scene ().RegisterSceneInit ( "S_Cutscene" , CutSceneInit );
-		Scene ().RegisterSceneLogic ( "S_Cutscene" , CutSceneUpdate );
+		Scene ().RegisterSceneLogic ( "InitMainMenu" , InitMainMenu, "UpdateMainMenu", UpdateMainMenu );
+		Scene ().RegisterSceneLogic ( "HawkerSceneInit" , HawkerSceneInit , "HawkerSceneUpdate" , HawkerSceneUpdate );
+		Scene ().RegisterSceneLogic ( "CutSceneInit" , CutSceneInit , "CutSceneUpdate" , CutSceneUpdate );
 
 		Scene ().RegisterLogic ( "MoveRight" , MoveRight );
 		Scene ().RegisterLogic ( "MoveUp" , MoveUp );
+
+		/*! LEGACY CODE */
+		Scene ().RegisterSceneInit ( "MainMenu" , "InitMainMenu" , InitMainMenu );
+		Scene ().RegisterSceneLogic ( "MainMenu" , "UpdateMainMenu" , UpdateMainMenu );
+
+		Scene ().RegisterSceneInit ( "S_MainMenu" , "InitMainMenu" , InitMainMenu );
+		Scene ().RegisterSceneLogic ( "S_MainMenu" , "UpdateMainMenu" , UpdateMainMenu );
+
+		Scene ().RegisterSceneInit ( "S_MainMenu2" , "InitMainMenu" , InitMainMenu );
+		Scene ().RegisterSceneLogic ( "S_MainMenu2" , "UpdateMainMenu" , UpdateMainMenu );
+
+		Scene ().RegisterSceneInit ( "HawkerV2" , "HawkerSceneInit" , HawkerSceneInit );
+		Scene ().RegisterSceneLogic ( "HawkerV2" , "HawkerSceneUpdate" , HawkerSceneUpdate );
+
+		Scene ().RegisterSceneInit ( "CutScene" , "CutSceneInit" , CutSceneInit );
+		Scene ().RegisterSceneLogic ( "CutScene" , "CutSceneUpdate" , CutSceneUpdate );
+
+		Scene ().RegisterSceneInit ( "S_Cutscene" , "CutSceneInit" , CutSceneInit );
+		Scene ().RegisterSceneLogic ( "S_Cutscene" , "CutSceneUpdate" , CutSceneUpdate );
 	}
 };
 

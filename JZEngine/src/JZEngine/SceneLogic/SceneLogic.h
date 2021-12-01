@@ -29,8 +29,8 @@ namespace JZEngine
 		~SceneLogic();
 		static SceneLogic& Instance();
 
-		void RegisterSceneInit(const std::string& name, fpSceneInit function);
-		void RegisterSceneLogic(const std::string& name, fpSceneUpdate function);
+		void RegisterSceneInit( const std::string& sceneName , std::string const& funcName , fpSceneInit function );
+		void RegisterSceneLogic( const std::string& sceneName , std::string const& funcName , fpSceneUpdate function );
 		void UpdateSceneLogic(float dt);
 		void InitSceneLogic();
 		void BuildEntityMap();
@@ -89,17 +89,24 @@ namespace JZEngine
 			}
 		}
 
+		void RegisterSceneLogic ( std::string const& initName , fpSceneInit init , std::string const& updateName , fpSceneUpdate update );
+
+		std::unordered_map<std::string , fpSceneInit>* init_functions_ { nullptr };
+		std::unordered_map<std::string , fpSceneUpdate>* update_functions_ { nullptr };
+
+		std::unordered_map<std::string , fpSceneInit>* scene_inits_ { nullptr };
+		std::unordered_map<std::string , fpSceneUpdate>* scene_updates_ { nullptr };
+
+		std::unordered_map<std::string , std::string>* scene_inits_names_ { nullptr };
+		std::unordered_map<std::string , std::string>* scene_updates_names_ { nullptr };
 
 	private:
-
 
 		std::string* scene_to_change_to_{ nullptr };
 		bool scene_to_be_changed_{ false };
 		ECS::ECSInstance* ecs_instance_{ nullptr };
 		SceneTree* scene_tree_{ nullptr };
 		SoundSystem* soundsys{ nullptr };
-		std::unordered_map<std::string, fpSceneInit>* scene_inits_{ nullptr };
-		std::unordered_map<std::string, fpSceneUpdate>* scene_updates_{ nullptr };
 		std::unordered_map<std::string, std::vector<ECS::Entity*>>* entity_map_{ nullptr };
 		std::string* current_scene_name_{ nullptr };
 
