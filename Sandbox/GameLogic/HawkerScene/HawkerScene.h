@@ -589,7 +589,7 @@ void HawkerSceneUpdate(float dt)
 		UpdateWinScreen(dt);
 		break;
 	case HawkerSceneState::App:
-		UpdatePhoneScreen(dt);
+		UpdateHomeScreen(dt);
 		break;
 	}
 }

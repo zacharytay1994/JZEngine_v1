@@ -1,5 +1,13 @@
 #pragma once
 
+enum class HawkerAppState
+{
+	MainScreen,
+	Theresapp
+};
+
+HawkerAppState current_app_state = HawkerAppState::MainScreen;
+
 float hp_text_leading{ 3.0f };
 float scrolling_speed{ 20.0f };
 float top_boundary{ 280.0f };
@@ -131,6 +139,8 @@ void FlagMsg13(bool flag)
 
 void InitPhoneScreen()
 {
+	current_app_state = HawkerAppState::MainScreen;
+
 	FlagPhone(false);
 	FlagPhoneHomeScreen(false);
 	FlagTheresappScreen(false);
@@ -197,148 +207,189 @@ void UpdatePhoneScreen(float dt)
 	{
 		if (e->on_click_)
 		{
+			current_app_state = HawkerAppState::Theresapp;
+		}
+	}
+	/*if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Resume"))
+	{
+		if (e->on_click_)
+		{
+			FlagPhone(false);
 			FlagPhoneHomeScreen(false);
-			FlagTheresappScreen(true);
-			FlagMsg1(true);
-			FlagMsg2(true);
-			FlagMsg3(true);
-			FlagMsg4(true);
-			FlagMsg5(true);
-			FlagMsg6(true);
-			FlagMsg7(true);
-			FlagMsg8(true);
-			FlagMsg9(true);
-			FlagMsg10(true);
-			FlagMsg11(true);
-			FlagMsg12(true);
-			FlagMsg13(true);
-
-			if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_.y > bottom_line || 
-				Scene().GetComponent<JZEngine::Transform>("Last_page_msg_7_bg")->position_.y < top_line)
-			{
-				scroll_up = true;
-			}
-			else
-			{
-				scroll_up = false;
-			}
-
-			if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_.y > upper_bound)
-			{
-				scroll_down = true;
-			}
-			else
-			{
-				scroll_down = false;
-			}
-
-			if (scroll_down == true && JZEngine::InputHandler::IsKeyPressed(JZEngine::KEY::KEY_M) && JZEngine::InputHandler::mouse_scrolled_ == -1)
-			{
-				Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_.y -= scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("Last_page_msg_2_bg")->position_.y -= scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("Last_page_msg_3_bg")->position_.y -= scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("Last_page_msg_4_bg")->position_.y -= scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("Last_page_msg_5_bg")->position_.y -= scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("Last_page_msg_6_bg")->position_.y -= scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("Last_page_msg_7_bg")->position_.y -= scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("First_page_msg_8_bg")->position_.y -= scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("First_page_msg_9_bg")->position_.y -= scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("First_page_msg_10_bg")->position_.y -= scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("First_page_msg_11_bg")->position_.y -= scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("First_page_msg_12_bg")->position_.y -= scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_.y -= scrolling_speed;
-			}
-			else if (scroll_up == true && JZEngine::InputHandler::IsKeyPressed(JZEngine::KEY::KEY_M) && JZEngine::InputHandler::mouse_scrolled_ == 1)
-			{
-				Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_.y += scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("Last_page_msg_2_bg")->position_.y += scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("Last_page_msg_3_bg")->position_.y += scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("Last_page_msg_4_bg")->position_.y += scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("Last_page_msg_5_bg")->position_.y += scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("Last_page_msg_6_bg")->position_.y += scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("Last_page_msg_7_bg")->position_.y += scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("First_page_msg_8_bg")->position_.y += scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("First_page_msg_9_bg")->position_.y += scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("First_page_msg_10_bg")->position_.y += scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("First_page_msg_11_bg")->position_.y += scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("First_page_msg_12_bg")->position_.y += scrolling_speed;
-				Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_.y += scrolling_speed;
-
-			}
-
-			
-			if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_.y < bottom_boundary)
-			{
-				FlagMsg1(false);
-			}
-			if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_2_bg")->position_.y < bottom_boundary)
-			{
-				FlagMsg2(false);
-			}
-			if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_3_bg")->position_.y < bottom_boundary)
-			{
-				FlagMsg3(false);
-			}
-			if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_4_bg")->position_.y < bottom_boundary)
-			{
-				FlagMsg4(false);
-			}
-			if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_5_bg")->position_.y < bottom_boundary)
-			{
-				FlagMsg5(false);
-			}
-			if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_6_bg")->position_.y < bottom_boundary)
-			{
-				FlagMsg6(false);
-			}
-			if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_8_bg")->position_.y > top_boundary)
-			{
-				FlagMsg8(false);
-			}
-			if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_9_bg")->position_.y > top_boundary)
-			{
-				FlagMsg9(false);
-			}
-			if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_10_bg")->position_.y > top_boundary)
-			{
-				FlagMsg10(false);
-			}
-			if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_11_bg")->position_.y > top_boundary)
-			{
-				FlagMsg11(false);
-			}
-			if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_12_bg")->position_.y > top_boundary)
-			{
-				FlagMsg12(false);
-			}
-			if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_.y > top_boundary)
-			{
-				FlagMsg13(false);
-			}
-
-			if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Theresapp_back_arrow"))
-			{
-				if (e->on_click_)
-				{
-					FlagPhoneHomeScreen(true);
-					FlagTheresappScreen(false);
-					FlagMsg1(false);
-					FlagMsg2(false);
-					FlagMsg3(false);
-					FlagMsg4(false);
-					FlagMsg5(false);
-					FlagMsg6(false);
-					FlagMsg7(false);
-					FlagMsg8(false);
-					FlagMsg9(false);
-					FlagMsg10(false);
-					FlagMsg11(false);
-					FlagMsg12(false);
-					FlagMsg13(false);
-				}
-			}
+			Scene().EntityFlagActive("PhoneOptions", true);
+		}
+	}*/
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Restart"))
+	{
+		if (e->on_click_)
+		{
+			Scene().ChangeScene("HawkerV2");
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Exit"))
+	{
+		if (e->on_click_)
+		{
+			Scene().ChangeScene("MainMenu");
 		}
 	}
 
-	
+}
+
+void UpdateTheresapp(float dt)
+{
+	FlagPhoneHomeScreen(false);
+	FlagTheresappScreen(true);
+	FlagMsg1(true);
+	FlagMsg2(true);
+	FlagMsg3(true);
+	FlagMsg4(true);
+	FlagMsg5(true);
+	FlagMsg6(true);
+	FlagMsg7(true);
+	FlagMsg8(true);
+	FlagMsg9(true);
+	FlagMsg10(true);
+	FlagMsg11(true);
+	FlagMsg12(true);
+	FlagMsg13(true);
+
+	if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_.y > bottom_line ||
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_7_bg")->position_.y < top_line)
+	{
+		scroll_up = true;
+	}
+	else
+	{
+		scroll_up = false;
+	}
+
+	if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_.y > upper_bound)
+	{
+		scroll_down = true;
+	}
+	else
+	{
+		scroll_down = false;
+	}
+
+	if (scroll_down == true && JZEngine::InputHandler::IsKeyPressed(JZEngine::KEY::KEY_M) && JZEngine::InputHandler::mouse_scrolled_ == -1)
+	{
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_2_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_3_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_4_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_5_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_6_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_7_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_8_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_9_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_10_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_11_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_12_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_.y -= scrolling_speed;
+	}
+	else if (scroll_up == true && JZEngine::InputHandler::IsKeyPressed(JZEngine::KEY::KEY_M) && JZEngine::InputHandler::mouse_scrolled_ == 1)
+	{
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_2_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_3_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_4_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_5_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_6_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_7_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_8_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_9_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_10_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_11_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_12_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_.y += scrolling_speed;
+	}
+
+
+	if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_.y < bottom_boundary)
+	{
+		FlagMsg1(false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_2_bg")->position_.y < bottom_boundary)
+	{
+		FlagMsg2(false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_3_bg")->position_.y < bottom_boundary)
+	{
+		FlagMsg3(false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_4_bg")->position_.y < bottom_boundary)
+	{
+		FlagMsg4(false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_5_bg")->position_.y < bottom_boundary)
+	{
+		FlagMsg5(false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_6_bg")->position_.y < bottom_boundary)
+	{
+		FlagMsg6(false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_8_bg")->position_.y > top_boundary)
+	{
+		FlagMsg8(false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_9_bg")->position_.y > top_boundary)
+	{
+		FlagMsg9(false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_10_bg")->position_.y > top_boundary)
+	{
+		FlagMsg10(false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_11_bg")->position_.y > top_boundary)
+	{
+		FlagMsg11(false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_12_bg")->position_.y > top_boundary)
+	{
+		FlagMsg12(false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_.y > top_boundary)
+	{
+		FlagMsg13(false);
+	}
+
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Theresapp_back_arrow"))
+	{
+		if (e->on_click_)
+		{
+			FlagPhoneHomeScreen(true);
+			FlagTheresappScreen(false);
+			FlagMsg1(false);
+			FlagMsg2(false);
+			FlagMsg3(false);
+			FlagMsg4(false);
+			FlagMsg5(false);
+			FlagMsg6(false);
+			FlagMsg7(false);
+			FlagMsg8(false);
+			FlagMsg9(false);
+			FlagMsg10(false);
+			FlagMsg11(false);
+			FlagMsg12(false);
+			FlagMsg13(false);
+
+			current_app_state = HawkerAppState::MainScreen;
+		}
+	}
+}
+
+void UpdateHomeScreen(float dt)
+{
+	switch (current_app_state)
+	{
+	case HawkerAppState::MainScreen:
+		UpdatePhoneScreen(dt);
+		break;
+	case HawkerAppState::Theresapp:
+		UpdateTheresapp(dt);
+		break;
+	}
 }
