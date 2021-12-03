@@ -3,7 +3,8 @@
 enum class HawkerAppState
 {
 	MainScreen,
-	Theresapp
+	Theresapp,
+	Album
 };
 
 HawkerAppState current_app_state = HawkerAppState::MainScreen;
@@ -44,6 +45,13 @@ void FlagTheresappScreen(bool flag)
 	Scene().EntityFlagActive("Theresapp_main_screen", flag);
 	Scene().EntityFlagActive("Theresapp_Dad_chat", flag);
 	Scene().EntityFlagActive("Theresapp_back_arrow", flag);
+}
+
+void FlagAlbumScreen(bool flag)
+{
+	Scene().EntityFlagActive("Album_main_screen", flag);
+	Scene().EntityFlagActive("Album_top", flag);
+	Scene().EntityFlagActive("Album_time", flag);
 }
 
 void FlagMsg1(bool flag)
@@ -144,6 +152,7 @@ void InitPhoneScreen()
 	FlagPhone(false);
 	FlagPhoneHomeScreen(false);
 	FlagTheresappScreen(false);
+	FlagAlbumScreen(false);
 	FlagMsg1(false);
 	FlagMsg2(false);
 	FlagMsg3(false);
@@ -208,6 +217,13 @@ void UpdatePhoneScreen(float dt)
 		if (e->on_click_)
 		{
 			current_app_state = HawkerAppState::Theresapp;
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album"))
+	{
+		if (e->on_click_)
+		{
+			current_app_state = HawkerAppState::Album;
 		}
 	}
 	/*if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Resume"))
@@ -381,6 +397,12 @@ void UpdateTheresapp(float dt)
 	}
 }
 
+void UpdateAlbum(float dt)
+{
+	FlagPhoneHomeScreen(false);
+	FlagAlbumScreen(true);
+}
+
 void UpdateHomeScreen(float dt)
 {
 	switch (current_app_state)
@@ -390,6 +412,9 @@ void UpdateHomeScreen(float dt)
 		break;
 	case HawkerAppState::Theresapp:
 		UpdateTheresapp(dt);
+		break;
+	case HawkerAppState::Album:
+		UpdateAlbum(dt);
 		break;
 	}
 }
