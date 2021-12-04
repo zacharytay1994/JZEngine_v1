@@ -14,10 +14,12 @@ float scrolling_speed{ 20.0f };
 float top_boundary{ 280.0f };
 float bottom_boundary{ -375.0f };
 float top_line{ 220.0f };
-float bottom_line{-340.0f};
-float upper_bound{270.0f};
+float bottom_line{ -340.0f };
+float upper_bound{ 270.0f };
 bool scroll_up{ false };
 bool scroll_down{ false };
+int album_black_bg_layer{ 0 };
+int add_layer{ 7 };
 
 void FlagPhone(bool flag)
 {
@@ -49,9 +51,22 @@ void FlagTheresappScreen(bool flag)
 
 void FlagAlbumScreen(bool flag)
 {
+	Scene().EntityFlagActive("Album_blacker_bg", flag);
 	Scene().EntityFlagActive("Album_main_screen", flag);
 	Scene().EntityFlagActive("Album_top", flag);
 	Scene().EntityFlagActive("Album_time", flag);
+	Scene().EntityFlagActive("Album_battery", flag);
+	Scene().EntityFlagActive("Album_text", flag);
+	Scene().EntityFlagActive("Album_back_arrow", flag);
+	Scene().EntityFlagActive("Album_photo_2021s", flag);
+	Scene().EntityFlagActive("black_cover_2021s", flag);
+	Scene().EntityFlagActive("text_2021s", flag);
+	Scene().EntityFlagActive("Album_photo_1980s", flag);
+	Scene().EntityFlagActive("black_cover_1980s", flag);
+	Scene().EntityFlagActive("text_1980s", flag);
+	Scene().EntityFlagActive("Album_photo_1960s", flag);
+	Scene().EntityFlagActive("black_cover_1960s", flag);
+	Scene().EntityFlagActive("text_1960s", flag);
 }
 
 void FlagMsg1(bool flag)
@@ -166,6 +181,10 @@ void InitPhoneScreen()
 	FlagMsg11(false);
 	FlagMsg12(false);
 	FlagMsg13(false);
+	Scene().EntityFlagActive("Album_1960_big_photo", false);
+	Scene().EntityFlagActive("Album_1960_big_photo_quit", false);
+
+	album_black_bg_layer = Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_;
 
 	Scene().GetComponent<JZEngine::TextData>("Last_page_msg_1_text")->text =
 	JZEngine::String("   Okay okayyy. Let me\nsleep for an hour first.");
@@ -205,6 +224,14 @@ void InitPhoneScreen()
 	Scene().GetComponent<JZEngine::TextData>("First_page_msg_12_text")->text = JZEngine::String("           Yea, what's up?");
 	Scene().GetComponent<JZEngine::TextData>("First_page_msg_12_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	Scene().GetComponent<JZEngine::TextData>("First_page_msg_13_text")->text = JZEngine::String("Baozi, are you still up?");
+
+	Scene().GetComponent<JZEngine::TextData>("Album_text")->text = JZEngine::String("My Albums");
+	Scene().GetComponent<JZEngine::TextData>("text_2021s")->text = JZEngine::String("2021s");
+	Scene().GetComponent<JZEngine::TextData>("text_2021s")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
+	Scene().GetComponent<JZEngine::TextData>("text_1980s")->text = JZEngine::String("1980s");
+	Scene().GetComponent<JZEngine::TextData>("text_1980s")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
+	Scene().GetComponent<JZEngine::TextData>("text_1960s")->text = JZEngine::String("1960s");
+	Scene().GetComponent<JZEngine::TextData>("text_1960s")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 }
 
 void UpdatePhoneScreen(float dt)
@@ -217,6 +244,7 @@ void UpdatePhoneScreen(float dt)
 		if (e->on_click_)
 		{
 			current_app_state = HawkerAppState::Theresapp;
+			std::cout << "enter!\n";
 		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album"))
@@ -393,14 +421,48 @@ void UpdateTheresapp(float dt)
 			FlagMsg13(false);
 
 			current_app_state = HawkerAppState::MainScreen;
+			std::cout << "back button!\n";
 		}
 	}
 }
 
 void UpdateAlbum(float dt)
 {
+	Scene().EntityFlagActive("Phone_battery", false);
+	Scene().EntityFlagActive("Phone_time", false);
 	FlagPhoneHomeScreen(false);
 	FlagAlbumScreen(true);
+
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album_photo_1960s"))
+	{
+		if (e->on_click_)
+		{
+			Scene().EntityFlagActive("Album_1960_big_photo", true);
+			Scene().EntityFlagActive("Album_1960_big_photo_quit", true);
+			Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_ = album_black_bg_layer + add_layer;
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album_1960_big_photo_quit"))
+	{
+		if (e->on_click_)
+		{
+			Scene().EntityFlagActive("Album_1960_big_photo", false);
+			Scene().EntityFlagActive("Album_1960_big_photo_quit", false);
+			Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_ = album_black_bg_layer;
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album_back_arrow"))
+	{
+		if (e->on_click_)
+		{
+			Scene().EntityFlagActive("Phone_battery", true);
+			Scene().EntityFlagActive("Phone_time", true);
+			FlagPhoneHomeScreen(true);
+			FlagAlbumScreen(false);
+
+			current_app_state = HawkerAppState::MainScreen;
+		}
+	}
 }
 
 void UpdateHomeScreen(float dt)
