@@ -29,7 +29,7 @@ namespace JZEngine
 
 		void createSound(std::string const &name, const char *pFile);
 		int playSound(std::string const &name, bool bLoop = false, float volume = 1.0f);
-		//void playSound(SoundEvent *);
+
 		void stopSound(int id);
 		void releaseSound(std::string const &name);
 
@@ -41,10 +41,11 @@ namespace JZEngine
 		void stopChannelGroup(std::string const &name);
 		void setChannelGroupVolume(float vol, std::string const& name);
 
+		//specific sound
+		void setpauseSound(int id, bool pausestate);
 
-		
-
-	
+		//soundsystem
+		void setPauseSoundSystem(bool pausestate);
 
 		void setMasterVolume(float volume);
 		void toggleMute();

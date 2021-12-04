@@ -9,14 +9,17 @@
 #include "ResourceManager.h"
 #include "../EngineConfig.h"
 #include "../DebugTools/Log.h"
+
 #include "../Threads/ThreadPool.h"
 
 #include <atomic>
 
 namespace JZEngine
 {
-	// 
-	std::atomic<bool> is_thread_pool_done_ ( false );
+	// one thread writes to an atomic object while another thread reads from it
+	std::string thread_load_string;
+	std::atomic<std::string*> thread_load_string_pointer = &thread_load_string;
+	std::atomic<bool> thread_is_pool_done_ ( false );
 
 	std::vector<ResourceManager::InstancedShaderID> ResourceManager::instanced_shader_programs_;
 	std::vector<ResourceManager::ShaderID> ResourceManager::shader_programs_;
@@ -29,8 +32,9 @@ namespace JZEngine
 	ResourceManager::FolderData ResourceManager::texture_folder_data_;
 	std::unordered_map<std::string , std::vector<std::string>> ResourceManager::texture_folders_;
 
-
 	ResourceManager::ResourceManager ()
+		:
+		load_screen_main_ ( this )
 	{
 		// intialised loading screen
 		load_screen_main_.PreDraw ();
@@ -41,17 +45,25 @@ namespace JZEngine
 			pool_load_folder_tex.Parallel ( LoadAllTexturesInFolder , "Assets/Textures/" );
 		}
 
+		// calculate delta time
+		double dt{ 0.0 };
 		// draw loading screen if pool_load_folder_tex is not done yet
-		while( !is_thread_pool_done_ )
+		while( !thread_is_pool_done_ )
 		{
-			load_screen_main_.Draw ();
+			auto start_time = std::chrono::high_resolution_clock::now ();
+			// draw the loading screen and print out the intialised items 
+			load_screen_main_.DrawLoadingScreen ( *thread_load_string_pointer, dt );
+			// calculate delta time for this loading screen
+			auto end_time = std::chrono::high_resolution_clock::now ();
+			std::chrono::duration<double , std::milli> milli_dt = end_time - start_time;
+			dt = milli_dt.count () / 1000.0;
 		}
 
-		// uninitialised loading screen
-		load_screen_main_.PostDraw ();
+		// draw stagnent "NOW ENTERING" for frozen screen
+		load_screen_main_.DrawExitScreen ();
 
 		for( auto& tex : texture2ds_ )
-		{
+		{	// initialised Opengl texture 
 			tex.texture2d_.InitOpenGL ();
 		}
 
@@ -59,6 +71,7 @@ namespace JZEngine
 		LoadShader ( "Default" ,
 					 "Assets/Shaders/Vertex/VS_Sprite2D.vs" ,
 					 "Assets/Shaders/Fragment/FS_Tex.fs" );
+
 		LoadShader ( "Black White" ,
 					 "Assets/Shaders/Vertex/VS_Sprite2D.vs" ,
 					 "Assets/Shaders/Fragment/FS_BlackWhite.fs" );
@@ -86,6 +99,13 @@ namespace JZEngine
 
 		texture_folder_data_.name_ = "Textures";
 
+		// fade out "NOW ENTERING" loading screen
+		load_screen_main_.DrawFadeOut ();
+		
+		// uninitialised loading screen
+		load_screen_main_.PostDraw ();
+
+		// exit thread
 		pool_load_folder_tex.Free ();
 	}
 
@@ -286,7 +306,7 @@ namespace JZEngine
 		RecursivelyLoadTexture ( folder , texture_folder_data_ );
 
 		// informed loading screen to stop drawing after texture is done loaded
-		is_thread_pool_done_ = true;
+		thread_is_pool_done_ = true;
 	}
 
 	void ResourceManager::RecursivelyLoadTexture ( const std::string& folder , FolderData& folderData )
@@ -325,7 +345,9 @@ namespace JZEngine
 					texture2ds_.emplace_back ( static_cast< int >( texture2ds_.size () ) );
 					texture2ds_.back ().texture2d_.Texture2DLoad ( file.path ().string () );
 					umap_texture2ds_[ texture_name ] = texture2ds_.back ().id_;
+					//ThreadDataShare <std::string>::SaveTemperoryData ( texture_name );
 					Log::Info ( "Resources" , "- Read [{}]." , file.path ().string () );
+					*thread_load_string_pointer = file.path ().string ();
 				}
 				check[ texture_name ] = true;
 			}

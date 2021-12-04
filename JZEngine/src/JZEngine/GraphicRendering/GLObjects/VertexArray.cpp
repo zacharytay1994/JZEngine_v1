@@ -83,6 +83,7 @@ namespace JZEngine
 	// Same as AddBuffer but does not call Bind()
 	void VertexArray::BindBufferLayout ( const VertexBuffer& vb , const VertexBufferLayout& layout )
 	{
+		UNREFERENCED_PARAMETER ( vb );
 		const auto& elements = layout.GetElement ();
 		unsigned long long offset = 0;
 

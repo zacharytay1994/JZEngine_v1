@@ -23,6 +23,8 @@
 #include "../ECSSystems/ExampleParticleSystem.h"
 #include "../ECSSystems/MouseEvent.h"
 #include "../ECSSystems/FollowMouseCursor.h"
+#include "../SceneLogic/LogicContainer.h"
+#include "../SceneLogic/DataContainer.h"
 
 namespace JZEngine
 { 
@@ -50,7 +52,9 @@ namespace JZEngine
 				ExampleParticleComponent ,
 				PopiahPSFlag,
 				MouseEvent,
-				FollowMouseCursor
+				FollowMouseCursor,
+				CustomLogicContainer,
+				CustomDataContainer
 		
 
 				>;
@@ -69,7 +73,8 @@ namespace JZEngine
 				ExampleParticle ,
 				PopiahParticleSystem,
 				MouseEventSystem,
-				FollowMouseCursorSystem
+				FollowMouseCursorSystem,
+				LogicContainerSystem
 
 				>;
 		};

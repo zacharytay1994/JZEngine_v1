@@ -112,12 +112,12 @@ namespace JZEngine
         if (name == "bgm")
         {
             result = fmodsystem->playSound(sound_cont[name], bgmchannelgrp, false, &fchannel);
-            Log::Info("Sound", "bgm cg");
+            Log::Info("Sound", "bgm channelgroup");
         }
         else
         {
             result = fmodsystem->playSound(sound_cont[name], sfxchannelgrp, false, &fchannel);
-            Log::Info("Sound", "main cg");
+            Log::Info("Sound", "main channelgroup");
         }
 
         if (result != FMOD_OK)
@@ -139,16 +139,39 @@ namespace JZEngine
         return 0;
     }
 
-    //void SoundSystem::playSound(SoundEvent* msg)
-    //{
-    //    //this just calls the normal playSound function
-    //    playSound(msg->name, false, 0.5f);
-    //}
 
+    /**
+     * Stops a sound specified by id.
+     *
+     * \param id
+     */
     void SoundSystem::stopSound(int id)
     {
         channel_cont[id]->stop();
     }
+    /**
+     * Pause a sound specified by id.
+     *
+     * \param id
+     */
+    void SoundSystem::setpauseSound(int id, bool pausestate)
+    {
+        channel_cont[id]->setPaused(pausestate);
+    }
+
+    /**
+    * Releases pause/unpause soundsystem
+    *
+    * \param pausestate
+    */
+    void SoundSystem::setPauseSoundSystem(bool pausestate)
+    {
+        for (auto& channelgrp : channelgroup_cont)
+        {
+            channelgrp.second->setPaused(pausestate);
+        }
+    }
+
 
     /**
      * Releases a sound specified by name.

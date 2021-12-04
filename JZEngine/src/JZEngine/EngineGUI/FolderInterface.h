@@ -30,6 +30,8 @@ namespace JZEngine
 		SceneTree* scene_tree_{ nullptr };
 		SoundSystem* sound_system_{ nullptr };
 		static constexpr unsigned int display_columns_{ 4 };
+		bool select_enabled_{ false };
+		std::string selected_texture_{ "" };
 
 		FolderInterface(float x, float y, float sx, float sy, int group);
 		virtual void Render(float dt) override;
@@ -44,10 +46,12 @@ namespace JZEngine
 		void RecursivelyRenderAudioFolders(SoundSystem::FolderData const& folder);
 		void GetAllDirectories(std::string const& path);
 
-	private:
 		DISPLAY mode{ DISPLAY::RESOURCES_TEXTURES };
-
 		void ResetAllPreviews();
+
+		void ReloadScene ();
+	private:
+
 		/*!
 		 * TEXTURE VARIABLES
 		*/

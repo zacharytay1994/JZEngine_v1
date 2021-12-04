@@ -56,6 +56,7 @@ namespace JZEngine
 		Sprite ()
 		{
 			RegisterComponents<Transform , Texture , Animation2D , NonInstanceShader, SpriteLayer> ();
+			update_on_pause_ = true;
 		}
 
 		virtual void Update(const float& dt) override;

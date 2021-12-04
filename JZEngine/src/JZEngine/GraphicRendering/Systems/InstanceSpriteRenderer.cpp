@@ -16,6 +16,7 @@ namespace JZEngine
 	InstanceSprite::InstanceSprite()
 	{
 		RegisterComponents<Transform, Texture, InstanceShader>();
+		update_on_pause_ = true;
 	}
 
 	void InstanceSprite::FrameBegin( const float& dt )

@@ -75,6 +75,7 @@
     <ClCompile Include="src\JZEngine\GraphicRendering\Renderers\GlobalRenderer.cpp" />
     <ClCompile Include="src\JZEngine\Threads\ThreadPool.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\LoadingScreens\LSMain.cpp" />
+    <ClCompile Include="src\JZEngine\SceneLogic\LogicContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
@@ -270,5 +271,7 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\Renderers\GlobalRenderer.h" />
     <ClInclude Include="src\JZEngine\Threads\ThreadPool.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\LoadingScreens\LSMain.h" />
+    <ClInclude Include="src\JZEngine\SceneLogic\LogicContainer.h" />
+    <ClInclude Include="src\JZEngine\SceneLogic\DataContainer.h" />
   </ItemGroup>
 </Project>

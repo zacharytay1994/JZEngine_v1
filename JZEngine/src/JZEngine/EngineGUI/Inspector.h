@@ -23,6 +23,8 @@
 
 namespace JZEngine
 {
+	void PrintSystemAffected(std::string const& name);
+
 	/*!
 	 * @brief ___JZEngine::Inspector___
 	 * ****************************************************************************************************
@@ -37,6 +39,21 @@ namespace JZEngine
 		ResourceManager* resource_manager_{ nullptr };
 		float x_ , y_ , sx_ , sy_;		/*!< position and scale of the ImGui window */
 
+		enum class VIEW
+		{
+			PROPERTY,
+			SYSTEM,
+			COMPONENT
+		};
+
+		VIEW view_ = VIEW::PROPERTY;
+
+		bool component_view_{ true };
+		
+		bool		requesting_texture_{ false };
+		std::string requested_texture_{ "" };
+
+
 		Inspector ( float x , float y , float sx , float sy );
 
 		/*!
@@ -50,6 +67,8 @@ namespace JZEngine
 		*/
 		void Render ( ECS::Entity* const entity = nullptr );
 
+		void TreeNodeComponents ( ECS::Entity* const entity );
+
 		/*!
 		 * @brief ___JZEngine::ToolsGUI::TreeNodeComponentAndSystems()___
 		 * ****************************************************************************************************
@@ -61,7 +80,7 @@ namespace JZEngine
 		*/
 		void TreeNodeComponentsAndSystems ( ECS::Entity* const entity );
 
-		int TrimName ( const std::string& name );
+		static int TrimName ( const std::string& name );
 
 		enum class Confirmation
 		{
@@ -205,8 +224,18 @@ namespace JZEngine
 					current_texture = texture.first;
 				}
 			}
-			if( ImGui::Button ( current_texture.c_str () , ImVec2 ( 168.0f , 0.0f ) ) )
-				ImGui::OpenPopup ( "Textures" );
+			if (ImGui::Button(current_texture.c_str(), ImVec2(168.0f, 0.0f)))
+			{
+				//ImGui::OpenPopup ( "Textures" );
+				requesting_texture_ = true;
+			}
+
+			if (requested_texture_ != "")
+			{
+				current_texture = requested_texture_;
+				component.texture_id_ = resource_manager_->umap_texture2ds_[current_texture];
+				requested_texture_ = "";
+			}
 
 			ImGui::SameLine ();
 			ImGui::Text ( "Texture" );
@@ -602,6 +631,72 @@ namespace JZEngine
 			ImGui::InputFloat ( "##MEY" , &component.bounding_half_height_ );
 		}
 
+		int current_id = 0;
+		template<>
+		void RenderComponent ( CustomLogicContainer& component )
+		{
+			// display selection for all the functions
+			if ( ImGui::BeginPopup ( "Updates" ) )
+			{
+				if ( ImGui::Selectable ( "Remove" ) )
+				{
+					component.updates[ current_id ] = 0;
+				}
+				for ( auto& update : LogicContainer::Instance ().GetUpdates () )
+				{
+					if ( update.first != "Remove" )
+					{
+						if ( ImGui::Selectable ( update.first.c_str () ) )
+						{
+							component.updates[ current_id ] = update.second;
+						}
+					}
+				};
+				ImGui::EndPopup ();
+			};
+
+			int next_slot = -1;
+			float button_width = ImGui::GetWindowWidth () * 0.8f;
+			for ( int i = 0; i < MAX_LOGIC_PER_ENTITY; ++i )
+			{
+				if ( component.updates[ i ] != 0 )
+				{
+					if ( ImGui::Button ( LogicContainer::Instance ().GetUpdateName ( component.updates[ i ] ).c_str () , { button_width, 0 } ) )
+					{
+						current_id = i;
+						ImGui::OpenPopup ( "Updates" );
+					}
+				}
+				else
+				{
+					next_slot = i;
+				}
+			}
+			if ( next_slot != -1 )
+			{
+				if ( ImGui::Button ( "- Select -" , { button_width, 0 } ) )
+				{
+					current_id = next_slot;
+					ImGui::OpenPopup ( "Updates" );
+				}
+			}
+			else
+			{
+				ImGui::Text ( "Max functions stored." );
+			}
+		}
+
+		struct TestType
+		{
+			int a , b;
+		};
+
+		template<>
+		void RenderComponent ( CustomDataContainer& component )
+		{
+			ImGui::Text ( "Unable to display custom data." );
+		}
+
 		/*!
 		 * @brief ___JZEngine::LoopTupleRender___
 		 * ****************************************************************************************************
@@ -636,6 +731,25 @@ namespace JZEngine
 				if( ImGui::TreeNodeEx ( typeid( COMPONENT ).name () , ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_Framed ) )
 				{
 					RenderComponent ( entity.GetComponent<std::remove_reference_t<COMPONENT>> () );
+					ImGui::SetCursorPosX(ImGui::GetWindowWidth() - 45.0f);
+					if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("deleteicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 }))
+					{
+						entity.RemoveComponent(i);
+					}
+					if (ImGui::IsItemHovered())
+					{
+						ImGui::BeginTooltip();
+						ImGui::Text("Remove this component.");
+						ImGui::Separator();
+						ImGui::Text("These systems will no longer update this entity:");
+						ImGui::Separator();
+						ImGui::NewLine();
+
+						ECS::ECSConfig::System systems;
+						std::apply([&i, &entity](auto&...systems) { (systems.NotifyInspectorMissingComponent(i, PrintSystemAffected, entity.owning_chunk_->owning_archetype_->mask_), ...); }, systems);
+
+						ImGui::EndTooltip();
+					}
 					ImGui::TreePop ();
 				}
 				return;

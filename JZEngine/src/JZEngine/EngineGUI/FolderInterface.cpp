@@ -16,6 +16,7 @@
 #include "SceneTree.h"
 #include "../SceneLogic/SceneLogic.h"
 #include "../Sound/Sound.h"
+#include "MenuBar.h"
 
 namespace JZEngine
 {
@@ -28,7 +29,7 @@ namespace JZEngine
 	void FolderInterface::RecursivelyRenderFolders(ResourceManager::FolderData const& folder)
 	{
 		//ImGui::SetNextItemOpen(true);
-		ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconfolder")->GetRendererID()), { 11.0f, 11.0f }, { 0,1 }, { 1,0 });
+		ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconfolder")->GetRendererID()), { 11.0f, 11.0f }, { 0,1 }, { 1,0 } , engine_gui_->icon_col_ );
 		ImGui::SameLine();
 		bool open = ImGui::TreeNodeEx(folder.name_.c_str(), ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick);
 		if (ImGui::IsItemClicked())
@@ -53,7 +54,7 @@ namespace JZEngine
 	void FolderInterface::RecursivelyRenderAudioFolders(SoundSystem::FolderData const& folder)
 	{
 		//ImGui::SetNextItemOpen(true);
-		ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconfolder")->GetRendererID()), { 11.0f, 11.0f }, { 0,1 }, { 1,0 });
+		ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconfolder")->GetRendererID()), { 11.0f, 11.0f }, { 0,1 }, { 1,0 } , engine_gui_->icon_col_ );
 		ImGui::SameLine();
 		bool open = ImGui::TreeNodeEx(folder.name_.c_str(), ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick);
 		if (ImGui::IsItemClicked())
@@ -81,7 +82,6 @@ namespace JZEngine
 		UNREFERENCED_PARAMETER(dt);
 
 		SetNextWindowDimensions(0.0f, 0.0f, 0.2f, 1.0f);
-		ImGui::PushStyleColor(ImGuiCol_MenuBarBg, { 0, 0, 0, 1 });
 		ImGui::Begin("Folders", 0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 		CloseButtonMenuBar();
 
@@ -90,7 +90,7 @@ namespace JZEngine
 		switch (mode)
 		{
 		case (DISPLAY::SCENES):
-			ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconfolder")->GetRendererID()), { 11.0f, 11.0f }, { 0,1 }, { 1,0 });
+			ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconfolder")->GetRendererID()), { 11.0f, 11.0f }, { 0,1 }, { 1,0 } , engine_gui_->icon_col_ );
 			ImGui::SameLine();
 			if (ImGui::TreeNodeEx("Scenes", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick))
 			{
@@ -98,7 +98,7 @@ namespace JZEngine
 			}
 			break;
 		case(DISPLAY::PREFAB):
-			ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconfolder")->GetRendererID()), { 11.0f, 11.0f }, { 0,1 }, { 1,0 });
+			ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconfolder")->GetRendererID()), { 11.0f, 11.0f }, { 0,1 }, { 1,0 } , engine_gui_->icon_col_ );
 			ImGui::SameLine();
 			if (ImGui::TreeNodeEx("Prefabs", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick))
 			{
@@ -116,10 +116,8 @@ namespace JZEngine
 			break;
 		}
 		ImGui::End();
-		ImGui::PopStyleColor();
 
 		SetNextWindowDimensions(0.2f, 0.0f, 0.8f, 1.0f);
-		ImGui::PushStyleColor(ImGuiCol_MenuBarBg, { 0, 0, 0, 1 });
 		ImGui::Begin("Directory", 0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 		if (ImGui::BeginMenuBar())
 		{
@@ -162,6 +160,11 @@ namespace JZEngine
 		case(DISPLAY::RESOURCES_TEXTURES):
 			ss << "Folder: " << selected_texture_path;
 			ImGui::Text(ss.str().c_str());
+			if (select_enabled_)
+			{
+				ImGui::Separator();
+				ImGui::Text("[Selection] Select a texture to change the current object's texture.");
+			}
 			ImGui::Separator();
 			if (texture_preview_)
 			{
@@ -188,11 +191,11 @@ namespace JZEngine
 		}
 
 		ImGui::End();
-		ImGui::PopStyleColor();
 	}
 
 	void FolderInterface::CloseAction()
 	{
+		select_enabled_ = false;
 		ResetAllPreviews();
 	}
 
@@ -202,7 +205,7 @@ namespace JZEngine
 		ImGui::Text("Prefabs |");
 		ImGui::SameLine();
 		static ImGuiTextFilter filter;
-		filter.Draw(": Filter");
+		filter.Draw(" Filter");
 		ImGui::Separator();
 		if (ImGui::BeginTable("prefab_table", display_columns_))
 		{
@@ -212,7 +215,7 @@ namespace JZEngine
 				{
 					ImGui::TableNextColumn();
 					ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("textfileicon")->GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f }, {0,1}, {1,0});
-					if (ImGui::BeginPopupContextItem(e.first.c_str()))
+					if (ImGui::BeginPopupContextItem(e.first.c_str(), ImGuiPopupFlags_MouseButtonLeft))
 					{
 						if (ImGui::Selectable("Add To Scene"))
 						{
@@ -233,7 +236,7 @@ namespace JZEngine
 		ImGui::Text("Scenes |");
 		ImGui::SameLine();
 		static ImGuiTextFilter filter;
-		filter.Draw(": Filter");
+		filter.Draw(" Filter");
 		ImGui::Separator();
 		if (ImGui::BeginTable("scene_table", display_columns_))
 		{
@@ -243,20 +246,33 @@ namespace JZEngine
 				{
 					ImGui::TableNextColumn();
 					ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("textfileicon")->GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f }, { 0,1 }, { 1,0 });
-					if (ImGui::BeginPopupContextItem(s.first.c_str()))
+					if (ImGui::BeginPopupContextItem(s.first.c_str(), ImGuiPopupFlags_MouseButtonLeft))
 					{
 						if (ImGui::Selectable("Load Scene"))
 						{
+							MenuBar::play_ = false;
 							scene_tree_->RemoveAllEntities();
 							Serialize::DeserializeScene(ecs_instance_, s.first);
 							*scene_tree_->current_scene_name_ = s.first;
 							SceneLogic::Instance().SetCurrentSceneName(s.first);
 							SceneLogic::Instance().BuildEntityMap();
 							SceneLogic::Instance().InitSceneLogic();
+							ToggleOnOff();
 						}
 						if (ImGui::Selectable("Append To Scene"))
 						{
 							Serialize::DeserializeScene(ecs_instance_, s.first);
+							ToggleOnOff();
+						}
+						if ( ImGui::Selectable ( "Secondary Load" ) )
+						{
+							scene_tree_->RemoveAllEntities ();
+							Serialize::DeserializeScene2 ( ecs_instance_ , s.first );
+							*scene_tree_->current_scene_name_ = s.first;
+							SceneLogic::Instance ().SetCurrentSceneName ( s.first );
+							SceneLogic::Instance ().BuildEntityMap ();
+							SceneLogic::Instance ().InitSceneLogic ();
+							ToggleOnOff ();
 						}
 						ImGui::EndPopup();
 					}
@@ -269,15 +285,24 @@ namespace JZEngine
 
 	void FolderInterface::RenderTextures()
 	{
+		/*if (selected_texture_ != "")
+		{
+			selected_texture_ = "";
+		}*/
+
 		ImGui::Separator();
 		ImGui::Text("Textures |");
 		ImGui::SameLine();
 		static ImGuiTextFilter filter;
-		filter.Draw(": Filter");
-		ImGui::SameLine();
-		if (ImGui::Button("Refresh"))
+		filter.Draw(" Filter");
+		//ImGui::SameLine();
+		//if (ImGui::Button("Refresh"))
+		//{
+		//	//ResourceManager::LoadAllTexturesInFolder();
+		//}
+		ImGui::SameLine(ImGui::GetWindowWidth() - 45.0f);
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("refreshicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , engine_gui_->icon_col_ ))
 		{
-			//ResourceManager::LoadAllTexturesInFolder();
 		}
 		ImGui::Separator();
 		if (selected_texture_directory != "Nothing Selected")
@@ -302,8 +327,14 @@ namespace JZEngine
 									texture_preview_ = true;
 									selected_preview_texture = texture.first.c_str();
 								}
-								if (ImGui::Selectable("Select"))
+								if (select_enabled_)
 								{
+									if (ImGui::Selectable("Select"))
+									{
+										selected_texture_ = texture.first;
+										select_enabled_ = false;
+										ToggleOnOff();
+									}
 								}
 								ImGui::EndPopup();
 							}
@@ -328,8 +359,14 @@ namespace JZEngine
 									texture_preview_ = true;
 									selected_preview_texture = texture.c_str();
 								}
-								if (ImGui::Selectable("Select"))
+								if (select_enabled_)
 								{
+									if (ImGui::Selectable("Select"))
+									{
+										selected_texture_ = texture;
+										select_enabled_ = false;
+										ToggleOnOff();
+									}
 								}
 								ImGui::EndPopup();
 							}
@@ -361,11 +398,14 @@ namespace JZEngine
 		ImGui::Text("Audio |");
 		ImGui::SameLine();
 		static ImGuiTextFilter filter;
-		filter.Draw(": Filter");
-		ImGui::SameLine();
-		if (ImGui::Button("Refresh"))
+		filter.Draw(" Filter");
+		//if (ImGui::Button("Refresh"))
+		//{
+		//	//ResourceManager::LoadAllTexturesInFolder();
+		//}
+		ImGui::SameLine(ImGui::GetWindowWidth() - 45.0f);
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("refreshicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , engine_gui_->icon_col_ ))
 		{
-			//ResourceManager::LoadAllTexturesInFolder();
 		}
 		ImGui::Separator();
 		if (!sound_system_)
@@ -384,7 +424,7 @@ namespace JZEngine
 						if (filter.PassFilter(sound.first.c_str()))
 						{
 							ImGui::TableNextColumn();
-							if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconaudio")->GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f }, { 0,1 }, { 1,0 }, -1, { 0, 0, 0, 0 }, { 1, 1, 1, 1 }))
+							if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconaudio")->GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f }, { 0,1 }, { 1,0 }, -1, { 0, 0, 0, 0 }, engine_gui_->icon_col_))
 							{
 							}
 							if (ImGui::BeginPopupContextItem(sound.first.c_str(), ImGuiPopupFlags_MouseButtonLeft))
@@ -412,7 +452,7 @@ namespace JZEngine
 						if (filter.PassFilter(sound.c_str()))
 						{
 							ImGui::TableNextColumn();
-							if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconaudio")->GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f }, { 0,1 }, { 1,0 }, -1, { 0, 0, 0, 0 }, { 1, 1, 1, 1 }))
+							if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconaudio")->GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f }, { 0,1 }, { 1,0 }, -1, { 0, 0, 0, 0 } , engine_gui_->icon_col_ ))
 							{
 							}
 							if (ImGui::BeginPopupContextItem(sound.c_str(), ImGuiPopupFlags_MouseButtonLeft))
@@ -468,10 +508,21 @@ namespace JZEngine
 		}
 	}
 
+	void FolderInterface::ReloadScene ()
+	{
+		std::string same_scene = *scene_tree_->current_scene_name_;
+		scene_tree_->RemoveAllEntities ();
+		Serialize::DeserializeScene ( ecs_instance_ , same_scene );
+		*scene_tree_->current_scene_name_ = same_scene;
+		SceneLogic::Instance ().SetCurrentSceneName ( same_scene );
+		SceneLogic::Instance ().BuildEntityMap ();
+		SceneLogic::Instance ().InitSceneLogic ();
+	}
+
 	void FolderInterface::DisplayTexturePreview()
 	{
 		float button_size = Settings::window_width * sx_ * 0.01f;
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconback")->GetRendererID()), { button_size, button_size }))
+		if ( ImGui::ImageButton ( ( void* )static_cast< unsigned long long >( ResourceManager::GetTexture ( "iconback" )->GetRendererID () ) , { button_size, button_size } , { 0,1 } , { 1,0 } , -1 , { 0,0,0,0 } , engine_gui_->icon_col_ ) )
 		{
 			texture_preview_ = false;
 		}
@@ -489,7 +540,7 @@ namespace JZEngine
 	void FolderInterface::DisplayAudioPreview()
 	{
 		float button_size = Settings::window_width * sx_ * 0.01f;
-		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconback")->GetRendererID()), { button_size, button_size }))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconback")->GetRendererID()), { button_size, button_size } , { 0,1 } , { 1,0 } , -1 , { 0,0,0,0 } , engine_gui_->icon_col_ ))
 		{
 			audio_preview_ = false;
 			sound_system_->stopSound(audio_clip_preview_id_);
@@ -505,10 +556,10 @@ namespace JZEngine
 			unsigned long long id = static_cast<unsigned long long>(tex2d->GetRendererID());
 			float width = static_cast<float>(Settings::window_width) * sx_ * 0.1f;
 			ImGui::SetCursorPosX(static_cast<float>(Settings::window_width) * sx_ * 0.4f - width/2.0f);
-			ImGui::Image((void*)id, { width , width }, { 0,1 }, { 1,0 }, { 1, 1, 1, 1 });
+			ImGui::Image((void*)id, { width , width }, { 0,1 }, { 1,0 }, engine_gui_->icon_col_);
 
 			ImGui::SetCursorPosX(static_cast<float>(Settings::window_width) * sx_ * 0.4f - button_size);
-			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconstart")->GetRendererID()), { button_size * 2.0f , button_size * 2.0f }, { 0,1 }, { 1,0 }, -1, { 0, 0, 0, 0 }, { 1, 1, 1, 1 }))
+			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconstart")->GetRendererID()), { button_size * 2.0f , button_size * 2.0f }, { 0,1 }, { 1,0 }, -1, { 0, 0, 0, 0 } , engine_gui_->icon_col_ ))
 			{
 				if (sound_system_)
 				{
