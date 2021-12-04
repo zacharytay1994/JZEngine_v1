@@ -1,10 +1,18 @@
+/*	__FILE HEADER__
+*	File:		HawkerApp.h
+	Primary:	Yu Ching Yin
+	Date:		05/12/21
+	Brief:		Apps logic.
+*/
+
 #pragma once
 
 enum class HawkerAppState
 {
 	MainScreen,
 	Theresapp,
-	Album
+	Album,
+	HowtoPlay
 };
 
 HawkerAppState current_app_state = HawkerAppState::MainScreen;
@@ -20,6 +28,8 @@ bool scroll_up{ false };
 bool scroll_down{ false };
 int album_black_bg_layer{ 0 };
 int add_layer{ 7 };
+bool paused{ false };
+//bool esc_again{ false };
 
 void FlagPhone(bool flag)
 {
@@ -35,6 +45,8 @@ void FlagPhoneHomeScreen(bool flag)
 	Scene().EntityFlagActive("Theresapp", flag);
 	Scene().EntityFlagActive("Album", flag);
 	Scene().EntityFlagActive("Shop", flag);
+	Scene().EntityFlagActive("How_to_Play_app", flag);
+	Scene().EntityFlagActive("Main_Menu_app", flag);
 	Scene().EntityFlagActive("Resume", flag);
 	Scene().EntityFlagActive("Restart", flag);
 	Scene().EntityFlagActive("Options", flag);
@@ -67,6 +79,13 @@ void FlagAlbumScreen(bool flag)
 	Scene().EntityFlagActive("Album_photo_1960s", flag);
 	Scene().EntityFlagActive("black_cover_1960s", flag);
 	Scene().EntityFlagActive("text_1960s", flag);
+}
+
+void FlagHowtoPlayScreen(bool flag)
+{
+	Scene().EntityFlagActive("How_to_Play_photo", flag);
+	Scene().EntityFlagActive("How_to_Play_text", flag);
+	Scene().EntityFlagActive("How_to_Play_x", flag);
 }
 
 void FlagMsg1(bool flag)
@@ -168,6 +187,7 @@ void InitPhoneScreen()
 	FlagPhoneHomeScreen(false);
 	FlagTheresappScreen(false);
 	FlagAlbumScreen(false);
+	FlagHowtoPlayScreen(false);
 	FlagMsg1(false);
 	FlagMsg2(false);
 	FlagMsg3(false);
@@ -183,6 +203,10 @@ void InitPhoneScreen()
 	FlagMsg13(false);
 	Scene().EntityFlagActive("Album_1960_big_photo", false);
 	Scene().EntityFlagActive("Album_1960_big_photo_quit", false);
+	Scene().EntityFlagActive("Album_1980_big_photo", false);
+	Scene().EntityFlagActive("Album_1980_big_photo_quit", false);
+	Scene().EntityFlagActive("Album_2021_big_photo", false);
+	Scene().EntityFlagActive("Album_2021_big_photo_quit", false);
 
 	album_black_bg_layer = Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_;
 
@@ -232,6 +256,9 @@ void InitPhoneScreen()
 	Scene().GetComponent<JZEngine::TextData>("text_1980s")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	Scene().GetComponent<JZEngine::TextData>("text_1960s")->text = JZEngine::String("1960s");
 	Scene().GetComponent<JZEngine::TextData>("text_1960s")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
+
+	Scene().GetComponent<JZEngine::TextData>("How_to_Play_text")->text = JZEngine::String("HOW TO PLAY");
+	Scene().GetComponent<JZEngine::TextData>("How_to_Play_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 }
 
 void UpdatePhoneScreen(float dt)
@@ -243,6 +270,21 @@ void UpdatePhoneScreen(float dt)
 	{
 		if (e->on_click_)
 		{
+			FlagPhoneHomeScreen(false);
+			FlagTheresappScreen(true);
+			FlagMsg1(true);
+			FlagMsg2(true);
+			FlagMsg3(true);
+			FlagMsg4(true);
+			FlagMsg5(true);
+			FlagMsg6(true);
+			FlagMsg7(true);
+			FlagMsg8(true);
+			FlagMsg9(true);
+			FlagMsg10(true);
+			FlagMsg11(true);
+			FlagMsg12(true);
+			FlagMsg13(true);
 			current_app_state = HawkerAppState::Theresapp;
 			std::cout << "enter!\n";
 		}
@@ -251,18 +293,40 @@ void UpdatePhoneScreen(float dt)
 	{
 		if (e->on_click_)
 		{
+			Scene().EntityFlagActive("Phone_battery", false);
+			Scene().EntityFlagActive("Phone_time", false);
+			FlagPhoneHomeScreen(false);
+			FlagAlbumScreen(true);
 			current_app_state = HawkerAppState::Album;
 		}
 	}
-	/*if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Resume"))
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("How_to_Play_app"))
 	{
 		if (e->on_click_)
 		{
-			FlagPhone(false);
+			Scene().EntityFlagActive("Phone_outercase", false);
+			Scene().EntityFlagActive("Phone_battery", false);
+			Scene().EntityFlagActive("Phone_time", false);
 			FlagPhoneHomeScreen(false);
-			Scene().EntityFlagActive("PhoneOptions", true);
+			FlagHowtoPlayScreen(true);
+			current_app_state = HawkerAppState::HowtoPlay;
 		}
-	}*/
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Main_Menu_app"))
+	{
+		if (e->on_click_)
+		{
+			Scene().ChangeScene("MainMenu");
+		}
+	}
+	if (paused == true && JZEngine::InputHandler::IsKeyReleased(JZEngine::KEY::KEY_ESCAPE))
+	{
+		FlagPhone(false);
+		FlagPhoneHomeScreen(false);
+		Scene().EntityFlagActive("PhoneOptions", true);
+		paused = false;
+		//esc_again = false;
+	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Restart"))
 	{
 		if (e->on_click_)
@@ -274,7 +338,7 @@ void UpdatePhoneScreen(float dt)
 	{
 		if (e->on_click_)
 		{
-			Scene().ChangeScene("MainMenu");
+			//Scene().ChangeScene("MainMenu");
 		}
 	}
 
@@ -451,6 +515,42 @@ void UpdateAlbum(float dt)
 			Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_ = album_black_bg_layer;
 		}
 	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album_photo_1980s"))
+	{
+		if (e->on_click_)
+		{
+			Scene().EntityFlagActive("Album_1980_big_photo", true);
+			Scene().EntityFlagActive("Album_1980_big_photo_quit", true);
+			Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_ = album_black_bg_layer + add_layer;
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album_1980_big_photo_quit"))
+	{
+		if (e->on_click_)
+		{
+			Scene().EntityFlagActive("Album_1980_big_photo", false);
+			Scene().EntityFlagActive("Album_1980_big_photo_quit", false);
+			Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_ = album_black_bg_layer;
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album_photo_2021s"))
+	{
+		if (e->on_click_)
+		{
+			Scene().EntityFlagActive("Album_2021_big_photo", true);
+			Scene().EntityFlagActive("Album_2021_big_photo_quit", true);
+			Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_ = album_black_bg_layer + add_layer;
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album_2021_big_photo_quit"))
+	{
+		if (e->on_click_)
+		{
+			Scene().EntityFlagActive("Album_2021_big_photo", false);
+			Scene().EntityFlagActive("Album_2021_big_photo_quit", false);
+			Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_ = album_black_bg_layer;
+		}
+	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album_back_arrow"))
 	{
 		if (e->on_click_)
@@ -459,6 +559,29 @@ void UpdateAlbum(float dt)
 			Scene().EntityFlagActive("Phone_time", true);
 			FlagPhoneHomeScreen(true);
 			FlagAlbumScreen(false);
+
+			current_app_state = HawkerAppState::MainScreen;
+		}
+	}
+}
+
+void UpdateHowtoPlay(float dt)
+{
+	Scene().EntityFlagActive("Phone_outercase", false);
+	Scene().EntityFlagActive("Phone_battery", false);
+	Scene().EntityFlagActive("Phone_time", false);
+	FlagPhoneHomeScreen(false);
+	FlagHowtoPlayScreen(true);
+
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("How_to_Play_x"))
+	{
+		if (e->on_click_)
+		{
+			Scene().EntityFlagActive("Phone_outercase", true);
+			Scene().EntityFlagActive("Phone_battery", true);
+			Scene().EntityFlagActive("Phone_time", true);
+			FlagPhoneHomeScreen(true);
+			FlagHowtoPlayScreen(false);
 
 			current_app_state = HawkerAppState::MainScreen;
 		}
@@ -477,6 +600,9 @@ void UpdateHomeScreen(float dt)
 		break;
 	case HawkerAppState::Album:
 		UpdateAlbum(dt);
+		break;
+	case HawkerAppState::HowtoPlay:
+		UpdateHowtoPlay(dt);
 		break;
 	}
 }

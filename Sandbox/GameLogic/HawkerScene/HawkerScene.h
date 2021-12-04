@@ -477,13 +477,12 @@ void UpdateMainScene(float dt)
 	}
 
 	//if clicked on phone, change the state to App
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("PhoneOptions"))
+	if (JZEngine::InputHandler::IsKeyReleased(JZEngine::KEY::KEY_ESCAPE))
 	{
-		if (e->on_click_)
-		{
-			current_hawker_scene_state = HawkerSceneState::App;
-			Scene().EntityFlagActive("PhoneOptions", false);
-		}
+		current_hawker_scene_state = HawkerSceneState::App;
+		Scene().EntityFlagActive("PhoneOptions", false);
+		paused = true;
+		//esc_again = true;
 	}
 
 	// give customer food
@@ -531,6 +530,7 @@ void HawkerSceneInit()
 {
 	// initialize scene
 	current_hawker_scene_state = HawkerSceneState::Main;
+	//esc_again = false;
 
 	ToggleWin(false);
 
@@ -590,6 +590,10 @@ void HawkerSceneUpdate(float dt)
 		break;
 	case HawkerSceneState::App:
 		UpdateHomeScreen(dt);
+		if (!paused)
+		{
+			current_hawker_scene_state = HawkerSceneState::Main;
+		}
 		break;
 	}
 }

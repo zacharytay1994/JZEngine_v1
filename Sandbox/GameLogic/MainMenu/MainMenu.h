@@ -18,6 +18,7 @@ enum class MainMenuState
 	Main,
 	Options,
 	Credits,
+	HowtoPlay,
 	Quit
 };
 MainMenuState current_main_menu_state = MainMenuState::Main;
@@ -120,7 +121,7 @@ void ToggleOptions(bool toggle)
 {
 	// active/inactive option objects
 	Scene().EntityFlagActive("Option_background", toggle);
-	Scene().EntityFlagActive("Option_title", toggle);
+	Scene().EntityFlagActive("Option_text", toggle);
 	Scene().EntityFlagActive("Option_soundline", toggle);
 	Scene().EntityFlagActive("Option_sound", toggle);
 	Scene().EntityFlagActive("Option_master", toggle);
@@ -171,6 +172,13 @@ void ToggleCredits(bool toggle)
 	Scene().EntityFlagActive("Credits_x", toggle);
 }
 
+void ToggleHowtoPlay(bool toggle)
+{
+	Scene().EntityFlagActive("How_to_play_photo", toggle);
+	Scene().EntityFlagActive("How_to_play_text", toggle);
+	Scene().EntityFlagActive("How_to_play_x", toggle);
+}
+
 void UpdateMainScreen(float dt)
 {
 	UNREFERENCED_PARAMETER(dt);
@@ -198,6 +206,8 @@ void UpdateMainScreen(float dt)
 		if (e->on_released_)
 		{
 			ToggleOptions(true);
+			Scene().EntityFlagActive("Credits", true);
+			Scene().EntityFlagActive("Quit", true);
 			current_main_menu_state = MainMenuState::Options;
 		}
 		if (e->on_held_)
@@ -213,12 +223,68 @@ void UpdateMainScreen(float dt)
 			ToggleButton("Options", ButtonState::Normal);
 		}
 	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_howtoplay"))
+	{
+		if (e->on_released_)
+		{
+			ToggleHowtoPlay(true);
+			current_main_menu_state = MainMenuState::HowtoPlay;
+		}
+		if (e->on_held_)
+		{
+			ToggleButton("how_to_play", ButtonState::Clicked);
+		}
+		else if (e->on_hover_)
+		{
+			ToggleButton("how_to_play", ButtonState::Hover);
+		}
+		else
+		{
+			ToggleButton("how_to_play", ButtonState::Normal);
+		}
+	}
+	
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_quit"))
+	{
+		if (e->on_released_)
+		{
+			ToggleQuit(true);
+			current_main_menu_state = MainMenuState::Quit;
+		}
+		if (e->on_held_)
+		{
+			ToggleButton("Quit_Game", ButtonState::Clicked);
+		}
+		else if (e->on_hover_)
+		{
+			ToggleButton("Quit_Game", ButtonState::Hover);
+		}
+		else
+		{
+			ToggleButton("Quit_Game", ButtonState::Normal);
+		}
+	}
+}
+
+void UpdateOptionsMenu(float dt)
+{
+	UNREFERENCED_PARAMETER(dt);
+	UpdateVolumeSlider(); 
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Option_quit_bb"))
+	{
+		if (e->on_released_)
+		{
+			ToggleOptions(false);
+			Scene().EntityFlagActive("Credits", false);
+			Scene().EntityFlagActive("Quit", false);
+			current_main_menu_state = MainMenuState::Main;
+		}
+	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_credits"))
 	{
 		if (e->on_released_)
 		{
 			ToggleCredits(true);
-			current_main_menu_state = MainMenuState::Credits;
 		}
 		if (e->on_held_)
 		{
@@ -233,12 +299,21 @@ void UpdateMainScreen(float dt)
 			ToggleButton("Credits", ButtonState::Normal);
 		}
 	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_quit"))
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Credits_x_bb"))
 	{
 		if (e->on_released_)
 		{
-			ToggleQuit(true);
-			current_main_menu_state = MainMenuState::Quit;
+			ToggleCredits(false);
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_Quit"))
+	{
+		if (e->on_released_)
+		{
+			ToggleOptions(false);
+			Scene().EntityFlagActive("Credits", false);
+			Scene().EntityFlagActive("Quit", false);
+			current_main_menu_state = MainMenuState::Main;
 		}
 		if (e->on_held_)
 		{
@@ -251,20 +326,6 @@ void UpdateMainScreen(float dt)
 		else
 		{
 			ToggleButton("Quit", ButtonState::Normal);
-		}
-	}
-}
-
-void UpdateOptionsMenu(float dt)
-{
-	UNREFERENCED_PARAMETER(dt);
-	UpdateVolumeSlider(); 
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Option_quit_bb"))
-	{
-		if (e->on_released_)
-		{
-			ToggleOptions(false);
-			current_main_menu_state = MainMenuState::Main;
 		}
 	}
 }
@@ -314,14 +375,26 @@ void UpdateQuitMenu(float dt)
 	}
 }
 
-void UpdateCreditsMenu(float dt)
+//void UpdateCreditsMenu(float dt)
+//{
+//	UNREFERENCED_PARAMETER(dt);
+//	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Credits_x_bb"))
+//	{
+//		if (e->on_released_)
+//		{
+//			ToggleCredits(false);
+//			current_main_menu_state = MainMenuState::Main;
+//		}
+//	}
+//}
+
+void UpdateHowtoPlayMenu(float dt)
 {
-	UNREFERENCED_PARAMETER(dt);
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Credits_x_bb"))
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("How_to_play_x"))
 	{
 		if (e->on_released_)
 		{
-			ToggleCredits(false);
+			ToggleHowtoPlay(false);
 			current_main_menu_state = MainMenuState::Main;
 		}
 	}
@@ -335,6 +408,13 @@ void InitMainMenu()
 	ToggleOptions(false);
 	ToggleQuit(false);
 	ToggleCredits(false);
+	Scene().EntityFlagActive("Credits", false);
+	Scene().EntityFlagActive("Quit", false);
+	ToggleHowtoPlay(false);
+	Scene().GetComponent<JZEngine::TextData>("How_to_play_text")->text = JZEngine::String("HOW TO PLAY");
+	Scene().GetComponent<JZEngine::TextData>("How_to_play_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
+	Scene().GetComponent<JZEngine::TextData>("Option_text")->text = JZEngine::String("OPTIONS");
+	Scene().GetComponent<JZEngine::TextData>("Option_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 }
 
 void UpdateMainMenu(float dt)
@@ -350,8 +430,11 @@ void UpdateMainMenu(float dt)
 	case MainMenuState::Options:
 		UpdateOptionsMenu(dt);
 		break;
-	case MainMenuState::Credits:
+	/*case MainMenuState::Credits:
 		UpdateCreditsMenu(dt);
+		break;*/
+	case MainMenuState::HowtoPlay:
+		UpdateHowtoPlayMenu(dt);
 		break;
 	case MainMenuState::Quit:
 		UpdateQuitMenu(dt);
