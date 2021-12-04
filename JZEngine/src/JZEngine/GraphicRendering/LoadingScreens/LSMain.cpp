@@ -72,6 +72,10 @@ namespace JZEngine
 		tex2d_path2.InitOpenGL ();
 		tex2d_path3.Texture2DLoad ( texpath3 );
 		tex2d_path3.InitOpenGL ();
+		tex2d_path4.Texture2DLoad ( texpath4 );
+		tex2d_path4.InitOpenGL ();
+		tex2d_path5.Texture2DLoad ( texpath5 );
+		tex2d_path5.InitOpenGL ();
 
 		// make full viewport size
 		glViewport ( 0 , 0 , Settings::window_width , Settings::window_height );
@@ -142,13 +146,79 @@ namespace JZEngine
 		{
 			if( renderer_text_ )
 			{
-				renderer_text_->RenderText ( resource_manager_ , Information , 0 , 0 , 0.5 , { 1.0f , 1.0f , 1.0f } ,1.0f, 2.0f, Paragraph::AlignCenter);
+				renderer_text_->RenderText ( resource_manager_ , Information , 0 , -( Settings::window_height / 8.0f ) , 0.5 , { 1.0f , 1.0f , 1.0f } , 1.0f , 2.0f , Paragraph::AlignCenter );
 			}
 		}
 
 		//glfw: swap buffersand poll IO events.
 		glfwSwapBuffers ( GLFW_Instance::window_ );
 		glfwPollEvents ();
+	}
+
+	void LSMain::DrawExitScreen ()
+	{
+
+		glCheckError ();
+		glClearColor ( 0.5f , 0.5f , 0.5f , 1.0f );
+		glClear ( GL_COLOR_BUFFER_BIT );
+
+		va.Bind ();
+		ib.Bind ();
+		shader_program.Bind ();
+
+		tex2d_path4.Bind ();
+		shader_program.SetUniform ( "myAlpha" , 1.0f );
+		glDrawElements ( GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0 );
+
+
+		//glfw: swap buffersand poll IO events.
+		glfwSwapBuffers ( GLFW_Instance::window_ );
+		glfwPollEvents ();
+
+	}
+
+	void LSMain::DrawFadeOut ()
+	{
+
+		for( float i = 1.0f; i > 0.0f ; i -= 0.0005f )
+		{
+			glCheckError ();
+			glClearColor ( 0.0f , 0.0f , 0.0f , 1.0f );
+			glClear ( GL_COLOR_BUFFER_BIT );
+
+			va.Bind ();
+			ib.Bind ();
+			shader_program.Bind ();
+
+			tex2d_path4.Bind ();
+			shader_program.SetUniform ( "myAlpha" , i );
+			glDrawElements ( GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0 );
+
+			//glfw: swap buffersand poll IO events.
+			glfwSwapBuffers ( GLFW_Instance::window_ );
+			glfwPollEvents ();
+
+		}
+
+		//for( float i = 0.0f; i < 1.0f ; i += 0.0005f )
+		//{
+		//	glCheckError ();
+		//	glClearColor ( 0.0f , 0.0f , 0.0f , 1.0f );
+		//	glClear ( GL_COLOR_BUFFER_BIT );
+
+		//	va.Bind ();
+		//	ib.Bind ();
+		//	shader_program.Bind ();
+
+		//	tex2d_path5.Bind ();
+		//	shader_program.SetUniform ( "myAlpha" , i );
+		//	glDrawElements ( GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0 );
+
+		//	//glfw: swap buffersand poll IO events.
+		//	glfwSwapBuffers ( GLFW_Instance::window_ );
+		//	glfwPollEvents ();
+		//}
+
 	}
 
 	void LSMain::PostDraw ()
@@ -166,5 +236,8 @@ namespace JZEngine
 		shader_program.Unbind ();
 		tex2d_path1.Unbind ();
 		tex2d_path2.Unbind ();
+		tex2d_path3.Unbind ();
+		tex2d_path4.Unbind ();
+		tex2d_path5.Unbind ();
 	}
 }

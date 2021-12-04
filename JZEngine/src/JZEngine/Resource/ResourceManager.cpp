@@ -16,7 +16,7 @@
 
 namespace JZEngine
 {
-	
+
 	std::string thread_load_string;
 	std::atomic<std::string*> thread_load_string_pointer = &thread_load_string;
 	std::atomic<bool> thread_is_pool_done_ ( false );
@@ -57,13 +57,16 @@ namespace JZEngine
 			dt = milli_dt.count () / 1000.0;
 		}
 
-		// uninitialised loading screen
-		load_screen_main_.PostDraw ();
+
+		load_screen_main_.DrawExitScreen ();
 
 		for( auto& tex : texture2ds_ )
 		{
 			tex.texture2d_.InitOpenGL ();
 		}
+
+
+
 
 		// load shaders
 		LoadShader ( "Default" ,
@@ -95,6 +98,13 @@ namespace JZEngine
 							  "Assets/Shaders/Fragment/FS_Instancing.fs" );
 
 		texture_folder_data_.name_ = "Textures";
+
+		
+		load_screen_main_.DrawFadeOut ();
+		
+
+		// uninitialised loading screen
+		load_screen_main_.PostDraw ();
 
 		pool_load_folder_tex.Free ();
 	}

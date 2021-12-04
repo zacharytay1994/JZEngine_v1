@@ -49,32 +49,40 @@ namespace JZEngine
 		Texture2D tex2d_path1;
 		Texture2D tex2d_path2;
 		Texture2D tex2d_path3;
+		Texture2D tex2d_path4;
+		Texture2D tex2d_path5;
 
 		bool draw_load_screen_{ true };
-		float myAlpha{ 0.0f };
-		float myAlpha1{ 0.0f };
+
+		bool start_fade_{ false };
+		bool fade_2_start_{ false };
+		float fade_1_alpha_{ 1.0f };
+		float fade_2_alpha_{ 1.0f };
 
 		bool reverse_dot_{ false };
-		float dot_1_alpha_ = 1.0f;
-		float dot_2_alpha_ = 0.0f;
-		float dot_3_alpha_ = 0.0f;
+		float dot_1_alpha_{ 1.0f };
+		float dot_2_alpha_{ 0.0f };
+		float dot_3_alpha_{ 0.0f };
 
-		
 
+		// Initialised Data
 		std::string fspath{ "Assets/Shaders/Fragment/FS_BasicTex.fs" };
 		std::string vspath{ "Assets/Shaders/Vertex/VS_BasicTex.vs" };
 		std::string texpath1{ "Assets/Textures/LoadingScreen/Jump0_BlackLogo-01.png" };
 		std::string texpath2{ "Assets/Textures/LoadingScreen/Jump0_BlackLogo-02.png" };
 		std::string texpath3{ "Assets/Textures/LoadingScreen/Jump0_BlackLogo-03.png" };
-
+		std::string texpath4{ "Assets/Textures/LoadingScreen/Jump0_BlackLogo-04.png" };
+		std::string texpath5{ "Assets/Textures/LoadingScreen/Jump0_BlackLogo-05.png" };
 
 		ResourceManager* resource_manager_{ nullptr };
-		std::unique_ptr< TextRenderer> renderer_text_{nullptr};
+		std::unique_ptr< TextRenderer> renderer_text_{ nullptr };
 	public:
-		LSMain ( ResourceManager* ResourceManager);
+		LSMain ( ResourceManager* ResourceManager );
 		~LSMain ();
 		void PreDraw ();
-		void Draw (std::string Information) ;
+		void Draw ( std::string Information ) ;
+		void DrawExitScreen ();
+		void DrawFadeOut ();
 		void PostDraw ();
 	};
 }
