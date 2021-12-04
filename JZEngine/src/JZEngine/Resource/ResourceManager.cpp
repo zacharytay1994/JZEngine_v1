@@ -16,7 +16,7 @@
 
 namespace JZEngine
 {
-
+	// one thread writes to an atomic object while another thread reads from it
 	std::string thread_load_string;
 	std::atomic<std::string*> thread_load_string_pointer = &thread_load_string;
 	std::atomic<bool> thread_is_pool_done_ ( false );
@@ -32,7 +32,6 @@ namespace JZEngine
 	ResourceManager::FolderData ResourceManager::texture_folder_data_;
 	std::unordered_map<std::string , std::vector<std::string>> ResourceManager::texture_folders_;
 
-
 	ResourceManager::ResourceManager ()
 		:
 		load_screen_main_ ( this )
@@ -46,32 +45,33 @@ namespace JZEngine
 			pool_load_folder_tex.Parallel ( LoadAllTexturesInFolder , "Assets/Textures/" );
 		}
 
-		// draw loading screen if pool_load_folder_tex is not done yet
+		// calculate delta time
 		double dt{ 0.0 };
+		// draw loading screen if pool_load_folder_tex is not done yet
 		while( !thread_is_pool_done_ )
 		{
 			auto start_time = std::chrono::high_resolution_clock::now ();
-			load_screen_main_.Draw ( *thread_load_string_pointer );
+			// draw the loading screen and print out the intialised items 
+			load_screen_main_.DrawLoadingScreen ( *thread_load_string_pointer, dt );
+			// calculate delta time for this loading screen
 			auto end_time = std::chrono::high_resolution_clock::now ();
 			std::chrono::duration<double , std::milli> milli_dt = end_time - start_time;
 			dt = milli_dt.count () / 1000.0;
 		}
 
-
+		// draw stagnent "NOW ENTERING" for frozen screen
 		load_screen_main_.DrawExitScreen ();
 
 		for( auto& tex : texture2ds_ )
-		{
+		{	// initialised Opengl texture 
 			tex.texture2d_.InitOpenGL ();
 		}
-
-
-
 
 		// load shaders
 		LoadShader ( "Default" ,
 					 "Assets/Shaders/Vertex/VS_Sprite2D.vs" ,
 					 "Assets/Shaders/Fragment/FS_Tex.fs" );
+
 		LoadShader ( "Black White" ,
 					 "Assets/Shaders/Vertex/VS_Sprite2D.vs" ,
 					 "Assets/Shaders/Fragment/FS_BlackWhite.fs" );
@@ -99,13 +99,13 @@ namespace JZEngine
 
 		texture_folder_data_.name_ = "Textures";
 
-		
+		// fade out "NOW ENTERING" loading screen
 		load_screen_main_.DrawFadeOut ();
 		
-
 		// uninitialised loading screen
 		load_screen_main_.PostDraw ();
 
+		// exit thread
 		pool_load_folder_tex.Free ();
 	}
 

@@ -39,7 +39,9 @@ namespace JZEngine
 
 	void LSMain::PreDraw ()
 	{
+#ifdef LSMainDebug
 		std::cout << "LSMain::Draw() " << std::endl;
+#endif
 
 		VertexBufferLayout layout;
 		layout.Push<float> ( 3 );
@@ -74,21 +76,21 @@ namespace JZEngine
 		tex2d_path3.InitOpenGL ();
 		tex2d_path4.Texture2DLoad ( texpath4 );
 		tex2d_path4.InitOpenGL ();
-		tex2d_path5.Texture2DLoad ( texpath5 );
-		tex2d_path5.InitOpenGL ();
 
 		// make full viewport size
 		glViewport ( 0 , 0 , Settings::window_width , Settings::window_height );
 
+		// load font data
 		resource_manager_->LoadFont ( "Assets/Fonts/arlrdbd.ttf" , 100 , "Font1" , "Assets/Shaders/Vertex/VS_Font.vs" , "Assets/Shaders/Fragment/FS_Font.fs" );
-
 	}
 
-	void LSMain::Draw ( std::string Information )
+	void LSMain::DrawLoadingScreen ( std::string Information , double DeltaTime )
 	{
 		glCheckError ();
 		glClearColor ( 0.5f , 0.5f , 0.5f , 1.0f );
 		glClear ( GL_COLOR_BUFFER_BIT );
+
+		float loading_speed = 2.0f * (float)DeltaTime;
 
 		if( !reverse_dot_ )
 		{
@@ -100,25 +102,25 @@ namespace JZEngine
 				}
 				else
 				{
-					dot_3_alpha_ += 0.005f;
+					dot_3_alpha_ += loading_speed;
 				}
 			}
 			else
 			{
-				dot_2_alpha_ += 0.005f;
+				dot_2_alpha_ += loading_speed;
 			}
 		}
 		else
 		{
 			if( dot_3_alpha_ > 0.0f )
 			{
-				dot_3_alpha_ -= 0.005f;
+				dot_3_alpha_ -= loading_speed;
 			}
 			else
 			{
 				if( dot_2_alpha_ > 0.0f )
 				{
-					dot_2_alpha_ -= 0.005f;
+					dot_2_alpha_ -= loading_speed;
 				}
 				else
 				{
@@ -126,6 +128,7 @@ namespace JZEngine
 				}
 			}
 		}
+
 		va.Bind ();
 		ib.Bind ();
 		shader_program.Bind ();
@@ -157,7 +160,6 @@ namespace JZEngine
 
 	void LSMain::DrawExitScreen ()
 	{
-
 		glCheckError ();
 		glClearColor ( 0.5f , 0.5f , 0.5f , 1.0f );
 		glClear ( GL_COLOR_BUFFER_BIT );
@@ -170,16 +172,14 @@ namespace JZEngine
 		shader_program.SetUniform ( "myAlpha" , 1.0f );
 		glDrawElements ( GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0 );
 
-
 		//glfw: swap buffersand poll IO events.
 		glfwSwapBuffers ( GLFW_Instance::window_ );
 		glfwPollEvents ();
-
 	}
 
 	void LSMain::DrawFadeOut ()
 	{
-
+		// slow fade out 
 		for( float i = 1.0f; i > 0.0f ; i -= 0.0005f )
 		{
 			glCheckError ();
@@ -197,28 +197,7 @@ namespace JZEngine
 			//glfw: swap buffersand poll IO events.
 			glfwSwapBuffers ( GLFW_Instance::window_ );
 			glfwPollEvents ();
-
 		}
-
-		//for( float i = 0.0f; i < 1.0f ; i += 0.0005f )
-		//{
-		//	glCheckError ();
-		//	glClearColor ( 0.0f , 0.0f , 0.0f , 1.0f );
-		//	glClear ( GL_COLOR_BUFFER_BIT );
-
-		//	va.Bind ();
-		//	ib.Bind ();
-		//	shader_program.Bind ();
-
-		//	tex2d_path5.Bind ();
-		//	shader_program.SetUniform ( "myAlpha" , i );
-		//	glDrawElements ( GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0 );
-
-		//	//glfw: swap buffersand poll IO events.
-		//	glfwSwapBuffers ( GLFW_Instance::window_ );
-		//	glfwPollEvents ();
-		//}
-
 	}
 
 	void LSMain::PostDraw ()
@@ -238,6 +217,5 @@ namespace JZEngine
 		tex2d_path2.Unbind ();
 		tex2d_path3.Unbind ();
 		tex2d_path4.Unbind ();
-		tex2d_path5.Unbind ();
 	}
 }
