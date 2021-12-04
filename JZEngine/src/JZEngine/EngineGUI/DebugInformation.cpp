@@ -26,7 +26,6 @@ namespace JZEngine
 
 	void DebugInformation::Render(float dt) 
 	{
-		ImGui::PushStyleColor(ImGuiCol_MenuBarBg, { 0, 0, 0, 1 });
 		ImGui::Begin("Performance Visualizer", 0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
 		if (ImGui::BeginMenuBar())
 		{
@@ -80,9 +79,7 @@ namespace JZEngine
 
 		// render global systems timers
 		ImGui::Separator();
-		ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f, 1.0f, 1.0f, 1.0f });
 		ImGui::Text("Global Systems");
-		ImGui::PopStyleColor();
 		ImGui::Separator();
 		if (ImGui::BeginTable("Global Systems", 4))
 		{
@@ -104,9 +101,7 @@ namespace JZEngine
 
 		// render ecs system timers
 		ImGui::Separator();
-		ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f, 1.0f, 1.0f, 1.0f });
 		ImGui::Text("ECS Systems");
-		ImGui::PopStyleColor();
 		ImGui::Separator();
 		if (ImGui::BeginTable("ECS Systems", 4))
 		{
@@ -128,9 +123,7 @@ namespace JZEngine
 
 		// render default timers
 		ImGui::Separator();
-		ImGui::PushStyleColor(ImGuiCol_Text, {0.0f, 1.0f, 1.0f, 1.0f});
 		ImGui::Text("Default Systems");
-		ImGui::PopStyleColor();
 		ImGui::Separator();
 		if (ImGui::BeginTable("Default Systems", 4))
 		{
@@ -151,6 +144,5 @@ namespace JZEngine
 		}
 
 		ImGui::End();
-		ImGui::PopStyleColor();
 	}
 }

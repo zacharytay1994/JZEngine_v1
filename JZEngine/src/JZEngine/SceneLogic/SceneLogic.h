@@ -10,6 +10,9 @@
 #include "../DebugTools/Log.h"
 #include "../Sound/Sound.h"
 
+#include "LogicContainer.h"
+#include "DataContainer.h"
+
 namespace JZEngine
 {
 	namespace ECS
@@ -26,11 +29,12 @@ namespace JZEngine
 		~SceneLogic();
 		static SceneLogic& Instance();
 
-		void RegisterSceneInit(const std::string& name, fpSceneInit function);
-		void RegisterSceneLogic(const std::string& name, fpSceneUpdate function);
+		void RegisterSceneInit( const std::string& sceneName , std::string const& funcName , fpSceneInit function );
+		void RegisterSceneLogic( const std::string& sceneName , std::string const& funcName , fpSceneUpdate function );
 		void UpdateSceneLogic(float dt);
 		void InitSceneLogic();
 		void BuildEntityMap();
+
 		template <typename T>
 		T* GetComponent(const std::string& name, unsigned int id = 0)
 		{
@@ -41,6 +45,25 @@ namespace JZEngine
 			}
 			return &((*entity_map_)[name][id])->GetComponentEX<T>();
 		}
+
+		template <typename T>
+		T& GetComponent ( EntityPacket& entityPacket )
+		{
+			return entityPacket.chunk_->GetComponentEX <T> ( entityPacket.id_ );
+		}
+
+		template <typename T>
+		T& GetCustomComponent ( EntityPacket& entityPacket )
+		{
+			CustomDataContainer& cdc = GetComponent<CustomDataContainer> ( entityPacket );
+			if ( !cdc.initialized )
+			{
+				cdc.initialized = true;
+				return *reinterpret_cast< T* >( cdc.data ) = T ();
+			}
+			return *reinterpret_cast< T* >( cdc.data );
+		}
+
 		ECS::Entity* GetEntity(const std::string& name, unsigned int id = 0);
 		void AddPrefab(const std::string& name, const std::string& parent = "default");
 		void SetECS(ECS::ECSInstance* ecs);
@@ -51,20 +74,39 @@ namespace JZEngine
 
 		void SetCurrentSceneName(const std::string& name);
 		void EntityFlagActive(const std::string& name, bool flag, int id = 0);
-		int GetTexture(const std::string& name);
+		int	GetTexture(const std::string& name);
 		void ChangeScene(const std::string& name);
 
+		/*! LOGIC CONTAINER */
+		void RegisterLogic ( std::string const& name , JZUpdate function);
+
+		template <typename T>
+		void RegisterData ()
+		{
+			if ( ecs_instance_ )
+			{
+				ecs_instance_->RegisterComponent<T> ();
+			}
+		}
+
+		void RegisterSceneLogic ( std::string const& initName , fpSceneInit init , std::string const& updateName , fpSceneUpdate update );
+
+		std::unordered_map<std::string , fpSceneInit>* init_functions_ { nullptr };
+		std::unordered_map<std::string , fpSceneUpdate>* update_functions_ { nullptr };
+
+		std::unordered_map<std::string , fpSceneInit>* scene_inits_ { nullptr };
+		std::unordered_map<std::string , fpSceneUpdate>* scene_updates_ { nullptr };
+
+		std::unordered_map<std::string , std::string>* scene_inits_names_ { nullptr };
+		std::unordered_map<std::string , std::string>* scene_updates_names_ { nullptr };
 
 	private:
-
 
 		std::string* scene_to_change_to_{ nullptr };
 		bool scene_to_be_changed_{ false };
 		ECS::ECSInstance* ecs_instance_{ nullptr };
 		SceneTree* scene_tree_{ nullptr };
 		SoundSystem* soundsys{ nullptr };
-		std::unordered_map<std::string, fpSceneInit>* scene_inits_{ nullptr };
-		std::unordered_map<std::string, fpSceneUpdate>* scene_updates_{ nullptr };
 		std::unordered_map<std::string, std::vector<ECS::Entity*>>* entity_map_{ nullptr };
 		std::string* current_scene_name_{ nullptr };
 

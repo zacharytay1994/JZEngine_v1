@@ -135,7 +135,7 @@ namespace JZEngine
             // to clear the console
             bool clear = ImGui::Button("Clear");
             ImGui::SameLine();
-            Filter.Draw("Filter", -100.0f);
+            Filter.Draw(" Filter", -100.0f);
 
             ImGui::Separator();
 

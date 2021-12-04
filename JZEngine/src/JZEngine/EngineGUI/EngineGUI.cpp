@@ -30,6 +30,7 @@ namespace JZEngine
 	//Mat4f projection;
 	//Mat4f transform; //{ {100, 0, 0, 0}, { 0,100,0,0 }, { 0,0,1,0 }, { 0,0,0,1 }};
 	//Mat3f EngineGUI::camera_transform_;
+	ImVec4 EngineGUI::icon_col_ { 0,0,0,1 };
 	EngineGUI::EngineGUI()
 		:
 		inspector_(5.0f / 6.0f, 1.0f / 46.0f, 1.0f / 6.0f, 45.0f / 46.0f),
@@ -90,6 +91,8 @@ namespace JZEngine
 		ImGui::NewFrame();
 		ImGuizmo::BeginFrame();
 
+		ImGui::PushFont(editor_font_);
+		ImGui::PopFont();
 		// engine gui shortcuts
 		/*if (InputHandler::IsKeyPressed(KEY::KEY_TAB))
 		{
@@ -97,9 +100,36 @@ namespace JZEngine
 		}*/
 
 		// render all engine gui parts
+		UpdateTheme ( dt );
 
 		if (!Camera::fullscreen)
 		{
+			std::shared_ptr<FolderInterface> folder_interface = GetInterface<FolderInterface>();
+			if (folder_interface->selected_texture_ != "")
+			{
+				inspector_.requested_texture_ = folder_interface->selected_texture_;
+				//inspector_.requesting_texture_ = false;
+				folder_interface->selected_texture_ = "";
+			}
+
+			if (inspector_.requesting_texture_)
+			{
+				if (!folder_interface->active_)
+				{
+					folder_interface->ToggleOnOff();
+					folder_interface->select_enabled_ = true;
+					folder_interface->mode = FolderInterface::DISPLAY::RESOURCES_TEXTURES;
+					folder_interface->ResetAllPreviews();
+				}
+				else
+				{
+					folder_interface->select_enabled_ = true;
+					folder_interface->mode = FolderInterface::DISPLAY::RESOURCES_TEXTURES;
+					folder_interface->ResetAllPreviews();
+				}
+				inspector_.requesting_texture_ = false;
+			}
+
 			console_.Render();
 			scene_tree_.Render();
 			inspector_.Render(scene_tree_.GetSelectedEntity());
@@ -107,6 +137,30 @@ namespace JZEngine
 			for (auto& interface : imgui_interfaces_)
 			{
 				interface.second.interface_->RenderInterface(dt);
+			}
+
+			// check if inspector is requesting texture, open folder interface
+			//if (inspector_.requesting_texture_)
+			//{
+			//	std::shared_ptr<FolderInterface> folder_interface = GetInterface<FolderInterface>();
+			//	if (!folder_interface->active_)
+			//	{
+			//		folder_interface->ToggleOnOff();
+			//	}
+
+			//	// if folder interface selected texture != "", pass it to inspector
+			//	if (folder_interface->selected_texture_ != "")
+			//	{
+			//		inspector_.requested_texture_ = folder_interface->selected_texture_;
+			//		inspector_.requesting_texture_ = false;
+			//		folder_interface->selected_texture_ = "";
+			//	}
+			//}
+
+			// if folder interface selected texture != "", pass it to inspector
+			if (inspector_.requested_texture_ != "")
+			{
+				inspector_.requested_texture_ = "";
 			}
 		}
 		else
@@ -119,6 +173,18 @@ namespace JZEngine
 			//		interface.second.interface_->RenderInterface(dt);
 			//	}
 			//}
+			ImGui::SetNextWindowBgAlpha(0.0f);
+			ImGui::SetNextWindowPos({ 0.0f, 0.0f }, ImGuiCond_Always);
+			ImGui::SetNextWindowSize({ 10.0f, 10.0f }, ImGuiCond_Always);
+			bool open = true;
+			ImGui::Begin("FullscreenOff", &open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
+			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("fullscreenicon")->GetRendererID()), { 10.0f, 10.0f }))
+			{
+				Camera::fullscreen = !Camera::fullscreen;
+				GLFW_Instance::UpdateViewportDimensions();
+				Log::Info("Main", "Toggle fullscreen: {}", Camera::fullscreen);
+			}
+			ImGui::End();
 		}
 
 		ECS::Entity* selected_entity = scene_tree_.GetSelectedEntity();
@@ -179,6 +245,7 @@ namespace JZEngine
 		Camera::camera_transform_ = Math::GetModelTransformNonTransposed(-Camera::camera_position_, 0.0f, { Camera::camera_zoom_, Camera::camera_zoom_ }, { 1.0f, 1.0f });
 
 		//InputHandler::CalculateMouseWorldPosition(GetSystem<GLFW_Instance>()->window_, MenuBar::height_);
+
 	}
 
 	void EngineGUI::CloseAllGroupedInterface(int group) {
@@ -209,6 +276,79 @@ namespace JZEngine
 		ImGui_ImplGlfw_InitForOpenGL(glfwwindow, true);
 		ImGui_ImplOpenGL3_Init("#version 330");
 		ImGui::StyleColorsDark();
+
+		ImGuiStyle& style = ImGui::GetStyle();
+
+		style.Colors[ImGuiCol_Button]			= ImVec4( curr_col1.x , curr_col1.y , curr_col1.z , curr_col1.w );
+		style.Colors[ImGuiCol_MenuBarBg]		= ImVec4( curr_col1.x , curr_col1.y , curr_col1.z , curr_col1.w );
+		style.Colors[ImGuiCol_ButtonHovered]	= ImVec4( curr_col2.x , curr_col2.y , curr_col2.z , curr_col2.w );
+		style.Colors[ImGuiCol_WindowBg]			= ImVec4( curr_col2.x , curr_col2.y , curr_col2.z , curr_col2.w );
+		style.Colors[ImGuiCol_Border]			= ImVec4( curr_col3.x , curr_col3.y , curr_col3.z , curr_col3.w );
+		style.Colors[ImGuiCol_Text]				= ImVec4( curr_col4.x , curr_col4.y , curr_col4.z , curr_col4.w );
+		style.Colors[ImGuiCol_TitleBg]			= ImVec4( curr_col5.x , curr_col5.y , curr_col5.z , curr_col5.w );
+		style.Colors[ImGuiCol_TitleBgActive]	= ImVec4( curr_col5.x , curr_col5.y , curr_col5.z , curr_col5.w );
+		style.Colors[ImGuiCol_PopupBg]			= ImVec4( curr_col2.x , curr_col2.y , curr_col2.z , curr_col2.w );
+		style.Colors[ImGuiCol_FrameBg]			= ImVec4( curr_col1.x , curr_col1.y , curr_col1.z , curr_col1.w );
+		style.Colors[ImGuiCol_Separator]		= ImVec4( curr_col1.x , curr_col1.y , curr_col1.z , curr_col1.w );
+
+		editor_font_ = ImGui::GetIO().Fonts->AddFontFromFileTTF("Assets/Fonts/arlrdbd.ttf", 15.0f);
+		/*if (editor_font_ == nullptr)
+		{
+			std::cout << "wrong" << std::endl;
+		}*/
+	}
+
+	void EngineGUI::UpdateTheme ( float dt )
+	{
+		if ( light_theme_ )
+		{
+			TransitionColor ( curr_col1 , light_col1 , dt );
+			TransitionColor ( curr_col2 , light_col2 , dt );
+			TransitionColor ( curr_col3 , light_col3 , dt );
+			TransitionColor ( curr_col4 , light_col4 , dt );
+			TransitionColor ( curr_col5 , light_col5 , dt );
+
+			TransitionColor ( curr_icon_col , light_icon_col , dt );
+		}
+		else
+		{
+			TransitionColor ( curr_col1 , dark_col1 , dt );
+			TransitionColor ( curr_col2 , dark_col2 , dt );
+			TransitionColor ( curr_col3 , dark_col3 , dt );
+			TransitionColor ( curr_col4 , dark_col4 , dt );
+			TransitionColor ( curr_col5 , dark_col5 , dt );
+
+			TransitionColor ( curr_icon_col , dark_icon_col , dt );
+		}
+
+		icon_col_ = { curr_icon_col.x, curr_icon_col.y, curr_icon_col.z, curr_icon_col.w };
+
+		ImGuiStyle& style = ImGui::GetStyle ();
+
+		style.Colors[ ImGuiCol_Button ]			= ImVec4 ( curr_col1.x , curr_col1.y , curr_col1.z , curr_col1.w );
+		style.Colors[ ImGuiCol_MenuBarBg ]		= ImVec4 ( curr_col1.x , curr_col1.y , curr_col1.z , curr_col1.w );
+		style.Colors[ ImGuiCol_ButtonHovered ]	= ImVec4 ( curr_col2.x , curr_col2.y , curr_col2.z , curr_col2.w );
+		style.Colors[ ImGuiCol_WindowBg ]		= ImVec4 ( curr_col2.x , curr_col2.y , curr_col2.z , curr_col2.w );
+		style.Colors[ ImGuiCol_Border ]			= ImVec4 ( curr_col3.x , curr_col3.y , curr_col3.z , curr_col3.w );
+		style.Colors[ ImGuiCol_Text ]			= ImVec4 ( curr_col4.x , curr_col4.y , curr_col4.z , curr_col4.w );
+		style.Colors[ ImGuiCol_TitleBg ]		= ImVec4 ( curr_col5.x , curr_col5.y , curr_col5.z , curr_col5.w );
+		style.Colors[ ImGuiCol_TitleBgActive ]	= ImVec4 ( curr_col5.x , curr_col5.y , curr_col5.z , curr_col5.w );
+		style.Colors[ ImGuiCol_PopupBg ]		= ImVec4 ( curr_col2.x , curr_col2.y , curr_col2.z , curr_col2.w );
+		style.Colors[ ImGuiCol_FrameBg ]		= ImVec4 ( curr_col1.x , curr_col1.y , curr_col1.z , curr_col1.w );
+		style.Colors[ ImGuiCol_Separator ]		= ImVec4 ( curr_col1.x , curr_col1.y , curr_col1.z , curr_col1.w );
+	}
+
+	void EngineGUI::TransitionColor ( Vec4f& curr , Vec4f theme, float dt )
+	{
+		if ( ( theme - curr ).LenSq () < threshold_ )
+		{
+			curr = theme;
+		}
+		else
+		{
+			curr += ( theme - curr ) * dt * transition_speed_;
+		}
+		//curr += ( theme - curr ) * transition_speed_ * dt;
 	}
 
 	Console* EngineGUI::GetConsole()

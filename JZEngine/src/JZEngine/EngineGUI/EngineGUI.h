@@ -79,10 +79,15 @@ namespace JZEngine
 		//float camera_zoom_{ 1.0f };
 
 		SceneTree* GetSceneTree();
+
+		bool light_theme_ = true;
+		static ImVec4 icon_col_;
 	private:
 		Inspector	inspector_;		/*!< engine inspector */
 		Console		console_;		/*!< engine console */
 		SceneTree	scene_tree_;	/*!< engine console */
+
+		ImFont* editor_font_;
 
 		ECS::ECSInstance* ecs_instance_{ nullptr };
 		// scene camera
@@ -110,5 +115,45 @@ namespace JZEngine
 		 * ****************************************************************************************************
 		*/
 		void InitializeWithGLFW(GLFWwindow*& glfwwindow);
+
+		/*! COLOR SCHEMES */
+
+		/*! light theme */
+		Vec4f light_col1 = { 0.6f, 0.6f, 0.6f, 1.0f };
+		Vec4f light_col2 = { 0.8f, 0.8f, 0.8f, 1.0f };
+		Vec4f light_col3 = { 0.5f, 0.5f, 0.5f, 1.0f };
+		Vec4f light_col4 = { 0.0f, 0.0f, 0.0f, 1.0f };
+		Vec4f light_col5 = { 0.9f, 0.9f, 0.9f, 1.0f };
+
+		Vec4f light_icon_col = { 0.0f, 0.0f, 0.0f, 1.0f };
+
+		/*! dark theme */
+		Vec4f dark_col1 = { 0.25f, 0.25f, 0.25f, 1.0f };
+		Vec4f dark_col2 = { 0.0f, 0.0f, 0.0f, 1.0f };
+		Vec4f dark_col3 = { 0.2f, 0.2f, 0.2f, 1.0f };
+		Vec4f dark_col4 = { 0.9f, 0.9f, 0.9f, 1.0f };
+		Vec4f dark_col5 = { 0.1f, 0.1f, 0.1f, 1.0f };
+
+		Vec4f dark_icon_col = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+		/*! current theme */
+		/*Vec4f curr_col1 = { 0.6f, 0.6f, 0.6f, 1.0f };
+		Vec4f curr_col2 = { 0.8f, 0.8f, 0.8f, 1.0f };
+		Vec4f curr_col3 = { 0.5f, 0.5f, 0.5f, 1.0f };
+		Vec4f curr_col4 = { 0.0f, 0.0f, 0.0f, 1.0f };
+		Vec4f curr_col5 = { 0.9f, 0.9f, 0.9f, 1.0f };*/
+		Vec4f curr_col1 = { 0,0,0,1 };
+		Vec4f curr_col2 = { 0,0,0,1 };
+		Vec4f curr_col3 = { 0,0,0,1 };
+		Vec4f curr_col4 = { 0,0,0,1 };
+		Vec4f curr_col5 = { 0,0,0,1 };
+
+		Vec4f curr_icon_col = { 0.9f, 0.9f, 0.9f, 1.0f };
+
+		float threshold_ = 0.002f;
+		float transition_speed_ = 4.0f;
+
+		void UpdateTheme ( float dt );
+		void TransitionColor ( Vec4f& curr , Vec4f theme , float dt );
 	};
 }

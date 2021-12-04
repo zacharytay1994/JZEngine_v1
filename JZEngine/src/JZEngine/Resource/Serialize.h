@@ -35,16 +35,31 @@ namespace JZEngine
 			WRITE = 1
 		};
 
-		template <typename STREAM, typename...ARGS>
-		static void SERIALIZE(STREAM& stream, MODE mode, ARGS&&... args)
+		template <typename STREAM, typename ARG>
+		static void StreamToArg ( STREAM& stream , ARG& arg )
 		{
-			if (mode == MODE::READ)
+			if ( stream.peek () != 'c' )
 			{
-				((stream >> args), ...);
+				stream >> arg;
+				std::cout << arg << std::endl;
 			}
 			else
 			{
-				((stream << args << " "), ...);
+				arg = ARG ();
+				std::cout <<  "c detected" << stream.peek () << std::endl;
+			}
+		}
+
+		template <typename STREAM, typename...ARGS>
+		static void SERIALIZE(STREAM& stream, MODE mode, ARGS&&... args)
+		{
+			if ( mode == MODE::READ )
+			{
+				( ( stream >> args ) , ... );
+			}
+			else
+			{
+				( ( stream << args << " " ) , ... );
 			}
 		}
 
@@ -59,7 +74,55 @@ namespace JZEngine
 		static void ListAllPrefabFiles();
 
 		template <typename STREAM>
-		static int DeSerializeAllChildEntities(ECS::ECSInstance* ecs, STREAM& file, std::stringstream& ss, unsigned int parent = -1)
+		static int DeSerializeAllChildEntities ( ECS::ECSInstance* ecs , STREAM& file , std::stringstream& ss , unsigned int parent = -1 )
+		{
+			// read line of file
+			// if no parent
+			int id;
+			if ( parent == -1 )
+			{
+				id = ecs->CreateEntity ();
+			}
+			else // else create with parent
+			{
+				id = ecs->CreateEntity ( parent );
+			}
+			ECS::Entity& entity = ecs->entity_manager_.GetEntity ( id );
+			// read data and load entity
+			ss >> entity.name_;
+			int children;
+			ss >> children;
+
+			// deserialize all components
+			char c;
+			while ( ss >> c )
+			{
+				switch ( c )
+				{
+				case 'c':
+					int i;
+					ss >> i;
+					entity.AddComponent ( i );
+					DeSerializeECSConfigComponent ( ECS::ECSConfig::Component () , i , entity , ss );
+					break;
+				}
+			}
+
+			// deserialize all children
+			for ( int i = 0; i < children; ++i )
+			{
+				std::string line;
+				std::getline ( file , line );
+				std::stringstream next_ss;
+				next_ss << line;
+				DeSerializeAllChildEntities ( ecs , file , next_ss , id );
+			}
+
+			return id;
+		}
+
+		template <typename STREAM>
+		static int DeSerializeAllChildEntities2(ECS::ECSInstance* ecs, STREAM& file, std::stringstream& ss, unsigned int parent = -1)
 		{
 			// read line of file
 			// if no parent
@@ -88,6 +151,9 @@ namespace JZEngine
 					int i;
 					ss >> i;
 					entity.AddComponent(i);
+					std::string component_name;
+					ss >> component_name;
+					ss >> component_name;
 					DeSerializeECSConfigComponent(ECS::ECSConfig::Component(), i, entity, ss);
 					break;
 				}
@@ -99,8 +165,12 @@ namespace JZEngine
 				std::string line;
 				std::getline(file, line);
 				std::stringstream next_ss;
-				next_ss << line;
-				DeSerializeAllChildEntities(ecs, file, next_ss, id);
+				while ( line[ 0 ] != '!' )
+				{
+					next_ss << line;
+					std::getline ( file , line );
+				}
+				DeSerializeAllChildEntities2(ecs, file, next_ss, id);
 			}
 
 			return id;
@@ -159,8 +229,12 @@ namespace JZEngine
 		}
 
 		static void DeserializeScene(ECS::ECSInstance* ecs, const std::string& name);
-		static void SerializeAllChildEntities(ECS::ECSInstance* ecs, std::ofstream& file, ECS::Entity& entity);
+		static void DeserializeScene2( ECS::ECSInstance* ecs , const std::string& name );
+
+		static void SerializeAllChildEntities (ECS::ECSInstance* ecs, std::ofstream& file, ECS::Entity& entity);
+		static void SerializeAllChildEntities2 ( ECS::ECSInstance* ecs , std::ofstream& file , ECS::Entity& entity );
 		static bool SerializeScene(ECS::ECSInstance* ecs_instance_, const std::string& name);
+		static bool SerializeScene2 ( ECS::ECSInstance* ecs_instance_ , const std::string& name );
 
 		template <typename COMPONENT>
 		static void SerializeComponent(COMPONENT& component, std::stringstream& stream, MODE mode = MODE::WRITE)
@@ -313,6 +387,54 @@ namespace JZEngine
 		{
 			SERIALIZE(stream, mode,
 				component.font_size_);
+		}
+
+		template <>
+		static void SerializeComponent ( CustomLogicContainer& component , std::stringstream& stream , MODE mode )
+		{
+			if ( mode == MODE::WRITE )
+			{
+				// get string representation of texture_id
+				for ( int i = 0; i < MAX_LOGIC_PER_ENTITY; ++i )
+				{
+					SERIALIZE ( stream , mode , LogicContainer::Instance ().GetUpdateName ( component.updates[ i ] ) );
+				}
+			}
+			else if ( mode == MODE::READ )
+			{
+				// get string representation of texture_id
+				for ( int i = 0; i < MAX_LOGIC_PER_ENTITY; ++i )
+				{
+					std::string name;
+					SERIALIZE ( stream , mode , name );
+					component.updates[ i ] = LogicContainer::Instance ().GetUpdateID(name);
+				}
+			}
+		}
+
+		template <>
+		static void SerializeComponent ( CustomDataContainer& component , std::stringstream& stream , MODE mode )
+		{
+			if ( mode == MODE::WRITE )
+			{
+				// serialize initialized flag
+				SERIALIZE ( stream , mode , component.initialized );
+				// serialize data
+				for ( int i = 0; i < CustomDataContainer::CUSTOM_DATA_SIZE; ++i )
+				{
+					SERIALIZE ( stream , mode , component.data[ i ] );
+				}
+			}
+			else if ( mode == MODE::READ )
+			{
+				// deserialize initialized flag
+				SERIALIZE ( stream , mode , component.initialized );
+				// deserialize data
+				for ( int i = 0; i < CustomDataContainer::CUSTOM_DATA_SIZE; ++i )
+				{
+					SERIALIZE ( stream , mode , component.data[ i ] );
+				}
+			}
 		}
 
 		/*!_______________________________________________________________________________________________________*/

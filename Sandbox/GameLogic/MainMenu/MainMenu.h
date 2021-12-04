@@ -21,7 +21,7 @@ enum class MainMenuState
 	Quit
 };
 MainMenuState current_main_menu_state = MainMenuState::Main;
-
+bool playingbgm{ false };
 float master_volume_{ 0.33f };
 float music_volume_{ 0.2f };
 float sfx_volume_{ 0.2f };
@@ -330,8 +330,11 @@ void UpdateCreditsMenu(float dt)
 void InitMainMenu()
 {
 	current_main_menu_state = MainMenuState::Main;
-
-	Scene().PlaySound("bgm");
+	if (playingbgm == false)
+	{
+		Scene().PlaySound("bgm");
+		playingbgm = true;
+	}
 	ToggleOptions(false);
 	ToggleQuit(false);
 	ToggleCredits(false);
@@ -341,6 +344,15 @@ void UpdateMainMenu(float dt)
 {
 	if (JZEngine::InputHandler::IsMouseTriggered(JZEngine::MOUSE::MOUSE_BUTTON_1))
 		Scene().PlaySound("click");
+
+	//if (JZEngine::InputHandler::IsKeyTriggered(JZEngine::KEY::KEY_P))
+	//{
+	//	Scene().GetSoundSystem()->setPauseSoundSystem(true);
+	//}
+	//if (JZEngine::InputHandler::IsKeyTriggered(JZEngine::KEY::KEY_O))
+	//{
+	//	Scene().GetSoundSystem()->setPauseSoundSystem(false);
+	//}
 
 	switch (current_main_menu_state)
 	{

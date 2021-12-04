@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Math/JZMath.h"
+
 namespace JZEngine
 {
 	struct Transform

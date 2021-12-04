@@ -15,6 +15,7 @@ namespace JZEngine
 	Text::Text ()
 	{
 		RegisterComponents<TextData , Transform, SpriteLayer> ();
+		update_on_pause_ = true;
 	}
 
 	void Text::Update ( const float& dt )
