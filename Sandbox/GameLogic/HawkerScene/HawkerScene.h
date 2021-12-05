@@ -209,12 +209,128 @@ float total_time{ 60.0f };
 float current_time{ 0.0f };
 bool win{ false };
 bool lose{ false };
-float initial_progress_scale{ 1.0f };
+float initial_progress_scale{ 7.537f };
+float current_coin_scale { 0.0f };
 
 void UpdateCoinProgressBar()
 {
-	Scene().GetComponent<JZEngine::Transform>("ui_coin_progress")->scale_.x 
+	current_coin_scale
 		= static_cast<float>(current_coins) / static_cast<float>(target_coins) * initial_progress_scale;
+}
+
+void AnimateCoinProgreeBar (float dt)
+{
+	float& x = Scene ().GetComponent<JZEngine::Transform> ( "ui_coin_progress" )->scale_.x;
+	if ( x < current_coin_scale)
+	{
+		x += dt;
+	}
+}
+
+bool coin_bar_animation_play = false;
+bool coin_bar_played_once = false;
+bool coin_sparkles_animation_play = false;
+int coin_sparkles_play_count = 0;
+bool coin_animation_play = false;
+bool coin_played_once = false;
+bool coin_suck = false;
+JZEngine::Vec2f og_coin_position {};
+float og_coin_distance_from_bar {};
+void UpdateCoinProgressBarAnimation ()
+{
+	if ( coin_bar_animation_play )
+	{
+		Scene ().GetComponent<JZEngine::Animation2D> ( "CoinBar" )->animation_speed_ = 0.1f;
+		if (  Scene ().GetComponent<JZEngine::Animation2D> ( "CoinBar" )->frame_ == 0 )
+		{
+			if ( coin_bar_played_once )
+			{
+				coin_bar_animation_play = false;
+				coin_bar_played_once = false;
+			}
+			else
+			{
+				coin_bar_played_once = true;
+			}
+		}
+	}
+	else
+	{
+		Scene ().GetComponent<JZEngine::Animation2D> ( "CoinBar" )->animation_speed_ = 1000.0f;
+	}
+}
+
+void UpdateCoinSparklesAnimation ()
+{
+	if ( coin_sparkles_animation_play )
+	{
+		Scene ().GetComponent<JZEngine::Animation2D> ( "CoinSparkles" )->animation_speed_ = 0.1f;
+		if ( Scene ().GetComponent<JZEngine::Animation2D> ( "CoinSparkles" )->frame_ == 0 )
+		{
+			if ( coin_sparkles_play_count > 4 )
+			{
+				Scene ().EntityFlagActive ( "CoinSparkles" , false );
+				coin_sparkles_animation_play = false;
+				coin_sparkles_play_count = 0;
+			}
+			else
+			{
+				++coin_sparkles_play_count;
+			}
+		}
+	}
+	else
+	{
+		Scene ().GetComponent<JZEngine::Animation2D> ( "CoinSparkles" )->animation_speed_ = 1000.0f;
+	}
+}
+
+void UpdateCoinAnimation (float dt)
+{
+	if ( coin_animation_play )
+	{
+		Scene ().GetComponent<JZEngine::Animation2D> ( "CoinOnTable" )->animation_speed_ = 0.03f;
+		if ( Scene ().GetComponent<JZEngine::Animation2D> ( "CoinOnTable" )->frame_ == Scene ().GetComponent<JZEngine::Animation2D> ( "CoinOnTable" )->max_frames_ - 1 )
+		{
+			if ( coin_played_once )
+			{
+				coin_animation_play = false;
+				coin_played_once = false;
+				coin_suck = true;
+
+				UpdateCoinProgressBar ();
+				coin_bar_animation_play = true;
+				coin_sparkles_animation_play = true;
+				Scene ().EntityFlagActive ( "CoinSparkles" , true );
+			}
+			else
+			{
+				coin_played_once = true;
+			}
+		}
+	}
+	else
+	{
+		Scene ().GetComponent<JZEngine::Animation2D> ( "CoinOnTable" )->animation_speed_ = 1000.0f;
+	}
+	if ( coin_suck )
+	{
+		JZEngine::Vec2f dir = Scene ().GetComponent<JZEngine::Transform> ( "CoinBar" )->position_ - Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_;
+		float length = dir.Len ();
+		if ( length > 10.0f )
+		{
+			Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_ += 2000.0f * dir.Normalize () * dt;
+			Scene ().GetComponent<JZEngine::NonInstanceShader> ( "CoinOnTable" )->tint.w = length / og_coin_distance_from_bar * 2.0f;
+		}
+		else
+		{
+			coin_suck = false;
+			Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_ = og_coin_position;
+			Scene ().GetComponent<JZEngine::Animation2D> ( "CoinOnTable" )->frame_ = 0;
+			Scene ().GetComponent<JZEngine::NonInstanceShader> ( "CoinOnTable" )->tint.w = 1.0f;
+			Scene ().EntityFlagActive ( "CoinOnTable" , false );
+		}
+	}
 }
 
 void UpdateGoalProgressBar(float dt)
@@ -317,6 +433,10 @@ void UpdateMainScene(float dt)
 {
 	UpdateHawkerQueue(dt);
 	//UpdateGoalProgressBar(dt);
+	AnimateCoinProgreeBar ( dt );
+	UpdateCoinProgressBarAnimation ();
+	UpdateCoinSparklesAnimation ();
+	UpdateCoinAnimation ( dt );
 
 	// process click inputs
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_springroll"))
@@ -517,7 +637,12 @@ void UpdateMainScene(float dt)
 					// if successfully served customer increment coins
 					current_coins += coin_increment;
 					SetCoinText("$", current_coins);
-					UpdateCoinProgressBar();
+					/*UpdateCoinProgressBar();
+					coin_bar_animation_play = true;
+					coin_sparkles_animation_play = true;*/
+					coin_animation_play = true;
+					//Scene ().EntityFlagActive ( "CoinSparkles" , true );
+					Scene ().EntityFlagActive ( "CoinOnTable" , true );
 					if (current_coins >= target_coins)
 					{
 						win = true;
@@ -540,6 +665,11 @@ void HawkerSceneInit()
 	// initialize scene
 	current_hawker_scene_state = HawkerSceneState::Main;
 	//esc_again = false;
+	Scene ().EntityFlagActive ( "CoinSparkles" , false );
+	og_coin_position = Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_;
+	og_coin_distance_from_bar = (Scene ().GetComponent<JZEngine::Transform> ( "CoinBar" )->position_ 
+		- Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_).Len();
+	Scene ().EntityFlagActive ( "CoinOnTable" , false );
 
 	ToggleWin(false);
 
@@ -557,6 +687,7 @@ void HawkerSceneInit()
 
 	target_coins = 500;
 	current_coins = 0;
+	current_coin_scale = 0.0f;
 	total_time = 60.0f;
 	current_time = 0.0f;
 	//current_angry_customers = 0;
@@ -564,9 +695,18 @@ void HawkerSceneInit()
 	lose = false;
 
 	// set scale of coin bar and angry customer bar to 0
-	initial_progress_scale = 6.4f;
-	Scene().GetComponent<JZEngine::Transform>("ui_coin_progress")->scale_.x = 0.0f;
-	Scene().GetComponent<JZEngine::Transform>("ui_goal_progress")->scale_.x = 0.0f;
+	//initial_progress_scale = 7.537f;
+
+	coin_bar_animation_play = false;
+	coin_bar_played_once = false;
+	coin_sparkles_animation_play = false;
+	coin_sparkles_play_count = 0;
+	coin_animation_play = false;
+	coin_played_once = false;
+	coin_suck = false;
+
+	Scene().GetComponent<JZEngine::Transform>("ui_coin_progress")->scale_.x = 1.0f;
+	Scene().GetComponent<JZEngine::Transform>("ui_goal_progress")->scale_.x = 1.0f;
 
 	// initialize cursors
 	ResetCursors();

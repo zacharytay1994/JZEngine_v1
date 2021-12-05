@@ -1,0 +1,177 @@
+Tree1 0 c 0 0 1.27115 0 0 0 36.6847 29.359 50 50 c 1 -12 c 2 Tree_Left1_Background_Hawker_2 c 3 2 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Sky 0 c 0 0 0 0 0 0 31.9285 18.5829 50 50 c 1 -100 c 2 bg_skypan c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Clouds 0 c 0 491.984 127.12 0 0 0 31.6 12.918 50 50 c 1 -30 c 2 bg_hawker_clouds c 3 0 0 0 0 c 7 0 10 0 c 10 0 0.420512 1 1 0 1 1 
+Middlegroud 0 c 0 1.24998 -8.89828 0 0 0 32.4999 21.2414 50 50 c 1 -11 c 2 bg_hawker_misc c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Tree6 0 c 0 -12.5 -15.2543 0 0 0 41.0109 19.844 50 50 c 1 -12 c 2 Tree_Middle1_Background_Hawker_5 c 3 2 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+HawkerStalls 0 c 0 4.99997 3.81351 0 0 0 39.4162 21.4432 50 50 c 1 -10 c 2 bg_hawker_stalls c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+HawkerStalls2 0 c 0 -11.25 22.8814 0 0 0 35.3333 17.6752 50 50 c 1 -8 c 2 bg_hawker_stalls2 c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Table 0 c 0 -3.75004 -222.458 0 0 0 32.64 9.49811 50 50 c 1 20 c 2 Table c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Tree5 0 c 0 -7.49999 -6.35593 0 0 0 33.6133 18.2484 50 50 c 1 -12 c 2 Tree_Left3_Background_Hawker_4 c 3 2 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Tree4 0 c 0 423.751 -66.1003 0 0 0 28.9553 22.442 50 50 c 1 -12 c 2 Tree_Left2_Background_Hawker_3 c 3 2 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Tree3 0 c 0 -2.50006 -2.54237 0 0 0 35.73 19.2942 50 50 c 1 -9 c 2 Tree_Left2_Background_Hawker_11 c 3 2 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Tree2 0 c 0 -5.00003 -16.5254 0 0 0 36.6626 19.5444 50 50 c 1 -12 c 2 Tree_Left1_Background_Hawker_9 c 3 2 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+HawkerTables 0 c 0 -1.24998 21.6101 0 0 0 32.5218 18.4372 50 50 c 1 -5 c 2 bg_hawker_tables c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+HawkerUmbrella 0 c 0 0 0 0 0 0 32.8695 18.2935 50 50 c 1 -4 c 2 bg_hawker_umbrellas c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Queue 5 c 0 -262.5 74.2852 0 0 0 1 1 50 50 c 1 10 c 2 emptyimage c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Customer 0 c 0 -1062.5 74.2852 -800 0 0 7 7 50 50 c 1 8 c 2 bigguy_idle c 3 0 0 0 0 c 10 1 0.0500001 0.1 12 2 12 1 
+Customer 0 c 0 -1062.5 74.2852 -800 0 0 7 11 50 50 c 1 8 c 2 tallguy_idle c 3 0 0 0 0 c 10 1 0.0333334 0.1 13 9 13 1 
+Customer 0 c 0 -1062.5 74.2852 -800 0 0 7 7 50 50 c 1 9 c 2 ahma_angry c 3 0 0 0 0 c 10 1 0.0718765 0.1 18 1 18 1 
+Customer 0 c 0 -1062.5 74.2852 -800 0 0 7 7 50 50 c 1 10 c 2 ahma_angry c 3 0 0 0 0 c 10 1 0.0718765 0.1 18 3 18 1 
+Customer 0 c 0 -1062.5 74.2852 -800 0 0 7 7 50 50 c 1 8 c 2 bigguy_idle c 3 0 0 0 0 c 10 1 0.0363109 0.1 12 7 12 1 
+FoodTray 0 c 0 197.5 -25.4237 0 0 0 16.3254 10.3283 50 50 c 1 25 c 2 dryfood c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+SideTray 0 c 0 733.75 -7.6271 0 0 0 10.6739 10.6739 50 50 c 1 24 c 2 BigSteamer c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Plate 0 c 0 -322.5 -329.237 0 0 0 4.91771 2.8 50 50 c 1 25 c 2 Plate c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Tongs 0 c 0 -86.2501 -338.136 0 0 -14.7989 4.69173 3.27 50 50 c 1 25 c 2 Tongs c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Scizzors 0 c 0 156.25 -344.492 0 0 -179.416 5.27791 4.02933 50 50 c 1 25 c 2 Scissors c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Trashbin 0 c 0 468.751 -326.694 0 0 0 2.98 3.01108 50 50 c 1 25 c 2 trashbin c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+RoundSteamer 0 c 0 -851.249 -72.4565 0 0 0 8.57423 8.1718 50 50 c 1 25 c 2 RoundSteamers c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Tray 0 c 0 -381.25 -127.119 0 0 0 12.8308 6.61906 50 50 c 1 24 c 2 Tray c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Pepper 0 c 0 -601.249 -99.1514 0 0 0 1.9 2.37502 50 50 c 1 24 c 2 ChillPowder c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+SpringOnion 0 c 0 -549.999 -49.575 0 0 0 4.54539 2.9306 50 50 c 1 23 c 2 SpringOnions c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+bb_springroll 0 c 0 16.2499 -59.7457 0 0 0 1 1 50 50 c 15 100 40 
+bb_wanton 0 c 0 17.5001 -153.814 0 0 0 1 1 50 50 c 15 120 40 
+bb_seaweedchicken 0 c 0 273.75 -58.4746 0 0 0 1 1 50 50 c 15 100 40 
+bb_carrotcake 0 c 0 317.5 -155.085 0 0 0 1 1 50 50 c 15 120 40 
+bb_plate 0 c 0 -325 -329.237 0 0 0 1 1 50 50 c 15 60 50 
+bb_tongs 0 c 0 -88.7501 -340.678 0 0 0 1 1 50 50 c 15 90 50 
+bb_scizzors 0 c 0 165 -340.678 0 0 0 1 1 50 50 c 15 100 60 
+bb_trashbin 0 c 0 470.001 -326.694 0 0 0 1 1 50 50 c 15 60 60 
+Cursor 7 c 0 -228.75 -94.9894 0 0 0 1 1 50 50 c 16 
+EmptyTongs 0 c 0 -228.75 -94.9894 0 0 0 3 3 50 50 c 1 50 c 2 tongs_cursor c 3 0 0 0 0 c 10 0 0.536427 1 1 0 1 1 
+TongsCarrotCake 0 c 0 -228.75 -94.9894 0 0 0 3 3 50 50 c 1 50 c 2 tongs_carrotcake c 3 0 0 0 0 c 10 0 0.218302 1 1 0 1 1 
+TongsDumpling 0 c 0 -228.75 -94.9894 0 0 0 3 3 50 50 c 1 50 c 2 tongs_dumplings c 3 0 0 0 0 c 10 0 0.116667 1 1 0 1 1 
+TongsSeaweedChicken 0 c 0 -228.75 -94.9894 0 0 0 3 3 50 50 c 1 50 c 2 tongs_seaweedchicken c 3 0 0 0 0 c 10 0 0.0376774 1 1 0 1 1 
+TongsSpringroll 0 c 0 -228.75 -94.9894 0 0 0 3 3 50 50 c 1 50 c 2 tongs_springroll c 3 0 0 0 0 c 10 0 0.715911 1 1 0 1 1 
+ScizzorsCursor 0 c 0 -228.75 -94.9894 0 0 0 3 3 50 50 c 1 50 c 2 scissors_cursor c 3 0 0 0 0 c 10 0 0.600016 1 1 0 1 1 
+PlateCursor 0 c 0 -228.75 -94.9894 0 0 0 4.2 2.8 50 50 c 1 50 c 2 food_plate c 3 0 0 0 0 c 10 0 0.743139 1 1 0 1 1 
+bb_tray 0 c 0 -355 -146.186 0 0 0 1 1 50 50 c 15 180 70 
+tray_plate 4 c 0 -326.25 -151.271 0 0 0 4.29039 2.48812 50 50 c 1 26 c 2 food_plate c 3 0 0 0 0 c 10 0 0.804651 1 1 0 1 1 
+tray_wanton 0 c 0 -325 -146.186 1.25 5.08479 0 2.08 2.08 50 50 c 1 27 c 2 food_frieddumpling c 3 0 0 0 0 c 10 0 0.683335 1 1 0 1 1 
+tray_seaweedchicken 0 c 0 -327.5 -146.186 -1.25006 5.08466 0 2.21 2.21 50 50 c 1 27 c 2 food_seaweedchicken c 3 0 0 0 0 c 10 0 0.525706 1 1 0 1 1 
+tray_springroll 0 c 0 -335 -148.729 -8.75006 2.54231 0 2 1 50 50 c 1 27 c 2 food_springroll c 3 0 0 0 0 c 10 0 0.228568 1 1 0 1 1 
+tray_carrotcake 0 c 0 -335 -156 -8.75 -4.729 0 2 1 50 50 c 1 27 c 2 food_carrotcake c 3 0 0 0 0 c 10 0 0.593067 1 1 0 1 1 
+bb_customer 0 c 0 -281.25 169.068 0 0 0 1 1 50 50 c 15 100 200 
+OrderUI 8 c 0 -18.7499 319.068 0 0 0 1 1 50 50 
+OrderBoard 0 c 0 -33.7499 301.271 -15 -17.7967 0 3.58858 2.7993 50 50 c 1 50 c 2 ui_foodboard c 3 0 0 0 0 c 10 0 0.0892533 1 1 0 1 1 
+EmptyBar 0 c 0 5.0001 322.882 23.75 3.81354 0 3.094 2.69445 50 50 c 1 50 c 2 ui_emptybar c 3 0 0 0 0 c 10 0 0.535972 1 1 0 1 1 
+GreenBar 0 c 0 -41.5624 258.672 -22.8125 -60.3955 0 5.31854 4.25 50 50 c 1 52 c 2 ui_greenbar c 3 0 0 0 0 c 10 0 0.93726 1 1 0 1 1 
+RedBar 0 c 0 -46.2498 324.153 -27.4999 5.08475 0 5.53752 3.0256 50 50 c 1 51 c 2 ui_redbar c 3 0 0 0 0 c 10 0 0.0892533 1 1 0 1 1 
+OrderWanton 0 c 0 -35.0002 308.898 -16.2503 -10.1698 0 2 2 50 50 c 1 51 c 2 food_frieddumpling c 3 0 0 0 0 c 10 0 0.203819 1 1 0 1 1 
+OrderSeaweed 0 c 0 -33.7501 312.712 -15.0002 -6.3562 0 2 2 50 50 c 1 51 c 2 food_seaweedchicken c 3 0 0 0 0 c 10 0 0.462458 1 1 0 1 1 
+OrderSpringroll 0 c 0 -41.25 303.814 -22.5001 -15.2545 0 2 1 50 50 c 1 51 c 2 food_springroll c 3 0 0 0 0 c 10 0 0.76505 1 1 0 1 1 
+OrderCarrotcake 0 c 0 -32.5 313.983 -13.7501 -5.0849 0 2 1 50 50 c 1 51 c 2 food_carrotcake c 3 0 0 0 0 c 10 0 1.00296 1 1 0 1 1 
+PhoneOptions 0 c 0 -738.749 396.611 0 0 0 1.5604 1.59522 50 50 c 1 50 c 2 ui_phone c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 c 15 12 12 
+CoinBar 0 c 0 431.25 392.324 0 0 0 6.50993 3.43488 50 50 c 1 51 c 2 CoinbarPopOut_Spritesheet_Hawker c 3 0 0 0 0 c 10 1 75.7488 1000 2 0 4 2 
+GoalBar 0 c 0 670 400 0 0 0 4.45 1.35 50 50 c 1 51 c 2 ui_goalbar c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+ui_coin_progress 0 c 0 337.5 400 0 0 0 1 1 50 50 c 1 50 c 2 ui_bar_progress c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+ui_goal_progress 0 c 0 0 0 0 0 0 1 1 50 50 
+ui_coin_progress_bg 0 c 0 431.25 400 0 0 0 4.45 1.35 50 50 c 1 49 c 2 ui_coinbar_bg c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+ui_goal_progress_bg 0 c 0 670 400 0 0 0 4.45 1.35 50 50 c 1 49 c 2 ui_goalbar_bg c 3 0 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+ui_coin_text 0 c 0 430.726 400 0 0 0 1 1 50 50 c 1 100 c 9 1 
+ui_goal_text 0 c 0 650 400 0 0 0 1 1 50 50 c 1 100 c 9 1 
+Tree7 0 c 0 3.74995 -7.62707 0 0 0 48.5021 24.79 50 50 c 1 -12 c 2 Tree_Middle2_Background_Hawker_6 c 3 2 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Tree8 0 c 0 -72.5 -362.288 0 0 0 45.4259 45.4259 50 50 c 1 -12 c 2 Tree_Middle4_Background_Hawker_8 c 3 2 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Win_background 0 c 0 0 0 0 0 0 25 16 50 50 c 1 100 c 2 hs_win_background c 3 0 0 0 0 c 10 0 0.783336 1 1 0 1 1 
+Win_restart 0 c 0 -260 -160 0 0 0 7 3.5 50 50 c 1 101 c 2 button_restart c 3 0 0 0 0 c 10 0 0.600002 1 1 0 1 1 
+Win_exit 0 c 0 257.5 -160 0 0 0 7 2.9257 50 50 c 1 101 c 2 button_exit c 3 0 0 0 0 c 10 0 0.600002 1 1 0 1 1 
+Win_title 0 c 0 -2.50006 249.153 0 0 0 5.83574 3.17382 50 50 c 1 101 c 2 yay_title c 3 0 0 0 0 c 10 0 0.783336 1 1 0 1 1 
+Win_words 0 c 0 -342.589 78.2572 0 0 0 1 1 50 50 c 1 100 c 9 2 
+Win_words2 0 c 0 -337.448 12.7118 0 0 0 1 1 50 50 c 1 100 c 9 2 
+Win_restart_bb 0 c 0 -261.25 -161.441 0 0 0 1 1 50 50 c 15 150 50 
+Win_exit_bb 0 c 0 256.25 -158.898 0 0 0 1 1 50 50 c 15 150 50 
+bg_dad_child 0 c 0 132.5 129.661 0 0 0 2.49631 3.12039 50 50 c 1 -4 c 2 DadandChild_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.214148 0.2 10 3 11 2 
+bg_friends 0 c 0 -307.5 100.424 0 0 0 3.5125 2.43573 50 50 c 1 -4 c 2 Friends_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.214148 0.2 12 7 12 1 
+bg_drinkstall 0 c 0 -216.25 151.272 0 0 0 1.71 1.67023 50 50 c 1 -9 c 2 IndianStall_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.214148 0.2 11 5 11 1 
+bg_chickenstall 0 c 0 -90 146.186 0 0 0 3.09175 1.44242 50 50 c 1 -6 c 2 ChickenStall_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.214148 0.2 7 3 7 1 
+bg_drinkstall2 0 c 0 22.5001 170.339 0 0 0 1.35419 2.352 50 50 c 1 -6 c 2 DrinkStall_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.214148 0.2 7 3 7 1 
+bg_leftshrubs 0 c 0 49.9999 99.1524 0 0 0 38.4745 31.6849 50 50 c 1 0 c 2 ShrubForegroundL_Background_Hawker_17 c 3 2 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+bg_rightshrubs 0 c 0 675.001 47.0353 0 0 0 10.5639 5.9422 50 50 c 1 0 c 2 ShrubForegroundR_Background_Hawker_18 c 3 2 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+bg_toplefttree 0 c 0 -658.749 223.73 0 0 0 10.2422 13.6564 50 50 c 1 -1 c 2 TreeForeground_Background_Hawker_13 c 3 2 0 0 0 c 10 0 0.420512 1 1 0 1 1 
+Phone_black_bg 0 c 0 -5 0 0 0 0 33 19 50 50 c 1 52 c 2 hp_black_bg c 3 0 0 0 0 c 10 0 0.400001 1 1 0 1 1 
+Phone_outercase 3 c 0 0 0 0 0 0 18 18 50 50 c 1 59 c 2 hp_Phonecase c 3 0 0 0 0 c 10 0 0.400001 1 1 0 1 1 
+Phone_main_screen 0 c 0 0 10 0 10 0 18.1 18.1 50 50 c 1 54 c 2 hp_bg_Mainscreen c 3 0 0 0 0 c 10 0 0.916669 1 1 0 1 1 
+Phone_battery 0 c 0 185 370 185 370 0 1 1 50 25 c 1 60 c 2 hp_Battery c 3 0 0 0 0 c 10 0 0.283334 1 1 0 1 1 
+Phone_time 0 c 0 -161.25 370 -161.25 370 0 2 1.2 50 25 c 1 60 c 2 hp_Time c 3 0 0 0 0 c 10 0 0.283334 1 1 0 1 1 
+Theresapp 0 c 0 -156 290 0 0 0 2 2 50 50 c 1 55 c 2 hp_Theresapp c 3 0 0 0 0 c 10 0 0.916669 1 1 0 1 1 c 15 20 20 
+Album 0 c 0 -60 290 0 0 0 2 2 50 50 c 1 55 c 2 hp_Album_app c 3 0 0 0 0 c 10 0 0.916669 1 1 0 1 1 c 15 20 20 
+Shop 0 c 0 38.5 290 0 0 0 2 2 50 50 c 1 55 c 2 hp_Shop_app c 3 0 0 0 0 c 10 0 0.916669 1 1 0 1 1 c 15 10 10 
+Resume 0 c 0 -146.25 -310 0 0 0 2.4 2.4 50 50 c 1 55 c 2 hp_Resume c 3 0 0 0 0 c 10 0 0.916669 1 1 0 1 1 c 15 20 20 
+Restart 0 c 0 -48.7501 -310 0 0 0 2.4 2.4 50 50 c 1 55 c 2 hp_Restart c 3 0 0 0 0 c 10 0 0.916669 1 1 0 1 1 c 15 20 20 
+Options 0 c 0 53.75 -310 0 0 0 2.4 2.4 50 50 c 1 55 c 2 hp_Settings c 3 0 0 0 0 c 10 0 0.916669 1 1 0 1 1 c 15 10 10 
+Exit 0 c 0 150 -310 0 0 0 2.3 2.4 50 50 c 1 55 c 2 hp_Exit c 3 0 0 0 0 c 10 0 0.916669 1 1 0 1 1 c 15 20 20 
+Phone_blacker_bg 0 c 0 0 0 0 0 0 33 19 50 50 c 1 53 c 2 hp_black_bg c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 
+Theresapp_main_screen 2 c 0 0 10 0 0 0 18.1 18.1 50 50 c 1 54 c 2 hp_Theresapp_bg c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 
+Theresapp_Dad_chat 0 c 0 11 350 11 340 0 18.1 2.2 50 50 c 1 57 c 2 hp_Theresapp_Dadchat c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 
+Theresapp_back_arrow 0 c 0 -191.25 332.5 -191.25 322.5 0 1 1 26 26 c 1 58 c 2 hp_Theresapp_Arrow c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 c 15 5 5 
+Last_page_msg_1_bg 2 c 0 41.25 -342.5 0 0 0 6.5 1.5 50 50 c 1 55 c 2 cs_phone_baozi_msg_bg c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 
+Last_page_msg_1_emoji 0 c 0 166.25 -343 125 -0.499939 0 1.2 1.2 50 50 c 1 56 c 2 cs_app_Baozi_Sian_emoji c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 
+Last_page_msg_1_text 0 c 0 -81.25 -330 -122.5 12.5001 0 1 1 50 50 c 1 55 c 9 0.8 
+Last_page_msg_2_bg 2 c 0 -40 -253.75 0 0 0 6.5 1.5 50 50 c 1 55 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 
+Last_page_msg_2_emoji 0 c 0 -172.5 -253.75 -132.5 -3.05176e-05 0 1.2 1.2 50 50 c 1 56 c 2 cs_app_Dad_YouNoChoice_emoji c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 
+Last_page_msg_2_text 0 c 0 -136.25 -241.25 -96.25 12.4999 0 1 1 50 50 c 1 55 c 9 0.8 
+Last_page_msg_3_bg 2 c 0 -40 -157.5 0 0 0 6.5 1.6 50 50 c 1 55 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 
+Last_page_msg_3_emoji 0 c 0 -172.5 -157.5 -132.5 -3.05176e-05 0 1.2 1.2 50 50 c 1 56 c 2 cs_app_Dad_Embarrassed_emoji c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 
+Last_page_msg_3_text 0 c 0 -136.25 -136.25 -96.25 21.25 0 1 1 50 50 c 1 55 c 9 0.8 
+Last_page_msg_4_bg 2 c 0 41.25 -60 0 0 0 6.5 1.5 50 50 c 1 55 c 2 cs_phone_baozi_msg_bg c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 
+Last_page_msg_4_emoji 0 c 0 165 -60 123.75 0 0 1 1 50 50 c 1 56 c 2 cs_app_Baozi_Tired_emoji c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 
+Last_page_msg_4_text 0 c 0 -81.25 -48.75 -122.5 11.25 0 1 1 50 50 c 1 55 c 9 0.8 
+Last_page_msg_5_bg 2 c 0 41.25 30 0 0 0 6.5 1.5 50 50 c 1 55 c 2 cs_phone_baozi_msg_bg c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 
+Last_page_msg_5_emoji 0 c 0 165 30 123.75 0 0 1 1 50 50 c 1 56 c 2 cs_app_Baozi_Shock_emoji c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 
+Last_page_msg_5_text 0 c 0 -81.25 41.25 -122.5 11.25 0 1 1 50 50 c 1 55 c 9 0.8 
+Last_page_msg_6_bg 2 c 0 -40 123.75 0 0 0 6.5 1.5 50 50 c 1 55 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 
+Last_page_msg_6_emoji 0 c 0 -172.5 123.75 -132.5 -1.52588e-05 0 1.2 1.2 50 50 c 1 56 c 2 cs_app_Dad_Embarrassed_emoji c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 
+Last_page_msg_6_text 0 c 0 -136.25 136.25 -96.25 12.4999 0 1 1 50 50 c 1 55 c 9 0.8 
+Last_page_msg_7_bg 2 c 0 -40 220 0 0 0 6.5 1.6 50 50 c 1 55 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 
+Last_page_msg_7_emoji 0 c 0 -172.5 220 -132.5 1.52588e-05 0 1 1 47 47 c 1 56 c 2 cs_app_Dad_pain_emoji c 3 0 0 0 0 c 10 0 0.533334 1 1 0 1 1 
+Last_page_msg_7_text 0 c 0 -136.25 241.25 -96.25 21.25 0 1 1 50 50 c 1 55 c 9 0.8 
+First_page_msg_8_bg 2 c 0 -40 310 0 0 0 6.5 1.5 50 50 c 1 55 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 0.0666668 1 1 0 1 1 
+First_page_msg_8_emoji 0 c 0 -172.5 310 -132.5 0 0 1 1 47 47 c 1 56 c 2 cs_app_Dad_pain_emoji c 3 0 0 0 0 c 10 0 0.0666668 1 1 0 1 1 
+First_page_msg_8_text 0 c 0 -136.25 310 -96.25 0 0 1 1 50 50 c 1 55 c 9 0.8 
+First_page_msg_9_bg 2 c 0 -40 410 0 0 0 6.5 1.7 50 50 c 1 55 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 0.0666668 1 1 0 1 1 
+First_page_msg_9_emoji 0 c 0 -172.5 410 -132.5 0 0 1.2 1.2 50 50 c 1 56 c 2 cs_app_Dad_Embarrassed_emoji c 3 0 0 0 0 c 10 0 0.0666668 1 1 0 1 1 
+First_page_msg_9_text 0 c 0 -136.25 431.25 -96.25 21.25 0 1 1 50 50 c 1 55 c 9 0.8 
+First_page_msg_10_bg 2 c 0 41.25 510 0 0 0 6.5 1.5 50 50 c 1 55 c 2 cs_phone_baozi_msg_bg c 3 0 0 0 0 c 10 0 0.0666668 1 1 0 1 1 
+First_page_msg_10_emoji 0 c 0 165 510 123.75 0 0 1 1 50 50 c 1 56 c 2 cs_app_Baozi_Shock_emoji c 3 0 0 0 0 c 10 0 0.0666668 1 1 0 1 1 
+First_page_msg_10_text 0 c 0 -81.25 521.25 -122.5 11.25 0 1 1 50 50 c 1 55 c 9 0.8 
+First_page_msg_11_bg 2 c 0 -40 608 0 0 0 6.5 1.5 50 50 c 1 55 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 0.0666668 1 1 0 1 1 
+First_page_msg_11_emoji 0 c 0 -172.5 608 -132.5 0 0 1 1 47 47 c 1 56 c 2 cs_app_Dad_pain_emoji c 3 0 0 0 0 c 10 0 0.0666668 1 1 0 1 1 
+First_page_msg_11_text 0 c 0 -136.25 608 -96.25 0 0 1 1 50 50 c 1 55 c 9 0.8 
+First_page_msg_12_bg 2 c 0 41.25 700 0 0 0 6.5 1.5 50 50 c 1 55 c 2 cs_phone_baozi_msg_bg c 3 0 0 0 0 c 10 0 0.0666668 1 1 0 1 1 
+First_page_msg_12_emoji 0 c 0 165 700 123.75 6.10352e-05 0 1 1 50 50 c 1 56 c 2 cs_app_Baozi_Tired_emoji c 3 0 0 0 0 c 10 0 0.0666668 1 1 0 1 1 
+First_page_msg_12_text 0 c 0 -81.25 700 -122.5 6.10352e-05 0 1 1 50 50 c 1 55 c 9 0.8 
+First_page_msg_13_bg 2 c 0 -40 795 0 0 0 6.5 1.5 50 50 c 1 55 c 2 cs_phone_dad_msg_bg c 3 0 0 0 0 c 10 0 0.0666668 1 1 0 1 1 
+First_page_msg_13_emoji 0 c 0 -172.5 795 -132.5 0 0 1.2 1.2 50 50 c 1 56 c 2 cs_app_Dad_Embarrassed_emoji c 3 0 0 0 0 c 10 0 0.0666668 1 1 0 1 1 
+First_page_msg_13_text 0 c 0 -136.25 795 -96.25 0 0 1 1 50 50 c 1 55 c 9 0.8 
+Album_main_screen 4 c 0 0 0 0 0 0 18.1 18.1 50 50 c 1 56 c 2 Album_screen_bg c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
+Album_top 0 c 0 0 348.75 0 348.75 0 18 2.5 50 50 c 1 57 c 2 Album_Header c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
+Album_time 0 c 0 -161.25 368 -161.25 368 0 2 1 50 50 c 1 58 c 2 Album_Time c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
+Album_battery 0 c 0 185 368 185 368 0 1 1 50 50 c 1 58 c 2 Album_Battery c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
+Album_text 0 c 0 -85 326.25 -85 326.25 0 1 1 50 50 c 1 58 c 9 1.3 
+Album_back_arrow 0 c 0 -192.5 324.75 0 0 0 1 1 50 50 c 1 58 c 2 Album_Arrow c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 c 15 10 10 
+Album_photo_2021s 2 c 0 2 -265 0 0 0 8.9 8.2 50 50 c 1 57 c 2 Album_2021s c 3 0 0 0 0 c 10 0 0.300001 1 1 0 1 1 c 15 150 80 
+black_cover_2021s 0 c 0 2.00009 -265.5 8.7738e-05 -0.500061 0 8.25 4.25 50 50 c 1 58 c 2 Album_black_cover c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
+text_2021s 0 c 0 -197.5 -347.5 -199.5 -82.5 0 1 1 50 50 c 1 58 c 9 1.5 
+Album_photo_1980s 2 c 0 2 -43.7501 0 0 0 8.9 8.2 50 50 c 1 57 c 2 Album_1980s c 3 0 0 0 0 c 10 0 0.300001 1 1 0 1 1 c 15 150 80 
+black_cover_1980s 0 c 0 2 -44.25 0 -0.499901 0 8.25 4.25 50 50 c 1 58 c 2 Album_black_cover c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
+text_1980s 0 c 0 -197.5 -124 -199.5 -80.2499 0 1 1 50 50 c 1 58 c 9 1.5 
+Album_photo_1960s 2 c 0 2 176.25 0 0 0 8.9 8.2 50 50 c 1 57 c 2 Album_1960s c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 c 15 150 80 
+black_cover_1960s 0 c 0 2 175.75 0 -0.5 0 8.25 4.25 50 50 c 1 58 c 2 Album_black_cover c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
+text_1960s 0 c 0 -197.5 100 -199.5 -76.25 0 1 1 50 50 c 1 58 c 9 1.5 
+Album_blacker_bg 0 c 0 0 0 0 0 0 33 19 50 50 c 1 53 c 2 hp_black_bg c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
+Album_1960_big_photo 0 c 0 0 0 0 0 0 28 28 50 50 c 1 61 c 2 Album_1960s c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
+Album_1960_big_photo_quit 0 c 0 643.752 360 0 0 0 2.5 2.5 50 50 c 1 110 c 2 Album_X_Button c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 c 15 20 20 
+How_to_Play_app 0 c 0 136.5 288 0 0 0 2 2 50 50 c 1 55 c 2 hp_Howtoplay_App c 3 0 0 0 0 c 10 0 0.916669 1 1 0 1 1 c 15 20 20 
+Main_Menu_app 0 c 0 -156 190 0 0 0 2 2 50 50 c 1 55 c 2 hp_MainMenu_App c 3 0 0 0 0 c 10 0 0.633335 1 1 0 1 1 c 15 20 20 
+How_to_Play_photo 1 c 0 0 0 0 0 0 40 18 50 50 c 1 61 c 2 hp_HowtoPlay c 3 0 0 0 0 c 10 0 0.516668 1 1 0 1 1 
+How_to_Play_text 0 c 0 -243.75 290 -243.75 290 0 1 1 50 50 c 1 61 c 9 2.6 
+How_to_Play_x 0 c 0 631.25 348.75 0 0 0 1.5 1.5 50 50 c 1 62 c 2 Album_X_Button c 3 0 0 0 0 c 10 0 0.516668 1 1 0 1 1 c 15 10 10 
+Album_1980_big_photo 0 c 0 0 0 0 0 0 28 28 50 50 c 1 61 c 2 Album_1980s c 3 0 0 0 0 c 10 0 0.673725 1 1 0 1 1 
+Album_1980_big_photo_quit 0 c 0 643.752 360 0 0 0 2.5 2.5 50 50 c 1 110 c 2 Album_X_Button c 3 0 0 0 0 c 10 0 0.316679 1 1 0 1 1 c 15 20 20 
+Album_2021_big_photo 0 c 0 0 0 0 0 0 28 28 50 50 c 1 61 c 2 Album_2021s c 3 0 0 0 0 c 10 0 0.1 1 1 0 1 1 
+Album_2021_big_photo_quit 0 c 0 643.752 360 0 0 0 2.5 2.5 50 50 c 1 110 c 2 Album_X_Button c 3 0 0 0 0 c 10 0 0.15 1 1 0 1 1 c 15 20 20 
+Album_1960_button1 0 c 0 42.5 -122.642 0 0 0 1 1 50 50 c 1 62 c 2 Album_photo_onhover c 3 0 0 0 0 c 10 0 0.333334 1 1 0 1 1 c 15 10 10 
+Album_1960_button2 0 c 0 100 -293.711 0 0 0 1 1 50 50 c 1 62 c 2 Album_photo_onhover c 3 0 0 0 0 c 10 0 0.333334 1 1 0 1 1 c 15 10 10 
+Album_1960_hovertext_bg 1 c 0 -201.25 -60.3207 0 0 0 8.3 3.5 50 50 c 1 62 c 2 Album_photo_text_bg c 3 0 0 0 0 c 10 0 0.833408 1 1 0 1 1 
+Album_1960_hovertext 0 c 0 -388.75 0.0566978 -187.5 60.3774 0 1 1 50 50 c 1 62 c 9 1 
+CoinSparkles 0 c 0 341.25 397.868 0 0 0 1.96 1.96 50 50 c 1 52 c 2 Coinbarsparkle_Spritesheet_Hawker c 3 0 0 0 0 c 10 1 0.0537382 1000 4 1 10 4 
+CoinOnTable 0 c 0 -276.25 7.67579 0 0 0 3.98323 3.98323 50 50 c 1 21 c 2 Coin_Spritesheet_Hawker c 3 0 0 0 0 c 10 1 0 0.03 8 0 21 4 
