@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "../ButtonLogic.h"
+
 enum class HawkerAppState
 {
 	MainScreen,
@@ -19,16 +21,29 @@ HawkerAppState current_app_state = HawkerAppState::MainScreen;
 
 float hp_text_leading{ 3.0f };
 float scrolling_speed{ 20.0f };
-float top_boundary{ 280.0f };
-float bottom_boundary{ -375.0f };
+float top_boundary{ 267.0f };
+float bottom_boundary{ -348.0f };
 float top_line{ 220.0f };
 float bottom_line{ -340.0f };
 float upper_bound{ 270.0f };
 bool scroll_up{ false };
 bool scroll_down{ false };
-int album_black_bg_layer{ 0 };
-int add_layer{ 7 };
 bool paused{ false };
+
+//Original position of messages variables
+JZEngine::Vec2f original_msg1_position{ 0.0,0.0 };
+JZEngine::Vec2f original_msg2_position{ 0.0,0.0 };
+JZEngine::Vec2f original_msg3_position{ 0.0,0.0 };
+JZEngine::Vec2f original_msg4_position{ 0.0,0.0 };
+JZEngine::Vec2f original_msg5_position{ 0.0,0.0 };
+JZEngine::Vec2f original_msg6_position{ 0.0,0.0 };
+JZEngine::Vec2f original_msg7_position{ 0.0,0.0 };
+JZEngine::Vec2f original_msg8_position{ 0.0,0.0 };
+JZEngine::Vec2f original_msg9_position{ 0.0,0.0 };
+JZEngine::Vec2f original_msg10_position{ 0.0,0.0 };
+JZEngine::Vec2f original_msg11_position{ 0.0,0.0 };
+JZEngine::Vec2f original_msg12_position{ 0.0,0.0 };
+JZEngine::Vec2f original_msg13_position{ 0.0,0.0 };
 
 void FlagPhone(bool flag)
 {
@@ -94,6 +109,26 @@ void FlagAlbumPhoto1960(bool flag)
 	Scene().EntityFlagActive("Album_1960_big_photo_quit", flag);
 	Scene().EntityFlagActive("Album_1960_button1", flag);
 	Scene().EntityFlagActive("Album_1960_button2", flag);
+}
+
+void FlagAlbumPhoto1980(bool flag)
+{
+	Scene().EntityFlagActive("Album_1980_big_photo", flag);
+	if (!flag)
+	{
+		Scene().GetComponent<JZEngine::MouseEvent>("Album_1980_big_photo_quit")->on_released_ = false;
+	}
+	Scene().EntityFlagActive("Album_1980_big_photo_quit", flag);
+}
+
+void FlagAlbumPhoto2021(bool flag)
+{
+	Scene().EntityFlagActive("Album_2021_big_photo", flag);
+	if (!flag)
+	{
+		Scene().GetComponent<JZEngine::MouseEvent>("Album_2021_big_photo_quit")->on_released_ = false;
+	}
+	Scene().EntityFlagActive("Album_2021_big_photo_quit", flag);
 }
 
 void FlagHowtoPlayScreen(bool flag)
@@ -203,6 +238,8 @@ void InitPhoneScreen()
 	FlagTheresappScreen(false);
 	FlagAlbumScreen(false);
 	FlagAlbumPhoto1960(false);
+	FlagAlbumPhoto1980(false);
+	FlagAlbumPhoto2021(false);
 	FlagHowtoPlayScreen(false);
 	FlagMsg1(false);
 	FlagMsg2(false);
@@ -217,17 +254,31 @@ void InitPhoneScreen()
 	FlagMsg11(false);
 	FlagMsg12(false);
 	FlagMsg13(false);
+
+	//Get the original position of all messages
+	original_msg1_position = Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_;
+	original_msg2_position = Scene().GetComponent<JZEngine::Transform>("Last_page_msg_2_bg")->position_;
+	original_msg3_position = Scene().GetComponent<JZEngine::Transform>("Last_page_msg_3_bg")->position_;
+	original_msg4_position = Scene().GetComponent<JZEngine::Transform>("Last_page_msg_4_bg")->position_;
+	original_msg5_position = Scene().GetComponent<JZEngine::Transform>("Last_page_msg_5_bg")->position_;
+	original_msg6_position = Scene().GetComponent<JZEngine::Transform>("Last_page_msg_6_bg")->position_;
+	original_msg7_position = Scene().GetComponent<JZEngine::Transform>("Last_page_msg_7_bg")->position_;
+	original_msg8_position = Scene().GetComponent<JZEngine::Transform>("First_page_msg_8_bg")->position_;
+	original_msg9_position = Scene().GetComponent<JZEngine::Transform>("First_page_msg_9_bg")->position_;
+	original_msg10_position = Scene().GetComponent<JZEngine::Transform>("First_page_msg_10_bg")->position_;
+	original_msg11_position = Scene().GetComponent<JZEngine::Transform>("First_page_msg_11_bg")->position_;
+	original_msg12_position = Scene().GetComponent<JZEngine::Transform>("First_page_msg_12_bg")->position_;
+	original_msg13_position = Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_;
 	
-	Scene().EntityFlagActive("Album_1960_hovertext_bg", false);
-	Scene().EntityFlagActive("Album_1960_hovertext", false);
-	Scene().EntityFlagActive("Album_1980_big_photo", false);
-	Scene().EntityFlagActive("Album_1980_big_photo_quit", false);
-	Scene().EntityFlagActive("Album_2021_big_photo", false);
-	Scene().EntityFlagActive("Album_2021_big_photo_quit", false);
-	//Scene().EntityFlagActive("PhoneOptions", true);
+	Scene().EntityFlagActive("Album_black_layer_3", false);
+	Scene().EntityFlagActive("Album_1960_hovertext1_bg", false);
+	Scene().EntityFlagActive("Album_1960_hovertext1", false);
+	Scene().EntityFlagActive("Album_1960_hovertext2_bg", false);
+	Scene().EntityFlagActive("Album_1960_hovertext2", false);
 
-	album_black_bg_layer = Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_;
-
+	//album_black_bg_layer = Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_;
+	
+	//Text section for messages
 	Scene().GetComponent<JZEngine::TextData>("Last_page_msg_1_text")->text =
 	JZEngine::String("   Okay okayyy. Let me\nsleep for an hour first.");
 	Scene().GetComponent<JZEngine::TextData>("Last_page_msg_1_text")->leading_y_ = hp_text_leading;
@@ -267,6 +318,7 @@ void InitPhoneScreen()
 	Scene().GetComponent<JZEngine::TextData>("First_page_msg_12_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	Scene().GetComponent<JZEngine::TextData>("First_page_msg_13_text")->text = JZEngine::String("Baozi, are you still up?");
 
+	//Text section for Album app
 	Scene().GetComponent<JZEngine::TextData>("Album_text")->text = JZEngine::String("My Albums");
 	Scene().GetComponent<JZEngine::TextData>("text_2021s")->text = JZEngine::String("2021s");
 	Scene().GetComponent<JZEngine::TextData>("text_2021s")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
@@ -275,14 +327,38 @@ void InitPhoneScreen()
 	Scene().GetComponent<JZEngine::TextData>("text_1960s")->text = JZEngine::String("1960s");
 	Scene().GetComponent<JZEngine::TextData>("text_1960s")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 
-	Scene().GetComponent<JZEngine::TextData>("Album_1960_hovertext")->text = 
-	JZEngine::String
-	("Diners sit on the wooden tools\naround the stall facing a\nhawker owner who would take\ntheir orders and serve hot food\nfrom the pot at street hawkers.");
-	Scene().GetComponent<JZEngine::TextData>("Album_1960_hovertext")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
-	Scene().GetComponent<JZEngine::TextData>("Album_1960_hovertext")->leading_y_ = hp_text_leading;
+	//Text section for Album app photo hover
+	Scene().GetComponent<JZEngine::TextData>("Album_1960_hovertext1")->text = JZEngine::String
+	("Diners sit on the wooden tools\naround the stall facing a\nhawker owner who would take\n"
+	 "their orders and serve hot food\nfrom the pot at street hawkers.");
+	Scene().GetComponent<JZEngine::TextData>("Album_1960_hovertext1")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
+	Scene().GetComponent<JZEngine::TextData>("Album_1960_hovertext1")->leading_y_ = hp_text_leading;
+	Scene().GetComponent<JZEngine::TextData>("Album_1960_hovertext2")->text = JZEngine::String
+	("During the era, the hawker\nowners does not have pipeline\nacross to water. Their utensils\n"
+	 "not clean cause a lot of\ncontamination by fliesand rats.");
+	Scene().GetComponent<JZEngine::TextData>("Album_1960_hovertext2")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
+	Scene().GetComponent<JZEngine::TextData>("Album_1960_hovertext2")->leading_y_ = hp_text_leading;
 
+	//Text section for how to play
 	Scene().GetComponent<JZEngine::TextData>("How_to_Play_text")->text = JZEngine::String("HOW TO PLAY");
 	Scene().GetComponent<JZEngine::TextData>("How_to_Play_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
+}
+
+void ResetAllMsgPosition()
+{
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_ = original_msg1_position;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_2_bg")->position_ = original_msg2_position;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_3_bg")->position_ = original_msg3_position;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_4_bg")->position_ = original_msg4_position;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_5_bg")->position_ = original_msg5_position;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_6_bg")->position_ = original_msg6_position;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_7_bg")->position_ = original_msg7_position;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_8_bg")->position_ = original_msg8_position;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_9_bg")->position_ = original_msg9_position;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_10_bg")->position_ = original_msg10_position;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_11_bg")->position_ = original_msg11_position;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_12_bg")->position_ = original_msg12_position;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_ = original_msg13_position;
 }
 
 void UpdatePhoneScreen(float dt)
@@ -311,6 +387,8 @@ void UpdatePhoneScreen(float dt)
 			FlagMsg11(true);
 			FlagMsg12(true);
 			FlagMsg13(true);
+			
+			ResetAllMsgPosition();
 			current_app_state = HawkerAppState::Theresapp;
 		}
 	}
@@ -396,6 +474,7 @@ void UpdateTheresapp(float dt)
 	FlagMsg12(true);
 	FlagMsg13(true);
 
+	//Set control for scrolling down
 	if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_.y > bottom_line ||
 		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_7_bg")->position_.y < top_line)
 	{
@@ -406,6 +485,7 @@ void UpdateTheresapp(float dt)
 		scroll_up = false;
 	}
 
+	//Set control for scrolling up
 	if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_.y > upper_bound)
 	{
 		scroll_down = true;
@@ -415,23 +495,8 @@ void UpdateTheresapp(float dt)
 		scroll_down = false;
 	}
 
-	if (scroll_down == true && JZEngine::InputHandler::IsKeyPressed(JZEngine::KEY::KEY_M) && JZEngine::InputHandler::mouse_scrolled_ == -1)
-	{
-		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_.y -= scrolling_speed;
-		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_2_bg")->position_.y -= scrolling_speed;
-		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_3_bg")->position_.y -= scrolling_speed;
-		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_4_bg")->position_.y -= scrolling_speed;
-		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_5_bg")->position_.y -= scrolling_speed;
-		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_6_bg")->position_.y -= scrolling_speed;
-		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_7_bg")->position_.y -= scrolling_speed;
-		Scene().GetComponent<JZEngine::Transform>("First_page_msg_8_bg")->position_.y -= scrolling_speed;
-		Scene().GetComponent<JZEngine::Transform>("First_page_msg_9_bg")->position_.y -= scrolling_speed;
-		Scene().GetComponent<JZEngine::Transform>("First_page_msg_10_bg")->position_.y -= scrolling_speed;
-		Scene().GetComponent<JZEngine::Transform>("First_page_msg_11_bg")->position_.y -= scrolling_speed;
-		Scene().GetComponent<JZEngine::Transform>("First_page_msg_12_bg")->position_.y -= scrolling_speed;
-		Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_.y -= scrolling_speed;
-	}
-	else if (scroll_up == true && JZEngine::InputHandler::IsKeyPressed(JZEngine::KEY::KEY_M) && JZEngine::InputHandler::mouse_scrolled_ == 1)
+	//Scrolling
+	if (scroll_up == true && JZEngine::InputHandler::mouse_scrolled_ == -1)
 	{
 		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_.y += scrolling_speed;
 		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_2_bg")->position_.y += scrolling_speed;
@@ -447,8 +512,24 @@ void UpdateTheresapp(float dt)
 		Scene().GetComponent<JZEngine::Transform>("First_page_msg_12_bg")->position_.y += scrolling_speed;
 		Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_.y += scrolling_speed;
 	}
+	else if (scroll_down == true && JZEngine::InputHandler::mouse_scrolled_ == 1)
+	{
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_2_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_3_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_4_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_5_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_6_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Last_page_msg_7_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_8_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_9_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_10_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_11_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_12_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_.y -= scrolling_speed;
+	}
 
-
+	//If the message is out of the phone it will disappear
 	if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_.y < bottom_boundary)
 	{
 		FlagMsg1(false);
@@ -534,54 +615,78 @@ void UpdateAlbum(float dt)
 	{
 		if (e->on_released_)
 		{
-			//FlagAlbumScreen(true);
 			FlagAlbumPhoto1960(true);
-			Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_ = album_black_bg_layer + add_layer;
+			Scene().EntityFlagActive("Album_black_layer_3", true);
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album_1960_button1"))
+	{
+		if (e->on_hover_)
+		{
+			ToggleButton("Album_1960_button1", ButtonState::Hover);
+			Scene().EntityFlagActive("Album_1960_hovertext1_bg", true);
+			Scene().EntityFlagActive("Album_1960_hovertext1", true);
+		}
+		else
+		{
+			ToggleButton("Album_1960_button1", ButtonState::Normal);
+			Scene().EntityFlagActive("Album_1960_hovertext1_bg", false);
+			Scene().EntityFlagActive("Album_1960_hovertext1", false);
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album_1960_button2"))
+	{
+		if (e->on_hover_)
+		{
+			ToggleButton("Album_1960_button2", ButtonState::Hover);
+			Scene().EntityFlagActive("Album_1960_hovertext2_bg", true);
+			Scene().EntityFlagActive("Album_1960_hovertext2", true);
+		}
+		else
+		{
+			ToggleButton("Album_1960_button2", ButtonState::Normal);
+			Scene().EntityFlagActive("Album_1960_hovertext2_bg", false);
+			Scene().EntityFlagActive("Album_1960_hovertext2", false);
 		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album_1960_big_photo_quit"))
 	{
 		if (e->on_released_)
 		{
-			//FlagAlbumScreen(true);
-			Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_ = album_black_bg_layer;
 			FlagAlbumPhoto1960(false);
+			Scene().EntityFlagActive("Album_black_layer_3", false);
 		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album_photo_1980s"))
 	{
-		if (e->on_click_)
+		if (e->on_released_)
 		{
-			Scene().EntityFlagActive("Album_1980_big_photo", true);
-			Scene().EntityFlagActive("Album_1980_big_photo_quit", true);
-			Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_ = album_black_bg_layer + add_layer;
+			FlagAlbumPhoto1980(true);
+			Scene().EntityFlagActive("Album_black_layer_3", true);
 		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album_1980_big_photo_quit"))
 	{
-		if (e->on_click_)
+		if (e->on_released_)
 		{
-			Scene().EntityFlagActive("Album_1980_big_photo", false);
-			Scene().EntityFlagActive("Album_1980_big_photo_quit", false);
-			Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_ = album_black_bg_layer;
+			FlagAlbumPhoto1980(false);
+			Scene().EntityFlagActive("Album_black_layer_3", false);
 		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album_photo_2021s"))
 	{
-		if (e->on_click_)
+		if (e->on_released_)
 		{
-			Scene().EntityFlagActive("Album_2021_big_photo", true);
-			Scene().EntityFlagActive("Album_2021_big_photo_quit", true);
-			Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_ = album_black_bg_layer + add_layer;
+			FlagAlbumPhoto2021(true);
+			Scene().EntityFlagActive("Album_black_layer_3", true);
 		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album_2021_big_photo_quit"))
 	{
-		if (e->on_click_)
+		if (e->on_released_)
 		{
-			Scene().EntityFlagActive("Album_2021_big_photo", false);
-			Scene().EntityFlagActive("Album_2021_big_photo_quit", false);
-			Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_ = album_black_bg_layer;
+			FlagAlbumPhoto2021(false);
+			Scene().EntityFlagActive("Album_black_layer_3", false);
 		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Album_back_arrow"))

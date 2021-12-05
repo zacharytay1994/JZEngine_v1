@@ -44,7 +44,9 @@ std::unordered_map<std::string, ButtonTextures> button_textures{
 	{ "Quit_no",	{ "Quit_no"			, "Quit_no_highlight"			, "Quit_no_clicked"}},
 	{ "Win_restart",{ "button_restart"	, "button_restart_highlight"	, "button_restart_clicked"}},
 	{ "Win_exit",	{ "button_exit"		, "button_exit_highlight"		, "button_exit_clicked"}},
-	{ "Skip",       { "cs_Skip"         , "cs_Skip_highlight"           , "cs_Skip_clicked"}}
+	{ "Skip",       { "cs_Skip"         , "cs_Skip_highlight"           , "cs_Skip_clicked"}},
+	{ "Album_1960_button1", {"Album_photo_button_normal", "Album_photo_onhover", ""}},
+	{ "Album_1960_button2", {"Album_photo_button_normal", "Album_photo_onhover", ""}}
 };
 
 void ToggleButton(const std::string& name, ButtonState state)
