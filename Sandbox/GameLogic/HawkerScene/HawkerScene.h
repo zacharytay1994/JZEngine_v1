@@ -285,6 +285,14 @@ void UpdateCoinSparklesAnimation ()
 	}
 }
 
+template <typename...T>
+void SetCoinText ( T...text )
+{
+	std::stringstream ss;
+	( ( ss << text ) , ... );
+	Scene ().GetComponent<JZEngine::TextData> ( "ui_coin_text" )->text = JZEngine::String ( ss.str ().c_str () );
+}
+
 void UpdateCoinAnimation (float dt)
 {
 	if ( coin_animation_play )
@@ -297,11 +305,6 @@ void UpdateCoinAnimation (float dt)
 				coin_animation_play = false;
 				coin_played_once = false;
 				coin_suck = true;
-
-				UpdateCoinProgressBar ();
-				coin_bar_animation_play = true;
-				coin_sparkles_animation_play = true;
-				Scene ().EntityFlagActive ( "CoinSparkles" , true );
 			}
 			else
 			{
@@ -325,6 +328,13 @@ void UpdateCoinAnimation (float dt)
 		else
 		{
 			coin_suck = false;
+
+			SetCoinText ( "$" , current_coins );
+			UpdateCoinProgressBar ();
+			coin_bar_animation_play = true;
+			coin_sparkles_animation_play = true;
+			Scene ().EntityFlagActive ( "CoinSparkles" , true );
+
 			Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_ = og_coin_position;
 			Scene ().GetComponent<JZEngine::Animation2D> ( "CoinOnTable" )->frame_ = 0;
 			Scene ().GetComponent<JZEngine::NonInstanceShader> ( "CoinOnTable" )->tint.w = 1.0f;
@@ -343,14 +353,6 @@ void UpdateGoalProgressBar(float dt)
 	{
 		Scene().ChangeScene("MainMenu");
 	}
-}
-
-template <typename...T>
-void SetCoinText(T...text)
-{
-	std::stringstream ss;
-	((ss << text), ...);
-	Scene().GetComponent<JZEngine::TextData>("ui_coin_text")->text = JZEngine::String(ss.str().c_str());
 }
 
 template <typename...T>
@@ -636,7 +638,6 @@ void UpdateMainScene(float dt)
 					UnDisplayOrder();
 					// if successfully served customer increment coins
 					current_coins += coin_increment;
-					SetCoinText("$", current_coins);
 					/*UpdateCoinProgressBar();
 					coin_bar_animation_play = true;
 					coin_sparkles_animation_play = true;*/
