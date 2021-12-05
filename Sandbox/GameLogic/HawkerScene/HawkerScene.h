@@ -482,7 +482,16 @@ void UpdateMainScene(float dt)
 		current_hawker_scene_state = HawkerSceneState::App;
 		Scene().EntityFlagActive("PhoneOptions", false);
 		paused = true;
-		//esc_again = true;
+	}
+
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("PhoneOptions"))
+	{
+		if (e->on_released_)
+		{
+			current_hawker_scene_state = HawkerSceneState::App;
+			Scene().EntityFlagActive("PhoneOptions", false);
+			paused = true;
+		}
 	}
 
 	// give customer food
