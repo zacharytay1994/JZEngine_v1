@@ -156,6 +156,8 @@ void UnDisplayOrder()
 	Scene().EntityFlagActive("OrderSeaweed", false);
 	Scene().EntityFlagActive("OrderSpringroll", false);
 	Scene().EntityFlagActive("OrderCarrotcake", false);
+
+	Scene ().EntityFlagActive ( "OrderSuccess" , false );
 	// reset flags
 	display_up_ = false;
 	timer_ = display_time_;
@@ -163,15 +165,19 @@ void UnDisplayOrder()
 	Scene().GetComponent<JZEngine::Transform>("GreenBar")->scale_.y = greenbar_original_scale_y;
 }
 
+bool order_board_animated_once = false;
+bool order_success = false;
 void DisplayOrder(CustomerOrder order)
 {
 	UnDisplayOrder();
+	order_board_animated_once = false;
 	// flag board
 	Scene().EntityFlagActive("OrderBoard", true);
 	Scene().EntityFlagActive("EmptyBar", true);
 	Scene().EntityFlagActive("GreenBar", true);
 	Scene().EntityFlagActive("RedBar", true);
 	display_up_ = true;
+	order_success = false;
 	switch (order)
 	{
 	case CustomerOrder::Wanton:
@@ -187,6 +193,19 @@ void DisplayOrder(CustomerOrder order)
 		Scene().EntityFlagActive("OrderCarrotcake", true);
 		break;
 	}
+}
+
+void DisplayTick ()
+{
+	UnDisplayOrder ();
+	order_board_animated_once = false;
+	// flag board
+	Scene ().EntityFlagActive ( "OrderBoard" , true );
+	Scene ().EntityFlagActive ( "EmptyBar" , true );
+	Scene ().EntityFlagActive ( "GreenBar" , true );
+	Scene ().EntityFlagActive ( "RedBar" , true );
+	display_up_ = true;
+	Scene ().EntityFlagActive ( "OrderSuccess" , true );
 }
 
 void DisplayUpdate(float dt)
@@ -282,6 +301,27 @@ void UpdateCoinSparklesAnimation ()
 	else
 	{
 		Scene ().GetComponent<JZEngine::Animation2D> ( "CoinSparkles" )->animation_speed_ = 1000.0f;
+	}
+}
+
+void UpdateOrderBoardAnimation ()
+{
+	JZEngine::Animation2D* anim = Scene ().GetComponent<JZEngine::Animation2D> ( "OrderBoard" );
+	if ( anim )
+	{
+		if ( order_board_animated_once )
+		{
+			anim->animation_speed_ = 1000.0f;
+		}
+		else
+		{
+			anim->animation_speed_ = 0.15f;
+			if ( anim->frame_ == anim->max_frames_ - 1 )
+			{
+				order_board_animated_once = true;
+				anim->frame_ = 0;
+			}
+		}
 	}
 }
 
@@ -439,6 +479,18 @@ void UpdateMainScene(float dt)
 	UpdateCoinProgressBarAnimation ();
 	UpdateCoinSparklesAnimation ();
 	UpdateCoinAnimation ( dt );
+	UpdateOrderBoardAnimation ();
+
+	if ( order_success )
+	{
+		JZEngine::Animation2D* order_success_anim = Scene ().GetComponent<JZEngine::Animation2D> ( "OrderSuccess" );
+		if ( order_success_anim->frame_ == order_success_anim->max_frames_ - 1 )
+		{
+			order_success_anim->frame_ = 0;
+			order_success = false;
+			UnDisplayOrder ();
+		}
+	}
 
 	// process click inputs
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_springroll"))
@@ -642,6 +694,8 @@ void UpdateMainScene(float dt)
 					coin_bar_animation_play = true;
 					coin_sparkles_animation_play = true;*/
 					coin_animation_play = true;
+					order_success = true;
+					DisplayTick ();
 					//Scene ().EntityFlagActive ( "CoinSparkles" , true );
 					Scene ().EntityFlagActive ( "CoinOnTable" , true );
 					if (current_coins >= target_coins)
