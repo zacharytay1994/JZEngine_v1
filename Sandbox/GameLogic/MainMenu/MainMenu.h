@@ -179,6 +179,7 @@ void ToggleHowtoPlay(bool toggle)
 	Scene().EntityFlagActive("How_to_play_x", toggle);
 }
 
+//Handle logic for main menu
 void UpdateMainScreen(float dt)
 {
 	UNREFERENCED_PARAMETER(dt);
