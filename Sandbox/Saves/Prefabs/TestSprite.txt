@@ -1,0 +1,1 @@
+TestSprite 0 c 0 -137.466 -31.7879 0 0 0 2.32 2.32 50 50 c 1 0 c 2 RoundSteamers c 3 0 0 0 0 c 10 0 0.550007 1 1 0 1 1 c 17 Remove Remove Remove Remove Remove Remove Remove Remove MoveUp MoveRight 

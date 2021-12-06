@@ -23,6 +23,7 @@ enum class MainMenuState
 };
 MainMenuState current_main_menu_state = MainMenuState::Main;
 bool playingbgm{ false };
+bool how_to_play_page1{ true };
 float master_volume_{ 0.33f };
 float music_volume_{ 0.2f };
 float sfx_volume_{ 0.2f };
@@ -172,11 +173,13 @@ void ToggleCredits(bool toggle)
 	Scene().EntityFlagActive("Credits_x", toggle);
 }
 
-void ToggleHowtoPlay(bool toggle)
+void ToggleHowtoPlayPage(bool toggle)
 {
 	Scene().EntityFlagActive("How_to_play_photo", toggle);
-	Scene().EntityFlagActive("How_to_play_text", toggle);
+	Scene ().EntityFlagActive ( "How_to_play_photo2" , toggle );
 	Scene().EntityFlagActive("How_to_play_x", toggle);
+	Scene ().EntityFlagActive ( "Arrow_left_how_to_play" , toggle );
+	Scene ().EntityFlagActive ( "Arrow_right_how_to_play" , toggle );
 }
 
 //Handle logic for main menu
@@ -228,7 +231,7 @@ void UpdateMainScreen(float dt)
 	{
 		if (e->on_released_)
 		{
-			ToggleHowtoPlay(true);
+			ToggleHowtoPlayPage (true);
 			current_main_menu_state = MainMenuState::HowtoPlay;
 		}
 		if (e->on_held_)
@@ -244,7 +247,8 @@ void UpdateMainScreen(float dt)
 			ToggleButton("how_to_play", ButtonState::Normal);
 		}
 	}
-	
+
+
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_quit"))
 	{
 		if (e->on_released_)
@@ -391,11 +395,38 @@ void UpdateQuitMenu(float dt)
 
 void UpdateHowtoPlayMenu(float dt)
 {
+	if( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Arrow_left_how_to_play" ) )
+	{
+		if( e->on_released_ )
+		{
+			how_to_play_page1 = !how_to_play_page1;
+		}
+	}
+
+	if( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Arrow_right_how_to_play" ) )
+	{
+		if( e->on_released_ )
+		{
+			how_to_play_page1 = !how_to_play_page1;
+		}
+	}
+
+	if( how_to_play_page1 )
+	{
+		Scene ().EntityFlagActive ( "How_to_play_photo" , true );
+		Scene ().EntityFlagActive ( "How_to_play_photo2" , false );
+	}
+	else
+	{
+		Scene ().EntityFlagActive ( "How_to_play_photo" , false );
+		Scene ().EntityFlagActive ( "How_to_play_photo2" , true );
+	}
+
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("How_to_play_x"))
 	{
 		if (e->on_released_)
 		{
-			ToggleHowtoPlay(false);
+			ToggleHowtoPlayPage (false);
 			current_main_menu_state = MainMenuState::Main;
 		}
 	}
@@ -414,9 +445,7 @@ void InitMainMenu()
 	ToggleCredits(false);
 	Scene().EntityFlagActive("Credits", false);
 	Scene().EntityFlagActive("Quit", false);
-	ToggleHowtoPlay(false);
-	Scene().GetComponent<JZEngine::TextData>("How_to_play_text")->text = JZEngine::String("HOW TO PLAY");
-	Scene().GetComponent<JZEngine::TextData>("How_to_play_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
+	ToggleHowtoPlayPage (false);
 	Scene().GetComponent<JZEngine::TextData>("Option_text")->text = JZEngine::String("OPTIONS");
 	Scene().GetComponent<JZEngine::TextData>("Option_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 }

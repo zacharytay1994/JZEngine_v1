@@ -237,12 +237,22 @@ void UpdateCoinProgressBar()
 		= static_cast<float>(current_coins) / static_cast<float>(target_coins) * initial_progress_scale;
 }
 
+bool won_bar_ { false };
+float won_bar_counter_ { 0.0f };
+bool coin_last_update { false };
+
+void ShowWonBar ();
 void AnimateCoinProgreeBar (float dt)
 {
 	float& x = Scene ().GetComponent<JZEngine::Transform> ( "ui_coin_progress" )->scale_.x;
 	if ( x < current_coin_scale)
 	{
 		x += dt;
+	}
+	if ( coin_last_update && x > initial_progress_scale )
+	{
+		won_bar_ = true;
+		ShowWonBar ();
 	}
 }
 
@@ -360,7 +370,7 @@ void UpdateCoinAnimation (float dt)
 	{
 		JZEngine::Vec2f dir = Scene ().GetComponent<JZEngine::Transform> ( "CoinBar" )->position_ - Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_;
 		float length = dir.Len ();
-		if ( length > 10.0f )
+		if ( length > 50.0f )
 		{
 			Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_ += 2000.0f * dir.Normalize () * dt;
 			Scene ().GetComponent<JZEngine::NonInstanceShader> ( "CoinOnTable" )->tint.w = length / og_coin_distance_from_bar * 2.0f;
@@ -401,6 +411,77 @@ void SetGoalText(T...text)
 	std::stringstream ss;
 	((ss << text), ...);
 	Scene().GetComponent<JZEngine::TextData>("ui_goal_text")->text = JZEngine::String(ss.str().c_str());
+}
+
+bool notification_display_ { false };
+int notification_current_ { -1 };
+float notification_time_ { 3.0f };
+float notification_time_counter_ { 0.0f };
+constexpr int notification_count_ { 5 };
+std::string notification[ notification_count_ ] =
+{
+	"Baozi! Click the customer for orders.",
+	"Baozi! Use a tong to grab the food.",
+	"Put it on the plate and serve it!",
+	"For wrong orders, throw it in the bin.",
+	"Don't take too long! They will get angry."
+};
+bool notification_shown[ notification_count_ ] { false };
+
+void TurnOffNotification ()
+{
+	Scene ().EntityFlagActive ( "NotificationText" , false );
+	notification_display_ = false;
+	notification_time_counter_ = 0.0f;
+}
+
+void ShowNotification (int i)
+{
+	TurnOffNotification ();
+	if ( i < 5 )
+	{
+		if ( !notification_shown[ i ] )
+		{
+			notification_shown[ i ] = true;
+			Scene ().GetComponent<JZEngine::TextData> ( "NotificationText" )->text = JZEngine::String ( notification[ i ].c_str () );
+			Scene ().EntityFlagActive ( "NotificationText" , true );
+			notification_display_ = true;
+		}
+	}
+}
+
+void UpdateNotification ( float dt )
+{
+	if ( notification_display_ )
+	{
+		if ( notification_time_counter_ < notification_time_ )
+		{
+			notification_time_counter_ += dt;
+		}
+		else
+		{
+			notification_time_counter_ = 0.0f;
+			TurnOffNotification ();
+		}
+	}
+}
+
+void HideWonBar ()
+{
+	Scene ().EntityFlagActive ( "WinBar" , false );
+	Scene ().EntityFlagActive ( "WinBarBG" , false );
+	Scene ().EntityFlagActive ( "WinFireworks1" , false );
+	Scene ().EntityFlagActive ( "WinFireworks2" , false );
+	Scene ().EntityFlagActive ( "WinBlackCover" , false );
+}
+
+void ShowWonBar ()
+{
+	Scene ().EntityFlagActive ( "WinBar" , true );
+	Scene ().EntityFlagActive ( "WinBarBG" , true );
+	Scene ().EntityFlagActive ( "WinFireworks1" , true );
+	Scene ().EntityFlagActive ( "WinFireworks2" , true );
+	Scene ().EntityFlagActive ( "WinBlackCover" , true );
 }
 
 /*!
@@ -475,11 +556,18 @@ void UpdateMainScene(float dt)
 {
 	UpdateHawkerQueue(dt);
 	//UpdateGoalProgressBar(dt);
+	UpdateCoinAnimation ( dt );
 	AnimateCoinProgreeBar ( dt );
 	UpdateCoinProgressBarAnimation ();
 	UpdateCoinSparklesAnimation ();
-	UpdateCoinAnimation ( dt );
 	UpdateOrderBoardAnimation ();
+	UpdateNotification ( dt );
+
+	if ( took_too_long_ )
+	{
+		took_too_long_ = false;
+		ShowNotification ( 4 );
+	}
 
 	if ( order_success )
 	{
@@ -569,6 +657,7 @@ void UpdateMainScene(float dt)
 	{
 		if (e->on_click_ && !plate_on_hand)
 		{
+			ShowNotification ( 2 );
 			JZEngine::Log::Info("Main", "Tongs Selected");
 			FlagCursorState(CursorState::EmptyTongs);
 		}
@@ -673,6 +762,7 @@ void UpdateMainScene(float dt)
 	{
 		if (e->on_click_)
 		{
+			ShowNotification ( 1 );
 			if (!plate_on_hand)
 			{
 				DisplayOrder(GetNextCustomerOrder());
@@ -700,14 +790,33 @@ void UpdateMainScene(float dt)
 					Scene ().EntityFlagActive ( "CoinOnTable" , true );
 					if (current_coins >= target_coins)
 					{
-						win = true;
-						JZEngine::Log::Info("Main", "You have won the game!");
-						//Scene().ChangeScene("MainMenu");
-						ToggleWin(true);
-						current_hawker_scene_state = HawkerSceneState::Win;
+						coin_last_update = true;
 					}
 				}
 			}
+			else
+			{
+				if ( plate_on_hand && current_order != CustomerOrder::Nothing )
+				{
+					ShowNotification ( 3 );
+				}
+			}
+		}
+	}
+
+	if ( won_bar_ )
+	{
+		if ( won_bar_counter_ < 1.0f )
+		{
+			won_bar_counter_ += dt;
+		}
+		else
+		{
+			win = true;
+			JZEngine::Log::Info ( "Main" , "You have won the game!" );
+			//Scene().ChangeScene("MainMenu");
+			ToggleWin ( true );
+			current_hawker_scene_state = HawkerSceneState::Win;
 		}
 	}
 
@@ -725,6 +834,13 @@ void HawkerSceneInit()
 	og_coin_distance_from_bar = (Scene ().GetComponent<JZEngine::Transform> ( "CoinBar" )->position_ 
 		- Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_).Len();
 	Scene ().EntityFlagActive ( "CoinOnTable" , false );
+
+	/*notification_display_ = false;
+	notification_time_counter_ = 0.0f;*/
+	for ( int i = 0; i < notification_count_; ++i )
+	{
+		notification_shown[ i ] = false;
+	}
 
 	ToggleWin(false);
 
@@ -749,6 +865,10 @@ void HawkerSceneInit()
 	win = false;
 	lose = false;
 
+	HideWonBar ();
+	won_bar_ = false;
+	won_bar_counter_ = 0.0f;
+
 	// set scale of coin bar and angry customer bar to 0
 	//initial_progress_scale = 7.537f;
 
@@ -759,6 +879,7 @@ void HawkerSceneInit()
 	coin_animation_play = false;
 	coin_played_once = false;
 	coin_suck = false;
+	coin_last_update = false;
 
 	Scene().GetComponent<JZEngine::Transform>("ui_coin_progress")->scale_.x = 1.0f;
 	Scene().GetComponent<JZEngine::Transform>("ui_goal_progress")->scale_.x = 1.0f;
@@ -780,6 +901,8 @@ void HawkerSceneInit()
 	Scene().GetComponent<JZEngine::TextData>("Win_words2")->text = JZEngine::String("    continue to the next level?    ");
 
 	JZEngine::Log::Info("Main", "Hawker Scene Initialized.");
+
+	ShowNotification ( 0 );
 }
 
 void HawkerSceneUpdate(float dt)

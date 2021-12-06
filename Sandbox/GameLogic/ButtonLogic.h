@@ -48,7 +48,9 @@ std::unordered_map<std::string, ButtonTextures> button_textures{
 	{ "Quit_no",	{ "No(OG)_Button_MainMenu"			, "No(Highlight)_Button_MainMenu"			, "No(Clicked)_Button_MainMenu"}},
 	{ "Win_restart",{ "Restart(OG)_Button_MainMenu"	, "Restart(Highlight)_Button_MainMenu"	, "Restart(Clicked)_Button_MainMenu"}},
 	{ "Win_exit",	{ "Exit(OG)_Button_MainMenu"		, "Exit(Highlight)_Button_MainMenu"		, "Exit(clicked)_Button_MainMenu"}},
-	{ "Skip",       { "Skip(OG)_Button_MainMenu"      , "Skip(Highlight)_Button_MainMenu"       , "Skip(Clicked)_Button_MainMenu"}}
+	{ "Skip",       { "Skip(OG)_Button_MainMenu"      , "Skip(Highlight)_Button_MainMenu"       , "Skip(Clicked)_Button_MainMenu"}},
+	{ "Album_1960_button1", {"Album_photo_button_normal", "Album_photo_onhover", ""}},
+	{ "Album_1960_button2", {"Album_photo_button_normal", "Album_photo_onhover", ""}}
 };
 
 //std::unordered_map<std::string, ButtonTextures> button_textures{
