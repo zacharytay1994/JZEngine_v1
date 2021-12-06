@@ -1,33 +1,33 @@
-Tree1 0 c 0 0 1.27115 0 0 0 36.6847 29.359 50 50 c 1 -12 c 2 Tree_Left1_Background_Hawker_2 c 3 2 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-Sky 0 c 0 0 0 0 0 0 31.9285 18.5829 50 50 c 1 -100 c 2 bg_skypan c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-Clouds 0 c 0 -371.258 127.12 0 0 0 31.6 12.918 50 50 c 1 -30 c 2 bg_hawker_clouds c 3 0 0 0 0 c 7 0 10 0 c 10 0 0.356063 1 1 0 1 1 
-Middlegroud 0 c 0 1.24998 -8.89828 0 0 0 32.4999 21.2414 50 50 c 1 -11 c 2 bg_hawker_misc c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-Tree6 0 c 0 -12.5 -15.2543 0 0 0 41.0109 19.844 50 50 c 1 -12 c 2 Tree_Middle1_Background_Hawker_5 c 3 2 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-HawkerStalls 0 c 0 4.99997 3.81351 0 0 0 39.4162 21.4432 50 50 c 1 -10 c 2 bg_hawker_stalls c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-HawkerStalls2 0 c 0 -11.25 22.8814 0 0 0 35.3333 17.6752 50 50 c 1 -8 c 2 bg_hawker_stalls2 c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-Table 0 c 0 -3.75004 -222.458 0 0 0 32.64 9.49811 50 50 c 1 20 c 2 Table c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-Tree5 0 c 0 -7.49999 -6.35593 0 0 0 33.6133 18.2484 50 50 c 1 -12 c 2 Tree_Left3_Background_Hawker_4 c 3 2 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-Tree4 0 c 0 423.751 -66.1003 0 0 0 28.9553 22.442 50 50 c 1 -12 c 2 Tree_Left2_Background_Hawker_3 c 3 2 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-Tree3 0 c 0 -2.50006 -2.54237 0 0 0 35.73 19.2942 50 50 c 1 -9 c 2 Tree_Left2_Background_Hawker_11 c 3 2 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-Tree2 0 c 0 -5.00003 -16.5254 0 0 0 36.6626 19.5444 50 50 c 1 -12 c 2 Tree_Left1_Background_Hawker_9 c 3 2 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-HawkerTables 0 c 0 -1.24998 21.6101 0 0 0 32.5218 18.4372 50 50 c 1 -5 c 2 bg_hawker_tables c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-HawkerUmbrella 0 c 0 0 0 0 0 0 32.8695 18.2935 50 50 c 1 -4 c 2 bg_hawker_umbrellas c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-Queue 5 c 0 -262.5 74.2852 0 0 0 1 1 50 50 c 1 10 c 2 emptyimage c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-Customer 0 c 0 -257.82 74.2852 4.68024 0 0 7 11 50 50 c 1 10 c 2 tallguy_idle c 3 0 0 0 0 c 10 1 0 0.1 13 8 13 1 
+Tree1 0 c 0 0 1.27115 0 0 0 36.6847 29.359 50 50 c 1 -12 c 2 Tree_Left1_Background_Hawker_2 c 3 2 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+Sky 0 c 0 0 0 0 0 0 31.9285 18.5829 50 50 c 1 -100 c 2 bg_skypan c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+Clouds 0 c 0 864.5 127.12 0 0 0 31.6 12.918 50 50 c 1 -30 c 2 bg_hawker_clouds c 3 0 0 0 0 c 7 0 10 0 c 10 0 0.413142 1 1 0 1 1 
+Middlegroud 0 c 0 1.24998 -8.89828 0 0 0 32.4999 21.2414 50 50 c 1 -11 c 2 bg_hawker_misc c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+Tree6 0 c 0 -12.5 -15.2543 0 0 0 41.0109 19.844 50 50 c 1 -12 c 2 Tree_Middle1_Background_Hawker_5 c 3 2 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+HawkerStalls 0 c 0 4.99997 3.81351 0 0 0 39.4162 21.4432 50 50 c 1 -10 c 2 bg_hawker_stalls c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+HawkerStalls2 0 c 0 -11.25 22.8814 0 0 0 35.3333 17.6752 50 50 c 1 -8 c 2 bg_hawker_stalls2 c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+Table 0 c 0 -3.75004 -222.458 0 0 0 32.64 9.49811 50 50 c 1 20 c 2 Table c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+Tree5 0 c 0 -7.49999 -6.35593 0 0 0 33.6133 18.2484 50 50 c 1 -12 c 2 Tree_Left3_Background_Hawker_4 c 3 2 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+Tree4 0 c 0 423.751 -66.1003 0 0 0 28.9553 22.442 50 50 c 1 -12 c 2 Tree_Left2_Background_Hawker_3 c 3 2 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+Tree3 0 c 0 -2.50006 -2.54237 0 0 0 35.73 19.2942 50 50 c 1 -9 c 2 Tree_Left2_Background_Hawker_11 c 3 2 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+Tree2 0 c 0 -5.00003 -16.5254 0 0 0 36.6626 19.5444 50 50 c 1 -12 c 2 Tree_Left1_Background_Hawker_9 c 3 2 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+HawkerTables 0 c 0 -1.24998 21.6101 0 0 0 32.5218 18.4372 50 50 c 1 -5 c 2 bg_hawker_tables c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+HawkerUmbrella 0 c 0 0 0 0 0 0 32.8695 18.2935 50 50 c 1 -4 c 2 bg_hawker_umbrellas c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+Queue 5 c 0 -262.5 74.2852 0 0 0 1 1 50 50 c 1 10 c 2 emptyimage c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+Customer 0 c 0 -1062.5 74.2852 -800 0 0 7 11 50 50 c 1 10 c 2 tallguy_idle c 3 0 0 0 0 c 10 1 0 0.1 13 8 13 1 
 Customer 0 c 0 -1062.5 74.2852 -800 0 0 7 7 50 50 c 1 10 c 2 bigguy_idle c 3 0 0 0 0 c 10 1 0.0643277 0.1 12 6 12 1 
 Customer 0 c 0 -1062.5 74.2852 -800 0 0 7 7 50 50 c 1 9 c 2 ahma_idle c 3 0 0 0 0 c 10 1 0.0506362 0.1 12 5 12 1 
 Customer 0 c 0 -1062.5 74.2852 -800 0 0 7 11 50 50 c 1 8 c 2 tallguy_idle c 3 0 0 0 0 c 10 1 0.100637 0.1 13 3 13 1 
-Customer 0 c 0 -1062.5 74.2852 -800 0 0 7 7 50 50 c 1 10 c 2 bigguy_angry c 3 0 0 0 0 c 10 1 0 0.1 15 6 15 1 
-FoodTray 0 c 0 197.5 -25.4237 0 0 0 16.3254 10.3283 50 50 c 1 25 c 2 dryfood c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-SideTray 0 c 0 733.75 -7.6271 0 0 0 10.6739 10.6739 50 50 c 1 24 c 2 BigSteamer c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-Plate 0 c 0 -322.5 -329.237 0 0 0 4.91771 2.8 50 50 c 1 25 c 2 Plate c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-Tongs 0 c 0 -86.2501 -338.136 0 0 -14.7989 4.69173 3.27 50 50 c 1 25 c 2 Tongs c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-Scizzors 0 c 0 156.25 -344.492 0 0 -179.416 5.27791 4.02933 50 50 c 1 25 c 2 Scissors c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-Trashbin 0 c 0 468.751 -326.694 0 0 0 2.98 3.01108 50 50 c 1 25 c 2 trashbin c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-RoundSteamer 0 c 0 -851.249 -72.4565 0 0 0 8.57423 8.1718 50 50 c 1 25 c 2 RoundSteamers c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-Tray 0 c 0 -381.25 -127.119 0 0 0 12.8308 6.61906 50 50 c 1 24 c 2 Tray c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-Pepper 0 c 0 -601.249 -99.1514 0 0 0 1.9 2.37502 50 50 c 1 24 c 2 ChillPowder c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-SpringOnion 0 c 0 -549.999 -49.575 0 0 0 4.54539 2.9306 50 50 c 1 23 c 2 SpringOnions c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
+Customer 0 c 0 -1062.5 74.2852 -800 0 0 7 11 50 50 c 1 10 c 2 tallguy_idle c 3 0 0 0 0 c 10 1 0.055729 0.1 13 7 13 1 
+FoodTray 0 c 0 197.5 -25.4237 0 0 0 16.3254 10.3283 50 50 c 1 25 c 2 dryfood c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+SideTray 0 c 0 733.75 -7.6271 0 0 0 10.6739 10.6739 50 50 c 1 24 c 2 BigSteamer c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+Plate 0 c 0 -322.5 -329.237 0 0 0 4.91771 2.8 50 50 c 1 25 c 2 Plate c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+Tongs 0 c 0 -86.2501 -338.136 0 0 -14.7989 4.69173 3.27 50 50 c 1 25 c 2 Tongs c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+Scizzors 0 c 0 156.25 -344.492 0 0 -179.416 5.27791 4.02933 50 50 c 1 25 c 2 Scissors c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+Trashbin 0 c 0 468.751 -326.694 0 0 0 2.98 3.01108 50 50 c 1 25 c 2 trashbin c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+RoundSteamer 0 c 0 -851.249 -72.4565 0 0 0 8.57423 8.1718 50 50 c 1 25 c 2 RoundSteamers c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+Tray 0 c 0 -381.25 -127.119 0 0 0 12.8308 6.61906 50 50 c 1 24 c 2 Tray c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+Pepper 0 c 0 -601.249 -99.1514 0 0 0 1.9 2.37502 50 50 c 1 24 c 2 ChillPowder c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+SpringOnion 0 c 0 -549.999 -49.575 0 0 0 4.54539 2.9306 50 50 c 1 23 c 2 SpringOnions c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
 bb_springroll 0 c 0 16.2499 -59.7457 0 0 0 1 1 50 50 c 15 100 40 
 bb_wanton 0 c 0 17.5001 -153.814 0 0 0 1 1 50 50 c 15 120 40 
 bb_seaweedchicken 0 c 0 273.75 -58.4746 0 0 0 1 1 50 50 c 15 100 40 
@@ -36,14 +36,14 @@ bb_plate 0 c 0 -325 -329.237 0 0 0 1 1 50 50 c 15 60 50
 bb_tongs 0 c 0 -88.7501 -340.678 0 0 0 1 1 50 50 c 15 90 50 
 bb_scizzors 0 c 0 165 -340.678 0 0 0 1 1 50 50 c 15 100 60 
 bb_trashbin 0 c 0 470.001 -326.694 0 0 0 1 1 50 50 c 15 60 60 
-Cursor 7 c 0 -211.5 -117.058 0 0 0 1 1 50 50 c 16 
-EmptyTongs 0 c 0 -211.5 -117.058 0 0 0 3 3 50 50 c 1 50 c 2 tongs_cursor c 3 0 0 0 0 c 10 0 0.852984 1 1 0 1 1 
-TongsCarrotCake 0 c 0 -211.5 -117.058 0 0 0 3 3 50 50 c 1 50 c 2 tongs_carrotcake c 3 0 0 0 0 c 10 0 0.218302 1 1 0 1 1 
-TongsDumpling 0 c 0 -211.5 -117.058 0 0 0 3 3 50 50 c 1 50 c 2 tongs_dumplings c 3 0 0 0 0 c 10 0 0.518653 1 1 0 1 1 
-TongsSeaweedChicken 0 c 0 -211.5 -117.058 0 0 0 3 3 50 50 c 1 50 c 2 tongs_seaweedchicken c 3 0 0 0 0 c 10 0 0.748814 1 1 0 1 1 
-TongsSpringroll 0 c 0 -211.5 -117.058 0 0 0 3 3 50 50 c 1 50 c 2 tongs_springroll c 3 0 0 0 0 c 10 0 0.0777641 1 1 0 1 1 
-ScizzorsCursor 0 c 0 -211.5 -117.058 0 0 0 3 3 50 50 c 1 50 c 2 scissors_cursor c 3 0 0 0 0 c 10 0 0.600016 1 1 0 1 1 
-PlateCursor 0 c 0 -211.5 -117.058 0 0 0 4.2 2.8 50 50 c 1 50 c 2 food_plate c 3 0 0 0 0 c 10 0 0.793946 1 1 0 1 1 
+Cursor 7 c 0 97.6271 583.043 0 0 0 1 1 50 50 c 16 
+EmptyTongs 0 c 0 97.6271 583.043 0 0 0 3 3 50 50 c 1 50 c 2 tongs_cursor c 3 0 0 0 0 c 10 0 0.852984 1 1 0 1 1 
+TongsCarrotCake 0 c 0 97.6271 583.043 0 0 0 3 3 50 50 c 1 50 c 2 tongs_carrotcake c 3 0 0 0 0 c 10 0 0.218302 1 1 0 1 1 
+TongsDumpling 0 c 0 97.6271 583.043 0 0 0 3 3 50 50 c 1 50 c 2 tongs_dumplings c 3 0 0 0 0 c 10 0 0.518653 1 1 0 1 1 
+TongsSeaweedChicken 0 c 0 97.6271 583.043 0 0 0 3 3 50 50 c 1 50 c 2 tongs_seaweedchicken c 3 0 0 0 0 c 10 0 0.748814 1 1 0 1 1 
+TongsSpringroll 0 c 0 97.6271 583.043 0 0 0 3 3 50 50 c 1 50 c 2 tongs_springroll c 3 0 0 0 0 c 10 0 0.0777641 1 1 0 1 1 
+ScizzorsCursor 0 c 0 97.6271 583.043 0 0 0 3 3 50 50 c 1 50 c 2 scissors_cursor c 3 0 0 0 0 c 10 0 0.600016 1 1 0 1 1 
+PlateCursor 0 c 0 97.6271 583.043 0 0 0 4.2 2.8 50 50 c 1 50 c 2 food_plate c 3 0 0 0 0 c 10 0 0.793946 1 1 0 1 1 
 bb_tray 0 c 0 -355 -146.186 0 0 0 1 1 50 50 c 15 180 70 
 tray_plate 4 c 0 -326.25 -151.271 0 0 0 4.29039 2.48812 50 50 c 1 26 c 2 food_plate c 3 0 0 0 0 c 10 0 0.634428 1 1 0 1 1 
 tray_wanton 0 c 0 -325 -146.186 1.25 5.08479 0 2.08 2.08 50 50 c 1 27 c 2 food_frieddumpling c 3 0 0 0 0 c 10 0 0.258358 1 1 0 1 1 
@@ -52,7 +52,7 @@ tray_springroll 0 c 0 -335 -148.729 -8.75006 2.54231 0 2 1 50 50 c 1 27 c 2 food
 tray_carrotcake 0 c 0 -335 -156 -8.75 -4.729 0 2 1 50 50 c 1 27 c 2 food_carrotcake c 3 0 0 0 0 c 10 0 0.593067 1 1 0 1 1 
 bb_customer 0 c 0 -281.25 169.068 0 0 0 1 1 50 50 c 15 100 200 
 OrderUI 9 c 0 -18.7499 319.068 0 0 0 1 1 50 50 
-OrderBoard 0 c 0 -33.7499 301.271 -15 -17.7967 0 4.01921 4.29126 50 50 c 1 50 c 2 OrderPopUp_Spritesheet_Hawker c 3 0 0 0 0 c 10 1 0.73517 1000 2 0 4 2 
+OrderBoard 0 c 0 -33.7499 301.271 -15 -17.7967 0 4.01921 4.29126 50 50 c 1 50 c 2 OrderPopUp_Spritesheet_Hawker c 3 0 0 0 0 c 10 1 0.73517 0.15 2 0 4 2 
 EmptyBar 0 c 0 5.0001 322.882 23.75 3.81354 0 3.094 2.69445 50 50 c 1 50 c 2 ui_emptybar c 3 0 0 0 0 c 10 0 0.82426 1 1 0 1 1 
 GreenBar 0 c 0 -41.5624 258.672 -22.8125 -60.3955 0 5.31854 4.25 50 50 c 1 52 c 2 ui_greenbar c 3 0 0 0 0 c 10 0 0.15877 1 1 0 1 1 
 RedBar 0 c 0 -46.2498 324.153 -27.4999 5.08475 0 5.53752 3.0256 50 50 c 1 51 c 2 ui_redbar c 3 0 0 0 0 c 10 0 0.358075 1 1 0 1 1 
@@ -61,17 +61,17 @@ OrderSeaweed 0 c 0 -33.7501 312.712 -15.0002 -6.3562 0 2 2 50 50 c 1 51 c 2 food
 OrderSpringroll 0 c 0 -41.25 303.814 -22.5001 -15.2545 0 2 1 50 50 c 1 51 c 2 food_springroll c 3 0 0 0 0 c 10 0 0.556168 1 1 0 1 1 
 OrderCarrotcake 0 c 0 -32.5 313.983 -13.7501 -5.0849 0 2 1 50 50 c 1 51 c 2 food_carrotcake c 3 0 0 0 0 c 10 0 1.00296 1 1 0 1 1 
 OrderSuccess 0 c 0 -37.5 291.684 -18.7501 -27.3836 0 2 2 50 50 c 1 51 c 2 OrderTick_Spritesheet_Hawker c 3 0 0 0 0 c 10 1 0 0.05 4 0 14 4 
-PhoneOptions 0 c 0 -738.749 396.611 0 0 0 1.5604 1.59522 50 50 c 1 50 c 2 ui_phone c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 c 15 12 12 
-CoinBar 0 c 0 431.25 392.324 0 0 0 6.50993 3.43488 50 50 c 1 51 c 2 CoinbarPopOut_Spritesheet_Hawker c 3 0 0 0 0 c 10 1 5.38495 1000 2 0 4 2 
-GoalBar 0 c 0 670 400 0 0 0 4.45 1.35 50 50 c 1 51 c 2 ui_goalbar c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-ui_coin_progress 0 c 0 337.5 400 0 0 0 1.52855 1 50 50 c 1 50 c 2 ui_bar_progress c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
+PhoneOptions 0 c 0 -738.749 396.611 0 0 0 1.5604 1.59522 50 50 c 1 50 c 2 ui_phone c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 c 15 12 12 
+CoinBar 0 c 0 431.25 392.324 0 0 0 6.50993 3.43488 50 50 c 1 51 c 2 CoinbarPopOut_Spritesheet_Hawker_Hollow c 3 0 0 0 0 c 10 1 16.8791 2 2 0 4 2 
+GoalBar 0 c 0 670 400 0 0 0 4.45 1.35 50 50 c 1 51 c 2 ui_goalbar c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+ui_coin_progress 0 c 0 337.5 400 0 0 0 1 1 50 50 c 1 50 c 2 ui_bar_progress c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
 ui_goal_progress 0 c 0 0 0 0 0 0 1 1 50 50 
-ui_coin_progress_bg 0 c 0 431.25 400 0 0 0 4.45 1.35 50 50 c 1 49 c 2 ui_coinbar_bg c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-ui_goal_progress_bg 0 c 0 670 400 0 0 0 4.45 1.35 50 50 c 1 49 c 2 ui_goalbar_bg c 3 0 0 0 0 c 10 0 0.356063 1 1 0 1 1 
+ui_coin_progress_bg 0 c 0 431.25 400 0 0 0 4.45 1.35 50 50 c 1 49 c 2 ui_coinbar_bg c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+ui_goal_progress_bg 0 c 0 670 400 0 0 0 4.45 1.35 50 50 c 1 49 c 2 ui_goalbar_bg c 3 0 0 0 0 c 10 0 0.413142 1 1 0 1 1 
 ui_coin_text 0 c 0 430.726 400 0 0 0 1 1 50 50 c 1 100 c 9 1 
 ui_goal_text 0 c 0 650 400 0 0 0 1 1 50 50 c 1 100 c 9 1 
-Tree7 0 c 0 3.74995 -7.62707 0 0 0 48.5021 24.79 50 50 c 1 -12 c 2 Tree_Middle2_Background_Hawker_6 c 3 2 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-Tree8 0 c 0 -72.5 -362.288 0 0 0 45.4259 45.4259 50 50 c 1 -12 c 2 Tree_Middle4_Background_Hawker_8 c 3 2 0 0 0 c 10 0 0.356063 1 1 0 1 1 
+Tree7 0 c 0 3.74995 -7.62707 0 0 0 48.5021 24.79 50 50 c 1 -12 c 2 Tree_Middle2_Background_Hawker_6 c 3 2 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+Tree8 0 c 0 -72.5 -362.288 0 0 0 45.4259 45.4259 50 50 c 1 -12 c 2 Tree_Middle4_Background_Hawker_8 c 3 2 0 0 0 c 10 0 0.413142 1 1 0 1 1 
 Win_background 0 c 0 0 0 0 0 0 25 16 50 50 c 1 100 c 2 hs_win_background c 3 0 0 0 0 c 10 0 0.783336 1 1 0 1 1 
 Win_restart 0 c 0 -260 -160 0 0 0 7 3.5 50 50 c 1 101 c 2 button_restart c 3 0 0 0 0 c 10 0 0.600002 1 1 0 1 1 
 Win_exit 0 c 0 257.5 -160 0 0 0 7 2.9257 50 50 c 1 101 c 2 button_exit c 3 0 0 0 0 c 10 0 0.600002 1 1 0 1 1 
@@ -80,14 +80,14 @@ Win_words 0 c 0 -342.589 78.2572 0 0 0 1 1 50 50 c 1 100 c 9 2
 Win_words2 0 c 0 -337.448 12.7118 0 0 0 1 1 50 50 c 1 100 c 9 2 
 Win_restart_bb 0 c 0 -261.25 -161.441 0 0 0 1 1 50 50 c 15 150 50 
 Win_exit_bb 0 c 0 256.25 -158.898 0 0 0 1 1 50 50 c 15 150 50 
-bg_dad_child 0 c 0 132.5 129.661 0 0 0 2.49631 3.12039 50 50 c 1 -4 c 2 DadandChild_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0 0.2 10 10 11 2 
-bg_friends 0 c 0 -307.5 100.424 0 0 0 3.5125 2.43573 50 50 c 1 -4 c 2 Friends_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0 0.2 12 9 12 1 
-bg_drinkstall 0 c 0 -216.25 151.272 0 0 0 1.71 1.67023 50 50 c 1 -9 c 2 IndianStall_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0 0.2 11 1 11 1 
-bg_chickenstall 0 c 0 -90 146.186 0 0 0 3.09175 1.44242 50 50 c 1 -6 c 2 ChickenStall_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0 0.2 7 5 7 1 
-bg_drinkstall2 0 c 0 22.5001 170.339 0 0 0 1.35419 2.352 50 50 c 1 -6 c 2 DrinkStall_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0 0.2 7 5 7 1 
-bg_leftshrubs 0 c 0 49.9999 99.1524 0 0 0 38.4745 31.6849 50 50 c 1 0 c 2 ShrubForegroundL_Background_Hawker_17 c 3 2 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-bg_rightshrubs 0 c 0 675.001 47.0353 0 0 0 10.5639 5.9422 50 50 c 1 0 c 2 ShrubForegroundR_Background_Hawker_18 c 3 2 0 0 0 c 10 0 0.356063 1 1 0 1 1 
-bg_toplefttree 0 c 0 -658.749 223.73 0 0 0 10.2422 13.6564 50 50 c 1 -1 c 2 TreeForeground_Background_Hawker_13 c 3 2 0 0 0 c 10 0 0.356063 1 1 0 1 1 
+bg_dad_child 0 c 0 132.5 129.661 0 0 0 2.49631 3.12039 50 50 c 1 -4 c 2 DadandChild_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0849948 0.2 10 2 11 2 
+bg_friends 0 c 0 -307.5 100.424 0 0 0 3.5125 2.43573 50 50 c 1 -4 c 2 Friends_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0849948 0.2 12 8 12 1 
+bg_drinkstall 0 c 0 -216.25 151.272 0 0 0 1.71 1.67023 50 50 c 1 -9 c 2 IndianStall_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0849948 0.2 11 4 11 1 
+bg_chickenstall 0 c 0 -90 146.186 0 0 0 3.09175 1.44242 50 50 c 1 -6 c 2 ChickenStall_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0849948 0.2 7 3 7 1 
+bg_drinkstall2 0 c 0 22.5001 170.339 0 0 0 1.35419 2.352 50 50 c 1 -6 c 2 DrinkStall_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0849948 0.2 7 3 7 1 
+bg_leftshrubs 0 c 0 49.9999 99.1524 0 0 0 38.4745 31.6849 50 50 c 1 0 c 2 ShrubForegroundL_Background_Hawker_17 c 3 2 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+bg_rightshrubs 0 c 0 675.001 47.0353 0 0 0 10.5639 5.9422 50 50 c 1 0 c 2 ShrubForegroundR_Background_Hawker_18 c 3 2 0 0 0 c 10 0 0.413142 1 1 0 1 1 
+bg_toplefttree 0 c 0 -658.749 223.73 0 0 0 10.2422 13.6564 50 50 c 1 -1 c 2 TreeForeground_Background_Hawker_13 c 3 2 0 0 0 c 10 0 0.413142 1 1 0 1 1 
 Phone_black_bg 0 c 0 -5 0 0 0 0 33 19 50 50 c 1 52 c 2 hp_black_bg c 3 0 0 0 0 c 10 0 0.400001 1 1 0 1 1 
 Phone_outercase 3 c 0 0 0 0 0 0 18 18 50 50 c 1 59 c 2 hp_Phonecase c 3 0 0 0 0 c 10 0 0.400001 1 1 0 1 1 
 Phone_main_screen 0 c 0 0 10 0 10 0 18.1 18.1 50 50 c 1 54 c 2 hp_bg_Mainscreen c 3 0 0 0 0 c 10 0 0.916669 1 1 0 1 1 
@@ -179,5 +179,10 @@ Album_1960_hovertext2 0 c 0 154.999 -178 -186.251 59.107 0 1 1 50 50 c 1 62 c 9 
 Album_black_layer_3 0 c 0 0 0 0 0 0 33 19 50 50 c 1 60 c 2 Album_black_cover c 3 0 0 0 0 c 10 0 0.333367 1 1 0 1 1 
 CoinSparkles 0 c 0 341.25 397.868 0 0 0 1.96 1.96 50 50 c 1 52 c 2 Coinbarsparkle_Spritesheet_Hawker c 3 0 0 0 0 c 10 1 0.0763777 1000 4 0 10 4 
 CoinOnTable 0 c 0 -276.25 7.67579 0 0 0 3.98323 3.98323 50 50 c 1 21 c 2 Coin_Spritesheet_Hawker c 3 0 0 0 0 c 10 1 1.18853 1000 8 0 21 4 
-NotificationBar 0 c 0 -436.505 397.331 0 0 0 18.0005 1.44984 50 50 c 1 50 c 2 NotificationBar_UI_Hawker c 3 0 0 0 0 c 10 0 0.429441 1 1 0 1 1 
+NotificationBar 0 c 0 -436.505 397.331 0 0 0 18.0005 1.44984 50 50 c 1 50 c 2 NotificationBar_UI_Hawker c 3 0 0 0 0 c 10 0 0.439313 1 1 0 1 1 
 NotificationText 0 c 0 -651.249 398.743 0 0 0 1 1 50 50 c 1 51 c 9 1 
+WinBar 0 c 0 0 0 0 0 0 1 1 1024 256 c 1 90 c 2 Winbar_Spritesheet_Hawker c 3 0 0 0 0 c 10 1 0.0252676 0.1 2 0 7 4 
+WinBarBG 0 c 0 -3.75492 -43.6548 0 0 0 1 1 1024 1024 c 1 88 c 2 WinStarbust_Spritesheet_Hawker c 3 0 0 0 0 c 10 1 0.0252676 0.1 4 0 16 4 
+WinFireworks1 0 c 0 -473.115 -165.34 0 0 0 1 1 512 512 c 1 89 c 2 Firework1_Spritesheet_Hawker c 3 0 0 0 0 c 10 1 0 0.1 2 0 4 2 
+WinFireworks2 0 c 0 587.639 -209.56 0 0 0 1 1 1024 1024 c 1 89 c 2 Firework2_Spritesheet_Hawker c 3 0 0 0 0 c 10 1 0 0.1 2 0 6 3 
+WinBlackCover 0 c 0 0 0 0 0 0 47.52 24.4201 50 50 c 1 87 c 2 Album_black_cover c 3 0 0 0 0 c 10 0 0 1 1 0 1 1 

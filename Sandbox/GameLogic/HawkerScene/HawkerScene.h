@@ -237,12 +237,22 @@ void UpdateCoinProgressBar()
 		= static_cast<float>(current_coins) / static_cast<float>(target_coins) * initial_progress_scale;
 }
 
+bool won_bar_ { false };
+float won_bar_counter_ { 0.0f };
+bool coin_last_update { false };
+
+void ShowWonBar ();
 void AnimateCoinProgreeBar (float dt)
 {
 	float& x = Scene ().GetComponent<JZEngine::Transform> ( "ui_coin_progress" )->scale_.x;
 	if ( x < current_coin_scale)
 	{
 		x += dt;
+	}
+	if ( coin_last_update && x > initial_progress_scale )
+	{
+		won_bar_ = true;
+		ShowWonBar ();
 	}
 }
 
@@ -360,7 +370,7 @@ void UpdateCoinAnimation (float dt)
 	{
 		JZEngine::Vec2f dir = Scene ().GetComponent<JZEngine::Transform> ( "CoinBar" )->position_ - Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_;
 		float length = dir.Len ();
-		if ( length > 10.0f )
+		if ( length > 50.0f )
 		{
 			Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_ += 2000.0f * dir.Normalize () * dt;
 			Scene ().GetComponent<JZEngine::NonInstanceShader> ( "CoinOnTable" )->tint.w = length / og_coin_distance_from_bar * 2.0f;
@@ -456,6 +466,24 @@ void UpdateNotification ( float dt )
 	}
 }
 
+void HideWonBar ()
+{
+	Scene ().EntityFlagActive ( "WinBar" , false );
+	Scene ().EntityFlagActive ( "WinBarBG" , false );
+	Scene ().EntityFlagActive ( "WinFireworks1" , false );
+	Scene ().EntityFlagActive ( "WinFireworks2" , false );
+	Scene ().EntityFlagActive ( "WinBlackCover" , false );
+}
+
+void ShowWonBar ()
+{
+	Scene ().EntityFlagActive ( "WinBar" , true );
+	Scene ().EntityFlagActive ( "WinBarBG" , true );
+	Scene ().EntityFlagActive ( "WinFireworks1" , true );
+	Scene ().EntityFlagActive ( "WinFireworks2" , true );
+	Scene ().EntityFlagActive ( "WinBlackCover" , true );
+}
+
 /*!
  * @brief UI - END
  * **********************************************************************
@@ -528,10 +556,10 @@ void UpdateMainScene(float dt)
 {
 	UpdateHawkerQueue(dt);
 	//UpdateGoalProgressBar(dt);
+	UpdateCoinAnimation ( dt );
 	AnimateCoinProgreeBar ( dt );
 	UpdateCoinProgressBarAnimation ();
 	UpdateCoinSparklesAnimation ();
-	UpdateCoinAnimation ( dt );
 	UpdateOrderBoardAnimation ();
 	UpdateNotification ( dt );
 
@@ -762,11 +790,7 @@ void UpdateMainScene(float dt)
 					Scene ().EntityFlagActive ( "CoinOnTable" , true );
 					if (current_coins >= target_coins)
 					{
-						win = true;
-						JZEngine::Log::Info("Main", "You have won the game!");
-						//Scene().ChangeScene("MainMenu");
-						ToggleWin(true);
-						current_hawker_scene_state = HawkerSceneState::Win;
+						coin_last_update = true;
 					}
 				}
 			}
@@ -777,6 +801,22 @@ void UpdateMainScene(float dt)
 					ShowNotification ( 3 );
 				}
 			}
+		}
+	}
+
+	if ( won_bar_ )
+	{
+		if ( won_bar_counter_ < 1.0f )
+		{
+			won_bar_counter_ += dt;
+		}
+		else
+		{
+			win = true;
+			JZEngine::Log::Info ( "Main" , "You have won the game!" );
+			//Scene().ChangeScene("MainMenu");
+			ToggleWin ( true );
+			current_hawker_scene_state = HawkerSceneState::Win;
 		}
 	}
 
@@ -825,6 +865,10 @@ void HawkerSceneInit()
 	win = false;
 	lose = false;
 
+	HideWonBar ();
+	won_bar_ = false;
+	won_bar_counter_ = 0.0f;
+
 	// set scale of coin bar and angry customer bar to 0
 	//initial_progress_scale = 7.537f;
 
@@ -835,6 +879,7 @@ void HawkerSceneInit()
 	coin_animation_play = false;
 	coin_played_once = false;
 	coin_suck = false;
+	coin_last_update = false;
 
 	Scene().GetComponent<JZEngine::Transform>("ui_coin_progress")->scale_.x = 1.0f;
 	Scene().GetComponent<JZEngine::Transform>("ui_goal_progress")->scale_.x = 1.0f;
