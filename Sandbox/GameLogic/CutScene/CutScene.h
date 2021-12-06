@@ -348,6 +348,10 @@ void CutSceneUpdate(float dt)
 				Flag10thMsg(false);
 				message_state = MessageState::Thirteen;
 			}
+			else if (message_state == MessageState::Thirteen)
+			{
+				Scene().ChangeScene("HawkerV2");
+			}
 		}
 		
 	}
