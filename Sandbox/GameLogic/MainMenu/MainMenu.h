@@ -28,8 +28,8 @@ float music_volume_{ 0.2f };
 float sfx_volume_{ 0.2f };
 float mute_threshold{ 0.05f };
 
-float initial_bar_scale_{ 20.0f };
-float initial_bar_position_{ -128.0f };
+float initial_bar_scale_{ 1.0f };
+float initial_bar_position_{ -215.0f };
 
 void UpdateVolumeIcons(bool flag)
 {
@@ -56,7 +56,7 @@ void UpdateVolumeSlider()
 	{
 		if (e->on_held_)
 		{
-			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_) / 500.0f;
+			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_) / 670.0f;
 			ratio = std::clamp(ratio, 0.0f, 1.0f);
 			if (ratio < mute_threshold)
 			{
@@ -71,14 +71,14 @@ void UpdateVolumeSlider()
 			
 			Scene().GetSoundSystem()->setMasterVolume(master_volume_);
 			Scene().GetComponent<JZEngine::Transform>("Option_master_brownbar")->scale_.x = ratio * initial_bar_scale_;
-			Scene().GetComponent<JZEngine::Transform>("Option_master_pau")->position_.x = initial_bar_position_ + ratio * 500.0f;
+			Scene().GetComponent<JZEngine::Transform>("Option_master_pau")->position_.x = initial_bar_position_ + ratio * 670.0f;
 		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Option_music_bb"))
 	{
 		if (e->on_held_)
 		{
-			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_) / 500.0f;
+			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_) / 670.0f;
 			ratio = std::clamp(ratio, 0.0f, 1.0f);
 			if (ratio < mute_threshold)
 			{
@@ -91,14 +91,14 @@ void UpdateVolumeSlider()
 			music_volume_ = ratio;
 			Scene().GetSoundSystem()->setBGMChannelGroupVolume(music_volume_);
 			Scene().GetComponent<JZEngine::Transform>("Option_music_brownbar")->scale_.x = ratio * initial_bar_scale_;
-			Scene().GetComponent<JZEngine::Transform>("Option_music_pau")->position_.x = initial_bar_position_ + ratio * 500.0f;
+			Scene().GetComponent<JZEngine::Transform>("Option_music_pau")->position_.x = initial_bar_position_ + ratio * 670.0f;
 		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Option_sfx_bb"))
 	{
 		if (e->on_held_)
 		{
-			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_) / 500.0f;
+			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_) / 670.0f;
 			ratio = std::clamp(ratio, 0.0f, 1.0f);
 			if (ratio < mute_threshold)
 			{
@@ -111,7 +111,7 @@ void UpdateVolumeSlider()
 			sfx_volume_ = ratio;
 			Scene().GetSoundSystem()->setEffectsChannelGroupVolume(sfx_volume_);
 			Scene().GetComponent<JZEngine::Transform>("Option_sfx_brownbar")->scale_.x = ratio * initial_bar_scale_;
-			Scene().GetComponent<JZEngine::Transform>("Option_sfx_pau")->position_.x = initial_bar_position_ + ratio * 500.0f;
+			Scene().GetComponent<JZEngine::Transform>("Option_sfx_pau")->position_.x = initial_bar_position_ + ratio * 670.0f;
 		}
 	}
 	UpdateVolumeIcons(true);
