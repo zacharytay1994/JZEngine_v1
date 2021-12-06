@@ -36,8 +36,8 @@ namespace JZEngine
 		glTextureParameteri ( renderer_id_ , GL_TEXTURE_MIN_FILTER , GL_LINEAR );
 		glTextureParameteri ( renderer_id_ , GL_TEXTURE_MAG_FILTER , GL_NEAREST );
 
-		glTextureParameteri ( renderer_id_ , GL_TEXTURE_WRAP_S , GL_REPEAT );
-		glTextureParameteri ( renderer_id_ , GL_TEXTURE_WRAP_T , GL_REPEAT );
+		glTextureParameteri ( renderer_id_ , GL_TEXTURE_WRAP_S , GL_CLAMP_TO_BORDER );
+		glTextureParameteri ( renderer_id_ , GL_TEXTURE_WRAP_T , GL_CLAMP_TO_BORDER );
 	}
 
 	void Texture2D::Texture2DLoad ( const std::string& path )
