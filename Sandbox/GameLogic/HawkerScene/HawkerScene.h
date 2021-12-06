@@ -418,23 +418,26 @@ std::string notification[ notification_count_ ] =
 };
 bool notification_shown[ notification_count_ ] { false };
 
-void ShowNextNotification (int i)
-{
-	if ( i < 5 )
-	{
-		if ( !notification_shown[ i ] )
-		{
-			Scene ().GetComponent<JZEngine::TextData> ( "NotificationText" )->text = JZEngine::String ( notification[ i ].c_str () );
-		}
-	}
-	Scene ().EntityFlagActive ( "NotificationText" , true );
-	notification_display_ = true;
-}
-
 void TurnOffNotification ()
 {
 	Scene ().EntityFlagActive ( "NotificationText" , false );
 	notification_display_ = false;
+	notification_time_counter_ = 0.0f;
+}
+
+void ShowNotification (int i)
+{
+	TurnOffNotification ();
+	if ( i < 5 )
+	{
+		if ( !notification_shown[ i ] )
+		{
+			notification_shown[ i ] = true;
+			Scene ().GetComponent<JZEngine::TextData> ( "NotificationText" )->text = JZEngine::String ( notification[ i ].c_str () );
+			Scene ().EntityFlagActive ( "NotificationText" , true );
+			notification_display_ = true;
+		}
+	}
 }
 
 void UpdateNotification ( float dt )
@@ -447,6 +450,7 @@ void UpdateNotification ( float dt )
 		}
 		else
 		{
+			notification_time_counter_ = 0.0f;
 			TurnOffNotification ();
 		}
 	}
@@ -529,6 +533,13 @@ void UpdateMainScene(float dt)
 	UpdateCoinSparklesAnimation ();
 	UpdateCoinAnimation ( dt );
 	UpdateOrderBoardAnimation ();
+	UpdateNotification ( dt );
+
+	if ( took_too_long_ )
+	{
+		took_too_long_ = false;
+		ShowNotification ( 4 );
+	}
 
 	if ( order_success )
 	{
@@ -618,6 +629,7 @@ void UpdateMainScene(float dt)
 	{
 		if (e->on_click_ && !plate_on_hand)
 		{
+			ShowNotification ( 2 );
 			JZEngine::Log::Info("Main", "Tongs Selected");
 			FlagCursorState(CursorState::EmptyTongs);
 		}
@@ -722,6 +734,7 @@ void UpdateMainScene(float dt)
 	{
 		if (e->on_click_)
 		{
+			ShowNotification ( 1 );
 			if (!plate_on_hand)
 			{
 				DisplayOrder(GetNextCustomerOrder());
@@ -757,6 +770,13 @@ void UpdateMainScene(float dt)
 					}
 				}
 			}
+			else
+			{
+				if ( plate_on_hand && current_order != CustomerOrder::Nothing )
+				{
+					ShowNotification ( 3 );
+				}
+			}
 		}
 	}
 
@@ -774,6 +794,13 @@ void HawkerSceneInit()
 	og_coin_distance_from_bar = (Scene ().GetComponent<JZEngine::Transform> ( "CoinBar" )->position_ 
 		- Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_).Len();
 	Scene ().EntityFlagActive ( "CoinOnTable" , false );
+
+	/*notification_display_ = false;
+	notification_time_counter_ = 0.0f;*/
+	for ( int i = 0; i < notification_count_; ++i )
+	{
+		notification_shown[ i ] = false;
+	}
 
 	ToggleWin(false);
 
@@ -829,6 +856,8 @@ void HawkerSceneInit()
 	Scene().GetComponent<JZEngine::TextData>("Win_words2")->text = JZEngine::String("    continue to the next level?    ");
 
 	JZEngine::Log::Info("Main", "Hawker Scene Initialized.");
+
+	ShowNotification ( 0 );
 }
 
 void HawkerSceneUpdate(float dt)
