@@ -149,7 +149,7 @@ namespace JZEngine
 		{
 			if( renderer_text_ )
 			{
-				renderer_text_->RenderText ( resource_manager_ , Information , 0 , -( Settings::window_height / 8.0f ) , 0.5 , { 1.0f , 1.0f , 1.0f } , 1.0f , 2.0f , Paragraph::AlignCenter );
+				renderer_text_->RenderText ( resource_manager_ , Information , 0 , -( Settings::window_height / 2.5f ) , 0.5 , { 1.0f , 1.0f , 1.0f } , 1.0f , 2.0f , Paragraph::AlignCenter );
 			}
 		}
 
