@@ -12,9 +12,9 @@ struct CustomDataTest
 
 void MoveRight ( float const& dt , JZEngine::EntityPacket& ep )
 {
-	CustomDataTest& cdt = Scene ().GetCustomComponent<CustomDataTest> ( ep );
-	cdt.a += 5.0f * dt;
-	Scene ().GetComponent<JZEngine::Transform> ( ep ).position_.x += (float)cdt.a * dt;
+	/*CustomDataTest& cdt = Scene ().GetCustomComponent<CustomDataTest> ( ep );
+	cdt.a += 5.0f * dt;*/
+	Scene ().GetComponent<JZEngine::Transform> ( ep ).position_.x += 10.0f * dt;
 }
 
 void MoveUp ( float const& dt , JZEngine::EntityPacket& ep )

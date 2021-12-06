@@ -1,0 +1,1 @@
+ExampleSprite 0 c 0 -175.046 -61.5692 0 0 0 2.49 2.49 50 50 c 1 0 c 2 RoundSteamers c 3 0 0 0 0 c 10 0 0.950249 1 1 0 1 1 c 17 Remove Remove Remove Remove Remove Remove Remove Remove MoveUp MoveRight 

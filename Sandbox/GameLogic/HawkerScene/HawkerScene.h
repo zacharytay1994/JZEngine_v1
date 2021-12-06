@@ -403,6 +403,55 @@ void SetGoalText(T...text)
 	Scene().GetComponent<JZEngine::TextData>("ui_goal_text")->text = JZEngine::String(ss.str().c_str());
 }
 
+bool notification_display_ { false };
+int notification_current_ { -1 };
+float notification_time_ { 1.5f };
+float notification_time_counter_ { 0.0f };
+constexpr int notification_count_ { 5 };
+std::string notification[ notification_count_ ] =
+{
+	"Baozi! Click the customer for orders.",
+	"Baozi! Use a tong to grab the food.",
+	"Put it on the plate and serve it!",
+	"For wrong orders, throw it in the bin.",
+	"Don't take too long! They will get angry."
+};
+bool notification_shown[ notification_count_ ] { false };
+
+void ShowNextNotification (int i)
+{
+	if ( i < 5 )
+	{
+		if ( !notification_shown[ i ] )
+		{
+			Scene ().GetComponent<JZEngine::TextData> ( "NotificationText" )->text = JZEngine::String ( notification[ i ].c_str () );
+		}
+	}
+	Scene ().EntityFlagActive ( "NotificationText" , true );
+	notification_display_ = true;
+}
+
+void TurnOffNotification ()
+{
+	Scene ().EntityFlagActive ( "NotificationText" , false );
+	notification_display_ = false;
+}
+
+void UpdateNotification ( float dt )
+{
+	if ( notification_display_ )
+	{
+		if ( notification_time_counter_ < notification_time_ )
+		{
+			notification_time_counter_ += dt;
+		}
+		else
+		{
+			TurnOffNotification ();
+		}
+	}
+}
+
 /*!
  * @brief UI - END
  * **********************************************************************
