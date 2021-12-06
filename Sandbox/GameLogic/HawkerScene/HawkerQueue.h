@@ -322,7 +322,8 @@ bool InteractWithQueue(bool food, CustomerOrder order)
 			{
 				// success
 				SetCustomerAnimation(customer.animation_pack_, AnimationStates::Success, customer.scene_object_id_);
-				customer.state_ = CustomerState::Success;
+				customer.state_ = CustomerState::Success; 
+				Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Customer" , customer.scene_object_id_ )->tint.x = 0.0f;
 				JZEngine::Log::Info("Main", "Order success to customer {}", customer.scene_object_id_);
 				return true;
 			}

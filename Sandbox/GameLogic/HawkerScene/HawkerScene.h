@@ -405,7 +405,7 @@ void SetGoalText(T...text)
 
 bool notification_display_ { false };
 int notification_current_ { -1 };
-float notification_time_ { 1.5f };
+float notification_time_ { 3.0f };
 float notification_time_counter_ { 0.0f };
 constexpr int notification_count_ { 5 };
 std::string notification[ notification_count_ ] =
