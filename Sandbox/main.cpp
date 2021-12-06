@@ -12,9 +12,9 @@ struct CustomDataTest
 
 void MoveRight ( float const& dt , JZEngine::EntityPacket& ep )
 {
-	CustomDataTest& cdt = Scene ().GetCustomComponent<CustomDataTest> ( ep );
-	cdt.a += 5.0f * dt;
-	Scene ().GetComponent<JZEngine::Transform> ( ep ).position_.x += (float)cdt.a * dt;
+	/*CustomDataTest& cdt = Scene ().GetCustomComponent<CustomDataTest> ( ep );
+	cdt.a += 5.0f * dt;*/
+	Scene ().GetComponent<JZEngine::Transform> ( ep ).position_.x += 10.0f * dt;
 }
 
 void MoveUp ( float const& dt , JZEngine::EntityPacket& ep )
@@ -48,6 +48,9 @@ public:
 
 		Scene ().RegisterSceneInit ( "HawkerV2" , "HawkerSceneInit" , HawkerSceneInit );
 		Scene ().RegisterSceneLogic ( "HawkerV2" , "HawkerSceneUpdate" , HawkerSceneUpdate );
+
+		Scene ().RegisterSceneInit ( "Hawker_w_CoinLogic" , "HawkerSceneInit" , HawkerSceneInit );
+		Scene ().RegisterSceneLogic ( "Hawker_w_CoinLogic" , "HawkerSceneUpdate" , HawkerSceneUpdate );
 
 		Scene ().RegisterSceneInit ( "CutScene" , "CutSceneInit" , CutSceneInit );
 		Scene ().RegisterSceneLogic ( "CutScene" , "CutSceneUpdate" , CutSceneUpdate );
