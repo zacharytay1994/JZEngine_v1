@@ -9,7 +9,7 @@ namespace JZEngine
 	{
 		if (pcomponent.IsStatic)
 			return;
-		pcomponent.totalforce += gravity;
+		pcomponent.acceleration = gravity;
 	}
 
 	void ForcesManager::AddForce(PhysicsComponent& pcomponent, const Vec2f& force)
