@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		ObjectPool.cpp
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Object Pooling.
+*/
+
 #include <PCH.h>
 #include "ObjectPool.h"
 #include "Serialize.h"

@@ -75,7 +75,7 @@ namespace JZEngine
 		*/
 		void Initialize ();
 
-		//void HideConsole ();
+		void HideConsole ();
 
 		bool mouse_settings_ { false };
 	};

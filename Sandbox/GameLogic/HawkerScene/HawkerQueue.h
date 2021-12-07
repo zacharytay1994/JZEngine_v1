@@ -55,14 +55,14 @@ enum class AnimationStates
 
 //name of spritesheet, size width, size height, row, column, total frames, framespeed)
 std::unordered_map<std::string, CustomerSpriteData> customer_animations {
-	{"AhMa(Idle)_SpriteSheet_Hawker",		{13.24f * 0.75, 9.56f * 0.75, 3, 3, 7, 0.1f}  },
-	{"AhMa(Angry)_SpriteSheet_Hawker",		{13.24f * 0.75, 9.56f * 0.75, 3, 6, 18, 0.1f} },
-	{"AhMa(Ordering)_SpriteSheet_Hawker",	{13.24f * 0.75, 9.56f * 0.75, 4, 6, 21, 0.1f} },
-	{"AhMa(Success)_SpriteSheet_Hawker",	{13.24f * 0.75, 9.56f * 0.75, 3, 6, 13, 0.1f} },
-	{"BigGuy(Idle)_SpriteSheet_Hawker",		{12.14f * 0.75, 9.56f * 0.75, 2, 6, 12, 0.1f} },
-	{"BigGuy(angry)_SpriteSheet_Hawker",	{12.14f * 0.75, 9.56f * 0.75, 2, 6, 12, 0.1f} },
-	{"BigGuy(Ordering)_SpriteSheet_Hawker",	{12.14f * 0.75, 9.56f * 0.75, 2, 6, 9, 0.1f} },
-	{"BigGuy(Success)_SpriteSheet_Hawker",	{12.14f * 0.75, 9.56f * 0.75, 2, 6, 12, 0.1f} },
+	{"AhMa(Idle)_SpriteSheet_Hawker",		{13.24f * 0.75f, 9.56f * 0.75f, 3, 3, 7, 0.1f}  },
+	{"AhMa(Angry)_SpriteSheet_Hawker",		{13.24f * 0.75f, 9.56f * 0.75f, 3, 6, 18, 0.1f} },
+	{"AhMa(Ordering)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 4, 6, 21, 0.1f} },
+	{"AhMa(Success)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 3, 6, 13, 0.1f} },
+	{"BigGuy(Idle)_SpriteSheet_Hawker",		{12.14f * 0.75f, 9.56f * 0.75f, 2, 6, 12, 0.1f} },
+	{"BigGuy(angry)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 2, 6, 12, 0.1f} },
+	{"BigGuy(Ordering)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 2, 6, 9, 0.1f} },
+	{"BigGuy(Success)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 2, 6, 12, 0.1f} },
 	{"TallGuy(Idle)_SpriteSheet_Hawker",	{8.14f, 13.42f, 3, 6, 13, 0.1f} },
 	{"TallGuy(angry)_SpriteSheet_Hawker",	{8.14f, 13.42f, 3, 6, 17, 0.1f} },
 	{"TallGuy(Ordering)_SpriteSheet_Hawker",{8.14f, 13.42f, 4, 6, 19, 0.1f} },
@@ -223,7 +223,7 @@ struct Customer
 				if (!angry_ && wait_time_ < angry_wait_time_)
 				{
 					angry_ = true;
-					Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Customer" , scene_object_id_ )->tint.x = 0.337;
+					Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Customer" , scene_object_id_ )->tint.x = 0.337f;
 					JZEngine::Log::Info("Main", "Customer {} got angry.", scene_object_id_);
 					took_too_long_ = true;
 					//SetCustomerAnimation("ahma_angry", scene_object_id_);

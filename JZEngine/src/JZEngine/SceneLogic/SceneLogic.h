@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		SceneLogic.h
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Scene Logic.
+*/
+
 #pragma once
 
 #include <string>

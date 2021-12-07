@@ -27,7 +27,7 @@ namespace JZEngine
 		Initialize();
 		if ( Settings::GAME_BUILD )
 		{
-			//HideConsole ();
+			HideConsole ();
 		}
 	}
 
@@ -45,11 +45,11 @@ namespace JZEngine
 	{
 		glClearColor ( 0.6f , 0.6f , 0.6f , 1.0f );
 		glClear( GL_COLOR_BUFFER_BIT );
-		if ( Settings::GAME_BUILD && !mouse_settings_ )
+		/*if ( Settings::GAME_BUILD && !mouse_settings_ )
 		{
 			mouse_settings_ = true;
 			glfwSetInputMode ( window_ , GLFW_CURSOR , GLFW_CURSOR_DISABLED );
-		}
+		}*/
 	}
 
 	void GLFW_Instance::FrameEnd()
@@ -89,6 +89,7 @@ namespace JZEngine
 
 	void window_focus_callback ( GLFWwindow* window , int focused )
 	{
+		UNREFERENCED_PARAMETER ( window );
 		GLFW_Instance::focused_ = focused;
 	}
 
@@ -161,10 +162,10 @@ namespace JZEngine
 		glfwSetWindowFocusCallback ( window_ , window_focus_callback );
 	}
 
-	/*void GLFW_Instance::HideConsole ()
+	void GLFW_Instance::HideConsole ()
 	{
 		::ShowWindow ( ::GetConsoleWindow () , SW_HIDE );
-	}*/
+	}
 
 	bool GLFW_Instance::dimensions_updated{ false };
 	void GLFW_Instance::UpdateViewportDimensions()

@@ -217,7 +217,6 @@
     <ClInclude Include="src\JZEngine\STL\String.h" />
     <ClInclude Include="src\JZEngine\DebugTools\DebugNew.h" />
     <ClInclude Include="src\JZEngine\Input\Input.h" />
-    <ClInclude Include="src\JZEngine\Input\DeltaTime.h" />
     <ClInclude Include="src\JZEngine\Message\MessageHandler.h" />
     <ClInclude Include="src\JZEngine\Message\MessageBus.h" />
     <ClInclude Include="src\JZEngine\Message\Event.h" />

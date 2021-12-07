@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		LogicContainer.h
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Custom Logic.
+*/
+
 #pragma once
 
 #include "../ECS/ECS.h"

@@ -396,6 +396,7 @@ void UpdateQuitMenu(float dt)
 
 void UpdateHowtoPlayMenu(float dt)
 {
+	UNREFERENCED_PARAMETER ( dt );
 	if( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Arrow_left_how_to_play" ) )
 	{
 		if( e->on_released_ )

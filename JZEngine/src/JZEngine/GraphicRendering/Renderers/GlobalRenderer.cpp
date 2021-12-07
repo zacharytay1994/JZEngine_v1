@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		GlobalRenderer.h
+	Primary:	Jia Min
+	Date:		01/07/21
+	Brief:		Handles all rendering.
+*/
+
 #include <PCH.h>
 #include "GlobalRenderer.h"
 
@@ -45,6 +52,7 @@ namespace JZEngine
 	*/
 	void GlobalRenderer::Update(float dt)
 	{
+		UNREFERENCED_PARAMETER ( dt );
 		if (resource_manager_)
 		{
 			// sort text data by layer

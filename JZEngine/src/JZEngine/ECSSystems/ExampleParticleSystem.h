@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		ExampleParticleSystem.h
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Particle system example.
+*/
+
 #pragma once
 
 #include "../ECS/ECS.h"

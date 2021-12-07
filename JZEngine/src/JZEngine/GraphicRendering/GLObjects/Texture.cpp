@@ -68,12 +68,12 @@ namespace JZEngine
 	Texture2D::~Texture2D ()
 	{}
 
-	void Texture2D::SetData ( void* data , unsigned int size )
+	void Texture2D::SetData ( void* _data , unsigned int size )
 	{
 		unsigned int bpp = data_format_ == GL_RGBA ? 4 : 3;
 		bool result = size == ( width_ * height_ * bpp );
 		JZ_ASSERT ( result , "Data must be entire texture!" );
-		glTextureSubImage2D ( renderer_id_ , 0 , 0 , 0 , width_ , height_ , data_format_ , GL_UNSIGNED_BYTE , data );
+		glTextureSubImage2D ( renderer_id_ , 0 , 0 , 0 , width_ , height_ , data_format_ , GL_UNSIGNED_BYTE , _data );
 	}
 
 	/**

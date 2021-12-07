@@ -45,6 +45,7 @@ namespace JZEngine
 
 	void RendererDebug::Update(ResourceManager* rm)
 	{
+		UNREFERENCED_PARAMETER ( rm );
 		if (initialized_)
 		{
 			if (sprite_outline_)

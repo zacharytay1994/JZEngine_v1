@@ -513,6 +513,7 @@ namespace JZEngine
 			name.second = 0;
 		}
 		*current_scene_name_ = "New Scene";
+		SceneLogic::Instance ().SetCurrentSceneName ( "New Scene" );
 		selected_entity_id_ = -1;
 	}
 
@@ -604,12 +605,12 @@ namespace JZEngine
 					confirmation_flag_ = Confirmation::NONE;
 				}
 				ImGui::SameLine ();
-				if ( ImGui::ImageButton ( ( void* )static_cast< unsigned long long >( ResourceManager::GetTexture ( "tempicon" )->GetRendererID () ) , { 10.0f, 10.0f } ) )
+				/*if ( ImGui::ImageButton ( ( void* )static_cast< unsigned long long >( ResourceManager::GetTexture ( "tempicon" )->GetRendererID () ) , { 10.0f, 10.0f } ) )
 				{
 					Serialize::SerializeScene2 ( ecs_instance_ , ss.str () );
 					Serialize::scenes_[ ss.str () ];
 					confirmation_flag_ = Confirmation::NONE;
-				}
+				}*/
 				ImGui::SameLine(ImGui::GetWindowSize().x / 4 * 3 - 50.0f);
 				if (ImGui::Button("Cancel", ImVec2(100.0f, 0.0f))) {
 					confirmation_flag_ = Confirmation::NONE;

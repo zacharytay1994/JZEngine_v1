@@ -705,6 +705,7 @@ namespace JZEngine
 		template<>
 		void RenderComponent ( CustomDataContainer& component )
 		{
+			UNREFERENCED_PARAMETER ( component );
 			ImGui::Text ( "Unable to display custom data." );
 		}
 
@@ -765,7 +766,7 @@ namespace JZEngine
 				}
 				return;
 			}
-			LoopTupleRender<I + 1> ( t , i , entity );
+			LoopTupleRender<static_cast<size_t>(I + 1)> ( t , i , entity );
 		}
 	};
 }

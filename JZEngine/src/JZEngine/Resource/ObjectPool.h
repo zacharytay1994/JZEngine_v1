@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		ObjectPool.h
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Object Pooling.
+*/
+
 #pragma once
 
 #include <unordered_map>

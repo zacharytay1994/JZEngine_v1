@@ -21,7 +21,6 @@ namespace JZEngine
 		ImGuiInterface(x, y, sx, sy, group)
 	{
 		target_fps_ = Settings::max_fps;
-		float test = sx_;
 	}
 
 	void DebugInformation::Render(float dt) 

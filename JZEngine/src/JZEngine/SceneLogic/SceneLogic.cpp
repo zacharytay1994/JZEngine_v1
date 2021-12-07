@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		SceneLogic.cpp
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Scene Logic.
+*/
+
 #include <PCH.h>
 #include "SceneLogic.h"
 #include "../DebugTools/Log.h"

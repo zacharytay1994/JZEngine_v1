@@ -109,7 +109,7 @@ namespace JZEngine
      */
     int SoundSystem::playSound(std::string const& name, bool bLoop, float volume)
     {
-        
+        UNREFERENCED_PARAMETER ( volume );
         if (!bLoop)
             sound_cont[name]->setMode(FMOD_LOOP_OFF);
         else

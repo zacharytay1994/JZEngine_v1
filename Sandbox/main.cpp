@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		main.cpp
+	Primary:	Zachary Tay
+	Date:		12/08/21
+	Brief:		Entry point to sandbox.
+*/
+
 #include <JZEngine.h>
 #include "GameLogic/HawkerScene/HawkerScene.h"
 #include "GameLogic/MainMenu/MainMenu.h"
@@ -36,7 +43,7 @@ public:
 		Scene ().RegisterLogic ( "MoveRight" , MoveRight );
 		Scene ().RegisterLogic ( "MoveUp" , MoveUp );
 
-		/*! LEGACY CODE */
+		/*! SOON TO BE LEGACY CODE */
 		Scene ().RegisterSceneInit ( "MainMenu" , "InitMainMenu" , InitMainMenu );
 		Scene ().RegisterSceneLogic ( "MainMenu" , "UpdateMainMenu" , UpdateMainMenu );
 

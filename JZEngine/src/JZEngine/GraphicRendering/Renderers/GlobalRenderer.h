@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		GlobalRenderer.h
+	Primary:	Jia Min
+	Date:		01/07/21
+	Brief:		Handles all rendering.
+*/
+
 #pragma once
 
 /*! std includes - START */

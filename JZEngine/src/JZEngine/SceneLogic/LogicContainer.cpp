@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		LogicContainer.cpp
+	Primary:	Zachary Tay
+	Date:		01/07/21
+	Brief:		Custom Logic.
+*/
+
 #include <PCH.h>
 #include "LogicContainer.h"
 
@@ -9,13 +16,13 @@ namespace JZEngine
 	void DefaultUpdate ( float const& dt , EntityPacket& ep )
 	{
 		UNREFERENCED_PARAMETER ( dt );
-		UNREFERENCED_PARAMETER ( system );
+		UNREFERENCED_PARAMETER ( ep );
 	}
 
 	void Update2 ( float const& dt , EntityPacket& ep )
 	{
 		UNREFERENCED_PARAMETER ( dt );
-		UNREFERENCED_PARAMETER ( system );
+		UNREFERENCED_PARAMETER ( ep );
 		Log::Info ( "Main" , "Update2 updating" );
 		
 	}
@@ -23,7 +30,7 @@ namespace JZEngine
 	void Update3 ( float const& dt , EntityPacket& ep )
 	{
 		UNREFERENCED_PARAMETER ( dt );
-		UNREFERENCED_PARAMETER ( system );
+		UNREFERENCED_PARAMETER ( ep );
 		//Log::Info ( "Main" , "Position x : {}" , system.GetComponent<JZEngine::Transform> ().position_.x );
 	}
 
@@ -47,8 +54,8 @@ namespace JZEngine
 	LogicContainer::LogicContainer ()
 	{
 		Register ( "Remove" , DefaultUpdate );
-		Register ( "Update2" , Update2 );
-		Register ( "Update3" , Update3 );
+		/*Register ( "Update2" , Update2 );
+		Register ( "Update3" , Update3 );*/
 	}
 
 	LogicContainer& LogicContainer::Instance ()
@@ -60,7 +67,7 @@ namespace JZEngine
 	void LogicContainer::Register ( std::string const& name , JZUpdate function )
 	{
 		logic_.push_back ( function );
-		logic_map_[ name ] = logic_.size () - 1;
+		logic_map_[ name ] = static_cast<int>(logic_.size ()) - 1;
 	}
 
 	void LogicContainer::Invoke ( int id , float dt , EntityPacket ep )

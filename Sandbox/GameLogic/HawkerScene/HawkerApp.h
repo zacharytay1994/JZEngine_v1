@@ -439,6 +439,7 @@ void ResetAllMsgPosition()
 
 void UpdatePhoneScreen(float dt)
 {
+	UNREFERENCED_PARAMETER ( dt );
 	FlagPhone(true);
 	FlagPhoneHomeScreen(true);
 	Scene().EntityFlagActive("PhoneOptions", false);
@@ -549,6 +550,7 @@ void UpdatePhoneScreen(float dt)
 
 void UpdateShopApp ( float dt )
 {
+	UNREFERENCED_PARAMETER ( dt );
 	switch ( shopapp_state )
 	{
 	case SHOPAPP_STATE::FOOD:
@@ -679,6 +681,7 @@ void UpdateHawkerQuitMenu ( )
 
 void UpdateTheresapp(float dt)
 {
+	UNREFERENCED_PARAMETER ( dt );
 	FlagPhoneHomeScreen(false);
 	FlagTheresappScreen(true);
 	FlagMsg1(true);
@@ -827,6 +830,7 @@ void UpdateTheresapp(float dt)
 
 void UpdateAlbum(float dt)
 {
+	UNREFERENCED_PARAMETER ( dt );
 	Scene().EntityFlagActive("Phone_battery", false);
 	Scene().EntityFlagActive("Phone_time", false);
 	FlagPhoneHomeScreen(false);
@@ -926,6 +930,7 @@ void UpdateAlbum(float dt)
 
 void UpdateHowtoPlay(float dt)
 {
+	UNREFERENCED_PARAMETER ( dt );
 	Scene().EntityFlagActive("Phone_outercase", false);
 	Scene().EntityFlagActive("Phone_battery", false);
 	Scene().EntityFlagActive("Phone_time", false);

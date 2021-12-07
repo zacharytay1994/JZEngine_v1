@@ -264,7 +264,7 @@ namespace JZEngine
 							Serialize::DeserializeScene(ecs_instance_, s.first);
 							ToggleOnOff();
 						}
-						if ( ImGui::Selectable ( "Secondary Load" ) )
+						/*if ( ImGui::Selectable ( "Secondary Load" ) )
 						{
 							scene_tree_->RemoveAllEntities ();
 							Serialize::DeserializeScene2 ( ecs_instance_ , s.first );
@@ -273,7 +273,7 @@ namespace JZEngine
 							SceneLogic::Instance ().BuildEntityMap ();
 							SceneLogic::Instance ().InitSceneLogic ();
 							ToggleOnOff ();
-						}
+						}*/
 						ImGui::EndPopup();
 					}
 					ImGui::Text(s.first.c_str());
