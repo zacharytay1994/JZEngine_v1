@@ -158,11 +158,7 @@ namespace JZEngine
     {
         channel_cont[id]->setPaused(pausestate);
     }
-    void SoundSystem::stopSound(int id)
-    {
-        channel_cont[id]->stop();
 
-    }
     /**
     * Releases pause/unpause soundsystem
     *
