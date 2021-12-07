@@ -22,6 +22,8 @@ namespace JZEngine
 	rotation{ 0.f },
 	angularVelocity{ 0.f },
 	force{ 0.f,0.f },
+		totalforce{ 0.f,0.f },
+		externalforce{ 0.f,0.f },
 	Area{ 0.f },
 	Density{ 0.001f },
 	Mass{ 1.0f },

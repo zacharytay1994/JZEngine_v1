@@ -1,15 +1,12 @@
 /*	__FILE HEADER__
 *	File:		PhysicsSystem.h
 	Primary:	Deon Khong
-	Secondary:
 	Date:		07/10/2021
-	Brief:
-	Physics system handles collision and resolution of physics objects.
+	Brief:		Physics system handles collision and resolution of physics objects.
 */
 
 #pragma once
 #include "../GraphicRendering/Systems/TransformComponent.h"
-
 #include "../DebugTools/Log.h"
 #include "../ECS/ECS.h"
 #include "../ECS/ECSConfig.h"
@@ -18,6 +15,7 @@
 #include "../Physics/CollisionSystem.h"
 #include "../Physics/ResolveSystem.h"
 #include "../Physics/Force.h"
+#include "../Physics/PhysicsPlayer.h"
 #include "../Input/Input.h"
 #include "../Physics/QuadTree.h"
 #include "../Physics/RigidBody.h"

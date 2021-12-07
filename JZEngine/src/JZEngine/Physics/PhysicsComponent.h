@@ -28,6 +28,7 @@ namespace JZEngine
 		float angularVelocity;
 		Vec2f force;
 		Vec2f totalforce;
+		Vec2f externalforce;
 
 		float Area; // size * size (m^3)
 		float Density;// mass / volume(area for 2D) // kg/cm^2

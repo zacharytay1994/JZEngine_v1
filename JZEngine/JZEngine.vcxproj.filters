@@ -76,6 +76,7 @@
     <ClCompile Include="src\JZEngine\Threads\ThreadPool.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\LoadingScreens\LSMain.cpp" />
     <ClCompile Include="src\JZEngine\SceneLogic\LogicContainer.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\PhysicsPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
@@ -195,7 +196,6 @@
     <ClInclude Include="src\JZEngine\ImGui\imstb_truetype.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\EngineGUI.h" />
     <ClInclude Include="src\JZEngine\ImGui\ImZoomSlider.h" />
-    <ClInclude Include="src\JZEngine\Input\DeltaTime.h" />
     <ClInclude Include="src\JZEngine\Input\Input.h" />
     <ClInclude Include="src\JZEngine\JZGL\JZ_GL.h" />
     <ClInclude Include="src\JZEngine\Math\JZMath.h" />
@@ -273,5 +273,6 @@
     <ClInclude Include="src\JZEngine\GraphicRendering\LoadingScreens\LSMain.h" />
     <ClInclude Include="src\JZEngine\SceneLogic\LogicContainer.h" />
     <ClInclude Include="src\JZEngine\SceneLogic\DataContainer.h" />
+    <ClInclude Include="src\JZEngine\Physics\PhysicsPlayer.h" />
   </ItemGroup>
 </Project>

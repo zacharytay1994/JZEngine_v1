@@ -469,6 +469,17 @@ namespace JZEngine
 
 			ImGui::Text ( "Dynamic Friction" );
 			ImGui::SliderFloat ( "##PhysicsComponentDynamicFriction" , &component.DynamicFriction , 0.0f , 1.5f );
+
+			ImGui::Text("Add Force");
+			ImGui::PushItemWidth((w / 2.0f) - (spacing * 3.0f));
+			ImGui::InputFloat("##X", &component.externalforce.x);
+			ImGui::SameLine();
+			ImGui::Text("X");
+			ImGui::SameLine();
+			ImGui::InputFloat("##Y", &component.externalforce.y);
+			ImGui::SameLine();
+			ImGui::Text("Y");
+			ImGui::PopItemWidth();
 		}
 
 		template <>

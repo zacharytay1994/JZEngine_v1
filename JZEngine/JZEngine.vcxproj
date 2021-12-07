@@ -286,6 +286,7 @@
     <ClCompile Include="src\JZEngine\Physics\Force.cpp" />
     <ClCompile Include="src\JZEngine\Physics\PhyicsDebug.cpp" />
     <ClCompile Include="src\JZEngine\Physics\PhysicsComponent.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\PhysicsPlayer.cpp" />
     <ClCompile Include="src\JZEngine\Physics\ResolveSystem.cpp" />
     <ClCompile Include="src\JZEngine\Physics\RigidBody.cpp" />
     <ClCompile Include="src\JZEngine\Resource\ObjectPool.cpp" />
@@ -369,7 +370,6 @@
     <ClInclude Include="src\JZEngine\ImGui\imstb_truetype.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\EngineGUI.h" />
     <ClInclude Include="src\JZEngine\ImGui\ImZoomSlider.h" />
-    <ClInclude Include="src\JZEngine\Input\DeltaTime.h" />
     <ClInclude Include="src\JZEngine\Input\Input.h" />
     <ClInclude Include="src\JZEngine\JZGL\JZ_GL.h" />
     <ClInclude Include="src\JZEngine\Math\JZMath.h" />
@@ -384,6 +384,7 @@
     <ClInclude Include="src\JZEngine\PCH.h" />
     <ClInclude Include="src\JZEngine\BuildDefinitions.h" />
     <ClInclude Include="src\JZEngine\Physics\CollisionSystem.h" />
+    <ClInclude Include="src\JZEngine\Physics\PhysicsPlayer.h" />
     <ClInclude Include="src\JZEngine\Physics\PhysicsShapes.h" />
     <ClInclude Include="src\JZEngine\Physics\QuadTree.h" />
     <ClInclude Include="src\JZEngine\Physics\Rect.h" />

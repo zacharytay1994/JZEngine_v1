@@ -1,10 +1,8 @@
 /*	__FILE HEADER__
 *	File:		PhysicsSystem.cpp
 	Primary:	Deon Khong
-	Secondary:
 	Date:		07/10/2021
-	Brief:
-	Physics system handles collision and resolution of physics objects.
+	Brief:		Physics system handles collision and resolution of physics objects.
 */
 
 #include "PCH.h"
@@ -81,34 +79,16 @@ namespace JZEngine
 		else
 			pcomponent.InvMass = 0.f;
 		
-		if (pcomponent.player)
-		{
-			float dx = 0.f;
-			float dy = 0.f;
-			float forcemagnitude = 1500.f;
-			if (InputHandler::IsKeyPressed(KEY::KEY_W))
-				++++++dy;
-			if (InputHandler::IsKeyPressed(KEY::KEY_A))
-				--dx;
-			if (InputHandler::IsKeyPressed(KEY::KEY_S))
-				--dy;
-			if (InputHandler::IsKeyPressed(KEY::KEY_D))
-				++dx;
 
-			if (dx != 0.f || dy != 0.f)
-			{
-				Vec2f forcedirection{ dx,dy };
-				forcedirection.Normalize();
-				Vec2f force = forcedirection * forcemagnitude;
-				ForcesManager::AddForce(pcomponent, force);
-
-			}
-			
-		}
 
 		if (!pause)
 		{
 			ForcesManager::ApplyGravity(pcomponent);
+			if (pcomponent.player)
+			{
+				PlayerControl(pcomponent);
+			}
+			ForcesManager::AddForce(pcomponent,pcomponent.externalforce);
 			RigidBody::Update(pcomponent, dt);
 		}
 

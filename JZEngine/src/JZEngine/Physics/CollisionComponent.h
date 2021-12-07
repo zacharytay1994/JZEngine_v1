@@ -1,3 +1,9 @@
+/*	__FILE HEADER__
+*	File:		CollisionComponent.h
+	Primary:	Deon Khong
+	Date:		11/11/21
+	Brief:		Header file for Collision Component for physics system
+*/
 #pragma once
 
 #include "../Math/JZMath.h"

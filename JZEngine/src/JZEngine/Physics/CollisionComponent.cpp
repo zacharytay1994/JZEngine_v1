@@ -1,3 +1,9 @@
+/*	__FILE HEADER__
+*	File:		CollisionComponent.cpp
+	Primary:	Deon Khong
+	Date:		11/11/21
+	Brief:		Collision Component for physics system
+*/
 #include "PCH.h"
 #include "CollisionComponent.h"
 

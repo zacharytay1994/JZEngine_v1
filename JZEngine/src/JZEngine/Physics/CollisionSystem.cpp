@@ -1,14 +1,12 @@
 /*	__FILE HEADER__
-*	File:		Collision.cpp
+*	File:		CollisionSystem.cpp
 	Primary:	Deon Khong
-	Date:		01/07/21
+	Date:		11/11/21
 	Brief:		Collision Detection
 */
 
 #include "PCH.h"
 #include "../Physics/CollisionSystem.h"
-
-
 
 
 namespace JZEngine
