@@ -370,7 +370,6 @@
     <ClInclude Include="src\JZEngine\ImGui\imstb_truetype.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\EngineGUI.h" />
     <ClInclude Include="src\JZEngine\ImGui\ImZoomSlider.h" />
-    <ClInclude Include="src\JZEngine\Input\DeltaTime.h" />
     <ClInclude Include="src\JZEngine\Input\Input.h" />
     <ClInclude Include="src\JZEngine\JZGL\JZ_GL.h" />
     <ClInclude Include="src\JZEngine\Math\JZMath.h" />
