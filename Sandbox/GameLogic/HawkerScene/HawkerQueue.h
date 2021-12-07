@@ -53,19 +53,20 @@ enum class AnimationStates
 	Success
 };
 
+//name of spritesheet, size width, size height, row, column, total frames, framespeed)
 std::unordered_map<std::string, CustomerSpriteData> customer_animations {
-	{"ahma_idle",		{7.0f, 7.0f, 1, 12, 12, 0.1f} },
-	{"ahma_angry",		{7.0f, 7.0f, 1, 18, 18, 0.1f} },
-	{"ahma_ordering",	{7.0f, 7.0f, 1, 21, 21, 0.1f} },
-	{"ahma_success",	{7.0f, 7.0f, 1, 9, 9, 0.1f}	  },
-	{"bigguy_idle",		{7.0f, 7.0f, 1, 12, 12, 0.1f} },
-	{"bigguy_angry",	{7.0f, 7.0f, 1, 15, 15, 0.1f} },
-	{"bigguy_ordering",	{7.0f, 7.0f, 1, 9, 9, 0.1f} },
-	{"bigguy_success",	{7.0f, 7.0f, 1, 8, 8, 0.1f} },
-	{"tallguy_idle",	{7.0f, 11.0f, 1, 13, 13, 0.1f} },
-	{"tallguy_angry",	{7.0f, 11.0f, 1, 17, 17, 0.1f} },
-	{"tallguy_ordering",{7.0f, 11.0f, 1, 18, 18, 0.1f} },
-	{"tallguy_success",	{7.0f, 11.0f, 1, 9, 9, 0.1f} }
+	{"AhMa(Idle)_SpriteSheet_Hawker",		{13.24f * 0.75, 9.56f * 0.75, 3, 3, 7, 0.1f}  },
+	{"AhMa(Angry)_SpriteSheet_Hawker",		{13.24f * 0.75, 9.56f * 0.75, 3, 6, 18, 0.1f} },
+	{"AhMa(Ordering)_SpriteSheet_Hawker",	{13.24f * 0.75, 9.56f * 0.75, 4, 6, 21, 0.1f} },
+	{"AhMa(Success)_SpriteSheet_Hawker",	{13.24f * 0.75, 9.56f * 0.75, 3, 6, 13, 0.1f} },
+	{"BigGuy(Idle)_SpriteSheet_Hawker",		{12.14f * 0.75, 9.56f * 0.75, 2, 6, 12, 0.1f} },
+	{"BigGuy(angry)_SpriteSheet_Hawker",	{12.14f * 0.75, 9.56f * 0.75, 2, 6, 12, 0.1f} },
+	{"BigGuy(Ordering)_SpriteSheet_Hawker",	{12.14f * 0.75, 9.56f * 0.75, 2, 6, 9, 0.1f} },
+	{"BigGuy(Success)_SpriteSheet_Hawker",	{12.14f * 0.75, 9.56f * 0.75, 2, 6, 12, 0.1f} },
+	{"TallGuy(Idle)_SpriteSheet_Hawker",	{8.14f, 13.42f, 3, 6, 13, 0.1f} },
+	{"TallGuy(angry)_SpriteSheet_Hawker",	{8.14f, 13.42f, 3, 6, 17, 0.1f} },
+	{"TallGuy(Ordering)_SpriteSheet_Hawker",{8.14f, 13.42f, 4, 6, 19, 0.1f} },
+	{"TallGuy(Success)_SpriteSheet_Hawker",	{8.14f, 13.42f, 3, 6, 13, 0.1f} }
 };
 
 struct AnimationPack
@@ -80,26 +81,26 @@ void BuildAnimationPack(AnimationPack& anims, const std::string& name)
 {
 	if (name == "ahma")
 	{
-		anims.animations_[0] = "ahma_idle";
-		anims.animations_[1] = "ahma_angry";
-		anims.animations_[2] = "ahma_ordering";
-		anims.animations_[3] = "ahma_success";
+		anims.animations_[0] = "AhMa(Idle)_SpriteSheet_Hawker";
+		anims.animations_[1] = "AhMa(Angry)_SpriteSheet_Hawker";
+		anims.animations_[2] = "AhMa(Ordering)_SpriteSheet_Hawker";
+		anims.animations_[3] = "AhMa(Success)_SpriteSheet_Hawker";
 	}
 	else if (name == "bigguy")
 	{
 
-		anims.animations_[0] = "bigguy_idle";
-		anims.animations_[1] = "bigguy_angry";
-		anims.animations_[2] = "bigguy_ordering";
-		anims.animations_[3] = "bigguy_success";
+		anims.animations_[0] = "BigGuy(Idle)_SpriteSheet_Hawker";
+		anims.animations_[1] = "BigGuy(angry)_SpriteSheet_Hawker";
+		anims.animations_[2] = "BigGuy(Ordering)_SpriteSheet_Hawker";
+		anims.animations_[3] = "BigGuy(Success)_SpriteSheet_Hawker";
 	}
 	else if (name == "tallguy")
 	{
 
-		anims.animations_[0] = "tallguy_idle";
-		anims.animations_[1] = "tallguy_angry";
-		anims.animations_[2] = "tallguy_ordering";
-		anims.animations_[3] = "tallguy_success";
+		anims.animations_[0] = "TallGuy(Idle)_SpriteSheet_Hawker";
+		anims.animations_[1] = "TallGuy(angry)_SpriteSheet_Hawker";
+		anims.animations_[2] = "TallGuy(Ordering)_SpriteSheet_Hawker";
+		anims.animations_[3] = "TallGuy(Success)_SpriteSheet_Hawker";
 	}
 }
 
