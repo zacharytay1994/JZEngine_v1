@@ -173,18 +173,21 @@ namespace JZEngine
 			//		interface.second.interface_->RenderInterface(dt);
 			//	}
 			//}
-			ImGui::SetNextWindowBgAlpha(0.0f);
-			ImGui::SetNextWindowPos({ 0.0f, 0.0f }, ImGuiCond_Always);
-			ImGui::SetNextWindowSize({ 10.0f, 10.0f }, ImGuiCond_Always);
-			bool open = true;
-			ImGui::Begin("FullscreenOff", &open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
-			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("fullscreenicon")->GetRendererID()), { 10.0f, 10.0f }))
+			if ( !Settings::GAME_BUILD )
 			{
-				Camera::fullscreen = !Camera::fullscreen;
-				GLFW_Instance::UpdateViewportDimensions();
-				Log::Info("Main", "Toggle fullscreen: {}", Camera::fullscreen);
+				ImGui::SetNextWindowBgAlpha ( 0.0f );
+				ImGui::SetNextWindowPos ( { 0.0f, 0.0f } , ImGuiCond_Always );
+				ImGui::SetNextWindowSize ( { 10.0f, 10.0f } , ImGuiCond_Always );
+				bool open = true;
+				ImGui::Begin ( "FullscreenOff" , &open , ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar );
+				if ( ImGui::ImageButton ( ( void* )static_cast< unsigned long long >( ResourceManager::GetTexture ( "fullscreenicon" )->GetRendererID () ) , { 10.0f, 10.0f } ) )
+				{
+					Camera::fullscreen = !Camera::fullscreen;
+					GLFW_Instance::UpdateViewportDimensions ();
+					Log::Info ( "Main" , "Toggle fullscreen: {}" , Camera::fullscreen );
+				}
+				ImGui::End ();
 			}
-			ImGui::End();
 		}
 
 		ECS::Entity* selected_entity = scene_tree_.GetSelectedEntity();

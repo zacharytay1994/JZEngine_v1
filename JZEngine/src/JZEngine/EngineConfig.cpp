@@ -63,36 +63,39 @@ namespace JZEngine
 
 	void Settings::SaveToConfigFile()
 	{
-		std::string folder_path = "Saves/";
-		std::string config_file = "config.txt";
-		// create config folder
-		if (!std::filesystem::is_directory(folder_path))
+		if ( !Settings::GAME_BUILD )
 		{
-			std::filesystem::create_directory(folder_path);
-		}
+			std::string folder_path = "Saves/";
+			std::string config_file = "config.txt";
+			// create config folder
+			if ( !std::filesystem::is_directory ( folder_path ) )
+			{
+				std::filesystem::create_directory ( folder_path );
+			}
 
-		std::stringstream ss;
-		ss << folder_path << config_file;
+			std::stringstream ss;
+			ss << folder_path << config_file;
 
-		// try to open file, if no file exists create it
-		std::fstream file(ss.str(), std::ios::out);
+			// try to open file, if no file exists create it
+			std::fstream file ( ss.str () , std::ios::out );
 
-		if (file.is_open())
-		{
-			GLFW_Instance::GetWindowPos(window_x, window_y);
+			if ( file.is_open () )
+			{
+				GLFW_Instance::GetWindowPos ( window_x , window_y );
 
-			// write all variables inside
-			file << version << "\n";
-			file << window_x << "\n";
-			file << window_y << "\n";
-			file << window_width << "\n";
-			file << window_height << "\n";
-			file << max_fps << "\n";
-			file << logs_directory << "\n";
-			file << saves_directory << "\n";
-			//file << saves_config << "\n";
-			file << scenes_directory << "\n";
-			file << prefabs_directory << "\n";
+				// write all variables inside
+				file << version << "\n";
+				file << window_x << "\n";
+				file << window_y << "\n";
+				file << window_width << "\n";
+				file << window_height << "\n";
+				file << max_fps << "\n";
+				file << logs_directory << "\n";
+				file << saves_directory << "\n";
+				//file << saves_config << "\n";
+				file << scenes_directory << "\n";
+				file << prefabs_directory << "\n";
+			}
 		}
 	}
 }

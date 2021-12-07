@@ -46,7 +46,10 @@ namespace JZEngine
 		static std::string scenes_directory;
 		static std::string prefabs_directory;
 
+		static constexpr bool GAME_BUILD { false };
+
 		static void LoadFromConfigFile();
 		static void SaveToConfigFile();
+
 	};
 }

@@ -1,6 +1,6 @@
 Tree1 0 c 0 -818.876 274.255 0 0 0 0.81 0.81 256 256 c 1 -12 c 2 TreeLeft1_Background_Hawker_2 c 3 2 0 0 0 c 10 0 0.316667 1 1 0 1 1 
 Sky 0 c 0 0 0 0 0 0 1 1.1 4096 1024 c 1 -100 c 2 Sky_Background_Hawker c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
-Clouds 0 c 0 665.385 40 0 0 0 1 1 7660 1048 c 1 -30 c 2 bg_hawker_clouds c 3 0 0 0 0 c 7 0 10 0 c 10 0 0.316667 1 1 0 1 1 
+Clouds 0 c 0 811.016 40 0 0 0 1 1 7660 1048 c 1 -30 c 2 bg_hawker_clouds c 3 0 0 0 0 c 7 0 10 0 c 10 0 0.316667 1 1 0 1 1 
 Middlegroud 2 c 0 4.25 215.472 0 0 0 0.8 0.8 4096 1024 c 1 -11 c 2 Misc_Background_Hawker_1 c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
 Lamp 0 c 0 672.999 203.264 668.749 -12.2076 0 0.421142 0.421142 256 1024 c 1 0 c 2 Lamppost_Background_Hawker_19 c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
 Lamp(1) 0 c 0 -474.501 171.566 -478.751 -43.9058 0 0.231939 0.231939 256 1024 c 1 -9 c 2 Lamppost_Background_Hawker_19 c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
@@ -14,11 +14,11 @@ Tree3 0 c 0 727.155 285.089 0 0 0 0.75 0.75 1024 1024 c 1 -9 c 2 TreeRight2_Back
 Tree2 0 c 0 360.5 329.951 0 0 0 0.81 0.81 512 512 c 1 -12 c 2 TreeRight1_Background_Hawker_9 c 3 2 0 0 0 c 10 0 0.316667 1 1 0 1 1 
 HawkerTables 0 c 0 -74.1875 173.979 0 0 0 0.75 0.75 2048 512 c 1 -5 c 2 Tables_Background_Hawker_16 c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
 Queue 5 c 0 -262.5 104.474 0 0 0 1 1 50 50 c 1 10 c 2 emptyimage c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
-Customer 0 c 0 -260.043 104.474 2.45653 0 0 9.93 7.17 50 50 c 1 8 c 2 AhMa(Idle)_SpriteSheet_Hawker c 3 0 0 0 0 c 10 1 0.1 0.1 3 2 7 3 
-Customer 0 c 0 -262.476 104.474 0.0241241 0 0 8.14 13.42 50 50 c 1 7 c 2 TallGuy(Idle)_SpriteSheet_Hawker c 3 0 0 0 0 c 10 1 0.0166667 0.1 6 7 13 3 
-Customer 0 c 0 -262.499 104.474 0.00120544 0 0 9.105 7.17 50 50 c 1 6 c 2 BigGuy(Idle)_SpriteSheet_Hawker c 3 0 0 0 0 c 10 1 0.0500001 0.1 6 10 12 2 
-Customer 0 c 0 -262.443 104.474 0.0567551 0 0 9.105 7.17 50 50 c 1 10 c 2 BigGuy(Idle)_SpriteSheet_Hawker c 3 0 0.337 0 0 c 10 1 0 0.1 6 10 12 2 
-Customer 0 c 0 -262.48 104.474 0.0196381 0 0 8.14 13.42 50 50 c 1 9 c 2 TallGuy(Idle)_SpriteSheet_Hawker c 3 0 0.337 0 0 c 10 1 0.0166667 0.1 6 2 13 3 
+Customer 0 c 0 -1062.5 104.474 -800 0 0 9.93 7.17 50 50 c 1 8 c 2 AhMa(Idle)_SpriteSheet_Hawker c 3 0 0 0 0 c 10 1 0.1 0.1 3 2 7 3 
+Customer 0 c 0 -1062.5 104.474 -800 0 0 8.14 13.42 50 50 c 1 7 c 2 TallGuy(Idle)_SpriteSheet_Hawker c 3 0 0 0 0 c 10 1 0.0166667 0.1 6 7 13 3 
+Customer 0 c 0 -1062.5 104.474 -800 0 0 9.105 7.17 50 50 c 1 6 c 2 BigGuy(Idle)_SpriteSheet_Hawker c 3 0 0 0 0 c 10 1 0.0500001 0.1 6 10 12 2 
+Customer 0 c 0 -1062.5 104.474 -800 0 0 9.105 7.17 50 50 c 1 10 c 2 BigGuy(Idle)_SpriteSheet_Hawker c 3 0 0.337 0 0 c 10 1 0 0.1 6 10 12 2 
+Customer 0 c 0 -1062.5 104.474 -800 0 0 8.14 13.42 50 50 c 1 9 c 2 TallGuy(Idle)_SpriteSheet_Hawker c 3 0 0.337 0 0 c 10 1 0.0166667 0.1 6 2 13 3 
 FoodTray 4 c 0 290.501 -76.7444 0 0 0 0.8 0.8 1024 512 c 1 25 c 2 DryFood_Equipment_Hawker c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
 SpringRoll 0 c 0 105.625 -112.66 -184.876 -35.9152 0 0.8 0.8 512 125 c 1 26 c 2 DryFoodSpringRoll_Equipment_Hawker c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
 SeaweedChick 0 c 0 368.719 -115.835 78.2178 -39.0906 0 0.8 0.8 512 128 c 1 26 c 2 DryFoodSeaweedChicken_Equipment_Hawker c 3 0 0 0 0 c 10 0 0.316667 1 1 0 1 1 
@@ -200,7 +200,7 @@ bb_ShopappEquipment 0 c 0 102 254.84 0 0 0 1 1 50 50 c 15 100 30
 bb_ShopappProjection 0 c 0 172.5 320.853 0 0 0 1 1 50 50 c 15 30 30 
 bb_ShopappBack 0 c 0 -187.5 320.853 0 0 0 1 1 50 50 c 15 30 30 
 bb_ShopappInfoBack 0 c 0 130.5 104.392 0 0 0 1 1 50 50 c 15 35 35 
-MouseCursor 0 c 0 -216 -124.733 0 0 0 1 1 50 50 c 1 500 c 2 Arrow2_UI_Misc c 3 0 0 0 0 c 10 0 0.483334 1 1 0 1 1 c 16 
+MouseCursor 0 c 0 -216 -124.733 0 0 0 2 2 50 50 c 1 500 c 2 Arrow2_UI_Misc c 3 0 0 0 0 c 10 0 0.483334 1 1 0 1 1 c 16 
 Quit_yes 0 c 0 -362.999 -200 0 0 0 1 1 512 256 c 1 200 c 2 Yes(Highlight)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.600015 1 1 0 1 1 
 Quit_no 0 c 0 259.501 -200 0 0 0 1 1 512 256 c 1 200 c 2 No(OG)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.600015 1 1 0 1 1 
 Quit_bg 0 c 0 0 0 0 0 0 1 1 2048 1024 c 1 199 c 2 Quitgame(Body)_UI_MainMenu c 3 0 0 0 0 c 10 0 0.600015 1 1 0 1 1 

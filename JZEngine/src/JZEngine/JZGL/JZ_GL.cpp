@@ -25,6 +25,10 @@ namespace JZEngine
 		window_height_( height )
 	{
 		Initialize();
+		if ( Settings::GAME_BUILD )
+		{
+			//HideConsole ();
+		}
 	}
 
 	GLFW_Instance::~GLFW_Instance()
@@ -41,6 +45,11 @@ namespace JZEngine
 	{
 		glClearColor ( 0.6f , 0.6f , 0.6f , 1.0f );
 		glClear( GL_COLOR_BUFFER_BIT );
+		if ( Settings::GAME_BUILD && !mouse_settings_ )
+		{
+			mouse_settings_ = true;
+			glfwSetInputMode ( window_ , GLFW_CURSOR , GLFW_CURSOR_DISABLED );
+		}
 	}
 
 	void GLFW_Instance::FrameEnd()
@@ -96,8 +105,15 @@ namespace JZEngine
 #endif
 
 		// create glfw window
-		//window_ = glfwCreateWindow( Settings::window_width, Settings::window_height, JZEngine::Settings::engine_name.c_str(), glfwGetPrimaryMonitor(), NULL );
-		window_ = glfwCreateWindow ( Settings::window_width , Settings::window_height , JZEngine::Settings::engine_name.c_str () , NULL , NULL );
+		if ( Settings::GAME_BUILD )
+		{
+			window_ = glfwCreateWindow ( Settings::window_width , Settings::window_height , JZEngine::Settings::engine_name.c_str () , glfwGetPrimaryMonitor () , NULL );
+		}
+		else
+		{
+			window_ = glfwCreateWindow ( Settings::window_width , Settings::window_height , JZEngine::Settings::engine_name.c_str () , NULL , NULL );
+		}
+
 		if ( window_ == NULL )
 		{
 			std::cout << "Failed to create GLFW window" << std::endl;
@@ -144,6 +160,11 @@ namespace JZEngine
 		SetWindowPos(Settings::window_x, Settings::window_y);
 		glfwSetWindowFocusCallback ( window_ , window_focus_callback );
 	}
+
+	/*void GLFW_Instance::HideConsole ()
+	{
+		::ShowWindow ( ::GetConsoleWindow () , SW_HIDE );
+	}*/
 
 	bool GLFW_Instance::dimensions_updated{ false };
 	void GLFW_Instance::UpdateViewportDimensions()

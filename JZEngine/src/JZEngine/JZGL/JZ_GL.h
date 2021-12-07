@@ -74,6 +74,10 @@ namespace JZEngine
 		 * Sets up the OpenGL instance using GLFW, and loads glad.
 		*/
 		void Initialize ();
+
+		//void HideConsole ();
+
+		bool mouse_settings_ { false };
 	};
 
 	/*!

@@ -55,6 +55,7 @@ namespace JZEngine
 	private:
 		GlobalSystemsManager*				global_systems_;
 		static bool open_;
+		bool first_pass_ { true };
 
 	};
 

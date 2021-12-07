@@ -64,4 +64,4 @@ bb_credits 0 c 0 -216.25 -276.25 0 0 0 1 1 50 50 c 15 130 40
 bb_Quit 0 c 0 203.749 -276.25 0 0 0 1 1 50 50 c 15 130 40 
 Arrow_left_how_to_play 0 c 0 -115 -350 0 0 0 1 1 128 128 c 1 4 c 2 Arrowleft_UI_MainMenu c 3 0 0 0 0 c 10 0 0.516743 1 1 0 1 1 c 15 64 40 
 Arrow_right_how_to_play 0 c 0 115 -350 0 0 0 1 1 128 128 c 1 4 c 2 Arrowright_UI_MainMenu c 3 0 0 0 0 c 10 0 0.53341 1 1 0 1 1 c 15 64 40 
-MouseCursor 0 c 0 -234 -120.128 0 0 0 1 1 50 50 c 1 500 c 2 Arrow2_UI_Misc c 3 0 0 0 0 c 10 0 0.733339 1 1 0 1 1 c 16 
+MouseCursor 0 c 0 -234 -120.128 0 0 0 2 2 50 50 c 1 500 c 2 Arrow2_UI_Misc c 3 0 0 0 0 c 10 0 0.733339 1 1 0 1 1 c 16 

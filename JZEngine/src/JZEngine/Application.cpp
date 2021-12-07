@@ -21,6 +21,7 @@
 #include "Resource/ObjectPool.h"
 #include "DebugTools/PerformanceData.h"
 #include "GraphicRendering/Renderers/GlobalRenderer.h"
+#include "EngineGUI/MenuBar.h"
 /*! GAME ENGINE INCLUDES - END */
 
 namespace JZEngine
@@ -69,7 +70,11 @@ namespace JZEngine
 		SceneLogic::Instance().SetECS(global_systems_->GetSystem<ECS::ECSInstance>());
 		SceneLogic::Instance().SetSceneTree(global_systems_->GetSystem<EngineGUI>()->GetSceneTree());
 		SceneLogic::Instance().SetSoundSystem(global_systems_->GetSystem<SoundSystem>());
-	
+
+		if ( Settings::GAME_BUILD )
+		{
+			Camera::fullscreen = true;
+		}
 	}
 
 	/*!
@@ -173,6 +178,18 @@ namespace JZEngine
 			// Set performance data variables to be displayed in the engine
 			PerformanceData::time_elapsed_ = static_cast<float>(time);
 			PerformanceData::app_fps_ = static_cast<unsigned int>(1.0 / dt);
+
+			if ( first_pass_ && Settings::GAME_BUILD )
+			{
+				first_pass_ = false;
+				MenuBar::play_ = true;
+				global_systems_->GetSystem<EngineGUI> ()->GetSceneTree ()->RemoveAllEntities ();
+				Serialize::DeserializeScene ( global_systems_->GetSystem<ECS::ECSInstance> () , "MainMenu" );
+				*global_systems_->GetSystem<EngineGUI> ()->GetSceneTree ()->current_scene_name_ = "MainMenu";
+				SceneLogic::Instance ().SetCurrentSceneName ( "MainMenu" );
+				SceneLogic::Instance ().BuildEntityMap ();
+				SceneLogic::Instance ().InitSceneLogic ();
+			}
 		}
 
 		// Save engine settings to the config file upon exiting the program
