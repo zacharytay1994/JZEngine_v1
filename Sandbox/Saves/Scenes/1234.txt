@@ -1,0 +1,2 @@
+123 0 c 0 -437.629 87.4563 0 0 0 1 1 50 50 c 1 0 c 2 cs_app_Baozi_Shock_emoji c 3 0 0 0 0 c 10 0 0 1 1 0 1 1 
+123 0 c 0 -44.599 58.7814 0 0 0 1 1 50 50 c 1 0 c 2 cs_app_Baozi_Shock_emoji c 3 0 0 0 0 c 10 0 0 1 1 0 1 1 
