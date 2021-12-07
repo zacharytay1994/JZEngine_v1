@@ -14,6 +14,8 @@
 #include "ECSconfig.h"
 #include "../DebugTools/PerformanceData.h"
 
+#include "../EngineGUI/MenuBar.h"
+
 #include <iostream>
 
 namespace JZEngine
@@ -545,32 +547,36 @@ namespace JZEngine
 			ArchetypeManager& am = ecs_instance_->archetype_manager_;
 			for (auto& system : system_database_)
 			{
-				PerformanceData::StartMark(system->name_, PerformanceData::TimerType::ECS_SYSTEMS);
-				system->FrameBegin(dt);
-				for (ui32 j = 0; j < am.number_of_archetypes_; ++j)
+				system->play_ = MenuBar::play_;
+				if ( MenuBar::play_ || system->update_on_pause_ )
 				{
-					// if system mask matches archetype mask, means archetype holds entities of interest
-					if ((system->mask_ & am.archetype_database_[j].mask_) == system->mask_)
+					PerformanceData::StartMark ( system->name_ , PerformanceData::TimerType::ECS_SYSTEMS );
+					system->FrameBegin ( dt );
+					for ( ui32 j = 0; j < am.number_of_archetypes_; ++j )
 					{
-						// loop through archetype chunks
-						for (ui32 h = 0; h < am.archetype_database_[j].number_of_chunks_; ++h)
+						// if system mask matches archetype mask, means archetype holds entities of interest
+						if ( ( system->mask_ & am.archetype_database_[ j ].mask_ ) == system->mask_ )
 						{
-							system->current_chunk_ = &am.archetype_database_[j].chunk_database_[h];
-							// for each entity in a chunk
-							for (ubyte i = 0; i < system->current_chunk_->number_of_entities_; ++i)
+							// loop through archetype chunks
+							for ( ui32 h = 0; h < am.archetype_database_[ j ].number_of_chunks_; ++h )
 							{
-								// if it is marked active, i.e. exists 
-								if (system->current_chunk_->active_flags_[i])
+								system->current_chunk_ = &am.archetype_database_[ j ].chunk_database_[ h ];
+								// for each entity in a chunk
+								for ( ubyte i = 0; i < system->current_chunk_->number_of_entities_; ++i )
 								{
-									system->current_id_ = i;
-									system->Update(dt);
+									// if it is marked active, i.e. exists 
+									if ( system->current_chunk_->active_flags_[ i ] )
+									{
+										system->current_id_ = i;
+										system->Update ( dt );
+									}
 								}
 							}
 						}
 					}
+					system->FrameEnd ( dt );
+					PerformanceData::EndMark ( system->name_ , PerformanceData::TimerType::ECS_SYSTEMS );
 				}
-				system->FrameEnd(dt);
-				PerformanceData::EndMark(system->name_, PerformanceData::TimerType::ECS_SYSTEMS);
 			}
 		}
 
@@ -1001,6 +1007,40 @@ namespace JZEngine
 			return *this;
 		}
 
+		Entity& Entity::RemoveSystem(int systemid)
+		{
+			SystemComponents& components = ecs_instance_->system_manager_.system_database_[systemid]->components_;
+			std::array<int, MAX_COMPONENTS> system_component_flags{ 0 };
+			/*for (auto const& component : components)
+			{
+				if (component == -1)
+				{
+					break;
+				}
+				++system_component_flags[component];
+			}*/
+
+			// check all systems that use the component
+			ECSConfig::System systems;
+			std::apply( [&system_component_flags, this](auto&...system) { (system.AppendMaskDetails(owning_chunk_->owning_archetype_->mask_, system_component_flags), ...); },
+						systems);
+
+			for (auto const& component : components)
+			{
+				if (component == -1)
+				{
+					break;
+				}
+				// if only this system handles the component, remove it
+				if (system_component_flags[component] == 1)
+				{
+					RemoveComponent(component);
+				}
+			}
+
+			return *this;
+		}
+
 		void Entity::FlagActive(bool flag)
 		{
 			assert(owning_chunk_ != nullptr);
@@ -1076,6 +1116,46 @@ namespace JZEngine
 			if (current_chunk_)
 			{
 				current_chunk_->active_flags_[static_cast<int>(current_id_)] = flag;
+			}
+		}
+
+		void System::NotifyInspectorMissingComponent(int i, void(*ImGuiFunction)(std::string const&), std::bitset<ECS::MAX_COMPONENTS> const& mask)
+		{
+			if (mask_[i] == 1)
+			{
+				if ((mask & mask_) == mask_)
+				{
+					ImGuiFunction(name_);
+				}
+			}
+		}
+
+
+		void System::AppendMaskDetails(std::bitset<MAX_COMPONENTS>& mask, std::array<int, MAX_COMPONENTS>& systemComponents)
+		{
+			bool in_entity_{ true };
+			for (auto const& component : components_)
+			{
+				if (component == -1)
+				{
+					break;
+				}
+				if (mask[component] != 1)
+				{
+					in_entity_ = false;
+					break;
+				}
+			}
+			if (in_entity_)
+			{
+				for (auto const& component : components_)
+				{
+					if (component == -1)
+					{
+						break;
+					}
+					++systemComponents[component];
+				}
 			}
 		}
 	}

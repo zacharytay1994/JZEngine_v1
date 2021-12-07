@@ -8,7 +8,7 @@
 */
 
 #pragma once
-#include "../GraphicRendering/TransformComponent.h"
+#include "../GraphicRendering/Systems/TransformComponent.h"
 
 #include "../DebugTools/Log.h"
 #include "../ECS/ECS.h"
@@ -18,6 +18,7 @@
 #include "../Physics/CollisionSystem.h"
 #include "../Physics/ResolveSystem.h"
 #include "../Physics/Force.h"
+#include "../Physics/PhysicsPlayer.h"
 #include "../Input/Input.h"
 #include "../Physics/QuadTree.h"
 #include "../Physics/RigidBody.h"

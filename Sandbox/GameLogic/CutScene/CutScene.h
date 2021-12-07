@@ -47,7 +47,7 @@ float text_leading{3.0f};
 
 // relative position of the text in message box
 float message_left_position_x { -130.0f }; //
-float message_right_position_y{ -220.0f }; //
+float message_right_position_y{ -200.0f }; //
 
 
 void Flag1stMsg(bool flag)
@@ -173,40 +173,40 @@ void CutSceneInit()
 	Flag13thMsg(false);
 
 	Scene().GetComponent<JZEngine::TextData>("1st_msg_text")->text = JZEngine::String("Baozi, are you still up?");
-	Scene().GetComponent<JZEngine::TextData>("2nd_msg_text")->text = JZEngine::String("Yea, what’s up?");
+	Scene().GetComponent<JZEngine::TextData>("2nd_msg_text")->text = JZEngine::String("           Yea, what's up?");
 	Scene().GetComponent<JZEngine::TextData>("2nd_msg_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	Scene().GetComponent<JZEngine::TextData>("3rd_msg_text")->text = JZEngine::String("I'm in the hospital.");
 	Scene().GetComponent<JZEngine::TextData>("4th_msg_text")->text = 
-	JZEngine::String ( "WHAT! WHY? ARE\nYOU HURT?" ); 
+	JZEngine::String ( "      WHAT! WHY? ARE\n                  YOU HURT?" ); 
 	Scene().GetComponent<JZEngine::TextData>("4th_msg_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	Scene().GetComponent<JZEngine::TextData>("4th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("5th_msg_text")->text = 
-	JZEngine::String("I accidentally slipped\nat the hawker centre\nwhile I was preparing\nfor the day.");
+	JZEngine::String("I slipped and fell at the\nhawker centre while\npreparing for the day.");
 	Scene().GetComponent<JZEngine::TextData>("5th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("6th_msg_text")->text = 
-	JZEngine::String("Still waiting on the\nanalysis from the doctor.");
+	JZEngine::String("Oh dear...");
 	Scene().GetComponent<JZEngine::TextData>("6th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("7th_msg_text")->text = 
-	JZEngine::String("It seems like I may\nneed a few days in\nthe hospital though.");
+	JZEngine::String("It seems like I may need\nto stay a few days in the\nhospital though.");
 	Scene().GetComponent<JZEngine::TextData>("7th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("8th_msg_text")->text = 
-	JZEngine::String("Baozi, do you think you\ncan help me open my\nhawker business today?");
+	JZEngine::String("Baozi, can you help me\nrun the stall today?");
 	Scene().GetComponent<JZEngine::TextData>("8th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("9th_msg_text")->text = 
-	JZEngine::String ( "Ai yo... I told you many\ntimes to be careful!" );
+	JZEngine::String ( "Ai yo... I told you to be\n                           careful!" );
 	Scene().GetComponent<JZEngine::TextData>("9th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("9th_msg_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	Scene().GetComponent<JZEngine::TextData>("10th_msg_text")->text = 
-	JZEngine::String ( "Do I have to? I've\nnever done it before." );
+	JZEngine::String ( "         Do I have to? I've\n  never done it before." );
 	Scene().GetComponent<JZEngine::TextData>("10th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("10th_msg_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	Scene().GetComponent<JZEngine::TextData>("11th_msg_text")->text = 
-	JZEngine::String("Well, it’s your school\nholiday. Help your dad\nout.");
+	JZEngine::String("Well, it’s your school\nholiday. Help your dad\nout...");
 	Scene().GetComponent<JZEngine::TextData>("11th_msg_text")->leading_y_ = text_leading;
-	Scene().GetComponent<JZEngine::TextData>("12th_msg_text")->text = JZEngine::String("I will text you if you\nneed guidance!");
+	Scene().GetComponent<JZEngine::TextData>("12th_msg_text")->text = JZEngine::String("I will text you if you need\nguidance!");
 	Scene().GetComponent<JZEngine::TextData>("12th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("13th_msg_text")->text = 
-	JZEngine::String ( "Okay okayyy. Let me\nsleep for an hour first." );
+	JZEngine::String ( "   Okay okayyy. Let me\nsleep for an hour first." );
 	Scene().GetComponent<JZEngine::TextData>("13th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("13th_msg_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	
@@ -289,8 +289,8 @@ void CutSceneUpdate(float dt)
 			{
 				Flag7thMsg(true);
 				Scene().GetComponent<JZEngine::Transform>("4th_msg_bg")->position_.y = message_out_of_the_screen;
-				Scene().GetComponent<JZEngine::Transform>("5th_msg_bg")->position_.y = message_move_up_max;
-				Scene().GetComponent<JZEngine::Transform>("6th_msg_bg")->position_.y = 8.0f;
+				Scene().GetComponent<JZEngine::Transform>("5th_msg_bg")->position_.y = message_move_up_large;
+				Scene().GetComponent<JZEngine::Transform>("6th_msg_bg")->position_.y = -35.0f;
 				Flag4thMsg(false);
 				message_state = MessageState::Seven;
 			}
@@ -298,8 +298,8 @@ void CutSceneUpdate(float dt)
 			{
 				Flag8thMsg(true);
 				Scene().GetComponent<JZEngine::Transform>("5th_msg_bg")->position_.y = message_out_of_the_screen;
-				Scene().GetComponent<JZEngine::Transform>("6th_msg_bg")->position_.y = message_move_up_max;
-				Scene().GetComponent<JZEngine::Transform>("7th_msg_bg")->position_.y = 30.0f;
+				Scene().GetComponent<JZEngine::Transform>("6th_msg_bg")->position_.y = message_move_up_large;
+				Scene().GetComponent<JZEngine::Transform>("7th_msg_bg")->position_.y = -10.0f;
 				Flag5thMsg(false);
 				message_state = MessageState::Eight;
 			}
@@ -347,6 +347,10 @@ void CutSceneUpdate(float dt)
 				Scene().GetComponent<JZEngine::Transform>("12th_msg_bg")->position_.y = -10.0f;
 				Flag10thMsg(false);
 				message_state = MessageState::Thirteen;
+			}
+			else if (message_state == MessageState::Thirteen)
+			{
+				Scene().ChangeScene("HawkerV2");
 			}
 		}
 		

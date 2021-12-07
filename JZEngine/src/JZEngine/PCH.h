@@ -9,6 +9,8 @@
 
 #define UNREFERENCED_PARAMETER(P)(P)
 
+#include <algorithm>
+
 // containers
 #include <string>
 #include <array>
@@ -17,23 +19,25 @@
 #include <unordered_map>
 #include <map>
 #include <random>
-
+#include <tuple>
 
 // streams
 #include <fstream>
 #include <sstream>
 #include <iostream>
 
-#include <memory.h>
+#include <memory>
 #include <type_traits>
 #include <typeinfo>
 #include <math.h>
 #include <chrono>
 
-
 // debug tool 
 #include "DebugTools/Assert.h"
 
-
 // filesystem library 
 #include <filesystem>
+
+// time
+#include <chrono>
+#include <thread>

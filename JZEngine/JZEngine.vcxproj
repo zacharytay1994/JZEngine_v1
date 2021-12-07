@@ -92,6 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;JZENGINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -107,6 +108,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;JZENGINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -122,6 +124,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;JZENGINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -137,6 +140,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;JZENGINE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -173,24 +177,24 @@
     <ClCompile Include="src\JZEngine\EngineGUI\MenuBar.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\SceneLayerControl.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\Camera.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\NonInstanceSpriteRenderer.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\LoadingScreens\LSMain.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Renderers\GlobalRenderer.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Systems\NonInstanceSpriteRenderer.cpp" />
     <ClCompile Include="src\JZEngine\EngineGUI\SceneTree.cpp" />
     <ClCompile Include="src\JZEngine\GlobalSystems.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\Background.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\Buffer.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\RendererDebug.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\RenderQueue.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Systems\Background.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\GLObjects\Buffer.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Systems\InstanceSpriteRenderer.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Renderers\RendererDebug.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Renderers\RenderQueue.cpp" />
     <ClCompile Include="src\JZEngine\GraphicRendering\OpenGLDebug.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\Renderer.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\RendererInstancing.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\Shader.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\SpriteRenderer.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\Text.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\TextRenderer.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\Texture.cpp" />
-    <ClCompile Include="src\JZEngine\GraphicRendering\VertexArray.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Renderers\Renderer.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Renderers\RendererInstancing.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\GLObjects\Shader.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Systems\Text.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\Renderers\RendererText.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\GLObjects\Texture.cpp" />
+    <ClCompile Include="src\JZEngine\GraphicRendering\GLObjects\VertexArray.cpp" />
     <ClCompile Include="src\JZEngine\ImGui\GraphEditor.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -282,14 +286,17 @@
     <ClCompile Include="src\JZEngine\Physics\Force.cpp" />
     <ClCompile Include="src\JZEngine\Physics\PhyicsDebug.cpp" />
     <ClCompile Include="src\JZEngine\Physics\PhysicsComponent.cpp" />
+    <ClCompile Include="src\JZEngine\Physics\PhysicsPlayer.cpp" />
     <ClCompile Include="src\JZEngine\Physics\ResolveSystem.cpp" />
     <ClCompile Include="src\JZEngine\Physics\RigidBody.cpp" />
     <ClCompile Include="src\JZEngine\Resource\ObjectPool.cpp" />
     <ClCompile Include="src\JZEngine\Resource\ResourceManager.cpp" />
+    <ClCompile Include="src\JZEngine\SceneLogic\LogicContainer.cpp" />
     <ClCompile Include="src\JZEngine\SceneLogic\SceneLogic.cpp" />
     <ClCompile Include="src\JZEngine\Sound\SoundProcess.cpp" />
     <ClCompile Include="src\JZEngine\STL\String.cpp" />
     <ClCompile Include="src\JZEngine\Resource\Serialize.cpp" />
+    <ClCompile Include="src\JZEngine\Threads\ThreadPool.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\JZEngine\Sound\Sound.cpp" />
   </ItemGroup>
@@ -311,8 +318,10 @@
     <ClInclude Include="src\JZEngine\FSM\FiniteStateMachine.h" />
     <ClInclude Include="src\JZEngine\FSM\State.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\Camera.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\RenderQueue.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\TransformComponent.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\LoadingScreens\LSMain.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Renderers\GlobalRenderer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Renderers\RenderQueue.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Systems\TransformComponent.h" />
     <ClInclude Include="src\JZEngine\Physics\CollisionComponent.h" />
     <ClInclude Include="src\JZEngine\Physics\Force.h" />
     <ClInclude Include="src\JZEngine\Physics\PhyicsDebug.h" />
@@ -331,22 +340,20 @@
     <ClInclude Include="src\JZEngine\EngineGUI\MenuBar.h" />
     <ClInclude Include="src\JZEngine\EngineGUI\SceneTree.h" />
     <ClInclude Include="src\JZEngine\EntryPoint.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\Background.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\Buffer.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\InstanceSpriteRenderer.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\Text.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\RendererDebug.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\SpriteRendererInstancing.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\NonInstanceSpriteRenderer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Systems\Background.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\GLObjects\Buffer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Systems\InstanceSpriteRenderer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Systems\Text.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Renderers\RendererDebug.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Systems\NonInstanceSpriteRenderer.h" />
     <ClInclude Include="src\JZEngine\GraphicRendering\OpenGLDebug.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\Renderer.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\RendererInstancing.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\Shader.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\SpriteRenderer.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\TextRenderer.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\Texture.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\VertexArray.h" />
-    <ClInclude Include="src\JZEngine\GraphicRendering\VertexBufferLayout.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Renderers\Renderer.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Renderers\RendererInstancing.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\GLObjects\Shader.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\Renderers\RendererText.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\GLObjects\Texture.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\GLObjects\VertexArray.h" />
+    <ClInclude Include="src\JZEngine\GraphicRendering\GLObjects\VertexBufferLayout.h" />
     <ClInclude Include="src\JZEngine\GlobalSystems.h" />
     <ClInclude Include="src\JZEngine\ImGui\GraphEditor.h" />
     <ClInclude Include="src\JZEngine\ImGui\imconfig.h" />
@@ -378,6 +385,7 @@
     <ClInclude Include="src\JZEngine\PCH.h" />
     <ClInclude Include="src\JZEngine\BuildDefinitions.h" />
     <ClInclude Include="src\JZEngine\Physics\CollisionSystem.h" />
+    <ClInclude Include="src\JZEngine\Physics\PhysicsPlayer.h" />
     <ClInclude Include="src\JZEngine\Physics\PhysicsShapes.h" />
     <ClInclude Include="src\JZEngine\Physics\QuadTree.h" />
     <ClInclude Include="src\JZEngine\Physics\Rect.h" />
@@ -386,12 +394,15 @@
     <ClInclude Include="src\JZEngine\Resource\ObjectPool.h" />
     <ClInclude Include="src\JZEngine\Resource\ResourceManager.h" />
     <ClInclude Include="src\JZEngine\Resource\Serialize.h" />
+    <ClInclude Include="src\JZEngine\SceneLogic\DataContainer.h" />
+    <ClInclude Include="src\JZEngine\SceneLogic\LogicContainer.h" />
     <ClInclude Include="src\JZEngine\SceneLogic\SceneLogic.h" />
     <ClInclude Include="src\JZEngine\Sound\Sound.h" />
     <ClInclude Include="src\JZEngine\Sound\SoundProcess.h" />
     <ClInclude Include="src\JZEngine\STL\Random.h" />
     <ClInclude Include="src\JZEngine\STL\String.h" />
     <ClInclude Include="src\JZEngine\STL\Tuple.h" />
+    <ClInclude Include="src\JZEngine\Threads\ThreadPool.h" />
     <ClInclude Include="src\JZEngine\UnreferencedParam.h" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>

@@ -23,7 +23,7 @@ namespace JZEngine
 
 	
 
-		pcomponent.acceleration = pcomponent.totalforce / pcomponent.Mass;
+		pcomponent.acceleration += pcomponent.totalforce / pcomponent.Mass;
 
 		pcomponent.velocity += pcomponent.acceleration * dt;
 	

@@ -33,17 +33,41 @@ struct ButtonTextures
 	}
 };
 
+
+//here is where the button textures are created
+//{ "OBJECTNAME",		{ "exactTextureName_play}
+// in the scene create a new object, type the same name, rename, add sprite and mouse event
 std::unordered_map<std::string, ButtonTextures> button_textures{
-	{ "Play",		{ "button_play"		, "button_play_highlight"		, "button_play_clicked" } },
-	{ "Options",	{ "button_options"	, "button_options_highlight"	, "button_options_clicked" } },
-	{ "Credits",	{ "button_credits"	, "button_credits_highlight"	, "button_credits_clicked" } },
-	{ "Quit",		{ "button_quit"		, "button_quit_highlight"		, "button_quit_clicked" } },
-	{ "Quit_yes",	{ "Quit_yes"		, "Quit_yes_highlight"			, "Quit_yes_clicked"}},
-	{ "Quit_no",	{ "Quit_no"			, "Quit_no_highlight"			, "Quit_no_clicked"}},
-	{ "Win_restart",{ "button_restart"	, "button_restart_highlight"	, "button_restart_clicked"}},
-	{ "Win_exit",	{ "button_exit"		, "button_exit_highlight"		, "button_exit_clicked"}},
-	{"Skip",        { "Skip"            , "Skip_highlight"              , "Skip_clicked"}}
+	{ "Play",		{ "Play(OG)_Button_MainMenu"		, "Play(Highlight)_Button_MainMenu"		, "Play(Clicked)_Button_MainMenu" } },
+	{ "Options",	{ "Options(OG)_Button_MainMenu"	, "Options(Highlight)_Button_MainMenu"	, "Options(Clicked)_Button_MainMenu" } },
+	{ "Credits",	{ "Credits(OG)_Button_MainMenu"	, "Credits(Highlight)_Button_MainMenu"	, "Credits(Clicked)_Button_MainMenu" } },
+	{ "how_to_play",{ "HowToPlay(OG)_Button_MainMenu", "HowToPlay(Highlight)_Button_MainMenu"  , "HowToPlay(Clicked)_Button_MainMenu"} },
+	{ "Quit_Game",	{ "QuitGame(OG)_Button_MainMenu", "QuitGame(Highlight)_Button_MainMenu"	, "QuitGame(Clicked)_Button_MainMenu" } },
+	{ "Quit",       { "QuitGame(OG)_Button_MainMenu", "QuitGame(Highlight)_Button_MainMenu"	, "QuitGame(Clicked)_Button_MainMenu" } },
+	{ "Quit_yes",	{ "Yes(OG)_Button_MainMenu"		, "Yes(Highlight)_Button_MainMenu"			, "Yes(Clicked)_Button_MainMenu"}},
+	{ "Quit_no",	{ "No(OG)_Button_MainMenu"			, "No(Highlight)_Button_MainMenu"			, "No(Clicked)_Button_MainMenu"}},
+	{ "Win_restart",{ "Restart(OG)_Button_MainMenu"	, "Restart(Highlight)_Button_MainMenu"	, "Restart(Clicked)_Button_MainMenu"}},
+	{ "Win_exit",	{ "Exit(OG)_Button_MainMenu"		, "Exit(Highlight)_Button_MainMenu"		, "Exit(clicked)_Button_MainMenu"}},
+	{ "Skip",       { "Skip(OG)_Button_MainMenu"      , "Skip(Highlight)_Button_MainMenu"       , "Skip(Clicked)_Button_MainMenu"}},
+	{ "Album_1960_button1", {"Album_photo_button_normal", "Album_photo_onhover", ""}},
+	{ "Album_1960_button2", {"Album_photo_button_normal", "Album_photo_onhover", ""}}
 };
+
+//std::unordered_map<std::string, ButtonTextures> button_textures{
+//	{ "Play",		{ "button_play"		, "button_play_highlight"		, "button_play_clicked" } },
+//	{ "Options",	{ "button_options"	, "button_options_highlight"	, "button_options_clicked" } },
+//	{ "Credits",	{ "button_credits"	, "button_credits_highlight"	, "button_credits_clicked" } },
+//	{ "how_to_play",{ "button_HowToPlay", "button_HowToPlay_highlight"  , "button_HowToPlay_clicked"} },
+//	{ "Quit_Game",	{ "QuitGame(OG)_Button_MainMenu", "QuitGame(Highlight)_Button_MainMenu"	, "QuitGame(Clicked)_Button_MainMenu" } },
+//	{ "Quit_GameTEST",	{ "QuitGame(OG)_Button_MainMenu", "QuitGame(Highlight)_Button_MainMenu"	, "QuitGame(Clicked)_Button_MainMenu" } },
+//	{ "Quit",       { "button_quit"     , "button_quit_highlight"       , "button_quit_clicked" } },
+//	{ "Quit_yes",	{ "Quit_yes"		, "Quit_yes_highlight"			, "Quit_yes_clicked"}},
+//	{ "Quit_no",	{ "Quit_no"			, "Quit_no_highlight"			, "Quit_no_clicked"}},
+//	{ "Win_restart",{ "button_restart"	, "button_restart_highlight"	, "button_restart_clicked"}},
+//	{ "Win_exit",	{ "button_exit"		, "button_exit_highlight"		, "button_exit_clicked"}},
+//	{ "Skip",       { "cs_Skip"         , "cs_Skip_highlight"           , "cs_Skip_clicked"}}
+//};
+
 
 void ToggleButton(const std::string& name, ButtonState state)
 {

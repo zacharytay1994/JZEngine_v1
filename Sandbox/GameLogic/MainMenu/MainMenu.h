@@ -18,17 +18,19 @@ enum class MainMenuState
 	Main,
 	Options,
 	Credits,
+	HowtoPlay,
 	Quit
 };
 MainMenuState current_main_menu_state = MainMenuState::Main;
-
-float master_volume_{ 1.0f };
-float music_volume_{ 1.0f };
-float sfx_volume_{ 1.0f };
+bool playingbgm{ false };
+bool how_to_play_page1{ true };
+float master_volume_{ 0.33f };
+float music_volume_{ 0.2f };
+float sfx_volume_{ 0.2f };
 float mute_threshold{ 0.05f };
 
-float initial_bar_scale_{ 20.0f };
-float initial_bar_position_{ -128.0f };
+float initial_bar_scale_{ 1.0f };
+float initial_bar_position_{ -215.0f };
 
 void UpdateVolumeIcons(bool flag)
 {
@@ -55,7 +57,7 @@ void UpdateVolumeSlider()
 	{
 		if (e->on_held_)
 		{
-			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_) / 500.0f;
+			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_) / 670.0f;
 			ratio = std::clamp(ratio, 0.0f, 1.0f);
 			if (ratio < mute_threshold)
 			{
@@ -67,18 +69,17 @@ void UpdateVolumeSlider()
 			}
 			master_volume_ = ratio;
 			
-			//JZEngine::global_systems_->GetSystem<SoundSystem>()->setMastervolume(master_volume_);
 			
 			Scene().GetSoundSystem()->setMasterVolume(master_volume_);
 			Scene().GetComponent<JZEngine::Transform>("Option_master_brownbar")->scale_.x = ratio * initial_bar_scale_;
-			Scene().GetComponent<JZEngine::Transform>("Option_master_pau")->position_.x = initial_bar_position_ + ratio * 500.0f;
+			Scene().GetComponent<JZEngine::Transform>("Option_master_pau")->position_.x = initial_bar_position_ + ratio * 670.0f;
 		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Option_music_bb"))
 	{
 		if (e->on_held_)
 		{
-			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_) / 500.0f;
+			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_) / 670.0f;
 			ratio = std::clamp(ratio, 0.0f, 1.0f);
 			if (ratio < mute_threshold)
 			{
@@ -89,15 +90,16 @@ void UpdateVolumeSlider()
 				ratio = 1.0f;
 			}
 			music_volume_ = ratio;
+			Scene().GetSoundSystem()->setBGMChannelGroupVolume(music_volume_);
 			Scene().GetComponent<JZEngine::Transform>("Option_music_brownbar")->scale_.x = ratio * initial_bar_scale_;
-			Scene().GetComponent<JZEngine::Transform>("Option_music_pau")->position_.x = initial_bar_position_ + ratio * 500.0f;
+			Scene().GetComponent<JZEngine::Transform>("Option_music_pau")->position_.x = initial_bar_position_ + ratio * 670.0f;
 		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Option_sfx_bb"))
 	{
 		if (e->on_held_)
 		{
-			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_) / 500.0f;
+			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_) / 670.0f;
 			ratio = std::clamp(ratio, 0.0f, 1.0f);
 			if (ratio < mute_threshold)
 			{
@@ -108,9 +110,9 @@ void UpdateVolumeSlider()
 				ratio = 1.0f;
 			}
 			sfx_volume_ = ratio;
-
+			Scene().GetSoundSystem()->setEffectsChannelGroupVolume(sfx_volume_);
 			Scene().GetComponent<JZEngine::Transform>("Option_sfx_brownbar")->scale_.x = ratio * initial_bar_scale_;
-			Scene().GetComponent<JZEngine::Transform>("Option_sfx_pau")->position_.x = initial_bar_position_ + ratio * 500.0f;
+			Scene().GetComponent<JZEngine::Transform>("Option_sfx_pau")->position_.x = initial_bar_position_ + ratio * 670.0f;
 		}
 	}
 	UpdateVolumeIcons(true);
@@ -120,7 +122,7 @@ void ToggleOptions(bool toggle)
 {
 	// active/inactive option objects
 	Scene().EntityFlagActive("Option_background", toggle);
-	Scene().EntityFlagActive("Option_title", toggle);
+	Scene().EntityFlagActive("Option_text", toggle);
 	Scene().EntityFlagActive("Option_soundline", toggle);
 	Scene().EntityFlagActive("Option_sound", toggle);
 	Scene().EntityFlagActive("Option_master", toggle);
@@ -171,6 +173,16 @@ void ToggleCredits(bool toggle)
 	Scene().EntityFlagActive("Credits_x", toggle);
 }
 
+void ToggleHowtoPlayPage(bool toggle)
+{
+	Scene().EntityFlagActive("How_to_play_photo", toggle);
+	Scene ().EntityFlagActive ( "How_to_play_photo2" , toggle );
+	Scene().EntityFlagActive("How_to_play_x", toggle);
+	Scene ().EntityFlagActive ( "Arrow_left_how_to_play" , toggle );
+	Scene ().EntityFlagActive ( "Arrow_right_how_to_play" , toggle );
+}
+
+//Handle logic for main menu
 void UpdateMainScreen(float dt)
 {
 	UNREFERENCED_PARAMETER(dt);
@@ -198,6 +210,8 @@ void UpdateMainScreen(float dt)
 		if (e->on_released_)
 		{
 			ToggleOptions(true);
+			Scene().EntityFlagActive("Credits", true);
+			Scene().EntityFlagActive("Quit", true);
 			current_main_menu_state = MainMenuState::Options;
 		}
 		if (e->on_held_)
@@ -213,12 +227,69 @@ void UpdateMainScreen(float dt)
 			ToggleButton("Options", ButtonState::Normal);
 		}
 	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_howtoplay"))
+	{
+		if (e->on_released_)
+		{
+			ToggleHowtoPlayPage (true);
+			current_main_menu_state = MainMenuState::HowtoPlay;
+		}
+		if (e->on_held_)
+		{
+			ToggleButton("how_to_play", ButtonState::Clicked);
+		}
+		else if (e->on_hover_)
+		{
+			ToggleButton("how_to_play", ButtonState::Hover);
+		}
+		else
+		{
+			ToggleButton("how_to_play", ButtonState::Normal);
+		}
+	}
+
+
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_quit"))
+	{
+		if (e->on_released_)
+		{
+			ToggleQuit(true);
+			current_main_menu_state = MainMenuState::Quit;
+		}
+		if (e->on_held_)
+		{
+			ToggleButton("Quit_Game", ButtonState::Clicked);
+		}
+		else if (e->on_hover_)
+		{
+			ToggleButton("Quit_Game", ButtonState::Hover);
+		}
+		else
+		{
+			ToggleButton("Quit_Game", ButtonState::Normal);
+		}
+	}
+}
+
+void UpdateOptionsMenu(float dt)
+{
+	UNREFERENCED_PARAMETER(dt);
+	UpdateVolumeSlider(); 
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Option_quit_bb"))
+	{
+		if (e->on_released_)
+		{
+			ToggleOptions(false);
+			Scene().EntityFlagActive("Credits", false);
+			Scene().EntityFlagActive("Quit", false);
+			current_main_menu_state = MainMenuState::Main;
+		}
+	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_credits"))
 	{
 		if (e->on_released_)
 		{
 			ToggleCredits(true);
-			current_main_menu_state = MainMenuState::Credits;
 		}
 		if (e->on_held_)
 		{
@@ -233,12 +304,21 @@ void UpdateMainScreen(float dt)
 			ToggleButton("Credits", ButtonState::Normal);
 		}
 	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_quit"))
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Credits_x_bb"))
 	{
 		if (e->on_released_)
 		{
-			ToggleQuit(true);
-			current_main_menu_state = MainMenuState::Quit;
+			ToggleCredits(false);
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_Quit"))
+	{
+		if (e->on_released_)
+		{
+			ToggleOptions(false);
+			Scene().EntityFlagActive("Credits", false);
+			Scene().EntityFlagActive("Quit", false);
+			current_main_menu_state = MainMenuState::Main;
 		}
 		if (e->on_held_)
 		{
@@ -251,20 +331,6 @@ void UpdateMainScreen(float dt)
 		else
 		{
 			ToggleButton("Quit", ButtonState::Normal);
-		}
-	}
-}
-
-void UpdateOptionsMenu(float dt)
-{
-	UNREFERENCED_PARAMETER(dt);
-	UpdateVolumeSlider(); 
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Option_quit_bb"))
-	{
-		if (e->on_released_)
-		{
-			ToggleOptions(false);
-			current_main_menu_state = MainMenuState::Main;
 		}
 	}
 }
@@ -314,14 +380,53 @@ void UpdateQuitMenu(float dt)
 	}
 }
 
-void UpdateCreditsMenu(float dt)
+//void UpdateCreditsMenu(float dt)
+//{
+//	UNREFERENCED_PARAMETER(dt);
+//	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Credits_x_bb"))
+//	{
+//		if (e->on_released_)
+//		{
+//			ToggleCredits(false);
+//			current_main_menu_state = MainMenuState::Main;
+//		}
+//	}
+//}
+
+void UpdateHowtoPlayMenu(float dt)
 {
-	UNREFERENCED_PARAMETER(dt);
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Credits_x_bb"))
+	if( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Arrow_left_how_to_play" ) )
+	{
+		if( e->on_released_ )
+		{
+			how_to_play_page1 = !how_to_play_page1;
+		}
+	}
+
+	if( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Arrow_right_how_to_play" ) )
+	{
+		if( e->on_released_ )
+		{
+			how_to_play_page1 = !how_to_play_page1;
+		}
+	}
+
+	if( how_to_play_page1 )
+	{
+		Scene ().EntityFlagActive ( "How_to_play_photo" , true );
+		Scene ().EntityFlagActive ( "How_to_play_photo2" , false );
+	}
+	else
+	{
+		Scene ().EntityFlagActive ( "How_to_play_photo" , false );
+		Scene ().EntityFlagActive ( "How_to_play_photo2" , true );
+	}
+
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("How_to_play_x"))
 	{
 		if (e->on_released_)
 		{
-			ToggleCredits(false);
+			ToggleHowtoPlayPage (false);
 			current_main_menu_state = MainMenuState::Main;
 		}
 	}
@@ -330,14 +435,35 @@ void UpdateCreditsMenu(float dt)
 void InitMainMenu()
 {
 	current_main_menu_state = MainMenuState::Main;
-
+	if (playingbgm == false)
+	{
+		Scene().PlaySound("bgm");
+		playingbgm = true;
+	}
 	ToggleOptions(false);
 	ToggleQuit(false);
 	ToggleCredits(false);
+	Scene().EntityFlagActive("Credits", false);
+	Scene().EntityFlagActive("Quit", false);
+	ToggleHowtoPlayPage (false);
+	Scene().GetComponent<JZEngine::TextData>("Option_text")->text = JZEngine::String("OPTIONS");
+	Scene().GetComponent<JZEngine::TextData>("Option_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 }
 
 void UpdateMainMenu(float dt)
 {
+	if (JZEngine::InputHandler::IsMouseTriggered(JZEngine::MOUSE::MOUSE_BUTTON_1))
+		Scene().PlaySound("click");
+
+	//if (JZEngine::InputHandler::IsKeyTriggered(JZEngine::KEY::KEY_P))
+	//{
+	//	Scene().GetSoundSystem()->setPauseSoundSystem(true);
+	//}
+	//if (JZEngine::InputHandler::IsKeyTriggered(JZEngine::KEY::KEY_O))
+	//{
+	//	Scene().GetSoundSystem()->setPauseSoundSystem(false);
+	//}
+
 	switch (current_main_menu_state)
 	{
 	case MainMenuState::Main:
@@ -346,8 +472,11 @@ void UpdateMainMenu(float dt)
 	case MainMenuState::Options:
 		UpdateOptionsMenu(dt);
 		break;
-	case MainMenuState::Credits:
+	/*case MainMenuState::Credits:
 		UpdateCreditsMenu(dt);
+		break;*/
+	case MainMenuState::HowtoPlay:
+		UpdateHowtoPlayMenu(dt);
 		break;
 	case MainMenuState::Quit:
 		UpdateQuitMenu(dt);

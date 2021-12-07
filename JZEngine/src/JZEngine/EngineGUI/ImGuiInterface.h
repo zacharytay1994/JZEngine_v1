@@ -32,9 +32,13 @@ namespace JZEngine
 
 		virtual void Render(float dt) { UNREFERENCED_PARAMETER(dt); };
 
+		virtual void CloseAction() {};
+
 		void SetEngineGUI(EngineGUI* enginegui);
 
 		void ToggleOnOff();
+
+		void CloseButtonMenuBar();
 
 	protected:
 		template <typename INTERFACE>

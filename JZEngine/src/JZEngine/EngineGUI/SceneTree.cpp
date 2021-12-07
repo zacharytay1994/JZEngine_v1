@@ -14,7 +14,9 @@
 #include "Console.h"
 #include "../Resource/Serialize.h"
 #include "MenuBar.h"
-#include "../GraphicRendering/RenderQueue.h"
+#include "../GraphicRendering/Renderers/RenderQueue.h"
+
+#include "../SceneLogic/SceneLogic.h"
 
 namespace JZEngine
 {
@@ -51,35 +53,46 @@ namespace JZEngine
 
 		if (ImGui::BeginMenuBar())
 		{
-			if (ImGui::BeginMenu("Scene"))
+			if (ImGui::Button("Scene"))
 			{
-				if (ImGui::MenuItem("Toggle"))
-				{
-					scene_ = true;
-				}
-				ImGui::EndMenu();
+				view_ = VIEW::SCENE;
+				scene_ = true;
 			}
-			if (ImGui::BeginMenu("Layers"))
+			if (ImGui::Button("Layers"))
 			{
-				if (ImGui::MenuItem("Toggle"))
-				{
-					scene_ = false;
-					// rebuild layer data
-					BuildLayerData();
-				}
-				ImGui::EndMenu();
+				view_ = VIEW::LAYER;
+				scene_ = false;
+				// rebuild layer data
+				BuildLayerData();
+			}
+			if ( ImGui::Button ( "Logic" ) )
+			{
+				view_ = VIEW::LOGIC;
 			}
 			ImGui::EndMenuBar();
 		}
 
-		if (scene_)
+		switch ( view_ )
+		{
+		case VIEW::SCENE:
+			RenderScene ();
+			break;
+		case VIEW::LAYER:
+			RenderLayers ();
+			break;
+		case VIEW::LOGIC:
+			RenderLogic ();
+			break;
+		}
+
+		/*if (scene_)
 		{
 			RenderScene();
 		}
 		else
 		{
 			RenderLayers();
-		}
+		}*/
 		
 
 		ImGui::End();
@@ -93,20 +106,8 @@ namespace JZEngine
 	{
 		ImGui::Text("%s", current_scene_name_->c_str());
 		ImGui::Separator();
-		if (ImGui::Button("Save"))
-		{
-			confirmation_flag_ = Confirmation::SAVE;
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("Remove All"))
-		{
-			RemoveAllEntities();
-		}
-		ImGui::Separator();
-		// render text box for input name
-		ImGui::InputText(": Name", new_entity_name_, MAX_NAME_SIZE);
 
-		if (ImGui::Button("Add Default Entity"))
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("addicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , EngineGUI::icon_col_ ))
 		{
 			// create a new entity, pushed into EntityManager
 			unsigned int id = ecs_instance_->CreateEntity();
@@ -118,21 +119,75 @@ namespace JZEngine
 				ecs_instance_->GetEntity(id).name_ = GetName();
 			}
 		}
-		ImGui::SameLine();
-		if (ImGui::Button("Hide"))
+		if (ImGui::IsItemHovered())
 		{
-			hide_ = !hide_;
+			ImGui::BeginTooltip();
+			ImGui::Text("Add a new object to the scene.");
+			ImGui::EndTooltip();
 		}
-		ImGui::Text("\nCurrent Scene");
+		ImGui::SameLine();
+		if (hide_)
+		{
+			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("hideicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , EngineGUI::icon_col_ ))
+			{
+				hide_ = !hide_;
+			}
+			if (ImGui::IsItemHovered())
+			{
+				ImGui::BeginTooltip();
+				ImGui::Text("Show objects in scene hierarchy.");
+				ImGui::EndTooltip();
+			}
+		}
+		else
+		{
+			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("showicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , EngineGUI::icon_col_ ))
+			{
+				hide_ = !hide_;
+			}
+			if (ImGui::IsItemHovered())
+			{
+				ImGui::BeginTooltip();
+				ImGui::Text("Hide objects in scene hierarchy.");
+				ImGui::EndTooltip();
+			}
+		}
+		ImGui::SameLine();
+		if ( ImGui::ImageButton ( ( void* )static_cast< unsigned long long >( ResourceManager::GetTexture ( "saveicon" )->GetRendererID () ) , { 15.0f, 15.0f } , { 0,1 } , { 1,0 } , -1 , { 0,0,0,0 }, EngineGUI::icon_col_ ) )
+		{
+			confirmation_flag_ = Confirmation::SAVE;
+		}
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::Text("Save the scene.");
+			ImGui::EndTooltip();
+		}
+
+		float window_width = ImGui::GetWindowWidth();
+		ImGui::SameLine(window_width - 45.0f);
+		if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("deleteicon")->GetRendererID()), { 15.0f, 15.0f }, { 0,1 }, { 1,0 } , -1 , { 0,0,0,0 } , EngineGUI::icon_col_ ))
+		{
+			MenuBar::play_ = false;
+			RemoveAllEntities();
+		}
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::Text("Remove all objects from scene.");
+			ImGui::EndTooltip();
+		}
+
+		ImGui::Separator();
+		// render text box for input name
+		ImGui::InputText(" Name", new_entity_name_, MAX_NAME_SIZE);
 
 		static ImGuiTextFilter filter;
 		// Helper class to easy setup a text filter.
 		// You may want to implement a more feature-full filtering scheme in your own application.
-		filter.Draw(": Filter");
+		filter.Draw(" Filter");
 
-		ImGui::PushStyleColor(ImGuiCol_Separator, { 0.8f,0.8f,0.8f,1.0f });
 		ImGui::Separator();
-		ImGui::PopStyleColor();
 
 		if (!hide_)
 		{
@@ -157,7 +212,7 @@ namespace JZEngine
 	void SceneTree::RecursivelyAddChildObjectsToLayerData(ECS::Entity* entity)
 	{
 		// add to layers if has layer and texture component
-		if (entity->HasComponent(1) && entity->persistant_)
+		if (entity->HasComponent(1) && entity->HasComponent(2) && entity->persistant_)
 		{
 			layers_.emplace_back(entity->name_, entity->ecs_id_, &entity->GetComponent<SpriteLayer>().layer_, &entity->GetComponent<Texture>().texture_id_);
 		}
@@ -235,6 +290,72 @@ namespace JZEngine
 		//ImGui::End();
 	}
 
+	void SceneTree::RenderLogic ()
+	{
+		// display selection for all the functions
+		if ( ImGui::BeginPopup ( "Inits" ) )
+		{
+			for ( auto& init : *SceneLogic::Instance().init_functions_ )
+			{
+				if ( ImGui::Selectable ( init.first.c_str () ) )
+				{
+					( *SceneLogic::Instance ().scene_inits_ )[ *current_scene_name_ ] = init.second;
+					( *SceneLogic::Instance ().scene_inits_names_ )[ *current_scene_name_ ] = init.first;
+				}
+			};
+			ImGui::EndPopup ();
+		};
+
+		if ( ImGui::BeginPopup ( "Updates" ) )
+		{
+			for ( auto& update : *SceneLogic::Instance ().update_functions_ )
+			{
+				if ( ImGui::Selectable ( update.first.c_str () ) )
+				{
+					( *SceneLogic::Instance ().scene_updates_ )[ *current_scene_name_ ] = update.second;
+					( *SceneLogic::Instance ().scene_updates_names_ )[ *current_scene_name_ ] = update.first;
+				}
+			};
+			ImGui::EndPopup ();
+		};
+
+		ImGui::Text ( "Scene Logic" );
+		ImGui::Separator ();
+
+		ImGui::Text ( "Init:" );
+		if ( ( *SceneLogic::Instance ().scene_inits_ ).find ( *current_scene_name_ ) != ( *SceneLogic::Instance ().scene_inits_ ).end () )
+		{
+			if ( ImGui::Button ( ( *SceneLogic::Instance ().scene_inits_names_ )[ *current_scene_name_ ].c_str () , { ImGui::GetWindowWidth () * 0.9f, 0 } ) )
+			{
+				ImGui::OpenPopup ( "Inits" );
+			}
+		}
+		else
+		{
+			if ( ImGui::Button ( "- Select -" , { ImGui::GetWindowWidth () * 0.9f, 0 } ) )
+			{
+				ImGui::OpenPopup ( "Inits" );
+			}
+		}
+
+		ImGui::Text ( "Update:" );
+		if ( ( *SceneLogic::Instance ().scene_updates_ ).find ( *current_scene_name_ ) != ( *SceneLogic::Instance ().scene_updates_ ).end () )
+		{
+			if ( ImGui::Button ( ( *SceneLogic::Instance ().scene_updates_names_ )[ *current_scene_name_ ].c_str() , { ImGui::GetWindowWidth () * 0.9f, 0 } ) )
+			{
+				ImGui::OpenPopup ( "Updates" );
+			}
+		}
+		else
+		{
+			if ( ImGui::Button ( "- Select -" , { ImGui::GetWindowWidth () * 0.9f, 0 } ) )
+			{
+				ImGui::OpenPopup ( "Updates" );
+			}
+		}
+
+	}
+
 	/*!
 	 * @brief ___JZEngine::SceneTree::RenderAllChildObjects()___
 	 * ****************************************************************************************************
@@ -253,16 +374,18 @@ namespace JZEngine
 		// add own tree node
 		ImGui::SetNextItemOpen ( true , ImGuiCond_Once );
 		bool is_selected = false;
+		ImGuiTreeNodeFlags tree_node_flag = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
 		if(	selected_entity_id_ != -1	)
 		{
 			if( entity->entity_id_ == static_cast<ECS::ui32>(selected_entity_id_) )
 			{
 				is_selected = true;
-				ImGui::PushStyleColor ( ImGuiCol_Text , { 0.0f,1.0f,0.0f,1.0f } );
+				//ImGui::PushStyleColor ( ImGuiCol_TextSelectedBg , { 0.5f,0.5f,0.5f,1.0f } );
+				tree_node_flag |= ImGuiTreeNodeFlags_Selected;
 			}
 		}
 
-		bool open = ImGui::TreeNodeEx ( ss.str ().c_str () , ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick );
+		bool open = ImGui::TreeNodeEx ( ss.str ().c_str () ,  tree_node_flag );
 
 		// if a treenode is clicked, make that entity the selected_entity_
 		if( ImGui::IsItemClicked () )
@@ -309,7 +432,7 @@ namespace JZEngine
 		}
 		if( is_selected )
 		{
-			ImGui::PopStyleColor ();
+			//ImGui::PopStyleColor ();
 		}
 
 		// end own tree node
@@ -480,10 +603,23 @@ namespace JZEngine
 					}*/
 					confirmation_flag_ = Confirmation::NONE;
 				}
+				ImGui::SameLine ();
+				if ( ImGui::ImageButton ( ( void* )static_cast< unsigned long long >( ResourceManager::GetTexture ( "tempicon" )->GetRendererID () ) , { 10.0f, 10.0f } ) )
+				{
+					Serialize::SerializeScene2 ( ecs_instance_ , ss.str () );
+					Serialize::scenes_[ ss.str () ];
+					confirmation_flag_ = Confirmation::NONE;
+				}
 				ImGui::SameLine(ImGui::GetWindowSize().x / 4 * 3 - 50.0f);
 				if (ImGui::Button("Cancel", ImVec2(100.0f, 0.0f))) {
 					confirmation_flag_ = Confirmation::NONE;
 				}
+				/*if ( ImGui::Button ( "Confirm2" ) )
+				{
+					Serialize::SerializeScene2 ( ecs_instance_ , ss.str () );
+					Serialize::scenes_[ ss.str () ];
+					confirmation_flag_ = Confirmation::NONE;
+				}*/
 				break;
 			case Confirmation::REMOVE:
 				break;

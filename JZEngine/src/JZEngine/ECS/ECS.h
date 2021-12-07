@@ -26,6 +26,8 @@
 
 #include "../UnreferencedParam.h"
 
+#include "../DebugTools/Log.h"
+
 namespace JZEngine
 {
 	/*!
@@ -981,15 +983,16 @@ namespace JZEngine
 		template<typename COMPONENT>
 		COMPONENT& Chunk::GetComponentEX(ui32 id)
 		{
-			assert(("Getting component that does not exist in Entity.",
-				owning_archetype_->mask_[ecs_instance_->component_manager_.exported_descriptions_[typeid(COMPONENT).name()].bit_] == 1));
-
+			if ( !(owning_archetype_->mask_[ ecs_instance_->component_manager_.exported_descriptions_[ typeid( COMPONENT ).name () ].bit_ ] == 1 ) )
+			{
+				Log::Error ( "Main" , "Getting component [{}] that does not exist in Entity. Undefined Behaviour!" , typeid( COMPONENT ).name () );
+			}
 			// navigates to location of data
-			char* data = data_.get() + (size_t)id * (size_t)owning_archetype_->entity_stride_ +
-				(size_t)owning_archetype_->component_stride_[ecs_instance_->component_manager_.exported_descriptions_[typeid(COMPONENT).name()].bit_];
+			char* data = data_.get () + ( size_t ) id * ( size_t ) owning_archetype_->entity_stride_ +
+				( size_t ) owning_archetype_->component_stride_[ ecs_instance_->component_manager_.exported_descriptions_[ typeid( COMPONENT ).name () ].bit_ ];
 
 			// cast to type and return reference
-			return *(reinterpret_cast<COMPONENT*>(data));
+			return *( reinterpret_cast< COMPONENT* >( data ) );
 		}
 
 		/* ____________________________________________________________________________________________________
@@ -1321,6 +1324,8 @@ namespace JZEngine
 			*/
 			Entity& AddSystem(int systemid);
 
+			Entity& RemoveSystem(int systemid);
+
 			void FlagActive(bool flag);
 
 			bool GetFlag();
@@ -1351,6 +1356,9 @@ namespace JZEngine
 																			 over the bits. [Write a function to get all flagged bits of a bitset] */
 			ECSInstance* ecs_instance_{ nullptr };
 
+			bool update_on_pause_ { false };
+			bool play_ { false };
+
 			System() {}
 			virtual ~System() = default;
 
@@ -1377,6 +1385,9 @@ namespace JZEngine
 				components_.fill(static_cast<ui32>(-1));
 				// fill components with components id
 				((components_[number_of_components_++] = ComponentManager::component_descriptions_<COMPONENTS>.bit_), ...);
+
+				// set name of derived
+				name_ = typeid(*this).name();
 			}
 
 			/*!
@@ -1426,6 +1437,11 @@ namespace JZEngine
 			 * ****************************************************************************************************
 			*/
 			virtual void FrameEnd(const float& dt) { UNREFERENCED_PARAMETER(dt); };
+
+			// delete component notification in inspector
+			void NotifyInspectorMissingComponent(int i, void(*ImGuiFunction)(std::string const&), std::bitset<ECS::MAX_COMPONENTS> const& mask);
+
+			void AppendMaskDetails(std::bitset<MAX_COMPONENTS>& mask, std::array<int, MAX_COMPONENTS>& systemComponents);
 		};
 	}
 }

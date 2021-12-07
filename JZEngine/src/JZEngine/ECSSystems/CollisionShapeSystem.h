@@ -5,7 +5,7 @@
 #include "../ECS/ECSConfig.h"
 
 #include "../Physics/QuadTree.h"
-#include "../GraphicRendering/TransformComponent.h"
+#include "../GraphicRendering/Systems/TransformComponent.h"
 
 namespace JZEngine
 {

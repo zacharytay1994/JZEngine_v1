@@ -15,14 +15,16 @@
 
 #include "../ECSSystems/CollisionShapeSystem.h"
 #include "../ECSSystems/PhysicsSystem.h"
-#include "../GraphicRendering/NonInstanceSpriteRenderer.h"
-#include "../GraphicRendering/InstanceSpriteRenderer.h"
-#include "../GraphicRendering/Background.h"
-#include "../GraphicRendering/Text.h"
+#include "../GraphicRendering/Systems/NonInstanceSpriteRenderer.h"
+#include "../GraphicRendering/Systems/InstanceSpriteRenderer.h"
+#include "../GraphicRendering/Systems/Background.h"
+#include "../GraphicRendering/Systems/Text.h"
 #include "../ECSSystems/FloatRandom.h"
 #include "../ECSSystems/ExampleParticleSystem.h"
 #include "../ECSSystems/MouseEvent.h"
 #include "../ECSSystems/FollowMouseCursor.h"
+#include "../SceneLogic/LogicContainer.h"
+#include "../SceneLogic/DataContainer.h"
 
 namespace JZEngine
 { 
@@ -50,7 +52,9 @@ namespace JZEngine
 				ExampleParticleComponent ,
 				PopiahPSFlag,
 				MouseEvent,
-				FollowMouseCursor
+				FollowMouseCursor,
+				CustomLogicContainer,
+				CustomDataContainer
 		
 
 				>;
@@ -69,7 +73,8 @@ namespace JZEngine
 				ExampleParticle ,
 				PopiahParticleSystem,
 				MouseEventSystem,
-				FollowMouseCursorSystem
+				FollowMouseCursorSystem,
+				LogicContainerSystem
 
 				>;
 		};

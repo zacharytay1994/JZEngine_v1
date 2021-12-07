@@ -26,7 +26,7 @@ namespace JZEngine
 	enum class KEY;
 
 	//Input Handler class
-	class InputHandler
+	class JZENGINE_API InputHandler
 	{
 	public:
 		static bool init(GLFWwindow*);
@@ -61,7 +61,7 @@ namespace JZEngine
 	};
 
 
-	enum class MOUSE
+	enum class JZENGINE_API MOUSE
 	{
 		MOUSE_BUTTON_1 = 0,
 		MOUSE_BUTTON_2 = 1,
@@ -76,7 +76,7 @@ namespace JZEngine
 		MOUSE_BUTTON_RIGHT = MOUSE_BUTTON_2,
 		MOUSE_BUTTON_MIDDLE = MOUSE_BUTTON_3
 	};
-	enum class KEY
+	enum class JZENGINE_API KEY
 	{
 		KEY_UNKNOWN = -1,
 

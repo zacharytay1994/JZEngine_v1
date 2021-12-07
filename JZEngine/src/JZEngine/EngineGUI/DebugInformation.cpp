@@ -21,12 +21,21 @@ namespace JZEngine
 		ImGuiInterface(x, y, sx, sy, group)
 	{
 		target_fps_ = Settings::max_fps;
+		float test = sx_;
 	}
 
 	void DebugInformation::Render(float dt) 
 	{
 		ImGui::Begin("Performance Visualizer", 0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar);
-
+		if (ImGui::BeginMenuBar())
+		{
+			float button_size = Settings::window_width * sx_ * 0.01f;
+			if (ImGui::ImageButton((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("iconx")->GetRendererID()), { button_size, button_size }))
+			{
+				ToggleOnOff();
+			}
+			ImGui::EndMenuBar();
+		}
 		ImGui::SetNextItemWidth(100.0f);
 		ImGui::InputInt("Target FPS |", &target_fps_);
 		if (target_fps_ < 30)
@@ -70,9 +79,7 @@ namespace JZEngine
 
 		// render global systems timers
 		ImGui::Separator();
-		ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f, 1.0f, 1.0f, 1.0f });
 		ImGui::Text("Global Systems");
-		ImGui::PopStyleColor();
 		ImGui::Separator();
 		if (ImGui::BeginTable("Global Systems", 4))
 		{
@@ -94,9 +101,7 @@ namespace JZEngine
 
 		// render ecs system timers
 		ImGui::Separator();
-		ImGui::PushStyleColor(ImGuiCol_Text, { 0.0f, 1.0f, 1.0f, 1.0f });
 		ImGui::Text("ECS Systems");
-		ImGui::PopStyleColor();
 		ImGui::Separator();
 		if (ImGui::BeginTable("ECS Systems", 4))
 		{
@@ -118,9 +123,7 @@ namespace JZEngine
 
 		// render default timers
 		ImGui::Separator();
-		ImGui::PushStyleColor(ImGuiCol_Text, {0.0f, 1.0f, 1.0f, 1.0f});
 		ImGui::Text("Default Systems");
-		ImGui::PopStyleColor();
 		ImGui::Separator();
 		if (ImGui::BeginTable("Default Systems", 4))
 		{
