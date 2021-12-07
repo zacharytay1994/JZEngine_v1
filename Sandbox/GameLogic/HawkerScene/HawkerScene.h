@@ -563,6 +563,9 @@ void UpdateMainScene(float dt)
 	UpdateOrderBoardAnimation ();
 	UpdateNotification ( dt );
 
+	if (JZEngine::InputHandler::IsMouseTriggered(JZEngine::MOUSE::MOUSE_BUTTON_1))
+		Scene().PlaySound("click", false);
+
 	if ( took_too_long_ )
 	{
 		took_too_long_ = false;

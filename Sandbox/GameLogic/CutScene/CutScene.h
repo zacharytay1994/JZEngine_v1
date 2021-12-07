@@ -215,6 +215,9 @@ void CutSceneInit()
 
 void CutSceneUpdate(float dt)
 {
+	if (JZEngine::InputHandler::IsMouseTriggered(JZEngine::MOUSE::MOUSE_BUTTON_1))
+		Scene().PlaySound("click", false);
+
 	UNREFERENCED_PARAMETER(dt);
 	//if the mouse event phone app background exist
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Phone_app_bg"))

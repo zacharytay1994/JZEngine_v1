@@ -437,7 +437,7 @@ void InitMainMenu()
 	current_main_menu_state = MainMenuState::Main;
 	if (playingbgm == false)
 	{
-		Scene().PlaySound("bgm");
+		Scene().PlaySound("bgm", true);
 		playingbgm = true;
 	}
 	ToggleOptions(false);
@@ -453,7 +453,7 @@ void InitMainMenu()
 void UpdateMainMenu(float dt)
 {
 	if (JZEngine::InputHandler::IsMouseTriggered(JZEngine::MOUSE::MOUSE_BUTTON_1))
-		Scene().PlaySound("click");
+		Scene().PlaySound("click", false);
 
 	//if (JZEngine::InputHandler::IsKeyTriggered(JZEngine::KEY::KEY_P))
 	//{
