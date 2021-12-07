@@ -1,3 +1,9 @@
+/*	__FILE HEADER__
+*	File:		PhysicsPlayer.cpp
+	Primary:	Deon Khong
+	Date:		07/12/21
+	Brief:		For applying forces for player object for physics
+*/
 #include "PCH.h"
 #include "PhysicsPlayer.h"
 

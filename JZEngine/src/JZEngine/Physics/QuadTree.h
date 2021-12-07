@@ -1,3 +1,9 @@
+/*	__FILE HEADER__
+*	File:		QuadTree.h
+	Primary:	Deon Khong
+	Date:		11/11/21
+	Brief:		QuadTree implementation for physics collision system
+*/
 #pragma once
 #include <memory>
 #include "../Math/JZMath.h"

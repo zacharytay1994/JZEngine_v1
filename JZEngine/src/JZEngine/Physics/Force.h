@@ -1,3 +1,9 @@
+/*	__FILE HEADER__
+*	File:		Force.h
+	Primary:	Deon Khong
+	Date:		11/11/21
+	Brief:		Header file For applying forces for physics objects
+*/
 #pragma once
 
 #include "../Math/JZMath.h"

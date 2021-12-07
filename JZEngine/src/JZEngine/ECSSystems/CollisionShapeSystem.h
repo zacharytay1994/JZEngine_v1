@@ -1,3 +1,9 @@
+/*	__FILE HEADER__
+*	File:		CollisionShapeSystem.h
+	Primary:	Deon Khong
+	Date:		11/11/21
+	Brief:		Header file For updating vertices of physics shapes
+*/
 #pragma once
 
 #include "../DebugTools/Log.h"

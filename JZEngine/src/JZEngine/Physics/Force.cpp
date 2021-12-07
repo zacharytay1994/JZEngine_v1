@@ -1,3 +1,10 @@
+/*	__FILE HEADER__
+*	File:		Force.cpp
+	Primary:	Deon Khong
+	Date:		11/11/21
+	Brief:		For applying forces for physics objects
+*/
+
 #include "PCH.h"
 #include "Force.h"
 

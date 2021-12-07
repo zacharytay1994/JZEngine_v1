@@ -1,7 +1,7 @@
 /*	__FILE HEADER__
-*	File:		Collision.h
+*	File:		Header file for CollisionSystem.h
 	Primary:	Deon Khong
-	Date:		01/07/21
+	Date:		11/11/21
 	Brief:		Collision Detection
 */
 

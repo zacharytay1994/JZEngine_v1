@@ -1,3 +1,9 @@
+/*	__FILE HEADER__
+*	File:		ResolveSystem.cpp
+	Primary:	Deon Khong
+	Date:		11/11/21
+	Brief:		For applying impulse after collision of physics objects
+*/
 #include "PCH.h"
 #include "ResolveSystem.h"
 

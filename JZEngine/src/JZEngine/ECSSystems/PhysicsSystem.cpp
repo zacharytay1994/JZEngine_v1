@@ -1,10 +1,8 @@
 /*	__FILE HEADER__
 *	File:		PhysicsSystem.cpp
 	Primary:	Deon Khong
-	Secondary:
 	Date:		07/10/2021
-	Brief:
-	Physics system handles collision and resolution of physics objects.
+	Brief:		Physics system handles collision and resolution of physics objects.
 */
 
 #include "PCH.h"

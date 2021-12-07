@@ -1,3 +1,9 @@
+/*	__FILE HEADER__
+*	File:		Rect.h
+	Primary:	Deon Khong
+	Date:		11/11/21
+	Brief:		Rect class used by QuadTree
+*/
 #pragma once
 
 #include "../Math/JZMath.h"
