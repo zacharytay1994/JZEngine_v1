@@ -78,7 +78,11 @@ namespace JZEngine
 		tex2d_path4.InitOpenGL ();
 
 		// make full viewport size
-		glViewport ( 0 , 0 , Settings::window_width , Settings::window_height );
+		if ( GLFW_Instance::window_ )
+		{
+			glfwGetWindowSize ( GLFW_Instance::window_ , &window_width_ , &window_height_ );
+			glViewport ( 0 , 0 , window_width_ , window_height_ );
+		}
 
 		// load font data
 		resource_manager_->LoadFont ( "Assets/Fonts/arlrdbd.ttf" , 100 , "Font1" , "Assets/Shaders/Vertex/VS_Font.vs" , "Assets/Shaders/Fragment/FS_Font.fs" );
@@ -86,8 +90,13 @@ namespace JZEngine
 
 	void LSMain::DrawLoadingScreen ( std::string Information , double DeltaTime )
 	{
+		if ( GLFW_Instance::window_ )
+		{
+			glfwGetWindowSize ( GLFW_Instance::window_ , &window_width_ , &window_height_ );
+			glViewport ( 0 , 0 , window_width_ , window_height_ );
+		}
 		glCheckError ();
-		glClearColor ( 0.5f , 0.5f , 0.5f , 1.0f );
+		glClearColor ( 0.0f , 0.0f , 0.0f , 1.0f );
 		glClear ( GL_COLOR_BUFFER_BIT );
 
 		float loading_speed = 2.0f * (float)DeltaTime;
@@ -161,8 +170,14 @@ namespace JZEngine
 	void LSMain::DrawExitScreen ()
 	{
 		glCheckError ();
-		glClearColor ( 0.5f , 0.5f , 0.5f , 1.0f );
+		glClearColor ( 0.0f , 0.0f , 0.0f , 1.0f );
 		glClear ( GL_COLOR_BUFFER_BIT );
+
+		if ( GLFW_Instance::window_ )
+		{
+			glfwGetWindowSize ( GLFW_Instance::window_ , &window_width_ , &window_height_ );
+			glViewport ( 0 , 0 , window_width_ , window_height_ );
+		}
 
 		va.Bind ();
 		ib.Bind ();
@@ -180,11 +195,17 @@ namespace JZEngine
 	void LSMain::DrawFadeOut ()
 	{
 		// slow fade out 
-		for( float i = 1.0f; i > 0.0f ; i -= 0.0005f )
+		for( float i = 1.0f; i > 0.0f ; i -= 0.005f )
 		{
 			glCheckError ();
 			glClearColor ( 0.0f , 0.0f , 0.0f , 1.0f );
 			glClear ( GL_COLOR_BUFFER_BIT );
+
+			if ( GLFW_Instance::window_ )
+			{
+				glfwGetWindowSize ( GLFW_Instance::window_ , &window_width_ , &window_height_ );
+				glViewport ( 0 , 0 , window_width_ , window_height_ );
+			}
 
 			va.Bind ();
 			ib.Bind ();

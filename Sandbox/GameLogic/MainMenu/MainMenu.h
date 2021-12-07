@@ -343,7 +343,8 @@ void UpdateQuitMenu(float dt)
 		if (e->on_released_)
 		{
 			ToggleQuit(false);
-			current_main_menu_state = MainMenuState::Main;
+			//current_main_menu_state = MainMenuState::Main;
+			Scene ().CloseApplication ();
 		}
 		if (e->on_held_)
 		{

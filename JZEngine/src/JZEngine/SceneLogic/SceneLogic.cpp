@@ -7,6 +7,7 @@
 #include "../Resource/Serialize.h"
 #include "../EngineGUI/SceneTree.h"
 #include "../EngineGUI/MenuBar.h"
+#include "../Application.h"
 
 namespace JZEngine
 {
@@ -124,6 +125,11 @@ namespace JZEngine
 		soundsys->playSound(name, loop);
 	}
 
+	void SceneLogic::PauseAllSounds ( bool flag )
+	{
+		soundsys->setPauseSoundSystem ( flag );
+	}
+
 	void SceneLogic::SetCurrentSceneName(const std::string& name)
 	{
 		if (current_scene_name_)
@@ -163,6 +169,11 @@ namespace JZEngine
 	{
 		static SceneLogic instance;
 		return instance;
+	}
+
+	void SceneLogic::CloseApplication ()
+	{
+		Application::CloseApplication ();
 	}
 
 	void SceneLogic::RegisterSceneInit(const std::string& sceneName, std::string const& funcName, fpSceneInit function)

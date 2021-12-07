@@ -177,6 +177,8 @@ struct Customer
 			BuildAnimationPack(animation_pack_, "tallguy");
 		}
 		SetCustomerAnimation(animation_pack_, AnimationStates::Idle, scene_object_id_);
+
+		Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Customer" , scene_object_id_ )->tint.x = 0.0f;
 	}
 
 	void Update(float dt)
@@ -221,7 +223,7 @@ struct Customer
 				if (!angry_ && wait_time_ < angry_wait_time_)
 				{
 					angry_ = true;
-					Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Customer" , scene_object_id_ )->tint.x = 0.7f;
+					Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Customer" , scene_object_id_ )->tint.x = 0.337;
 					JZEngine::Log::Info("Main", "Customer {} got angry.", scene_object_id_);
 					took_too_long_ = true;
 					//SetCustomerAnimation("ahma_angry", scene_object_id_);
@@ -302,7 +304,7 @@ void RemoveCustomer(int id)
 	}
 }
 
-bool InteractWithQueue(bool food, CustomerOrder order)
+bool InteractWithQueue(bool food, CustomerOrder order, bool giveMeWin)
 {
 	// find next customer that has not been successfully served
 	Customer* p_customer{ nullptr };
@@ -319,7 +321,7 @@ bool InteractWithQueue(bool food, CustomerOrder order)
 		if (food)
 		{
 			Customer& customer = *p_customer;
-			if (order == customer.order_)
+			if (order == customer.order_ || giveMeWin)
 			{
 				// success
 				SetCustomerAnimation(customer.animation_pack_, AnimationStates::Success, customer.scene_object_id_);

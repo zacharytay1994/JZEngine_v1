@@ -74,6 +74,8 @@ namespace JZEngine
 		FMOD::ChannelGroup * bgmchannelgrp;
 		std::vector<FMOD::Channel *> channel_cont;
 		std::map<std::string, FMOD::ChannelGroup *> channelgroup_cont;
+
+		bool focused_ { true };
 	};
 
 }

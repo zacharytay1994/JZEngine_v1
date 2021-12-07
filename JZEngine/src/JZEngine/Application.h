@@ -50,8 +50,11 @@ namespace JZEngine
 		*/
 		void Run();
 
+		static void CloseApplication ();
+
 	private:
 		GlobalSystemsManager*				global_systems_;
+		static bool open_;
 
 	};
 

@@ -18,6 +18,7 @@
 namespace JZEngine
 {
 	GLFWwindow* GLFW_Instance::window_{ nullptr };
+	bool GLFW_Instance::focused_ { true };
 	GLFW_Instance::GLFW_Instance( int width, int height )
 		:
 		window_width_( width ),
@@ -38,7 +39,6 @@ namespace JZEngine
 
 	void GLFW_Instance::FrameStart ()
 	{
-
 		glClearColor ( 0.6f , 0.6f , 0.6f , 1.0f );
 		glClear( GL_COLOR_BUFFER_BIT );
 	}
@@ -78,6 +78,11 @@ namespace JZEngine
 		}
 	}
 
+	void window_focus_callback ( GLFWwindow* window , int focused )
+	{
+		GLFW_Instance::focused_ = focused;
+	}
+
 	void GLFW_Instance::Initialize ()
 	{
 		glfwInit();
@@ -91,7 +96,8 @@ namespace JZEngine
 #endif
 
 		// create glfw window
-		window_ = glfwCreateWindow( Settings::window_width, Settings::window_height, JZEngine::Settings::engine_name.c_str(), NULL, NULL );
+		//window_ = glfwCreateWindow( Settings::window_width, Settings::window_height, JZEngine::Settings::engine_name.c_str(), glfwGetPrimaryMonitor(), NULL );
+		window_ = glfwCreateWindow ( Settings::window_width , Settings::window_height , JZEngine::Settings::engine_name.c_str () , NULL , NULL );
 		if ( window_ == NULL )
 		{
 			std::cout << "Failed to create GLFW window" << std::endl;
@@ -136,6 +142,7 @@ namespace JZEngine
 		glCheckError();
 
 		SetWindowPos(Settings::window_x, Settings::window_y);
+		glfwSetWindowFocusCallback ( window_ , window_focus_callback );
 	}
 
 	bool GLFW_Instance::dimensions_updated{ false };

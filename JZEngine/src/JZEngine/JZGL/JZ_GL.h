@@ -29,6 +29,8 @@ namespace JZEngine
 		int				window_width_{ 0 };		/*!< width of the GLFWwindow created and updated from resizing */
 		int				window_height_{ 0 };	/*!< height of the GLFWwindow created and updated from resizing */
 
+		static bool focused_;
+
 		GLFW_Instance ( int width , int height );
 		~GLFW_Instance ();
 

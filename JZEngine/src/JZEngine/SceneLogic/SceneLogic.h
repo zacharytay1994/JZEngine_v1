@@ -29,6 +29,7 @@ namespace JZEngine
 		~SceneLogic();
 		static SceneLogic& Instance();
 
+		void CloseApplication ();
 		void RegisterSceneInit( const std::string& sceneName , std::string const& funcName , fpSceneInit function );
 		void RegisterSceneLogic( const std::string& sceneName , std::string const& funcName , fpSceneUpdate function );
 		void UpdateSceneLogic(float dt);
@@ -71,6 +72,7 @@ namespace JZEngine
 		void SetSoundSystem(SoundSystem* soundsys);
 		SoundSystem* GetSoundSystem();
 		void PlaySound(const std::string& name, bool loop);
+		void PauseAllSounds ( bool flag );
 
 		void SetCurrentSceneName(const std::string& name);
 		void EntityFlagActive(const std::string& name, bool flag, int id = 0);

@@ -65,6 +65,9 @@ namespace JZEngine
 
 		ResourceManager* resource_manager_{ nullptr };
 		std::unique_ptr< TextRenderer> renderer_text_{ nullptr };
+
+		int window_width_;
+		int window_height_;
 	public:
 		LSMain ( ResourceManager* ResourceManager );
 		~LSMain ();

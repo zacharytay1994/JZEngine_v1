@@ -25,6 +25,7 @@
 
 namespace JZEngine
 {
+	bool Application::open_ { true };
 	Application::Application()
 		: 
 		global_systems_(new GlobalSystemsManager())
@@ -100,7 +101,7 @@ namespace JZEngine
 		bool	limit_frames{ true };
 
 		// Gameloop
-		while (global_systems_->GetSystem<GLFW_Instance>()->Active())
+		while (global_systems_->GetSystem<GLFW_Instance>()->Active() && open_)
 		{
 			// Get the start time
 			auto start_time = std::chrono::high_resolution_clock::now();
@@ -176,5 +177,10 @@ namespace JZEngine
 
 		// Save engine settings to the config file upon exiting the program
 		Settings::SaveToConfigFile ();
+	}
+
+	void Application::CloseApplication ()
+	{
+		open_ = false;
 	}
 }

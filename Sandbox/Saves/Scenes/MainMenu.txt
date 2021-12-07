@@ -1,49 +1,49 @@
-Background 0 c 0 0 0 0 0 0 1 1 2048 2048 c 1 0 c 2 MainMenuBG_Background_MainMenu c 3 0 0 0 0 c 10 0 0.866679 1 1 0 1 1 
-Baozi 0 c 0 369 -211.961 0 0 0 1 1 483 634 c 1 0 c 2 Baozi_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0333334 0.02 8 16 33 5 
-Play 0 c 0 -228 -128.407 0 0 0 1 1 512 256 c 1 1 c 2 Play(OG)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.866679 1 1 0 1 1 
-Options 0 c 0 -228 -242.023 0 0 0 1 1 512 128 c 1 1 c 2 Options(OG)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.866679 1 1 0 1 1 
+Background 0 c 0 0 0 0 0 0 1 1 2048 2048 c 1 0 c 2 MainMenuBG_Background_MainMenu c 3 0 0 0 0 c 10 0 0.866673 1 1 0 1 1 
+Baozi 0 c 0 369 -211.961 0 0 0 1 1 483 634 c 1 0 c 2 Baozi_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0166667 0.02 8 27 33 5 
+Play 0 c 0 -228 -128.407 0 0 0 1 1 512 256 c 1 1 c 2 Play(Clicked)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.866673 1 1 0 1 1 
+Options 0 c 0 -228 -242.023 0 0 0 1 1 512 128 c 1 1 c 2 Options(OG)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.866673 1 1 0 1 1 
 bb_play 0 c 0 -230 -126.625 0 0 0 1 1 50 50 c 15 220 60 
-Quit_Game 0 c 0 -228 -434.03 0 0 0 1 1 512 128 c 1 1 c 2 QuitGame(OG)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.866679 1 1 0 1 1 
+Quit_Game 0 c 0 -228 -434.03 0 0 0 1 1 512 128 c 1 1 c 2 QuitGame(OG)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.866673 1 1 0 1 1 
 bb_options 0 c 0 -230 -240 0 0 0 1 1 50 50 c 15 140 40 
 bb_howtoplay 0 c 0 -230 -335 0 0 0 1 1 50 50 c 15 140 40 
 bb_quit 0 c 0 -230 -430 0 0 0 1 1 50 50 c 15 140 35 
-Lantern 0 c 0 805.251 168.157 0 0 0 1 1 366 548 c 1 1 c 2 Lantern_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0333334 0.1 10 46 64 7 
-LeftTree 0 c 0 -859.202 -3.81228 0 0 0 1 1 580 1108 c 1 -1 c 2 TreeL_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0333334 0.1 6 1 17 3 
-LeftLeaves 0 c 0 -671.874 -411.847 0 0 0 1 1 668 434 c 1 2 c 2 LeafL_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0333334 0.1 6 30 33 6 
-RightTree 0 c 0 910.079 61.9275 0 0 0 1 1 508 1084 c 1 -1 c 2 TreeR_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0333334 0.1 6 7 17 3 
-RightLeaves 0 c 0 767.61 -427.282 0 0 0 1 1 494 379 c 1 2 c 2 LeafR_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0333334 0.1 6 30 33 6 
-Option_background 0 c 0 0 0 0 0 0 1 1 2048 1024 c 1 10 c 2 Options(Body)_UI_MainMenu c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
+Lantern 0 c 0 805.251 168.157 0 0 0 1 1 366 548 c 1 1 c 2 Lantern_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0833335 0.1 10 56 64 7 
+LeftTree 0 c 0 -859.202 -3.81228 0 0 0 1 1 580 1108 c 1 -1 c 2 TreeL_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0833335 0.1 6 9 17 3 
+LeftLeaves 0 c 0 -671.874 -411.847 0 0 0 1 1 668 434 c 1 2 c 2 LeafL_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0833335 0.1 6 20 33 6 
+RightTree 0 c 0 910.079 61.9275 0 0 0 1 1 508 1084 c 1 -1 c 2 TreeR_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0833335 0.1 6 15 17 3 
+RightLeaves 0 c 0 767.61 -427.282 0 0 0 1 1 494 379 c 1 2 c 2 LeafR_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0833335 0.1 6 20 33 6 
+Option_background 0 c 0 0 0 0 0 0 1 1 2048 1024 c 1 10 c 2 Options(Body)_UI_MainMenu c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
 Option_text 0 c 0 -175 295 0 0 0 1 1 50 50 c 1 10 c 9 2.9 
-Option_soundline 0 c 0 -11.2499 2.81778 0 0 0 1 1 1071 345 c 1 11 c 2 Sound_line c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
-Option_sound 0 c 0 -10 160.248 0 0 0 1 1 256 128 c 1 12 c 2 Sound_Options_MainMenu c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
-Option_master 0 c 0 -380 85 0 0 0 1 1 133 32 c 1 12 c 2 MASTER c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
-Option_music 0 c 0 -380 2.7 0 0 0 1 1 92 30 c 1 12 c 2 MUSIC c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
-Option_sfx 0 c 0 -380 -78 0 0 0 1 1 63 34 c 1 12 c 2 SFX c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
-Option_master_speaker 0 c 0 -285 85 0 0 0 1 1 47 44 c 1 12 c 2 Speaker c 3 0 0 0 0 c 10 0 0.0333334 1 1 0 1 1 
+Option_soundline 0 c 0 -11.2499 2.81778 0 0 0 1 1 1071 345 c 1 11 c 2 Sound_line c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
+Option_sound 0 c 0 -10 160.248 0 0 0 1 1 256 128 c 1 12 c 2 Sound_Options_MainMenu c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
+Option_master 0 c 0 -380 85 0 0 0 1 1 133 32 c 1 12 c 2 MASTER c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
+Option_music 0 c 0 -380 2.7 0 0 0 1 1 92 30 c 1 12 c 2 MUSIC c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
+Option_sfx 0 c 0 -380 -78 0 0 0 1 1 63 34 c 1 12 c 2 SFX c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
+Option_master_speaker 0 c 0 -285 85 0 0 0 1 1 47 44 c 1 12 c 2 Speaker c 3 0 0 0 0 c 10 0 0.36667 1 1 0 1 1 
 Option_master_speaker_off 0 c 0 -285 85 0 0 0 1 1 47 44 c 1 12 c 2 Speaker c 3 0 0 0 0 c 10 0 0.253212 1 1 0 1 1 
-Option_music_speaker 0 c 0 -285 2.7 0 0 0 1 1 47 44 c 1 12 c 2 Speaker c 3 0 0 0 0 c 10 0 0.516668 1 1 0 1 1 
-Option_music_speaker_off 0 c 0 -285 2.7 0 0 0 1 1 47 44 c 1 12 c 2 Speaker c 3 0 0 0 0 c 10 0 0.962142 1 1 0 1 1 
-Option_sfx_speaker 0 c 0 -285 -78 0 0 0 1 1 47 44 c 1 12 c 2 Speaker c 3 0 0 0 0 c 10 0 0.750002 1 1 0 1 1 
-Option_sfx_speaker_off 0 c 0 -285 -78 0 0 0 1 1 47 44 c 1 12 c 2 Speaker c 3 0 0 0 0 c 10 0 0.800805 1 1 0 1 1 
-Option_master_blackbar 0 c 0 120 85 0 0 0 1 1 670 34 c 1 12 c 2 Dark_bar c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
-Option_master_brownbar 0 c 0 -215 85 0 0 0 0.368004 1 1340 34 c 1 13 c 2 Brown_bar c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
+Option_music_speaker 0 c 0 -285 2.7 0 0 0 1 1 47 44 c 1 12 c 2 Speaker c 3 0 0 0 0 c 10 0 0.733338 1 1 0 1 1 
+Option_music_speaker_off 0 c 0 -285 2.7 0 0 0 1 1 47 44 c 1 12 c 2 Speaker c 3 0 0 0 0 c 10 0 0.0500001 1 1 0 1 1 
+Option_sfx_speaker 0 c 0 -285 -78 0 0 0 1 1 47 44 c 1 12 c 2 Speaker c 3 0 0 0 0 c 10 0 0.583337 1 1 0 1 1 
+Option_sfx_speaker_off 0 c 0 -285 -78 0 0 0 1 1 47 44 c 1 12 c 2 Speaker c 3 0 0 0 0 c 10 0 0.283345 1 1 0 1 1 
+Option_master_blackbar 0 c 0 120 85 0 0 0 1 1 670 34 c 1 12 c 2 Dark_bar c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
+Option_master_brownbar 0 c 0 -215 85 0 0 0 1 1 1340 34 c 1 13 c 2 Brown_bar c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
 Option_master_bb 0 c 0 125 85 0 0 0 1 1 50 50 c 15 340 20 
-Option_master_pau 0 c 0 31.5626 85 0 0 0 1 1 64 59 c 1 15 c 2 Dumpling c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
-Option_music_blackbar 0 c 0 120 2.7 0 0 0 1 1 670 34 c 1 12 c 2 Dark_bar c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
-Option_music_brownbar 0 c 0 -215 2.7 0 0 0 0.240812 1 1340 34 c 1 13 c 2 Brown_bar c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
+Option_master_pau 0 c 0 455 85 0 0 0 1 1 64 59 c 1 15 c 2 Dumpling c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
+Option_music_blackbar 0 c 0 120 2.7 0 0 0 1 1 670 34 c 1 12 c 2 Dark_bar c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
+Option_music_brownbar 0 c 0 -215 2.7 0 0 0 1 1 1340 34 c 1 13 c 2 Brown_bar c 3 0 0 0 0 c 10 0 0.350003 1 1 0 1 1 
 Option_music_bb 0 c 0 125 5 0 0 0 1 1 50 50 c 15 340 20 
-Option_music_pau 0 c 0 -53.6562 2.7 0 0 0 1 1 64 59 c 1 15 c 2 Dumpling c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
-Option_sfx_blackbar 0 c 0 120 -78 0 0 0 1 1 670 34 c 1 12 c 2 Dark_bar c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
-Option_sfx_brownbar 0 c 0 -215 -78 0 0 0 0.240812 1 1340 34 c 1 13 c 2 Brown_bar c 3 0 0 0 0 c 10 0 0.750002 1 1 0 1 1 
+Option_music_pau 0 c 0 455 2.7 0 0 0 1 1 64 59 c 1 15 c 2 Dumpling c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
+Option_sfx_blackbar 0 c 0 120 -78 0 0 0 1 1 670 34 c 1 12 c 2 Dark_bar c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
+Option_sfx_brownbar 0 c 0 -215 -78 0 0 0 1 1 1340 34 c 1 13 c 2 Brown_bar c 3 0 0 0 0 c 10 0 0.733338 1 1 0 1 1 
 Option_sfx_bb 0 c 0 125 -75 0 0 0 1 1 50 50 c 15 340 20 
-Option_sfx_pau 0 c 0 -53.6562 -78 0 0 0 1 1 64 59 c 1 15 c 2 Dumpling c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
-Option_master_blackbar_border 0 c 0 120 85 0 0 0 1 1 670 34 c 1 14 c 2 imagenotfound c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
-Option_music_blackbar_border 0 c 0 120 2.7 0 0 0 1 1 670 34 c 1 14 c 2 imagenotfound c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
-Option_sfx_blackbar_border 0 c 0 120 -78 0 0 0 1 1 670 34 c 1 14 c 2 imagenotfound c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
-Option_x 0 c 0 631.251 381.145 0 0 0 1 1 128 128 c 1 12 c 2 X(OG)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
+Option_sfx_pau 0 c 0 455 -78 0 0 0 1 1 64 59 c 1 15 c 2 Dumpling c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
+Option_master_blackbar_border 0 c 0 120 85 0 0 0 1 1 670 34 c 1 14 c 2 Dark_bar_border c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
+Option_music_blackbar_border 0 c 0 120 2.7 0 0 0 1 1 670 34 c 1 14 c 2 Dark_bar_border c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
+Option_sfx_blackbar_border 0 c 0 120 -78 0 0 0 1 1 670 34 c 1 14 c 2 Dark_bar_border c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
+Option_x 0 c 0 631.251 381.145 0 0 0 1 1 128 128 c 1 12 c 2 X(OG)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
 Option_quit_bb 0 c 0 631.251 381.145 0 0 0 0.720924 1 50 50 c 15 50 50 
-Sky 0 c 0 0 0 0 0 0 1 1 2048 2048 c 1 -2 c 2 MainMenuHawkerStall_Background_MainMenu c 3 0 0 0 0 c 10 0 0.866679 1 1 0 1 1 
-Smoke 0 c 0 32.4999 181.471 0 0 0 1 1 256 256 c 1 2 c 2 Smoke_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0333334 0.1 4 6 12 4 
+Sky 0 c 0 0 0 0 0 0 1 1 2048 2048 c 1 -2 c 2 MainMenuHawkerStall_Background_MainMenu c 3 0 0 0 0 c 10 0 0.866673 1 1 0 1 1 
+Smoke 0 c 0 32.4999 181.471 0 0 0 1 1 256 256 c 1 2 c 2 Smoke_SpriteSheet_MainMenu c 3 0 0 0 0 c 10 1 0.0833335 0.1 4 8 12 4 
 Quit_background 0 c 0 0 0 0 0 0 1 1 2048 1024 c 1 10 c 2 Quitgame(Body)_UI_MainMenu c 3 0 0 0 0 c 10 0 0.0166667 1 1 0 1 1 
 Quit_title 0 c 0 -33.4685 196.314 0 0 0 1 1 574 167 c 1 11 c 2 Quit_QuitGame_MainMenu c 3 0 0 0 0 c 10 0 0.0166667 1 1 0 1 1 
 Quit_yes 0 c 0 170 -160 0 0 0 1 1 512 256 c 1 11 c 2 Yes(OG)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.670069 1 1 0 1 1 
@@ -57,10 +57,11 @@ How_to_play_photo 0 c 0 0 0 0 0 0 1 1 2048 1024 c 1 3 c 2 HowtoPlay1_UI_MainMenu
 How_to_play_photo2 0 c 0 0 0 0 0 0 1 1 2048 1024 c 1 3 c 2 HowtoPlay2_UI_MainMenu c 3 0 0 0 0 c 10 0 0.0166667 1 1 0 1 1 
 How_to_play_text 0 c 0 -220 291.25 0 0 0 1 1 50 50 c 1 3 c 9 2.5 
 How_to_play_x 0 c 0 631.251 378.91 0 0 0 1 1 128 128 c 1 4 c 2 X(OG)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.466743 1 1 0 1 1 c 15 50 50 
-how_to_play 0 c 0 -208.938 -339.9 0 0 0 1 1 512 128 c 1 1 c 2 HowToPlay(OG)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.866679 1 1 0 1 1 
-Credits 0 c 0 -216.25 -275 0 0 0 9.4 2.7 50 50 c 1 11 c 2 Credits(OG)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
-Quit 0 c 0 203.749 -275 0 0 0 9.4 2.7 50 50 c 1 15 c 2 QuitGame(OG)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.183334 1 1 0 1 1 
+how_to_play 0 c 0 -208.938 -339.9 0 0 0 1 1 512 128 c 1 1 c 2 HowToPlay(OG)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.866673 1 1 0 1 1 
+Credits 0 c 0 -216.25 -275 0 0 0 9.4 2.7 50 50 c 1 11 c 2 Credits(OG)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
+Quit 0 c 0 203.749 -275 0 0 0 9.4 2.7 50 50 c 1 15 c 2 QuitGame(OG)_Button_MainMenu c 3 0 0 0 0 c 10 0 0.51667 1 1 0 1 1 
 bb_credits 0 c 0 -216.25 -276.25 0 0 0 1 1 50 50 c 15 130 40 
 bb_Quit 0 c 0 203.749 -276.25 0 0 0 1 1 50 50 c 15 130 40 
 Arrow_left_how_to_play 0 c 0 -115 -350 0 0 0 1 1 128 128 c 1 4 c 2 Arrowleft_UI_MainMenu c 3 0 0 0 0 c 10 0 0.516743 1 1 0 1 1 c 15 64 40 
 Arrow_right_how_to_play 0 c 0 115 -350 0 0 0 1 1 128 128 c 1 4 c 2 Arrowright_UI_MainMenu c 3 0 0 0 0 c 10 0 0.53341 1 1 0 1 1 c 15 64 40 
+MouseCursor 0 c 0 -234 -120.128 0 0 0 1 1 50 50 c 1 500 c 2 Arrow2_UI_Misc c 3 0 0 0 0 c 10 0 0.733339 1 1 0 1 1 c 16 

@@ -9,6 +9,7 @@
 #include "Sound.h"
 #include "../Message/MessageHandler.h"
 #include "../DebugTools/Log.h"
+#include "../JZGL/JZ_GL.h"
 
 namespace JZEngine
 {
@@ -66,7 +67,17 @@ namespace JZEngine
     void SoundSystem::Update(float dt)
     {
         UNREFERENCED_PARAMETER(dt);
-        fmodsystem->update();
+        if ( GLFW_Instance::focused_ && !focused_ )
+        {
+            focused_ = GLFW_Instance::focused_;
+            setPauseSoundSystem ( false );
+        }
+        if ( !GLFW_Instance::focused_ && focused_ )
+        {
+            focused_ = GLFW_Instance::focused_;
+            setPauseSoundSystem ( true );
+        }
+        fmodsystem->update ();
     }
     /**
      * Creates a sound and stores it in the container.

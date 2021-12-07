@@ -251,6 +251,10 @@ void AnimateCoinProgreeBar (float dt)
 	}
 	if ( coin_last_update && x > initial_progress_scale )
 	{
+		if ( won_bar_ == false )
+		{
+			Scene ().PlaySound ( "cheer" , false );
+		}
 		won_bar_ = true;
 		ShowWonBar ();
 	}
@@ -563,6 +567,16 @@ void UpdateMainScene(float dt)
 	UpdateOrderBoardAnimation ();
 	UpdateNotification ( dt );
 
+	if ( JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_LEFT_CONTROL ) && JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_W ) )
+	{
+		if ( won_bar_ == false )
+		{
+			Scene ().PlaySound ( "cheer" , false );
+		}
+		won_bar_ = true;
+		ShowWonBar ();
+	}
+
 	if (JZEngine::InputHandler::IsMouseTriggered(JZEngine::MOUSE::MOUSE_BUTTON_1))
 		Scene().PlaySound("click", false);
 
@@ -770,9 +784,14 @@ void UpdateMainScene(float dt)
 			{
 				DisplayOrder(GetNextCustomerOrder());
 			}
-			if (InteractWithQueue(plate_on_hand, current_order))
+			bool instant_win = false;
+			if ( JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_LEFT_CONTROL ) )
 			{
-				if (plate_on_hand)
+				instant_win = true;
+			}
+			if (InteractWithQueue(plate_on_hand || instant_win, current_order, instant_win))
+			{
+				if (plate_on_hand || instant_win)
 				{
 					plate_on_hand = false;
 					// make invisible all tray items
@@ -900,8 +919,11 @@ void HawkerSceneInit()
 	SetCoinText("$", current_coins);
 	SetGoalText("$", target_coins);
 
-	Scene().GetComponent<JZEngine::TextData>("Win_words")->text = JZEngine::String("I knew you had it in you Baozi,");
-	Scene().GetComponent<JZEngine::TextData>("Win_words2")->text = JZEngine::String("    continue to the next level?    ");
+	/*Scene().GetComponent<JZEngine::TextData>("Win_words")->text = JZEngine::String("I knew you had it in you Baozi,");
+	Scene().GetComponent<JZEngine::TextData>("Win_words2")->text = JZEngine::String("    continue to the next level?    ");*/
+
+	Scene ().GetComponent<JZEngine::TextData> ( "Win_words" )->text = JZEngine::String ( " " );
+	Scene ().GetComponent<JZEngine::TextData> ( "Win_words2" )->text = JZEngine::String ( " " );
 
 	JZEngine::Log::Info("Main", "Hawker Scene Initialized.");
 
