@@ -255,7 +255,8 @@ namespace JZEngine {
 		{
 			// stop code
 			MenuBar::play_ = false;
-			engine_gui_->GetInterface<FolderInterface> ()->ReloadScene ();
+			//engine_gui_->GetInterface<FolderInterface> ()->ReloadScene ();
+			engine_gui_->GetInterface<FolderInterface> ()->ReloadScene2 ();
 		}
 		if (ImGui::IsItemHovered())
 		{

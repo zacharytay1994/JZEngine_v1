@@ -592,16 +592,20 @@ namespace JZEngine
 				ImGui::NewLine();
 				ImGui::SameLine(ImGui::GetWindowSize().x / 4 - 50.0f);
 				if (ImGui::Button("Confirm", ImVec2(100.0f, 0.0f))) {
-					Serialize::SerializeScene(ecs_instance_, ss.str());
-					Serialize::scenes_[ss.str()];
-					/*if (reset_name_[0] == '\0') {
-						Serialize::SerializeScene(ecs_instance_, *default_entity_name_);
-						Serialize::scenes_[(*default_entity_name_)];
-					}
-					else {
-						Serialize::SerializeScene(ecs_instance_, ss.str());
-						Serialize::scenes_[ss.str()];
-					}*/
+					//Serialize::SerializeScene(ecs_instance_, ss.str());
+					//Serialize::scenes_[ss.str()];
+					///*if (reset_name_[0] == '\0') {
+					//	Serialize::SerializeScene(ecs_instance_, *default_entity_name_);
+					//	Serialize::scenes_[(*default_entity_name_)];
+					//}
+					//else {
+					//	Serialize::SerializeScene(ecs_instance_, ss.str());
+					//	Serialize::scenes_[ss.str()];
+					//}*/
+					//confirmation_flag_ = Confirmation::NONE;
+
+					Serialize::SerializeScene2 ( ecs_instance_ , ss.str () );
+					Serialize::scenes_[ ss.str () ];
 					confirmation_flag_ = Confirmation::NONE;
 				}
 				ImGui::SameLine ();

@@ -248,7 +248,7 @@ namespace JZEngine
 					ImGui::Image((void*)static_cast<unsigned long long>(ResourceManager::GetTexture("textfileicon")->GetRendererID()), { static_cast<float>(Settings::window_width) / 20.0f,static_cast<float>(Settings::window_width) / 20.0f }, { 0,1 }, { 1,0 });
 					if (ImGui::BeginPopupContextItem(s.first.c_str(), ImGuiPopupFlags_MouseButtonLeft))
 					{
-						if (ImGui::Selectable("Load Scene"))
+						/*if (ImGui::Selectable("Load Scene"))
 						{
 							MenuBar::play_ = false;
 							scene_tree_->RemoveAllEntities();
@@ -258,6 +258,17 @@ namespace JZEngine
 							SceneLogic::Instance().BuildEntityMap();
 							SceneLogic::Instance().InitSceneLogic();
 							ToggleOnOff();
+						}*/
+						if ( ImGui::Selectable ( "Load Scene" ) )
+						{
+							MenuBar::play_ = false;
+							scene_tree_->RemoveAllEntities ();
+							Serialize::DeserializeScene2 ( ecs_instance_ , s.first );
+							*scene_tree_->current_scene_name_ = s.first;
+							SceneLogic::Instance ().SetCurrentSceneName ( s.first );
+							SceneLogic::Instance ().BuildEntityMap ();
+							SceneLogic::Instance ().InitSceneLogic ();
+							ToggleOnOff ();
 						}
 						if (ImGui::Selectable("Append To Scene"))
 						{
@@ -266,6 +277,7 @@ namespace JZEngine
 						}
 						/*if ( ImGui::Selectable ( "Secondary Load" ) )
 						{
+							MenuBar::play_ = false;
 							scene_tree_->RemoveAllEntities ();
 							Serialize::DeserializeScene2 ( ecs_instance_ , s.first );
 							*scene_tree_->current_scene_name_ = s.first;
@@ -513,6 +525,17 @@ namespace JZEngine
 		std::string same_scene = *scene_tree_->current_scene_name_;
 		scene_tree_->RemoveAllEntities ();
 		Serialize::DeserializeScene ( ecs_instance_ , same_scene );
+		*scene_tree_->current_scene_name_ = same_scene;
+		SceneLogic::Instance ().SetCurrentSceneName ( same_scene );
+		SceneLogic::Instance ().BuildEntityMap ();
+		SceneLogic::Instance ().InitSceneLogic ();
+	}
+
+	void FolderInterface::ReloadScene2 ()
+	{
+		std::string same_scene = *scene_tree_->current_scene_name_;
+		scene_tree_->RemoveAllEntities ();
+		Serialize::DeserializeScene2 ( ecs_instance_ , same_scene );
 		*scene_tree_->current_scene_name_ = same_scene;
 		SceneLogic::Instance ().SetCurrentSceneName ( same_scene );
 		SceneLogic::Instance ().BuildEntityMap ();

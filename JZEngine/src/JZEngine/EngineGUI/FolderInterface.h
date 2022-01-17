@@ -50,6 +50,7 @@ namespace JZEngine
 		void ResetAllPreviews();
 
 		void ReloadScene ();
+		void ReloadScene2 ();
 	private:
 
 		/*!

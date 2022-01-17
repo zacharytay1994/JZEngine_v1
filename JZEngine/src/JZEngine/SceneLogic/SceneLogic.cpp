@@ -215,7 +215,7 @@ namespace JZEngine
 			{
 				scene_to_be_changed_ = false;
 				scene_tree_->RemoveAllEntities ();
-				Serialize::DeserializeScene ( ecs_instance_ , *scene_to_change_to_ );
+				Serialize::DeserializeScene2 ( ecs_instance_ , *scene_to_change_to_ );
 				*scene_tree_->current_scene_name_ = *scene_to_change_to_;
 				SceneLogic::Instance ().SetCurrentSceneName ( *scene_to_change_to_ );
 				SceneLogic::Instance ().BuildEntityMap ();

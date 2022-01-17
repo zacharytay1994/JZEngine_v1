@@ -353,7 +353,7 @@ void CutSceneUpdate(float dt)
 			}
 			else if (message_state == MessageState::Thirteen)
 			{
-				Scene().ChangeScene("HawkerV2");
+				Scene().ChangeScene("HawkerScene");
 			}
 		}
 		
@@ -364,7 +364,7 @@ void CutSceneUpdate(float dt)
 	{
 		if (e->on_released_)
 		{
-			Scene().ChangeScene("HawkerV2");
+			Scene().ChangeScene("HawkerScene");
 			current_cut_scene_state = CutSceneState::Skip;
 		}
 		if (e->on_held_)
