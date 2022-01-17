@@ -709,6 +709,16 @@ namespace JZEngine
 			ImGui::Text ( "Unable to display custom data." );
 		}
 
+		template <>
+		void RenderComponent ( AnimatedTransformComponent& component )
+		{
+			ImGui::Checkbox ( "Active" , &component.active_flag );
+			ImGui::SliderFloat ( "Speed" , &component.speed_ , 0.0f , 10.0f );
+			ImGui::InputFloat ( "Change Rotation" , &component.modulate_rotation_ );
+			ImGui::InputFloat ( "Change ScaleX" , &component.modulate_scale_.x );
+			ImGui::InputFloat ( "Change ScaleY" , &component.modulate_scale_.y );
+		}
+
 		/*!
 		 * @brief ___JZEngine::LoopTupleRender___
 		 * ****************************************************************************************************

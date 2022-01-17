@@ -25,6 +25,7 @@
 #include "../ECSSystems/FollowMouseCursor.h"
 #include "../SceneLogic/LogicContainer.h"
 #include "../SceneLogic/DataContainer.h"
+#include "../ECSSystems/AnimatedTransforms.h"
 
 namespace JZEngine
 { 
@@ -54,7 +55,8 @@ namespace JZEngine
 				MouseEvent,
 				FollowMouseCursor,
 				CustomLogicContainer,
-				CustomDataContainer
+				CustomDataContainer,
+				AnimatedTransformComponent
 		
 
 				>;
@@ -74,7 +76,8 @@ namespace JZEngine
 				PopiahParticleSystem,
 				MouseEventSystem,
 				FollowMouseCursorSystem,
-				LogicContainerSystem
+				LogicContainerSystem,
+				AnimatedTransform
 
 				>;
 		};

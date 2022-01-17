@@ -437,6 +437,16 @@ namespace JZEngine
 			}
 		}
 
+		template <>
+		static void SerializeComponent ( AnimatedTransformComponent& component , std::stringstream& stream , MODE mode )
+		{
+			SERIALIZE ( stream , mode ,
+				component.speed_ ,
+				component.modulate_rotation_ ,
+				component.modulate_scale_.x ,
+				component.modulate_scale_.y );
+		}
+
 		/*!_______________________________________________________________________________________________________*/
 		/* STOP HERE GO NO FURTHER! */ // WHY NOT
 		/*!_______________________________________________________________________________________________________*/

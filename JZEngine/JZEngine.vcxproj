@@ -154,6 +154,7 @@
     <ClCompile Include="src\JZEngine\Application.cpp" />
     <ClCompile Include="src\JZEngine\DebugTools\Log.cpp" />
     <ClCompile Include="src\JZEngine\DebugTools\PerformanceData.cpp" />
+    <ClCompile Include="src\JZEngine\ECSSystems\AnimatedTransforms.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\CollisionShapeSystem.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\ExampleParticleSystem.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.cpp" />
@@ -307,6 +308,7 @@
     <ClInclude Include="src\JZEngine\DebugTools\DebugNew.h" />
     <ClInclude Include="src\JZEngine\DebugTools\Log.h" />
     <ClInclude Include="src\JZEngine\DebugTools\PerformanceData.h" />
+    <ClInclude Include="src\JZEngine\ECSSystems\AnimatedTransforms.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\CollisionShapeSystem.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleParticleSystem.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h" />
