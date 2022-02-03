@@ -22,7 +22,7 @@ namespace JZEngine
 		constexpr float PIx2 = 3.1415926535897932384626433832795f * 2.0f;
 		constexpr float EPSILON = 0.0001f;
 
-
+		float Mod ( float in );
 
 		template <typename T>
 		T RadToDeg(T val)

@@ -26,6 +26,7 @@
 #include "../SceneLogic/LogicContainer.h"
 #include "../SceneLogic/DataContainer.h"
 #include "../ECSSystems/AnimatedTransforms.h"
+#include "../ECSSystems/FallingLeavesParticleSystem.h"
 
 namespace JZEngine
 { 
@@ -56,7 +57,9 @@ namespace JZEngine
 				FollowMouseCursor,
 				CustomLogicContainer,
 				CustomDataContainer,
-				AnimatedTransformComponent
+				AnimatedTransformComponent,
+				LeafParticleComponent,
+				LeafParticleSystemComponent
 		
 
 				>;
@@ -77,7 +80,9 @@ namespace JZEngine
 				MouseEventSystem,
 				FollowMouseCursorSystem,
 				LogicContainerSystem,
-				AnimatedTransform
+				AnimatedTransform,
+				LeafParticle,
+				LeafParticleSystem
 
 				>;
 		};

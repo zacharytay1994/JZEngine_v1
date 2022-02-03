@@ -78,6 +78,7 @@
     <ClCompile Include="src\JZEngine\SceneLogic\LogicContainer.cpp" />
     <ClCompile Include="src\JZEngine\Physics\PhysicsPlayer.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\AnimatedTransforms.cpp" />
+    <ClCompile Include="src\JZEngine\ECSSystems\FallingLeavesParticleSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\JZEngine\JZGL\glad.c">
@@ -274,5 +275,6 @@
     <ClInclude Include="src\JZEngine\SceneLogic\DataContainer.h" />
     <ClInclude Include="src\JZEngine\Physics\PhysicsPlayer.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\AnimatedTransforms.h" />
+    <ClInclude Include="src\JZEngine\ECSSystems\FallingLeavesParticleSystem.h" />
   </ItemGroup>
 </Project>

@@ -709,6 +709,15 @@ namespace JZEngine
 			ImGui::Text ( "Unable to display custom data." );
 		}
 
+		template<>
+		void RenderComponent ( LeafParticleSystemComponent& component )
+		{
+			ImGui::SliderFloat ( "Emission" , &component.emission_rate_ , 0.0f , 1.0f );
+			ImGui::SliderFloat ( "Wind Speed" , &component.wind_speed_, 0.0f, 1000.0f );
+			ImGui::SliderFloat ( "Wind Direction" , &component.wind_direction_ , 0.0f , Math::PIx2 );
+			ImGui::SliderFloat ( "Wind Spread" , &component.wind_spread_ , 0.0f , Math::PI );
+		}
+
 		template <>
 		void RenderComponent ( AnimatedTransformComponent& component )
 		{

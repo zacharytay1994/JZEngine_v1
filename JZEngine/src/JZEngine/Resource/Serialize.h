@@ -447,6 +447,16 @@ namespace JZEngine
 				component.modulate_scale_.y );
 		}
 
+		template <>
+		static void SerializeComponent ( LeafParticleSystemComponent& component , std::stringstream& stream , MODE mode )
+		{
+			SERIALIZE ( stream , mode ,
+				component.emission_rate_ ,
+				component.wind_speed_ ,
+				component.wind_direction_ ,
+				component.wind_spread_ );
+		}
+
 		/*!_______________________________________________________________________________________________________*/
 		/* STOP HERE GO NO FURTHER! */ // WHY NOT
 		/*!_______________________________________________________________________________________________________*/

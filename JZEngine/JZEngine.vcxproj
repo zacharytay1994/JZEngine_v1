@@ -158,6 +158,7 @@
     <ClCompile Include="src\JZEngine\ECSSystems\CollisionShapeSystem.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\ExampleParticleSystem.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.cpp" />
+    <ClCompile Include="src\JZEngine\ECSSystems\FallingLeavesParticleSystem.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\FloatRandom.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\FollowMouseCursor.cpp" />
     <ClCompile Include="src\JZEngine\ECSSystems\MouseEvent.cpp" />
@@ -312,6 +313,7 @@
     <ClInclude Include="src\JZEngine\ECSSystems\CollisionShapeSystem.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleParticleSystem.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\ExampleSplitHeaderSource.h" />
+    <ClInclude Include="src\JZEngine\ECSSystems\FallingLeavesParticleSystem.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\FloatRandom.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\FollowMouseCursor.h" />
     <ClInclude Include="src\JZEngine\ECSSystems\MouseEvent.h" />

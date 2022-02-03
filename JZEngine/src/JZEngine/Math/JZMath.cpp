@@ -33,6 +33,14 @@ namespace JZEngine
 			return val % 2 == 0;
 		}
 
+		float Mod ( float in )
+		{
+			if ( in < 0.0f )
+				return -in;
+			else
+				return in;
+		}
+
 		Mat3f GetModelTransformNonTransposed(const Vec2f& position, float rotate, const Vec2f& scale, const Vec2f& size)
 		{
 			return (JZEngine::Mat3f::Translate(position.x, position.y) * 
