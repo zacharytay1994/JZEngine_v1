@@ -127,6 +127,7 @@ void SetCustomerAnimation(AnimationPack& animPack, AnimationStates state, int id
 
 float out_queue_position_{ -800.0f };
 bool took_too_long_ { false };
+float customer_spacing_ = { 100.0f };
 
 struct Customer
 {
@@ -137,6 +138,8 @@ struct Customer
 	bool angry_{ false };
 	bool active_{ true };
 	int animation_id_ { -1 };
+
+	int position_in_queue_ { -1 };
 
 	CustomerOrder order_{ CustomerOrder::Wanton };
 	AnimationPack animation_pack_;
@@ -206,7 +209,7 @@ struct Customer
 		{
 		case CustomerState::WalkingIn:
 			// walk in 
-			if (transform->child_position_.x < 0.0f)
+			if (transform->child_position_.x < -( customer_spacing_ * position_in_queue_ ) )
 			{
 				transform->child_position_.x += walk_speed_ * dt;
 			}
@@ -228,6 +231,12 @@ struct Customer
 					took_too_long_ = true;
 					//SetCustomerAnimation("ahma_angry", scene_object_id_);
 					//SetCustomerAnimation(animation_pack_, AnimationStates::Angry, scene_object_id_);
+				}
+
+				// move to new position
+				if ( transform->child_position_.x < -( customer_spacing_ * position_in_queue_ ) )
+				{
+					transform->child_position_.x += walk_speed_ * dt;
 				}
 			}
 			else
@@ -263,6 +272,7 @@ int number_of_customers{ 5 };
 std::vector<Customer> customers;
 float customer_delay_{ 5.0f };
 float queue_timer_{ customer_delay_};
+int customers_in_queue_ { 0 };
 
 bool NewCustomer()
 {
@@ -276,6 +286,7 @@ bool NewCustomer()
 		{
 			customers.emplace_back ( customer_ids.top () , customers.back ().animation_id_ );
 		}
+		customers.back().position_in_queue_ = customers_in_queue_++;
 		JZEngine::Log::Info("Main", "Customer came. ID: {}.", customer_ids.top());
 		customer_ids.pop();
 		return true;
@@ -289,6 +300,16 @@ void RemoveCustomer(int id)
 	{
 		if (i->scene_object_id_ == id)
 		{
+			// decrement all customers behind queue number
+			for ( auto& j : customers )
+			{
+				if ( j.position_in_queue_ > i->position_in_queue_ )
+				{
+					--j.position_in_queue_;
+				}
+			}
+			--customers_in_queue_;
+
 			customers.erase(i);
 			Scene().EntityFlagActive("Customer", false, id);
 			customer_ids.push(id);
