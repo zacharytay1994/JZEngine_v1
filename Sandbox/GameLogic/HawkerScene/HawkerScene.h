@@ -555,6 +555,8 @@ void UpdateWinScreen(float dt)
  * @brief WIN - END
  * **********************************************************************
 */
+unsigned int springroll_count_ { 10 };
+
 
 void UpdateMainScene(float dt)
 {
@@ -606,11 +608,22 @@ void UpdateMainScene(float dt)
 			{
 				JZEngine::Log::Info("Main", "SpringRoll Selected");
 				FlagCursorState(CursorState::TongsSpringroll);
+				if ( springroll_count_ > 0 )
+				{
+					--springroll_count_;
+					std::stringstream springroll_name;
+					springroll_name << "DryFoodSpringRoll(" << springroll_count_ << ")_Equipment_hawker";
+					Scene ().GetComponent<JZEngine::Texture> ( "SpringRoll" )->texture_id_ = Scene ().GetTexture ( springroll_name.str () );
+				}
 			}
 			else if (CheckCursorState(CursorState::TongsSpringroll))
 			{
 				JZEngine::Log::Info("Main", "SpringRoll Returned");
 				FlagCursorState(CursorState::EmptyTongs);
+				++springroll_count_;
+				std::stringstream springroll_name;
+				springroll_name << "DryFoodSpringRoll(" << springroll_count_ << ")_Equipment_hawker";
+				Scene ().GetComponent<JZEngine::Texture> ( "SpringRoll" )->texture_id_ = Scene ().GetTexture ( springroll_name.str () );
 			}
 		}
 	}
