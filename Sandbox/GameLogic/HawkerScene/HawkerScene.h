@@ -928,6 +928,10 @@ void HawkerSceneInit()
 	JZEngine::Log::Info("Main", "Hawker Scene Initialized.");
 
 	ShowNotification ( 0 );
+
+	// temporarily remove upgrades
+	Scene ().EntityFlagActive ( "RoundSteamer" , false );
+	Scene ().EntityFlagActive ( "SideTray" , false );
 }
 
 void HawkerSceneUpdate(float dt)

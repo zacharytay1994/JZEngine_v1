@@ -190,7 +190,7 @@ void UpdateMainScreen(float dt)
 	{
 		if (e->on_released_)
 		{
-			Scene().ChangeScene("Cutscene");
+			Scene().ChangeScene("CutScene");
 		}
 		if (e->on_held_)
 		{

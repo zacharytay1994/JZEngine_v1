@@ -62,8 +62,8 @@ public:
 		Scene ().RegisterSceneInit ( "Hawker_w_CoinLogic" , "HawkerSceneInit" , HawkerSceneInit );
 		Scene ().RegisterSceneLogic ( "Hawker_w_CoinLogic" , "HawkerSceneUpdate" , HawkerSceneUpdate );*/
 
-		Scene ().RegisterSceneInit ( "Cutscene" , "CutSceneInit" , CutSceneInit );
-		Scene ().RegisterSceneLogic ( "Cutscene" , "CutSceneUpdate" , CutSceneUpdate );
+		Scene ().RegisterSceneInit ( "CutScene" , "CutSceneInit" , CutSceneInit );
+		Scene ().RegisterSceneLogic ( "CutScene" , "CutSceneUpdate" , CutSceneUpdate );
 
 		/*Scene ().RegisterSceneInit ( "CutSceneS" , "CutSceneInit" , CutSceneInit );
 		Scene ().RegisterSceneLogic ( "CutSceneS" , "CutSceneUpdate" , CutSceneUpdate );*/
