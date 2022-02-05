@@ -24,7 +24,7 @@ Sky 0
 !
 Clouds 0 
 	c 0 struct JZEngine::Transform
-		-4470.66 40 0 0 0 1 1 7660 1048 
+		-2465.76 40 0 0 0 1 1 7660 1048 
 	c 1 struct JZEngine::SpriteLayer
 		-30 
 	c 2 struct JZEngine::Texture
@@ -2445,4 +2445,52 @@ Total_amt 0
 		401 
 	c 9 struct JZEngine::TextData
 		1 
+!
+Black_goal 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 51.696 23.7053 50 50 
+	c 1 struct JZEngine::SpriteLayer
+		402 
+	c 2 struct JZEngine::Texture
+		hp_black_bg 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
+!
+Goal_one 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 1 1 2048 1024 
+	c 1 struct JZEngine::SpriteLayer
+		404 
+	c 2 struct JZEngine::Texture
+		TutorialDadDay01_UI_hawker_01 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
+!
+Goal_two 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 1 1 2048 1024 
+	c 1 struct JZEngine::SpriteLayer
+		405 
+	c 2 struct JZEngine::Texture
+		TutorialDadDay01_UI_hawker_02 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
+!
+Goal_three 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 1 1 2048 1024 
+	c 1 struct JZEngine::SpriteLayer
+		406 
+	c 2 struct JZEngine::Texture
+		TutorialDadDay01_UI_hawker_03 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
 !

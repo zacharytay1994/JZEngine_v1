@@ -19,7 +19,8 @@ enum class HawkerSceneState
 	Main,
 	Win,
 	App,
-	Shop
+	Shop,
+	Goal
 };
 HawkerSceneState current_hawker_scene_state = HawkerSceneState::Main;
 
@@ -82,6 +83,102 @@ void ResetCursors();
  * @brief CURSOR CODE - END
  * **********************************************************************
 */
+
+/*!
+ * **********************************************************************
+ * @brief BEGIN GOAL - START
+*/
+
+void FlagGoalActive ( bool flag )
+{
+	Scene ().EntityFlagActive ( "Black_goal" , flag );
+	Scene ().EntityFlagActive ( "Goal_one" , flag );
+	Scene ().EntityFlagActive ( "Goal_two" , flag );
+	Scene ().EntityFlagActive ( "Goal_three" , flag );
+}
+
+unsigned int goal_phase { 0 };
+bool end_goal { false };
+
+void InitGoal ()
+{
+	goal_phase = 0;
+	end_goal = false;
+	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Black_goal" )->tint.w = 0.0f;
+	Scene ().EntityFlagActive ( "Goal_one" , true );
+	Scene ().EntityFlagActive ( "Goal_two" , false );
+	Scene ().EntityFlagActive ( "Goal_three" , false );
+	Scene ().GetComponent<JZEngine::Transform> ( "Goal_one" )->position_.x = -2048.0f;
+	Scene ().GetComponent<JZEngine::Transform> ( "Goal_three" )->position_.x = 0.0f;
+}
+
+void UpdateGoal (float dt)
+{
+	float& bg_alpha = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Black_goal" )->tint.w;
+	float& goal_x = Scene ().GetComponent<JZEngine::Transform> ( "Goal_one" )->position_.x;
+	float& goal3_x = Scene ().GetComponent<JZEngine::Transform> ( "Goal_three" )->position_.x;
+	switch ( goal_phase )
+	{
+	case ( 0 ):
+		if ( bg_alpha < 1.0f )
+		{
+			bg_alpha += dt;
+		}
+		else
+		{
+			++goal_phase;
+		}
+		break;
+	case ( 1 ):
+		if ( goal_x < 0.0f )
+		{
+			goal_x += 2048.0f * dt;
+		}
+		else if ( JZEngine::InputHandler::IsMouseReleased ( JZEngine::MOUSE::MOUSE_BUTTON_1 ) )
+		{
+			Scene ().EntityFlagActive ( "Goal_one" , false );
+			Scene ().EntityFlagActive ( "Goal_two" , true );
+			++goal_phase;
+		}
+		break;
+	case ( 2 ):
+		if ( JZEngine::InputHandler::IsMouseReleased ( JZEngine::MOUSE::MOUSE_BUTTON_1 ) )
+		{
+			Scene ().EntityFlagActive ( "Goal_two" , false );
+			Scene ().EntityFlagActive ( "Goal_three" , true );
+			++goal_phase;
+		}
+		break;
+	case ( 3 ):
+		if ( JZEngine::InputHandler::IsMouseReleased ( JZEngine::MOUSE::MOUSE_BUTTON_1 ) && !end_goal )
+		{
+			end_goal = true;
+		}
+		if ( end_goal )
+		{
+			if ( goal3_x < 2048.0f * 2.0f )
+			{
+				goal3_x += 2048.0f * dt;
+			}
+			else if ( bg_alpha > 0.0f )
+			{
+				bg_alpha -= dt;
+			}
+			else
+			{
+				FlagGoalActive ( false );
+				current_hawker_scene_state = HawkerSceneState::Shop;
+			}
+		}
+		break;
+	}
+}
+
+/*!
+ * @brief BEGIN SHOP - END
+ * **********************************************************************
+*/
+
 
 /*!
  * **********************************************************************
@@ -1058,7 +1155,7 @@ void UpdateMainScene(float dt)
 void HawkerSceneInit()
 {
 	// initialize scene
-	current_hawker_scene_state = HawkerSceneState::Shop;
+	current_hawker_scene_state = HawkerSceneState::Goal;
 	//esc_again = false;
 	Scene ().EntityFlagActive ( "CoinSparkles" , false );
 	og_coin_position = Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_;
@@ -1166,6 +1263,10 @@ void HawkerSceneInit()
 	ss.str ( "" );
 	ss << carrotcake_count;
 	Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+
+	// initialize goal
+	FlagGoalActive ( true );
+	InitGoal ();
 }
 
 void HawkerSceneUpdate(float dt)
@@ -1187,6 +1288,9 @@ void HawkerSceneUpdate(float dt)
 		break;
 	case HawkerSceneState::Shop:
 		UpdateShop ();
+		break;
+	case HawkerSceneState::Goal:
+		UpdateGoal (dt);
 		break;
 	}
 }
