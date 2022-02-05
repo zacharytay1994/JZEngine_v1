@@ -555,7 +555,10 @@ void UpdateWinScreen(float dt)
  * @brief WIN - END
  * **********************************************************************
 */
-unsigned int springroll_count_ { 10 };
+unsigned int springroll_count		{ 10 };
+unsigned int carrotcake_count		{ 10 };
+unsigned int wanton_count			{ 10 };
+unsigned int seaweedchicken_count	{ 10 };
 
 
 void UpdateMainScene(float dt)
@@ -608,11 +611,11 @@ void UpdateMainScene(float dt)
 			{
 				JZEngine::Log::Info("Main", "SpringRoll Selected");
 				FlagCursorState(CursorState::TongsSpringroll);
-				if ( springroll_count_ > 0 )
+				if ( springroll_count > 0 )
 				{
-					--springroll_count_;
+					--springroll_count;
 					std::stringstream springroll_name;
-					springroll_name << "DryFoodSpringRoll(" << springroll_count_ << ")_Equipment_hawker";
+					springroll_name << "DryFoodSpringRoll(" << springroll_count << ")_Equipment_hawker";
 					Scene ().GetComponent<JZEngine::Texture> ( "SpringRoll" )->texture_id_ = Scene ().GetTexture ( springroll_name.str () );
 				}
 			}
@@ -620,9 +623,9 @@ void UpdateMainScene(float dt)
 			{
 				JZEngine::Log::Info("Main", "SpringRoll Returned");
 				FlagCursorState(CursorState::EmptyTongs);
-				++springroll_count_;
+				++springroll_count;
 				std::stringstream springroll_name;
-				springroll_name << "DryFoodSpringRoll(" << springroll_count_ << ")_Equipment_hawker";
+				springroll_name << "DryFoodSpringRoll(" << springroll_count << ")_Equipment_hawker";
 				Scene ().GetComponent<JZEngine::Texture> ( "SpringRoll" )->texture_id_ = Scene ().GetTexture ( springroll_name.str () );
 			}
 		}
@@ -635,11 +638,22 @@ void UpdateMainScene(float dt)
 			{
 				JZEngine::Log::Info("Main", "Wanton Selected");
 				FlagCursorState(CursorState::TongsWanton);
+				if ( wanton_count > 0 )
+				{
+					--wanton_count;
+					std::stringstream wanton_name;
+					wanton_name << "DryFoodFriedDumplings(" << wanton_count << ")_Equipment_hawker";
+					Scene ().GetComponent<JZEngine::Texture> ( "Dumpling" )->texture_id_ = Scene ().GetTexture ( wanton_name.str () );
+				}
 			}
 			else if (CheckCursorState(CursorState::TongsWanton))
 			{
 				JZEngine::Log::Info("Main", "Wanton Returned");
 				FlagCursorState(CursorState::EmptyTongs);
+				++wanton_count;
+				std::stringstream wanton_name;
+				wanton_name << "DryFoodFriedDumplings(" << wanton_count << ")_Equipment_hawker";
+				Scene ().GetComponent<JZEngine::Texture> ( "Dumpling" )->texture_id_ = Scene ().GetTexture ( wanton_name.str () );
 			}
 		}
 	}
@@ -651,11 +665,22 @@ void UpdateMainScene(float dt)
 			{
 				JZEngine::Log::Info("Main", "SeaweedChicken Selected");
 				FlagCursorState(CursorState::TongsSeaweedChicken);
+				if ( seaweedchicken_count > 0 )
+				{
+					--seaweedchicken_count;
+					std::stringstream seaweedchicken_name;
+					seaweedchicken_name << "DryFoodSeaweedChicken(" << seaweedchicken_count << ")_Equipment_hawker";
+					Scene ().GetComponent<JZEngine::Texture> ( "SeaweedChick" )->texture_id_ = Scene ().GetTexture ( seaweedchicken_name.str () );
+				}
 			}
 			else if (CheckCursorState(CursorState::TongsSeaweedChicken))
 			{
 				JZEngine::Log::Info("Main", "SeaweedChicken Returned");
 				FlagCursorState(CursorState::EmptyTongs);
+				++seaweedchicken_count;
+				std::stringstream seaweedchicken_name;
+				seaweedchicken_name << "DryFoodSeaweedChicken(" << seaweedchicken_count << ")_Equipment_hawker";
+				Scene ().GetComponent<JZEngine::Texture> ( "SeaweedChick" )->texture_id_ = Scene ().GetTexture ( seaweedchicken_name.str () );
 			}
 		}
 	}
@@ -667,11 +692,22 @@ void UpdateMainScene(float dt)
 			{
 				JZEngine::Log::Info("Main", "CarrotCake Selected");
 				FlagCursorState(CursorState::TongsCarrotCake);
+				if ( carrotcake_count > 0 )
+				{
+					--carrotcake_count;
+					std::stringstream carrotcake_name;
+					carrotcake_name << "DryFoodCarrotCake(" << carrotcake_count << ")_Equipment_hawker";
+					Scene ().GetComponent<JZEngine::Texture> ( "CarrotCake" )->texture_id_ = Scene ().GetTexture ( carrotcake_name.str () );
+				}
 			}
 			else if (CheckCursorState(CursorState::TongsCarrotCake))
 			{
 				JZEngine::Log::Info("Main", "CarrotCake Returned");
 				FlagCursorState(CursorState::EmptyTongs);
+				++carrotcake_count;
+				std::stringstream carrotcake_name;
+				carrotcake_name << "DryFoodCarrotCake(" << carrotcake_count << ")_Equipment_hawker";
+				Scene ().GetComponent<JZEngine::Texture> ( "CarrotCake" )->texture_id_ = Scene ().GetTexture ( carrotcake_name.str () );
 			}
 		}
 	}
@@ -945,6 +981,23 @@ void HawkerSceneInit()
 	// temporarily remove upgrades
 	Scene ().EntityFlagActive ( "RoundSteamer" , false );
 	Scene ().EntityFlagActive ( "SideTray" , false );
+
+	// set food count
+	std::stringstream springroll_name;
+	springroll_name << "DryFoodSpringRoll(" << springroll_count << ")_Equipment_hawker";
+	Scene ().GetComponent<JZEngine::Texture> ( "SpringRoll" )->texture_id_ = Scene ().GetTexture ( springroll_name.str () );
+
+	std::stringstream wanton_name;
+	wanton_name << "DryFoodFriedDumplings(" << wanton_count << ")_Equipment_hawker";
+	Scene ().GetComponent<JZEngine::Texture> ( "Dumpling" )->texture_id_ = Scene ().GetTexture ( wanton_name.str () );
+
+	std::stringstream seaweedchicken_name;
+	seaweedchicken_name << "DryFoodSeaweedChicken(" << seaweedchicken_count << ")_Equipment_hawker";
+	Scene ().GetComponent<JZEngine::Texture> ( "SeaweedChick" )->texture_id_ = Scene ().GetTexture ( seaweedchicken_name.str () );
+
+	std::stringstream carrotcake_name;
+	carrotcake_name << "DryFoodCarrotCake(" << carrotcake_count << ")_Equipment_hawker";
+	Scene ().GetComponent<JZEngine::Texture> ( "CarrotCake" )->texture_id_ = Scene ().GetTexture ( carrotcake_name.str () );
 }
 
 void HawkerSceneUpdate(float dt)
