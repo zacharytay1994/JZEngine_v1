@@ -24,6 +24,7 @@ enum class MainMenuState
 MainMenuState current_main_menu_state = MainMenuState::Main;
 bool playingbgm{ false };
 bool how_to_play_page1{ true };
+bool transition_main_cutscene{ false };
 float master_volume_{ 0.33f };
 float music_volume_{ 0.2f };
 float sfx_volume_{ 0.2f };
@@ -190,7 +191,7 @@ void UpdateMainScreen(float dt)
 	{
 		if (e->on_released_)
 		{
-			Scene().ChangeScene("CutScene");
+			transition_main_cutscene = true ;
 		}
 		if (e->on_held_)
 		{
@@ -203,6 +204,19 @@ void UpdateMainScreen(float dt)
 		else
 		{
 			ToggleButton("Play", ButtonState::Normal);
+		}
+	}
+	if( transition_main_cutscene )
+	{
+		float & TransitionBlack = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black" )->tint.w;
+		if( TransitionBlack < 1.0f )
+		{
+			TransitionBlack += dt;
+		}
+		else
+		{
+			Scene().ChangeScene("CutScene");
+			transition_main_cutscene = false;
 		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_options"))
@@ -247,8 +261,6 @@ void UpdateMainScreen(float dt)
 			ToggleButton("how_to_play", ButtonState::Normal);
 		}
 	}
-
-
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_quit"))
 	{
 		if (e->on_released_)
@@ -450,6 +462,7 @@ void InitMainMenu()
 	ToggleHowtoPlayPage (false);
 	Scene().GetComponent<JZEngine::TextData>("Option_text")->text = JZEngine::String("OPTIONS");
 	Scene().GetComponent<JZEngine::TextData>("Option_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
+	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black" )->tint.w = 0.0f;
 }
 
 void UpdateMainMenu(float dt)
