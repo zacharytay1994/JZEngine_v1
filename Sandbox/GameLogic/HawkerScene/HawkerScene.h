@@ -977,11 +977,6 @@ void HawkerSceneInit()
 	JZEngine::Log::Info("Main", "Hawker Scene Initialized.");
 
 	ShowNotification ( 0 );
-	
-	// setup food
-	std::stringstream springroll_name;
-	springroll_name << "DryFoodSpringRoll(" << springroll_count_ << ")_Equipment_hawker";
-	Scene ().GetComponent<JZEngine::Texture> ( "SpringRoll" )->texture_id_ = Scene ().GetTexture ( springroll_name.str () );
 
 	// temporarily remove upgrades
 	Scene ().EntityFlagActive ( "RoundSteamer" , false );
