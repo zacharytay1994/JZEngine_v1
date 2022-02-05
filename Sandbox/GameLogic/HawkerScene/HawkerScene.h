@@ -18,7 +18,8 @@ enum class HawkerSceneState
 {
 	Main,
 	Win,
-	App
+	App,
+	Shop
 };
 HawkerSceneState current_hawker_scene_state = HawkerSceneState::Main;
 
@@ -79,6 +80,170 @@ void ResetCursors();
 
 /*!
  * @brief CURSOR CODE - END
+ * **********************************************************************
+*/
+
+/*!
+ * **********************************************************************
+ * @brief BEGIN SHOP - START
+*/
+
+void FlagShopActive ( bool flag )
+{
+	Scene ().EntityFlagActive ( "BeginShop" , flag );
+	Scene ().EntityFlagActive ( "BeginBlack" , flag );
+	Scene ().EntityFlagActive ( "Shop_a_springroll" , flag );
+	Scene ().EntityFlagActive ( "Shop_s_springroll" , flag );
+	Scene ().EntityFlagActive ( "Shop_a_seaweedchickenl" , flag );
+	Scene ().EntityFlagActive ( "Shop_s_seaweedchickenl" , flag );
+	Scene ().EntityFlagActive ( "Shop_a_dumpling" , flag );
+	Scene ().EntityFlagActive ( "Shop_s_dumpling" , flag );
+	Scene ().EntityFlagActive ( "Shop_a_carrotcake" , flag );
+	Scene ().EntityFlagActive ( "Shop_s_carrotcake" , flag );
+	Scene ().EntityFlagActive ( "BeginShop_Exit" , flag );
+	Scene ().EntityFlagActive ( "BeginShop_Next" , flag );
+	Scene ().EntityFlagActive ( "Springroll_amt" , flag );
+	Scene ().EntityFlagActive ( "Seaweedchicken_amt" , flag );
+	Scene ().EntityFlagActive ( "Dumpling_amt" , flag );
+	Scene ().EntityFlagActive ( "Carrotcake_amt" , flag );
+	Scene ().EntityFlagActive ( "Total_amt" , flag );
+}
+
+unsigned int springroll_count { 8 };
+unsigned int carrotcake_count { 8 };
+unsigned int wanton_count { 9 };
+unsigned int seaweedchicken_count { 7 };
+
+unsigned int min_count { 0 };
+unsigned int max_count { 10 };
+
+void UpdateShop ()
+{
+	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "BeginShop_Next" ) )
+	{
+		if ( e->on_released_ )
+		{
+			std::stringstream springroll_name;
+			springroll_name << "DryFoodSpringRoll(" << springroll_count << ")_Equipment_hawker";
+			Scene ().GetComponent<JZEngine::Texture> ( "SpringRoll" )->texture_id_ = Scene ().GetTexture ( springroll_name.str () );
+
+			std::stringstream wanton_name;
+			wanton_name << "DryFoodFriedDumplings(" << wanton_count << ")_Equipment_hawker";
+			Scene ().GetComponent<JZEngine::Texture> ( "Dumpling" )->texture_id_ = Scene ().GetTexture ( wanton_name.str () );
+
+			std::stringstream seaweedchicken_name;
+			seaweedchicken_name << "DryFoodSeaweedChicken(" << seaweedchicken_count << ")_Equipment_hawker";
+			Scene ().GetComponent<JZEngine::Texture> ( "SeaweedChick" )->texture_id_ = Scene ().GetTexture ( seaweedchicken_name.str () );
+
+			std::stringstream carrotcake_name;
+			carrotcake_name << "DryFoodCarrotCake(" << carrotcake_count << ")_Equipment_hawker";
+			Scene ().GetComponent<JZEngine::Texture> ( "CarrotCake" )->texture_id_ = Scene ().GetTexture ( carrotcake_name.str () );
+
+			FlagShopActive ( false );
+			current_hawker_scene_state = HawkerSceneState::Main;
+		}
+	}
+	// spring roll
+	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Shop_a_springroll" ) )
+	{
+		if ( e->on_released_ )
+		{
+			if ( springroll_count < max_count )
+				++springroll_count;
+			std::stringstream ss;
+			ss << springroll_count;
+			Scene ().GetComponent<JZEngine::TextData> ( "Springroll_amt" )->text = JZEngine::String ( ss.str ().c_str() );
+		}
+	}
+	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Shop_s_springroll" ) )
+	{
+		if ( e->on_released_ )
+		{
+			if ( springroll_count > min_count )
+				--springroll_count;
+			std::stringstream ss;
+			ss << springroll_count;
+			Scene ().GetComponent<JZEngine::TextData> ( "Springroll_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+		}
+	}
+	// seaweed chicken
+	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Shop_a_seaweedchickenl" ) )
+	{
+		if ( e->on_released_ )
+		{
+			if ( seaweedchicken_count < max_count )
+				++seaweedchicken_count;
+			std::stringstream ss;
+			ss << seaweedchicken_count;
+			Scene ().GetComponent<JZEngine::TextData> ( "Seaweedchicken_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+		}
+	}
+	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Shop_s_seaweedchickenl" ) )
+	{
+		if ( e->on_released_ )
+		{
+			if ( seaweedchicken_count > min_count )
+				--seaweedchicken_count;
+			std::stringstream ss;
+			ss << seaweedchicken_count;
+			Scene ().GetComponent<JZEngine::TextData> ( "Seaweedchicken_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+		}
+	}
+	// dumpling
+	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Shop_a_dumpling" ) )
+	{
+		if ( e->on_released_ )
+		{
+			if ( wanton_count < max_count )
+				++wanton_count;
+			std::stringstream ss;
+			ss << wanton_count;
+			Scene ().GetComponent<JZEngine::TextData> ( "Dumpling_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+		}
+	}
+	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Shop_s_dumpling" ) )
+	{
+		if ( e->on_released_ )
+		{
+			if ( wanton_count > min_count )
+				--wanton_count;
+			std::stringstream ss;
+			ss << wanton_count;
+			Scene ().GetComponent<JZEngine::TextData> ( "Dumpling_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+		}
+	}
+	// carrotcake
+	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Shop_a_carrotcake" ) )
+	{
+		if ( e->on_released_ )
+		{
+			if ( carrotcake_count < max_count )
+				++carrotcake_count;
+			std::stringstream ss;
+			ss << carrotcake_count;
+			Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+		}
+	}
+	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Shop_s_carrotcake" ) )
+	{
+		if ( e->on_released_ )
+		{
+			if ( carrotcake_count > min_count )
+				--carrotcake_count;
+			std::stringstream ss;
+			ss << carrotcake_count;
+			Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+		}
+	}
+
+	float total_amt = 0.4f * springroll_count + 0.2f * seaweedchicken_count + 0.3f * wanton_count + 0.5f * carrotcake_count;
+	std::stringstream ss;
+	ss << "$" << std::setprecision (2) << std::fixed << total_amt;
+	Scene ().GetComponent<JZEngine::TextData> ( "Total_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+}
+
+/*!
+ * @brief BEGIN SHOP - END
  * **********************************************************************
 */
 
@@ -555,10 +720,6 @@ void UpdateWinScreen(float dt)
  * @brief WIN - END
  * **********************************************************************
 */
-unsigned int springroll_count		{ 1 };
-unsigned int carrotcake_count		{ 1 };
-unsigned int wanton_count			{ 1 };
-unsigned int seaweedchicken_count	{ 1 };
 
 void UpdateMainScene(float dt)
 {
@@ -609,9 +770,9 @@ void UpdateMainScene(float dt)
 			if (CheckCursorState(CursorState::EmptyTongs))
 			{
 				JZEngine::Log::Info("Main", "SpringRoll Selected");
-				FlagCursorState(CursorState::TongsSpringroll);
 				if ( springroll_count > 0 )
 				{
+					FlagCursorState ( CursorState::TongsSpringroll );
 					--springroll_count;
 					std::stringstream springroll_name;
 					springroll_name << "DryFoodSpringRoll(" << springroll_count << ")_Equipment_hawker";
@@ -636,9 +797,9 @@ void UpdateMainScene(float dt)
 			if (CheckCursorState(CursorState::EmptyTongs))
 			{
 				JZEngine::Log::Info("Main", "Wanton Selected");
-				FlagCursorState(CursorState::TongsWanton);
 				if ( wanton_count > 0 )
 				{
+					FlagCursorState ( CursorState::TongsWanton );
 					--wanton_count;
 					std::stringstream wanton_name;
 					wanton_name << "DryFoodFriedDumplings(" << wanton_count << ")_Equipment_hawker";
@@ -663,9 +824,9 @@ void UpdateMainScene(float dt)
 			if (CheckCursorState(CursorState::EmptyTongs))
 			{
 				JZEngine::Log::Info("Main", "SeaweedChicken Selected");
-				FlagCursorState(CursorState::TongsSeaweedChicken);
 				if ( seaweedchicken_count > 0 )
 				{
+					FlagCursorState(CursorState::TongsSeaweedChicken);
 					--seaweedchicken_count;
 					std::stringstream seaweedchicken_name;
 					seaweedchicken_name << "DryFoodSeaweedChicken(" << seaweedchicken_count << ")_Equipment_hawker";
@@ -690,9 +851,9 @@ void UpdateMainScene(float dt)
 			if (CheckCursorState(CursorState::EmptyTongs))
 			{
 				JZEngine::Log::Info("Main", "CarrotCake Selected");
-				FlagCursorState(CursorState::TongsCarrotCake);
 				if ( carrotcake_count > 0 )
 				{
+					FlagCursorState ( CursorState::TongsCarrotCake );
 					--carrotcake_count;
 					std::stringstream carrotcake_name;
 					carrotcake_name << "DryFoodCarrotCake(" << carrotcake_count << ")_Equipment_hawker";
@@ -897,7 +1058,7 @@ void UpdateMainScene(float dt)
 void HawkerSceneInit()
 {
 	// initialize scene
-	current_hawker_scene_state = HawkerSceneState::Main;
+	current_hawker_scene_state = HawkerSceneState::Shop;
 	//esc_again = false;
 	Scene ().EntityFlagActive ( "CoinSparkles" , false );
 	og_coin_position = Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_;
@@ -982,21 +1143,29 @@ void HawkerSceneInit()
 	Scene ().EntityFlagActive ( "SideTray" , false );
 
 	// set food count
-	std::stringstream springroll_name;
-	springroll_name << "DryFoodSpringRoll(" << springroll_count << ")_Equipment_hawker";
-	Scene ().GetComponent<JZEngine::Texture> ( "SpringRoll" )->texture_id_ = Scene ().GetTexture ( springroll_name.str () );
+	springroll_count = 8;
+	carrotcake_count = 8;
+	wanton_count = 9;
+	seaweedchicken_count = 7;
 
-	std::stringstream wanton_name;
-	wanton_name << "DryFoodFriedDumplings(" << wanton_count << ")_Equipment_hawker";
-	Scene ().GetComponent<JZEngine::Texture> ( "Dumpling" )->texture_id_ = Scene ().GetTexture ( wanton_name.str () );
+	// shop init
+	FlagShopActive ( true );
 
-	std::stringstream seaweedchicken_name;
-	seaweedchicken_name << "DryFoodSeaweedChicken(" << seaweedchicken_count << ")_Equipment_hawker";
-	Scene ().GetComponent<JZEngine::Texture> ( "SeaweedChick" )->texture_id_ = Scene ().GetTexture ( seaweedchicken_name.str () );
+	std::stringstream ss;
+	ss << springroll_count;
+	Scene ().GetComponent<JZEngine::TextData> ( "Springroll_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 
-	std::stringstream carrotcake_name;
-	carrotcake_name << "DryFoodCarrotCake(" << carrotcake_count << ")_Equipment_hawker";
-	Scene ().GetComponent<JZEngine::Texture> ( "CarrotCake" )->texture_id_ = Scene ().GetTexture ( carrotcake_name.str () );
+	ss.str ( "" );
+	ss << seaweedchicken_count;
+	Scene ().GetComponent<JZEngine::TextData> ( "Seaweedchicken_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+
+	ss.str ( "" );
+	ss << wanton_count;
+	Scene ().GetComponent<JZEngine::TextData> ( "Dumpling_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+
+	ss.str ( "" );
+	ss << carrotcake_count;
+	Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 }
 
 void HawkerSceneUpdate(float dt)
@@ -1015,6 +1184,9 @@ void HawkerSceneUpdate(float dt)
 		{
 			current_hawker_scene_state = HawkerSceneState::Main;
 		}
+		break;
+	case HawkerSceneState::Shop:
+		UpdateShop ();
 		break;
 	}
 }
