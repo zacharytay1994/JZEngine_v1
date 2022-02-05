@@ -140,6 +140,7 @@ struct Customer
 	int animation_id_ { -1 };
 
 	int position_in_queue_ { -1 };
+	bool no_food_ { false };
 
 	CustomerOrder order_{ CustomerOrder::Wanton };
 	AnimationPack animation_pack_;
@@ -360,7 +361,16 @@ bool InteractWithQueue(bool food, CustomerOrder order, bool giveMeWin)
 		{
 			// display order
 			Customer& customer = *p_customer;
-			SetCustomerAnimation(customer.animation_pack_, AnimationStates::Ordering, customer.scene_object_id_);
+			if ( customer.no_food_ )
+			{
+				SetCustomerAnimation ( customer.animation_pack_ , AnimationStates::Angry , customer.scene_object_id_ );
+				customer.state_ = CustomerState::Success;
+				JZEngine::Log::Info ( "Main" , "No Food to customer {}" , customer.scene_object_id_ );
+			}
+			else
+			{
+				SetCustomerAnimation ( customer.animation_pack_ , AnimationStates::Ordering , customer.scene_object_id_ );
+			}
 
 			// debug code
 			switch (customer.order_)
@@ -383,7 +393,7 @@ bool InteractWithQueue(bool food, CustomerOrder order, bool giveMeWin)
 	return false;
 }
 
-CustomerOrder GetNextCustomerOrder()
+CustomerOrder GetNextCustomerOrder(int dumpling, int seaweed, int carrotcake, int popiah)
 {
 	Customer* p_customer{ nullptr };
 	for (int i = 0; i < customers.size(); ++i)
@@ -396,6 +406,33 @@ CustomerOrder GetNextCustomerOrder()
 	}
 	if (p_customer)
 	{
+		switch ( p_customer->order_ )
+		{
+		case CustomerOrder::CarrotCake:
+			if ( carrotcake <= 0 )
+			{
+				p_customer->no_food_ = true;
+			}
+			break;
+		case CustomerOrder::Wanton:
+			if ( dumpling <= 0 )
+			{
+				p_customer->no_food_ = true;
+			}
+			break;
+		case CustomerOrder::SeaweedChicken:
+			if ( seaweed <= 0 )
+			{
+				p_customer->no_food_ = true;
+			}
+			break;
+		case CustomerOrder::SpringRoll:
+			if ( popiah <= 0 )
+			{
+				p_customer->no_food_ = true;
+			}
+			break;
+		}
 		return p_customer->order_;
 	}
 	return CustomerOrder::Nothing;

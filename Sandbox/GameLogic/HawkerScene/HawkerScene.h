@@ -555,11 +555,10 @@ void UpdateWinScreen(float dt)
  * @brief WIN - END
  * **********************************************************************
 */
-unsigned int springroll_count		{ 10 };
-unsigned int carrotcake_count		{ 10 };
-unsigned int wanton_count			{ 10 };
-unsigned int seaweedchicken_count	{ 10 };
-
+unsigned int springroll_count		{ 1 };
+unsigned int carrotcake_count		{ 1 };
+unsigned int wanton_count			{ 1 };
+unsigned int seaweedchicken_count	{ 1 };
 
 void UpdateMainScene(float dt)
 {
@@ -831,7 +830,7 @@ void UpdateMainScene(float dt)
 			ShowNotification ( 1 );
 			if (!plate_on_hand)
 			{
-				DisplayOrder(GetNextCustomerOrder());
+				DisplayOrder(GetNextCustomerOrder(wanton_count, seaweedchicken_count, carrotcake_count, springroll_count));
 			}
 			bool instant_win = false;
 			if ( JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_LEFT_CONTROL ) )
