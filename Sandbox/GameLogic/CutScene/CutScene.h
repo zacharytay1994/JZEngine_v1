@@ -49,6 +49,10 @@ float text_leading{3.0f};
 float message_left_position_x { -130.0f }; //
 float message_right_position_y{ -200.0f }; //
 
+// related to transition screen
+bool transition_cutscene_hawker{ false };
+bool transition_skip_pressed{ false };
+
 
 void Flag1stMsg(bool flag)
 {
@@ -211,10 +215,38 @@ void CutSceneInit()
 	Scene().GetComponent<JZEngine::TextData>("13th_msg_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	
 	JZEngine::Log::Info("Main", "Cut Scene Initialized.");
+
+
+	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black_1" )->tint.w = 1.0f;
+	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black_2" )->tint.w = 1.0f;
+	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black_3" )->tint.w = 0.0f;
 }
 
 void CutSceneUpdate(float dt)
 {
+	float TransitionSpeed = dt * 0.5f;
+
+	float& TransitionBlack2 = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black_2" )->tint.w;
+	if( TransitionBlack2 > 0.0f )
+	{
+		TransitionBlack2 -= TransitionSpeed;
+	}
+	else
+	{
+		TransitionBlack2 = 0.0f;
+	}
+
+	float& TransitionBlack1 = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black_1" )->tint.w;
+	if( TransitionBlack1 > 0.0f )
+	{
+		TransitionBlack1 -= TransitionSpeed;
+	}
+	else 
+	{
+		TransitionBlack1 = 0.0f;
+	}
+	
+
 	if (JZEngine::InputHandler::IsMouseTriggered(JZEngine::MOUSE::MOUSE_BUTTON_1))
 		Scene().PlaySound("click", false);
 
@@ -353,7 +385,8 @@ void CutSceneUpdate(float dt)
 			}
 			else if (message_state == MessageState::Thirteen)
 			{
-				Scene().ChangeScene("HawkerScene");
+				// apply black transition screen
+				transition_cutscene_hawker = true;
 			}
 		}
 		
@@ -364,8 +397,11 @@ void CutSceneUpdate(float dt)
 	{
 		if (e->on_released_)
 		{
-			Scene().ChangeScene("HawkerScene");
-			current_cut_scene_state = CutSceneState::Skip;
+			//Scene().ChangeScene("HawkerScene");
+			//current_cut_scene_state = CutSceneState::Skip;
+
+			transition_cutscene_hawker = true;
+			transition_skip_pressed = true;
 		}
 		if (e->on_held_)
 		{
@@ -378,6 +414,24 @@ void CutSceneUpdate(float dt)
 		else
 		{
 			ToggleButton("Skip", ButtonState::Normal);
+		}
+	}
+
+	if( transition_cutscene_hawker )
+	{
+		float& TransitionBlack3 = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black_3" )->tint.w;
+		if( TransitionBlack3 < 1.0f )
+		{
+			TransitionBlack3 += TransitionSpeed;
+		}
+		else
+		{
+			Scene ().ChangeScene ( "HawkerScene" );
+			if( transition_skip_pressed )
+			{
+				current_cut_scene_state = CutSceneState::Skip;
+			}
+			transition_cutscene_hawker = false;
 		}
 	}
 	

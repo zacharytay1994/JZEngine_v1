@@ -724,3 +724,15 @@ MouseCursor 0
 	c 16 struct JZEngine::FollowMouseCursor
 		
 !
+Transition_Black 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 1 1 1920 1080 
+	c 1 struct JZEngine::SpriteLayer
+		100 
+	c 2 struct JZEngine::Texture
+		BlackSolidColorBackground 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
+!
