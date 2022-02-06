@@ -507,9 +507,9 @@ void DisplayUpdate(float dt)
 	}
 }
 
-int target_coins{ 500 };
-int current_coins{ 0 };
-int coin_increment{ 100 };
+float target_coins{ 10.0f };
+float current_coins{ 0.0f };
+//float coin_increment{ 100 };
 float total_time{ 60.0f };
 float current_time{ 0.0f };
 bool win{ false };
@@ -669,7 +669,7 @@ void UpdateCoinAnimation (float dt)
 		{
 			coin_suck = false;
 
-			SetCoinText ( "$" , current_coins );
+			SetCoinText ( "$" , std::setprecision(2), std::fixed, current_coins );
 			UpdateCoinProgressBar ();
 			coin_bar_animation_play = true;
 			coin_sparkles_animation_play = true;
@@ -1231,6 +1231,21 @@ void UpdateMainScene(float dt)
 			{
 				if (plate_on_hand || instant_win)
 				{
+					switch ( current_order )
+					{
+					case ( CustomerOrder::CarrotCake ):
+						current_coins += 3.0f;
+						break;
+					case ( CustomerOrder::SeaweedChicken ):
+						current_coins += 1.2f;
+						break;
+					case ( CustomerOrder::SpringRoll ):
+						current_coins += 2.7f;
+						break;
+					case ( CustomerOrder::Wanton ):
+						current_coins += 2.1f;
+						break;
+					}
 					plate_on_hand = false;
 					// make invisible all tray items
 					FlagAllTrayItemsFalse();
@@ -1239,7 +1254,7 @@ void UpdateMainScene(float dt)
 					// turn off order ui
 					UnDisplayOrder();
 					// if successfully served customer increment coins
-					current_coins += coin_increment;
+					//current_coins += coin_increment;
 					/*UpdateCoinProgressBar();
 					coin_bar_animation_play = true;
 					coin_sparkles_animation_play = true;*/
@@ -1319,7 +1334,7 @@ void HawkerSceneInit()
 	display_up_ = false;
 	greenbar_original_scale_y = Scene().GetComponent<JZEngine::Transform>("GreenBar")->scale_.y;
 
-	target_coins = 500;
+	target_coins = 10.0f;
 	current_coins = 0;
 	current_coin_scale = 0.0f;
 	total_time = 60.0f;

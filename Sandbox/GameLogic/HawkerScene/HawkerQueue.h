@@ -31,6 +31,68 @@ enum class CustomerOrder
 	Nothing
 };
 
+unsigned int num_springroll {8};
+unsigned int num_dumpling {7};
+unsigned int num_carrotcake {9};
+unsigned int num_seaweedchicken {8};
+
+unsigned int rnum_springroll;
+unsigned int rnum_dumpling;;
+unsigned int rnum_carrotcake;
+unsigned int rnum_seaweedchicken;
+
+int max_customers { 0 };
+int num_customers { 0 };
+
+int GetRandomOrder ()
+{
+	bool find { true };
+	while ( find )
+	{
+		if ( num_customers <= 0 )
+		{
+			return 0;
+		}
+		int rand_order = rand () % 4;
+		switch ( rand_order )
+		{
+			// springroll
+		case ( 0 ):
+			if ( rnum_springroll > 0 )
+			{
+				--rnum_springroll;
+				--num_customers;
+				return rand_order;
+			}
+			break;
+		case ( 1 ):
+			if ( rnum_dumpling > 0 )
+			{
+				--rnum_dumpling;
+				--num_customers;
+				return rand_order;
+			}
+			break;
+		case ( 2 ):
+			if ( rnum_carrotcake > 0 )
+			{
+				--rnum_carrotcake;
+				--num_customers;
+				return rand_order;
+			}
+			break;
+		case ( 3 ):
+			if ( rnum_seaweedchicken > 0 )
+			{
+				--rnum_seaweedchicken;
+				--num_customers;
+				return rand_order;
+			}
+			break;
+		}
+	}
+}
+
 std::stack<int> customer_ids;
 
 void RemoveCustomer(int id);
@@ -204,7 +266,8 @@ struct Customer
 		JZEngine::Transform* transform = Scene().GetComponent<JZEngine::Transform>("Customer", scene_object_id_);
 		transform->child_position_ = { 0.0f,0.0f };
 		// set a random order for the customer
-		int order = rand() % 4;
+		//int order = rand() % 4;
+		int order = GetRandomOrder();
 		order_ = static_cast<CustomerOrder>(order);
 		JZEngine::Log::Info("Main", "Order: {}.", order);
 
@@ -316,7 +379,7 @@ struct Customer
 int queue_layer{ 0 };
 int number_of_customers{ 5 };
 std::vector<Customer> customers;
-float customer_delay_{ 5.0f };
+float customer_delay_{ 2.5f };
 float queue_timer_{ customer_delay_};
 int customers_in_queue_ { 0 };
 
@@ -491,7 +554,7 @@ void InitHawkerQueue()
 	queue_layer = 0;
 	number_of_customers = 5;
 	customers = std::vector<Customer>();
-	customer_delay_ = 5.0f;
+	customer_delay_ = 2.5f;
 	queue_timer_ = customer_delay_;
 
 	queue_layer = Scene().GetComponent<JZEngine::SpriteLayer>("Queue")->layer_;
@@ -502,6 +565,14 @@ void InitHawkerQueue()
 		Scene().EntityFlagActive("Customer", false, i);
 		Scene().GetComponent<JZEngine::Transform>("Customer", i)->child_position_.x = out_queue_position_;
 	}
+
+	rnum_springroll = num_springroll + ( ( rand () % 5 ) - 2 );
+	rnum_carrotcake = rnum_carrotcake + ( ( rand () % 5 ) - 2 );
+	rnum_dumpling = rnum_dumpling + ( ( rand () % 5 ) - 2 );
+	rnum_seaweedchicken = rnum_seaweedchicken + ( ( rand () % 5 ) - 2 );
+
+	max_customers = rnum_springroll + rnum_carrotcake + rnum_dumpling + rnum_seaweedchicken;
+	num_customers = max_customers;
 }
 
 void UpdateHawkerQueue(float dt)
