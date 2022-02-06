@@ -444,7 +444,8 @@ namespace JZEngine
 				component.speed_ ,
 				component.modulate_rotation_ ,
 				component.modulate_scale_.x ,
-				component.modulate_scale_.y );
+				component.modulate_scale_.y ,
+				component.repeat_ );
 		}
 
 		template <>

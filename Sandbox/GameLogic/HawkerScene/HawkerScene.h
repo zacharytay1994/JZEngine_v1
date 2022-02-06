@@ -721,6 +721,8 @@ bool notification_shown[ notification_count_ ] { false };
 void TurnOffNotification ()
 {
 	Scene ().EntityFlagActive ( "NotificationText" , false );
+	Scene ().EntityFlagActive ( "NotificationBar" , false );
+	Scene ().GetComponent<JZEngine::AnimatedTransformComponent> ( "PhoneOptions" )->active_flag = false;
 	notification_display_ = false;
 	notification_time_counter_ = 0.0f;
 }
@@ -735,6 +737,8 @@ void ShowNotification (int i)
 			notification_shown[ i ] = true;
 			Scene ().GetComponent<JZEngine::TextData> ( "NotificationText" )->text = JZEngine::String ( notification[ i ].c_str () );
 			Scene ().EntityFlagActive ( "NotificationText" , true );
+			Scene ().EntityFlagActive ( "NotificationBar" , true );
+			Scene ().GetComponent<JZEngine::AnimatedTransformComponent> ( "PhoneOptions" )->active_flag = true;
 			notification_display_ = true;
 		}
 	}

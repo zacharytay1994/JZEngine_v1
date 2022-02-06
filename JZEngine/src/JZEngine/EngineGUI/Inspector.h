@@ -722,6 +722,7 @@ namespace JZEngine
 		void RenderComponent ( AnimatedTransformComponent& component )
 		{
 			ImGui::Checkbox ( "Active" , &component.active_flag );
+			ImGui::Checkbox ( "Repeat" , &component.repeat_ );
 			ImGui::SliderFloat ( "Speed" , &component.speed_ , 0.0f , 10.0f );
 			ImGui::InputFloat ( "Change Rotation" , &component.modulate_rotation_ );
 			ImGui::InputFloat ( "Change ScaleX" , &component.modulate_scale_.x );

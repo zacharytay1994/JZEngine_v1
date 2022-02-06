@@ -19,6 +19,8 @@ namespace JZEngine
 		float original_rotation_;
 		Vec2f original_scale_;
 		bool positive_ { true };
+
+		bool repeat_ { true };
 	};
 
 	struct AnimatedTransform : public JZEngine::ECS::System
