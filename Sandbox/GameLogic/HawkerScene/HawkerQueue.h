@@ -586,7 +586,7 @@ void UpdateHawkerQueue(float dt)
 		if (NewCustomer())
 		{
 			// set queue timer to rand 5-8 secs
-			queue_timer_ = 5.0f + static_cast<float>( rand () % 3 + 1);
+			queue_timer_ = customer_delay_ + static_cast<float>( rand () % 3 + 1);
 		}
 	}
 
