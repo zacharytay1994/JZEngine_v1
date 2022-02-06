@@ -225,7 +225,9 @@ void UpdateMainScreen(float dt)
 		{
 			ToggleOptions(true);
 			Scene().EntityFlagActive("Credits", true);
-			Scene().EntityFlagActive("Quit", true);
+
+			//Scene().EntityFlagActive("Quit", true); // JM : "Quit Game" in "Option" no longer needed.
+
 			current_main_menu_state = MainMenuState::Options;
 		}
 		if (e->on_held_)
@@ -323,7 +325,8 @@ void UpdateOptionsMenu(float dt)
 			ToggleCredits(false);
 		}
 	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_Quit"))
+	// JM: comment this out , as "Quit Game" in "Option" no longer needed.
+	/*if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_Quit"))
 	{
 		if (e->on_released_)
 		{
@@ -344,7 +347,7 @@ void UpdateOptionsMenu(float dt)
 		{
 			ToggleButton("Quit", ButtonState::Normal);
 		}
-	}
+	}*/
 }
 
 void UpdateQuitMenu(float dt)
