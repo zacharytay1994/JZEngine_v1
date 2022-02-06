@@ -44,7 +44,7 @@ namespace JZEngine
 					atc.accumulated_speed_ += atc.speed_ * dt;
 				}
 			}
-			else
+			/*else
 			{
 				if ( atc.accumulated_speed_ < 0.0f )
 				{
@@ -54,7 +54,7 @@ namespace JZEngine
 				{
 					atc.accumulated_speed_ -= atc.speed_ * dt;
 				}
-			}
+			}*/
 
 			transform.rotation_ = atc.original_rotation_ + ( atc.accumulated_speed_ * ( atc.modulate_rotation_ - atc.original_rotation_ ) );
 			transform.scale_.x = atc.original_scale_.x + ( atc.accumulated_speed_ * atc.modulate_scale_.x * atc.original_scale_.x );
