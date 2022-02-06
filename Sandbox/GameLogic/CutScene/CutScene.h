@@ -44,6 +44,7 @@ float message_move_up_large{165.0f};
 float message_move_up_medium{135.0f};
 float message_move_up_small{-40.0f};
 float text_leading{3.0f};
+float bigger_box{ 10.0f };
 
 // relative position of the text in message box
 float message_left_position_x { -130.0f }; //
@@ -58,32 +59,32 @@ void Flag1stMsg(bool flag)
 {
 	// active/inactive 1st msg
 	Scene().EntityFlagActive("1st_msg_bg", flag);
-	Scene().EntityFlagActive("1st_msg_emoji", flag);
-	Scene().EntityFlagActive("1st_msg_text", flag);
+	//Scene().EntityFlagActive("1st_msg_emoji", flag);
+	//Scene().EntityFlagActive("1st_msg_text", flag);
 }
 
 void Flag2ndMsg(bool flag)
 {
 	// active/inactive 2nd msg
 	Scene().EntityFlagActive("2nd_msg_bg", flag);
-	Scene().EntityFlagActive("2nd_msg_emoji", flag);
-	Scene().EntityFlagActive("2nd_msg_text", flag);
+	//Scene().EntityFlagActive("2nd_msg_emoji", flag);
+	//Scene().EntityFlagActive("2nd_msg_text", flag);
 }
 
 void Flag3rdMsg(bool flag)
 {
 	// active/inactive 3rd msg
 	Scene().EntityFlagActive("3rd_msg_bg", flag);
-	Scene().EntityFlagActive("3rd_msg_emoji", flag);
-	Scene().EntityFlagActive("3rd_msg_text", flag);
+	//Scene().EntityFlagActive("3rd_msg_emoji", flag);
+	//Scene().EntityFlagActive("3rd_msg_text", flag);
 }
 
 void Flag4thMsg(bool flag)
 {
 	// active/inactive 4th msg
 	Scene().EntityFlagActive("4th_msg_bg", flag);
-	Scene().EntityFlagActive("4th_msg_emoji", flag);
-	Scene().EntityFlagActive("4th_msg_text", flag);
+	//Scene().EntityFlagActive("4th_msg_emoji", flag);
+	//Scene().EntityFlagActive("4th_msg_text", flag);
 }
 
 void Flag5thMsg(bool flag)
@@ -176,6 +177,15 @@ void CutSceneInit()
 	Flag12thMsg(false);
 	Flag13thMsg(false);
 
+	Scene().EntityFlagActive("1st_msg_emoji", false);
+	Scene().EntityFlagActive("1st_msg_text", false);
+	Scene().EntityFlagActive("2nd_msg_emoji", false);
+	Scene().EntityFlagActive("2nd_msg_text", false);
+	Scene().EntityFlagActive("3rd_msg_emoji", false);
+	Scene().EntityFlagActive("3rd_msg_text", false);
+	Scene().EntityFlagActive("4th_msg_emoji", false);
+	Scene().EntityFlagActive("4th_msg_text", false);
+
 	Scene().GetComponent<JZEngine::TextData>("1st_msg_text")->text = JZEngine::String("Baozi, are you still up?");
 	Scene().GetComponent<JZEngine::TextData>("2nd_msg_text")->text = JZEngine::String("           Yea, what's up?");
 	Scene().GetComponent<JZEngine::TextData>("2nd_msg_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
@@ -220,6 +230,13 @@ void CutSceneInit()
 	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black_1" )->tint.w = 1.0f;
 	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black_2" )->tint.w = 1.0f;
 	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black_3" )->tint.w = 0.0f;
+
+	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("1st_msg_bg")->active_flag = true;
+	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("2nd_msg_bg")->active_flag = true;
+	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("3rd_msg_bg")->active_flag = true;
+	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("4th_msg_bg")->active_flag = true;
+	//Scene().GetComponent<JZEngine::AnimatedTransformComponent>("1st_msg_emoji")->active_flag = true;
+
 }
 
 void CutSceneUpdate(float dt)
@@ -249,6 +266,58 @@ void CutSceneUpdate(float dt)
 
 	if (JZEngine::InputHandler::IsMouseTriggered(JZEngine::MOUSE::MOUSE_BUTTON_1))
 		Scene().PlaySound("click", false);
+
+	////Text animation
+	//if (Scene().GetComponent<JZEngine::TextData>("1st_msg_text")->font_size_ < 1.2f)
+	//{
+	//	Scene().GetComponent<JZEngine::TextData>("1st_msg_text")->font_size_ += 0.12 * dt;
+	//}
+
+
+	//Extra section for splitting box and the text and emoji out
+	if (Scene().GetComponent<JZEngine::Transform>("1st_msg_bg")->scale_.x > bigger_box)
+	{
+		Scene().EntityFlagActive("1st_msg_emoji", true);
+		Scene().EntityFlagActive("1st_msg_text", true);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("1st_msg_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("1st_msg_emoji", false);
+		Scene().EntityFlagActive("1st_msg_text", false);
+	}
+
+	if (Scene().GetComponent<JZEngine::Transform>("2nd_msg_bg")->scale_.x > bigger_box)
+	{
+		Scene().EntityFlagActive("2nd_msg_emoji", true);
+		Scene().EntityFlagActive("2nd_msg_text", true);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("2nd_msg_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("2nd_msg_emoji", false);
+		Scene().EntityFlagActive("2nd_msg_text", false);
+	}
+
+	if (Scene().GetComponent<JZEngine::Transform>("3rd_msg_bg")->scale_.x > bigger_box)
+	{
+		Scene().EntityFlagActive("3rd_msg_emoji", true);
+		Scene().EntityFlagActive("3rd_msg_text", true);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("3rd_msg_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("3rd_msg_emoji", false);
+		Scene().EntityFlagActive("3rd_msg_text", false);
+	}
+
+	if (Scene().GetComponent<JZEngine::Transform>("4th_msg_bg")->scale_.x > bigger_box)
+	{
+		Scene().EntityFlagActive("4th_msg_emoji", true);
+		Scene().EntityFlagActive("4th_msg_text", true);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("4th_msg_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("4th_msg_emoji", false);
+		Scene().EntityFlagActive("4th_msg_text", false);
+	}
 
 	UNREFERENCED_PARAMETER(dt);
 	//if the mouse event phone app background exist
@@ -289,7 +358,7 @@ void CutSceneUpdate(float dt)
 			else if (message_state == MessageState::Two)
 			{
 				Flag3rdMsg(true);
-				Scene().GetComponent<JZEngine::Transform>("1st_msg_bg")->position_.y = 74.0f;
+				Scene().GetComponent<JZEngine::Transform>("1st_msg_bg")->position_.y = 90.0f;
 				Scene().GetComponent<JZEngine::Transform>("2nd_msg_bg")->position_.y = -80.0f;
 				message_state = MessageState::Three;
 			}
