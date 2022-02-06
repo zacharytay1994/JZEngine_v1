@@ -211,6 +211,16 @@ unsigned int carrotcake_count { 8 };
 unsigned int wanton_count { 9 };
 unsigned int seaweedchicken_count { 7 };
 
+unsigned int init_springroll_count { 0 };
+unsigned int init_carrotcake_count { 0 };
+unsigned int init_wanton_count { 0 };
+unsigned int init_seaweedchicken_count { 0 };
+
+unsigned int summary_sr_count { 0 };
+unsigned int summary_sc_count { 0 };
+unsigned int summary_fd_count { 0 };
+unsigned int summary_cc_count { 0 };
+
 unsigned int min_count { 0 };
 unsigned int max_count { 10 };
 
@@ -238,6 +248,11 @@ void UpdateShop ()
 
 			FlagShopActive ( false );
 			current_hawker_scene_state = HawkerSceneState::Main;
+
+			init_springroll_count = springroll_count;
+			init_carrotcake_count = carrotcake_count;
+			init_wanton_count = wanton_count;
+			init_seaweedchicken_count = seaweedchicken_count;
 		}
 	}
 	// spring roll
@@ -249,6 +264,7 @@ void UpdateShop ()
 				++springroll_count;
 			std::stringstream ss;
 			ss << springroll_count;
+			Scene ().GetComponent<JZEngine::TextData> ( "Springroll_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "Springroll_amt" )->text = JZEngine::String ( ss.str ().c_str() );
 		}
 	}
@@ -260,6 +276,7 @@ void UpdateShop ()
 				--springroll_count;
 			std::stringstream ss;
 			ss << springroll_count;
+			Scene ().GetComponent<JZEngine::TextData> ( "Springroll_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "Springroll_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 		}
 	}
@@ -272,6 +289,7 @@ void UpdateShop ()
 				++seaweedchicken_count;
 			std::stringstream ss;
 			ss << seaweedchicken_count;
+			Scene ().GetComponent<JZEngine::TextData> ( "Seaweedchicken_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "Seaweedchicken_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 		}
 	}
@@ -283,6 +301,7 @@ void UpdateShop ()
 				--seaweedchicken_count;
 			std::stringstream ss;
 			ss << seaweedchicken_count;
+			Scene ().GetComponent<JZEngine::TextData> ( "Seaweedchicken_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "Seaweedchicken_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 		}
 	}
@@ -295,6 +314,7 @@ void UpdateShop ()
 				++wanton_count;
 			std::stringstream ss;
 			ss << wanton_count;
+			Scene ().GetComponent<JZEngine::TextData> ( "Dumpling_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "Dumpling_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 		}
 	}
@@ -306,6 +326,7 @@ void UpdateShop ()
 				--wanton_count;
 			std::stringstream ss;
 			ss << wanton_count;
+			Scene ().GetComponent<JZEngine::TextData> ( "Dumpling_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "Dumpling_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 		}
 	}
@@ -318,6 +339,7 @@ void UpdateShop ()
 				++carrotcake_count;
 			std::stringstream ss;
 			ss << carrotcake_count;
+			Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 		}
 	}
@@ -329,6 +351,7 @@ void UpdateShop ()
 				--carrotcake_count;
 			std::stringstream ss;
 			ss << carrotcake_count;
+			Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 		}
 	}
@@ -336,6 +359,7 @@ void UpdateShop ()
 	float total_amt = 0.4f * springroll_count + 0.2f * seaweedchicken_count + 0.3f * wanton_count + 0.5f * carrotcake_count;
 	std::stringstream ss;
 	ss << "$" << std::setprecision (2) << std::fixed << total_amt;
+	Scene ().GetComponent<JZEngine::TextData> ( "Total_amt" )->color_ = { 0.0f,0.0f,0.0f };
 	Scene ().GetComponent<JZEngine::TextData> ( "Total_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 }
 
@@ -770,45 +794,153 @@ void ToggleWin(bool toggle)
 	Scene().EntityFlagActive("Win_words2", toggle);
 }
 
+void ToggleSummary ( bool toggle )
+{
+	Scene ().EntityFlagActive ( "Win_restart_bb" , toggle );
+	Scene ().EntityFlagActive ( "Win_exit_bb" , toggle );
+	Scene ().EntityFlagActive ( "Summary_screen" , toggle );
+	Scene ().EntityFlagActive ( "sum_sr_amt" , toggle );
+	Scene ().EntityFlagActive ( "sum_sc_amt" , toggle );
+	Scene ().EntityFlagActive ( "sum_fd_amt" , toggle );
+	Scene ().EntityFlagActive ( "sum_cc_amt" , toggle );
+	Scene ().EntityFlagActive ( "sum_total_amt" , toggle );
+}
+
+bool summary_ready { false };
+float summary_counter { 0.0f };
+void SummaryInit ()
+{
+	summary_ready = false;
+	Scene ().EntityFlagActive ( "BeginBlack" , true );
+	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "BeginBlack" )->tint.w = 0.0f;
+	Scene ().GetComponent<JZEngine::Transform> ( "Summary_screen" )->position_.y = 2048.0f;
+
+	summary_sr_count = 0;
+	summary_sc_count = 0;
+	summary_fd_count = 0;
+	summary_cc_count = 0;
+
+	summary_counter = 0.0f;
+
+	std::stringstream ss;
+	ss << "";
+	Scene ().GetComponent<JZEngine::TextData> ( "sum_sr_amt" )->color_ = { 1.0f,1.0f,1.0f };
+	Scene ().GetComponent<JZEngine::TextData> ( "sum_sr_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+
+	Scene ().GetComponent<JZEngine::TextData> ( "sum_sc_amt" )->color_ = { 1.0f,1.0f,1.0f };
+	Scene ().GetComponent<JZEngine::TextData> ( "sum_sc_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+
+	Scene ().GetComponent<JZEngine::TextData> ( "sum_fd_amt" )->color_ = { 1.0f,1.0f,1.0f };
+	Scene ().GetComponent<JZEngine::TextData> ( "sum_fd_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+
+	Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->color_ = { 1.0f,1.0f,1.0f };
+	Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+
+	Scene ().GetComponent<JZEngine::TextData> ( "sum_total_amt" )->color_ = { 1.0f,1.0f,1.0f };
+	Scene ().GetComponent<JZEngine::TextData> ( "sum_total_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+}
+
 void UpdateWinScreen(float dt)
 {
 	UNREFERENCED_PARAMETER(dt);
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Win_restart_bb"))
+	float& black_alpha = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "BeginBlack" )->tint.w;
+	float& summary_y = Scene ().GetComponent<JZEngine::Transform> ( "Summary_screen" )->position_.y;
+	bool ready { true };
+	if ( black_alpha < 1.0f )
 	{
-		if (e->on_released_)
+		black_alpha += dt;
+		ready = false;
+	}
+	if ( summary_y > 0.0f )
+	{
+		summary_y -= 1024.0f * dt;
+		ready = false;
+	}
+
+	if ( ready )
+	{
+		bool update { false };
+		if ( summary_counter < 0.5f )
 		{
-			Scene().ChangeScene("HawkerV2");
-		}
-		if (e->on_held_)
-		{
-			ToggleButton("Win_restart", ButtonState::Clicked);
-		}
-		else if (e->on_hover_)
-		{
-			ToggleButton("Win_restart", ButtonState::Hover);
+			summary_counter += dt;
 		}
 		else
 		{
-			ToggleButton("Win_restart", ButtonState::Normal);
+			summary_counter = 0.0f;
+			update = true;
+		}
+
+		if ( update )
+		{
+			bool done_updating { true };
+			// add display numbers
+			if ( summary_sc_count < init_seaweedchicken_count - seaweedchicken_count )
+			{
+				++summary_sc_count;
+				done_updating = false;
+			}
+			if ( summary_sr_count < init_springroll_count - springroll_count )
+			{
+				++summary_sr_count;
+				done_updating = false;
+			}
+			if ( summary_fd_count < init_wanton_count - wanton_count )
+			{
+				++summary_fd_count;
+				done_updating = false;
+			}
+			if ( summary_cc_count < init_carrotcake_count - carrotcake_count )
+			{
+				++summary_cc_count;
+				done_updating = false;
+			}
+
+			std::stringstream ss;
+			ss << summary_sr_count << " pcs";
+			Scene ().GetComponent<JZEngine::TextData> ( "sum_sr_amt" )->color_ = { 1.0f,1.0f,1.0f };
+			Scene ().GetComponent<JZEngine::TextData> ( "sum_sr_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+			ss.str ("");
+			ss << summary_sc_count << " pcs";
+			Scene ().GetComponent<JZEngine::TextData> ( "sum_sc_amt" )->color_ = { 1.0f,1.0f,1.0f };
+			Scene ().GetComponent<JZEngine::TextData> ( "sum_sc_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+			ss.str ( "" );
+			ss << summary_fd_count << " pcs";
+			Scene ().GetComponent<JZEngine::TextData> ( "sum_fd_amt" )->color_ = { 1.0f,1.0f,1.0f };
+			Scene ().GetComponent<JZEngine::TextData> ( "sum_fd_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+			ss.str ( "" );
+			ss << summary_cc_count << " pcs";
+			Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->color_ = { 1.0f,1.0f,1.0f };
+			Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+
+			float total_amt = 2.7f * summary_sr_count + 1.2f * summary_sc_count + 2.1f * summary_fd_count + 3.0f * summary_cc_count;
+			ss.str ( "" );
+			ss << "$" << std::setprecision(2) << std::fixed << total_amt;
+			Scene ().GetComponent<JZEngine::TextData> ( "sum_total_amt" )->color_ = { 0.0f,0.0f,0.0f };
+			Scene ().GetComponent<JZEngine::TextData> ( "sum_total_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+
+			if ( done_updating )
+			{
+				summary_ready = true;
+			}
 		}
 	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Win_exit_bb"))
+
+
+	if ( summary_ready )
 	{
-		if (e->on_released_)
+		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Win_restart_bb" ) )
 		{
-			Scene().ChangeScene("MainMenu");
+			if ( e->on_released_ )
+			{
+				//Scene().ChangeScene("MainMenu");
+			}
 		}
-		if (e->on_held_)
+		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Win_exit_bb" ) )
 		{
-			ToggleButton("Win_exit", ButtonState::Clicked);
-		}
-		else if (e->on_hover_)
-		{
-			ToggleButton("Win_exit", ButtonState::Hover);
-		}
-		else
-		{
-			ToggleButton("Win_exit", ButtonState::Normal);
+			if ( e->on_released_ )
+			{
+				Scene ().ChangeScene ( "MainMenu" );
+			}
 		}
 	}
 }
@@ -1143,7 +1275,9 @@ void UpdateMainScene(float dt)
 			win = true;
 			JZEngine::Log::Info ( "Main" , "You have won the game!" );
 			//Scene().ChangeScene("MainMenu");
-			ToggleWin ( true );
+			//ToggleWin ( true );
+			ToggleSummary ( true );
+			SummaryInit ();
 			current_hawker_scene_state = HawkerSceneState::Win;
 		}
 	}
@@ -1171,6 +1305,7 @@ void HawkerSceneInit()
 	}
 
 	ToggleWin(false);
+	ToggleSummary ( false );
 
 	InitHawkerQueue();
 	InitPhoneScreen();
@@ -1239,6 +1374,8 @@ void HawkerSceneInit()
 	Scene ().EntityFlagActive ( "RoundSteamer" , false );
 	Scene ().EntityFlagActive ( "SideTray" , false );
 
+	customers_in_queue_ = 0;
+
 	// set food count
 	springroll_count = 8;
 	carrotcake_count = 8;
@@ -1250,23 +1387,29 @@ void HawkerSceneInit()
 
 	std::stringstream ss;
 	ss << springroll_count;
+	Scene ().GetComponent<JZEngine::TextData> ( "Springroll_amt" )->color_ = { 1.0f,1.0f,1.0f };
 	Scene ().GetComponent<JZEngine::TextData> ( "Springroll_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 
 	ss.str ( "" );
 	ss << seaweedchicken_count;
+	Scene ().GetComponent<JZEngine::TextData> ( "Seaweedchicken_amt" )->color_ = { 1.0f,1.0f,1.0f };
 	Scene ().GetComponent<JZEngine::TextData> ( "Seaweedchicken_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 
 	ss.str ( "" );
 	ss << wanton_count;
+	Scene ().GetComponent<JZEngine::TextData> ( "Dumpling_amt" )->color_ = { 1.0f,1.0f,1.0f };
 	Scene ().GetComponent<JZEngine::TextData> ( "Dumpling_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 
 	ss.str ( "" );
 	ss << carrotcake_count;
+	Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->color_ = { 1.0f,1.0f,1.0f };
 	Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 
 	// initialize goal
 	FlagGoalActive ( true );
 	InitGoal ();
+
+	// init summary
 }
 
 void HawkerSceneUpdate(float dt)
