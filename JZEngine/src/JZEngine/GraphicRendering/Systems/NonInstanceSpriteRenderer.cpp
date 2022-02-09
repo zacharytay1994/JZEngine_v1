@@ -21,7 +21,7 @@ namespace JZEngine
 		Animation2D& anim2d = GetComponent<Animation2D>();
 
 		// update animation
-		if ( play_ )
+		if ( play_ && !anim2d.pause_ )
 		{
 			if ( anim2d.animation_counter_ < anim2d.animation_speed_ )
 			{

@@ -24,7 +24,7 @@ Sky 0
 !
 Clouds 0 
 	c 0 struct JZEngine::Transform
-		4943.95 40 0 0 0 1 1 7660 1048 
+		-2109.61 40 0 0 0 1 1 7660 1048 
 	c 1 struct JZEngine::SpriteLayer
 		-30 
 	c 2 struct JZEngine::Texture
@@ -194,7 +194,7 @@ Queue 5
 !
 Customer 0 
 	c 0 struct JZEngine::Transform
-		-562.493 104.474 -299.993 0 0 9.93 7.17 50 50 
+		-1062.5 104.474 -800 0 0 9.93 7.17 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		7 
 	c 2 struct JZEngine::Texture
@@ -206,7 +206,7 @@ Customer 0
 !
 Customer 0 
 	c 0 struct JZEngine::Transform
-		-929.176 104.474 -666.676 0 0 9.105 7.17 50 50 
+		-1062.5 104.474 -800 0 0 9.105 7.17 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		10 
 	c 2 struct JZEngine::Texture
@@ -218,7 +218,7 @@ Customer 0
 !
 Customer 0 
 	c 0 struct JZEngine::Transform
-		-662.494 104.474 -399.994 0 0 8.14 13.42 50 50 
+		-1062.5 104.474 -800 0 0 8.14 13.42 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		6 
 	c 2 struct JZEngine::Texture
@@ -230,7 +230,7 @@ Customer 0
 !
 Customer 0 
 	c 0 struct JZEngine::Transform
-		-362.493 104.474 -99.9934 0 0 9.93 7.17 50 50 
+		-1062.5 104.474 -800 0 0 9.93 7.17 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		9 
 	c 2 struct JZEngine::Texture
@@ -242,7 +242,7 @@ Customer 0
 !
 Customer 0 
 	c 0 struct JZEngine::Transform
-		-462.494 104.474 -199.994 0 0 9.105 7.17 50 50 
+		-1062.5 104.474 -800 0 0 9.105 7.17 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		8 
 	c 2 struct JZEngine::Texture
@@ -756,7 +756,7 @@ PhoneOptions 0
 	c 15 struct JZEngine::MouseEvent
 		52 50 
 	c 19 struct JZEngine::AnimatedTransformComponent
-		2.748 0 0.2 0.2 
+		2.748 0 0.2 0.2 1 
 !
 CoinBar 0 
 	c 0 struct JZEngine::Transform
@@ -2462,7 +2462,7 @@ Black_goal 0
 !
 Goal_one 0 
 	c 0 struct JZEngine::Transform
-		0.0361633 0 0 0 0 1 1 2048 1024 
+		-2048 0 0 0 0 1 1 2048 1024 
 	c 1 struct JZEngine::SpriteLayer
 		404 
 	c 2 struct JZEngine::Texture
@@ -2486,7 +2486,7 @@ Goal_two 0
 !
 Goal_three 0 
 	c 0 struct JZEngine::Transform
-		4096.39 0 0 0 0 1 1 2048 1024 
+		0 0 0 0 0 1 1 2048 1024 
 	c 1 struct JZEngine::SpriteLayer
 		406 
 	c 2 struct JZEngine::Texture
@@ -2547,4 +2547,28 @@ sum_total_amt 0
 		409 
 	c 9 struct JZEngine::TextData
 		1 
+!
+LoseAnimation 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 2048 0 1 1 2048 512 
+	c 1 struct JZEngine::SpriteLayer
+		406 
+	c 2 struct JZEngine::Texture
+		Losebar_Spritesheet_Hawker 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		1 0 0.1 2 0 6 4 
+!
+LoseAnimationTears 0 
+	c 0 struct JZEngine::Transform
+		597.374 88.8203 0 2048 0 1 1 512 512 
+	c 1 struct JZEngine::SpriteLayer
+		407 
+	c 2 struct JZEngine::Texture
+		LoseSweatdrop_Spritesheet_Hawker 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		1 0 0.1 8 0 25 4 
 !
