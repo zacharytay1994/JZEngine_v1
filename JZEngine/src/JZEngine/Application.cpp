@@ -184,7 +184,7 @@ namespace JZEngine
 				first_pass_ = false;
 				MenuBar::play_ = true;
 				global_systems_->GetSystem<EngineGUI> ()->GetSceneTree ()->RemoveAllEntities ();
-				Serialize::DeserializeScene ( global_systems_->GetSystem<ECS::ECSInstance> () , "MainMenu" );
+				Serialize::DeserializeScene2 ( global_systems_->GetSystem<ECS::ECSInstance> () , "MainMenu" );
 				*global_systems_->GetSystem<EngineGUI> ()->GetSceneTree ()->current_scene_name_ = "MainMenu";
 				SceneLogic::Instance ().SetCurrentSceneName ( "MainMenu" );
 				SceneLogic::Instance ().BuildEntityMap ();
