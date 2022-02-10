@@ -24,7 +24,7 @@ Sky 0
 !
 Clouds 0 
 	c 0 struct JZEngine::Transform
-		-2109.61 40 0 0 0 1 1 7660 1048 
+		-1116.67 40 0 0 0 1 1 7660 1048 
 	c 1 struct JZEngine::SpriteLayer
 		-30 
 	c 2 struct JZEngine::Texture
@@ -326,7 +326,7 @@ SideTray 0
 !
 Plate 0 
 	c 0 struct JZEngine::Transform
-		-298.5 -421.312 0 0 0 0.65 0.65 512 256 
+		-159.001 -421.312 0 0 0 0.65 0.65 512 256 
 	c 1 struct JZEngine::SpriteLayer
 		25 
 	c 2 struct JZEngine::Texture
@@ -338,7 +338,7 @@ Plate 0
 !
 Tongs 0 
 	c 0 struct JZEngine::Transform
-		-3.3003 -428.424 0 0 16.681 0.59 0.59 512 256 
+		199.2 -433.975 0 0 16.681 0.59 0.59 512 256 
 	c 1 struct JZEngine::SpriteLayer
 		25 
 	c 2 struct JZEngine::Texture
@@ -446,19 +446,19 @@ bb_carrotcake 0
 !
 bb_plate 0 
 	c 0 struct JZEngine::Transform
-		-300 -425 0 0 0 1 1 50 50 
+		-140.25 -425 0 0 0 1 1 50 50 
 	c 15 struct JZEngine::MouseEvent
 		90 65 
 !
 bb_tongs 0 
 	c 0 struct JZEngine::Transform
-		-6.49996 -418.632 0 0 0 1 1 50 50 
+		180.25 -418.632 0 0 0 1 1 50 50 
 	c 15 struct JZEngine::MouseEvent
 		120 55 
 !
 bb_scizzors 0 
 	c 0 struct JZEngine::Transform
-		268.25 -422.344 0 0 0 1 1 50 50 
+		270.5 -422.344 0 0 0 1 1 50 50 
 	c 15 struct JZEngine::MouseEvent
 		120 65 
 !
@@ -2550,7 +2550,7 @@ sum_total_amt 0
 !
 LoseAnimation 0 
 	c 0 struct JZEngine::Transform
-		0 0 0 2048 0 1 1 2048 512 
+		0 2048 0 2048 0 1 1 2048 512 
 	c 1 struct JZEngine::SpriteLayer
 		406 
 	c 2 struct JZEngine::Texture
@@ -2562,7 +2562,7 @@ LoseAnimation 0
 !
 LoseAnimationTears 0 
 	c 0 struct JZEngine::Transform
-		597.374 88.8203 0 2048 0 1 1 512 512 
+		597.374 2136.82 0 2048 0 1 1 512 512 
 	c 1 struct JZEngine::SpriteLayer
 		407 
 	c 2 struct JZEngine::Texture

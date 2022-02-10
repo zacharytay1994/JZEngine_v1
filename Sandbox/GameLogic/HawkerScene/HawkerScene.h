@@ -1183,8 +1183,8 @@ void UpdateMainScene(float dt)
 	{
 		if (e->on_click_ && !plate_on_hand)
 		{
-			JZEngine::Log::Info("Main", "Scizzors Selected");
-			FlagCursorState(CursorState::Scizzors);
+			/*JZEngine::Log::Info("Main", "Scizzors Selected");
+			FlagCursorState(CursorState::Scizzors);*/
 		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_trashbin"))
