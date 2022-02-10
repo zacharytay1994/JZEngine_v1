@@ -64,6 +64,10 @@ void FlagAllCursorsFalse()
 	Scene().EntityFlagActive("ScizzorsCursor", false);
 	Scene().EntityFlagActive("PlateCursor", false);
 	cursor_state = CursorState::Nothing;
+
+	// set plate and tongs to non shadow
+	Scene ().GetComponent<JZEngine::Texture> ( "Plate" )->texture_id_ = Scene ().GetTexture ( "Plate_Equipment_Hawker" );
+	Scene ().GetComponent<JZEngine::Texture> ( "Tongs" )->texture_id_ = Scene ().GetTexture ( "Tongs_Equipment_hawker" );
 }
 
 void FlagCursorState(CursorState state)
@@ -71,6 +75,20 @@ void FlagCursorState(CursorState state)
 	FlagAllCursorsFalse();
 	cursor_state = state;
 	Scene().EntityFlagActive(cursor_object_names[static_cast<int>(cursor_state)], true);
+
+
+	if ( state == CursorState::Plate )
+	{
+		Scene ().GetComponent<JZEngine::Texture> ( "Plate" )->texture_id_ = Scene ().GetTexture ( "Plate(Shaded)_Equipment_hawker" );
+	}
+	if ( state == CursorState::EmptyTongs || 
+		state == CursorState::TongsCarrotCake ||
+		state == CursorState::TongsSeaweedChicken ||
+		state == CursorState::TongsSpringroll ||
+		state == CursorState::TongsWanton )
+	{
+		Scene ().GetComponent<JZEngine::Texture> ( "Tongs" )->texture_id_ = Scene ().GetTexture ( "Tongs(Shaded)_Equipment_hawker" );
+	}
 }
 
 bool CheckCursorState(CursorState state)
