@@ -31,6 +31,7 @@ bool scroll_up{ false };
 bool scroll_down{ false };
 bool paused{ false };
 bool quit_confirmation { false };
+bool main_menu_confirmation{ false };
 
 //Original position of messages variables
 JZEngine::Vec2f original_msg1_position{ 0.0,0.0 };
@@ -115,6 +116,18 @@ void SwitchShopAppState (SHOPAPP_STATE state)
 		Scene ().EntityFlagActive ( "bb_ShopappInfoBack" , true );
 		shopapp_state = state;
 		break;
+	}
+}
+
+void FlagExitToMainMenu(bool flag)
+{
+	main_menu_confirmation = flag;
+	Scene().EntityFlagActive("ExitToMainMenu", flag);
+	Scene().EntityFlagActive("MainMenuExit_yes", flag);
+	Scene().EntityFlagActive("MainMenuExit_no", flag);
+	if (!flag)
+	{
+		Scene().GetComponent<JZEngine::MouseEvent>("MainMenuExit_no")->on_released_ = false;
 	}
 }
 
@@ -308,6 +321,7 @@ void InitPhoneScreen()
 
 	FlagQuitConfirmation ( false );
 	FlagShopApp ( false );
+	FlagExitToMainMenu(false);
 
 	FlagPhone(false);
 	FlagPhoneHomeScreen(false);
@@ -496,7 +510,7 @@ void UpdatePhoneScreen(float dt)
 	{
 		if (e->on_click_)
 		{
-			Scene().ChangeScene("MainMenu");
+			FlagExitToMainMenu(true);
 		}
 	}
 	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Shop" ) )
@@ -675,6 +689,49 @@ void UpdateHawkerQuitMenu ( )
 		else
 		{
 			ToggleButton ( "Quit_no" , ButtonState::Normal );
+		}
+	}
+}
+
+void UpdateMainMenuExitConfirm(float dt)
+{
+	UNREFERENCED_PARAMETER(dt);
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("MainMenuExit_yes"))
+	{
+		if (e->on_released_)
+		{
+			Scene().ChangeScene("MainMenu");
+		}
+		if (e->on_held_)
+		{
+			ToggleButton("MainMenuExit_yes", ButtonState::Clicked);
+		}
+		else if (e->on_hover_)
+		{
+			ToggleButton("MainMenuExit_yes", ButtonState::Hover);
+		}
+		else
+		{
+			ToggleButton("MainMenuExit_yes", ButtonState::Normal);
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("MainMenuExit_no"))
+	{
+		if (e->on_released_)
+		{
+			FlagExitToMainMenu(false);
+		}
+		if (e->on_held_)
+		{
+			ToggleButton("MainMenuExit_no", ButtonState::Clicked);
+		}
+		else if (e->on_hover_)
+		{
+			ToggleButton("MainMenuExit_no", ButtonState::Hover);
+		}
+		else
+		{
+			ToggleButton("MainMenuExit_no", ButtonState::Normal);
 		}
 	}
 }
@@ -976,5 +1033,9 @@ void UpdateHomeScreen(float dt)
 	if ( quit_confirmation )
 	{
 		UpdateHawkerQuitMenu ();
+	}
+	if (main_menu_confirmation)
+	{
+		UpdateMainMenuExitConfirm(dt);
 	}
 }
