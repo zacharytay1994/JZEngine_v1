@@ -567,9 +567,9 @@ void InitHawkerQueue()
 	}
 
 	rnum_springroll = num_springroll + ( ( rand () % 5 ) - 2 );
-	rnum_carrotcake = rnum_carrotcake + ( ( rand () % 5 ) - 2 );
-	rnum_dumpling = rnum_dumpling + ( ( rand () % 5 ) - 2 );
-	rnum_seaweedchicken = rnum_seaweedchicken + ( ( rand () % 5 ) - 2 );
+	rnum_carrotcake = num_carrotcake + ( ( rand () % 5 ) - 2 );
+	rnum_dumpling = num_dumpling + ( ( rand () % 5 ) - 2 );
+	rnum_seaweedchicken = num_seaweedchicken + ( ( rand () % 5 ) - 2 );
 
 	max_customers = rnum_springroll + rnum_carrotcake + rnum_dumpling + rnum_seaweedchicken;
 	num_customers = max_customers;

@@ -20,7 +20,8 @@ enum class HawkerSceneState
 	Win,
 	App,
 	Shop,
-	Goal
+	Goal,
+	Lose
 };
 HawkerSceneState current_hawker_scene_state = HawkerSceneState::Main;
 
@@ -63,6 +64,10 @@ void FlagAllCursorsFalse()
 	Scene().EntityFlagActive("ScizzorsCursor", false);
 	Scene().EntityFlagActive("PlateCursor", false);
 	cursor_state = CursorState::Nothing;
+
+	// set plate and tongs to non shadow
+	Scene ().GetComponent<JZEngine::Texture> ( "Plate" )->texture_id_ = Scene ().GetTexture ( "Plate_Equipment_Hawker" );
+	Scene ().GetComponent<JZEngine::Texture> ( "Tongs" )->texture_id_ = Scene ().GetTexture ( "Tongs_Equipment_hawker" );
 }
 
 void FlagCursorState(CursorState state)
@@ -70,6 +75,20 @@ void FlagCursorState(CursorState state)
 	FlagAllCursorsFalse();
 	cursor_state = state;
 	Scene().EntityFlagActive(cursor_object_names[static_cast<int>(cursor_state)], true);
+
+
+	if ( state == CursorState::Plate )
+	{
+		Scene ().GetComponent<JZEngine::Texture> ( "Plate" )->texture_id_ = Scene ().GetTexture ( "Plate(Shaded)_Equipment_hawker" );
+	}
+	if ( state == CursorState::EmptyTongs || 
+		state == CursorState::TongsCarrotCake ||
+		state == CursorState::TongsSeaweedChicken ||
+		state == CursorState::TongsSpringroll ||
+		state == CursorState::TongsWanton )
+	{
+		Scene ().GetComponent<JZEngine::Texture> ( "Tongs" )->texture_id_ = Scene ().GetTexture ( "Tongs(Shaded)_Equipment_hawker" );
+	}
 }
 
 bool CheckCursorState(CursorState state)
@@ -778,6 +797,63 @@ void ShowWonBar ()
 	Scene ().EntityFlagActive ( "WinBlackCover" , true );
 }
 
+float lose_bar_fall_speed { 4096 };
+float offset { 1024 };
+void FlagLoseBar (bool flag)
+{
+	Scene ().EntityFlagActive ( "LoseAnimation" , flag );
+	Scene ().EntityFlagActive ( "LoseAnimationTears" , flag );
+}
+
+void InitLoseBar ()
+{
+	offset = 1024;
+	Scene ().GetComponent<JZEngine::Transform> ( "LoseAnimation" )->position_.y += offset;
+	Scene ().GetComponent<JZEngine::Transform> ( "LoseAnimationTears" )->position_.y += offset;
+	FlagLoseBar ( false );
+}
+
+void ToggleSummary ( bool flag );
+void SummaryInit ();
+void UpdateLoseBar (float dt)
+{
+	bool reach { true };
+	JZEngine::Transform* lose_animation = Scene ().GetComponent<JZEngine::Transform> ( "LoseAnimation" );
+	JZEngine::Transform* lose_animation_tears = Scene ().GetComponent<JZEngine::Transform> ( "LoseAnimationTears" );
+	if ( offset > 0 )
+	{
+		reach = false;
+		offset -= lose_bar_fall_speed * dt;
+		lose_animation->position_.y -= lose_bar_fall_speed * dt;
+		lose_animation_tears->position_.y -= lose_bar_fall_speed * dt;
+	}
+	JZEngine::Animation2D* lose_animation_anim = Scene ().GetComponent<JZEngine::Animation2D> ( "LoseAnimation" );
+	if ( lose_animation_anim->frame_ == lose_animation_anim->max_frames_ - 1 )
+	{
+		lose_animation_anim->pause_ = true;
+	}
+	else
+	{
+		reach = false;
+	}
+	JZEngine::Animation2D* lose_animation_tears_anim = Scene ().GetComponent<JZEngine::Animation2D> ( "LoseAnimationTears" );
+	if ( lose_animation_tears_anim->frame_ == lose_animation_tears_anim->max_frames_ - 1 )
+	{
+		lose_animation_tears_anim->pause_ = true;
+	}
+	else
+	{
+		reach = false;
+	}
+
+	if ( reach )
+	{
+		ToggleSummary ( true );
+		SummaryInit ();
+		current_hawker_scene_state = HawkerSceneState::Win;
+	}
+}
+
 /*!
  * @brief UI - END
  * **********************************************************************
@@ -1125,8 +1201,8 @@ void UpdateMainScene(float dt)
 	{
 		if (e->on_click_ && !plate_on_hand)
 		{
-			JZEngine::Log::Info("Main", "Scizzors Selected");
-			FlagCursorState(CursorState::Scizzors);
+			/*JZEngine::Log::Info("Main", "Scizzors Selected");
+			FlagCursorState(CursorState::Scizzors);*/
 		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_trashbin"))
@@ -1348,6 +1424,7 @@ void HawkerSceneInit()
 	lose = false;
 
 	HideWonBar ();
+	//FlagLoseBar ( false );
 	won_bar_ = false;
 	won_bar_counter_ = 0.0f;
 
@@ -1428,11 +1505,19 @@ void HawkerSceneInit()
 	FlagGoalActive ( true );
 	InitGoal ();
 
-	// init summary
+	InitLoseBar ();
 }
 
 void HawkerSceneUpdate(float dt)
 {
+	if (( num_customers <= 0 ||
+		(springroll_count <= 0 && carrotcake_count <= 0 && wanton_count <= 0 && seaweedchicken_count <= 0)) &&
+		current_hawker_scene_state != HawkerSceneState::Win)
+	{
+		FlagLoseBar ( true );
+		current_hawker_scene_state = HawkerSceneState::Lose;
+	}
+
 	switch (current_hawker_scene_state)
 	{
 	case HawkerSceneState::Main:
@@ -1453,6 +1538,9 @@ void HawkerSceneUpdate(float dt)
 		break;
 	case HawkerSceneState::Goal:
 		UpdateGoal (dt);
+		break;
+	case HawkerSceneState::Lose:
+		UpdateLoseBar ( dt );
 		break;
 	}
 }
