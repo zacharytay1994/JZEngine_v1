@@ -160,50 +160,57 @@ void Flag13thMsg(bool flag)
 	//Scene().EntityFlagActive("13th_msg_text", flag);
 }
 
+void FlagAllScreenItems ( bool flag )
+{
+
+	Flag1stMsg ( flag );
+	Flag2ndMsg ( flag );
+	Flag3rdMsg ( flag );
+	Flag4thMsg ( flag );
+	Flag5thMsg ( flag );
+	Flag6thMsg ( flag );
+	Flag7thMsg ( flag );
+	Flag8thMsg ( flag );
+	Flag9thMsg ( flag );
+	Flag10thMsg ( flag );
+	Flag11thMsg ( flag );
+	Flag12thMsg ( flag );
+	Flag13thMsg ( flag );
+
+	Scene ().EntityFlagActive ( "1st_msg_emoji" , flag );
+	Scene ().EntityFlagActive ( "1st_msg_text" , flag );
+	Scene ().EntityFlagActive ( "2nd_msg_emoji" , flag );
+	Scene ().EntityFlagActive ( "2nd_msg_text" , flag );
+	Scene ().EntityFlagActive ( "3rd_msg_emoji" , flag );
+	Scene ().EntityFlagActive ( "3rd_msg_text" , flag );
+	Scene ().EntityFlagActive ( "4th_msg_emoji" , flag );
+	Scene ().EntityFlagActive ( "4th_msg_text" , flag );
+	Scene ().EntityFlagActive ( "5th_msg_emoji" , flag );
+	Scene ().EntityFlagActive ( "5th_msg_text" , flag );
+	Scene ().EntityFlagActive ( "6th_msg_emoji" , flag );
+	Scene ().EntityFlagActive ( "6th_msg_text" , flag );
+	Scene ().EntityFlagActive ( "7th_msg_emoji" , flag );
+	Scene ().EntityFlagActive ( "7th_msg_text" , flag );
+	Scene ().EntityFlagActive ( "8th_msg_emoji" , flag );
+	Scene ().EntityFlagActive ( "8th_msg_text" , flag );
+	Scene ().EntityFlagActive ( "9th_msg_emoji" , flag );
+	Scene ().EntityFlagActive ( "9th_msg_text" , flag );
+	Scene ().EntityFlagActive ( "10th_msg_emoji" , flag );
+	Scene ().EntityFlagActive ( "10th_msg_text" , flag );
+	Scene ().EntityFlagActive ( "11th_msg_emoji" , flag );
+	Scene ().EntityFlagActive ( "11th_msg_text" , flag );
+	Scene ().EntityFlagActive ( "12th_msg_emoji" , flag );
+	Scene ().EntityFlagActive ( "12th_msg_text" , flag );
+	Scene ().EntityFlagActive ( "13th_msg_emoji" , flag );
+	Scene ().EntityFlagActive ( "13th_msg_text" , flag );
+}
+
 void CutSceneInit()
 {
 	current_cut_scene_state = CutSceneState::CutScene;
 	message_state = MessageState::Nothing;
-	Flag1stMsg(false);
-	Flag2ndMsg(false);
-	Flag3rdMsg(false);
-	Flag4thMsg(false);
-	Flag5thMsg(false);
-	Flag6thMsg(false);
-	Flag7thMsg(false);
-	Flag8thMsg(false);
-	Flag9thMsg(false);
-	Flag10thMsg(false);
-	Flag11thMsg(false);
-	Flag12thMsg(false);
-	Flag13thMsg(false);
-
-	Scene().EntityFlagActive("1st_msg_emoji", false);
-	Scene().EntityFlagActive("1st_msg_text", false);
-	Scene().EntityFlagActive("2nd_msg_emoji", false);
-	Scene().EntityFlagActive("2nd_msg_text", false);
-	Scene().EntityFlagActive("3rd_msg_emoji", false);
-	Scene().EntityFlagActive("3rd_msg_text", false);
-	Scene().EntityFlagActive("4th_msg_emoji", false);
-	Scene().EntityFlagActive("4th_msg_text", false);
-	Scene().EntityFlagActive("5th_msg_emoji", false);
-	Scene().EntityFlagActive("5th_msg_text", false);
-	Scene().EntityFlagActive("6th_msg_emoji", false);
-	Scene().EntityFlagActive("6th_msg_text", false);
-	Scene().EntityFlagActive("7th_msg_emoji", false);
-	Scene().EntityFlagActive("7th_msg_text", false);
-	Scene().EntityFlagActive("8th_msg_emoji", false);
-	Scene().EntityFlagActive("8th_msg_text", false);
-	Scene().EntityFlagActive("9th_msg_emoji", false);
-	Scene().EntityFlagActive("9th_msg_text", false);
-	Scene().EntityFlagActive("10th_msg_emoji", false);
-	Scene().EntityFlagActive("10th_msg_text", false);
-	Scene().EntityFlagActive("11th_msg_emoji", false);
-	Scene().EntityFlagActive("11th_msg_text", false);
-	Scene().EntityFlagActive("12th_msg_emoji", false);
-	Scene().EntityFlagActive("12th_msg_text", false);
-	Scene().EntityFlagActive("13th_msg_emoji", false);
-	Scene().EntityFlagActive("13th_msg_text", false);
+	
+	FlagAllScreenItems ( false );
 
 	Scene().GetComponent<JZEngine::TextData>("1st_msg_text")->text = JZEngine::String("Baozi, are you still up?");
 	Scene().GetComponent<JZEngine::TextData>("2nd_msg_text")->text = JZEngine::String("           Yea, what's up?");
@@ -265,30 +272,37 @@ void CutSceneInit()
 	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("13th_msg_bg")->active_flag = true;
 	//Scene().GetComponent<JZEngine::AnimatedTransformComponent>("1st_msg_emoji")->active_flag = true;
 
+	Scene ().PlaySound ( "temp_phone_notification" , false );
 }
 
 void CutSceneUpdate(float dt)
 {
-	float TransitionSpeed = dt * 0.5f;
+	float TransitionSpeed = dt * 0.4f;
+	float phone_light_up_speed = dt * 5.0f;
+	float darken_speed = dt * 2.0f;
 
 	float& TransitionBlack2 = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black_2" )->tint.w;
-	if( TransitionBlack2 > 0.0f )
-	{
-		TransitionBlack2 -= TransitionSpeed;
-	}
-	else
-	{
-		TransitionBlack2 = 0.0f;
-	}
-
 	float& TransitionBlack1 = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black_1" )->tint.w;
-	if( TransitionBlack1 > 0.0f )
+
+	if ( !transition_cutscene_hawker )
 	{
-		TransitionBlack1 -= TransitionSpeed;
-	}
-	else 
-	{
-		TransitionBlack1 = 0.0f;
+		if ( TransitionBlack2 > 0.0f )
+		{
+			TransitionBlack2 -= phone_light_up_speed;
+		}
+		else
+		{
+			TransitionBlack2 = 0.0f;
+		}
+
+		if ( TransitionBlack1 > 0.0f )
+		{
+			TransitionBlack1 -= TransitionSpeed;
+		}
+		else
+		{
+			TransitionBlack1 = 0.0f;
+		}
 	}
 	
 
@@ -600,10 +614,17 @@ void CutSceneUpdate(float dt)
 
 	if( transition_cutscene_hawker )
 	{
+		FlagAllScreenItems ( false );
+
 		float& TransitionBlack3 = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black_3" )->tint.w;
-		if( TransitionBlack3 < 1.0f )
+
+		if ( TransitionBlack2 < 1.0f )
 		{
-			TransitionBlack3 += TransitionSpeed;
+			TransitionBlack2 += phone_light_up_speed;
+		}
+		else if ( TransitionBlack3 < 1.0f )
+		{
+			TransitionBlack3 += darken_speed;
 		}
 		else
 		{

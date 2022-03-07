@@ -24,7 +24,7 @@ Sky 0
 !
 Clouds 0 
 	c 0 struct JZEngine::Transform
-		192.041 40 0 0 0 1 1 7660 1048 
+		1000.13 40 0 0 0 1 1 7660 1048 
 	c 1 struct JZEngine::SpriteLayer
 		-30 
 	c 2 struct JZEngine::Texture
@@ -2611,4 +2611,16 @@ LoseAnimationTears 0
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
 		1 0 0.1 8 0 25 4 
+!
+BlackFromCutscene 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 38.6757 23.5002 50 50 
+	c 1 struct JZEngine::SpriteLayer
+		499 
+	c 2 struct JZEngine::Texture
+		BlackSolidColorBackground 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
 !

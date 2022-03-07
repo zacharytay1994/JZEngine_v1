@@ -572,7 +572,7 @@ Transition_Black_1 0
 !
 Transition_Black_2 0 
 	c 0 struct JZEngine::Transform
-		0 0 0 0 0 1 1 1920 1080 
+		3.37498 -16.6538 0 0 0 0.292017 0.925004 1920 1080 
 	c 1 struct JZEngine::SpriteLayer
 		50 
 	c 2 struct JZEngine::Texture

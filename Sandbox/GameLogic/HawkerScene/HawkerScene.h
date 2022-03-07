@@ -1510,6 +1510,13 @@ void HawkerSceneInit()
 
 void HawkerSceneUpdate(float dt)
 {
+	float& black_from_cutscene = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "BlackFromCutscene" )->tint.w;
+	if ( black_from_cutscene > 0.0f )
+	{
+		black_from_cutscene -= dt;
+		return;
+	}
+
 	if (( num_customers <= 0 ||
 		(springroll_count <= 0 && carrotcake_count <= 0 && wanton_count <= 0 && seaweedchicken_count <= 0)) &&
 		current_hawker_scene_state != HawkerSceneState::Win)
