@@ -142,7 +142,7 @@ namespace JZEngine
 							ImGui::SetNextItemOpen ( true , ImGuiCond_Once );
 
 							// renders all components using their specialization
-							LoopTupleRender ( ECS::ECSConfig::Component () , static_cast<size_t>(i) , *entity );
+							LoopTupleRender ( ECS::ECSConfig::Component () , i , *entity );
 							ImGui::Separator ();
 						}
 					}

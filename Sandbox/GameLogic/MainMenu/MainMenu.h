@@ -183,6 +183,20 @@ void ToggleHowtoPlayPage(bool toggle)
 	Scene ().EntityFlagActive ( "Arrow_right_how_to_play" , toggle );
 }
 
+void InitLoadToMenuTransition ()
+{
+	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Load_to_menu" )->tint.w = 1.0f;
+}
+
+void UpdateLoadToMenuTransition (float dt)
+{
+	float& tint = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Load_to_menu" )->tint.w;
+	if ( tint > 0.0f )
+	{
+		tint -= dt;
+	}
+}
+
 //Handle logic for main menu
 void UpdateMainScreen(float dt)
 {
@@ -466,10 +480,13 @@ void InitMainMenu()
 	Scene().GetComponent<JZEngine::TextData>("Option_text")->text = JZEngine::String("OPTIONS");
 	Scene().GetComponent<JZEngine::TextData>("Option_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black" )->tint.w = 0.0f;
+
+	InitLoadToMenuTransition ();
 }
 
 void UpdateMainMenu(float dt)
 {
+	UpdateLoadToMenuTransition (dt);
 	if (JZEngine::InputHandler::IsMouseTriggered(JZEngine::MOUSE::MOUSE_BUTTON_1))
 		Scene().PlaySound("click", false);
 

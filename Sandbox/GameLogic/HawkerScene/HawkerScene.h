@@ -798,7 +798,7 @@ void ShowWonBar ()
 }
 
 float lose_bar_fall_speed { 4096 };
-float offset { 1024 };
+float lose_offset { 1024 };
 void FlagLoseBar (bool flag)
 {
 	Scene ().EntityFlagActive ( "LoseAnimation" , flag );
@@ -807,9 +807,9 @@ void FlagLoseBar (bool flag)
 
 void InitLoseBar ()
 {
-	offset = 1024;
-	Scene ().GetComponent<JZEngine::Transform> ( "LoseAnimation" )->position_.y += offset;
-	Scene ().GetComponent<JZEngine::Transform> ( "LoseAnimationTears" )->position_.y += offset;
+	lose_offset = 1024;
+	Scene ().GetComponent<JZEngine::Transform> ( "LoseAnimation" )->position_.y = lose_offset;
+	Scene ().GetComponent<JZEngine::Transform> ( "LoseAnimationTears" )->position_.y = lose_offset;
 	FlagLoseBar ( false );
 }
 
@@ -820,10 +820,10 @@ void UpdateLoseBar (float dt)
 	bool reach { true };
 	JZEngine::Transform* lose_animation = Scene ().GetComponent<JZEngine::Transform> ( "LoseAnimation" );
 	JZEngine::Transform* lose_animation_tears = Scene ().GetComponent<JZEngine::Transform> ( "LoseAnimationTears" );
-	if ( offset > 0 )
+	if ( lose_offset > 0 )
 	{
 		reach = false;
-		offset -= lose_bar_fall_speed * dt;
+		lose_offset -= lose_bar_fall_speed * dt;
 		lose_animation->position_.y -= lose_bar_fall_speed * dt;
 		lose_animation_tears->position_.y -= lose_bar_fall_speed * dt;
 	}

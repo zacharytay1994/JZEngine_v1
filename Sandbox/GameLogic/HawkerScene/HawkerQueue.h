@@ -91,6 +91,7 @@ int GetRandomOrder ()
 			break;
 		}
 	}
+	return -1;
 }
 
 std::stack<int> customer_ids;

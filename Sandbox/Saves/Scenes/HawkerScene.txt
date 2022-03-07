@@ -24,7 +24,7 @@ Sky 0
 !
 Clouds 0 
 	c 0 struct JZEngine::Transform
-		-293.86 40 0 0 0 1 1 7660 1048 
+		192.041 40 0 0 0 1 1 7660 1048 
 	c 1 struct JZEngine::SpriteLayer
 		-30 
 	c 2 struct JZEngine::Texture
@@ -2590,7 +2590,7 @@ MainMenuExit_no 0
 !
 LoseAnimation 0 
 	c 0 struct JZEngine::Transform
-		0 4096 0 2048 0 1 1 2048 512 
+		0 1024 0 2048 0 1 1 2048 512 
 	c 1 struct JZEngine::SpriteLayer
 		406 
 	c 2 struct JZEngine::Texture
@@ -2602,7 +2602,7 @@ LoseAnimation 0
 !
 LoseAnimationTears 0 
 	c 0 struct JZEngine::Transform
-		597.374 4184.82 0 2048 0 1 1 512 512 
+		597.374 1024 0 2048 0 1 1 512 512 
 	c 1 struct JZEngine::SpriteLayer
 		407 
 	c 2 struct JZEngine::Texture

@@ -160,6 +160,12 @@ namespace JZEngine
 
 		SetWindowPos(Settings::window_x, Settings::window_y);
 		glfwSetWindowFocusCallback ( window_ , window_focus_callback );
+
+		// set cursor 
+		if ( Settings::GAME_BUILD )
+		{
+			glfwSetInputMode ( window_ , GLFW_CURSOR , GLFW_CURSOR_DISABLED );
+		}
 	}
 
 	void GLFW_Instance::HideConsole ()
