@@ -300,10 +300,10 @@ void FlagShopActive ( bool flag )
 	Scene ().EntityFlagActive ( "Total_amt" , flag );
 }
 
-unsigned int springroll_count { 8 };
-unsigned int carrotcake_count { 8 };
-unsigned int wanton_count { 9 };
-unsigned int seaweedchicken_count { 7 };
+unsigned int springroll_count { 5 };
+unsigned int carrotcake_count { 5 };
+unsigned int wanton_count { 5 };
+unsigned int seaweedchicken_count { 5 };
 
 unsigned int init_springroll_count { 0 };
 unsigned int init_carrotcake_count { 0 };
@@ -315,7 +315,7 @@ unsigned int summary_sc_count { 0 };
 unsigned int summary_fd_count { 0 };
 unsigned int summary_cc_count { 0 };
 
-unsigned int min_count { 0 };
+unsigned int min_count { 1 };
 unsigned int max_count { 10 };
 
 void UpdateShop ()
@@ -613,8 +613,14 @@ float current_coin_scale { 0.0f };
 
 void UpdateCoinProgressBar()
 {
+	float currentcoins = current_coins;
+	if (currentcoins > target_coins)
+		currentcoins = target_coins;
+
 	current_coin_scale
-		= static_cast<float>(current_coins) / static_cast<float>(target_coins) * initial_progress_scale;
+		= static_cast<float>(currentcoins) / static_cast<float>(target_coins) * initial_progress_scale;
+
+
 }
 
 bool won_bar_ { false };
@@ -1262,6 +1268,18 @@ void UpdateMainScene(float dt)
 			JZEngine::Log::Info("Main", "Plate Selected");
 			FlagCursorState(CursorState::Plate);
 		}
+
+		if (e->on_hover_)
+		{
+
+			Scene().GetComponent<JZEngine::Transform>("Plate")->scale_.x = 0.77f;
+			Scene().GetComponent<JZEngine::Transform>("Plate")->scale_.y = 0.77f;
+		}
+		else
+		{
+			Scene().GetComponent<JZEngine::Transform>("Plate")->scale_.x = 0.65f;
+			Scene().GetComponent<JZEngine::Transform>("Plate")->scale_.y = 0.65f;
+		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_tongs"))
 	{
@@ -1271,6 +1289,18 @@ void UpdateMainScene(float dt)
 			JZEngine::Log::Info("Main", "Tongs Selected");
 			FlagCursorState(CursorState::EmptyTongs);
 		}
+		if (e->on_hover_)
+		{
+
+			Scene().GetComponent<JZEngine::Transform>("Tongs")->scale_.x = 0.7f;
+			Scene().GetComponent<JZEngine::Transform>("Tongs")->scale_.y = 0.7f;
+		}
+		else
+		{
+			Scene().GetComponent<JZEngine::Transform>("Tongs")->scale_.x = 0.59f;
+			Scene().GetComponent<JZEngine::Transform>("Tongs")->scale_.y = 0.59f;
+		}
+
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_scizzors"))
 	{
@@ -1303,6 +1333,18 @@ void UpdateMainScene(float dt)
 				Scene().GetComponent<JZEngine::Transform>("tray_plate")->position_ = original_plate_position_;
 			}
 		}
+		if (e->on_hover_)
+		{
+			Scene().GetComponent<JZEngine::Transform>("Trashbin")->scale_.x = 0.804f;
+			Scene().GetComponent<JZEngine::Transform>("Trashbin")->scale_.y = 0.804f;
+		}
+		else
+		{
+			Scene().GetComponent<JZEngine::Transform>("Trashbin")->scale_.x = 0.718f;
+			Scene().GetComponent<JZEngine::Transform>("Trashbin")->scale_.y = 0.718f;
+		}
+
+
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_tray"))
 	{
@@ -1367,6 +1409,17 @@ void UpdateMainScene(float dt)
 			Scene().EntityFlagActive("PhoneOptions", false);
 			paused = true;
 			e->on_released_ = false;
+		}
+		if (e->on_hover_)
+		{
+
+			Scene().GetComponent<JZEngine::Transform>("PhoneOptions")->scale_.x = 0.285f;
+			Scene().GetComponent<JZEngine::Transform>("PhoneOptions")->scale_.y = 0.285f;
+		}
+		else
+		{
+			Scene().GetComponent<JZEngine::Transform>("PhoneOptions")->scale_.x = 0.254f;
+			Scene().GetComponent<JZEngine::Transform>("PhoneOptions")->scale_.y = 0.254f;
 		}
 	}
 
@@ -1551,10 +1604,10 @@ void HawkerSceneInit()
 	customers_in_queue_ = 0;
 
 	// set food count
-	springroll_count = 8;
-	carrotcake_count = 8;
-	wanton_count = 9;
-	seaweedchicken_count = 7;
+	springroll_count = 5;
+	carrotcake_count = 5;
+	wanton_count = 5;
+	seaweedchicken_count = 5;
 
 	// shop init
 	FlagShopActive ( true );

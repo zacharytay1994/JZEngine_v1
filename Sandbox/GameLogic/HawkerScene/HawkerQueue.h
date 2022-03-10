@@ -380,7 +380,7 @@ struct Customer
 int queue_layer{ 0 };
 int number_of_customers{ 5 };
 std::vector<Customer> customers;
-float customer_delay_{ 2.5f };
+float customer_delay_{ 5.5f };
 float queue_timer_{ customer_delay_};
 int customers_in_queue_ { 0 };
 

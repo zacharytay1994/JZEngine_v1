@@ -154,13 +154,13 @@ namespace JZEngine
 		shader_program.SetUniform ( "myAlpha" , dot_3_alpha_ );
 		glDrawElements ( GL_TRIANGLES , 6 , GL_UNSIGNED_INT , 0 );
 
-		if( resource_manager_ )
+		/*if( resource_manager_ )
 		{
 			if( renderer_text_ )
 			{
 				renderer_text_->RenderText ( resource_manager_ , Information , 0 , -( Settings::window_height / 2.5f ) , 0.5 , { 1.0f , 1.0f , 1.0f } , 1.0f , 2.0f , Paragraph::AlignCenter );
 			}
-		}
+		}*/
 
 		//glfw: swap buffersand poll IO events.
 		glfwSwapBuffers ( GLFW_Instance::window_ );
