@@ -8,7 +8,7 @@ Background 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.216667 1 1 0 1 1 
+		0 0.866669 1 1 0 1 1 
 !
 Baozi 0 
 	c 0 struct JZEngine::Transform
@@ -20,7 +20,7 @@ Baozi 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0333334 0.02 8 19 33 5 
+		1 0.0333334 0.02 8 7 33 5 
 !
 Play 0 
 	c 0 struct JZEngine::Transform
@@ -32,7 +32,7 @@ Play 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.216667 1 1 0 1 1 
+		0 0.866669 1 1 0 1 1 
 !
 Options 0 
 	c 0 struct JZEngine::Transform
@@ -44,7 +44,7 @@ Options 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.216667 1 1 0 1 1 
+		0 0.866669 1 1 0 1 1 
 !
 bb_play 0 
 	c 0 struct JZEngine::Transform
@@ -62,7 +62,7 @@ Quit_Game 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.216667 1 1 0 1 1 
+		0 0.866669 1 1 0 1 1 
 !
 bb_options 0 
 	c 0 struct JZEngine::Transform
@@ -92,7 +92,7 @@ Lantern 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0166667 0.1 10 37 64 7 
+		1 0.0833335 0.1 10 46 64 7 
 !
 LeftTree 0 
 	c 0 struct JZEngine::Transform
@@ -104,7 +104,7 @@ LeftTree 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0166667 0.1 6 9 17 3 
+		1 0.0833335 0.1 6 10 17 3 
 !
 LeftLeaves 0 
 	c 0 struct JZEngine::Transform
@@ -116,7 +116,7 @@ LeftLeaves 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0166667 0.1 6 17 33 6 
+		1 0.0833335 0.1 6 21 33 6 
 !
 RightTree 0 
 	c 0 struct JZEngine::Transform
@@ -128,7 +128,7 @@ RightTree 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0166667 0.1 6 15 17 3 
+		1 0.0833335 0.1 6 16 17 3 
 !
 RightLeaves 0 
 	c 0 struct JZEngine::Transform
@@ -140,7 +140,7 @@ RightLeaves 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0166667 0.1 6 17 33 6 
+		1 0.0833335 0.1 6 21 33 6 
 !
 Option_background 0 
 	c 0 struct JZEngine::Transform
@@ -152,7 +152,7 @@ Option_background 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Option_text 0 
 	c 0 struct JZEngine::Transform
@@ -164,7 +164,7 @@ Option_text 0
 !
 Option_soundline 0 
 	c 0 struct JZEngine::Transform
-		-11.2499 2.81778 0 0 0 1 1 1071 345 
+		0 2.81778 0 0 0 1 1 1071 345 
 	c 1 struct JZEngine::SpriteLayer
 		11 
 	c 2 struct JZEngine::Texture
@@ -172,11 +172,11 @@ Option_soundline 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Option_sound 0 
 	c 0 struct JZEngine::Transform
-		-10 160.248 0 0 0 1 1 256 128 
+		0 168 0 0 0 1 1 233 60 
 	c 1 struct JZEngine::SpriteLayer
 		12 
 	c 2 struct JZEngine::Texture
@@ -184,7 +184,7 @@ Option_sound 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Option_master 0 
 	c 0 struct JZEngine::Transform
@@ -196,7 +196,7 @@ Option_master 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Option_music 0 
 	c 0 struct JZEngine::Transform
@@ -208,7 +208,7 @@ Option_music 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Option_sfx 0 
 	c 0 struct JZEngine::Transform
@@ -220,7 +220,7 @@ Option_sfx 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Option_master_speaker 0 
 	c 0 struct JZEngine::Transform
@@ -232,7 +232,7 @@ Option_master_speaker 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.933336 1 1 0 1 1 
+		0 0.800002 1 1 0 1 1 
 !
 Option_master_speaker_off 0 
 	c 0 struct JZEngine::Transform
@@ -256,7 +256,7 @@ Option_music_speaker 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.283334 1 1 0 1 1 
+		0 0.15 1 1 0 1 1 
 !
 Option_music_speaker_off 0 
 	c 0 struct JZEngine::Transform
@@ -280,7 +280,7 @@ Option_sfx_speaker 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.133334 1 1 0 1 1 
+		0 0 1 1 0 1 1 
 !
 Option_sfx_speaker_off 0 
 	c 0 struct JZEngine::Transform
@@ -304,7 +304,7 @@ Option_master_blackbar 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Option_master_brownbar 0 
 	c 0 struct JZEngine::Transform
@@ -316,7 +316,7 @@ Option_master_brownbar 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Option_master_bb 0 
 	c 0 struct JZEngine::Transform
@@ -334,7 +334,7 @@ Option_master_pau 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Option_music_blackbar 0 
 	c 0 struct JZEngine::Transform
@@ -346,7 +346,7 @@ Option_music_blackbar 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Option_music_brownbar 0 
 	c 0 struct JZEngine::Transform
@@ -358,7 +358,7 @@ Option_music_brownbar 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.916669 1 1 0 1 1 
+		0 0.783335 1 1 0 1 1 
 !
 Option_music_bb 0 
 	c 0 struct JZEngine::Transform
@@ -376,7 +376,7 @@ Option_music_pau 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Option_sfx_blackbar 0 
 	c 0 struct JZEngine::Transform
@@ -388,7 +388,7 @@ Option_sfx_blackbar 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Option_sfx_brownbar 0 
 	c 0 struct JZEngine::Transform
@@ -400,7 +400,7 @@ Option_sfx_brownbar 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.283334 1 1 0 1 1 
+		0 0.15 1 1 0 1 1 
 !
 Option_sfx_bb 0 
 	c 0 struct JZEngine::Transform
@@ -418,7 +418,7 @@ Option_sfx_pau 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Option_master_blackbar_border 0 
 	c 0 struct JZEngine::Transform
@@ -430,7 +430,7 @@ Option_master_blackbar_border 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Option_music_blackbar_border 0 
 	c 0 struct JZEngine::Transform
@@ -442,7 +442,7 @@ Option_music_blackbar_border 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Option_sfx_blackbar_border 0 
 	c 0 struct JZEngine::Transform
@@ -454,7 +454,7 @@ Option_sfx_blackbar_border 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Option_x 0 
 	c 0 struct JZEngine::Transform
@@ -466,7 +466,7 @@ Option_x 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Option_quit_bb 0 
 	c 0 struct JZEngine::Transform
@@ -484,7 +484,7 @@ Sky 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.216667 1 1 0 1 1 
+		0 0.866669 1 1 0 1 1 
 !
 Smoke 0 
 	c 0 struct JZEngine::Transform
@@ -496,7 +496,7 @@ Smoke 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0166667 0.1 4 5 12 4 
+		1 0.0833335 0.1 4 6 12 4 
 !
 Quit_background 0 
 	c 0 struct JZEngine::Transform
@@ -644,7 +644,7 @@ how_to_play 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.216667 1 1 0 1 1 
+		0 0.866669 1 1 0 1 1 
 !
 Credits 0 
 	c 0 struct JZEngine::Transform
@@ -656,7 +656,7 @@ Credits 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.950002 1 1 0 1 1 
 !
 Quit 0 
 	c 0 struct JZEngine::Transform
@@ -712,7 +712,7 @@ Arrow_right_how_to_play 0
 !
 MouseCursor 0 
 	c 0 struct JZEngine::Transform
-		-216 -123.237 0 0 0 2 2 50 50 
+		-181.8 -137.849 0 0 0 2 2 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		500 
 	c 2 struct JZEngine::Texture
@@ -720,7 +720,7 @@ MouseCursor 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0833335 1 1 0 1 1 
+		0 0.733335 1 1 0 1 1 
 	c 16 struct JZEngine::FollowMouseCursor
 		
 !
@@ -734,7 +734,7 @@ Transition_Black 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.366667 1 1 0 1 1 
+		0 0 1 1 0 1 1 
 !
 Load_to_menu 0 
 	c 0 struct JZEngine::Transform
@@ -746,5 +746,5 @@ Load_to_menu 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0 1 1 0 1 1 
+		0 0.650001 1 1 0 1 1 
 !
