@@ -24,7 +24,7 @@ Sky 0
 !
 Clouds 0 
 	c 0 struct JZEngine::Transform
-		1000.13 40 0 0 0 1 1 7660 1048 
+		3734.85 40 0 0 0 1 1 7660 1048 
 	c 1 struct JZEngine::SpriteLayer
 		-30 
 	c 2 struct JZEngine::Texture
@@ -2619,6 +2619,18 @@ BlackFromCutscene 0
 		499 
 	c 2 struct JZEngine::Texture
 		BlackSolidColorBackground 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
+!
+PhoneTransition 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 0.05 0.03 50 50 
+	c 1 struct JZEngine::SpriteLayer
+		62 
+	c 2 struct JZEngine::Texture
+		phone_transition_pause 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D

@@ -198,6 +198,81 @@ void UpdateGoal (float dt)
  * **********************************************************************
 */
 
+/*!
+ * **********************************************************************
+	SHOP TRANSITION - START
+*/
+
+bool phone_transition_play { false };
+bool phone_icon_open { false };
+float phone_icon_value { 0.0f };
+float transition_speed { 4.0f };
+float phone_transition_sx { 8.5f } , phone_transition_sy { 8.3f };
+float phone_icon_x { -854.0f } , phone_icon_y { 470.0f };
+
+void StartPhoneTransition ( bool open )
+{
+	phone_transition_play = true;
+	Scene ().EntityFlagActive ( "PhoneTransition" , true );
+	Scene ().EntityFlagActive ( "Phone_black_bg" , true );
+	phone_icon_open = open;
+}
+
+void UpdatePhoneTransition ( float dt )
+{
+	if ( phone_transition_play )
+	{
+		if ( phone_icon_open )
+		{
+			if ( phone_icon_value < 1.0f )
+			{
+				phone_icon_value += dt * transition_speed;
+			}
+			else
+			{
+				// done opening
+				phone_transition_play = false;
+				Scene ().EntityFlagActive ( "PhoneTransition" , false );
+				current_hawker_scene_state = HawkerSceneState::App;
+			}
+		}
+		else
+		{
+			if ( phone_icon_value > 0.1f )
+			{
+				phone_icon_value -= dt * transition_speed;
+			}
+			else
+			{
+				// done closing
+				phone_transition_play = false;
+				Scene ().EntityFlagActive ( "PhoneTransition" , false );
+				current_hawker_scene_state = HawkerSceneState::Main;
+				Scene ().EntityFlagActive ( "Phone_black_bg" , false );
+
+				/*FlagPhone ( false );
+				FlagPhoneHomeScreen ( false );
+				Scene ().EntityFlagActive ( "PhoneOptions" , true );*/
+			}
+		}
+
+		JZEngine::Vec2f& scale = Scene ().GetComponent<JZEngine::Transform> ( "PhoneTransition" )->scale_;
+		scale.x = phone_transition_sx * phone_icon_value;
+		scale.y = phone_transition_sy * phone_icon_value;
+
+		JZEngine::Vec2f& position = Scene ().GetComponent<JZEngine::Transform> ( "PhoneTransition" )->position_;
+		position.x = phone_icon_x * ( 1 - phone_icon_value );
+		position.y = phone_icon_y * ( 1 - phone_icon_value );
+
+		Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Phone_black_bg" )->tint.w = phone_icon_value;
+	}
+}
+
+/*!
+	SHOP TRANSITION - END
+ * **********************************************************************
+*/
+
 
 /*!
  * **********************************************************************
@@ -1286,9 +1361,12 @@ void UpdateMainScene(float dt)
 	{
 		if (e->on_released_)
 		{
-			current_hawker_scene_state = HawkerSceneState::App;
+			//current_hawker_scene_state = HawkerSceneState::App;
+			//SetPhoneIcon ( true );
+			StartPhoneTransition ( true );
 			Scene().EntityFlagActive("PhoneOptions", false);
 			paused = true;
+			e->on_released_ = false;
 		}
 	}
 
@@ -1505,6 +1583,13 @@ void HawkerSceneInit()
 	FlagGoalActive ( true );
 	InitGoal ();
 
+	// initialize phone transition
+	phone_transition_play = false;
+	phone_icon_open = false;
+	phone_icon_value = 0.0f;
+	transition_speed = 4.0f;
+	Scene ().EntityFlagActive ( "PhoneTransition" , false );
+
 	InitLoseBar ();
 }
 
@@ -1525,6 +1610,9 @@ void HawkerSceneUpdate(float dt)
 		current_hawker_scene_state = HawkerSceneState::Lose;
 	}
 
+	// update phone transition
+	UpdatePhoneTransition ( dt );
+
 	switch (current_hawker_scene_state)
 	{
 	case HawkerSceneState::Main:
@@ -1534,10 +1622,16 @@ void HawkerSceneUpdate(float dt)
 		UpdateWinScreen(dt);
 		break;
 	case HawkerSceneState::App:
-		UpdateHomeScreen(dt);
 		if (!paused)
 		{
-			current_hawker_scene_state = HawkerSceneState::Main;
+			//phone_icon_open = false;
+			//SetPhoneIcon ( false );
+			//current_hawker_scene_state = HawkerSceneState::Main;
+			StartPhoneTransition ( false );
+		}
+		else
+		{
+			UpdateHomeScreen ( dt );
 		}
 		break;
 	case HawkerSceneState::Shop:

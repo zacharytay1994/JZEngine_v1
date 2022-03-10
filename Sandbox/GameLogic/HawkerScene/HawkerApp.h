@@ -133,7 +133,7 @@ void FlagExitToMainMenu(bool flag)
 
 void FlagPhone(bool flag)
 {
-	Scene().EntityFlagActive("Phone_black_bg", flag);
+	//Scene().EntityFlagActive("Phone_black_bg", flag);
 	Scene().EntityFlagActive("Phone_outercase", flag);
 	Scene().EntityFlagActive("Phone_battery", flag);
 	Scene().EntityFlagActive("Phone_time", flag);
@@ -344,6 +344,9 @@ void InitPhoneScreen()
 	FlagMsg11(false);
 	FlagMsg12(false);
 	FlagMsg13(false);
+
+	Scene ().EntityFlagActive ( "Phone_black_bg" , false );
+	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Phone_black_bg" )->tint.w = 0.0f;
 
 	//Get the original position of all messages
 	original_msg1_position = Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_;
