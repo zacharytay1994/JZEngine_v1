@@ -212,7 +212,7 @@ void CutSceneInit()
 	
 	FlagAllScreenItems ( false );
 
-	Scene().GetComponent<JZEngine::TextData>("1st_msg_text")->text = JZEngine::String("Baozi, are you still up?");
+	//Scene().GetComponent<JZEngine::TextData>("1st_msg_text")->text = JZEngine::String("Baozi, are you still up?");
 	Scene().GetComponent<JZEngine::TextData>("2nd_msg_text")->text = JZEngine::String("           Yea, what's up?");
 	Scene().GetComponent<JZEngine::TextData>("2nd_msg_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	Scene().GetComponent<JZEngine::TextData>("3rd_msg_text")->text = JZEngine::String("I'm in the hospital.");
