@@ -240,7 +240,7 @@ unsigned int summary_sc_count { 0 };
 unsigned int summary_fd_count { 0 };
 unsigned int summary_cc_count { 0 };
 
-unsigned int min_count { 0 };
+unsigned int min_count { 1 };
 unsigned int max_count { 10 };
 
 void UpdateShop ()
@@ -1258,6 +1258,18 @@ void UpdateMainScene(float dt)
 				Scene().GetComponent<JZEngine::Transform>("tray_plate")->position_ = original_plate_position_;
 			}
 		}
+		if (e->on_hover_)
+		{
+			Scene().GetComponent<JZEngine::Transform>("Trashbin")->scale_.x = 0.804f;
+			Scene().GetComponent<JZEngine::Transform>("Trashbin")->scale_.y = 0.804f;
+		}
+		else
+		{
+			Scene().GetComponent<JZEngine::Transform>("Trashbin")->scale_.x = 0.718f;
+			Scene().GetComponent<JZEngine::Transform>("Trashbin")->scale_.y = 0.718f;
+		}
+
+
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_tray"))
 	{
@@ -1319,6 +1331,17 @@ void UpdateMainScene(float dt)
 			current_hawker_scene_state = HawkerSceneState::App;
 			Scene().EntityFlagActive("PhoneOptions", false);
 			paused = true;
+		}
+		if (e->on_hover_)
+		{
+
+			Scene().GetComponent<JZEngine::Transform>("PhoneOptions")->scale_.x = 0.285f;
+			Scene().GetComponent<JZEngine::Transform>("PhoneOptions")->scale_.y = 0.285f;
+		}
+		else
+		{
+			Scene().GetComponent<JZEngine::Transform>("PhoneOptions")->scale_.x = 0.254f;
+			Scene().GetComponent<JZEngine::Transform>("PhoneOptions")->scale_.y = 0.254f;
 		}
 	}
 
