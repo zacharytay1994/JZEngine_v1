@@ -105,6 +105,62 @@ void ResetCursors();
 
 /*!
  * **********************************************************************
+*  @brief SKY - START
+*/
+
+float max_night_sky_tint { 1.0f };
+float day_time { 5.0f };
+bool day_begin { false };
+
+void InitSky ()
+{
+	max_night_sky_tint = 1.0f;
+	day_time = 5.0f;
+	day_begin = false;
+
+	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "NightSky" )->tint.w = 0.0f;
+	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "NightHue" )->tint.w = 0.0f;
+	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "EveningHue" )->tint.w = 0.0f;
+	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Moon" )->tint.w = 0.0f;
+}
+
+void BringNightSky (float dt)
+{
+	float& night_sky_alpha = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "NightSky" )->tint.w;
+	float& cloud_red = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Clouds" )->tint.x;
+	float& cloud_green = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Clouds" )->tint.y;
+	float& cloud_blue = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Clouds" )->tint.z;
+	float& night_hue = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "NightHue" )->tint.w;
+	float& evening_hue = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "EveningHue" )->tint.w;
+	float& moon_alpha = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Moon" )->tint.w;
+	if ( night_sky_alpha < max_night_sky_tint )
+	{
+		float delta_sky = dt * (1.0f/30.0f);
+		night_sky_alpha += delta_sky;
+		cloud_red -= delta_sky * 6.0f;
+		cloud_blue += delta_sky * 5.0f;
+		cloud_green -= delta_sky * 4.0f;
+		moon_alpha += delta_sky * 1.5f;
+		if ( night_sky_alpha < max_night_sky_tint / 4.0f )
+		{
+			evening_hue += delta_sky * 1.1f;
+			night_hue += delta_sky * 0.05f;
+		}
+		else
+		{
+			evening_hue -= delta_sky * 1.1f;
+			night_hue += delta_sky * 0.75f;
+		}
+	}
+}
+
+/*!
+*  @brief SKY - END
+ * **********************************************************************
+*/
+
+/*!
+ * **********************************************************************
  * @brief BEGIN GOAL - START
 */
 
@@ -347,6 +403,8 @@ void UpdateShop ()
 			init_carrotcake_count = carrotcake_count;
 			init_wanton_count = wanton_count;
 			init_seaweedchicken_count = seaweedchicken_count;
+
+			day_begin = true;
 		}
 	}
 	// spring roll
@@ -1644,6 +1702,8 @@ void HawkerSceneInit()
 	Scene ().EntityFlagActive ( "PhoneTransition" , false );
 
 	InitLoseBar ();
+
+	InitSky ();
 }
 
 void HawkerSceneUpdate(float dt)
@@ -1661,6 +1721,18 @@ void HawkerSceneUpdate(float dt)
 	{
 		FlagLoseBar ( true );
 		current_hawker_scene_state = HawkerSceneState::Lose;
+	}
+
+	if ( day_begin )
+	{
+		if ( day_time > 0.0f )
+		{
+			day_time -= dt;
+		}
+		else
+		{
+			BringNightSky ( dt );
+		}
 	}
 
 	// update phone transition

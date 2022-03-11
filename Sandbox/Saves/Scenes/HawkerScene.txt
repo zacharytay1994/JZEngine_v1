@@ -24,7 +24,7 @@ Sky 0
 !
 Clouds 0 
 	c 0 struct JZEngine::Transform
-		3734.85 40 0 0 0 1 1 7660 1048 
+		-1411.26 40 0 0 0 1 1 7660 1048 
 	c 1 struct JZEngine::SpriteLayer
 		-30 
 	c 2 struct JZEngine::Texture
@@ -2631,6 +2631,54 @@ PhoneTransition 0
 		62 
 	c 2 struct JZEngine::Texture
 		phone_transition_pause 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
+!
+NightSky 0 
+	c 0 struct JZEngine::Transform
+		-4.49994 269.792 0 0 0 41.827 11.1325 50 50 
+	c 1 struct JZEngine::SpriteLayer
+		-40 
+	c 2 struct JZEngine::Texture
+		SkyPanNight_Background_Hawker 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
+!
+NightHue 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 41.958 23.0798 50 50 
+	c 1 struct JZEngine::SpriteLayer
+		5 
+	c 2 struct JZEngine::Texture
+		blue_hue 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
+!
+EveningHue 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 38.7575 23.2613 50 50 
+	c 1 struct JZEngine::SpriteLayer
+		4 
+	c 2 struct JZEngine::Texture
+		orange_hue 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
+!
+Moon 0 
+	c 0 struct JZEngine::Transform
+		0 436.33 0 0 0 10.7406 10.6635 50 50 
+	c 1 struct JZEngine::SpriteLayer
+		-35 
+	c 2 struct JZEngine::Texture
+		Moon_Background_Hawker 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
