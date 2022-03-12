@@ -33,7 +33,17 @@ enum class MessageState
 	Ten,
 	Eleven,
 	Twelve,
-	Thirteen
+	Thirteen,
+	Day2_msg1,
+	Day2_msg2,
+	Day2_msg3,
+	Day2_msg4,
+	Day2_msg5,
+	Day2_msg6,
+	Day2_msg7,
+	Day2_msg8,
+	Day2_msg9,
+	Day2_msg10
 };
 
 CutSceneState current_cut_scene_state = CutSceneState::CutScene;
@@ -160,6 +170,20 @@ void Flag13thMsg(bool flag)
 	//Scene().EntityFlagActive("13th_msg_text", flag);
 }
 
+void FlagDay2Msg(std::string name, bool flag)
+{
+	Scene().EntityFlagActive("Day2_msg1_bg", flag);
+	Scene().EntityFlagActive("Day2_msg2_bg", flag);
+	Scene().EntityFlagActive("Day2_msg3_bg", flag);
+	Scene().EntityFlagActive("Day2_msg4_bg", flag);
+	//Scene().EntityFlagActive("Day2_msg5_bg", flag);
+	//Scene().EntityFlagActive("Day2_msg6_bg", flag);
+	//Scene().EntityFlagActive("Day2_msg7_bg", flag);
+	//Scene().EntityFlagActive("Day2_msg8_bg", flag);
+	//Scene().EntityFlagActive("Day2_msg9_bg", flag);
+	//Scene().EntityFlagActive("Day2_msg10_bg", flag);
+}
+
 void FlagAllScreenItems ( bool flag )
 {
 
@@ -176,6 +200,17 @@ void FlagAllScreenItems ( bool flag )
 	Flag11thMsg ( flag );
 	Flag12thMsg ( flag );
 	Flag13thMsg ( flag );
+
+	FlagDay2Msg("Day2_msg1_bg", flag);
+	FlagDay2Msg("Day2_msg2_bg", flag);
+	FlagDay2Msg("Day2_msg3_bg", flag);
+	FlagDay2Msg("Day2_msg4_bg", flag);
+	//FlagDay2Msg("Day2_msg5_bg", flag);
+	//FlagDay2Msg("Day2_msg6_bg", flag);
+	//FlagDay2Msg("Day2_msg7_bg", flag);
+	//FlagDay2Msg("Day2_msg8_bg", flag);
+	//FlagDay2Msg("Day2_msg9_bg", flag);
+	//FlagDay2Msg("Day2_msg10_bg", flag);
 
 	Scene ().EntityFlagActive ( "1st_msg_emoji" , flag );
 	Scene ().EntityFlagActive ( "1st_msg_text" , flag );
@@ -203,6 +238,17 @@ void FlagAllScreenItems ( bool flag )
 	Scene ().EntityFlagActive ( "12th_msg_text" , flag );
 	Scene ().EntityFlagActive ( "13th_msg_emoji" , flag );
 	Scene ().EntityFlagActive ( "13th_msg_text" , flag );
+
+	Scene().EntityFlagActive("Day2_msg1_emoji", flag);
+	Scene().EntityFlagActive("Day2_msg2_emoji", flag);
+	Scene().EntityFlagActive("Day2_msg3_emoji", flag);
+	Scene().EntityFlagActive("Day2_msg4_emoji", flag);
+	//Scene().EntityFlagActive("Day2_msg5_emoji", flag);
+	//Scene().EntityFlagActive("Day2_msg6_emoji", flag);
+	//Scene().EntityFlagActive("Day2_msg7_emoji", flag);
+	//Scene().EntityFlagActive("Day2_msg8_emoji", flag);
+	//Scene().EntityFlagActive("Day2_msg9_emoji", flag);
+	//Scene().EntityFlagActive("Day2_msg10_emoji", flag);
 }
 
 void CutSceneInit()
@@ -431,17 +477,32 @@ void CutSceneUpdate(float dt)
 		Scene().EntityFlagActive("11th_msg_emoji", true);
 		Scene().EntityFlagActive("11th_msg_text", true);
 	}
+	if (Scene().GetComponent<JZEngine::Transform>("11th_msg_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("11th_msg_emoji", false);
+		Scene().EntityFlagActive("11th_msg_text", false);
+	}
 	
 	if (Scene().GetComponent<JZEngine::Transform>("12th_msg_bg")->scale_.x > bigger_box)
 	{
 		Scene().EntityFlagActive("12th_msg_emoji", true);
 		Scene().EntityFlagActive("12th_msg_text", true);
 	}
+	if (Scene().GetComponent<JZEngine::Transform>("12th_msg_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("12th_msg_emoji", false);
+		Scene().EntityFlagActive("12th_msg_text", false);
+	}
 
 	if (Scene().GetComponent<JZEngine::Transform>("13th_msg_bg")->scale_.x > bigger_box)
 	{
 		Scene().EntityFlagActive("13th_msg_emoji", true);
 		Scene().EntityFlagActive("13th_msg_text", true);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("13th_msg_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("13th_msg_emoji", false);
+		Scene().EntityFlagActive("13th_msg_text", false);
 	}
 
 	UNREFERENCED_PARAMETER(dt);
@@ -581,6 +642,52 @@ void CutSceneUpdate(float dt)
 			{
 				// apply black transition screen
 				//transition_cutscene_hawker = true;
+				Scene().GetComponent<JZEngine::Transform>("11th_msg_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("12th_msg_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("13th_msg_bg")->position_.y = message_out_of_the_screen;
+				Flag11thMsg(false);
+				Flag12thMsg(false);
+				Flag13thMsg(false);
+				Scene().EntityFlagActive("Day2_msg1_bg", true);
+				Scene().EntityFlagActive("Day2_msg1_emoji", true);
+				message_state = MessageState::Day2_msg1;
+			}
+			else if (message_state == MessageState::Day2_msg1)
+			{
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg1_bg")->position_.y = -135.0f;
+				Scene().EntityFlagActive("Day2_msg2_bg", true);
+				Scene().EntityFlagActive("Day2_msg2_emoji", true);
+				message_state = MessageState::Day2_msg2;
+			}
+			else if (message_state == MessageState::Day2_msg2)
+			{
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg1_bg")->position_.y = 115.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg2_bg")->position_.y = -60.0f;
+				Scene().EntityFlagActive("Day2_msg3_bg", true);
+				Scene().EntityFlagActive("Day2_msg3_emoji", true);
+				message_state = MessageState::Day2_msg3;
+			}
+			else if (message_state == MessageState::Day2_msg3)
+			{
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg1_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg2_bg")->position_.y = 90.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg3_bg")->position_.y = -100.0f;
+				Scene().EntityFlagActive("Day2_msg4_bg", true);
+				Scene().EntityFlagActive("Day2_msg4_emoji", true);
+				Scene().EntityFlagActive("Day2_msg1_bg", false);
+				Scene().EntityFlagActive("Day2_msg1_emoji", false);
+				message_state = MessageState::Day2_msg4;
+			}
+			else if (message_state == MessageState::Day2_msg4)
+			{
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg2_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg3_bg")->position_.y = 90.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg4_bg")->position_.y = -100.0f;
+				//Scene().EntityFlagActive("Day2_msg5_bg", true);
+				//Scene().EntityFlagActive("Day2_msg5_emoji", true);
+				Scene().EntityFlagActive("Day2_msg2_bg", false);
+				Scene().EntityFlagActive("Day2_msg2_emoji", false);
+				message_state = MessageState::Day2_msg5;
 			}
 		}
 		

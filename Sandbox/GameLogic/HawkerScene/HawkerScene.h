@@ -105,6 +105,65 @@ void ResetCursors();
 
 /*!
  * **********************************************************************
+*  @brief SKY - START
+*/
+
+float night_controller_value { 1.0f };
+float max_night_sky_tint { 1.0f };
+float day_time { 5.0f };
+bool day_begin { false };
+
+void InitSky ()
+{
+	night_controller_value = 1.0f;
+	max_night_sky_tint = 1.0f;
+	day_time = 5.0f;
+	day_begin = false;
+
+	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "NightSky" )->tint.w = 0.0f;
+	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "NightHue" )->tint.w = 0.0f;
+	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "EveningHue" )->tint.w = 0.0f;
+	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Moon" )->tint.w = 0.0f;
+}
+
+void BringNightSky (float dt)
+{
+	float& night_sky_alpha = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "NightSky" )->tint.w;
+	float& cloud_red = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Clouds" )->tint.x;
+	float& cloud_green = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Clouds" )->tint.y;
+	float& cloud_blue = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Clouds" )->tint.z;
+	float& night_hue = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "NightHue" )->tint.w;
+	float& evening_hue = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "EveningHue" )->tint.w;
+	float& moon_alpha = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Moon" )->tint.w;
+	if ( night_controller_value > 0.0f )
+	{
+		float delta_sky = dt * (1.0f/30.0f);
+		night_controller_value -= delta_sky;
+		night_sky_alpha += delta_sky * 0.6f;
+		cloud_red -= delta_sky * 6.0f;
+		cloud_blue += delta_sky * 5.0f;
+		cloud_green -= delta_sky * 4.0f;
+		moon_alpha += delta_sky * 0.6f;
+		if ( night_controller_value > 0.75f )
+		{
+			evening_hue += delta_sky * 1.1f;
+			night_hue += delta_sky * 0.05f;
+		}
+		else
+		{
+			evening_hue -= delta_sky * 0.8f;
+			night_hue += delta_sky * 0.20f;
+		}
+	}
+}
+
+/*!
+*  @brief SKY - END
+ * **********************************************************************
+*/
+
+/*!
+ * **********************************************************************
  * @brief BEGIN GOAL - START
 */
 
@@ -198,6 +257,81 @@ void UpdateGoal (float dt)
  * **********************************************************************
 */
 
+/*!
+ * **********************************************************************
+	SHOP TRANSITION - START
+*/
+
+bool phone_transition_play { false };
+bool phone_icon_open { false };
+float phone_icon_value { 0.0f };
+float transition_speed { 4.0f };
+float phone_transition_sx { 8.5f } , phone_transition_sy { 8.3f };
+float phone_icon_x { -854.0f } , phone_icon_y { 470.0f };
+
+void StartPhoneTransition ( bool open )
+{
+	phone_transition_play = true;
+	Scene ().EntityFlagActive ( "PhoneTransition" , true );
+	Scene ().EntityFlagActive ( "Phone_black_bg" , true );
+	phone_icon_open = open;
+}
+
+void UpdatePhoneTransition ( float dt )
+{
+	if ( phone_transition_play )
+	{
+		if ( phone_icon_open )
+		{
+			if ( phone_icon_value < 1.0f )
+			{
+				phone_icon_value += dt * transition_speed;
+			}
+			else
+			{
+				// done opening
+				phone_transition_play = false;
+				Scene ().EntityFlagActive ( "PhoneTransition" , false );
+				current_hawker_scene_state = HawkerSceneState::App;
+			}
+		}
+		else
+		{
+			if ( phone_icon_value > 0.1f )
+			{
+				phone_icon_value -= dt * transition_speed;
+			}
+			else
+			{
+				// done closing
+				phone_transition_play = false;
+				Scene ().EntityFlagActive ( "PhoneTransition" , false );
+				current_hawker_scene_state = HawkerSceneState::Main;
+				Scene ().EntityFlagActive ( "Phone_black_bg" , false );
+
+				/*FlagPhone ( false );
+				FlagPhoneHomeScreen ( false );
+				Scene ().EntityFlagActive ( "PhoneOptions" , true );*/
+			}
+		}
+
+		JZEngine::Vec2f& scale = Scene ().GetComponent<JZEngine::Transform> ( "PhoneTransition" )->scale_;
+		scale.x = phone_transition_sx * phone_icon_value;
+		scale.y = phone_transition_sy * phone_icon_value;
+
+		JZEngine::Vec2f& position = Scene ().GetComponent<JZEngine::Transform> ( "PhoneTransition" )->position_;
+		position.x = phone_icon_x * ( 1 - phone_icon_value );
+		position.y = phone_icon_y * ( 1 - phone_icon_value );
+
+		Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Phone_black_bg" )->tint.w = phone_icon_value;
+	}
+}
+
+/*!
+	SHOP TRANSITION - END
+ * **********************************************************************
+*/
+
 
 /*!
  * **********************************************************************
@@ -240,7 +374,7 @@ unsigned int summary_sc_count { 0 };
 unsigned int summary_fd_count { 0 };
 unsigned int summary_cc_count { 0 };
 
-unsigned int min_count { 0 };
+unsigned int min_count { 1 };
 unsigned int max_count { 10 };
 
 void UpdateShop ()
@@ -272,6 +406,8 @@ void UpdateShop ()
 			init_carrotcake_count = carrotcake_count;
 			init_wanton_count = wanton_count;
 			init_seaweedchicken_count = seaweedchicken_count;
+
+			day_begin = true;
 		}
 	}
 	// spring roll
@@ -1258,6 +1394,18 @@ void UpdateMainScene(float dt)
 				Scene().GetComponent<JZEngine::Transform>("tray_plate")->position_ = original_plate_position_;
 			}
 		}
+		if (e->on_hover_)
+		{
+			Scene().GetComponent<JZEngine::Transform>("Trashbin")->scale_.x = 0.804f;
+			Scene().GetComponent<JZEngine::Transform>("Trashbin")->scale_.y = 0.804f;
+		}
+		else
+		{
+			Scene().GetComponent<JZEngine::Transform>("Trashbin")->scale_.x = 0.718f;
+			Scene().GetComponent<JZEngine::Transform>("Trashbin")->scale_.y = 0.718f;
+		}
+
+
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_tray"))
 	{
@@ -1316,9 +1464,23 @@ void UpdateMainScene(float dt)
 	{
 		if (e->on_released_)
 		{
-			current_hawker_scene_state = HawkerSceneState::App;
+			//current_hawker_scene_state = HawkerSceneState::App;
+			//SetPhoneIcon ( true );
+			StartPhoneTransition ( true );
 			Scene().EntityFlagActive("PhoneOptions", false);
 			paused = true;
+			e->on_released_ = false;
+		}
+		if (e->on_hover_)
+		{
+
+			Scene().GetComponent<JZEngine::Transform>("PhoneOptions")->scale_.x = 0.285f;
+			Scene().GetComponent<JZEngine::Transform>("PhoneOptions")->scale_.y = 0.285f;
+		}
+		else
+		{
+			Scene().GetComponent<JZEngine::Transform>("PhoneOptions")->scale_.x = 0.254f;
+			Scene().GetComponent<JZEngine::Transform>("PhoneOptions")->scale_.y = 0.254f;
 		}
 	}
 
@@ -1535,7 +1697,16 @@ void HawkerSceneInit()
 	FlagGoalActive ( true );
 	InitGoal ();
 
+	// initialize phone transition
+	phone_transition_play = false;
+	phone_icon_open = false;
+	phone_icon_value = 0.0f;
+	transition_speed = 4.0f;
+	Scene ().EntityFlagActive ( "PhoneTransition" , false );
+
 	InitLoseBar ();
+
+	InitSky ();
 }
 
 void HawkerSceneUpdate(float dt)
@@ -1555,6 +1726,21 @@ void HawkerSceneUpdate(float dt)
 		current_hawker_scene_state = HawkerSceneState::Lose;
 	}
 
+	if ( day_begin )
+	{
+		if ( day_time > 0.0f )
+		{
+			day_time -= dt;
+		}
+		else
+		{
+			BringNightSky ( dt );
+		}
+	}
+
+	// update phone transition
+	UpdatePhoneTransition ( dt );
+
 	switch (current_hawker_scene_state)
 	{
 	case HawkerSceneState::Main:
@@ -1564,10 +1750,16 @@ void HawkerSceneUpdate(float dt)
 		UpdateWinScreen(dt);
 		break;
 	case HawkerSceneState::App:
-		UpdateHomeScreen(dt);
 		if (!paused)
 		{
-			current_hawker_scene_state = HawkerSceneState::Main;
+			//phone_icon_open = false;
+			//SetPhoneIcon ( false );
+			//current_hawker_scene_state = HawkerSceneState::Main;
+			StartPhoneTransition ( false );
+		}
+		else
+		{
+			UpdateHomeScreen ( dt );
 		}
 		break;
 	case HawkerSceneState::Shop:
