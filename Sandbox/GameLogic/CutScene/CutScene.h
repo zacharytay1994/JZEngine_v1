@@ -580,7 +580,7 @@ void CutSceneUpdate(float dt)
 			else if (message_state == MessageState::Thirteen)
 			{
 				// apply black transition screen
-				transition_cutscene_hawker = true;
+				//transition_cutscene_hawker = true;
 			}
 		}
 		

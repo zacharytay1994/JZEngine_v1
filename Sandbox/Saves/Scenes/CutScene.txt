@@ -8,7 +8,7 @@ Background 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.366667 1 1 0 1 1 
+		0 0.783335 1 1 0 1 1 
 !
 Phone_app_bg 1 
 	c 0 struct JZEngine::Transform
@@ -20,7 +20,7 @@ Phone_app_bg 1
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.366667 1 1 0 1 1 
+		0 0.783335 1 1 0 1 1 
 	c 15 struct JZEngine::MouseEvent
 		250 400 
 !
@@ -34,7 +34,7 @@ Border 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.133334 1 1 0 1 1 
+		0 0.550001 1 1 0 1 1 
 !
 Phone_top 2 
 	c 0 struct JZEngine::Transform
@@ -46,7 +46,7 @@ Phone_top 2
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.366667 1 1 0 1 1 
+		0 0.783335 1 1 0 1 1 
 !
 Battery 0 
 	c 0 struct JZEngine::Transform
@@ -58,7 +58,7 @@ Battery 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.133334 1 1 0 1 1 
+		0 0.550001 1 1 0 1 1 
 !
 Time 0 
 	c 0 struct JZEngine::Transform
@@ -70,7 +70,7 @@ Time 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.133334 1 1 0 1 1 
+		0 0.550001 1 1 0 1 1 
 !
 Skip 0 
 	c 0 struct JZEngine::Transform
@@ -82,7 +82,7 @@ Skip 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.733525 1 1 0 1 1 
+		0 0.133334 1 1 0 1 1 
 !
 black_bg 0 
 	c 0 struct JZEngine::Transform
@@ -94,7 +94,7 @@ black_bg 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.966865 1 1 0 1 1 
+		0 0.366667 1 1 0 1 1 
 !
 1st_msg_bg 2 
 	c 0 struct JZEngine::Transform
@@ -546,7 +546,7 @@ mouse_event_skip 0
 !
 MouseCursor 0 
 	c 0 struct JZEngine::Transform
-		59.9999 579.915 0 0 0 2 2 50 50 
+		70.5736 585 0 0 0 2 2 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		500 
 	c 2 struct JZEngine::Texture
@@ -554,7 +554,7 @@ MouseCursor 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.516858 1 1 0 1 1 
+		0 0.933336 1 1 0 1 1 
 	c 16 struct JZEngine::FollowMouseCursor
 		
 !
@@ -568,7 +568,7 @@ Transition_Black_1 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.516858 1 1 0 1 1 
+		0 0.933336 1 1 0 1 1 
 !
 Transition_Black_2 0 
 	c 0 struct JZEngine::Transform
@@ -580,7 +580,7 @@ Transition_Black_2 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.516858 1 1 0 1 1 
+		0 0.933336 1 1 0 1 1 
 !
 Transition_Black_3 0 
 	c 0 struct JZEngine::Transform
@@ -592,5 +592,5 @@ Transition_Black_3 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.516858 1 1 0 1 1 
+		0 0.933336 1 1 0 1 1 
 !
