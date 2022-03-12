@@ -17,6 +17,8 @@ namespace JZEngine
 	int				Settings::window_y{ 100 };
 	int				Settings::camera_width{ 1920 };
 	int				Settings::camera_height{ 1080 };
+	int				Settings::original_camera_width { 1920 };
+	int				Settings::original_camera_height { 1080 };
 	unsigned int	Settings::window_width{ 1600 };
 	unsigned int	Settings::window_height{ 900 };
 	float			Settings::aspect_ratio;

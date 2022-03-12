@@ -261,6 +261,8 @@ namespace JZEngine
 						}*/
 						if ( ImGui::Selectable ( "Load Scene" ) )
 						{
+							Settings::camera_width = Settings::original_camera_width;
+							Settings::camera_height = Settings::original_camera_height;
 							MenuBar::play_ = false;
 							scene_tree_->RemoveAllEntities ();
 							Serialize::DeserializeScene2 ( ecs_instance_ , s.first );
