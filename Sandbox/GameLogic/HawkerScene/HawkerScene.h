@@ -108,12 +108,14 @@ void ResetCursors();
 *  @brief SKY - START
 */
 
+float night_controller_value { 1.0f };
 float max_night_sky_tint { 1.0f };
 float day_time { 5.0f };
 bool day_begin { false };
 
 void InitSky ()
 {
+	night_controller_value = 1.0f;
 	max_night_sky_tint = 1.0f;
 	day_time = 5.0f;
 	day_begin = false;
@@ -133,23 +135,24 @@ void BringNightSky (float dt)
 	float& night_hue = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "NightHue" )->tint.w;
 	float& evening_hue = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "EveningHue" )->tint.w;
 	float& moon_alpha = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Moon" )->tint.w;
-	if ( night_sky_alpha < max_night_sky_tint )
+	if ( night_controller_value > 0.0f )
 	{
 		float delta_sky = dt * (1.0f/30.0f);
-		night_sky_alpha += delta_sky;
+		night_controller_value -= delta_sky;
+		night_sky_alpha += delta_sky * 0.6f;
 		cloud_red -= delta_sky * 6.0f;
 		cloud_blue += delta_sky * 5.0f;
 		cloud_green -= delta_sky * 4.0f;
-		moon_alpha += delta_sky * 1.5f;
-		if ( night_sky_alpha < max_night_sky_tint / 4.0f )
+		moon_alpha += delta_sky * 0.6f;
+		if ( night_controller_value > 0.75f )
 		{
 			evening_hue += delta_sky * 1.1f;
 			night_hue += delta_sky * 0.05f;
 		}
 		else
 		{
-			evening_hue -= delta_sky * 1.1f;
-			night_hue += delta_sky * 0.75f;
+			evening_hue -= delta_sky * 0.8f;
+			night_hue += delta_sky * 0.20f;
 		}
 	}
 }
