@@ -29,6 +29,9 @@ namespace JZEngine
 		scene_updates_names_ = new std::unordered_map<std::string , std::string> ();
 		entity_map_ = new std::unordered_map<std::string, std::vector<ECS::Entity*>>();
 		current_scene_name_ = new std::string("non");
+
+		original_camera_width = Settings::camera_width;
+		original_camera_height = Settings::camera_height;
 	}
 
 	SceneLogic::~SceneLogic()
@@ -213,6 +216,9 @@ namespace JZEngine
 		{
 			if ( scene_to_be_changed_ )
 			{
+				Settings::camera_width = Settings::original_camera_width;
+				Settings::camera_height = Settings::original_camera_height;
+
 				scene_to_be_changed_ = false;
 				scene_tree_->RemoveAllEntities ();
 				Serialize::DeserializeScene2 ( ecs_instance_ , *scene_to_change_to_ );
@@ -254,6 +260,22 @@ namespace JZEngine
 				}
 			}
 		}
+	}
+
+	void SceneLogic::SetCameraDimensions ( int x , int y )
+	{
+		Settings::camera_width = x;
+		Settings::camera_height = y;
+	}
+
+	int GetCameraWidth ()
+	{
+		return Settings::camera_width;
+	}
+
+	int GetCameraHeight ()
+	{
+		return Settings::camera_height;
 	}
 
 	ECS::Entity* SceneLogic::GetEntity(const std::string& name, unsigned int id)

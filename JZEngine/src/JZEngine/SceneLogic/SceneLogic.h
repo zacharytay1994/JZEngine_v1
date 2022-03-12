@@ -43,6 +43,8 @@ namespace JZEngine
 		void InitSceneLogic();
 		void BuildEntityMap();
 
+		void SetCameraDimensions ( int x , int y );
+
 		template <typename T>
 		T* GetComponent(const std::string& name, unsigned int id = 0)
 		{
@@ -118,6 +120,9 @@ namespace JZEngine
 		SoundSystem* soundsys{ nullptr };
 		std::unordered_map<std::string, std::vector<ECS::Entity*>>* entity_map_{ nullptr };
 		std::string* current_scene_name_{ nullptr };
+
+		int original_camera_width;
+		int original_camera_height;
 
 		SceneLogic();
 	};
