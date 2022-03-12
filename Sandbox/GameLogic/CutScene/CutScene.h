@@ -212,7 +212,7 @@ void CutSceneInit()
 	
 	FlagAllScreenItems ( false );
 
-	//Scene().GetComponent<JZEngine::TextData>("1st_msg_text")->text = JZEngine::String("Baozi, are you still up?");
+	/*Scene().GetComponent<JZEngine::TextData>("1st_msg_text")->text = JZEngine::String("Baozi, are you still up?");
 	Scene().GetComponent<JZEngine::TextData>("2nd_msg_text")->text = JZEngine::String("           Yea, what's up?");
 	Scene().GetComponent<JZEngine::TextData>("2nd_msg_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	Scene().GetComponent<JZEngine::TextData>("3rd_msg_text")->text = JZEngine::String("I'm in the hospital.");
@@ -241,14 +241,14 @@ void CutSceneInit()
 	Scene().GetComponent<JZEngine::TextData>("10th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("10th_msg_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	Scene().GetComponent<JZEngine::TextData>("11th_msg_text")->text = 
-	JZEngine::String("Well, it’s your school\nholiday. Help your dad\nout...");
+	JZEngine::String("Well, itï¿½s your school\nholiday. Help your dad\nout...");
 	Scene().GetComponent<JZEngine::TextData>("11th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("12th_msg_text")->text = JZEngine::String("I will text you if you need\nguidance!");
 	Scene().GetComponent<JZEngine::TextData>("12th_msg_text")->leading_y_ = text_leading;
 	Scene().GetComponent<JZEngine::TextData>("13th_msg_text")->text = 
 	JZEngine::String ( "   Okay okayyy. Let me\nsleep for an hour first." );
 	Scene().GetComponent<JZEngine::TextData>("13th_msg_text")->leading_y_ = text_leading;
-	Scene().GetComponent<JZEngine::TextData>("13th_msg_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
+	Scene().GetComponent<JZEngine::TextData>("13th_msg_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);*/
 	
 	JZEngine::Log::Info("Main", "Cut Scene Initialized.");
 
@@ -492,7 +492,7 @@ void CutSceneUpdate(float dt)
 				Flag4thMsg(true);
 				Scene().GetComponent<JZEngine::Transform>("1st_msg_bg")->position_.y = message_out_of_the_screen;
 				Scene().GetComponent<JZEngine::Transform>("2nd_msg_bg")->position_.y = message_move_up_medium;
-				Scene().GetComponent<JZEngine::Transform>("3rd_msg_bg")->position_.y = message_move_up_tiny;
+				Scene().GetComponent<JZEngine::Transform>("3rd_msg_bg")->position_.y = -59.0f;
 				Flag1stMsg(false);
 				message_state = MessageState::Four;
 			}
@@ -501,7 +501,7 @@ void CutSceneUpdate(float dt)
 				Flag5thMsg(true);
 				Scene().GetComponent<JZEngine::Transform>("2nd_msg_bg")->position_.y = message_out_of_the_screen;
 				Scene().GetComponent<JZEngine::Transform>("3rd_msg_bg")->position_.y = message_move_up_large;
-				Scene().GetComponent<JZEngine::Transform>("4th_msg_bg")->position_.y = message_move_up_small;
+				Scene().GetComponent<JZEngine::Transform>("4th_msg_bg")->position_.y = -21.0f;
 				Flag2ndMsg(false);
 				message_state = MessageState::Five;
 			}
@@ -510,7 +510,7 @@ void CutSceneUpdate(float dt)
 				Flag6thMsg(true);
 				Scene().GetComponent<JZEngine::Transform>("3rd_msg_bg")->position_.y = message_out_of_the_screen;
 				Scene().GetComponent<JZEngine::Transform>("4th_msg_bg")->position_.y = message_move_up_max;
-				Scene().GetComponent<JZEngine::Transform>("5th_msg_bg")->position_.y = message_move_up_small;
+				Scene().GetComponent<JZEngine::Transform>("5th_msg_bg")->position_.y = -27.0f;
 				Flag3rdMsg(false);
 				message_state = MessageState::Six;
 			}
@@ -519,7 +519,7 @@ void CutSceneUpdate(float dt)
 				Flag7thMsg(true);
 				Scene().GetComponent<JZEngine::Transform>("4th_msg_bg")->position_.y = message_out_of_the_screen;
 				Scene().GetComponent<JZEngine::Transform>("5th_msg_bg")->position_.y = message_move_up_large;
-				Scene().GetComponent<JZEngine::Transform>("6th_msg_bg")->position_.y = -35.0f;
+				Scene().GetComponent<JZEngine::Transform>("6th_msg_bg")->position_.y = -46.0f;
 				Flag4thMsg(false);
 				message_state = MessageState::Seven;
 			}
@@ -528,7 +528,7 @@ void CutSceneUpdate(float dt)
 				Flag8thMsg(true);
 				Scene().GetComponent<JZEngine::Transform>("5th_msg_bg")->position_.y = message_out_of_the_screen;
 				Scene().GetComponent<JZEngine::Transform>("6th_msg_bg")->position_.y = message_move_up_large;
-				Scene().GetComponent<JZEngine::Transform>("7th_msg_bg")->position_.y = message_move_up_small;
+				Scene().GetComponent<JZEngine::Transform>("7th_msg_bg")->position_.y = message_move_up_tiny;
 				Flag5thMsg(false);
 				message_state = MessageState::Eight;
 			}
@@ -537,7 +537,7 @@ void CutSceneUpdate(float dt)
 				Flag9thMsg(true);
 				Scene().GetComponent<JZEngine::Transform>("6th_msg_bg")->position_.y = message_out_of_the_screen;
 				Scene().GetComponent<JZEngine::Transform>("7th_msg_bg")->position_.y = 150.0f;
-				Scene().GetComponent<JZEngine::Transform>("8th_msg_bg")->position_.y = -30.0f;
+				Scene().GetComponent<JZEngine::Transform>("8th_msg_bg")->position_.y = -52.0f;
 				Flag6thMsg(false);
 				message_state = MessageState::Nine;
 			}
@@ -546,7 +546,7 @@ void CutSceneUpdate(float dt)
 				Flag10thMsg(true);
 				Scene().GetComponent<JZEngine::Transform>("7th_msg_bg")->position_.y = message_out_of_the_screen;
 				Scene().GetComponent<JZEngine::Transform>("8th_msg_bg")->position_.y = message_move_up_medium;
-				Scene().GetComponent<JZEngine::Transform>("9th_msg_bg")->position_.y = message_move_up_tiny;
+				Scene().GetComponent<JZEngine::Transform>("9th_msg_bg")->position_.y = -52.0f;
 				Flag7thMsg(false);
 				message_state = MessageState::Ten;
 			}
@@ -555,7 +555,7 @@ void CutSceneUpdate(float dt)
 				Flag11thMsg(true);
 				Scene().GetComponent<JZEngine::Transform>("8th_msg_bg")->position_.y = message_out_of_the_screen;
 				Scene().GetComponent<JZEngine::Transform>("9th_msg_bg")->position_.y = message_move_up_medium;
-				Scene().GetComponent<JZEngine::Transform>("10th_msg_bg")->position_.y = message_move_up_tiny;
+				Scene().GetComponent<JZEngine::Transform>("10th_msg_bg")->position_.y = -55.0f;
 				Flag8thMsg(false);
 				message_state = MessageState::Eleven;
 			}
@@ -564,7 +564,7 @@ void CutSceneUpdate(float dt)
 				Flag12thMsg(true);
 				Scene().GetComponent<JZEngine::Transform>("9th_msg_bg")->position_.y = message_out_of_the_screen;
 				Scene().GetComponent<JZEngine::Transform>("10th_msg_bg")->position_.y = message_move_up_large;
-				Scene().GetComponent<JZEngine::Transform>("11th_msg_bg")->position_.y = -4.0f;
+				Scene().GetComponent<JZEngine::Transform>("11th_msg_bg")->position_.y = -43.0f;
 				Flag9thMsg(false);
 				message_state = MessageState::Twelve;
 			}
@@ -573,7 +573,7 @@ void CutSceneUpdate(float dt)
 				Flag13thMsg(true);
 				Scene().GetComponent<JZEngine::Transform>("10th_msg_bg")->position_.y = message_out_of_the_screen;
 				Scene().GetComponent<JZEngine::Transform>("11th_msg_bg")->position_.y = message_move_up_large;
-				Scene().GetComponent<JZEngine::Transform>("12th_msg_bg")->position_.y = message_move_up_small;
+				Scene().GetComponent<JZEngine::Transform>("12th_msg_bg")->position_.y = -55.0f;
 				Flag10thMsg(false);
 				message_state = MessageState::Thirteen;
 			}
