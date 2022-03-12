@@ -1575,6 +1575,8 @@ void UpdateMainScene(float dt)
 
 void HawkerSceneInit()
 {
+
+	Scene().SetCameraDimensions(1977, 1112);
 	// initialize scene
 	current_hawker_scene_state = HawkerSceneState::Goal;
 	//esc_again = false;
