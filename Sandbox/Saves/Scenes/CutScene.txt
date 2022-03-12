@@ -8,7 +8,7 @@ Background 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0 1 1 0 1 1 
+		0 0.233334 1 1 0 1 1 
 !
 Phone_app_bg 1 
 	c 0 struct JZEngine::Transform
@@ -20,7 +20,7 @@ Phone_app_bg 1
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0 1 1 0 1 1 
+		0 0.233334 1 1 0 1 1 
 	c 15 struct JZEngine::MouseEvent
 		250 400 
 !
@@ -34,7 +34,7 @@ Border 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.783364 1 1 0 1 1 
+		0 0.0666668 1 1 0 1 1 
 !
 Phone_top 2 
 	c 0 struct JZEngine::Transform
@@ -46,7 +46,7 @@ Phone_top 2
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0 1 1 0 1 1 
+		0 0.233334 1 1 0 1 1 
 !
 Battery 0 
 	c 0 struct JZEngine::Transform
@@ -58,7 +58,7 @@ Battery 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.783364 1 1 0 1 1 
+		0 0.0666668 1 1 0 1 1 
 !
 Time 0 
 	c 0 struct JZEngine::Transform
@@ -70,7 +70,7 @@ Time 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.783364 1 1 0 1 1 
+		0 0.0666668 1 1 0 1 1 
 !
 Skip 0 
 	c 0 struct JZEngine::Transform
@@ -82,7 +82,7 @@ Skip 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.383352 1 1 0 1 1 
+		0 0.233334 1 1 0 1 1 
 !
 black_bg 0 
 	c 0 struct JZEngine::Transform
@@ -94,25 +94,25 @@ black_bg 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.60003 1 1 0 1 1 
+		0 0.233334 1 1 0 1 1 
 !
 1st_msg_bg 2 
 	c 0 struct JZEngine::Transform
-		-211.25 -300 0 0 0 1 1 50 50 
+		-212 -260 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		2 
 	c 2 struct JZEngine::Texture
-		cs_phone_dad_msg_bg 
+		Day1_01 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.300001 1 1 0 1 1 
+		0 0.350001 1 1 0 1 1 
 	c 19 struct JZEngine::AnimatedTransformComponent
-		3.711 0 10 2 0 
+		3.711 0 10 3 0 
 !
 1st_msg_emoji 0 
 	c 0 struct JZEngine::Transform
-		-398.75 -300 -187.5 0 0 1 1 128 128 
+		-413.75 -254 -201.75 6 0 1 1 128 128 
 	c 1 struct JZEngine::SpriteLayer
 		3 
 	c 2 struct JZEngine::Texture
@@ -120,11 +120,11 @@ black_bg 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0 0.2 4 4 9 4 
+		1 0.0166667 0.2 4 5 9 4 
 !
 1st_msg_text 0 
 	c 0 struct JZEngine::Transform
-		-341.25 -300 -130 0 0 1 1 50 50 
+		-342 -260 -130 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		100 
 	c 9 struct JZEngine::TextData
@@ -132,21 +132,21 @@ black_bg 0
 !
 2nd_msg_bg 2 
 	c 0 struct JZEngine::Transform
-		223.75 -265 0 0 0 1 1 50 50 
+		224 -260 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		2 
 	c 2 struct JZEngine::Texture
-		cs_phone_baozi_msg_bg 
+		Day1_02 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.900028 1 1 0 1 1 
+		0 0.883335 1 1 0 1 1 
 	c 19 struct JZEngine::AnimatedTransformComponent
-		3.763 0 10 2 0 
+		3.763 0 10.48 3.143 0 
 !
 2nd_msg_emoji 0 
 	c 0 struct JZEngine::Transform
-		401.25 -265 177.5 0 0 1 1 128 128 
+		413.25 -252 189.25 8 0 1 1 128 128 
 	c 1 struct JZEngine::SpriteLayer
 		3 
 	c 2 struct JZEngine::Texture
@@ -154,11 +154,11 @@ black_bg 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0333334 0.3 4 2 4 2 
+		1 0.0333334 0.3 4 1 4 2 
 !
 2nd_msg_text 0 
 	c 0 struct JZEngine::Transform
-		23.75 -265 -200 0 0 1 1 50 50 
+		24 -260 -200 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		100 
 	c 9 struct JZEngine::TextData
@@ -166,21 +166,21 @@ black_bg 0
 !
 3rd_msg_bg 2 
 	c 0 struct JZEngine::Transform
-		-211.25 -260 0 0 0 1 1 50 50 
+		-212 -260 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		2 
 	c 2 struct JZEngine::Texture
-		cs_phone_dad_msg_bg 
+		Day1_03 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.350001 1 1 0 1 1 
+		0 0.233334 1 1 0 1 1 
 	c 19 struct JZEngine::AnimatedTransformComponent
-		3.763 0 10.4 2 0 
+		3.763 0 10.48 3.143 0 
 !
 3rd_msg_emoji 0 
 	c 0 struct JZEngine::Transform
-		-398.75 -260 -187.5 0 0 1 1 128 128 
+		-413.75 -255 -201.75 5 0 1 1 128 128 
 	c 1 struct JZEngine::SpriteLayer
 		3 
 	c 2 struct JZEngine::Texture
@@ -188,11 +188,11 @@ black_bg 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.766671 0.3 4 0 9 4 
+		1 0.15 0.3 4 6 9 4 
 !
 3rd_msg_text 0 
 	c 0 struct JZEngine::Transform
-		-341.25 -260 -130 0 0 1 1 50 50 
+		-342 -260 -130 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		100 
 	c 9 struct JZEngine::TextData
@@ -200,21 +200,21 @@ black_bg 0
 !
 4th_msg_bg 2 
 	c 0 struct JZEngine::Transform
-		223.75 -225 0 0 0 1 1 50 50 
+		224 -260 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		2 
 	c 2 struct JZEngine::Texture
-		cs_phone_baozi_msg_bg 
+		Day1_04 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.883335 1 1 0 1 1 
+		0 0.0666668 1 1 0 1 1 
 	c 19 struct JZEngine::AnimatedTransformComponent
-		3.711 0 9.5 2.3 0 
+		3.711 0 10 3 0 
 !
 4th_msg_emoji 0 
 	c 0 struct JZEngine::Transform
-		401.25 -225 177.5 0 0 1 1 128 128 
+		413.25 -260 189.25 0 0 1 1 128 128 
 	c 1 struct JZEngine::SpriteLayer
 		3 
 	c 2 struct JZEngine::Texture
@@ -222,11 +222,11 @@ black_bg 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.583336 0.2 4 0 4 1 
+		1 0.0333334 0.2 4 0 4 1 
 !
 4th_msg_text 0 
 	c 0 struct JZEngine::Transform
-		23.75 -211 -200 14 0 1 1 50 50 
+		24 -246 -200 14 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		100 
 	c 9 struct JZEngine::TextData
@@ -234,21 +234,21 @@ black_bg 0
 !
 5th_msg_bg 2 
 	c 0 struct JZEngine::Transform
-		-211.25 -200 0 0 0 1 1 50 50 
+		-212 -260 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		2 
 	c 2 struct JZEngine::Texture
-		cs_phone_dad_msg_bg 
+		Day1_05 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.600005 1 1 0 1 1 
+		0 1 1 1 0 1 1 
 	c 19 struct JZEngine::AnimatedTransformComponent
-		3.763 0 10 2.3 0 
+		3.763 0 10.48 3.15 0 
 !
 5th_msg_emoji 0 
 	c 0 struct JZEngine::Transform
-		-398.75 -200 -187.5 0 0 1 1 128 128 
+		-413.75 -254 -201.75 6 0 1 1 128 128 
 	c 1 struct JZEngine::SpriteLayer
 		3 
 	c 2 struct JZEngine::Texture
@@ -256,11 +256,11 @@ black_bg 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.366669 0.3 4 0 9 4 
+		1 0.0666668 0.2 4 5 9 4 
 !
 5th_msg_text 0 
 	c 0 struct JZEngine::Transform
-		-341.25 -165 -130 35 0 1 1 50 50 
+		-342 -225 -130 35 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		100 
 	c 9 struct JZEngine::TextData
@@ -268,21 +268,21 @@ black_bg 0
 !
 6th_msg_bg 2 
 	c 0 struct JZEngine::Transform
-		-211.25 -205 0 0 0 1 1 50 50 
+		-212 -250 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		2 
 	c 2 struct JZEngine::Texture
-		cs_phone_dad_msg_bg 
+		Day1_06 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.716668 1 1 0 1 1 
+		0 0.550001 1 1 0 1 1 
 	c 19 struct JZEngine::AnimatedTransformComponent
-		3.711 0 9.5 1.8 0 
+		3.711 0 10 3.002 0 
 !
 6th_msg_emoji 0 
 	c 0 struct JZEngine::Transform
-		-398.75 -205 -187.5 0 0 1 1 128 128 
+		-413.75 -250 -201.75 0 0 1 1 128 128 
 	c 1 struct JZEngine::SpriteLayer
 		3 
 	c 2 struct JZEngine::Texture
@@ -290,11 +290,11 @@ black_bg 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.900012 0.2 4 0 9 4 
+		1 0.0666668 0.2 4 4 9 4 
 !
 6th_msg_text 0 
 	c 0 struct JZEngine::Transform
-		-341.25 -202 -130 3 0 1 1 50 50 
+		-342 -247 -130 3 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		100 
 	c 9 struct JZEngine::TextData
@@ -302,21 +302,21 @@ black_bg 0
 !
 7th_msg_bg 2 
 	c 0 struct JZEngine::Transform
-		-211.25 -215 0 0 0 1 1 50 50 
+		-212 -260 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		2 
 	c 2 struct JZEngine::Texture
-		cs_phone_dad_msg_bg 
+		Day1_07 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.666687 1 1 0 1 1 
+		0 0.416668 1 1 0 1 1 
 	c 19 struct JZEngine::AnimatedTransformComponent
-		3.711 0 9.5 2 0 
+		3.711 0 10 3 0 
 !
 7th_msg_emoji 0 
 	c 0 struct JZEngine::Transform
-		-398.75 -215 -187.5 0 0 1 1 128 128 
+		-413.75 -254 -201.75 6 0 1 1 128 128 
 	c 1 struct JZEngine::SpriteLayer
 		3 
 	c 2 struct JZEngine::Texture
@@ -324,11 +324,11 @@ black_bg 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.116667 0.2 4 0 9 4 
+		1 0 0.2 4 2 9 4 
 !
 7th_msg_text 0 
 	c 0 struct JZEngine::Transform
-		-341.25 -180 -130 35 0 1 1 50 50 
+		-342 -225 -130 35 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		100 
 	c 9 struct JZEngine::TextData
@@ -336,21 +336,21 @@ black_bg 0
 !
 8th_msg_bg 2 
 	c 0 struct JZEngine::Transform
-		-211.25 -200 0 0 0 1 1 50 50 
+		-211.25 -260 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		2 
 	c 2 struct JZEngine::Texture
-		cs_phone_dad_msg_bg 
+		Day1_08 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.733387 1 1 0 1 1 
+		0 0.716669 1 1 0 1 1 
 	c 19 struct JZEngine::AnimatedTransformComponent
-		3.711 0 9.5 2 0 
+		3.711 0 10 3.003 0 
 !
 8th_msg_emoji 0 
 	c 0 struct JZEngine::Transform
-		-398.75 -200 -187.5 0 0 1 1 128 128 
+		-413 -254 -201.75 6 0 1 1 128 128 
 	c 1 struct JZEngine::SpriteLayer
 		3 
 	c 2 struct JZEngine::Texture
@@ -358,11 +358,11 @@ black_bg 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.933375 0.3 4 0 9 4 
+		1 0.116667 0.3 4 2 9 4 
 !
 8th_msg_text 0 
 	c 0 struct JZEngine::Transform
-		-341.25 -181 -130 19 0 1 1 50 50 
+		-341.25 -241 -130 19 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		100 
 	c 9 struct JZEngine::TextData
@@ -370,21 +370,21 @@ black_bg 0
 !
 9th_msg_bg 2 
 	c 0 struct JZEngine::Transform
-		223.75 -220 0 0 0 1 1 50 50 
+		224 -260 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		2 
 	c 2 struct JZEngine::Texture
-		cs_phone_baozi_msg_bg 
+		Day1_09 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.700017 1 1 0 1 1 
+		0 0.800002 1 1 0 1 1 
 	c 19 struct JZEngine::AnimatedTransformComponent
-		3.711 0 9.5 2 0 
+		3.711 0 10 3 0 
 !
 9th_msg_emoji 0 
 	c 0 struct JZEngine::Transform
-		401.25 -220 177.5 0 0 1 1 128 128 
+		413 -258 189 2 0 1 1 128 128 
 	c 1 struct JZEngine::SpriteLayer
 		3 
 	c 2 struct JZEngine::Texture
@@ -392,11 +392,11 @@ black_bg 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.850006 0.2 4 0 4 1 
+		1 0.166667 0.2 4 1 4 1 
 !
 9th_msg_text 0 
 	c 0 struct JZEngine::Transform
-		23.75 -205 -200 15 0 1 1 50 50 
+		24 -245 -200 15 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		100 
 	c 9 struct JZEngine::TextData
@@ -404,21 +404,21 @@ black_bg 0
 !
 10th_msg_bg 2 
 	c 0 struct JZEngine::Transform
-		223.75 -215 0 0 0 1 1 50 50 
+		224 -260 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		2 
 	c 2 struct JZEngine::Texture
-		cs_phone_baozi_msg_bg 
+		Day1_10 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.116667 1 1 0 1 1 
+		0 0.366668 1 1 0 1 1 
 	c 19 struct JZEngine::AnimatedTransformComponent
-		3.711 0 9.5 2 0 
+		3.711 0 10 3.003 0 
 !
 10th_msg_emoji 0 
 	c 0 struct JZEngine::Transform
-		401.25 -215 177.5 0 0 1 1 128 128 
+		413 -252 189 8 0 1 1 128 128 
 	c 1 struct JZEngine::SpriteLayer
 		3 
 	c 2 struct JZEngine::Texture
@@ -426,11 +426,11 @@ black_bg 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.583358 0.3 4 0 7 2 
+		1 0.133334 0.3 4 4 7 2 
 !
 10th_msg_text 0 
 	c 0 struct JZEngine::Transform
-		23.75 -200 -200 15 0 1 1 50 50 
+		24 -245 -200 15 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		100 
 	c 9 struct JZEngine::TextData
@@ -438,21 +438,21 @@ black_bg 0
 !
 11th_msg_bg 2 
 	c 0 struct JZEngine::Transform
-		-211.25 -225 0 0 0 1 1 50 50 
+		-212 -260 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		2 
 	c 2 struct JZEngine::Texture
-		cs_phone_dad_msg_bg 
+		Day1_11 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.350006 1 1 0 1 1 
+		0 0.500001 1 1 0 1 1 
 	c 19 struct JZEngine::AnimatedTransformComponent
-		3.711 0 10 2 0 
+		3.711 0 10 3 0 
 !
 11th_msg_emoji 0 
 	c 0 struct JZEngine::Transform
-		-398.75 -225 -187.5 0 0 1 1 128 128 
+		-413 -250 -201 10 0 1 1 128 128 
 	c 1 struct JZEngine::SpriteLayer
 		3 
 	c 2 struct JZEngine::Texture
@@ -460,11 +460,11 @@ black_bg 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.607545 0.2 4 0 9 4 
+		1 0.0666669 0.2 4 2 9 4 
 !
 11th_msg_text 0 
 	c 0 struct JZEngine::Transform
-		-341.25 -191 -130 34 0 1 1 50 50 
+		-342 -226 -130 34 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		100 
 	c 9 struct JZEngine::TextData
@@ -472,21 +472,21 @@ black_bg 0
 !
 12th_msg_bg 2 
 	c 0 struct JZEngine::Transform
-		-211.25 -180 0 0 0 1 1 50 50 
+		-212 -260 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		2 
 	c 2 struct JZEngine::Texture
-		cs_phone_dad_msg_bg 
+		Day1_12 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0 1 1 0 1 1 
+		0 0.0500001 1 1 0 1 1 
 	c 19 struct JZEngine::AnimatedTransformComponent
-		3.711 0 10 2 0 
+		3.711 0 10 3.003 0 
 !
 12th_msg_emoji 0 
 	c 0 struct JZEngine::Transform
-		-398.75 -180 -187.5 0 0 1 1 128 128 
+		-413 -252 -201 8 0 1 1 128 128 
 	c 1 struct JZEngine::SpriteLayer
 		3 
 	c 2 struct JZEngine::Texture
@@ -494,11 +494,11 @@ black_bg 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.749454 0.3 4 0 9 4 
+		1 0.0500001 0.3 4 2 9 4 
 !
 12th_msg_text 0 
 	c 0 struct JZEngine::Transform
-		-341.25 -160 -130 20 0 1 1 50 50 
+		-342 -240 -130 20 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		100 
 	c 9 struct JZEngine::TextData
@@ -506,21 +506,21 @@ black_bg 0
 !
 13th_msg_bg 2 
 	c 0 struct JZEngine::Transform
-		223.75 -200 0 0 0 1 1 50 50 
+		223.75 -260 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		2 
 	c 2 struct JZEngine::Texture
-		cs_phone_baozi_msg_bg 
+		Day1_13 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
 		0 0.2 1 1 0 1 1 
 	c 19 struct JZEngine::AnimatedTransformComponent
-		3.711 0 10 2 0 
+		3.711 0 10 3.003 0 
 !
 13th_msg_emoji 0 
 	c 0 struct JZEngine::Transform
-		402.5 -202 178.75 -2 0 1 1 128 128 
+		413 -255 189.25 5 0 1 1 128 128 
 	c 1 struct JZEngine::SpriteLayer
 		3 
 	c 2 struct JZEngine::Texture
@@ -532,7 +532,7 @@ black_bg 0
 !
 13th_msg_text 0 
 	c 0 struct JZEngine::Transform
-		23.75 -180 -200 20 0 1 1 50 50 
+		23.75 -240 -200 20 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		100 
 	c 9 struct JZEngine::TextData
@@ -546,7 +546,7 @@ mouse_event_skip 0
 !
 MouseCursor 0 
 	c 0 struct JZEngine::Transform
-		58.5 578.38 0 0 0 2 2 50 50 
+		63.0001 576.356 0 0 0 2 2 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		500 
 	c 2 struct JZEngine::Texture
@@ -554,7 +554,7 @@ MouseCursor 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.15 1 1 0 1 1 
+		0 0.233334 1 1 0 1 1 
 	c 16 struct JZEngine::FollowMouseCursor
 		
 !
@@ -568,7 +568,7 @@ Transition_Black_1 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.15 1 1 0 1 1 
+		0 0.233334 1 1 0 1 1 
 !
 Transition_Black_2 0 
 	c 0 struct JZEngine::Transform
@@ -580,7 +580,7 @@ Transition_Black_2 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.15 1 1 0 1 1 
+		0 0.233334 1 1 0 1 1 
 !
 Transition_Black_3 0 
 	c 0 struct JZEngine::Transform
@@ -592,5 +592,5 @@ Transition_Black_3 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.15 1 1 0 1 1 
+		0 0.233334 1 1 0 1 1 
 !
