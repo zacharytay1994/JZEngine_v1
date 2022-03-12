@@ -15,6 +15,8 @@ namespace JZEngine
 
 		// private
 		float scale_x_ { 1.0f };
+
+		bool has_texture { false };
 	}; 
 	
 	struct LeafParticle : ECS::System
