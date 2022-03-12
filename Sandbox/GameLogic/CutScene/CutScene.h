@@ -270,7 +270,6 @@ void CutSceneInit()
 	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("11th_msg_bg")->active_flag = true;
 	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("12th_msg_bg")->active_flag = true;
 	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("13th_msg_bg")->active_flag = true;
-	//Scene().GetComponent<JZEngine::AnimatedTransformComponent>("1st_msg_emoji")->active_flag = true;
 
 	Scene ().PlaySound ( "temp_phone_notification" , false );
 }
