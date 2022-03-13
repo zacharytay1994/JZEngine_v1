@@ -927,6 +927,8 @@ void HideWonBar ()
 	Scene ().EntityFlagActive ( "WinBarBG" , false );
 	Scene ().EntityFlagActive ( "WinFireworks1" , false );
 	Scene ().EntityFlagActive ( "WinFireworks2" , false );
+	Scene().EntityFlagActive("WinFireworks3", false);
+	Scene().EntityFlagActive("WinFireworks4", false);
 	Scene ().EntityFlagActive ( "WinBlackCover" , false );
 }
 
@@ -936,6 +938,8 @@ void ShowWonBar ()
 	Scene ().EntityFlagActive ( "WinBarBG" , true );
 	Scene ().EntityFlagActive ( "WinFireworks1" , true );
 	Scene ().EntityFlagActive ( "WinFireworks2" , true );
+	Scene().EntityFlagActive("WinFireworks3", true);
+	Scene().EntityFlagActive("WinFireworks4", true);
 	Scene ().EntityFlagActive ( "WinBlackCover" , true );
 }
 
