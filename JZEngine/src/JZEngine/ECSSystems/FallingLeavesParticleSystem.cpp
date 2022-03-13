@@ -27,7 +27,7 @@ namespace JZEngine
 		transform.position_ += ( lpc.wind_direction_ + lpc.mass_ * lpc.gravity_ ) * dt;
 		transform.position_ += 1.0f * sin ( lpc.life_ );
 		//transform.scale_.x = lpc.scale_x_ * sin ( lpc.life_ );
-		transform.rotation_ += sin ( lpc.life_ ) * Math::PI/4.0f;
+		transform.rotation_ += sin ( lpc.life_ * 0.5f ) * Math::PI/2.0f;
 
 		if ( lpc.life_ <= 0.0f )
 		{
