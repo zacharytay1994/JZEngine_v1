@@ -18,6 +18,19 @@ enum class CutSceneState
 	Skip
 };
 
+enum class Days
+{
+	None,
+	One,
+	Two,
+	Three
+};
+
+namespace Cutscene
+{
+	static Days day;
+}
+
 enum class MessageState
 {
 	Nothing,
@@ -48,6 +61,8 @@ enum class MessageState
 
 CutSceneState current_cut_scene_state = CutSceneState::CutScene;
 MessageState message_state = MessageState::Nothing;
+Days day_state = Days::None;
+
 float message_out_of_the_screen{200.0f};
 float message_move_up_max{190.0f};
 float message_move_up_large{165.0f};
@@ -303,6 +318,7 @@ void CutSceneInit()
 	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black_2" )->tint.w = 1.0f;
 	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black_3" )->tint.w = 0.0f;
 
+	//Set the box animation active flag for day1 msgs
 	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("1st_msg_bg")->active_flag = true;
 	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("2nd_msg_bg")->active_flag = true;
 	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("3rd_msg_bg")->active_flag = true;
@@ -317,6 +333,7 @@ void CutSceneInit()
 	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("12th_msg_bg")->active_flag = true;
 	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("13th_msg_bg")->active_flag = true;
 
+	//Set the box animation active flag for day2 msgs
 	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day2_msg1_bg")->active_flag = true;
 	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day2_msg2_bg")->active_flag = true;
 	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day2_msg3_bg")->active_flag = true;
@@ -626,11 +643,17 @@ void CutSceneUpdate(float dt)
 
 		if (e->on_click_)
 		{
-			if (message_state == MessageState::Nothing)
+			if (message_state == MessageState::Nothing && Cutscene::day == Days::One)
 			{
-				//if nothing show the first message
+				//if nothing and day1 show day1 first message
 				Flag1stMsg(true);
 				message_state = MessageState::One;
+			}
+			else if (message_state == MessageState::Nothing && Cutscene::day == Days::Two)
+			{
+				//if nothing and day2 show day2 first message
+				Scene().EntityFlagActive("Day2_msg1_bg", true);
+				message_state = MessageState::Day2_msg1;
 			}
 			else if (message_state == MessageState::One)
 			{
@@ -739,15 +762,7 @@ void CutSceneUpdate(float dt)
 			else if (message_state == MessageState::Thirteen)
 			{
 				// apply black transition screen
-				//transition_cutscene_hawker = true;
-				Scene().GetComponent<JZEngine::Transform>("11th_msg_bg")->position_.y = message_out_of_the_screen;
-				Scene().GetComponent<JZEngine::Transform>("12th_msg_bg")->position_.y = message_out_of_the_screen;
-				Scene().GetComponent<JZEngine::Transform>("13th_msg_bg")->position_.y = message_out_of_the_screen;
-				Flag11thMsg(false);
-				Flag12thMsg(false);
-				Flag13thMsg(false);
-				Scene().EntityFlagActive("Day2_msg1_bg", true);
-				message_state = MessageState::Day2_msg1;
+				transition_cutscene_hawker = true;
 			}
 			else if (message_state == MessageState::Day2_msg1)
 			{
@@ -780,60 +795,55 @@ void CutSceneUpdate(float dt)
 				Scene().EntityFlagActive("Day2_msg2_bg", false);
 				message_state = MessageState::Day2_msg5;
 			}
-
 			else if (message_state == MessageState::Day2_msg5)
 			{
-			Scene().GetComponent<JZEngine::Transform>("Day2_msg3_bg")->position_.y = message_out_of_the_screen;
-			Scene().GetComponent<JZEngine::Transform>("Day2_msg4_bg")->position_.y = 125.0f;
-			Scene().GetComponent<JZEngine::Transform>("Day2_msg5_bg")->position_.y = -65.0f;
-			Scene().EntityFlagActive("Day2_msg6_bg", true);
-			Scene().EntityFlagActive("Day2_msg3_bg", false);
-			message_state = MessageState::Day2_msg6;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg3_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg4_bg")->position_.y = 125.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg5_bg")->position_.y = -65.0f;
+				Scene().EntityFlagActive("Day2_msg6_bg", true);
+				Scene().EntityFlagActive("Day2_msg3_bg", false);
+				message_state = MessageState::Day2_msg6;
 			}
-
 			else if (message_state == MessageState::Day2_msg6)
 			{
-			Scene().GetComponent<JZEngine::Transform>("Day2_msg4_bg")->position_.y = message_out_of_the_screen;
-			Scene().GetComponent<JZEngine::Transform>("Day2_msg5_bg")->position_.y = 145.0f;
-			Scene().GetComponent<JZEngine::Transform>("Day2_msg6_bg")->position_.y = -57.0f;
-			Scene().EntityFlagActive("Day2_msg7_bg", true);
-			Scene().EntityFlagActive("Day2_msg4_bg", false);
-			message_state = MessageState::Day2_msg7;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg4_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg5_bg")->position_.y = 145.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg6_bg")->position_.y = -57.0f;
+				Scene().EntityFlagActive("Day2_msg7_bg", true);
+				Scene().EntityFlagActive("Day2_msg4_bg", false);
+				message_state = MessageState::Day2_msg7;
 			}
-
 			else if (message_state == MessageState::Day2_msg7)
 			{
-			Scene().GetComponent<JZEngine::Transform>("Day2_msg5_bg")->position_.y = message_out_of_the_screen;
-			Scene().GetComponent<JZEngine::Transform>("Day2_msg6_bg")->position_.y = 196.0f;
-			Scene().GetComponent<JZEngine::Transform>("Day2_msg7_bg")->position_.y = -5.0f;
-			Scene().EntityFlagActive("Day2_msg8_bg", true);
-			Scene().EntityFlagActive("Day2_msg5_bg", false);
-			message_state = MessageState::Day2_msg8;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg5_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg6_bg")->position_.y = 196.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg7_bg")->position_.y = -5.0f;
+				Scene().EntityFlagActive("Day2_msg8_bg", true);
+				Scene().EntityFlagActive("Day2_msg5_bg", false);
+				message_state = MessageState::Day2_msg8;
 			}
-
 			else if (message_state == MessageState::Day2_msg8)
 			{
-			Scene().GetComponent<JZEngine::Transform>("Day2_msg6_bg")->position_.y = message_out_of_the_screen;
-			Scene().GetComponent<JZEngine::Transform>("Day2_msg7_bg")->position_.y = 195.0f;
-			Scene().GetComponent<JZEngine::Transform>("Day2_msg8_bg")->position_.y = -37.0f;
-			Scene().EntityFlagActive("Day2_msg9_bg", true);
-			Scene().EntityFlagActive("Day2_msg6_bg", false);
-			message_state = MessageState::Day2_msg9;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg6_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg7_bg")->position_.y = 195.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg8_bg")->position_.y = -37.0f;
+				Scene().EntityFlagActive("Day2_msg9_bg", true);
+				Scene().EntityFlagActive("Day2_msg6_bg", false);
+				message_state = MessageState::Day2_msg9;
 			}
-
 			else if (message_state == MessageState::Day2_msg9)
 			{
-			Scene().GetComponent<JZEngine::Transform>("Day2_msg7_bg")->position_.y = message_out_of_the_screen;
-			Scene().GetComponent<JZEngine::Transform>("Day2_msg8_bg")->position_.y = 139.0f;
-			Scene().GetComponent<JZEngine::Transform>("Day2_msg9_bg")->position_.y = -75.0f;
-			Scene().EntityFlagActive("Day2_msg10_bg", true);
-			Scene().EntityFlagActive("Day2_msg7_bg", false);
-			message_state = MessageState::Day2_msg10;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg7_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg8_bg")->position_.y = 139.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day2_msg9_bg")->position_.y = -75.0f;
+				Scene().EntityFlagActive("Day2_msg10_bg", true);
+				Scene().EntityFlagActive("Day2_msg7_bg", false);
+				message_state = MessageState::Day2_msg10;
 			}
-
 			else if (message_state == MessageState::Day2_msg10)
 			{
-				//next to scene
+				//Go to day2
+				transition_cutscene_hawker = true;
 			}
 		}
 		
@@ -888,6 +898,5 @@ void CutSceneUpdate(float dt)
 			transition_cutscene_hawker = false;
 		}
 	}
-	
 	
 }

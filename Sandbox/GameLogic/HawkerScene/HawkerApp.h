@@ -72,7 +72,7 @@ void FlagQuitConfirmation ( bool flag )
 	Scene ().EntityFlagActive ( "Quit_bg" , flag );
 }
 
-void FlagShopApp ( bool flag )
+/*void FlagShopApp ( bool flag )
 {
 	Scene ().EntityFlagActive ( "ShopappInfo" , flag );
 	Scene ().EntityFlagActive ( "ShopappProjection" , flag );
@@ -117,7 +117,7 @@ void SwitchShopAppState (SHOPAPP_STATE state)
 		shopapp_state = state;
 		break;
 	}
-}
+}*/
 
 void FlagExitToMainMenu(bool flag)
 {
@@ -144,7 +144,7 @@ void FlagPhoneHomeScreen(bool flag)
 	Scene().EntityFlagActive("Phone_main_screen", flag);
 	Scene().EntityFlagActive("Theresapp", flag);
 	Scene().EntityFlagActive("Album", flag);
-	Scene().EntityFlagActive("Shop", flag);
+	//Scene().EntityFlagActive("Shop", flag);
 	Scene().EntityFlagActive("How_to_Play_app", flag);
 	Scene().EntityFlagActive("Main_Menu_app", flag);
 	if (!flag)
@@ -320,7 +320,7 @@ void InitPhoneScreen()
 	current_app_state = HawkerAppState::MainScreen;
 
 	FlagQuitConfirmation ( false );
-	FlagShopApp ( false );
+	//FlagShopApp ( false );
 	FlagExitToMainMenu(false);
 
 	FlagPhone(false);
@@ -516,7 +516,7 @@ void UpdatePhoneScreen(float dt)
 			FlagExitToMainMenu(true);
 		}
 	}
-	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Shop" ) )
+	/*if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Shop" ) )
 	{
 		if ( e->on_click_ )
 		{
@@ -528,7 +528,7 @@ void UpdatePhoneScreen(float dt)
 			current_app_state = HawkerAppState::ShopApp;
 			SwitchShopAppState ( SHOPAPP_STATE::FOOD );
 		}
-	}
+	}*/
 	if (paused == true && JZEngine::InputHandler::IsKeyReleased(JZEngine::KEY::KEY_ESCAPE))
 	{
 		FlagPhone(false);
@@ -550,7 +550,7 @@ void UpdatePhoneScreen(float dt)
 	{
 		if (e->on_click_)
 		{
-			Scene().ChangeScene("HawkerV2");
+			Scene().ChangeScene("HawkerScene");
 		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Exit"))
@@ -565,7 +565,7 @@ void UpdatePhoneScreen(float dt)
 
 }
 
-void UpdateShopApp ( float dt )
+/*void UpdateShopApp ( float dt )
 {
 	UNREFERENCED_PARAMETER ( dt );
 	switch ( shopapp_state )
@@ -652,7 +652,7 @@ void UpdateShopApp ( float dt )
 		}
 		break;
 	}
-}
+}*/
 
 void UpdateHawkerQuitMenu ( )
 {
@@ -1028,9 +1028,9 @@ void UpdateHomeScreen(float dt)
 	case HawkerAppState::HowtoPlay:
 		UpdateHowtoPlay(dt);
 		break;
-	case HawkerAppState::ShopApp:
+	/*case HawkerAppState::ShopApp:
 		UpdateShopApp ( dt );
-		break;
+		break;*/
 	}
 
 	if ( quit_confirmation )

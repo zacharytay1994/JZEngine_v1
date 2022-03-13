@@ -12,6 +12,7 @@
 
 #include "../ButtonLogic.h"
 #include "../MainMenu/MainMenu.h"
+#include "../CutScene/CutScene.h"
 
 
 enum class MainMenuState
@@ -230,6 +231,7 @@ void UpdateMainScreen(float dt)
 		}
 		else
 		{
+			Cutscene::day = Days::One;
 			Scene().ChangeScene("CutScene");
 			transition_main_cutscene = false;
 		}
