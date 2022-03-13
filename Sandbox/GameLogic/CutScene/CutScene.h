@@ -11,6 +11,7 @@
 #include <string>
 #include <sstream>
 #include "../ButtonLogic.h"
+#include "../HawkerScene/HawkerQueue.h"
 
 enum class CutSceneState
 {
@@ -763,6 +764,14 @@ void CutSceneUpdate(float dt)
 			{
 				// apply black transition screen
 				transition_cutscene_hawker = true;
+				if ( Cutscene::day == Days::One )
+				{
+					hawker_scene_day = DAY::ONE;
+				}
+				else if ( Cutscene::day == Days::Two )
+				{
+					hawker_scene_day = DAY::TWO;
+				}
 			}
 			else if (message_state == MessageState::Day2_msg1)
 			{
@@ -844,6 +853,14 @@ void CutSceneUpdate(float dt)
 			{
 				//Go to day2
 				transition_cutscene_hawker = true;
+				if ( Cutscene::day == Days::One )
+				{
+					hawker_scene_day = DAY::ONE;
+				}
+				else if ( Cutscene::day == Days::Two )
+				{
+					hawker_scene_day = DAY::TWO;
+				}
 			}
 		}
 		
@@ -856,6 +873,14 @@ void CutSceneUpdate(float dt)
 		{
 			//Scene().ChangeScene("HawkerScene");
 			//current_cut_scene_state = CutSceneState::Skip;
+			if ( Cutscene::day == Days::One )
+			{
+				hawker_scene_day = DAY::ONE;
+			}
+			else if ( Cutscene::day == Days::Two )
+			{
+				hawker_scene_day = DAY::TWO;
+			}
 
 			transition_cutscene_hawker = true;
 			transition_skip_pressed = true;
