@@ -21,7 +21,7 @@ enum class HawkerAppState
 HawkerAppState current_app_state = HawkerAppState::MainScreen;
 
 float hp_text_leading{ 3.0f };
-float scrolling_speed{ 20.0f };
+float scrolling_speed{ 40.0f };
 float top_boundary{ 267.0f };
 float bottom_boundary{ -348.0f };
 float top_line{ 220.0f };
