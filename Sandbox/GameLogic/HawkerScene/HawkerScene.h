@@ -13,6 +13,7 @@
 #include <sstream>
 
 #include "../ButtonLogic.h"
+#include "../CutScene/CutScene.h"
 
 /*!
  * DAY RELATED - START
@@ -1379,6 +1380,8 @@ void UpdateWinScreen(float dt)
 
 	if ( summary_ready )
 	{
+		Scene().EntityFlagActive("BeginShop_Next", true);
+
 		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Win_restart_bb" ) )
 		{
 			if ( e->on_released_ )
@@ -1391,6 +1394,14 @@ void UpdateWinScreen(float dt)
 			if ( e->on_released_ )
 			{
 				Scene ().ChangeScene ( "MainMenu" );
+			}
+		}
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("BeginShop_Next"))
+		{
+			if (e->on_click_)
+			{
+				Cutscene::day = Days::Two;
+				Scene().ChangeScene("CutScene");
 			}
 		}
 	}

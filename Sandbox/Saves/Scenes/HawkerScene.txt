@@ -196,37 +196,37 @@ Customer 0
 	c 0 struct JZEngine::Transform
 		-1062.5 104.474 -800 0 0 9.93 7.17 50 50 
 	c 1 struct JZEngine::SpriteLayer
-		7 
+		9 
 	c 2 struct JZEngine::Texture
-		2_AhMa(Idle)_SpriteSheet_Hawker 
+		2_BigGuy(Idle)_SpriteSheet_Hawker 
 	c 3 struct JZEngine::NonInstanceShader
-		0 0 0 0 
+		0 0.337 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0666668 0.1 3 1 7 3 
+		1 0.0833401 0.1 6 11 12 2 
 !
 Customer 0 
 	c 0 struct JZEngine::Transform
 		-1062.5 104.474 -800 0 0 8.14 13.42 50 50 
 	c 1 struct JZEngine::SpriteLayer
-		6 
+		10 
 	c 2 struct JZEngine::Texture
-		1_TallGuy(Idle)_SpriteSheet_Hawker 
+		2_TallGuy(Idle)_SpriteSheet_Hawker 
 	c 3 struct JZEngine::NonInstanceShader
-		0 0 0 0 
+		0 0.337 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0166667 0.1 6 1 13 3 
+		1 0.0833401 0.1 6 8 13 3 
 !
 Customer 0 
 	c 0 struct JZEngine::Transform
 		-1062.5 104.474 -800 0 0 9.93 7.17 50 50 
 	c 1 struct JZEngine::SpriteLayer
-		10 
+		6 
 	c 2 struct JZEngine::Texture
-		1_AhMa(Idle)_SpriteSheet_Hawker 
+		1_BigGuy(Idle)_SpriteSheet_Hawker 
 	c 3 struct JZEngine::NonInstanceShader
-		0 0.337 0 0 
+		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0666668 0.1 3 5 7 3 
+		1 0.100007 0.1 6 1 12 2 
 !
 Customer 0 
 	c 0 struct JZEngine::Transform
@@ -2230,7 +2230,7 @@ Album_1960_big_photo_quit 0
 !
 How_to_Play_app 0 
 	c 0 struct JZEngine::Transform
-		147 280 0 0 0 0.8 0.8 128 128 
+		50 280 0 0 0 0.8 0.8 128 128 
 	c 1 struct JZEngine::SpriteLayer
 		55 
 	c 2 struct JZEngine::Texture
@@ -2244,7 +2244,7 @@ How_to_Play_app 0
 !
 Main_Menu_app 0 
 	c 0 struct JZEngine::Transform
-		-150 157.992 0 0 0 0.8 0.8 128 128 
+		150 280 0 0 0 0.8 0.8 128 128 
 	c 1 struct JZEngine::SpriteLayer
 		55 
 	c 2 struct JZEngine::Texture
@@ -2266,7 +2266,7 @@ How_to_Play_photo 1
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.133334 1 1 0 1 1 
+		0 0.133344 1 1 0 1 1 
 !
 How_to_Play_text 0 
 	c 0 struct JZEngine::Transform
@@ -2286,7 +2286,7 @@ How_to_Play_x 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.133334 1 1 0 1 1 
+		0 0.133344 1 1 0 1 1 
 	c 15 struct JZEngine::MouseEvent
 		30 30 
 !
@@ -2550,84 +2550,6 @@ WinBlackCover 0
 	c 10 struct JZEngine::Animation2D
 		0 0.167584 1 1 0 1 1 
 !
-ShopappInfo 0 
-	c 0 struct JZEngine::Transform
-		0 0 0 0 0 18.1 18.1 50 50 
-	c 1 struct JZEngine::SpriteLayer
-		61 
-	c 2 struct JZEngine::Texture
-		ProjectionInformation_Phone_Projection 
-	c 3 struct JZEngine::NonInstanceShader
-		0 0 0 0 
-	c 10 struct JZEngine::Animation2D
-		0 0.383334 1 1 0 1 1 
-!
-ShopappProjection 0 
-	c 0 struct JZEngine::Transform
-		0 0 0 0 0 18.1 18.1 50 50 
-	c 1 struct JZEngine::SpriteLayer
-		61 
-	c 2 struct JZEngine::Texture
-		ProjectionMain_Phone_Projection 
-	c 3 struct JZEngine::NonInstanceShader
-		0 0 0 0 
-	c 10 struct JZEngine::Animation2D
-		0 0.0500001 1 1 0 1 1 
-!
-ShopappEquipment 0 
-	c 0 struct JZEngine::Transform
-		0 0 0 0 0 18.1 18.1 50 50 
-	c 1 struct JZEngine::SpriteLayer
-		61 
-	c 2 struct JZEngine::Texture
-		ShopEquipment_Phone_Shop 
-	c 3 struct JZEngine::NonInstanceShader
-		0 0 0 0 
-	c 10 struct JZEngine::Animation2D
-		0 0.566684 1 1 0 1 1 
-!
-ShopappFood 0 
-	c 0 struct JZEngine::Transform
-		0 0 0 0 0 18.1 18.1 50 50 
-	c 1 struct JZEngine::SpriteLayer
-		61 
-	c 2 struct JZEngine::Texture
-		ShopFood_Phone_Shop 
-	c 3 struct JZEngine::NonInstanceShader
-		0 0 0 0 
-	c 10 struct JZEngine::Animation2D
-		0 0.750002 1 1 0 1 1 
-!
-bb_ShopappFood 0 
-	c 0 struct JZEngine::Transform
-		-111 254.84 0 0 0 1 1 50 50 
-	c 15 struct JZEngine::MouseEvent
-		100 30 
-!
-bb_ShopappEquipment 0 
-	c 0 struct JZEngine::Transform
-		102 254.84 0 0 0 1 1 50 50 
-	c 15 struct JZEngine::MouseEvent
-		100 30 
-!
-bb_ShopappProjection 0 
-	c 0 struct JZEngine::Transform
-		172.5 320.853 0 0 0 1 1 50 50 
-	c 15 struct JZEngine::MouseEvent
-		30 30 
-!
-bb_ShopappBack 0 
-	c 0 struct JZEngine::Transform
-		-187.5 320.853 0 0 0 1 1 50 50 
-	c 15 struct JZEngine::MouseEvent
-		30 30 
-!
-bb_ShopappInfoBack 0 
-	c 0 struct JZEngine::Transform
-		130.5 104.392 0 0 0 1 1 50 50 
-	c 15 struct JZEngine::MouseEvent
-		35 35 
-!
 MouseCursor 0 
 	c 0 struct JZEngine::Transform
 		-220.868 -115.227 0 0 0 2 2 50 50 
@@ -2644,19 +2566,19 @@ MouseCursor 0
 !
 Quit_yes 0 
 	c 0 struct JZEngine::Transform
-		-362.999 -200 0 0 0 1 1 512 256 
+		260 -200 0 0 0 1 1 512 256 
 	c 1 struct JZEngine::SpriteLayer
 		200 
 	c 2 struct JZEngine::Texture
-		Yes(Highlight)_Button_MainMenu 
+		Yes(OG)_Button_MainMenu 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.600015 1 1 0 1 1 
+		0 0.983336 1 1 0 1 1 
 !
 Quit_no 0 
 	c 0 struct JZEngine::Transform
-		259.501 -200 0 0 0 1 1 512 256 
+		-363 -200 0 0 0 1 1 512 256 
 	c 1 struct JZEngine::SpriteLayer
 		200 
 	c 2 struct JZEngine::Texture
@@ -2664,7 +2586,7 @@ Quit_no 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.600015 1 1 0 1 1 
+		0 0.983336 1 1 0 1 1 
 !
 Quit_bg 0 
 	c 0 struct JZEngine::Transform
@@ -2676,7 +2598,7 @@ Quit_bg 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.600015 1 1 0 1 1 
+		0 0.983336 1 1 0 1 1 
 !
 Quit_title 0 
 	c 0 struct JZEngine::Transform
@@ -2688,17 +2610,17 @@ Quit_title 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.600015 1 1 0 1 1 
+		0 0.983336 1 1 0 1 1 
 !
 Quit_yes_bb 0 
 	c 0 struct JZEngine::Transform
-		-361.499 -196.502 0 0 0 1 1 50 50 
+		260 -196.502 0 0 0 1 1 50 50 
 	c 15 struct JZEngine::MouseEvent
 		220 60 
 !
 Quit_no_bb 0 
 	c 0 struct JZEngine::Transform
-		262.501 -196.502 0 0 0 1 1 50 50 
+		-370 -196.502 0 0 0 1 1 50 50 
 	c 15 struct JZEngine::MouseEvent
 		220 60 
 !
@@ -2942,33 +2864,33 @@ ExitToMainMenu 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0166667 1 1 0 1 1 
+		0 0.533335 1 1 0 1 1 
 !
 MainMenuExit_yes 0 
 	c 0 struct JZEngine::Transform
-		-305 -200 0 0 0 1 1 512 256 
+		270.5 -200 0 0 0 1 1 512 256 
 	c 1 struct JZEngine::SpriteLayer
 		200 
 	c 2 struct JZEngine::Texture
-		Yes(Highlight)_Button_MainMenu 
+		Yes(OG)_Button_MainMenu 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0166667 1 1 0 1 1 
+		0 0.533335 1 1 0 1 1 
 	c 15 struct JZEngine::MouseEvent
 		220 60 
 !
 MainMenuExit_no 0 
 	c 0 struct JZEngine::Transform
-		270.501 -200 0 0 0 1 1 512 256 
+		-305 -200 0 0 0 1 1 512 256 
 	c 1 struct JZEngine::SpriteLayer
 		200 
 	c 2 struct JZEngine::Texture
-		No(Highlight)_Button_MainMenu 
+		No(OG)_Button_MainMenu 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.866672 1 1 0 1 1 
+		0 0.366667 1 1 0 1 1 
 	c 15 struct JZEngine::MouseEvent
 		220 60 
 !
