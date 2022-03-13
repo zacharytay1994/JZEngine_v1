@@ -1482,20 +1482,6 @@ Album 0
 	c 15 struct JZEngine::MouseEvent
 		35 45 
 !
-Shop 0 
-	c 0 struct JZEngine::Transform
-		50 280 0 0 0 0.8 0.8 128 128 
-	c 1 struct JZEngine::SpriteLayer
-		55 
-	c 2 struct JZEngine::Texture
-		Shop_App_Mainscreen 
-	c 3 struct JZEngine::NonInstanceShader
-		0 0 0 0 
-	c 10 struct JZEngine::Animation2D
-		0 0.116667 1 1 0 1 1 
-	c 15 struct JZEngine::MouseEvent
-		35 45 
-!
 Resume 0 
 	c 0 struct JZEngine::Transform
 		-147 -310 0 0 0 0.85 0.85 128 128 
