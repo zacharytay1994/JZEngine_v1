@@ -75,7 +75,7 @@ namespace JZEngine
 		constexpr ui32 MAX_ARCHETYPES			{ 128 };			/*!< arbitrary number */
 		constexpr ui32 CHUNKS_PER_ARCHETYPE		{ 256 };			/*!< arbitrary number */
 		constexpr ui32 ENTITIES_RESERVE			{ 1000 };			/*!< arbitrary number*/
-		constexpr ui32 ENTITY_MAX_CHILDREN		{ 10 };				/*!< arbitrary number*/
+		constexpr ui32 ENTITY_MAX_CHILDREN		{ 20 };				/*!< arbitrary number*/
 
 		constexpr ui32 ENTITIES_PER_CHUNK		{ 255 };			/*!< not to be changed entity ids only go up to 255
 																		 because the count it stored in a byte */

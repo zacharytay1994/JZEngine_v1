@@ -14,6 +14,14 @@
 #include <string>
 #include <stack>
 
+enum class DAY
+{
+	ONE ,
+	TWO ,
+	THREE
+};
+DAY hawker_scene_day = DAY::TWO;
+
 enum class CustomerState
 {
 	WalkingIn,
@@ -28,6 +36,12 @@ enum class CustomerOrder
 	SeaweedChicken,
 	SpringRoll,
 	CarrotCake,
+	ChickenFeet,
+	HarGao,
+	SiewMai,
+	CharSiewBao,
+	DouShaBao,
+	CoffeeBao,
 	Nothing
 };
 
@@ -41,6 +55,21 @@ unsigned int rnum_dumpling;;
 unsigned int rnum_carrotcake;
 unsigned int rnum_seaweedchicken;
 
+// day 2 
+unsigned int num_chickenfeet { 3 };
+unsigned int num_hargao { 3 };
+unsigned int num_siewmai { 3 };
+unsigned int num_charsiewbao { 3 };
+unsigned int num_doushabao { 3 };
+unsigned int num_coffeebao { 3 };
+
+unsigned int rnum_chickenfeet { 3 };
+unsigned int rnum_hargao { 3 };
+unsigned int rnum_siewmai { 3 };
+unsigned int rnum_charsiewbao { 3 };
+unsigned int rnum_doushabao { 3 };
+unsigned int rnum_coffeebao { 3 };
+
 int max_customers { 0 };
 int num_customers { 0 };
 
@@ -53,7 +82,16 @@ int GetRandomOrder ()
 		{
 			return 0;
 		}
-		int rand_order = rand () % 4;
+		int rand_order;
+		if ( hawker_scene_day == DAY::ONE )
+		{
+			rand_order = rand () % 4;
+		}
+		else if ( hawker_scene_day == DAY::TWO )
+		{
+			rand_order = rand () % 10;
+		}
+
 		switch ( rand_order )
 		{
 			// springroll
@@ -85,6 +123,54 @@ int GetRandomOrder ()
 			if ( rnum_seaweedchicken > 0 )
 			{
 				--rnum_seaweedchicken;
+				--num_customers;
+				return rand_order;
+			}
+			break;
+		case ( 4 ):
+			if ( rnum_chickenfeet > 0 )
+			{
+				--rnum_chickenfeet;
+				--num_customers;
+				return rand_order;
+			}
+			break;
+		case ( 5 ):
+			if ( rnum_hargao > 0 )
+			{
+				--rnum_hargao;
+				--num_customers;
+				return rand_order;
+			}
+			break;
+		case ( 6 ):
+			if ( rnum_siewmai > 0 )
+			{
+				--rnum_siewmai;
+				--num_customers;
+				return rand_order;
+			}
+			break;
+		case ( 7 ):
+			if ( rnum_charsiewbao > 0 )
+			{
+				--rnum_charsiewbao;
+				--num_customers;
+				return rand_order;
+			}
+			break;
+		case ( 8 ):
+			if ( rnum_doushabao > 0 )
+			{
+				--rnum_doushabao;
+				--num_customers;
+				return rand_order;
+			}
+			break;
+		case ( 9 ):
+			if ( rnum_coffeebao > 0 )
+			{
+				--rnum_coffeebao;
 				--num_customers;
 				return rand_order;
 			}
@@ -573,6 +659,10 @@ void InitHawkerQueue()
 	rnum_seaweedchicken = num_seaweedchicken + ( ( rand () % 5 ) - 2 );
 
 	max_customers = rnum_springroll + rnum_carrotcake + rnum_dumpling + rnum_seaweedchicken;
+	if ( hawker_scene_day == DAY::TWO )
+	{
+		max_customers += rnum_chickenfeet + rnum_hargao + rnum_siewmai + rnum_coffeebao + rnum_doushabao + rnum_charsiewbao;
+	}
 	num_customers = max_customers;
 }
 

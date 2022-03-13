@@ -14,6 +14,64 @@
 
 #include "../ButtonLogic.h"
 
+/*!
+ * DAY RELATED - START
+*/
+
+void InitDay () 
+{
+	// side tray
+	Scene ().EntityFlagActive ( "SideTray" , false );
+	Scene ().EntityFlagActive ( "CharSiewBao" , false );
+	Scene ().EntityFlagActive ( "bb_CharSiewBao" , false );
+	Scene ().EntityFlagActive ( "DouShaBao" , false );
+	Scene ().EntityFlagActive ( "bb_DouShaBao" , false );
+	Scene ().EntityFlagActive ( "CofeeBao" , false );
+	Scene ().EntityFlagActive ( "bb_CofeeBao" , false );
+	Scene ().EntityFlagActive ( "PlainCCF" , false );
+	Scene ().EntityFlagActive ( "bb_PlainCCF" , false );
+	Scene ().EntityFlagActive ( "PrawnCCF" , false );
+	Scene ().EntityFlagActive ( "bb_PrawnCCF" , false );
+	
+	// steamer
+	Scene ().EntityFlagActive ( "RoundSteamer" , false );
+	Scene ().EntityFlagActive ( "SiewMai" , false );
+	Scene ().EntityFlagActive ( "bb_SiewMai" , false );
+	Scene ().EntityFlagActive ( "HarGow" , false );
+	Scene ().EntityFlagActive ( "bb_HarGow" , false );
+	Scene ().EntityFlagActive ( "ChickenFeet" , false );
+	Scene ().EntityFlagActive ( "bb_ChickenFeet" , false );
+
+	// init day related stuff
+	switch ( hawker_scene_day )
+	{
+	case ( DAY::ONE ):
+		break;
+	case ( DAY::TWO ):
+		Scene ().EntityFlagActive ( "RoundSteamer" , true );
+		Scene ().EntityFlagActive ( "SiewMai" , true );
+		Scene ().EntityFlagActive ( "bb_SiewMai" , true );
+		Scene ().EntityFlagActive ( "HarGow" , true );
+		Scene ().EntityFlagActive ( "bb_HarGow" , true );
+		Scene ().EntityFlagActive ( "ChickenFeet" , true );
+		Scene ().EntityFlagActive ( "bb_ChickenFeet" , true );
+		Scene ().EntityFlagActive ( "SideTray" , true );
+		Scene ().EntityFlagActive ( "CharSiewBao" , true );
+		Scene ().EntityFlagActive ( "bb_CharSiewBao" , true );
+		Scene ().EntityFlagActive ( "DouShaBao" , true );
+		Scene ().EntityFlagActive ( "bb_DouShaBao" , true );
+		Scene ().EntityFlagActive ( "CofeeBao" , true );
+		Scene ().EntityFlagActive ( "bb_CofeeBao" , true );
+		break;
+	case ( DAY::THREE ):
+		break;
+	}
+}
+
+/*!
+ * DAY RELATED - END
+*/
+
 enum class HawkerSceneState
 {
 	Main,
@@ -38,7 +96,13 @@ enum class CursorState
 	TongsWanton,
 	TongsSeaweedChicken,
 	TongsSpringroll,
-	TongsCarrotCake
+	TongsCarrotCake,
+	TongsChickenFeet,
+	TongsSteamDumpling,
+	TongsSiewMai,
+	TongsCharSiewBao,
+	TongsDouShaBao,
+	TongsCoffeeBao
 };
 
 std::string cursor_object_names[] = {
@@ -49,7 +113,13 @@ std::string cursor_object_names[] = {
 	"TongsDumpling",
 	"TongsSeaweedChicken",
 	"TongsSpringroll",
-	"TongsCarrotCake"
+	"TongsCarrotCake",
+	"TongsChickenFeet",
+	"TongsSteamDumpling",
+	"TongsSiewMai",
+	"TongsCharSiewBao",
+	"TongsDouShaBao",
+	"TongsCoffeeBao"
 };
 
 CursorState cursor_state = CursorState::Nothing;
@@ -61,6 +131,15 @@ void FlagAllCursorsFalse()
 	Scene().EntityFlagActive("TongsDumpling", false);
 	Scene().EntityFlagActive("TongsSeaweedChicken", false);
 	Scene().EntityFlagActive("TongsSpringroll", false);
+
+	// day 2 tongs
+	Scene ().EntityFlagActive ( "TongsChickenFeet" , false );
+	Scene ().EntityFlagActive ( "TongsSteamDumpling" , false );
+	Scene ().EntityFlagActive ( "TongsSiewMai" , false );
+	Scene ().EntityFlagActive ( "TongsCharSiewBao" , false );
+	Scene ().EntityFlagActive ( "TongsDouShaBao" , false );
+	Scene ().EntityFlagActive ( "TongsCoffeeBao" , false );
+
 	Scene().EntityFlagActive("ScizzorsCursor", false);
 	Scene().EntityFlagActive("PlateCursor", false);
 	cursor_state = CursorState::Nothing;
@@ -85,7 +164,13 @@ void FlagCursorState(CursorState state)
 		state == CursorState::TongsCarrotCake ||
 		state == CursorState::TongsSeaweedChicken ||
 		state == CursorState::TongsSpringroll ||
-		state == CursorState::TongsWanton )
+		state == CursorState::TongsWanton ||
+		state == CursorState::TongsChickenFeet ||
+		state == CursorState::TongsSteamDumpling || 
+		state == CursorState::TongsSiewMai ||
+		state == CursorState::TongsCharSiewBao ||
+		state == CursorState::TongsDouShaBao ||
+		state == CursorState::TongsCoffeeBao )
 	{
 		Scene ().GetComponent<JZEngine::Texture> ( "Tongs" )->texture_id_ = Scene ().GetTexture ( "Tongs(Shaded)_Equipment_hawker" );
 	}
@@ -97,6 +182,54 @@ bool CheckCursorState(CursorState state)
 }
 
 void ResetCursors();
+
+void ProcessDay2Item (CursorState state , const char* bb, const char* foodObject, unsigned int& count, const char* tex1, const char* tex2)
+{
+	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( bb ) )
+	{
+		if ( e->on_click_ )
+		{
+			if ( CheckCursorState ( CursorState::EmptyTongs ) )
+			{
+				if ( count > 1 )
+				{
+					JZEngine::Log::Info ( "Main" , "{} Selected" , foodObject );
+					FlagCursorState ( state );
+					--count;
+					std::stringstream ss;
+					ss << tex1 << count << tex2;
+					Scene ().GetComponent<JZEngine::Texture> ( foodObject )->texture_id_ = Scene ().GetTexture ( ss.str () );
+				}
+				else if ( count == 1 )
+				{
+					JZEngine::Log::Info ( "Main" , "{} Selected" , foodObject );
+					FlagCursorState ( state );
+					--count;
+					Scene ().EntityFlagActive ( foodObject , false );
+				}
+			}
+			else if ( CheckCursorState ( state ) )
+			{
+				if ( count > 0 )
+				{
+					JZEngine::Log::Info ( "Main" , "{} Returned" , foodObject );
+					FlagCursorState ( CursorState::EmptyTongs );
+					++count;
+					std::stringstream ss;
+					ss << tex1 << count << tex2;
+					Scene ().GetComponent<JZEngine::Texture> ( foodObject )->texture_id_ = Scene ().GetTexture ( ss.str () );
+				}
+				else
+				{
+					JZEngine::Log::Info ( "Main" , "{} Returned" , foodObject );
+					FlagCursorState ( CursorState::EmptyTongs );
+					++count;
+					Scene ().EntityFlagActive ( foodObject , true );
+				}
+			}
+		}
+	}
+}
 
 /*!
  * @brief CURSOR CODE - END
@@ -120,6 +253,7 @@ void InitSky ()
 	day_time = 5.0f;
 	day_begin = false;
 
+	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Clouds" )->tint = { 1.0f,1.0f,1.0f,1.0f };
 	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "NightSky" )->tint.w = 0.0f;
 	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "NightHue" )->tint.w = 0.0f;
 	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "EveningHue" )->tint.w = 0.0f;
@@ -340,23 +474,57 @@ void UpdatePhoneTransition ( float dt )
 
 void FlagShopActive ( bool flag )
 {
-	Scene ().EntityFlagActive ( "BeginShop" , flag );
-	Scene ().EntityFlagActive ( "BeginBlack" , flag );
-	Scene ().EntityFlagActive ( "Shop_a_springroll" , flag );
-	Scene ().EntityFlagActive ( "Shop_s_springroll" , flag );
-	Scene ().EntityFlagActive ( "Shop_a_seaweedchickenl" , flag );
-	Scene ().EntityFlagActive ( "Shop_s_seaweedchickenl" , flag );
-	Scene ().EntityFlagActive ( "Shop_a_dumpling" , flag );
-	Scene ().EntityFlagActive ( "Shop_s_dumpling" , flag );
-	Scene ().EntityFlagActive ( "Shop_a_carrotcake" , flag );
-	Scene ().EntityFlagActive ( "Shop_s_carrotcake" , flag );
-	Scene ().EntityFlagActive ( "BeginShop_Exit" , flag );
-	Scene ().EntityFlagActive ( "BeginShop_Next" , flag );
-	Scene ().EntityFlagActive ( "Springroll_amt" , flag );
-	Scene ().EntityFlagActive ( "Seaweedchicken_amt" , flag );
-	Scene ().EntityFlagActive ( "Dumpling_amt" , flag );
-	Scene ().EntityFlagActive ( "Carrotcake_amt" , flag );
-	Scene ().EntityFlagActive ( "Total_amt" , flag );
+	if ( flag )
+	{
+		Scene ().EntityFlagActive ( "BeginBlack" , flag );
+		Scene ().EntityFlagActive ( "BeginShop_Exit" , flag );
+		Scene ().EntityFlagActive ( "BeginShop_Next" , flag );
+		if ( hawker_scene_day == DAY::ONE )
+		{
+			Scene ().EntityFlagActive ( "BeginShop" , flag );
+			Scene ().EntityFlagActive ( "Shop_a_springroll" , flag );
+			Scene ().EntityFlagActive ( "Shop_s_springroll" , flag );
+			Scene ().EntityFlagActive ( "Shop_a_seaweedchickenl" , flag );
+			Scene ().EntityFlagActive ( "Shop_s_seaweedchickenl" , flag );
+			Scene ().EntityFlagActive ( "Shop_a_dumpling" , flag );
+			Scene ().EntityFlagActive ( "Shop_s_dumpling" , flag );
+			Scene ().EntityFlagActive ( "Shop_a_carrotcake" , flag );
+			Scene ().EntityFlagActive ( "Shop_s_carrotcake" , flag );
+			Scene ().EntityFlagActive ( "Springroll_amt" , flag );
+			Scene ().EntityFlagActive ( "Seaweedchicken_amt" , flag );
+			Scene ().EntityFlagActive ( "Dumpling_amt" , flag );
+			Scene ().EntityFlagActive ( "Carrotcake_amt" , flag );
+			Scene ().EntityFlagActive ( "Total_amt" , flag );
+		}
+		else if ( hawker_scene_day == DAY::TWO )
+		{
+			Scene ().EntityFlagActive ( "BeginShop2" , flag );
+		}
+	}
+	else
+	{
+		// day 1
+		Scene ().EntityFlagActive ( "BeginShop" , flag );
+		Scene ().EntityFlagActive ( "BeginBlack" , flag );
+		Scene ().EntityFlagActive ( "Shop_a_springroll" , flag );
+		Scene ().EntityFlagActive ( "Shop_s_springroll" , flag );
+		Scene ().EntityFlagActive ( "Shop_a_seaweedchickenl" , flag );
+		Scene ().EntityFlagActive ( "Shop_s_seaweedchickenl" , flag );
+		Scene ().EntityFlagActive ( "Shop_a_dumpling" , flag );
+		Scene ().EntityFlagActive ( "Shop_s_dumpling" , flag );
+		Scene ().EntityFlagActive ( "Shop_a_carrotcake" , flag );
+		Scene ().EntityFlagActive ( "Shop_s_carrotcake" , flag );
+		Scene ().EntityFlagActive ( "BeginShop_Exit" , flag );
+		Scene ().EntityFlagActive ( "BeginShop_Next" , flag );
+		Scene ().EntityFlagActive ( "Springroll_amt" , flag );
+		Scene ().EntityFlagActive ( "Seaweedchicken_amt" , flag );
+		Scene ().EntityFlagActive ( "Dumpling_amt" , flag );
+		Scene ().EntityFlagActive ( "Carrotcake_amt" , flag );
+		Scene ().EntityFlagActive ( "Total_amt" , flag );
+
+		// day 2
+		Scene ().EntityFlagActive ( "BeginShop2" , flag );
+	}
 }
 
 unsigned int springroll_count { 5 };
@@ -368,6 +536,21 @@ unsigned int init_springroll_count { 0 };
 unsigned int init_carrotcake_count { 0 };
 unsigned int init_wanton_count { 0 };
 unsigned int init_seaweedchicken_count { 0 };
+
+// day 2 foods
+unsigned int chickenfeet_count { 3 };
+unsigned int hargao_count { 3 };
+unsigned int siewmai_count { 3 };
+unsigned int charsiewbao_count { 3 };
+unsigned int doushabao_count { 3 };
+unsigned int coffeebao_count { 3 };
+
+unsigned int init_chickenfeet_count { 0 };
+unsigned int init_hargao_count { 0 };
+unsigned int init_siewmai_count { 0 };
+unsigned int init_charsiewbao_count { 0 };
+unsigned int init_doushabao_count { 0 };
+unsigned int init_coffeebao_count { 0 };
 
 unsigned int summary_sr_count { 0 };
 unsigned int summary_sc_count { 0 };
@@ -536,6 +719,12 @@ std::string plate_food_object_names[] = {
 	"tray_seaweedchicken",
 	"tray_springroll",
 	"tray_carrotcake",
+	"tray_chickenfeet",
+	"tray_hargao",
+	"tray_siewmai",
+	"tray_charsiewbao",
+	"tray_doushabao",
+	"tray_coffeebao",
 	"Nothing"
 };
 
@@ -550,7 +739,18 @@ void FlagAllTrayItemsFalse()
 	Scene().EntityFlagActive("tray_seaweedchicken", false);
 	Scene().EntityFlagActive("tray_springroll", false);
 	Scene().EntityFlagActive("tray_carrotcake", false);
+	Scene ().EntityFlagActive ( "tray_chickenfeet" , false );
+	Scene ().EntityFlagActive ( "tray_hargao" , false );
+	Scene ().EntityFlagActive ( "tray_siewmai" , false );
+	Scene ().EntityFlagActive ( "tray_charsiewbao" , false );
+	Scene ().EntityFlagActive ( "tray_doushabao" , false );
+	Scene ().EntityFlagActive ( "tray_coffeebao" , false );
 	current_order = CustomerOrder::Nothing;
+
+	// reset all cut foods
+	Scene ().GetComponent<JZEngine::Texture> ( "tray_charsiewbao" )->texture_id_ = Scene ().GetTexture ( "CharSiewBao_Food_Hawker" );
+	Scene ().GetComponent<JZEngine::Texture> ( "tray_doushabao" )->texture_id_ = Scene ().GetTexture ( "DouShaBao_Food_Hawker" );
+	Scene ().GetComponent<JZEngine::Texture> ( "tray_coffeebao" )->texture_id_ = Scene ().GetTexture ( "CoffeeBao_Food_Hawker" );
 }
 
 void FlagPlateState(bool flag)
@@ -597,6 +797,13 @@ void UnDisplayOrder()
 	Scene().EntityFlagActive("OrderSeaweed", false);
 	Scene().EntityFlagActive("OrderSpringroll", false);
 	Scene().EntityFlagActive("OrderCarrotcake", false);
+	// day 2 foods
+	Scene ().EntityFlagActive ( "OrderChickenfeet" , false );
+	Scene ().EntityFlagActive ( "OrderHargao" , false );
+	Scene ().EntityFlagActive ( "OrderSiewmai" , false );
+	Scene ().EntityFlagActive ( "OrderCharsiewbao" , false );
+	Scene ().EntityFlagActive ( "OrderDoushabao" , false );
+	Scene ().EntityFlagActive ( "OrderCoffeebao" , false );
 
 	Scene ().EntityFlagActive ( "OrderSuccess" , false );
 	// reset flags
@@ -632,6 +839,24 @@ void DisplayOrder(CustomerOrder order)
 		break;
 	case CustomerOrder::CarrotCake:
 		Scene().EntityFlagActive("OrderCarrotcake", true);
+		break;
+	case CustomerOrder::ChickenFeet:
+		Scene ().EntityFlagActive ( "OrderChickenfeet" , true );
+		break;
+	case CustomerOrder::HarGao:
+		Scene ().EntityFlagActive ( "OrderHargao" , true );
+		break;
+	case CustomerOrder::SiewMai:
+		Scene ().EntityFlagActive ( "OrderSiewmai" , true );
+		break;
+	case CustomerOrder::CharSiewBao:
+		Scene ().EntityFlagActive ( "OrderCharsiewbao" , true );
+		break;
+	case CustomerOrder::DouShaBao:
+		Scene ().EntityFlagActive ( "OrderDoushabao" , true );
+		break;
+	case CustomerOrder::CoffeeBao:
+		Scene ().EntityFlagActive ( "OrderCoffeebao" , true );
 		break;
 	}
 }
@@ -1322,6 +1547,42 @@ void UpdateMainScene(float dt)
 			}
 		}
 	}
+
+	// day 2 foods
+	ProcessDay2Item ( CursorState::TongsChickenFeet , "bb_ChickenFeet" , "ChickenFeet" , chickenfeet_count , "RoundSteamerFeet" , "_Equipment_hawker" );
+	ProcessDay2Item ( CursorState::TongsSteamDumpling , "bb_HarGow" , "HarGow" , hargao_count , "RoundSteamerDumpling" , "_Equipment_hawker" );
+	ProcessDay2Item ( CursorState::TongsSiewMai , "bb_SiewMai" , "SiewMai" , siewmai_count , "RoundSteamerSiuMai" , "_Equipment_hawker" );
+	ProcessDay2Item ( CursorState::TongsCharSiewBao , "bb_CharSiewBao" , "CharSiewBao" , charsiewbao_count , "CharSiewBao(" , ")_Equipment_hawker" );
+	ProcessDay2Item ( CursorState::TongsDouShaBao , "bb_DouShaBao" , "DouShaBao" , doushabao_count , "DouBao(" , ")_Equipment_hawker" );
+	ProcessDay2Item ( CursorState::TongsCoffeeBao , "bb_CofeeBao" , "CofeeBao" , coffeebao_count , "CoffeeBao(" , ")_Equipment_hawker" );
+	/*if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "bb_ChickenFeet" ) )
+	{
+		if ( e->on_click_ )
+		{
+			if ( CheckCursorState ( CursorState::EmptyTongs ) )
+			{
+				JZEngine::Log::Info ( "Main" , "Chicken Feet Selected" );
+				if ( carrotcake_count > 0 )
+				{
+					FlagCursorState ( CursorState::TongsChickenFeet );
+					--chickenfeet_count;
+					std::stringstream chickenfeet_name;
+					chickenfeet_name << "RoundSteamerFeet" << chickenfeet_count << "_Equipment_hawker";
+					Scene ().GetComponent<JZEngine::Texture> ( "ChickenFeet" )->texture_id_ = Scene ().GetTexture ( chickenfeet_name.str () );
+				}
+			}
+			else if ( CheckCursorState ( CursorState::TongsChickenFeet ) )
+			{
+				JZEngine::Log::Info ( "Main" , "Chicken Feet Returned" );
+				FlagCursorState ( CursorState::EmptyTongs );
+				++chickenfeet_count;
+				std::stringstream chickenfeet_name;
+				chickenfeet_name << "RoundSteamerFeet" << chickenfeet_count << "_Equipment_hawker";
+				Scene ().GetComponent<JZEngine::Texture> ( "ChickenFeet" )->texture_id_ = Scene ().GetTexture ( chickenfeet_name.str () );
+			}
+		}
+	}*/
+
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_plate"))
 	{
 		if (e->on_click_ && !plate_on_hand)
@@ -1367,8 +1628,19 @@ void UpdateMainScene(float dt)
 	{
 		if (e->on_click_ && !plate_on_hand)
 		{
-			/*JZEngine::Log::Info("Main", "Scizzors Selected");
-			FlagCursorState(CursorState::Scizzors);*/
+			JZEngine::Log::Info("Main", "Scizzors Selected");
+			FlagCursorState(CursorState::Scizzors);
+		}
+		if ( e->on_hover_ )
+		{
+
+			Scene ().GetComponent<JZEngine::Transform> ( "Scizzors" )->scale_.x = 0.7f;
+			Scene ().GetComponent<JZEngine::Transform> ( "Scizzors" )->scale_.y = 0.7f;
+		}
+		else
+		{
+			Scene ().GetComponent<JZEngine::Transform> ( "Scizzors" )->scale_.x = 0.59f;
+			Scene ().GetComponent<JZEngine::Transform> ( "Scizzors" )->scale_.y = 0.59f;
 		}
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_trashbin"))
@@ -1432,12 +1704,56 @@ void UpdateMainScene(float dt)
 					SetPlateFood(CustomerOrder::Wanton);
 					FlagAllCursorsFalse();
 					break;
+				case CursorState::TongsChickenFeet:
+					SetPlateFood ( CustomerOrder::ChickenFeet );
+					FlagAllCursorsFalse ();
+					break;
+				case CursorState::TongsSteamDumpling:
+					SetPlateFood ( CustomerOrder::HarGao );
+					FlagAllCursorsFalse ();
+					break;
+				case CursorState::TongsSiewMai:
+					SetPlateFood ( CustomerOrder::SiewMai );
+					FlagAllCursorsFalse ();
+					break;
+				case CursorState::TongsCharSiewBao:
+					SetPlateFood ( CustomerOrder::CharSiewBao );
+					FlagAllCursorsFalse ();
+					break;
+				case CursorState::TongsDouShaBao:
+					SetPlateFood ( CustomerOrder::DouShaBao );
+					FlagAllCursorsFalse ();
+					break;
+				case CursorState::TongsCoffeeBao:
+					SetPlateFood ( CustomerOrder::CoffeeBao );
+					FlagAllCursorsFalse ();
+					break;
 				}
 			}
 			else if (plate_on_tray && current_order != CustomerOrder::Nothing)
 			{
-				plate_on_hand = true;
-				FlagAllCursorsFalse();
+				// cut mechanic
+				if ( CheckCursorState ( CursorState::Scizzors ) )
+				{
+					switch ( current_order )
+					{
+					case ( CustomerOrder::CharSiewBao ):
+						Scene ().GetComponent<JZEngine::Texture> ( "tray_charsiewbao" )->texture_id_ = Scene ().GetTexture ( "CharSiewBaoCUT01_Food_Hawker" );
+						break;
+					case ( CustomerOrder::DouShaBao ):
+						Scene ().GetComponent<JZEngine::Texture> ( "tray_doushabao" )->texture_id_ = Scene ().GetTexture ( "DouShaBaoCUT01_Food_Hawker" );
+						break;
+					case ( CustomerOrder::CoffeeBao ):
+						Scene ().GetComponent<JZEngine::Texture> ( "tray_coffeebao" )->texture_id_ = Scene ().GetTexture ( "CoffeeBaoCUT01_Food_Hawker" );
+						break;
+					}
+					FlagAllCursorsFalse ();
+				}
+				else
+				{
+					plate_on_hand = true;
+					FlagAllCursorsFalse ();
+				}
 			}
 			else if (!plate_on_tray && CheckCursorState(CursorState::Plate))
 			{
@@ -1516,6 +1832,24 @@ void UpdateMainScene(float dt)
 						break;
 					case ( CustomerOrder::Wanton ):
 						current_coins += 2.1f;
+						break;
+					case ( CustomerOrder::ChickenFeet ):
+						current_coins += 1.0f;
+						break;
+					case ( CustomerOrder::HarGao ):
+						current_coins += 1.0f;
+						break;
+					case ( CustomerOrder::SiewMai ):
+						current_coins += 1.0f;
+						break;
+					case ( CustomerOrder::CharSiewBao ):
+						current_coins += 1.0f;
+						break;
+					case ( CustomerOrder::DouShaBao ):
+						current_coins += 1.0f;
+						break;
+					case ( CustomerOrder::CoffeeBao ):
+						current_coins += 1.0f;
 						break;
 					}
 					plate_on_hand = false;
@@ -1671,6 +2005,12 @@ void HawkerSceneInit()
 	carrotcake_count = 5;
 	wanton_count = 5;
 	seaweedchicken_count = 5;
+	chickenfeet_count = 3;
+	hargao_count = 3;
+	siewmai_count = 3;
+	charsiewbao_count = 3;
+	doushabao_count = 3;
+	coffeebao_count = 3;
 
 	// shop init
 	FlagShopActive ( true );
@@ -1709,6 +2049,30 @@ void HawkerSceneInit()
 	InitLoseBar ();
 
 	InitSky ();
+
+	InitDay ();
+
+	// to reset shop for the day
+	FlagShopActive ( false );
+	FlagShopActive ( true );
+
+	Scene ().GetComponent<JZEngine::Transform> ( "Plate" )->position_.x = -159.0f;
+	Scene ().GetComponent<JZEngine::Transform> ( "bb_plate" )->position_.x = -159.0f;
+	Scene ().GetComponent<JZEngine::Transform> ( "Tongs" )->position_.x = 200.0f;
+	Scene ().GetComponent<JZEngine::Transform> ( "bb_tongs" )->position_.x = 200.0f;
+
+	if ( hawker_scene_day == DAY::ONE )
+	{
+		Scene ().EntityFlagActive ( "Scizzors" , false );
+		Scene ().EntityFlagActive ( "bb_scizzors" , false );
+	}
+	else if (hawker_scene_day == DAY::TWO )
+	{
+		Scene ().GetComponent<JZEngine::Transform> ( "Plate" )->position_.x -= 200.0f;
+		Scene ().GetComponent<JZEngine::Transform> ( "bb_plate" )->position_.x -= 200.0f;
+		Scene ().GetComponent<JZEngine::Transform> ( "Tongs" )->position_.x += 200.0f;
+		Scene ().GetComponent<JZEngine::Transform> ( "bb_tongs" )->position_.x += 200.0f;
+	}
 }
 
 void HawkerSceneUpdate(float dt)
