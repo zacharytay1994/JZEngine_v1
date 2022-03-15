@@ -20,7 +20,7 @@ enum class DAY
 	TWO ,
 	THREE
 };
-DAY hawker_scene_day = DAY::TWO;
+DAY hawker_scene_day = DAY::THREE;
 
 enum class CustomerState
 {
@@ -42,6 +42,8 @@ enum class CustomerOrder
 	CharSiewBao,
 	DouShaBao,
 	CoffeeBao,
+	PlainCCF,
+	PrawnCCF,
 	Nothing
 };
 
@@ -70,6 +72,13 @@ unsigned int rnum_charsiewbao { 3 };
 unsigned int rnum_doushabao { 3 };
 unsigned int rnum_coffeebao { 3 };
 
+// day 2
+unsigned int num_plainccf { 5 };
+unsigned int num_prawnccf { 5 };
+
+unsigned int rnum_plainccf { 5 };
+unsigned int rnum_prawnccf { 5 };
+
 int max_customers { 0 };
 int num_customers { 0 };
 
@@ -82,7 +91,7 @@ int GetRandomOrder ()
 		{
 			return 0;
 		}
-		int rand_order;
+		int rand_order = 0;
 		if ( hawker_scene_day == DAY::ONE )
 		{
 			rand_order = rand () % 4;
@@ -90,6 +99,10 @@ int GetRandomOrder ()
 		else if ( hawker_scene_day == DAY::TWO )
 		{
 			rand_order = rand () % 10;
+		}
+		else if ( hawker_scene_day == DAY::THREE )
+		{
+			rand_order = rand () % 12;
 		}
 
 		switch ( rand_order )
@@ -127,6 +140,7 @@ int GetRandomOrder ()
 				return rand_order;
 			}
 			break;
+		// day 2
 		case ( 4 ):
 			if ( rnum_chickenfeet > 0 )
 			{
@@ -171,6 +185,23 @@ int GetRandomOrder ()
 			if ( rnum_coffeebao > 0 )
 			{
 				--rnum_coffeebao;
+				--num_customers;
+				return rand_order;
+			}
+			break;
+		// day 3
+		case ( 10 ):
+			if ( rnum_plainccf > 0 )
+			{
+				--rnum_plainccf;
+				--num_customers;
+				return rand_order;
+			}
+			break;
+		case ( 11 ):
+			if ( rnum_prawnccf > 0 )
+			{
+				--rnum_prawnccf;
 				--num_customers;
 				return rand_order;
 			}

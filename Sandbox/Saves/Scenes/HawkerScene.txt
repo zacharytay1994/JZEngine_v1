@@ -24,7 +24,7 @@ Sky 0
 !
 Clouds 0 
 	c 0 struct JZEngine::Transform
-		-2744.47 40 0 0 0 1 1 7660 1048 
+		2079.21 40 0 0 0 1 1 7660 1048 
 	c 1 struct JZEngine::SpriteLayer
 		-30 
 	c 2 struct JZEngine::Texture
@@ -612,7 +612,7 @@ bb_trashbin 0
 	c 15 struct JZEngine::MouseEvent
 		70 78 
 !
-Cursor 13 
+Cursor 15 
 	c 0 struct JZEngine::Transform
 		-223.921 -77.2824 0 0 0 1 1 50 50 
 	c 16 struct JZEngine::FollowMouseCursor
@@ -764,11 +764,35 @@ TongsDouShaBao 0
 !
 TongsCoffeeBao 0 
 	c 0 struct JZEngine::Transform
-		-224.421 -77.9244 -0.499901 -0.642029 0 3 3 50 50 
+		-224.421 -77.9244 -0.499908 -0.642029 0 3 3 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		50 
 	c 2 struct JZEngine::Texture
 		TongswithCoffeeBao_Food_Hawker 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
+!
+TongsPlainCCF 0 
+	c 0 struct JZEngine::Transform
+		-223 -77 0.921005 0.282402 0 3 3 50 50 
+	c 1 struct JZEngine::SpriteLayer
+		50 
+	c 2 struct JZEngine::Texture
+		TongswithPlainCCF_Food_Hawker 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
+!
+TongsPrawnCCF 0 
+	c 0 struct JZEngine::Transform
+		-223 -77 0.921005 0.282402 0 3 3 50 50 
+	c 1 struct JZEngine::SpriteLayer
+		50 
+	c 2 struct JZEngine::Texture
+		TongswithPrawnCCF_Food_Hawker 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
@@ -780,7 +804,7 @@ bb_tray 0
 	c 15 struct JZEngine::MouseEvent
 		270 80 
 !
-tray_plate 10 
+tray_plate 12 
 	c 0 struct JZEngine::Transform
 		-235 -151.271 0 0 0 4.29039 2.48812 50 50 
 	c 1 struct JZEngine::SpriteLayer
@@ -912,13 +936,37 @@ tray_coffeebao 0
 	c 10 struct JZEngine::Animation2D
 		0 0 1 1 0 1 1 
 !
+tray_plainccf 0 
+	c 0 struct JZEngine::Transform
+		-235 -151 0 0.270996 0 3 1.5 50 50 
+	c 1 struct JZEngine::SpriteLayer
+		27 
+	c 2 struct JZEngine::Texture
+		PlainCCF_Food_Hawker 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
+!
+tray_prawnccf 0 
+	c 0 struct JZEngine::Transform
+		-235 -151 0 0.270996 0 3 1.5 50 50 
+	c 1 struct JZEngine::SpriteLayer
+		27 
+	c 2 struct JZEngine::Texture
+		PrawnCCF_Food_Hawker 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
+!
 bb_customer 0 
 	c 0 struct JZEngine::Transform
 		-281.25 169.068 0 0 0 1 1 50 50 
 	c 15 struct JZEngine::MouseEvent
 		100 200 
 !
-OrderUI 15 
+OrderUI 17 
 	c 0 struct JZEngine::Transform
 		-18.7499 319.068 0 0 0 1 1 50 50 
 !
@@ -1097,6 +1145,30 @@ OrderCoffeebao 0
 		51 
 	c 2 struct JZEngine::Texture
 		CoffeeBao_Food_Hawker 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
+!
+OrderPlainccf 0 
+	c 0 struct JZEngine::Transform
+		-33.75 312 -15.0001 -7.06799 0 2 1.5 50 50 
+	c 1 struct JZEngine::SpriteLayer
+		51 
+	c 2 struct JZEngine::Texture
+		PlainCCF_Food_Hawker 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
+!
+OrderPrawnccf 0 
+	c 0 struct JZEngine::Transform
+		-33.75 312 -15.0001 -7.06799 0 2 1.5 50 50 
+	c 1 struct JZEngine::SpriteLayer
+		51 
+	c 2 struct JZEngine::Texture
+		ShopBackgroundDay1_UI_hawker 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D

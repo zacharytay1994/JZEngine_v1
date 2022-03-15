@@ -65,6 +65,22 @@ void InitDay ()
 		Scene ().EntityFlagActive ( "bb_CofeeBao" , true );
 		break;
 	case ( DAY::THREE ):
+		// day 2
+		Scene ().EntityFlagActive ( "RoundSteamer" , true );
+		Scene ().EntityFlagActive ( "SiewMai" , true );
+		Scene ().EntityFlagActive ( "bb_SiewMai" , true );
+		Scene ().EntityFlagActive ( "HarGow" , true );
+		Scene ().EntityFlagActive ( "bb_HarGow" , true );
+		Scene ().EntityFlagActive ( "ChickenFeet" , true );
+		Scene ().EntityFlagActive ( "bb_ChickenFeet" , true );
+		Scene ().EntityFlagActive ( "SideTray" , true );
+		Scene ().EntityFlagActive ( "CharSiewBao" , true );
+		Scene ().EntityFlagActive ( "bb_CharSiewBao" , true );
+		Scene ().EntityFlagActive ( "DouShaBao" , true );
+		Scene ().EntityFlagActive ( "bb_DouShaBao" , true );
+		Scene ().EntityFlagActive ( "CofeeBao" , true );
+		Scene ().EntityFlagActive ( "bb_CofeeBao" , true );
+
 		Scene ().EntityFlagActive ( "PlainCCF" , true );
 		Scene ().EntityFlagActive ( "bb_PlainCCF" , true );
 		Scene ().EntityFlagActive ( "PrawnCCF" , true );
@@ -107,7 +123,9 @@ enum class CursorState
 	TongsSiewMai,
 	TongsCharSiewBao,
 	TongsDouShaBao,
-	TongsCoffeeBao
+	TongsCoffeeBao,
+	TongsPlainCCF,
+	TongsPrawnCCF
 };
 
 std::string cursor_object_names[] = {
@@ -124,7 +142,9 @@ std::string cursor_object_names[] = {
 	"TongsSiewMai",
 	"TongsCharSiewBao",
 	"TongsDouShaBao",
-	"TongsCoffeeBao"
+	"TongsCoffeeBao",
+	"TongsPlainCCF",
+	"TongsPrawnCCF"
 };
 
 CursorState cursor_state = CursorState::Nothing;
@@ -144,6 +164,10 @@ void FlagAllCursorsFalse()
 	Scene ().EntityFlagActive ( "TongsCharSiewBao" , false );
 	Scene ().EntityFlagActive ( "TongsDouShaBao" , false );
 	Scene ().EntityFlagActive ( "TongsCoffeeBao" , false );
+
+	// day 3 tongs
+	Scene ().EntityFlagActive ( "TongsPlainCCF" , false );
+	Scene ().EntityFlagActive ( "TongsPrawnCCF" , false );
 
 	Scene().EntityFlagActive("ScizzorsCursor", false);
 	Scene().EntityFlagActive("PlateCursor", false);
@@ -175,7 +199,9 @@ void FlagCursorState(CursorState state)
 		state == CursorState::TongsSiewMai ||
 		state == CursorState::TongsCharSiewBao ||
 		state == CursorState::TongsDouShaBao ||
-		state == CursorState::TongsCoffeeBao )
+		state == CursorState::TongsCoffeeBao ||
+		state == CursorState::TongsPlainCCF ||
+		state == CursorState::TongsPrawnCCF )
 	{
 		Scene ().GetComponent<JZEngine::Texture> ( "Tongs" )->texture_id_ = Scene ().GetTexture ( "Tongs(Shaded)_Equipment_hawker" );
 	}
@@ -537,6 +563,10 @@ void FlagShopActive ( bool flag )
 			Scene ().EntityFlagActive ( "Shop2_amt_prawndumpling" , flag );
 			Scene ().EntityFlagActive ( "Shop2_amt_chickenfeet" , flag );
 		}
+		else if ( hawker_scene_day == DAY::THREE )
+		{
+
+		}
 	}
 	else
 	{
@@ -593,6 +623,9 @@ void FlagShopActive ( bool flag )
 		Scene ().EntityFlagActive ( "Shop2_amt_chickendumpling" , flag );
 		Scene ().EntityFlagActive ( "Shop2_amt_prawndumpling" , flag );
 		Scene ().EntityFlagActive ( "Shop2_amt_chickenfeet" , flag );
+
+		// day 3
+
 	}
 }
 
@@ -663,6 +696,13 @@ unsigned int init_siewmai_count { 0 };
 unsigned int init_charsiewbao_count { 0 };
 unsigned int init_doushabao_count { 0 };
 unsigned int init_coffeebao_count { 0 };
+
+// day 3 foods
+unsigned int plainccf_count { 5 };
+unsigned int prawnccf_count { 5 };
+
+unsigned int init_plainccf_count { 0 };
+unsigned int init_prawnccf_count { 0 };
 
 unsigned int summary_sr_count { 0 };
 unsigned int summary_sc_count { 0 };
@@ -859,6 +899,8 @@ std::string plate_food_object_names[] = {
 	"tray_charsiewbao",
 	"tray_doushabao",
 	"tray_coffeebao",
+	"tray_plainccf",
+	"tray_prawnccf",
 	"Nothing"
 };
 
@@ -879,12 +921,16 @@ void FlagAllTrayItemsFalse()
 	Scene ().EntityFlagActive ( "tray_charsiewbao" , false );
 	Scene ().EntityFlagActive ( "tray_doushabao" , false );
 	Scene ().EntityFlagActive ( "tray_coffeebao" , false );
+	Scene ().EntityFlagActive ( "tray_plainccf" , false );
+	Scene ().EntityFlagActive ( "tray_prawnccf" , false );
 	current_order = CustomerOrder::Nothing;
 
 	// reset all cut foods
 	Scene ().GetComponent<JZEngine::Texture> ( "tray_charsiewbao" )->texture_id_ = Scene ().GetTexture ( "CharSiewBao_Food_Hawker" );
 	Scene ().GetComponent<JZEngine::Texture> ( "tray_doushabao" )->texture_id_ = Scene ().GetTexture ( "DouShaBao_Food_Hawker" );
 	Scene ().GetComponent<JZEngine::Texture> ( "tray_coffeebao" )->texture_id_ = Scene ().GetTexture ( "CoffeeBao_Food_Hawker" );
+	Scene ().GetComponent<JZEngine::Texture> ( "tray_plainccf" )->texture_id_ = Scene ().GetTexture ( "PlainCCF_Food_Hawker" );
+	Scene ().GetComponent<JZEngine::Texture> ( "tray_prawnccf" )->texture_id_ = Scene ().GetTexture ( "PrawnCCF_Food_Hawker" );
 }
 
 void FlagPlateState(bool flag)
@@ -938,6 +984,9 @@ void UnDisplayOrder()
 	Scene ().EntityFlagActive ( "OrderCharsiewbao" , false );
 	Scene ().EntityFlagActive ( "OrderDoushabao" , false );
 	Scene ().EntityFlagActive ( "OrderCoffeebao" , false );
+	// day 3 foods
+	Scene ().EntityFlagActive ( "OrderPlainccf" , false );
+	Scene ().EntityFlagActive ( "OrderPrawnccf" , false );
 
 	Scene ().EntityFlagActive ( "OrderSuccess" , false );
 	// reset flags
@@ -991,6 +1040,12 @@ void DisplayOrder(CustomerOrder order)
 		break;
 	case CustomerOrder::CoffeeBao:
 		Scene ().EntityFlagActive ( "OrderCoffeebao" , true );
+		break;
+	case CustomerOrder::PlainCCF:
+		Scene ().EntityFlagActive ( "OrderPlainccf" , true );
+		break;
+	case CustomerOrder::PrawnCCF:
+		Scene ().EntityFlagActive ( "OrderPrawnccf" , true );
 		break;
 	}
 }
@@ -1703,6 +1758,10 @@ void UpdateMainScene(float dt)
 	ProcessDay2Item ( CursorState::TongsCharSiewBao , "bb_CharSiewBao" , "CharSiewBao" , charsiewbao_count , "CharSiewBao(" , ")_Equipment_hawker" );
 	ProcessDay2Item ( CursorState::TongsDouShaBao , "bb_DouShaBao" , "DouShaBao" , doushabao_count , "DouBao(" , ")_Equipment_hawker" );
 	ProcessDay2Item ( CursorState::TongsCoffeeBao , "bb_CofeeBao" , "CofeeBao" , coffeebao_count , "CoffeeBao(" , ")_Equipment_hawker" );
+
+	// day 3 foods
+	ProcessDay2Item ( CursorState::TongsPlainCCF , "bb_PlainCCF" , "PlainCCF" ,  plainccf_count , "PlainCCF(" , ")_Equipment_hawker" );
+	ProcessDay2Item ( CursorState::TongsPrawnCCF , "bb_PrawnCCF" , "PrawnCCF" , prawnccf_count , "PrawnCCF(" , ")_Equipment_hawker" );
 	/*if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "bb_ChickenFeet" ) )
 	{
 		if ( e->on_click_ )
@@ -1874,6 +1933,14 @@ void UpdateMainScene(float dt)
 					break;
 				case CursorState::TongsCoffeeBao:
 					SetPlateFood ( CustomerOrder::CoffeeBao );
+					FlagAllCursorsFalse ();
+					break;
+				case CursorState::TongsPlainCCF:
+					SetPlateFood ( CustomerOrder::PlainCCF );
+					FlagAllCursorsFalse ();
+					break;
+				case CursorState::TongsPrawnCCF:
+					SetPlateFood ( CustomerOrder::PrawnCCF );
 					FlagAllCursorsFalse ();
 					break;
 				}
@@ -2226,7 +2293,7 @@ void HawkerSceneInit()
 		Scene ().EntityFlagActive ( "Scizzors" , false );
 		Scene ().EntityFlagActive ( "bb_scizzors" , false );
 	}
-	else if (hawker_scene_day == DAY::TWO )
+	else if (hawker_scene_day == DAY::TWO || hawker_scene_day == DAY::THREE)
 	{
 		Scene ().GetComponent<JZEngine::Transform> ( "Plate" )->position_.x -= 200.0f;
 		Scene ().GetComponent<JZEngine::Transform> ( "bb_plate" )->position_.x -= 200.0f;
