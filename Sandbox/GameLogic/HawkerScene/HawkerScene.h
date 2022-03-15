@@ -2076,6 +2076,10 @@ void HawkerSceneInit()
 	Scene ().GetComponent<JZEngine::Transform> ( "Tongs" )->position_.x = 200.0f;
 	Scene ().GetComponent<JZEngine::Transform> ( "bb_tongs" )->position_.x = 200.0f;
 
+	Scene().EntityFlagActive("SpringOnion", false);
+	Scene().EntityFlagActive("SoySauce", false);
+
+
 	if ( hawker_scene_day == DAY::ONE )
 	{
 		Scene ().EntityFlagActive ( "Scizzors" , false );
@@ -2087,6 +2091,11 @@ void HawkerSceneInit()
 		Scene ().GetComponent<JZEngine::Transform> ( "bb_plate" )->position_.x -= 200.0f;
 		Scene ().GetComponent<JZEngine::Transform> ( "Tongs" )->position_.x += 200.0f;
 		Scene ().GetComponent<JZEngine::Transform> ( "bb_tongs" )->position_.x += 200.0f;
+	}
+	else if (hawker_scene_day == DAY::THREE)
+	{
+		Scene().EntityFlagActive("SpringOnion", true);
+		Scene().EntityFlagActive("SoySauce", true);
 	}
 }
 
