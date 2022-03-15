@@ -8,6 +8,7 @@
 #pragma once
 
 #include "../ButtonLogic.h"
+#include "HawkerQueue.h"
 #include <string>
 #include <map>
 
@@ -172,7 +173,8 @@ void FlagTheresappScreen( bool flag )
 	Scene().EntityFlagActive( "Theresapp_back_arrow", flag );
 }
 
-void FlagAlbumScreen( bool flag )
+
+void FlagPhoneAlbumScreen( bool flag )
 {
 
 	Scene().EntityFlagActive( "Album_blacker_bg", flag );
@@ -182,17 +184,27 @@ void FlagAlbumScreen( bool flag )
 	Scene().EntityFlagActive( "Album_battery", flag );
 	Scene().EntityFlagActive( "Album_text", flag );
 	Scene().EntityFlagActive( "Album_back_arrow", flag );
-	Scene().EntityFlagActive( "Album_photo_2021s", flag );
-	Scene().EntityFlagActive( "black_cover_2021s", flag );
-	Scene().EntityFlagActive( "text_2021s", flag );
-	Scene().EntityFlagActive( "Album_photo_1980s", flag );
-	Scene().EntityFlagActive( "black_cover_1980s", flag );
-	Scene().EntityFlagActive( "text_1980s", flag );
+}
+
+void FlagPhoneAlbumScreenPhoto1960( bool flag )
+{
 	Scene().EntityFlagActive( "Album_photo_1960s", flag );
 	Scene().EntityFlagActive( "black_cover_1960s", flag );
 	Scene().EntityFlagActive( "text_1960s", flag );
+}
 
+void FlagPhoneAlbumScreenPhoto1980( bool flag )
+{
+	Scene().EntityFlagActive( "Album_photo_1980s", flag );
+	Scene().EntityFlagActive( "black_cover_1980s", flag );
+	Scene().EntityFlagActive( "text_1980s", flag );
+}
 
+void FlagPhoneAlbumScreenPhoto2021( bool flag )
+{
+	Scene().EntityFlagActive( "Album_photo_2021s", flag );
+	Scene().EntityFlagActive( "black_cover_2021s", flag );
+	Scene().EntityFlagActive( "text_2021s", flag );
 }
 
 void FlagAlbumPhoto1960( bool flag )
@@ -336,10 +348,16 @@ void InitPhoneScreen()
 	FlagPhone( false );
 	FlagPhoneHomeScreen( false );
 	FlagTheresappScreen( false );
-	FlagAlbumScreen( false );
+	FlagPhoneAlbumScreen( false );
+
+	FlagPhoneAlbumScreenPhoto1960( false );
+	FlagPhoneAlbumScreenPhoto1980( false );
+	FlagPhoneAlbumScreenPhoto2021( false );
+
 	FlagAlbumPhoto1960( false );
 	FlagAlbumPhoto1980( false );
 	FlagAlbumPhoto2021( false );
+
 	FlagHowtoPlayScreen( false );
 	FlagMsg1( false );
 	FlagMsg2( false );
@@ -505,7 +523,7 @@ void UpdatePhoneScreen( float dt )
 			Scene().EntityFlagActive( "Phone_battery", false );
 			Scene().EntityFlagActive( "Phone_time", false );
 			FlagPhoneHomeScreen( false );
-			FlagAlbumScreen( true );
+			FlagPhoneAlbumScreen( true );
 			current_app_state = HawkerAppState::Album;
 		}
 	}
@@ -903,37 +921,48 @@ void UpdateTheresapp( float dt )
 void UpdateAlbum( float dt )
 {
 	UNREFERENCED_PARAMETER( dt );
-	Scene().EntityFlagActive( "Phone_battery", false );
-	Scene().EntityFlagActive( "Phone_time", false );
 	FlagPhoneHomeScreen( false );
-	FlagAlbumScreen( true );
+	FlagPhoneAlbumScreen( true );
 
 	if ( !PhotoSelected )
-	{	// Check for mouse event Photo1960
-		if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_photo_1960s" ) )
+	{
+		if ( hawker_scene_day == DAY::TWO || hawker_scene_day == DAY::THREE )
 		{
-			if ( e->on_released_ )
+			// Render assests for 1960
+			FlagPhoneAlbumScreenPhoto1960( true );
+			// Check for mouse event Photo1960
+			if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_photo_1960s" ) )
 			{
-				Photo1960 = true;
-				PhotoSelected = true;
+				if ( e->on_released_ )
+				{
+					Photo1960 = true;
+					PhotoSelected = true;
+				}
 			}
 		}
-		// Check for mouse event Photo1980
-		if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_photo_1980s" ) )
+		if ( hawker_scene_day == DAY::THREE )
 		{
-			if ( e->on_released_ )
+			// Render assests for 1980
+			FlagPhoneAlbumScreenPhoto1980( true );
+			// Check for mouse event Photo1980
+			if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_photo_1980s" ) )
 			{
-				Photo1980 = true;
-				PhotoSelected = true;
+				if ( e->on_released_ )
+				{
+					Photo1980 = true;
+					PhotoSelected = true;
+				}
 			}
-		}
-		// Check for mouse event Photo2021
-		if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_photo_2021s" ) )
-		{
-			if ( e->on_released_ )
+			// Render assests for 2021
+			FlagPhoneAlbumScreenPhoto2021( true );
+			// Check for mouse event Photo2021
+			if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_photo_2021s" ) )
 			{
-				Photo2021 = true;
-				PhotoSelected = true;
+				if ( e->on_released_ )
+				{
+					Photo2021 = true;
+					PhotoSelected = true;
+				}
 			}
 		}
 		// Check for mouse event for '<' arrow 
@@ -944,12 +973,16 @@ void UpdateAlbum( float dt )
 				Scene().EntityFlagActive( "Phone_battery", true );
 				Scene().EntityFlagActive( "Phone_time", true );
 				FlagPhoneHomeScreen( true );
-				FlagAlbumScreen( false );
+				FlagPhoneAlbumScreen( false );
+
+				FlagPhoneAlbumScreenPhoto1960( false );
+				FlagPhoneAlbumScreenPhoto1980( false );
+				FlagPhoneAlbumScreenPhoto2021( false );
 
 				current_app_state = HawkerAppState::MainScreen;
 
 				// reset album 
-				Photo1960 = false; Photo1980 = false;  Photo2021 = false; PhotoSelected = false;
+				Photo1960 = false; Photo1980 = false; Photo2021 = false; PhotoSelected = false;
 			}
 		}
 	}
