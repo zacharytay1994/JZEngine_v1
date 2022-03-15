@@ -47,6 +47,8 @@ void InitDay ()
 	switch ( hawker_scene_day )
 	{
 	case ( DAY::ONE ):
+
+	
 		break;
 	case ( DAY::TWO ):
 		Scene ().EntityFlagActive ( "RoundSteamer" , true );
@@ -496,6 +498,9 @@ void FlagShopActive ( bool flag )
 			Scene ().EntityFlagActive ( "Dumpling_amt" , flag );
 			Scene ().EntityFlagActive ( "Carrotcake_amt" , flag );
 			Scene ().EntityFlagActive ( "Total_amt" , flag );
+			Scene().EntityFlagActive("ScrollDay1_mouse", flag);
+			Scene().EntityFlagActive("ScrollDay1", flag);
+
 		}
 		else if ( hawker_scene_day == DAY::TWO )
 		{
@@ -522,6 +527,10 @@ void FlagShopActive ( bool flag )
 		Scene ().EntityFlagActive ( "Dumpling_amt" , flag );
 		Scene ().EntityFlagActive ( "Carrotcake_amt" , flag );
 		Scene ().EntityFlagActive ( "Total_amt" , flag );
+		Scene().EntityFlagActive("ScrollDay1_mouse", flag);
+		Scene().EntityFlagActive("ScrollDay1", flag);
+
+
 
 		// day 2
 		Scene ().EntityFlagActive ( "BeginShop2" , flag );
@@ -694,6 +703,22 @@ void UpdateShop ()
 			Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 		}
 	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("ScrollDay1_mouse"))
+	{
+		JZEngine::Animation2D* scroll = Scene().GetComponent<JZEngine::Animation2D>("ScrollDay1");
+		if (e->on_hover_)
+		{
+			scroll->pause_ = false;
+			if (scroll->frame_ == 7)
+				scroll->pause_ = true;
+		}
+		else
+		{
+			scroll->frame_ = 0;
+			scroll->pause_ = true;
+		}
+	}
+
 
 	float total_amt = 0.4f * springroll_count + 0.2f * seaweedchicken_count + 0.3f * wanton_count + 0.5f * carrotcake_count;
 	std::stringstream ss;
@@ -1929,6 +1954,9 @@ void HawkerSceneInit()
 	// initialize scene
 	current_hawker_scene_state = HawkerSceneState::Goal;
 	//esc_again = false;
+	JZEngine::Animation2D* scroll = Scene().GetComponent<JZEngine::Animation2D>("ScrollDay1");
+	scroll->pause_ = true;
+	scroll->frame_ = 0;
 	Scene ().EntityFlagActive ( "CoinSparkles" , false );
 	og_coin_position = Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_;
 	og_coin_distance_from_bar = (Scene ().GetComponent<JZEngine::Transform> ( "CoinBar" )->position_ 
@@ -2084,6 +2112,7 @@ void HawkerSceneInit()
 	{
 		Scene ().EntityFlagActive ( "Scizzors" , false );
 		Scene ().EntityFlagActive ( "bb_scizzors" , false );
+		
 	}
 	else if (hawker_scene_day == DAY::TWO )
 	{
