@@ -82,7 +82,7 @@ int GetRandomOrder ()
 		{
 			return 0;
 		}
-		int rand_order;
+		int rand_order{0};
 		if ( hawker_scene_day == DAY::ONE )
 		{
 			rand_order = rand () % 4;
