@@ -20,7 +20,7 @@ enum class DAY
 	TWO ,
 	THREE
 };
-DAY hawker_scene_day = DAY::ONE;
+DAY hawker_scene_day = DAY::TWO;
 
 enum class CustomerState
 {
@@ -588,7 +588,8 @@ bool InteractWithQueue(bool food, CustomerOrder order, bool giveMeWin)
 	return false;
 }
 
-CustomerOrder GetNextCustomerOrder(int dumpling, int seaweed, int carrotcake, int popiah)
+CustomerOrder GetNextCustomerOrder(int dumpling, int seaweed, int carrotcake, int popiah,
+	int charsiewbao, int doushabao, int coffeebao, int siewmai, int hargow, int chickenfeet)
 {
 	Customer* p_customer{ nullptr };
 	for (int i = 0; i < customers.size(); ++i)
@@ -623,6 +624,43 @@ CustomerOrder GetNextCustomerOrder(int dumpling, int seaweed, int carrotcake, in
 			break;
 		case CustomerOrder::SpringRoll:
 			if ( popiah <= 0 )
+			{
+				p_customer->no_food_ = true;
+			}
+			break;
+		// day 2
+		case CustomerOrder::CharSiewBao:
+			if ( charsiewbao <= 0 )
+			{
+				p_customer->no_food_ = true;
+			}
+			break;
+		case CustomerOrder::DouShaBao:
+			if ( doushabao <= 0 )
+			{
+				p_customer->no_food_ = true;
+			}
+			break;
+		case CustomerOrder::CoffeeBao:
+			if ( coffeebao <= 0 )
+			{
+				p_customer->no_food_ = true;
+			}
+			break;
+		case CustomerOrder::SiewMai:
+			if ( siewmai <= 0 )
+			{
+				p_customer->no_food_ = true;
+			}
+			break;
+		case CustomerOrder::HarGao:
+			if ( hargow <= 0 )
+			{
+				p_customer->no_food_ = true;
+			}
+			break;
+		case CustomerOrder::ChickenFeet:
+			if ( chickenfeet <= 0 )
 			{
 				p_customer->no_food_ = true;
 			}

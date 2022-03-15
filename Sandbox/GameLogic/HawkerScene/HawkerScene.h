@@ -65,6 +65,10 @@ void InitDay ()
 		Scene ().EntityFlagActive ( "bb_CofeeBao" , true );
 		break;
 	case ( DAY::THREE ):
+		Scene ().EntityFlagActive ( "PlainCCF" , true );
+		Scene ().EntityFlagActive ( "bb_PlainCCF" , true );
+		Scene ().EntityFlagActive ( "PrawnCCF" , true );
+		Scene ().EntityFlagActive ( "bb_PrawnCCF" , true );
 		break;
 	}
 }
@@ -491,6 +495,7 @@ void FlagShopActive ( bool flag )
 			Scene ().EntityFlagActive ( "Shop_s_dumpling" , flag );
 			Scene ().EntityFlagActive ( "Shop_a_carrotcake" , flag );
 			Scene ().EntityFlagActive ( "Shop_s_carrotcake" , flag );
+
 			Scene ().EntityFlagActive ( "Springroll_amt" , flag );
 			Scene ().EntityFlagActive ( "Seaweedchicken_amt" , flag );
 			Scene ().EntityFlagActive ( "Dumpling_amt" , flag );
@@ -500,6 +505,37 @@ void FlagShopActive ( bool flag )
 		else if ( hawker_scene_day == DAY::TWO )
 		{
 			Scene ().EntityFlagActive ( "BeginShop2" , flag );
+			Scene ().EntityFlagActive ( "Shop2_a_springroll" , flag );
+			Scene ().EntityFlagActive ( "Shop2_a_seaweedchicken" , flag );
+			Scene ().EntityFlagActive ( "Shop2_a_frieddumpling" , flag );
+			Scene ().EntityFlagActive ( "Shop2_a_friedcarrotcake" , flag );
+			Scene ().EntityFlagActive ( "Shop2_a_charsiewbun" , flag );
+			Scene ().EntityFlagActive ( "Shop2_a_redbeanbun" , flag );
+			Scene ().EntityFlagActive ( "Shop2_a_coffeebun" , flag );
+			Scene ().EntityFlagActive ( "Shop2_a_chickendumpling" , flag );
+			Scene ().EntityFlagActive ( "Shop2_a_prawndumpling" , flag );
+			Scene ().EntityFlagActive ( "Shop2_a_chickenfeet" , flag );
+			Scene ().EntityFlagActive ( "Shop2_s_springroll" , flag );
+			Scene ().EntityFlagActive ( "Shop2_s_seaweedchicken" , flag );
+			Scene ().EntityFlagActive ( "Shop2_s_frieddumpling" , flag );
+			Scene ().EntityFlagActive ( "Shop2_s_friedcarrotcake" , flag );
+			Scene ().EntityFlagActive ( "Shop2_s_charsiewbun" , flag );
+			Scene ().EntityFlagActive ( "Shop2_s_redbeanbun" , flag );
+			Scene ().EntityFlagActive ( "Shop2_s_coffeebun" , flag );
+			Scene ().EntityFlagActive ( "Shop2_s_chickendumpling" , flag );
+			Scene ().EntityFlagActive ( "Shop2_s_prawndumpling" , flag );
+			Scene ().EntityFlagActive ( "Shop2_s_chickenfeet" , flag );
+
+			Scene ().EntityFlagActive ( "Shop2_amt_springroll" , flag );
+			Scene ().EntityFlagActive ( "Shop2_amt_seaweedchicken" , flag );
+			Scene ().EntityFlagActive ( "Shop2_amt_frieddumpling" , flag );
+			Scene ().EntityFlagActive ( "Shop2_amt_friedcarrotcake" , flag );
+			Scene ().EntityFlagActive ( "Shop2_amt_charsiewbun" , flag );
+			Scene ().EntityFlagActive ( "Shop2_amt_redbeanbun" , flag );
+			Scene ().EntityFlagActive ( "Shop2_amt_coffeebun" , flag );
+			Scene ().EntityFlagActive ( "Shop2_amt_chickendumpling" , flag );
+			Scene ().EntityFlagActive ( "Shop2_amt_prawndumpling" , flag );
+			Scene ().EntityFlagActive ( "Shop2_amt_chickenfeet" , flag );
 		}
 	}
 	else
@@ -517,6 +553,7 @@ void FlagShopActive ( bool flag )
 		Scene ().EntityFlagActive ( "Shop_s_carrotcake" , flag );
 		Scene ().EntityFlagActive ( "BeginShop_Exit" , flag );
 		Scene ().EntityFlagActive ( "BeginShop_Next" , flag );
+
 		Scene ().EntityFlagActive ( "Springroll_amt" , flag );
 		Scene ().EntityFlagActive ( "Seaweedchicken_amt" , flag );
 		Scene ().EntityFlagActive ( "Dumpling_amt" , flag );
@@ -525,7 +562,81 @@ void FlagShopActive ( bool flag )
 
 		// day 2
 		Scene ().EntityFlagActive ( "BeginShop2" , flag );
+		Scene ().EntityFlagActive ( "Shop2_a_springroll" , flag );
+		Scene ().EntityFlagActive ( "Shop2_a_seaweedchicken" , flag );
+		Scene ().EntityFlagActive ( "Shop2_a_frieddumpling" , flag );
+		Scene ().EntityFlagActive ( "Shop2_a_friedcarrotcake" , flag );
+		Scene ().EntityFlagActive ( "Shop2_a_charsiewbun" , flag );
+		Scene ().EntityFlagActive ( "Shop2_a_redbeanbun" , flag );
+		Scene ().EntityFlagActive ( "Shop2_a_coffeebun" , flag );
+		Scene ().EntityFlagActive ( "Shop2_a_chickendumpling" , flag );
+		Scene ().EntityFlagActive ( "Shop2_a_prawndumpling" , flag );
+		Scene ().EntityFlagActive ( "Shop2_a_chickenfeet" , flag );
+		Scene ().EntityFlagActive ( "Shop2_s_springroll" , flag );
+		Scene ().EntityFlagActive ( "Shop2_s_seaweedchicken" , flag );
+		Scene ().EntityFlagActive ( "Shop2_s_frieddumpling" , flag );
+		Scene ().EntityFlagActive ( "Shop2_s_friedcarrotcake" , flag );
+		Scene ().EntityFlagActive ( "Shop2_s_charsiewbun"		, flag );
+		Scene ().EntityFlagActive ( "Shop2_s_redbeanbun"		, flag );
+		Scene ().EntityFlagActive ( "Shop2_s_coffeebun"			, flag );
+		Scene ().EntityFlagActive ( "Shop2_s_chickendumpling"	, flag );
+		Scene ().EntityFlagActive ( "Shop2_s_prawndumpling"		, flag );
+		Scene ().EntityFlagActive ( "Shop2_s_chickenfeet"		, flag );
+
+		Scene ().EntityFlagActive ( "Shop2_amt_springroll" , flag );
+		Scene ().EntityFlagActive ( "Shop2_amt_seaweedchicken" , flag );
+		Scene ().EntityFlagActive ( "Shop2_amt_frieddumpling" , flag );
+		Scene ().EntityFlagActive ( "Shop2_amt_friedcarrotcake" , flag );
+		Scene ().EntityFlagActive ( "Shop2_amt_charsiewbun" , flag );
+		Scene ().EntityFlagActive ( "Shop2_amt_redbeanbun" , flag );
+		Scene ().EntityFlagActive ( "Shop2_amt_coffeebun" , flag );
+		Scene ().EntityFlagActive ( "Shop2_amt_chickendumpling" , flag );
+		Scene ().EntityFlagActive ( "Shop2_amt_prawndumpling" , flag );
+		Scene ().EntityFlagActive ( "Shop2_amt_chickenfeet" , flag );
 	}
+}
+
+void ProcessShopItem (const char* addEvent, const char* subEvent, const char* name, unsigned int& count, unsigned int const& maxCount, unsigned int const& minCount = 1)
+{
+	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( addEvent ) )
+	{
+		if ( e->on_released_ )
+		{
+			if ( count < maxCount )
+				++count;
+			std::stringstream ss;
+			ss << count;
+			Scene ().GetComponent<JZEngine::TextData> ( name )->color_ = { 1.0f,1.0f,1.0f };
+			Scene ().GetComponent<JZEngine::TextData> ( name )->text = JZEngine::String ( ss.str ().c_str () );
+		}
+	}
+	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( subEvent ) )
+	{
+		if ( e->on_released_ )
+		{
+			if ( count > minCount )
+				--count;
+			std::stringstream ss;
+			ss << count;
+			Scene ().GetComponent<JZEngine::TextData> ( name )->color_ = { 1.0f,1.0f,1.0f };
+			Scene ().GetComponent<JZEngine::TextData> ( name )->text = JZEngine::String ( ss.str ().c_str () );
+		}
+	}
+}
+
+void SetUIntTextAmt ( char const* text , unsigned int const& i )
+{
+	std::stringstream ss;
+	ss << i;
+	Scene ().GetComponent<JZEngine::TextData> ( text )->color_ = { 1.0f,1.0f,1.0f };
+	Scene ().GetComponent<JZEngine::TextData> ( text )->text = JZEngine::String ( ss.str ().c_str () );
+}
+
+void SetUIntTexture ( char const* name , char const* pre , char const* post , unsigned int i )
+{
+	std::stringstream ss;
+	ss << pre << i << post;
+	Scene ().GetComponent<JZEngine::Texture> ( name )->texture_id_ = Scene ().GetTexture ( ss.str () );
 }
 
 unsigned int springroll_count { 5 };
@@ -583,6 +694,13 @@ void UpdateShop ()
 			carrotcake_name << "DryFoodCarrotCake(" << carrotcake_count << ")_Equipment_hawker";
 			Scene ().GetComponent<JZEngine::Texture> ( "CarrotCake" )->texture_id_ = Scene ().GetTexture ( carrotcake_name.str () );
 
+			SetUIntTexture ( "CharSiewBao" , "CharSiewBao(" , ")_Equipment_hawker" , charsiewbao_count );
+			SetUIntTexture ( "DouShaBao" , "DouBao(" , ")_Equipment_hawker" , doushabao_count );
+			SetUIntTexture ( "CofeeBao" , "CoffeeBao(" , ")_Equipment_hawker" , coffeebao_count );
+			SetUIntTexture ( "ChickenFeet" , "RoundSteamerFeet" , "_Equipment_hawker" , chickenfeet_count );
+			SetUIntTexture ( "HarGow" , "RoundSteamerDumpling" , "_Equipment_hawker" , hargao_count );
+			SetUIntTexture ( "SiewMai" , "RoundSteamerSiuMai" , "_Equipment_hawker" , siewmai_count );
+
 			FlagShopActive ( false );
 			current_hawker_scene_state = HawkerSceneState::Main;
 
@@ -594,6 +712,8 @@ void UpdateShop ()
 			day_begin = true;
 		}
 	}
+
+	// day 1 shop
 	// spring roll
 	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Shop_a_springroll" ) )
 	{
@@ -694,6 +814,19 @@ void UpdateShop ()
 			Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 		}
 	}
+
+	// day 2 shop
+	ProcessShopItem ( "Shop2_a_springroll" , "Shop2_s_springroll" , "Shop2_amt_springroll"					, springroll_count , max_count, min_count );
+	ProcessShopItem ( "Shop2_a_seaweedchicken" , "Shop2_s_seaweedchicken" , "Shop2_amt_seaweedchicken"		, seaweedchicken_count , max_count , min_count );
+	ProcessShopItem ( "Shop2_a_frieddumpling" , "Shop2_s_frieddumpling" , "Shop2_amt_frieddumpling"			, wanton_count , max_count , min_count );
+	ProcessShopItem ( "Shop2_a_friedcarrotcake" , "Shop2_s_friedcarrotcake" , "Shop2_amt_friedcarrotcake"	, carrotcake_count , max_count , min_count );
+	ProcessShopItem ( "Shop2_a_charsiewbun" , "Shop2_s_charsiewbun" , "Shop2_amt_charsiewbun"				, charsiewbao_count , 3 , min_count );
+	ProcessShopItem ( "Shop2_a_redbeanbun" , "Shop2_s_redbeanbun" , "Shop2_amt_redbeanbun"					, doushabao_count , 3 , min_count );
+	ProcessShopItem ( "Shop2_a_coffeebun" , "Shop2_s_coffeebun" , "Shop2_amt_coffeebun"						, coffeebao_count , 3 , min_count );
+	ProcessShopItem ( "Shop2_a_chickendumpling" , "Shop2_s_chickendumpling" , "Shop2_amt_chickendumpling"	, siewmai_count , 3 , min_count );
+	ProcessShopItem ( "Shop2_a_prawndumpling" , "Shop2_s_prawndumpling" , "Shop2_amt_prawndumpling"			, hargao_count , 3 , min_count );
+	ProcessShopItem ( "Shop2_a_chickenfeet" , "Shop2_s_chickenfeet" , "Shop2_amt_chickenfeet"				, chickenfeet_count , 3 , min_count );
+
 
 	float total_amt = 0.4f * springroll_count + 0.2f * seaweedchicken_count + 0.3f * wanton_count + 0.5f * carrotcake_count;
 	std::stringstream ss;
@@ -1823,7 +1956,8 @@ void UpdateMainScene(float dt)
 			ShowNotification ( 1 );
 			if (!plate_on_hand)
 			{
-				DisplayOrder(GetNextCustomerOrder(wanton_count, seaweedchicken_count, carrotcake_count, springroll_count));
+				DisplayOrder(GetNextCustomerOrder(wanton_count, seaweedchicken_count, carrotcake_count, springroll_count,
+					charsiewbao_count, doushabao_count, coffeebao_count, siewmai_count, hargao_count, chickenfeet_count));
 			}
 			bool instant_win = false;
 			if ( JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_LEFT_CONTROL ) )
@@ -2049,6 +2183,17 @@ void HawkerSceneInit()
 	ss << carrotcake_count;
 	Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->color_ = { 1.0f,1.0f,1.0f };
 	Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+
+	SetUIntTextAmt ( "Shop2_amt_springroll" , springroll_count );
+	SetUIntTextAmt ( "Shop2_amt_seaweedchicken" , seaweedchicken_count );
+	SetUIntTextAmt ( "Shop2_amt_frieddumpling" , wanton_count );
+	SetUIntTextAmt ( "Shop2_amt_friedcarrotcake" , carrotcake_count );
+	SetUIntTextAmt ( "Shop2_amt_charsiewbun" , charsiewbao_count );
+	SetUIntTextAmt ( "Shop2_amt_redbeanbun" , doushabao_count );
+	SetUIntTextAmt ( "Shop2_amt_coffeebun" , coffeebao_count );
+	SetUIntTextAmt ( "Shop2_amt_chickendumpling" , siewmai_count );
+	SetUIntTextAmt ( "Shop2_amt_prawndumpling" , hargao_count );
+	SetUIntTextAmt ( "Shop2_amt_chickenfeet" , chickenfeet_count );
 
 	// initialize goal
 	FlagGoalActive ( true );
