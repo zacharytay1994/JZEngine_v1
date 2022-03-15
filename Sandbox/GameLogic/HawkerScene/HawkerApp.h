@@ -36,6 +36,9 @@ bool quit_confirmation{ false };
 bool main_menu_confirmation{ false };
 
 
+// Use in UpdateAlbum()
+bool Photo1960{ false }, Photo1980{ false }, Photo2021{ false }, PhotoSelected{ false };
+
 //Original position of messages variables
 JZEngine::Vec2f original_msg1_position{ 0.0,0.0 };
 JZEngine::Vec2f original_msg2_position{ 0.0,0.0 };
@@ -172,26 +175,6 @@ void FlagTheresappScreen( bool flag )
 void FlagAlbumScreen( bool flag )
 {
 
-	//std::map <std::string, bool> AlbumData
-	//{
-	//	{ "Album_blacker_bg",		false },
-	//	{ "Album_main_screen",		false },
-	//	{ "Album_top",				false },
-	//	{ "Album_time",				false },
-	//	{ "Album_battery",			false },
-	//	{ "Album_text",				false },
-	//	{ "Album_back_arrow",		false },
-	//	{ "Album_photo_2021s",		false },
-	//	{ "black_cover_2021s",		false },
-	//	{ "text_2021s",				false },
-	//	{ "Album_photo_1980s",		false },
-	//	{ "black_cover_1980s",		false },
-	//	{ "text_1980s",				false },
-	//	{ "Album_photo_1960s",		false },
-	//	{ "black_cover_1960s",		false },
-	//	{ "text_1960s",				false }
-	//};
-
 	Scene().EntityFlagActive( "Album_blacker_bg", flag );
 	Scene().EntityFlagActive( "Album_main_screen", flag );
 	Scene().EntityFlagActive( "Album_top", flag );
@@ -208,6 +191,8 @@ void FlagAlbumScreen( bool flag )
 	Scene().EntityFlagActive( "Album_photo_1960s", flag );
 	Scene().EntityFlagActive( "black_cover_1960s", flag );
 	Scene().EntityFlagActive( "text_1960s", flag );
+
+
 }
 
 void FlagAlbumPhoto1960( bool flag )
@@ -460,6 +445,8 @@ void InitPhoneScreen()
 	//Text section for how to play
 	Scene().GetComponent<JZEngine::TextData>( "How_to_Play_text" )->text = JZEngine::String( "HOW TO PLAY" );
 	Scene().GetComponent<JZEngine::TextData>( "How_to_Play_text" )->color_ = JZEngine::Vec3f( 255.0f, 255.0f, 255.0f );
+
+
 }
 
 void ResetAllMsgPosition()
@@ -913,8 +900,6 @@ void UpdateTheresapp( float dt )
 	}
 }
 
-
-bool Photo1960{ false }, Photo1980{ false }, Photo2021{ false }, PhotoSelected{ false };
 void UpdateAlbum( float dt )
 {
 	UNREFERENCED_PARAMETER( dt );
@@ -923,9 +908,8 @@ void UpdateAlbum( float dt )
 	FlagPhoneHomeScreen( false );
 	FlagAlbumScreen( true );
 
-
 	if ( !PhotoSelected )
-	{
+	{	// Check for mouse event Photo1960
 		if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_photo_1960s" ) )
 		{
 			if ( e->on_released_ )
@@ -934,6 +918,7 @@ void UpdateAlbum( float dt )
 				PhotoSelected = true;
 			}
 		}
+		// Check for mouse event Photo1980
 		if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_photo_1980s" ) )
 		{
 			if ( e->on_released_ )
@@ -942,7 +927,7 @@ void UpdateAlbum( float dt )
 				PhotoSelected = true;
 			}
 		}
-
+		// Check for mouse event Photo2021
 		if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_photo_2021s" ) )
 		{
 			if ( e->on_released_ )
@@ -951,28 +936,30 @@ void UpdateAlbum( float dt )
 				PhotoSelected = true;
 			}
 		}
+		// Check for mouse event for '<' arrow 
+		if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_back_arrow" ) )
+		{
+			if ( e->on_click_ )
+			{
+				Scene().EntityFlagActive( "Phone_battery", true );
+				Scene().EntityFlagActive( "Phone_time", true );
+				FlagPhoneHomeScreen( true );
+				FlagAlbumScreen( false );
 
-		//if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_back_arrow" ) )
-		//{
-		//	if ( e->on_click_ )
-		//	{
-		//		Scene().EntityFlagActive( "Phone_battery", true );
-		//		Scene().EntityFlagActive( "Phone_time", true );
-		//		FlagPhoneHomeScreen( true );
-		//		FlagAlbumScreen( false );
+				current_app_state = HawkerAppState::MainScreen;
 
-		//		current_app_state = HawkerAppState::MainScreen;
-		//	}
-		//}
+				// reset album 
+				Photo1960 = false; Photo1980 = false;  Photo2021 = false; PhotoSelected = false;
+			}
+		}
 	}
 	else
 	{
 		if ( Photo1960 )
 		{
-
 			FlagAlbumPhoto1960( true );
 			Scene().EntityFlagActive( "Album_black_layer_3", true );
-
+			// Hover Over #1
 			if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_1960_button1" ) )
 			{
 				if ( e->on_hover_ )
@@ -988,6 +975,7 @@ void UpdateAlbum( float dt )
 					Scene().EntityFlagActive( "Album_1960_hovertext1", false );
 				}
 			}
+			// Hover Over #2
 			if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_1960_button2" ) )
 			{
 				if ( e->on_hover_ )
@@ -1003,6 +991,7 @@ void UpdateAlbum( float dt )
 					Scene().EntityFlagActive( "Album_1960_hovertext2", false );
 				}
 			}
+			// Quit button for Photo 1960
 			if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_1960_big_photo_quit" ) )
 			{
 				if ( e->on_released_ )
@@ -1018,10 +1007,9 @@ void UpdateAlbum( float dt )
 		}
 		if ( Photo1980 )
 		{
-
 			FlagAlbumPhoto1980( true );
 			Scene().EntityFlagActive( "Album_black_layer_3", true );
-
+			// Quit button for Photo 1980
 			if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_1980_big_photo_quit" ) )
 			{
 				if ( e->on_released_ )
@@ -1039,12 +1027,13 @@ void UpdateAlbum( float dt )
 		{
 			FlagAlbumPhoto2021( true );
 			Scene().EntityFlagActive( "Album_black_layer_3", true );
+			// Quit button for Photo 2021
 			if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_2021_big_photo_quit" ) )
 			{
 				if ( e->on_released_ )
 				{
 					FlagAlbumPhoto2021( false );
-					Scene().EntityFlagActive( "Album_black_layer_3", false ); 
+					Scene().EntityFlagActive( "Album_black_layer_3", false );
 					Photo2021 = false;
 					PhotoSelected = false;
 				}
@@ -1053,67 +1042,6 @@ void UpdateAlbum( float dt )
 			Photo1980 = false;
 		}
 	}
-
-	//if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_photo_1980s" ) )
-	//{
-	//	if ( e->on_released_ )
-	//	{
-	//		FlagAlbumPhoto1980( true );
-	//		Scene().EntityFlagActive( "Album_black_layer_3", true );
-	//	}
-	//}
-	//
-
-	//if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_photo_2021s" ) )
-	//{
-	//	if ( e->on_released_ )
-	//	{
-	//		FlagAlbumPhoto2021( true );
-	//		Scene().EntityFlagActive( "Album_black_layer_3", true );
-	//	}
-	//}
-
-		//if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_back_arrow" ) )
-		//{
-		//	if ( e->on_click_ )
-		//	{
-		//		Scene().EntityFlagActive( "Phone_battery", true );
-		//		Scene().EntityFlagActive( "Phone_time", true );
-		//		FlagPhoneHomeScreen( true );
-		//		FlagAlbumScreen( false );
-
-		//		current_app_state = HawkerAppState::MainScreen;
-		//	}
-		//}
-
-	// Quit button 
-	/*if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_1960_big_photo_quit" ) )
-	{
-		if ( e->on_released_ )
-		{
-			FlagAlbumPhoto1960( false );
-			Scene().EntityFlagActive( "Album_black_layer_3", false );
-			Photo1960 = false;
-		}
-	}*/
-	//if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_1980_big_photo_quit" ) )
-	//{
-	//	if ( e->on_released_ )
-	//	{
-	//		FlagAlbumPhoto1980( false );
-	//		Scene().EntityFlagActive( "Album_black_layer_3", false );
-	//		render_current_photo = AlbumPhoto::Album;
-	//	}
-	//}
-	//if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_2021_big_photo_quit" ) )
-	//{
-	//	if ( e->on_released_ )
-	//	{
-	//		FlagAlbumPhoto2021( false );
-	//		Scene().EntityFlagActive( "Album_black_layer_3", false );
-	//		render_current_photo = AlbumPhoto::Album;
-	//	}
-	//}
 }
 
 void UpdateHowtoPlay( float dt )
