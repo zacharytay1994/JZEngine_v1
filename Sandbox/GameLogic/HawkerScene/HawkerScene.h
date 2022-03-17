@@ -277,9 +277,9 @@ void BringNightSky (float dt)
 		float delta_sky = dt * (1.0f/30.0f);
 		night_controller_value -= delta_sky;
 		night_sky_alpha += delta_sky * 0.6f;
-		cloud_red -= delta_sky * 6.0f;
-		cloud_blue += delta_sky * 5.0f;
-		cloud_green -= delta_sky * 4.0f;
+		cloud_red -= delta_sky * 1.8f;
+		cloud_blue += delta_sky * 1.7f;
+		cloud_green -= delta_sky * 1.5f;
 		moon_alpha += delta_sky * 0.6f;
 		if ( night_controller_value > 0.75f )
 		{
