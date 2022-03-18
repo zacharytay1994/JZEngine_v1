@@ -246,7 +246,7 @@ std::unordered_map<std::string, CustomerSpriteData> customer_animations {
 	{"3_AhMa(Idle)_SpriteSheet_Hawker",		{13.24f * 0.75f, 9.56f * 0.75f, 4, 4, 13, 0.1f}  },
 	{"3_AhMa(Angry)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 5, 6, 27, 0.1f} },
 	{"3_AhMa(Ordering)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 4, 6, 21, 0.1f} },
-	{"3_AhMa(Success)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 3, 6, 17, 0.1f} },
+	{"3_AhMa(Success)_SpriteSheet_Hawker_ver2",	{13.24f * 0.75f, 9.56f * 0.75f, 3, 6, 17, 0.1f} },
 
 
 
@@ -581,7 +581,7 @@ void RemoveCustomer(int id)
 			}
 			--customers_in_queue_;
 
-			customers.erase(i);
+			i = customers.erase(i);
 			Scene().EntityFlagActive("Customer", false, id);
 			customer_ids.push(id);
 			JZEngine::Log::Info("Main", "Customer left. ID: {}.", id);

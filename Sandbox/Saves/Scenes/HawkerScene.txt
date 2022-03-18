@@ -36,7 +36,7 @@ Clouds 0
 	c 10 struct JZEngine::Animation2D
 		0 0.57654 1 1 0 1 1 
 !
-Middlegroud 2 
+Middlegroud 1 
 	c 0 struct JZEngine::Transform
 		4.25 215.472 0 0 0 0.8 0.8 4096 1024 
 	c 1 struct JZEngine::SpriteLayer
@@ -53,18 +53,6 @@ Lamp 0
 		672.999 203.264 668.749 -12.2076 0 0.421142 0.421142 256 1024 
 	c 1 struct JZEngine::SpriteLayer
 		0 
-	c 2 struct JZEngine::Texture
-		Lamppost_Background_Hawker_19 
-	c 3 struct JZEngine::NonInstanceShader
-		0 0 0 0 
-	c 10 struct JZEngine::Animation2D
-		0 0.57654 1 1 0 1 1 
-!
-Lamp(1) 0 
-	c 0 struct JZEngine::Transform
-		-474.501 171.566 -478.751 -43.9058 0 0.231939 0.231939 256 1024 
-	c 1 struct JZEngine::SpriteLayer
-		-9 
 	c 2 struct JZEngine::Texture
 		Lamppost_Background_Hawker_19 
 	c 3 struct JZEngine::NonInstanceShader

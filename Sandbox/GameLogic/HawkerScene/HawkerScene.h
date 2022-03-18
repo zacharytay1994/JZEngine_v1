@@ -2271,6 +2271,7 @@ void UpdateMainScene(float dt)
 					}
 					ToggleGuidedCircle ( "gtc_platecustomer" , false );
 					TurnOffNotification ();
+					//JZEngine::Log::Info ( "Main" , "test" );
 				}
 			}
 			else
