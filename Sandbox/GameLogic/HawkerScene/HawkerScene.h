@@ -2568,6 +2568,12 @@ void HawkerSceneUpdate(float dt)
 
 	UpdateGuidedCircle ( dt );
 
+	if ( hawker_queue_display_order_toggle )
+	{
+		UnDisplayOrder ();
+		hawker_queue_display_order_toggle = false;
+	}
+
 	switch (current_hawker_scene_state)
 	{
 	case HawkerSceneState::Main:

@@ -398,6 +398,8 @@ float out_queue_position_{ -800.0f };
 bool took_too_long_ { false };
 float customer_spacing_ = { 100.0f };
 
+bool hawker_queue_display_order_toggle { false };
+
 struct Customer
 {
 	int scene_object_id_{ -1 };			// the scene object it will be controlling
@@ -521,6 +523,7 @@ struct Customer
 			{
 				SetCustomerAnimation(animation_pack_, AnimationStates::Idle, scene_object_id_);
 				state_ = CustomerState::WalkingOut;
+				hawker_queue_display_order_toggle = true;
 			}
 			break;
 		case CustomerState::WalkingOut:
@@ -777,6 +780,8 @@ void InitHawkerQueue()
 		max_customers += rnum_chickenfeet + rnum_hargao + rnum_siewmai + rnum_coffeebao + rnum_doushabao + rnum_charsiewbao;
 	}
 	num_customers = max_customers;
+
+	hawker_queue_display_order_toggle = false;
 }
 
 void UpdateHawkerQueue(float dt)
