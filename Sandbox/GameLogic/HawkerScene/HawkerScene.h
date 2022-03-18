@@ -625,6 +625,8 @@ void FlagShopActive ( bool flag )
 			Scene ().EntityFlagActive ( "Shop2_amt_chickendumpling" , flag );
 			Scene ().EntityFlagActive ( "Shop2_amt_prawndumpling" , flag );
 			Scene ().EntityFlagActive ( "Shop2_amt_chickenfeet" , flag );
+			Scene().EntityFlagActive("ScrollDay2_mouse", flag);
+			Scene().EntityFlagActive("ScrollDay2", flag);
 		}
 		else if ( hawker_scene_day == DAY::THREE )
 		{
@@ -731,6 +733,10 @@ void FlagShopActive ( bool flag )
 		Scene ().EntityFlagActive ( "Shop2_amt_chickendumpling" , flag );
 		Scene ().EntityFlagActive ( "Shop2_amt_prawndumpling" , flag );
 		Scene ().EntityFlagActive ( "Shop2_amt_chickenfeet" , flag );
+		Scene().EntityFlagActive("ScrollDay2_mouse", flag);
+		Scene().EntityFlagActive("ScrollDay2", flag);
+
+
 
 		// day 3
 		Scene ().EntityFlagActive ( "BeginShop3" , flag );
@@ -992,7 +998,21 @@ void UpdateShop ()
 			scroll->pause_ = true;
 		}
 	}
-
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("ScrollDay2_mouse"))
+	{
+		JZEngine::Animation2D* scroll = Scene().GetComponent<JZEngine::Animation2D>("ScrollDay2");
+		if (e->on_hover_)
+		{
+			scroll->pause_ = false;
+			if (scroll->frame_ == 7)
+				scroll->pause_ = true;
+		}
+		else
+		{
+			scroll->frame_ = 0;
+			scroll->pause_ = true;
+		}
+	}
 
 	// day 2 shop
 	ProcessShopItem ( "Shop2_a_springroll" , "Shop2_s_springroll" , "Shop2_amt_springroll" , springroll_count , max_count , min_count );
@@ -2313,9 +2333,15 @@ void HawkerSceneInit()
 	// initialize scene
 	current_hawker_scene_state = HawkerSceneState::Goal;
 	//esc_again = false;
+
 	JZEngine::Animation2D* scroll = Scene().GetComponent<JZEngine::Animation2D>("ScrollDay1");
 	scroll->pause_ = true;
 	scroll->frame_ = 0;
+
+	scroll = Scene().GetComponent<JZEngine::Animation2D>("ScrollDay2");
+	scroll->pause_ = true;
+	scroll->frame_ = 0;
+
 	Scene ().EntityFlagActive ( "CoinSparkles" , false );
 	og_coin_position = Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_;
 	og_coin_distance_from_bar = (Scene ().GetComponent<JZEngine::Transform> ( "CoinBar" )->position_ 
