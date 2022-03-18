@@ -91,7 +91,7 @@ int GetRandomOrder ()
 		{
 			return 0;
 		}
-		int rand_order = 0;
+		int rand_order{0};
 		if ( hawker_scene_day == DAY::ONE )
 		{
 			rand_order = rand () % 4;
@@ -235,32 +235,49 @@ enum class AnimationStates
 
 //name of spritesheet, size width, size height, row, column, total frames, framespeed)
 std::unordered_map<std::string, CustomerSpriteData> customer_animations {
-	{"1_AhMa(Idle)_SpriteSheet_Hawker",		{13.24f * 0.75f, 9.56f * 0.75f, 3, 3, 7, 0.1f}  },
-	{"1_AhMa(Angry)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 3, 6, 18, 0.1f} },
+	{"1_AhMa(Idle)_SpriteSheet_Hawker",		{13.24f * 0.75f, 9.56f * 0.75f, 4, 4, 13, 0.1f}  },
+	{"1_AhMa(Angry)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 5, 6, 27, 0.1f} },
 	{"1_AhMa(Ordering)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 4, 6, 21, 0.1f} },
-	{"1_AhMa(Success)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 3, 6, 13, 0.1f} },
-	{"2_AhMa(Idle)_SpriteSheet_Hawker",		{13.24f * 0.75f, 9.56f * 0.75f, 3, 3, 7, 0.1f}  },
-	{"2_AhMa(Angry)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 3, 6, 18, 0.1f} },
+	{"1_AhMa(Success)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 3, 6, 17, 0.1f} },
+	{"2_AhMa(Idle)_SpriteSheet_Hawker",		{13.24f * 0.75f, 9.56f * 0.75f, 4, 4, 13, 0.1f}  },
+	{"2_AhMa(Angry)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 5, 6, 27, 0.1f} },
 	{"2_AhMa(Ordering)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 4, 6, 21, 0.1f} },
-	{"2_AhMa(Success)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 3, 6, 13, 0.1f} },
+	{"2_AhMa(Success)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 3, 6, 17, 0.1f} },
+	{"3_AhMa(Idle)_SpriteSheet_Hawker",		{13.24f * 0.75f, 9.56f * 0.75f, 4, 4, 13, 0.1f}  },
+	{"3_AhMa(Angry)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 5, 6, 27, 0.1f} },
+	{"3_AhMa(Ordering)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 4, 6, 21, 0.1f} },
+	{"3_AhMa(Success)_SpriteSheet_Hawker",	{13.24f * 0.75f, 9.56f * 0.75f, 3, 6, 17, 0.1f} },
+
+
 
 	{"1_BigGuy(Idle)_SpriteSheet_Hawker",		{12.14f * 0.75f, 9.56f * 0.75f, 2, 6, 12, 0.1f} },
-	{"1_BigGuy(angry)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 2, 6, 12, 0.1f} },
-	{"1_BigGuy(Ordering)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 2, 6, 9, 0.1f} },
-	{"1_BigGuy(Success)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 2, 6, 12, 0.1f} },
-	{"2_BigGuy(Idle)_SpriteSheet_Hawker",		{12.14f * 0.75f, 9.56f * 0.75f, 2, 6, 12, 0.1f} },
-	{"2_BigGuy(angry)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 2, 6, 12, 0.1f} },
-	{"2_BigGuy(Ordering)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 2, 6, 9, 0.1f} },
-	{"2_BigGuy(Success)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 2, 6, 12, 0.1f} },
+	{"1_BigGuy(angry)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 4, 6, 24, 0.1f} },
+	{"1_BigGuy(Ordering)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 3, 6, 14, 0.1f} },
+	{"1_BigGuy(Success)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 3, 6, 17, 0.1f} },
+		{"2_BigGuy(Idle)_SpriteSheet_Hawker",		{12.14f * 0.75f, 9.56f * 0.75f, 2, 6, 12, 0.1f} },
+	{"2_BigGuy(angry)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 4, 6, 24, 0.1f} },
+	{"2_BigGuy(Ordering)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 3, 6, 14, 0.1f} },
+	{"2_BigGuy(Success)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 3, 6, 17, 0.1f} },
+		{"3_BigGuy(Idle)_SpriteSheet_Hawker",		{12.14f * 0.75f, 9.56f * 0.75f, 2, 6, 12, 0.1f} },
+	{"3_BigGuy(angry)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 4, 6, 24, 0.1f} },
+	{"3_BigGuy(Ordering)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 3, 6, 14, 0.1f} },
+	{"3_BigGuy(Success)_SpriteSheet_Hawker",	{12.14f * 0.75f, 9.56f * 0.75f, 3, 6, 17, 0.1f} },
 
 	{"1_TallGuy(Idle)_SpriteSheet_Hawker",	{8.14f, 13.42f, 3, 6, 13, 0.1f} },
-	{"1_TallGuy(angry)_SpriteSheet_Hawker",	{8.14f, 13.42f, 3, 6, 17, 0.1f} },
+	{"1_TallGuy(angry)_SpriteSheet_Hawker",	{8.14f, 13.42f, 5, 6, 25, 0.1f} },
 	{"1_TallGuy(Ordering)_SpriteSheet_Hawker",{8.14f, 13.42f, 4, 6, 19, 0.1f} },
-	{"1_TallGuy(Success)_SpriteSheet_Hawker",	{8.14f, 13.42f, 3, 6, 13, 0.1f} },
+	{"1_TallGuy(Success)_SpriteSheet_Hawker",	{8.14f, 13.42f, 3, 6, 17, 0.1f} },
 	{"2_TallGuy(Idle)_SpriteSheet_Hawker",	{8.14f, 13.42f, 3, 6, 13, 0.1f} },
-	{"2_TallGuy(angry)_SpriteSheet_Hawker",	{8.14f, 13.42f, 3, 6, 17, 0.1f} },
+	{"2_TallGuy(angry)_SpriteSheet_Hawker",	{8.14f, 13.42f, 5, 6, 25, 0.1f} },
 	{"2_TallGuy(Ordering)_SpriteSheet_Hawker",{8.14f, 13.42f, 4, 6, 19, 0.1f} },
-	{"2_TallGuy(Success)_SpriteSheet_Hawker",	{8.14f, 13.42f, 3, 6, 13, 0.1f} }
+	{"2_TallGuy(Success)_SpriteSheet_Hawker",	{8.14f, 13.42f, 3, 6, 17, 0.1f} },
+	{"3_TallGuy(Idle)_SpriteSheet_Hawker",	{8.14f, 13.42f, 3, 6, 13, 0.1f} },
+	{"3_TallGuy(angry)_SpriteSheet_Hawker",	{8.14f, 13.42f, 5, 6, 25, 0.1f} },
+	{"3_TallGuy(Ordering)_SpriteSheet_Hawker",{8.14f, 13.42f, 4, 6, 19, 0.1f} },
+	{"3_TallGuy(Success)_SpriteSheet_Hawker",	{8.14f, 13.42f, 3, 6, 17, 0.1f} },
+
+
+
 };
 
 struct AnimationPack
@@ -274,7 +291,7 @@ struct AnimationPack
 void BuildAnimationPack(AnimationPack& anims, const std::string& name)
 {
 	int rand_colour;
-	rand_colour = rand() % 2;
+	rand_colour = rand() % 3;
 	if (rand_colour == 0)
 	{
 		if (name == "ahma")
@@ -301,7 +318,7 @@ void BuildAnimationPack(AnimationPack& anims, const std::string& name)
 			anims.animations_[3] = "1_TallGuy(Success)_SpriteSheet_Hawker";
 		}
 	}
-	else
+	else if (rand_colour == 1)
 	{
 		if (name == "ahma")
 		{
@@ -327,6 +344,33 @@ void BuildAnimationPack(AnimationPack& anims, const std::string& name)
 			anims.animations_[3] = "2_TallGuy(Success)_SpriteSheet_Hawker";
 		}
 	}
+	else if (rand_colour == 2)
+	{
+		if (name == "ahma")
+		{
+			anims.animations_[0] = "3_AhMa(Idle)_SpriteSheet_Hawker";
+			anims.animations_[1] = "3_AhMa(Angry)_SpriteSheet_Hawker";
+			anims.animations_[2] = "3_AhMa(Ordering)_SpriteSheet_Hawker";
+			anims.animations_[3] = "3_AhMa(Success)_SpriteSheet_Hawker";
+		}							
+		else if (name == "bigguy")	
+		{							
+									
+			anims.animations_[0] = "3_BigGuy(Idle)_SpriteSheet_Hawker";
+			anims.animations_[1] = "3_BigGuy(angry)_SpriteSheet_Hawker";
+			anims.animations_[2] = "3_BigGuy(Ordering)_SpriteSheet_Hawker";
+			anims.animations_[3] = "3_BigGuy(Success)_SpriteSheet_Hawker";
+		}							
+		else if (name == "tallguy")	
+		{							
+									
+			anims.animations_[0] = "3_TallGuy(Idle)_SpriteSheet_Hawker";
+			anims.animations_[1] = "3_TallGuy(angry)_SpriteSheet_Hawker";
+			anims.animations_[2] = "3_TallGuy(Ordering)_SpriteSheet_Hawker";
+			anims.animations_[3] = "3_TallGuy(Success)_SpriteSheet_Hawker";
+		}
+	}
+
 }
 
 void SetCustomerAnimation(AnimationPack& animPack, AnimationStates state, int id)

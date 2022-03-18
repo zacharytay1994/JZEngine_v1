@@ -103,6 +103,8 @@ void InitDay ()
 	switch ( hawker_scene_day )
 	{
 	case ( DAY::ONE ):
+
+	
 		break;
 	case ( DAY::TWO ):
 		Scene ().EntityFlagActive ( "RoundSteamer" , true );
@@ -585,6 +587,9 @@ void FlagShopActive ( bool flag )
 			Scene ().EntityFlagActive ( "Dumpling_amt" , flag );
 			Scene ().EntityFlagActive ( "Carrotcake_amt" , flag );
 			Scene ().EntityFlagActive ( "Total_amt" , flag );
+			Scene().EntityFlagActive("ScrollDay1_mouse", flag);
+			Scene().EntityFlagActive("ScrollDay1", flag);
+
 		}
 		else if ( hawker_scene_day == DAY::TWO )
 		{
@@ -688,6 +693,10 @@ void FlagShopActive ( bool flag )
 		Scene ().EntityFlagActive ( "Dumpling_amt" , flag );
 		Scene ().EntityFlagActive ( "Carrotcake_amt" , flag );
 		Scene ().EntityFlagActive ( "Total_amt" , flag );
+		Scene().EntityFlagActive("ScrollDay1_mouse", flag);
+		Scene().EntityFlagActive("ScrollDay1", flag);
+
+
 
 		// day 2
 		Scene ().EntityFlagActive ( "BeginShop2" , flag );
@@ -968,6 +977,22 @@ void UpdateShop ()
 			Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 		}
 	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("ScrollDay1_mouse"))
+	{
+		JZEngine::Animation2D* scroll = Scene().GetComponent<JZEngine::Animation2D>("ScrollDay1");
+		if (e->on_hover_)
+		{
+			scroll->pause_ = false;
+			if (scroll->frame_ == 7)
+				scroll->pause_ = true;
+		}
+		else
+		{
+			scroll->frame_ = 0;
+			scroll->pause_ = true;
+		}
+	}
+
 
 	// day 2 shop
 	ProcessShopItem ( "Shop2_a_springroll" , "Shop2_s_springroll" , "Shop2_amt_springroll" , springroll_count , max_count , min_count );
@@ -2287,6 +2312,9 @@ void HawkerSceneInit()
 	// initialize scene
 	current_hawker_scene_state = HawkerSceneState::Goal;
 	//esc_again = false;
+	JZEngine::Animation2D* scroll = Scene().GetComponent<JZEngine::Animation2D>("ScrollDay1");
+	scroll->pause_ = true;
+	scroll->frame_ = 0;
 	Scene ().EntityFlagActive ( "CoinSparkles" , false );
 	og_coin_position = Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_;
 	og_coin_distance_from_bar = (Scene ().GetComponent<JZEngine::Transform> ( "CoinBar" )->position_ 
@@ -2455,10 +2483,15 @@ void HawkerSceneInit()
 	Scene ().GetComponent<JZEngine::Transform> ( "Tongs" )->position_.x = 200.0f;
 	Scene ().GetComponent<JZEngine::Transform> ( "bb_tongs" )->position_.x = 200.0f;
 
+	Scene().EntityFlagActive("SpringOnion", false);
+	Scene().EntityFlagActive("SoySauce", false);
+
+
 	if ( hawker_scene_day == DAY::ONE )
 	{
 		Scene ().EntityFlagActive ( "Scizzors" , false );
 		Scene ().EntityFlagActive ( "bb_scizzors" , false );
+		
 	}
 	else if (hawker_scene_day == DAY::TWO || hawker_scene_day == DAY::THREE)
 	{
@@ -2466,6 +2499,11 @@ void HawkerSceneInit()
 		Scene ().GetComponent<JZEngine::Transform> ( "bb_plate" )->position_.x -= 200.0f;
 		Scene ().GetComponent<JZEngine::Transform> ( "Tongs" )->position_.x += 200.0f;
 		Scene ().GetComponent<JZEngine::Transform> ( "bb_tongs" )->position_.x += 200.0f;
+	}
+	else if (hawker_scene_day == DAY::THREE)
+	{
+		Scene().EntityFlagActive("SpringOnion", true);
+		Scene().EntityFlagActive("SoySauce", true);
 	}
 }
 
