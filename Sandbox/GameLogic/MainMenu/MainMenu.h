@@ -27,9 +27,9 @@ MainMenuState current_main_menu_state = MainMenuState::Main;
 bool playingbgm{ false };
 bool how_to_play_page1{ true };
 bool transition_main_cutscene{ false };
-float master_volume_{ 0.5f };
-float music_volume_{ 0.5f };
-float sfx_volume_{ 0.5f };
+float master_volume_{ 0.33f };
+float music_volume_{ 0.33f };
+float sfx_volume_{ 0.33f };
 float mute_threshold{ 0.05f };
 
 float initial_bar_scale_{ 1.0f };

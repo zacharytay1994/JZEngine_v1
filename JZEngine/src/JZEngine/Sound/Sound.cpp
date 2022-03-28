@@ -31,8 +31,8 @@ namespace JZEngine
     void SoundSystem::Init()
     {
         mastervolume = 0.33f;
-        mainvolume = 0.2f;
-        bgmvolume = 0.2f;
+        mainvolume = 0.33f;
+        bgmvolume = 0.33f;
 
         FMOD_RESULT result = FMOD_OK;
         result = FMOD::System_Create(&fmodsystem);
