@@ -57,7 +57,21 @@ enum class MessageState
 	Day2_msg7,
 	Day2_msg8,
 	Day2_msg9,
-	Day2_msg10
+	Day2_msg10,
+
+	//Sandy work CutScene 3
+	Day3_msg1,
+	Day3_msg2,
+	Day3_msg3,
+	Day3_msg4,
+	Day3_msg5,
+	Day3_msg6,
+	Day3_msg7,
+	Day3_msg8,
+	Day3_msg9,
+	Day3_msg10,
+	Day3_msg11,
+	Day3_msg12,
 };
 
 CutSceneState current_cut_scene_state = CutSceneState::CutScene;
@@ -200,6 +214,23 @@ void FlagDay2Msg(std::string name, bool flag)
 	Scene().EntityFlagActive("Day2_msg10_bg", flag);
 }
 
+//Sandy work CutScene 3
+void FlagDay3Msg(std::string name, bool flag)
+{
+	Scene().EntityFlagActive("Day3_msg1_bg", flag);
+	Scene().EntityFlagActive("Day3_msg2_bg", flag);
+	Scene().EntityFlagActive("Day3_msg3_bg", flag);
+	Scene().EntityFlagActive("Day3_msg4_bg", flag);
+	Scene().EntityFlagActive("Day3_msg5_bg", flag);
+	Scene().EntityFlagActive("Day3_msg6_bg", flag);
+	Scene().EntityFlagActive("Day3_msg7_bg", flag);
+	Scene().EntityFlagActive("Day3_msg8_bg", flag);
+	Scene().EntityFlagActive("Day3_msg9_bg", flag);
+	Scene().EntityFlagActive("Day3_msg10_bg", flag);
+	Scene().EntityFlagActive("Day3_msg11_bg", flag);
+	Scene().EntityFlagActive("Day3_msg12_bg", flag);
+}
+
 void FlagAllScreenItems ( bool flag )
 {
 
@@ -227,6 +258,20 @@ void FlagAllScreenItems ( bool flag )
 	FlagDay2Msg("Day2_msg8_bg", flag);
 	FlagDay2Msg("Day2_msg9_bg", flag);
 	FlagDay2Msg("Day2_msg10_bg", flag);
+
+	//Sandy work CutScene 3
+	FlagDay3Msg("Day3_msg1_bg", flag);
+	FlagDay3Msg("Day3_msg2_bg", flag);
+	FlagDay3Msg("Day3_msg3_bg", flag);
+	FlagDay3Msg("Day3_msg4_bg", flag);
+	FlagDay3Msg("Day3_msg5_bg", flag);
+	FlagDay3Msg("Day3_msg6_bg", flag);
+	FlagDay3Msg("Day3_msg7_bg", flag);
+	FlagDay3Msg("Day3_msg8_bg", flag);
+	FlagDay3Msg("Day3_msg9_bg", flag);
+	FlagDay3Msg("Day3_msg10_bg", flag);
+	FlagDay3Msg("Day3_msg11_bg", flag);
+	FlagDay3Msg("Day3_msg12_bg", flag);
 
 	Scene ().EntityFlagActive ( "1st_msg_emoji" , flag );
 	Scene ().EntityFlagActive ( "1st_msg_text" , flag );
@@ -265,6 +310,20 @@ void FlagAllScreenItems ( bool flag )
 	Scene().EntityFlagActive("Day2_msg8_emoji", flag);
 	Scene().EntityFlagActive("Day2_msg9_emoji", flag);
 	Scene().EntityFlagActive("Day2_msg10_emoji", flag);
+
+	//Sandy work CutScene 3
+	Scene().EntityFlagActive("Day3_msg1_emoji", flag);
+	Scene().EntityFlagActive("Day3_msg2_emoji", flag);
+	Scene().EntityFlagActive("Day3_msg3_emoji", flag);
+	Scene().EntityFlagActive("Day3_msg4_emoji", flag);
+	Scene().EntityFlagActive("Day3_msg5_emoji", flag);
+	Scene().EntityFlagActive("Day3_msg6_emoji", flag);
+	Scene().EntityFlagActive("Day3_msg7_emoji", flag);
+	Scene().EntityFlagActive("Day3_msg8_emoji", flag);
+	Scene().EntityFlagActive("Day3_msg9_emoji", flag);
+	Scene().EntityFlagActive("Day3_msg10_emoji", flag);
+	Scene().EntityFlagActive("Day3_msg11_emoji", flag);
+	Scene().EntityFlagActive("Day3_msg12_emoji", flag);
 }
 
 void CutSceneInit()
@@ -345,6 +404,21 @@ void CutSceneInit()
 	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day2_msg8_bg")->active_flag = true;
 	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day2_msg9_bg")->active_flag = true;
 	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day2_msg10_bg")->active_flag = true;
+
+	//Sandy work CutScene 3
+	//Set the box animation active flag for day3 msgs
+	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day3_msg1_bg")->active_flag = true;
+	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day3_msg2_bg")->active_flag = true;
+	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day3_msg3_bg")->active_flag = true;
+	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day3_msg4_bg")->active_flag = true;
+	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day3_msg5_bg")->active_flag = true;
+	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day3_msg6_bg")->active_flag = true;
+	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day3_msg7_bg")->active_flag = true;
+	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day3_msg8_bg")->active_flag = true;
+	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day3_msg9_bg")->active_flag = true;
+	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day3_msg10_bg")->active_flag = true;
+	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day3_msg11_bg")->active_flag = true;
+	Scene().GetComponent<JZEngine::AnimatedTransformComponent>("Day3_msg12_bg")->active_flag = true;
 
 	Scene ().PlaySound ( "temp_phone_notification" , false );
 }
@@ -621,6 +695,118 @@ void CutSceneUpdate(float dt)
 		Scene().EntityFlagActive("Day2_msg10_emoji", false);
 	}
 
+	//Sandy work CutScene 3
+	//Add animation for cutscene 3
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg1_bg")->scale_.x > bigger_box)
+	{
+		Scene().EntityFlagActive("Day3_msg1_emoji", true);
+	}
+
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg1_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("Day3_msg1_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg2_bg")->scale_.x > bigger_box)
+	{
+		Scene().EntityFlagActive("Day3_msg2_emoji", true);
+	}
+
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg2_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("Day3_msg2_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg3_bg")->scale_.x > bigger_box)
+	{
+		Scene().EntityFlagActive("Day3_msg3_emoji", true);
+	}
+
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg3_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("Day3_msg3_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg4_bg")->scale_.x > bigger_box)
+	{
+		Scene().EntityFlagActive("Day3_msg4_emoji", true);
+	}
+
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg4_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("Day3_msg4_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg5_bg")->scale_.x > bigger_box)
+	{
+		Scene().EntityFlagActive("Day3_msg5_emoji", true);
+	}
+
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg5_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("Day3_msg5_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg6_bg")->scale_.x > bigger_box)
+	{
+		Scene().EntityFlagActive("Day3_msg6_emoji", true);
+	}
+
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg6_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("Day3_msg6_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg7_bg")->scale_.x > bigger_box)
+	{
+		Scene().EntityFlagActive("Day3_msg7_emoji", true);
+	}
+
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg7_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("Day3_msg7_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg8_bg")->scale_.x > bigger_box)
+	{
+		Scene().EntityFlagActive("Day3_msg8_emoji", true);
+	}
+
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg8_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("Day3_msg8_emoji", false);
+	}
+
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg9_bg")->scale_.x > bigger_box)
+	{
+		Scene().EntityFlagActive("Day3_msg9_emoji", true);
+	}
+
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg9_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("Day3_msg9_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg10_bg")->scale_.x > bigger_box)
+	{
+		Scene().EntityFlagActive("Day3_msg10_emoji", true);
+	}
+
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg10_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("Day3_msg10_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg11_bg")->scale_.x > bigger_box)
+	{
+		Scene().EntityFlagActive("Day3_msg11_emoji", true);
+	}
+
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg11_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("Day3_msg11_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg12_bg")->scale_.x > bigger_box)
+	{
+		Scene().EntityFlagActive("Day3_msg12_emoji", true);
+	}
+
+	if (Scene().GetComponent<JZEngine::Transform>("Day3_msg11_bg")->position_.y == message_out_of_the_screen)
+	{
+		Scene().EntityFlagActive("Day3_msg12_emoji", false);
+	}
+
 	UNREFERENCED_PARAMETER(dt);
 	//if the mouse event phone app background exist
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Phone_app_bg"))
@@ -644,13 +830,16 @@ void CutSceneUpdate(float dt)
 
 		if (e->on_click_)
 		{
+			
+			//Sandy work Cutscene 3
+			//if (message_state == MessageState::Nothing)
 			if (message_state == MessageState::Nothing && Cutscene::day == Days::One)
 			{
 				//if nothing and day1 show day1 first message
 				Flag1stMsg(true);
 				message_state = MessageState::One;
 			}
-			else if (message_state == MessageState::Nothing && Cutscene::day == Days::Two)
+			else if (message_state == MessageState::Nothing && Cutscene::day == Days::Two) //SKIP TO CUTSCENE 2
 			{
 				//if nothing and day2 show day2 first message
 				Scene().EntityFlagActive("Day2_msg1_bg", true);
@@ -763,6 +952,7 @@ void CutSceneUpdate(float dt)
 			else if (message_state == MessageState::Thirteen)
 			{
 				// apply black transition screen
+				//Sandy Comment temporarily if CY want to check
 				transition_cutscene_hawker = true;
 				if ( Cutscene::day == Days::One )
 				{
@@ -772,7 +962,127 @@ void CutSceneUpdate(float dt)
 				{
 					hawker_scene_day = DAY::TWO;
 				}
+
+
+				//Sandy work CutScene 3
+				Scene().GetComponent<JZEngine::Transform>("11th_msg_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("12th_msg_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("13th_msg_bg")->position_.y = message_out_of_the_screen;
+				Flag11thMsg(false);
+				Flag12thMsg(false);
+				Flag13thMsg(false);
+				Scene().EntityFlagActive("Day3_msg1_bg", true);
+				message_state = MessageState::Day3_msg1;
+
 			}
+
+			else if (message_state == MessageState::Day3_msg1)
+			{
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg1_bg")->position_.y = 35.0f;
+				Scene().EntityFlagActive("Day3_msg2_bg", true);
+				message_state = MessageState::Day3_msg2;
+			}
+
+			else if (message_state == MessageState::Day3_msg2)
+			{
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg1_bg")->position_.y = 199.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg2_bg")->position_.y = -26.0f;
+				Scene().EntityFlagActive("Day3_msg3_bg", true);
+				message_state = MessageState::Day3_msg3;
+			}
+
+			else if (message_state == MessageState::Day3_msg3)
+			{
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg1_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg2_bg")->position_.y = 215.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg3_bg")->position_.y = 0.0f;
+				Scene().EntityFlagActive("Day3_msg1_bg", false);
+				Scene().EntityFlagActive("Day3_msg4_bg", true);
+				message_state = MessageState::Day3_msg4;
+			}
+
+			else if (message_state == MessageState::Day3_msg4)
+			{
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg2_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg3_bg")->position_.y = 215.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg4_bg")->position_.y = 0.0f;
+				Scene().EntityFlagActive("Day3_msg2_bg", false);
+				Scene().EntityFlagActive("Day3_msg5_bg", true);
+				message_state = MessageState::Day3_msg5;
+			}
+
+			else if (message_state == MessageState::Day3_msg5)
+			{
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg3_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg4_bg")->position_.y = 215.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg5_bg")->position_.y = -15.0f;
+				Scene().EntityFlagActive("Day3_msg3_bg", false);
+				Scene().EntityFlagActive("Day3_msg6_bg", true);
+				message_state = MessageState::Day3_msg6;
+			}
+
+			else if (message_state == MessageState::Day3_msg6)
+			{
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg4_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg5_bg")->position_.y = 215.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg6_bg")->position_.y = 6.0f;
+				Scene().EntityFlagActive("Day3_msg4_bg", false);
+				Scene().EntityFlagActive("Day3_msg7_bg", true);
+				message_state = MessageState::Day3_msg7;
+			}
+
+			else if (message_state == MessageState::Day3_msg7)
+			{
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg5_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg6_bg")->position_.y = 215.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg7_bg")->position_.y = 6.0f;
+				Scene().EntityFlagActive("Day3_msg5_bg", false);
+				Scene().EntityFlagActive("Day3_msg8_bg", true);
+				message_state = MessageState::Day3_msg8;
+			}
+
+			else if (message_state == MessageState::Day3_msg8)
+			{
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg6_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg7_bg")->position_.y = 215.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg8_bg")->position_.y = -5.0f;
+				Scene().EntityFlagActive("Day3_msg6_bg", false);
+				Scene().EntityFlagActive("Day3_msg9_bg", true);
+				message_state = MessageState::Day3_msg9;
+			}
+
+			else if (message_state == MessageState::Day3_msg9)
+			{
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg7_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg8_bg")->position_.y = 215.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg9_bg")->position_.y = -10.0f;
+				Scene().EntityFlagActive("Day3_msg7_bg", false);
+				Scene().EntityFlagActive("Day3_msg10_bg", true);
+				message_state = MessageState::Day3_msg10;
+			}
+
+			else if (message_state == MessageState::Day3_msg10)
+			{
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg8_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg9_bg")->position_.y = 215.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg10_bg")->position_.y = -10.0f;
+				Scene().EntityFlagActive("Day3_msg8_bg", false);
+				Scene().EntityFlagActive("Day3_msg11_bg", true);
+				message_state = MessageState::Day3_msg11;
+			}
+
+			else if (message_state == MessageState::Day3_msg11)
+			{
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg9_bg")->position_.y = message_out_of_the_screen;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg10_bg")->position_.y = 215.0f;
+				Scene().GetComponent<JZEngine::Transform>("Day3_msg11_bg")->position_.y = -10.0f;
+				Scene().EntityFlagActive("Day3_msg9_bg", false);
+				Scene().EntityFlagActive("Day3_msg12_bg", true);
+				message_state = MessageState::Day3_msg12;
+			}
+
+			//End Cutscene 3
+
 			else if (message_state == MessageState::Day2_msg1)
 			{
 				Scene().GetComponent<JZEngine::Transform>("Day2_msg1_bg")->position_.y = -30.0f;
@@ -861,7 +1171,10 @@ void CutSceneUpdate(float dt)
 				{
 					hawker_scene_day = DAY::TWO;
 				}
+				
 			}
+
+			//else if for cutscene 3
 		}
 		
 	}
