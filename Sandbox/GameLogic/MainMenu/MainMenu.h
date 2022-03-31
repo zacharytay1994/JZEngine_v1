@@ -23,7 +23,17 @@ enum class MainMenuState
 	HowtoPlay,
 	Quit
 };
+
+enum class HowtoPlayState
+{
+	Photo1,
+	Photo2,
+	Photo3,
+	Photo4
+};
+
 MainMenuState current_main_menu_state = MainMenuState::Main;
+HowtoPlayState how_to_play_state = HowtoPlayState::Photo1;
 bool playingbgm{ false };
 bool how_to_play_page1{ true };
 bool transition_main_cutscene{ false };
@@ -180,6 +190,8 @@ void ToggleHowtoPlayPage(bool toggle)
 {
 	Scene().EntityFlagActive("How_to_play_photo", toggle);
 	Scene ().EntityFlagActive ( "How_to_play_photo2" , toggle );
+	Scene().EntityFlagActive("How_to_play_photo3", toggle);
+	Scene().EntityFlagActive("How_to_play_photo4", toggle);
 	Scene().EntityFlagActive("How_to_play_x", toggle);
 	Scene ().EntityFlagActive ( "Arrow_left_how_to_play" , toggle );
 	Scene ().EntityFlagActive ( "Arrow_right_how_to_play" , toggle );
@@ -429,11 +441,31 @@ void UpdateQuitMenu(float dt)
 void UpdateHowtoPlayMenu(float dt)
 {
 	UNREFERENCED_PARAMETER ( dt );
+
+	unsigned int count{ 1 };
+	unsigned int max{ 5 };
+	unsigned int min{ 1 };
+
 	if( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Arrow_left_how_to_play" ) )
 	{
 		if( e->on_released_ )
 		{
-			how_to_play_page1 = !how_to_play_page1;
+			if (count > min)
+			{
+				--count;
+			}
+		}
+		if (e->on_held_)
+		{
+			ToggleButton("Arrow_left_how_to_play", ButtonState::Clicked);
+		}
+		else if (e->on_hover_)
+		{
+			ToggleButton("Arrow_left_how_to_play", ButtonState::Hover);
+		}
+		else
+		{
+			ToggleButton("Arrow_left_how_to_play", ButtonState::Normal);
 		}
 	}
 
@@ -441,19 +473,57 @@ void UpdateHowtoPlayMenu(float dt)
 	{
 		if( e->on_released_ )
 		{
-			how_to_play_page1 = !how_to_play_page1;
+			if (count < max)
+			{
+				++count;
+			}
+		}
+		if (e->on_held_)
+		{
+			ToggleButton("Arrow_right_how_to_play", ButtonState::Clicked);
+		}
+		else if (e->on_hover_)
+		{
+			ToggleButton("Arrow_right_how_to_play", ButtonState::Hover);
+		}
+		else
+		{
+			ToggleButton("Arrow_right_how_to_play", ButtonState::Normal);
 		}
 	}
 
-	if( how_to_play_page1 )
+	if (count == 1)
 	{
-		Scene ().EntityFlagActive ( "How_to_play_photo" , true );
-		Scene ().EntityFlagActive ( "How_to_play_photo2" , false );
+		
 	}
-	else
+	if (count == 2)
 	{
-		Scene ().EntityFlagActive ( "How_to_play_photo" , false );
-		Scene ().EntityFlagActive ( "How_to_play_photo2" , true );
+		Scene().EntityFlagActive("How_to_play_photo", false);
+		Scene().EntityFlagActive("How_to_play_photo2", true);
+		Scene().EntityFlagActive("How_to_play_photo3", false);
+		Scene().EntityFlagActive("How_to_play_photo4", false);
+	}
+	if (count == 3)
+	{
+		Scene().EntityFlagActive("How_to_play_photo", false);
+		Scene().EntityFlagActive("How_to_play_photo2", false);
+		Scene().EntityFlagActive("How_to_play_photo3", true);
+		Scene().EntityFlagActive("How_to_play_photo4", false);
+	}
+	if (count == 4)
+	{
+		Scene().EntityFlagActive("How_to_play_photo", false);
+		Scene().EntityFlagActive("How_to_play_photo2", false);
+		Scene().EntityFlagActive("How_to_play_photo3", false);
+		Scene().EntityFlagActive("How_to_play_photo4", true);
+	}
+
+	if (how_to_play_state == HowtoPlayState::Photo1)
+	{
+		Scene().EntityFlagActive("How_to_play_photo", true);
+		Scene().EntityFlagActive("How_to_play_photo2", false);
+		Scene().EntityFlagActive("How_to_play_photo3", false);
+		Scene().EntityFlagActive("How_to_play_photo4", false);
 	}
 
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("How_to_play_x"))

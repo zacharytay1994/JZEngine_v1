@@ -51,6 +51,8 @@ std::unordered_map<std::string, ButtonTextures> button_textures{
 	{ "Skip",       { "Skip(OG)_Button_MainMenu"      , "Skip(Highlight)_Button_MainMenu"       , "Skip(Clicked)_Button_MainMenu"}},
 	{ "MainMenuExit_yes", { "Yes(OG)_Button_MainMenu", "Yes(Highlight)_Button_MainMenu"     , "Yes(Clicked)_Button_MainMenu"}},
 	{ "MainMenuExit_no" , { "No(OG)_Button_MainMenu" , "No(Highlight)_Button_MainMenu"      , "No(Clicked)_Button_MainMenu"}},
+	{ "Arrow_left_how_to_play"  , { "Arrowleft_UI_MainMenu_OG" , "Arrowleft_UI_MainMenu_Highlight"  , "Arrowleft_UI_MainMenu_Selected"}},
+	{ "Arrow_right_how_to_play" , { "Arrowright_UI_MainMenu_OG", "Arrowright_UI_MainMenu_Highlight" , "Arrowright_UI_MainMenu_Selected"}},
 	{ "Album_1960_button1", {"Album_photo_button_normal", "Album_photo_onhover", ""}},
 	{ "Album_1960_button2", {"Album_photo_button_normal", "Album_photo_onhover", ""}}
 };
