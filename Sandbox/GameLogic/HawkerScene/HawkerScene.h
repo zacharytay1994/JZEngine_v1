@@ -767,6 +767,10 @@ void ProcessShopItem (const char* addEvent, const char* subEvent, const char* na
 		{
 			if ( count < maxCount )
 				++count;
+			else
+			{
+				count = minCount;
+			}
 			std::stringstream ss;
 			ss << count;
 			Scene ().GetComponent<JZEngine::TextData> ( name )->color_ = { 1.0f,1.0f,1.0f };
@@ -779,6 +783,10 @@ void ProcessShopItem (const char* addEvent, const char* subEvent, const char* na
 		{
 			if ( count > minCount )
 				--count;
+			else
+			{
+				count = maxCount;
+			}
 			std::stringstream ss;
 			ss << count;
 			Scene ().GetComponent<JZEngine::TextData> ( name )->color_ = { 1.0f,1.0f,1.0f };
@@ -924,6 +932,10 @@ void UpdateShop ()
 		{
 			if ( springroll_count < max_count )
 				++springroll_count;
+			else
+			{
+				springroll_count = min_count;
+			}
 			std::stringstream ss;
 			ss << springroll_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "Springroll_amt" )->color_ = { 1.0f,1.0f,1.0f };
@@ -936,6 +948,10 @@ void UpdateShop ()
 		{
 			if ( springroll_count > min_count )
 				--springroll_count;
+			else
+			{
+				springroll_count = max_count;
+			}
 			std::stringstream ss;
 			ss << springroll_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "Springroll_amt" )->color_ = { 1.0f,1.0f,1.0f };
@@ -949,6 +965,10 @@ void UpdateShop ()
 		{
 			if ( seaweedchicken_count < max_count )
 				++seaweedchicken_count;
+			else
+			{
+				seaweedchicken_count = min_count;
+			}
 			std::stringstream ss;
 			ss << seaweedchicken_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "Seaweedchicken_amt" )->color_ = { 1.0f,1.0f,1.0f };
@@ -961,6 +981,10 @@ void UpdateShop ()
 		{
 			if ( seaweedchicken_count > min_count )
 				--seaweedchicken_count;
+			else
+			{
+				seaweedchicken_count = max_count;
+			}
 			std::stringstream ss;
 			ss << seaweedchicken_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "Seaweedchicken_amt" )->color_ = { 1.0f,1.0f,1.0f };
@@ -974,6 +998,10 @@ void UpdateShop ()
 		{
 			if ( wanton_count < max_count )
 				++wanton_count;
+			else
+			{
+				wanton_count = min_count;
+			}
 			std::stringstream ss;
 			ss << wanton_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "Dumpling_amt" )->color_ = { 1.0f,1.0f,1.0f };
@@ -986,6 +1014,10 @@ void UpdateShop ()
 		{
 			if ( wanton_count > min_count )
 				--wanton_count;
+			else
+			{
+				wanton_count = max_count;
+			}
 			std::stringstream ss;
 			ss << wanton_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "Dumpling_amt" )->color_ = { 1.0f,1.0f,1.0f };
@@ -999,6 +1031,10 @@ void UpdateShop ()
 		{
 			if ( carrotcake_count < max_count )
 				++carrotcake_count;
+			else
+			{
+				carrotcake_count = min_count;
+			}
 			std::stringstream ss;
 			ss << carrotcake_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->color_ = { 1.0f,1.0f,1.0f };
@@ -1011,6 +1047,10 @@ void UpdateShop ()
 		{
 			if ( carrotcake_count > min_count )
 				--carrotcake_count;
+			else
+			{
+				carrotcake_count = max_count;
+			}
 			std::stringstream ss;
 			ss << carrotcake_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->color_ = { 1.0f,1.0f,1.0f };
