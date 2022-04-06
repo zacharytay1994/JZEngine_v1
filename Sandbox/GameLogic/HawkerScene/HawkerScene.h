@@ -570,6 +570,10 @@ void FlagShopActive ( bool flag )
 		Scene ().EntityFlagActive ( "BeginBlack" , flag );
 		Scene ().EntityFlagActive ( "BeginShop_Exit" , flag );
 		Scene ().EntityFlagActive ( "BeginShop_Next" , flag );
+
+		Scene ().EntityFlagActive ( "shop_exit" , flag );
+		Scene ().EntityFlagActive ( "shop_next" , flag );
+
 		if ( hawker_scene_day == DAY::ONE )
 		{
 			Scene ().EntityFlagActive ( "BeginShop" , flag );
@@ -698,7 +702,8 @@ void FlagShopActive ( bool flag )
 		Scene().EntityFlagActive("ScrollDay1_mouse", flag);
 		Scene().EntityFlagActive("ScrollDay1", flag);
 
-
+		Scene ().EntityFlagActive ( "shop_exit" , flag );
+		Scene ().EntityFlagActive ( "shop_next" , flag );
 
 		// day 2
 		Scene ().EntityFlagActive ( "BeginShop2" , flag );
@@ -735,8 +740,6 @@ void FlagShopActive ( bool flag )
 		Scene ().EntityFlagActive ( "Shop2_amt_chickenfeet" , flag );
 		Scene().EntityFlagActive("ScrollDay2_mouse", flag);
 		Scene().EntityFlagActive("ScrollDay2", flag);
-
-
 
 		// day 3
 		Scene ().EntityFlagActive ( "BeginShop3" , flag );
@@ -879,6 +882,37 @@ void UpdateShop ()
 			init_seaweedchicken_count = seaweedchicken_count;
 
 			day_begin = true;
+		}
+		if ( e->on_held_ )
+		{
+			ToggleButton ( "shop_next" , ButtonState::Clicked );
+		}
+		else if ( e->on_hover_ )
+		{
+			ToggleButton ( "shop_next" , ButtonState::Hover );
+		}
+		else
+		{
+			ToggleButton ( "shop_next" , ButtonState::Normal );
+		}
+	}
+	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "BeginShop_Exit" ) )
+	{
+		if ( e->on_released_ )
+		{
+			Scene ().ChangeScene ( "MainMenu" );
+		}
+		if ( e->on_held_ )
+		{
+			ToggleButton ( "shop_exit" , ButtonState::Clicked );
+		}
+		else if ( e->on_hover_ )
+		{
+			ToggleButton ( "shop_exit" , ButtonState::Hover );
+		}
+		else
+		{
+			ToggleButton ( "shop_exit" , ButtonState::Normal );
 		}
 	}
 
@@ -2518,19 +2552,36 @@ void HawkerSceneInit()
 	{
 		Scene ().EntityFlagActive ( "Scizzors" , false );
 		Scene ().EntityFlagActive ( "bb_scizzors" , false );
+
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_one" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay01_UI_hawker_01" );
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_two" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay01_UI_hawker_02" );
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_three" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay01_UI_hawker_03" );
 		
 	}
-	else if (hawker_scene_day == DAY::TWO || hawker_scene_day == DAY::THREE)
+	else if (hawker_scene_day == DAY::TWO)
 	{
 		Scene ().GetComponent<JZEngine::Transform> ( "Plate" )->position_.x -= 200.0f;
 		Scene ().GetComponent<JZEngine::Transform> ( "bb_plate" )->position_.x -= 200.0f;
 		Scene ().GetComponent<JZEngine::Transform> ( "Tongs" )->position_.x += 200.0f;
 		Scene ().GetComponent<JZEngine::Transform> ( "bb_tongs" )->position_.x += 200.0f;
+
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_one" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay02_UI_hawker_01" );
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_two" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay02_UI_hawker_02" );
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_three" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay02_UI_hawker_03" );
 	}
 	else if (hawker_scene_day == DAY::THREE)
 	{
+		Scene ().GetComponent<JZEngine::Transform> ( "Plate" )->position_.x -= 200.0f;
+		Scene ().GetComponent<JZEngine::Transform> ( "bb_plate" )->position_.x -= 200.0f;
+		Scene ().GetComponent<JZEngine::Transform> ( "Tongs" )->position_.x += 200.0f;
+		Scene ().GetComponent<JZEngine::Transform> ( "bb_tongs" )->position_.x += 200.0f;
+
 		Scene().EntityFlagActive("SpringOnion", true);
 		Scene().EntityFlagActive("SoySauce", true);
+
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_one" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay03_UI_hawker_01" );
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_two" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay03_UI_hawker_02" );
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_three" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay03_UI_hawker_03" );
 	}
 }
 
