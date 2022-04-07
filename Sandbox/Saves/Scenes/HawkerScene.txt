@@ -24,7 +24,7 @@ Sky 0
 !
 Clouds 0 
 	c 0 struct JZEngine::Transform
-		-1930.37 40 0 0 0 1 1 7660 1048 
+		-1101.38 40 0 0 0 1 1 7660 1048 
 	c 1 struct JZEngine::SpriteLayer
 		-30 
 	c 2 struct JZEngine::Texture
@@ -404,7 +404,7 @@ bb_PrawnCCF 0
 !
 Plate 0 
 	c 0 struct JZEngine::Transform
-		-359 -421.312 0 0 0 0.65 0.65 512 256 
+		-159 -421.312 0 0 0 0.65 0.65 512 256 
 	c 1 struct JZEngine::SpriteLayer
 		25 
 	c 2 struct JZEngine::Texture
@@ -416,7 +416,7 @@ Plate 0
 !
 Tongs 0 
 	c 0 struct JZEngine::Transform
-		400 -433.975 0 0 16.681 0.59 0.59 512 256 
+		200 -433.975 0 0 16.681 0.59 0.59 512 256 
 	c 1 struct JZEngine::SpriteLayer
 		25 
 	c 2 struct JZEngine::Texture
@@ -578,13 +578,13 @@ bb_carrotcake 0
 !
 bb_plate 0 
 	c 0 struct JZEngine::Transform
-		-359 -425 0 0 0 1 1 50 50 
+		-159 -425 0 0 0 1 1 50 50 
 	c 15 struct JZEngine::MouseEvent
 		100 65 
 !
 bb_tongs 0 
 	c 0 struct JZEngine::Transform
-		400 -418.632 0 0 0 1 1 50 50 
+		200 -418.632 0 0 0 1 1 50 50 
 	c 15 struct JZEngine::MouseEvent
 		120 55 
 !
@@ -2818,7 +2818,7 @@ Goal_one 0
 	c 1 struct JZEngine::SpriteLayer
 		404 
 	c 2 struct JZEngine::Texture
-		TutorialDadDay03_UI_hawker_01 
+		TutorialDadDay01_UI_hawker_01 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
@@ -2830,7 +2830,7 @@ Goal_two 0
 	c 1 struct JZEngine::SpriteLayer
 		405 
 	c 2 struct JZEngine::Texture
-		TutorialDadDay03_UI_hawker_02 
+		TutorialDadDay01_UI_hawker_02 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
@@ -2842,7 +2842,7 @@ Goal_three 0
 	c 1 struct JZEngine::SpriteLayer
 		406 
 	c 2 struct JZEngine::Texture
-		TutorialDadDay03_UI_hawker_03 
+		TutorialDadDay01_UI_hawker_03 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
@@ -3447,4 +3447,12 @@ shop_next 0
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
 		0 0 1 1 0 1 1 
+!
+Wallet_amt 0 
+	c 0 struct JZEngine::Transform
+		-208 -185 0 0 0 1 1 50 50 
+	c 1 struct JZEngine::SpriteLayer
+		401 
+	c 9 struct JZEngine::TextData
+		1 
 !

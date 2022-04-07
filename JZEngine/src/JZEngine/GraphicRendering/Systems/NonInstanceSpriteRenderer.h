@@ -32,6 +32,7 @@ namespace JZEngine
 		float animation_counter_{ 0.0f };
 		bool animation_check_{ false };
 		bool pause_ { false };
+		bool reverse_ { false };
 	};
 
 	struct NonInstanceShader

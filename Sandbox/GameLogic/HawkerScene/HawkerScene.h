@@ -699,6 +699,7 @@ void FlagShopActive ( bool flag )
 		Scene ().EntityFlagActive ( "Dumpling_amt" , flag );
 		Scene ().EntityFlagActive ( "Carrotcake_amt" , flag );
 		Scene ().EntityFlagActive ( "Total_amt" , flag );
+		Scene ().EntityFlagActive ( "Wallet_amt" , flag );
 		Scene().EntityFlagActive("ScrollDay1_mouse", flag);
 		Scene().EntityFlagActive("ScrollDay1", flag);
 
@@ -848,7 +849,23 @@ unsigned int summary_fd_count { 0 };
 unsigned int summary_cc_count { 0 };
 
 unsigned int min_count { 1 };
-unsigned int max_count { 10 };
+unsigned int max_count { 9 };
+
+// price of food
+float springroll_cost { 0.40f };
+float seaweedchicken_cost { 0.20f };
+float frieddumpling_cost { 0.30f };
+float friedcarrotcake_cost { 0.50f };
+float chickendumpling_cost { 0.50f };
+float prawndumpling_cost { 0.60f };
+float chickenfeet_cost { 0.60f };
+float charsiewbun_cost { 0.30f };
+float redbeanbun_cost { 0.20f };
+float coffeebun_cost { 0.20f };
+float ricenoodleroll_cost { 0.30f };
+float prawnroll_cost { 0.60f };
+
+float wallet_amt { 12.50f };
 
 void UpdateShop ()
 {
@@ -1103,14 +1120,30 @@ void UpdateShop ()
 	// day 3 shop
 	ProcessShopItem ( "Shop3_a_hargao" , "Shop3_s_hargao" , "Shop3_amt_hargao" , hargao_count , 3 , min_count );
 	ProcessShopItem ( "Shop3_a_chickenfeet" , "Shop3_s_chickenfeet" , "Shop3_amt_chickenfeet" , chickenfeet_count , 3 , min_count );
-	ProcessShopItem ( "Shop3_a_plainccf" , "Shop3_s_plainccf" , "Shop3_amt_plainccf" , plainccf_count , 10 , min_count );
-	ProcessShopItem ( "Shop3_a_prawnccf" , "Shop3_s_prawnccf" , "Shop3_amt_prawnccf" , prawnccf_count , 10 , min_count );
+	ProcessShopItem ( "Shop3_a_plainccf" , "Shop3_s_plainccf" , "Shop3_amt_plainccf" , plainccf_count , max_count , min_count );
+	ProcessShopItem ( "Shop3_a_prawnccf" , "Shop3_s_prawnccf" , "Shop3_amt_prawnccf" , prawnccf_count , max_count , min_count );
 
-	float total_amt = 0.4f * springroll_count + 0.2f * seaweedchicken_count + 0.3f * wanton_count + 0.5f * carrotcake_count;
+	float total_amt = springroll_cost * springroll_count + seaweedchicken_cost * seaweedchicken_count + frieddumpling_cost * wanton_count + friedcarrotcake_cost * carrotcake_count;
+
+	if ( hawker_scene_day == DAY::TWO )
+	{
+		total_amt = chickendumpling_cost * siewmai_count + prawndumpling_cost * hargao_count + chickenfeet_cost * chickenfeet_count;
+	}
+	else if ( hawker_scene_day == DAY::THREE )
+	{
+		total_amt = charsiewbun_cost * charsiewbao_count + redbeanbun_cost * doushabao_count + coffeebun_cost * coffeebao_count +
+			ricenoodleroll_cost * plainccf_count + prawnroll_cost * prawnccf_count;
+	}
+
 	std::stringstream ss;
 	ss << "$" << std::setprecision (2) << std::fixed << total_amt;
 	Scene ().GetComponent<JZEngine::TextData> ( "Total_amt" )->color_ = { 0.0f,0.0f,0.0f };
 	Scene ().GetComponent<JZEngine::TextData> ( "Total_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+
+	ss.str ( "" );
+	ss << "$" << std::setprecision ( 2 ) << std::fixed << wallet_amt;
+	Scene ().GetComponent<JZEngine::TextData> ( "Wallet_amt" )->color_ = { 0.0f,0.0f,0.0f };
+	Scene ().GetComponent<JZEngine::TextData> ( "Wallet_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 }
 
 /*!
