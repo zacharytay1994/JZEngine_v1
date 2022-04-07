@@ -47,10 +47,10 @@ enum class CustomerOrder
 	Nothing
 };
 
-unsigned int num_springroll {8};
-unsigned int num_dumpling {7};
-unsigned int num_carrotcake {9};
-unsigned int num_seaweedchicken {8};
+unsigned int num_springroll {5};
+unsigned int num_dumpling {5};
+unsigned int num_carrotcake {6};
+unsigned int num_seaweedchicken {7};
 
 unsigned int rnum_springroll;
 unsigned int rnum_dumpling;;

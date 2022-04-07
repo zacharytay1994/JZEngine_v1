@@ -759,6 +759,9 @@ void FlagShopActive ( bool flag )
 		Scene ().EntityFlagActive ( "Shop3_amt_prawnccf" , flag );
 		Scene ().EntityFlagActive ( "Shop3_amt_hargao" , flag );
 		Scene ().EntityFlagActive ( "Shop3_amt_chickenfeet" , flag );
+
+		Scene ().EntityFlagActive ( "no_money" , flag );
+		Scene ().GetComponent<JZEngine::Transform> ( "no_money" )->scale_ = { 0.01f,0.01f };
 	}
 }
 
@@ -870,7 +873,11 @@ float prawnroll_cost { 0.60f };
 float total_amt { 0.0f };
 float wallet_amt { 12.50f };
 
-void UpdateShop ()
+bool no_money { false };
+float no_money_display_time { 2.0f };
+float no_money_display_timer { 0.0f };
+
+void UpdateShop (float dt)
 {
 	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "BeginShop_Next" ) )
 	{
@@ -919,6 +926,11 @@ void UpdateShop ()
 		else
 		{
 			// say cant purchase
+			if ( e->on_released_ )
+			{
+				Scene ().EntityFlagActive ( "no_money" , true );
+				no_money = true;
+			}
 		}
 		if ( e->on_held_ )
 		{
@@ -950,6 +962,38 @@ void UpdateShop ()
 		else
 		{
 			ToggleButton ( "shop_exit" , ButtonState::Normal );
+		}
+	}
+	if ( no_money )
+	{
+		if ( no_money_display_timer < no_money_display_time )
+		{
+			no_money_display_timer += dt;
+		}
+		else
+		{
+			no_money = false;
+			no_money_display_timer = 0.0f;
+		}
+
+		JZEngine::Vec2f& scale = Scene ().GetComponent<JZEngine::Transform> ( "no_money" )->scale_;
+		if ( scale.x < 1.0f )
+		{
+			scale.x += dt * 3.0f;
+			scale.y = scale.x;
+		}
+	}
+	else
+	{
+		JZEngine::Vec2f& scale = Scene ().GetComponent<JZEngine::Transform> ( "no_money" )->scale_;
+		if ( scale.x > 0.01f )
+		{
+			scale.x -= dt * 3.0f;
+			scale.y = scale.x;	
+		}
+		else
+		{
+			Scene ().EntityFlagActive ( "no_money" , false );
 		}
 	}
 
@@ -2421,13 +2465,14 @@ void UpdateMainScene(float dt)
 					DisplayTick ();
 					//Scene ().EntityFlagActive ( "CoinSparkles" , true );
 					Scene ().EntityFlagActive ( "CoinOnTable" , true );
-					if (current_coins >= target_coins)
-					{
-						coin_last_update = true;
-					}
+					//if (current_coins >= target_coins)
+					//{
+					//	//coin_last_update = true;
+					//}
 					ToggleGuidedCircle ( "gtc_platecustomer" , false );
 					TurnOffNotification ();
 					//JZEngine::Log::Info ( "Main" , "test" );
+					
 				}
 			}
 			else
@@ -2660,6 +2705,11 @@ void HawkerSceneInit()
 		Scene ().GetComponent<JZEngine::Texture> ( "Goal_three" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay01_UI_hawker_03" );
 
 		wallet_amt = 12.50f;
+
+		num_springroll = 5;
+		num_seaweedchicken = 7;
+		num_dumpling = 5;
+		num_carrotcake = 6;
 	}
 	else if (hawker_scene_day == DAY::TWO)
 	{
@@ -2671,6 +2721,17 @@ void HawkerSceneInit()
 		Scene ().GetComponent<JZEngine::Texture> ( "Goal_one" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay02_UI_hawker_01" );
 		Scene ().GetComponent<JZEngine::Texture> ( "Goal_two" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay02_UI_hawker_02" );
 		Scene ().GetComponent<JZEngine::Texture> ( "Goal_three" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay02_UI_hawker_03" );
+
+		num_springroll = 5;
+		num_seaweedchicken = 5;
+		num_dumpling = 4;
+		num_carrotcake = 4;
+		num_chickenfeet = 1;
+		num_siewmai = 1;
+		num_hargao = 1;
+		num_charsiewbao = 2;
+		num_doushabao = 2;
+		num_coffeebao = 2;
 	}
 	else if (hawker_scene_day == DAY::THREE)
 	{
@@ -2685,6 +2746,19 @@ void HawkerSceneInit()
 		Scene ().GetComponent<JZEngine::Texture> ( "Goal_one" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay03_UI_hawker_01" );
 		Scene ().GetComponent<JZEngine::Texture> ( "Goal_two" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay03_UI_hawker_02" );
 		Scene ().GetComponent<JZEngine::Texture> ( "Goal_three" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay03_UI_hawker_03" );
+
+		num_springroll = 3;
+		num_seaweedchicken = 3;
+		num_dumpling = 6;
+		num_carrotcake = 6;
+		num_chickenfeet = 2;
+		num_siewmai = 1;
+		num_hargao = 2;
+		num_charsiewbao = 1;
+		num_doushabao = 2;
+		num_coffeebao = 2;
+		num_plainccf = 4;
+		num_prawnccf = 4;
 	}
 }
 
@@ -2697,12 +2771,35 @@ void HawkerSceneUpdate(float dt)
 		return;
 	}
 
+	bool food_count = springroll_count <= 0 && carrotcake_count <= 0 && wanton_count <= 0 && seaweedchicken_count <= 0;
+	if ( hawker_scene_day == DAY::TWO )
+	{
+		food_count = food_count && ( chickenfeet_count <= 0 && hargao_count <= 0 && siewmai_count <= 0 && charsiewbao_count <= 0 && doushabao_count <= 0 && coffeebao_count );
+	}
+	if ( hawker_scene_day == DAY::THREE )
+	{
+		food_count = food_count && ( plainccf_count <= 0 && prawnccf_count <= 0 );
+	}
+
 	if (( num_customers <= 0 ||
-		(springroll_count <= 0 && carrotcake_count <= 0 && wanton_count <= 0 && seaweedchicken_count <= 0)) &&
+		food_count) &&
 		current_hawker_scene_state != HawkerSceneState::Win)
 	{
-		FlagLoseBar ( true );
-		current_hawker_scene_state = HawkerSceneState::Lose;
+		/*FlagLoseBar ( true );
+		current_hawker_scene_state = HawkerSceneState::Lose;*/
+		// check if win or lose
+
+		if ( current_coins >= target_coins )
+		{
+			// win
+			coin_last_update = true;
+		}
+		else
+		{
+			// lose
+			FlagLoseBar ( true );
+			current_hawker_scene_state = HawkerSceneState::Lose;
+		}
 	}
 
 	if ( day_begin )
@@ -2750,7 +2847,7 @@ void HawkerSceneUpdate(float dt)
 		}
 		break;
 	case HawkerSceneState::Shop:
-		UpdateShop ();
+		UpdateShop (dt);
 		break;
 	case HawkerSceneState::Goal:
 		UpdateGoal (dt);

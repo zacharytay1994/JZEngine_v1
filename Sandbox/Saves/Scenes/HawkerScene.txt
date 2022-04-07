@@ -24,7 +24,7 @@ Sky 0
 !
 Clouds 0 
 	c 0 struct JZEngine::Transform
-		-739.875 40 0 0 0 1 1 7660 1048 
+		221.408 40 0 0 0 1 1 7660 1048 
 	c 1 struct JZEngine::SpriteLayer
 		-30 
 	c 2 struct JZEngine::Texture
@@ -3456,4 +3456,15 @@ Wallet_amt 0
 	c 9 struct JZEngine::TextData
 		1 
 !
-
+no_money 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 0.01 0.01 2048 1024 
+	c 1 struct JZEngine::SpriteLayer
+		404 
+	c 2 struct JZEngine::Texture
+		NoMoneyDad_UI_hawker 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
+!
