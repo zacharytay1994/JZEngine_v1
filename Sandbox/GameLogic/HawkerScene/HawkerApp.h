@@ -75,7 +75,7 @@ void FlagQuitConfirmation( bool flag )
 	{
 		Scene().GetComponent<JZEngine::MouseEvent>( "Quit_no_bb" )->on_released_ = false;
 	}
-	Scene().EntityFlagActive( "Quit_title", flag );
+	//Scene().EntityFlagActive( "Quit_title", flag );
 	Scene().EntityFlagActive( "Quit_bg", flag );
 }
 
