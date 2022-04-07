@@ -24,7 +24,7 @@ Sky 0
 !
 Clouds 0 
 	c 0 struct JZEngine::Transform
-		-1101.38 40 0 0 0 1 1 7660 1048 
+		-739.875 40 0 0 0 1 1 7660 1048 
 	c 1 struct JZEngine::SpriteLayer
 		-30 
 	c 2 struct JZEngine::Texture
@@ -3456,3 +3456,4 @@ Wallet_amt 0
 	c 9 struct JZEngine::TextData
 		1 
 !
+

@@ -911,6 +911,8 @@ void UpdateShop ()
 				init_wanton_count = wanton_count;
 				init_seaweedchicken_count = seaweedchicken_count;
 
+				wallet_amt -= total_amt;
+
 				day_begin = true;
 			}
 		}
@@ -1792,6 +1794,21 @@ void SummaryInit ()
 	Scene ().GetComponent<JZEngine::TextData> ( "sum_total_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 }
 
+float springroll_price { 2.70f };
+float seaweedchicken_price { 1.20f };
+float frieddumplings_price { 2.10f };
+float friedcarrotcake_price { 3.00f };
+float chickendumplings_price { 2.50f };
+float prawndumplings_price { 2.70f };
+float chickenfeet_price { 3.50f };
+float charsiewbun_price { 0.60f };
+float redbeanbun_price { 0.50f };
+float coffeebun_price { 0.50f };
+float ricenoodleroll_price { 1.20f };
+float prawnroll_price { 1.50f };
+
+float summary_wallet_amt { 0.0f };
+
 void UpdateWinScreen(float dt)
 {
 	UNREFERENCED_PARAMETER(dt);
@@ -1864,9 +1881,10 @@ void UpdateWinScreen(float dt)
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 
-			float total_amt = 2.7f * summary_sr_count + 1.2f * summary_sc_count + 2.1f * summary_fd_count + 3.0f * summary_cc_count;
+			float summary_price_amt = springroll_price * summary_sr_count + seaweedchicken_price * summary_sc_count + frieddumplings_price * summary_fd_count + friedcarrotcake_price * summary_cc_count;
+			summary_wallet_amt = wallet_amt + summary_price_amt;
 			ss.str ( "" );
-			ss << "$" << std::setprecision(2) << std::fixed << total_amt;
+			ss << "$" << std::setprecision(2) << std::fixed << summary_wallet_amt;
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_total_amt" )->color_ = { 0.0f,0.0f,0.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_total_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 
@@ -1900,6 +1918,7 @@ void UpdateWinScreen(float dt)
 		{
 			if (e->on_click_)
 			{
+				wallet_amt = summary_wallet_amt;
 				Cutscene::day = Days::Two;
 				Scene().ChangeScene("CutScene");
 			}
@@ -2639,7 +2658,8 @@ void HawkerSceneInit()
 		Scene ().GetComponent<JZEngine::Texture> ( "Goal_one" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay01_UI_hawker_01" );
 		Scene ().GetComponent<JZEngine::Texture> ( "Goal_two" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay01_UI_hawker_02" );
 		Scene ().GetComponent<JZEngine::Texture> ( "Goal_three" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay01_UI_hawker_03" );
-		
+
+		wallet_amt = 12.50f;
 	}
 	else if (hawker_scene_day == DAY::TWO)
 	{
