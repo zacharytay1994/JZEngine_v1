@@ -574,6 +574,9 @@ void FlagShopActive ( bool flag )
 		Scene ().EntityFlagActive ( "shop_exit" , flag );
 		Scene ().EntityFlagActive ( "shop_next" , flag );
 
+		Scene ().EntityFlagActive ( "Total_amt" , flag );
+		Scene ().EntityFlagActive ( "Wallet_amt" , flag );
+
 		if ( hawker_scene_day == DAY::ONE )
 		{
 			Scene ().EntityFlagActive ( "BeginShop" , flag );
@@ -590,7 +593,6 @@ void FlagShopActive ( bool flag )
 			Scene ().EntityFlagActive ( "Seaweedchicken_amt" , flag );
 			Scene ().EntityFlagActive ( "Dumpling_amt" , flag );
 			Scene ().EntityFlagActive ( "Carrotcake_amt" , flag );
-			Scene ().EntityFlagActive ( "Total_amt" , flag );
 			Scene().EntityFlagActive("ScrollDay1_mouse", flag);
 			Scene().EntityFlagActive("ScrollDay1", flag);
 
@@ -865,48 +867,56 @@ float coffeebun_cost { 0.20f };
 float ricenoodleroll_cost { 0.30f };
 float prawnroll_cost { 0.60f };
 
+float total_amt { 0.0f };
 float wallet_amt { 12.50f };
 
 void UpdateShop ()
 {
 	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "BeginShop_Next" ) )
 	{
-		if ( e->on_released_ )
+		if ( total_amt <= wallet_amt )
 		{
-			std::stringstream springroll_name;
-			springroll_name << "DryFoodSpringRoll(" << springroll_count << ")_Equipment_hawker";
-			Scene ().GetComponent<JZEngine::Texture> ( "SpringRoll" )->texture_id_ = Scene ().GetTexture ( springroll_name.str () );
+			if ( e->on_released_ )
+			{
+				std::stringstream springroll_name;
+				springroll_name << "DryFoodSpringRoll(" << springroll_count << ")_Equipment_hawker";
+				Scene ().GetComponent<JZEngine::Texture> ( "SpringRoll" )->texture_id_ = Scene ().GetTexture ( springroll_name.str () );
 
-			std::stringstream wanton_name;
-			wanton_name << "DryFoodFriedDumplings(" << wanton_count << ")_Equipment_hawker";
-			Scene ().GetComponent<JZEngine::Texture> ( "Dumpling" )->texture_id_ = Scene ().GetTexture ( wanton_name.str () );
+				std::stringstream wanton_name;
+				wanton_name << "DryFoodFriedDumplings(" << wanton_count << ")_Equipment_hawker";
+				Scene ().GetComponent<JZEngine::Texture> ( "Dumpling" )->texture_id_ = Scene ().GetTexture ( wanton_name.str () );
 
-			std::stringstream seaweedchicken_name;
-			seaweedchicken_name << "DryFoodSeaweedChicken(" << seaweedchicken_count << ")_Equipment_hawker";
-			Scene ().GetComponent<JZEngine::Texture> ( "SeaweedChick" )->texture_id_ = Scene ().GetTexture ( seaweedchicken_name.str () );
+				std::stringstream seaweedchicken_name;
+				seaweedchicken_name << "DryFoodSeaweedChicken(" << seaweedchicken_count << ")_Equipment_hawker";
+				Scene ().GetComponent<JZEngine::Texture> ( "SeaweedChick" )->texture_id_ = Scene ().GetTexture ( seaweedchicken_name.str () );
 
-			std::stringstream carrotcake_name;
-			carrotcake_name << "DryFoodCarrotCake(" << carrotcake_count << ")_Equipment_hawker";
-			Scene ().GetComponent<JZEngine::Texture> ( "CarrotCake" )->texture_id_ = Scene ().GetTexture ( carrotcake_name.str () );
+				std::stringstream carrotcake_name;
+				carrotcake_name << "DryFoodCarrotCake(" << carrotcake_count << ")_Equipment_hawker";
+				Scene ().GetComponent<JZEngine::Texture> ( "CarrotCake" )->texture_id_ = Scene ().GetTexture ( carrotcake_name.str () );
 
-			SetUIntTexture ( "CharSiewBao" , "CharSiewBao(" , ")_Equipment_hawker" , charsiewbao_count );
-			SetUIntTexture ( "DouShaBao" , "DouBao(" , ")_Equipment_hawker" , doushabao_count );
-			SetUIntTexture ( "CofeeBao" , "CoffeeBao(" , ")_Equipment_hawker" , coffeebao_count );
-			SetUIntTexture ( "ChickenFeet" , "RoundSteamerFeet" , "_Equipment_hawker" , chickenfeet_count );
-			SetUIntTexture ( "HarGow" , "RoundSteamerDumpling" , "_Equipment_hawker" , hargao_count );
-			SetUIntTexture ( "SiewMai" , "RoundSteamerSiuMai" , "_Equipment_hawker" , siewmai_count );
-			SetUIntTexture ( "PlainCCF" , "PlainCCF(" , ")_Equipment_hawker" , plainccf_count );
-			SetUIntTexture ( "PrawnCCF" , "PrawnCCF(" , ")_Equipment_hawker" , prawnccf_count );
+				SetUIntTexture ( "CharSiewBao" , "CharSiewBao(" , ")_Equipment_hawker" , charsiewbao_count );
+				SetUIntTexture ( "DouShaBao" , "DouBao(" , ")_Equipment_hawker" , doushabao_count );
+				SetUIntTexture ( "CofeeBao" , "CoffeeBao(" , ")_Equipment_hawker" , coffeebao_count );
+				SetUIntTexture ( "ChickenFeet" , "RoundSteamerFeet" , "_Equipment_hawker" , chickenfeet_count );
+				SetUIntTexture ( "HarGow" , "RoundSteamerDumpling" , "_Equipment_hawker" , hargao_count );
+				SetUIntTexture ( "SiewMai" , "RoundSteamerSiuMai" , "_Equipment_hawker" , siewmai_count );
+				SetUIntTexture ( "PlainCCF" , "PlainCCF(" , ")_Equipment_hawker" , plainccf_count );
+				SetUIntTexture ( "PrawnCCF" , "PrawnCCF(" , ")_Equipment_hawker" , prawnccf_count );
 
-			FlagShopActive ( false );
-			current_hawker_scene_state = HawkerSceneState::Main;
+				FlagShopActive ( false );
+				current_hawker_scene_state = HawkerSceneState::Main;
 
-			init_springroll_count = springroll_count;
-			init_carrotcake_count = carrotcake_count;
-			init_wanton_count = wanton_count;
-			init_seaweedchicken_count = seaweedchicken_count;
+				init_springroll_count = springroll_count;
+				init_carrotcake_count = carrotcake_count;
+				init_wanton_count = wanton_count;
+				init_seaweedchicken_count = seaweedchicken_count;
 
-			day_begin = true;
+				day_begin = true;
+			}
+		}
+		else
+		{
+			// say cant purchase
 		}
 		if ( e->on_held_ )
 		{
@@ -1123,15 +1133,15 @@ void UpdateShop ()
 	ProcessShopItem ( "Shop3_a_plainccf" , "Shop3_s_plainccf" , "Shop3_amt_plainccf" , plainccf_count , max_count , min_count );
 	ProcessShopItem ( "Shop3_a_prawnccf" , "Shop3_s_prawnccf" , "Shop3_amt_prawnccf" , prawnccf_count , max_count , min_count );
 
-	float total_amt = springroll_cost * springroll_count + seaweedchicken_cost * seaweedchicken_count + frieddumpling_cost * wanton_count + friedcarrotcake_cost * carrotcake_count;
+	total_amt = springroll_cost * springroll_count + seaweedchicken_cost * seaweedchicken_count + frieddumpling_cost * wanton_count + friedcarrotcake_cost * carrotcake_count;
 
-	if ( hawker_scene_day == DAY::TWO )
+	if ( hawker_scene_day == DAY::TWO || hawker_scene_day == DAY::THREE )
 	{
-		total_amt = chickendumpling_cost * siewmai_count + prawndumpling_cost * hargao_count + chickenfeet_cost * chickenfeet_count;
+		total_amt += chickendumpling_cost * siewmai_count + prawndumpling_cost * hargao_count + chickenfeet_cost * chickenfeet_count;
 	}
-	else if ( hawker_scene_day == DAY::THREE )
+	if ( hawker_scene_day == DAY::THREE )
 	{
-		total_amt = charsiewbun_cost * charsiewbao_count + redbeanbun_cost * doushabao_count + coffeebun_cost * coffeebao_count +
+		total_amt += charsiewbun_cost * charsiewbao_count + redbeanbun_cost * doushabao_count + coffeebun_cost * coffeebao_count +
 			ricenoodleroll_cost * plainccf_count + prawnroll_cost * prawnccf_count;
 	}
 
