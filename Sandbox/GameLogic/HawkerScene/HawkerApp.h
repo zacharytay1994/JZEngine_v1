@@ -35,6 +35,7 @@ bool scroll_down{ false };
 bool paused{ false };
 bool quit_confirmation{ false };
 bool main_menu_confirmation{ false };
+bool restart_confirmation{ false };
 
 
 // Use in UpdateAlbum()
@@ -64,6 +65,21 @@ enum class SHOPAPP_STATE
 };
 SHOPAPP_STATE shopapp_state = SHOPAPP_STATE::FOOD;
 
+
+void FlagRestartConfirmation( bool flag )
+{
+	restart_confirmation = flag;
+	Scene().EntityFlagActive( "Restart_panel_yes", flag );
+	Scene().EntityFlagActive( "Restart_panel_yes_bb", flag );
+	Scene().EntityFlagActive( "Restart_panel_no", flag );
+	Scene().EntityFlagActive( "Restart_panel_no_bb", flag );
+	if ( !flag )
+	{
+		Scene().GetComponent<JZEngine::MouseEvent>( "Restart_panel_no_bb" )->on_released_ = false;
+	}
+	Scene().EntityFlagActive( "Restart_panel", flag );
+}
+
 void FlagQuitConfirmation( bool flag )
 {
 	quit_confirmation = flag;
@@ -75,56 +91,8 @@ void FlagQuitConfirmation( bool flag )
 	{
 		Scene().GetComponent<JZEngine::MouseEvent>( "Quit_no_bb" )->on_released_ = false;
 	}
-	//Scene().EntityFlagActive( "Quit_title", flag );
 	Scene().EntityFlagActive( "Quit_bg", flag );
 }
-
-/*void FlagShopApp ( bool flag )
-{
-	Scene ().EntityFlagActive ( "ShopappInfo" , flag );
-	Scene ().EntityFlagActive ( "ShopappProjection" , flag );
-	Scene ().EntityFlagActive ( "ShopappEquipment" , flag );
-	Scene ().EntityFlagActive ( "ShopappFood" , flag );
-
-	Scene ().EntityFlagActive ( "bb_ShopappFood" , flag );
-	Scene ().EntityFlagActive ( "bb_ShopappEquipment" , flag );
-	Scene ().EntityFlagActive ( "bb_ShopappProjection" , flag );
-	Scene ().EntityFlagActive ( "bb_ShopappBack" , flag );
-	Scene ().EntityFlagActive ( "bb_ShopappInfoBack" , flag );
-}
-
-void SwitchShopAppState (SHOPAPP_STATE state)
-{
-	FlagShopApp ( false );
-	switch ( state )
-	{
-	case SHOPAPP_STATE::FOOD:
-		Scene ().EntityFlagActive ( "ShopappFood" , true );
-		Scene ().EntityFlagActive ( "bb_ShopappEquipment" , true );
-		Scene ().EntityFlagActive ( "bb_ShopappProjection" , true );
-		Scene ().EntityFlagActive ( "bb_ShopappBack" , true );
-		shopapp_state = state;
-		break;
-	case SHOPAPP_STATE::EQUIPMENT:
-		Scene ().EntityFlagActive ( "ShopappEquipment" , true );
-		Scene ().EntityFlagActive ( "bb_ShopappFood" , true );
-		Scene ().EntityFlagActive ( "bb_ShopappProjection" , true );
-		Scene ().EntityFlagActive ( "bb_ShopappBack" , true );
-		shopapp_state = state;
-		break;
-	case SHOPAPP_STATE::PROJECTION:
-		Scene ().EntityFlagActive ( "ShopappProjection" , true );
-		Scene ().EntityFlagActive ( "bb_ShopappProjection" , true );
-		Scene ().EntityFlagActive ( "bb_ShopappBack" , true );
-		shopapp_state = state;
-		break;
-	case SHOPAPP_STATE::INFO:
-		Scene ().EntityFlagActive ( "ShopappInfo" , true );
-		Scene ().EntityFlagActive ( "bb_ShopappInfoBack" , true );
-		shopapp_state = state;
-		break;
-	}
-}*/
 
 void FlagExitToMainMenu( bool flag )
 {
@@ -140,7 +108,6 @@ void FlagExitToMainMenu( bool flag )
 
 void FlagPhone( bool flag )
 {
-	//Scene().EntityFlagActive("Phone_black_bg", flag);
 	Scene().EntityFlagActive( "Phone_outercase", flag );
 	Scene().EntityFlagActive( "Phone_battery", flag );
 	Scene().EntityFlagActive( "Phone_time", flag );
@@ -172,7 +139,6 @@ void FlagTheresappScreen( bool flag )
 	Scene().EntityFlagActive( "Theresapp_Dad_chat", flag );
 	Scene().EntityFlagActive( "Theresapp_back_arrow", flag );
 }
-
 
 void FlagPhoneAlbumScreen( bool flag )
 {
@@ -341,8 +307,8 @@ void InitPhoneScreen()
 {
 	current_app_state = HawkerAppState::MainScreen;
 
+	FlagRestartConfirmation( false );
 	FlagQuitConfirmation( false );
-	//FlagShopApp ( false );
 	FlagExitToMainMenu( false );
 
 	FlagPhone( false );
@@ -396,8 +362,6 @@ void InitPhoneScreen()
 	Scene().EntityFlagActive( "Album_1960_hovertext1", false );
 	Scene().EntityFlagActive( "Album_1960_hovertext2_bg", false );
 	Scene().EntityFlagActive( "Album_1960_hovertext2", false );
-
-	//album_black_bg_layer = Scene().GetComponent<JZEngine::SpriteLayer>("Album_blacker_bg")->layer_;
 
 	//Text section for messages
 	Scene().GetComponent<JZEngine::TextData>( "Last_page_msg_1_text" )->text =
@@ -463,7 +427,6 @@ void InitPhoneScreen()
 	//Text section for how to play
 	Scene().GetComponent<JZEngine::TextData>( "How_to_Play_text" )->text = JZEngine::String( "HOW TO PLAY" );
 	Scene().GetComponent<JZEngine::TextData>( "How_to_Play_text" )->color_ = JZEngine::Vec3f( 255.0f, 255.0f, 255.0f );
-
 
 }
 
@@ -546,19 +509,6 @@ void UpdatePhoneScreen( float dt )
 			FlagExitToMainMenu( true );
 		}
 	}
-	/*if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Shop" ) )
-	{
-		if ( e->on_click_ )
-		{
-			Scene ().EntityFlagActive ( "Phone_outercase" , false );
-			Scene ().EntityFlagActive ( "Phone_battery" , false );
-			Scene ().EntityFlagActive ( "Phone_time" , false );
-			FlagPhoneHomeScreen ( false );
-			FlagShopApp ( true );
-			current_app_state = HawkerAppState::ShopApp;
-			SwitchShopAppState ( SHOPAPP_STATE::FOOD );
-		}
-	}*/
 	if ( paused == true && JZEngine::InputHandler::IsKeyReleased( JZEngine::KEY::KEY_ESCAPE ) )
 	{
 		FlagPhone( false );
@@ -580,109 +530,18 @@ void UpdatePhoneScreen( float dt )
 	{
 		if ( e->on_click_ )
 		{
-			Scene().ChangeScene( "HawkerScene" );
+			//Scene().ChangeScene( "HawkerScene" );
+			FlagRestartConfirmation( true );
 		}
 	}
 	if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Exit" ) )
 	{
 		if ( e->on_click_ )
 		{
-			//Scene().ChangeScene("MainMenu");
-			//Scene ().CloseApplication ();
 			FlagQuitConfirmation( true );
 		}
 	}
-
 }
-
-/*void UpdateShopApp ( float dt )
-{
-	UNREFERENCED_PARAMETER ( dt );
-	switch ( shopapp_state )
-	{
-	case SHOPAPP_STATE::FOOD:
-		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "bb_ShopappBack" ) )
-		{
-			if ( e->on_click_ )
-			{
-				Scene ().EntityFlagActive ( "Phone_outercase" , true );
-				Scene ().EntityFlagActive ( "Phone_battery" , true );
-				Scene ().EntityFlagActive ( "Phone_time" , true );
-				FlagPhoneHomeScreen ( true );
-				FlagShopApp ( false );
-				current_app_state = HawkerAppState::MainScreen;
-			}
-		}
-		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "bb_ShopappEquipment" ) )
-		{
-			if ( e->on_click_ )
-			{
-				SwitchShopAppState ( SHOPAPP_STATE::EQUIPMENT );
-			}
-		}
-		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "bb_ShopappProjection" ) )
-		{
-			if ( e->on_click_ )
-			{
-				SwitchShopAppState ( SHOPAPP_STATE::PROJECTION );
-			}
-		}
-		break;
-	case SHOPAPP_STATE::EQUIPMENT:
-		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "bb_ShopappBack" ) )
-		{
-			if ( e->on_click_ )
-			{
-				Scene ().EntityFlagActive ( "Phone_outercase" , true );
-				Scene ().EntityFlagActive ( "Phone_battery" , true );
-				Scene ().EntityFlagActive ( "Phone_time" , true );
-				FlagPhoneHomeScreen ( true );
-				FlagShopApp ( false );
-				current_app_state = HawkerAppState::MainScreen;
-			}
-		}
-		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "bb_ShopappFood" ) )
-		{
-			if ( e->on_click_ )
-			{
-				SwitchShopAppState ( SHOPAPP_STATE::FOOD );
-			}
-		}
-		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "bb_ShopappProjection" ) )
-		{
-			if ( e->on_click_ )
-			{
-				SwitchShopAppState ( SHOPAPP_STATE::PROJECTION );
-			}
-		}
-		break;
-	case SHOPAPP_STATE::PROJECTION:
-		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "bb_ShopappBack" ) )
-		{
-			if ( e->on_click_ )
-			{
-				SwitchShopAppState ( SHOPAPP_STATE::FOOD );
-			}
-		}
-		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "bb_ShopappProjection" ) )
-		{
-			if ( e->on_click_ )
-			{
-				SwitchShopAppState ( SHOPAPP_STATE::INFO );
-			}
-		}
-		break;
-	case SHOPAPP_STATE::INFO:
-		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "bb_ShopappInfoBack" ) )
-		{
-			if ( e->on_click_ )
-			{
-				SwitchShopAppState ( SHOPAPP_STATE::PROJECTION );
-			}
-		}
-		break;
-	}
-}*/
 
 void UpdateHawkerQuitMenu()
 {
@@ -768,6 +627,53 @@ void UpdateMainMenuExitConfirm( float dt )
 		}
 	}
 }
+
+
+void UpdateRestartConfirm()
+{
+	if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Restart_panel_yes_bb" ) )
+	{
+		if ( e->on_released_ )
+		{
+			//Scene().ChangeScene( "MainMenu" );
+			Scene().ChangeScene( "HawkerScene" );
+		}
+		if ( e->on_held_ )
+		{
+			ToggleButton( "Restart_panel_yes", ButtonState::Clicked );
+		}
+		else if ( e->on_hover_ )
+		{
+			ToggleButton( "Restart_panel_yes", ButtonState::Hover );
+		}
+		else
+		{
+			ToggleButton( "Restart_panel_yes", ButtonState::Normal );
+		}
+	}
+	if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Restart_panel_no_bb" ) )
+	{
+		if ( e->on_released_ )
+		{
+			//FlagExitToMainMenu( false );
+			FlagRestartConfirmation( false );
+		}
+		if ( e->on_held_ )
+		{
+			ToggleButton( "Restart_panel_no", ButtonState::Clicked );
+		}
+		else if ( e->on_hover_ )
+		{
+			ToggleButton( "Restart_panel_no", ButtonState::Hover );
+		}
+		else
+		{
+			ToggleButton( "Restart_panel_no", ButtonState::Normal );
+		}
+	}
+}
+
+
 
 void UpdateTheresapp( float dt )
 {
@@ -1117,9 +1023,6 @@ void UpdateHomeScreen( float dt )
 	case HawkerAppState::HowtoPlay:
 		UpdateHowtoPlay( dt );
 		break;
-		/*case HawkerAppState::ShopApp:
-			UpdateShopApp ( dt );
-			break;*/
 	}
 
 	if ( quit_confirmation )
@@ -1129,5 +1032,9 @@ void UpdateHomeScreen( float dt )
 	if ( main_menu_confirmation )
 	{
 		UpdateMainMenuExitConfirm( dt );
+	}
+	if ( restart_confirmation )
+	{
+		UpdateRestartConfirm();
 	}
 }

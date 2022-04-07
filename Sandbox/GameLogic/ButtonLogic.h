@@ -52,7 +52,9 @@ std::unordered_map<std::string, ButtonTextures> button_textures{
 	{ "MainMenuExit_yes", { "Yes(OG)_Button_MainMenu", "Yes(Highlight)_Button_MainMenu"     , "Yes(Clicked)_Button_MainMenu"}},
 	{ "MainMenuExit_no" , { "No(OG)_Button_MainMenu" , "No(Highlight)_Button_MainMenu"      , "No(Clicked)_Button_MainMenu"}},
 	{ "Album_1960_button1", {"Album_photo_button_normal", "Album_photo_onhover", ""}},
-	{ "Album_1960_button2", {"Album_photo_button_normal", "Album_photo_onhover", ""}}
+	{ "Album_1960_button2", {"Album_photo_button_normal", "Album_photo_onhover", ""}},
+	{ "Restart_panel_yes",	{ "Yes(OG)_Button_MainMenu"		, "Yes(Highlight)_Button_MainMenu"			, "Yes(Clicked)_Button_MainMenu"}},
+	{ "Restart_panel_no",	{ "No(OG)_Button_MainMenu"		, "No(Highlight)_Button_MainMenu"			, "No(Clicked)_Button_MainMenu"}},
 };
 
 
