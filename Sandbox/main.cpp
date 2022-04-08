@@ -9,6 +9,7 @@
 #include "GameLogic/HawkerScene/HawkerScene.h"
 #include "GameLogic/MainMenu/MainMenu.h"
 #include "GameLogic/CutScene/CutScene.h"
+#include "GameLogic/CutScene/FinalCreditCutScene.h"
 
 #include <iostream>
 
@@ -67,6 +68,9 @@ public:
 
 		/*Scene ().RegisterSceneInit ( "CutSceneS" , "CutSceneInit" , CutSceneInit );
 		Scene ().RegisterSceneLogic ( "CutSceneS" , "CutSceneUpdate" , CutSceneUpdate );*/
+
+		Scene().RegisterSceneInit( "FinalCreditScene", "FinalCutSceneInit", FinalCutSceneInit );
+		Scene().RegisterSceneLogic( "FinalCreditScene", "FinalCutSceneUpdate", FinalCutSceneUpdate );
 	}
 };
 

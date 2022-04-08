@@ -1,0 +1,152 @@
+CreditScene_WoodBackground 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 1 1 1920 1080 
+	c 1 struct JZEngine::SpriteLayer
+		1 
+	c 2 struct JZEngine::Texture
+		01WoodBackground_CreditScene 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 1.00001 1 1 0 1 1 
+!
+CreditScene_GreyBackground 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 1 1 1920 1080 
+	c 1 struct JZEngine::SpriteLayer
+		2 
+	c 2 struct JZEngine::Texture
+		02GreyBackground_CreditScene 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 1.00001 1 1 0 1 1 
+!
+CreditScene_FullCreditsRoll 0 
+	c 0 struct JZEngine::Transform
+		0 -2760 0 0 0 1 1 1920 7680 
+	c 1 struct JZEngine::SpriteLayer
+		3 
+	c 2 struct JZEngine::Texture
+		03FullCreditsRoll_CreditScene 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 1.00001 1 1 0 1 1 
+!
+CreditScene_WoodForeground 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 1 1 1920 1080 
+	c 1 struct JZEngine::SpriteLayer
+		4 
+	c 2 struct JZEngine::Texture
+		04WoodForeground_CreditScene 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 1.00001 1 1 0 1 1 
+!
+CreditScene_GreyForeground 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 1 1 1920 1080 
+	c 1 struct JZEngine::SpriteLayer
+		5 
+	c 2 struct JZEngine::Texture
+		05GreyForeground_CreditScene 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 1.00001 1 1 0 1 1 
+!
+CreditScene_Shine 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 1 1 1920 1080 
+	c 1 struct JZEngine::SpriteLayer
+		6 
+	c 2 struct JZEngine::Texture
+		06Shine_CreditScene 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 1.00001 1 1 0 1 1 
+!
+CreditScene_Image01 0 
+	c 0 struct JZEngine::Transform
+		-960 0 0 0 0 1 1 3840 1080 
+	c 1 struct JZEngine::SpriteLayer
+		7 
+	c 2 struct JZEngine::Texture
+		07Image01_CreditScene 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 1.00001 1 1 0 1 1 
+	c 15 struct JZEngine::MouseEvent
+		3840 500 
+!
+CreditScene_Image02 0 
+	c 0 struct JZEngine::Transform
+		-960 0 0 0 0 1 1 3840 1080 
+	c 1 struct JZEngine::SpriteLayer
+		8 
+	c 2 struct JZEngine::Texture
+		08Image02_CreditScene 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 1.00001 1 1 0 1 1 
+	c 15 struct JZEngine::MouseEvent
+		3840 500 
+!
+CreditScene_Image03 0 
+	c 0 struct JZEngine::Transform
+		-960 0 0 0 0 1 1 3840 1080 
+	c 1 struct JZEngine::SpriteLayer
+		9 
+	c 2 struct JZEngine::Texture
+		09Image03_CreditScene 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 1.00001 1 1 0 1 1 
+	c 15 struct JZEngine::MouseEvent
+		3840 500 
+!
+CreditScene_Image04 0 
+	c 0 struct JZEngine::Transform
+		-960 0 0 0 0 0.99999 0.99999 3840 1080 
+	c 1 struct JZEngine::SpriteLayer
+		10 
+	c 2 struct JZEngine::Texture
+		10Image04_CreditScene 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 1.00001 1 1 0 1 1 
+	c 15 struct JZEngine::MouseEvent
+		3840 500 
+!
+CreditScene_WoodForeground02 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 1 1 1920 1080 
+	c 1 struct JZEngine::SpriteLayer
+		11 
+	c 2 struct JZEngine::Texture
+		11WoodForeground02_CreditScene 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 1.00001 1 1 0 1 1 
+!
+CreditScene_PhoneCase 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 1 1 1920 1080 
+	c 1 struct JZEngine::SpriteLayer
+		12 
+	c 2 struct JZEngine::Texture
+		12PhoneCase_CreditScene 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 1.00001 1 1 0 1 1 
+!
