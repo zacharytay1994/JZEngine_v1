@@ -1842,7 +1842,7 @@ void UpdateWinScreen(float dt)
 		black_alpha += dt;
 		ready = false;
 	}
-	if ( summary_y > 0.0f )
+	if ( summary_y > 20.0f )
 	{
 		summary_y -= 1024.0f * dt;
 		ready = false;
@@ -1887,19 +1887,19 @@ void UpdateWinScreen(float dt)
 			}
 
 			std::stringstream ss;
-			
+			ss << summary_sr_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sr_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sr_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 			ss.str ("");
-			
+			ss << summary_sc_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sc_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sc_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 			ss.str ( "" );
-			
+			ss << summary_fd_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_fd_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_fd_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 			ss.str ( "" );
-			
+			ss << summary_cc_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 
@@ -1919,21 +1919,36 @@ void UpdateWinScreen(float dt)
 
 	if ( summary_ready )
 	{
+		Scene().EntityFlagActive("shop_next", true);
+		Scene().EntityFlagActive("shop_exit", true);
 		Scene().EntityFlagActive("BeginShop_Next", true);
 
-		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Win_restart_bb" ) )
-		{
-			if ( e->on_released_ )
-			{
-				//Scene().ChangeScene("MainMenu");
-			}
-		}
+		//if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Win_restart_bb" ) )
+		//{
+		//	if ( e->on_released_ )
+		//	{
+		//		//Scene().ChangeScene("MainMenu");
+		//	}
+		//}
 		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Win_exit_bb" ) )
 		{
 			if ( e->on_released_ )
 			{
 				Scene ().ChangeScene ( "MainMenu" );
 			}
+			if (e->on_held_)
+			{
+				ToggleButton("shop_exit", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("shop_exit", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("shop_exit", ButtonState::Normal);
+			}
+
 		}
 		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("BeginShop_Next"))
 		{
@@ -1941,6 +1956,18 @@ void UpdateWinScreen(float dt)
 			{
 				Cutscene::day = Days::Two;
 				Scene().ChangeScene("CutScene");
+			}
+			if (e->on_held_)
+			{
+				ToggleButton("shop_next", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("shop_next", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("shop_next", ButtonState::Normal);
 			}
 		}
 	}
