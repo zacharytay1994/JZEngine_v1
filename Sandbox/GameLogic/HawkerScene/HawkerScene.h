@@ -570,7 +570,8 @@ void FlagShopActive ( bool flag )
 		Scene ().EntityFlagActive ( "BeginBlack" , flag );
 		Scene ().EntityFlagActive ( "BeginShop_Exit" , flag );
 		Scene ().EntityFlagActive ( "BeginShop_Next" , flag );
-
+		
+		
 		Scene ().EntityFlagActive ( "shop_exit" , flag );
 		Scene ().EntityFlagActive ( "shop_next" , flag );
 
@@ -1795,6 +1796,16 @@ void ToggleSummary ( bool toggle )
 	Scene ().EntityFlagActive ( "sum_fd_amt" , toggle );
 	Scene ().EntityFlagActive ( "sum_cc_amt" , toggle );
 	Scene ().EntityFlagActive ( "sum_total_amt" , toggle );
+
+	
+	Scene().EntityFlagActive("Summary_Next", toggle);
+	
+	Scene().EntityFlagActive("Summary_Restart", toggle);
+
+	Scene().EntityFlagActive("Summary_Exit", toggle);
+	
+
+	
 }
 
 bool summary_ready { false };
@@ -1834,6 +1845,15 @@ void SummaryInit ()
 void UpdateWinScreen(float dt)
 {
 	UNREFERENCED_PARAMETER(dt);
+	if (win)
+	{
+		Scene().EntityFlagActive("Summary_Restart", false);
+		
+	}
+	else//lose
+	{
+		Scene().EntityFlagActive("Summary_Next", false);
+	}
 	float& black_alpha = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "BeginBlack" )->tint.w;
 	float& summary_y = Scene ().GetComponent<JZEngine::Transform> ( "Summary_screen" )->position_.y;
 	bool ready { true };
@@ -1842,7 +1862,7 @@ void UpdateWinScreen(float dt)
 		black_alpha += dt;
 		ready = false;
 	}
-	if ( summary_y > 20.0f )
+	if ( summary_y > 11.0f )
 	{
 		summary_y -= 1024.0f * dt;
 		ready = false;
@@ -1919,18 +1939,10 @@ void UpdateWinScreen(float dt)
 
 	if ( summary_ready )
 	{
-		Scene().EntityFlagActive("shop_next", true);
-		Scene().EntityFlagActive("shop_exit", true);
-		Scene().EntityFlagActive("BeginShop_Next", true);
 
-		//if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Win_restart_bb" ) )
-		//{
-		//	if ( e->on_released_ )
-		//	{
-		//		//Scene().ChangeScene("MainMenu");
-		//	}
-		//}
-		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Win_exit_bb" ) )
+		
+
+		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Summary_Exit" ) )
 		{
 			if ( e->on_released_ )
 			{
@@ -1938,19 +1950,39 @@ void UpdateWinScreen(float dt)
 			}
 			if (e->on_held_)
 			{
-				ToggleButton("shop_exit", ButtonState::Clicked);
+				ToggleButton("Summary_Exit", ButtonState::Clicked);
 			}
 			else if (e->on_hover_)
 			{
-				ToggleButton("shop_exit", ButtonState::Hover);
+				ToggleButton("Summary_Exit", ButtonState::Hover);
 			}
 			else
 			{
-				ToggleButton("shop_exit", ButtonState::Normal);
+				ToggleButton("Summary_Exit", ButtonState::Normal);
 			}
 
 		}
-		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("BeginShop_Next"))
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_Restart"))
+		{
+			if (e->on_click_)
+			{
+				Cutscene::day = Days::One;
+				Scene().ChangeScene("CutScene");
+			}
+			if (e->on_held_)
+			{
+				ToggleButton("Summary_Restart", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_Restart", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_Restart", ButtonState::Normal);
+			}
+		}
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_Next"))
 		{
 			if (e->on_click_)
 			{
@@ -1959,15 +1991,15 @@ void UpdateWinScreen(float dt)
 			}
 			if (e->on_held_)
 			{
-				ToggleButton("shop_next", ButtonState::Clicked);
+				ToggleButton("Summary_Next", ButtonState::Clicked);
 			}
 			else if (e->on_hover_)
 			{
-				ToggleButton("shop_next", ButtonState::Hover);
+				ToggleButton("Summary_Next", ButtonState::Hover);
 			}
 			else
 			{
-				ToggleButton("shop_next", ButtonState::Normal);
+				ToggleButton("Summary_Next", ButtonState::Normal);
 			}
 		}
 	}
