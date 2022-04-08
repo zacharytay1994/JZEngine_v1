@@ -676,6 +676,8 @@ void FlagShopActive ( bool flag )
 			Scene ().EntityFlagActive ( "Shop3_amt_prawnccf" , flag );
 			Scene ().EntityFlagActive ( "Shop3_amt_hargao" , flag );
 			Scene ().EntityFlagActive ( "Shop3_amt_chickenfeet" , flag );
+			Scene().EntityFlagActive("ScrollDay3_mouse", flag);
+			Scene().EntityFlagActive("ScrollDay3", flag);
 		}
 	}
 	else
@@ -757,6 +759,8 @@ void FlagShopActive ( bool flag )
 		Scene ().EntityFlagActive ( "Shop3_amt_prawnccf" , flag );
 		Scene ().EntityFlagActive ( "Shop3_amt_hargao" , flag );
 		Scene ().EntityFlagActive ( "Shop3_amt_chickenfeet" , flag );
+		Scene().EntityFlagActive("ScrollDay3_mouse", flag);
+		Scene().EntityFlagActive("ScrollDay3", flag);
 	}
 }
 
@@ -1080,14 +1084,25 @@ void UpdateShop ()
 		if (e->on_hover_)
 		{
 			scroll->pause_ = false;
-			if (scroll->frame_ == 7)
+			scroll->reverse_ = false;
+			if (scroll->frame_ == 9)
 				scroll->pause_ = true;
 		}
+
 		else
 		{
-			scroll->frame_ = 0;
-			scroll->pause_ = true;
+			if (scroll->frame_ >0)
+			{
+				scroll->reverse_ = true;
+				scroll->pause_ = false;
+			}
+			else
+			{
+				scroll->frame_ = 0;
+				scroll->pause_ = true;
+			}
 		}
+
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("ScrollDay2_mouse"))
 	{
@@ -1095,16 +1110,50 @@ void UpdateShop ()
 		if (e->on_hover_)
 		{
 			scroll->pause_ = false;
-			if (scroll->frame_ == 7)
+			scroll->reverse_ = false;
+			if (scroll->frame_ == 9)
 				scroll->pause_ = true;
 		}
 		else
 		{
-			scroll->frame_ = 0;
-			scroll->pause_ = true;
+			if (scroll->frame_ > 0)
+			{
+				scroll->reverse_ = true;
+				scroll->pause_ = false;
+			}
+			else
+			{
+				scroll->frame_ = 0;
+				scroll->pause_ = true;
+			}
 		}
 	}
-
+	
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("ScrollDay3_mouse"))
+	{
+		JZEngine::Animation2D* scroll = Scene().GetComponent<JZEngine::Animation2D>("ScrollDay3");
+		if (e->on_hover_)
+		{
+			scroll->pause_ = false;
+			scroll->reverse_ = false;
+			if (scroll->frame_ == 9)
+				scroll->pause_ = true;
+		}
+		else
+		{
+			if (scroll->frame_ > 0)
+			{
+				scroll->reverse_ = true;
+				scroll->pause_ = false;
+			}
+			else
+			{
+				scroll->frame_ = 0;
+				scroll->pause_ = true;
+			}
+		}
+	}
+	
 	// day 2 shop
 	ProcessShopItem ( "Shop2_a_springroll" , "Shop2_s_springroll" , "Shop2_amt_springroll" , springroll_count , max_count , min_count );
 	ProcessShopItem ( "Shop2_a_seaweedchicken" , "Shop2_s_seaweedchicken" , "Shop2_amt_seaweedchicken" , seaweedchicken_count , max_count , min_count );
@@ -1838,19 +1887,19 @@ void UpdateWinScreen(float dt)
 			}
 
 			std::stringstream ss;
-			ss << summary_sr_count << " pcs";
+			
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sr_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sr_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 			ss.str ("");
-			ss << summary_sc_count << " pcs";
+			
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sc_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sc_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 			ss.str ( "" );
-			ss << summary_fd_count << " pcs";
+			
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_fd_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_fd_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 			ss.str ( "" );
-			ss << summary_cc_count << " pcs";
+			
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 
@@ -2357,22 +2406,22 @@ void UpdateMainScene(float dt)
 						current_coins += 2.1f;
 						break;
 					case ( CustomerOrder::ChickenFeet ):
-						current_coins += 1.0f;
+						current_coins += 3.50f;
 						break;
 					case ( CustomerOrder::HarGao ):
-						current_coins += 1.0f;
+						current_coins += 2.7f;
 						break;
 					case ( CustomerOrder::SiewMai ):
-						current_coins += 1.0f;
+						current_coins += 2.5f;
 						break;
 					case ( CustomerOrder::CharSiewBao ):
-						current_coins += 1.0f;
+						current_coins += 0.6f;
 						break;
 					case ( CustomerOrder::DouShaBao ):
-						current_coins += 1.0f;
+						current_coins += 0.5f;
 						break;
 					case ( CustomerOrder::CoffeeBao ):
-						current_coins += 1.0f;
+						current_coins += 0.5f;
 						break;
 					}
 					plate_on_hand = false;
@@ -2448,6 +2497,11 @@ void HawkerSceneInit()
 	scroll = Scene().GetComponent<JZEngine::Animation2D>("ScrollDay2");
 	scroll->pause_ = true;
 	scroll->frame_ = 0;
+
+	scroll = Scene().GetComponent<JZEngine::Animation2D>("ScrollDay3");
+	scroll->pause_ = true;
+	scroll->frame_ = 0;
+
 
 	Scene ().EntityFlagActive ( "CoinSparkles" , false );
 	og_coin_position = Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_;
