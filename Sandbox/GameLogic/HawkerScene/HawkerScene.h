@@ -2554,7 +2554,18 @@ void HawkerSceneInit()
 	display_up_ = false;
 	greenbar_original_scale_y = Scene().GetComponent<JZEngine::Transform>("GreenBar")->scale_.y;
 
-	target_coins = 10.0f;
+	if ( hawker_scene_day == DAY::ONE )
+	{
+		target_coins = 28.0f;
+	}
+	else if ( hawker_scene_day == DAY::TWO )
+	{
+		target_coins = 35.0f;
+	}
+	else if ( hawker_scene_day == DAY::THREE )
+	{
+		target_coins = 46.0f;
+	}
 	current_coins = 0;
 	current_coin_scale = 0.0f;
 	total_time = 60.0f;

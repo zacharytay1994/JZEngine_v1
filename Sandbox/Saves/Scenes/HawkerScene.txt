@@ -3451,6 +3451,10 @@ no_money 0
 		404 
 	c 2 struct JZEngine::Texture
 		NoMoneyDad_UI_hawker 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
 !
 Restart_panel 0 
 	c 0 struct JZEngine::Transform
