@@ -1877,7 +1877,7 @@ void ToggleConfirm(bool toggle, Confirmstate confirm_state = Confirmstate::None)
 {
 	if(confirm_state ==Confirmstate::Restart)
 		Scene().EntityFlagActive("Summary_Restart_Confirm", toggle);
-	if(confirm_state == Confirmstate::Exit)
+	else if(confirm_state == Confirmstate::Exit)
 		Scene().EntityFlagActive("Summary_Exit_Confirm", toggle);
 	else
 	{
@@ -1895,6 +1895,7 @@ float summary_counter { 0.0f };
 void SummaryInit ()
 {
 	summary_ready = false;
+	confirm_state = Confirmstate::None;
 	Scene ().EntityFlagActive ( "BeginBlack" , true );
 	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "BeginBlack" )->tint.w = 0.0f;
 	Scene ().GetComponent<JZEngine::Transform> ( "Summary_screen" )->position_.y = 2048.0f;
@@ -2078,9 +2079,9 @@ void UpdateWinScreen(float dt)
 		}
 		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_Restart"))
 		{
-			if (e->on_click_)
+			if (e->on_released_)
 			{
-				confirm_state == Confirmstate::Restart;
+				confirm_state = Confirmstate::Restart;
 				ToggleConfirm(true, confirm_state);
 			}
 			if (e->on_held_)
@@ -2179,15 +2180,15 @@ void UpdateWinScreen(float dt)
 			}
 			if (e->on_held_)
 			{
-				ToggleButton("Summary_Exit", ButtonState::Clicked);
+				ToggleButton("Summary_Yes", ButtonState::Clicked);
 			}
 			else if (e->on_hover_)
 			{
-				ToggleButton("Summary_Exit", ButtonState::Hover);
+				ToggleButton("Summary_Yes", ButtonState::Hover);
 			}
 			else
 			{
-				ToggleButton("Summary_Exit", ButtonState::Normal);
+				ToggleButton("Summary_Yes", ButtonState::Normal);
 			}
 
 		}
