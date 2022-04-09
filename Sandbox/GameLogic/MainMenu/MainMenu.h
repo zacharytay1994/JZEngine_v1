@@ -136,9 +136,9 @@ void ToggleOptions(bool toggle)
 {
 	// active/inactive option objects
 	Scene().EntityFlagActive("Option_background", toggle);
-	Scene().EntityFlagActive("Option_text", toggle);
+	//Scene().EntityFlagActive("Option_text", toggle);
 	Scene().EntityFlagActive("Option_soundline", toggle);
-	Scene().EntityFlagActive("Option_sound", toggle);
+	//Scene().EntityFlagActive("Option_sound", toggle);
 	Scene().EntityFlagActive("Option_master", toggle);
 	Scene().EntityFlagActive("Option_music", toggle);
 	Scene().EntityFlagActive("Option_sfx", toggle);
@@ -175,7 +175,7 @@ void ToggleQuit(bool toggle)
 {
 	// active/inactive option objects
 	Scene().EntityFlagActive("Quit_background", toggle);
-	Scene().EntityFlagActive("Quit_title", toggle);
+	//Scene().EntityFlagActive("Quit_title", toggle);
 	Scene().EntityFlagActive("Quit_yes", toggle);
 	Scene().EntityFlagActive("Quit_no", toggle);
 }
@@ -603,8 +603,8 @@ void InitMainMenu()
 	Scene().EntityFlagActive("Credits", false);
 	Scene().EntityFlagActive("Quit", false);
 	ToggleHowtoPlayPage (false);
-	Scene().GetComponent<JZEngine::TextData>("Option_text")->text = JZEngine::String("OPTIONS");
-	Scene().GetComponent<JZEngine::TextData>("Option_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
+	//Scene().GetComponent<JZEngine::TextData>("Option_text")->text = JZEngine::String("OPTIONS");
+	//Scene().GetComponent<JZEngine::TextData>("Option_text")->color_ = JZEngine::Vec3f(255.0f, 255.0f, 255.0f);
 	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Transition_Black" )->tint.w = 0.0f;
 
 	InitLoadToMenuTransition ();

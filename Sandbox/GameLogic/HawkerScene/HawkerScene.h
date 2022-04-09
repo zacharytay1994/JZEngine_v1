@@ -207,6 +207,16 @@ std::string cursor_object_names[] = {
 
 CursorState cursor_state = CursorState::Nothing;
 
+
+enum class Confirmstate
+{
+	Exit,
+	Restart,
+	None
+};
+Confirmstate confirm_state = Confirmstate::None;
+
+
 void FlagAllCursorsFalse()
 {
 	Scene().EntityFlagActive("EmptyTongs", false);
@@ -570,6 +580,14 @@ void FlagShopActive ( bool flag )
 		Scene ().EntityFlagActive ( "BeginBlack" , flag );
 		Scene ().EntityFlagActive ( "BeginShop_Exit" , flag );
 		Scene ().EntityFlagActive ( "BeginShop_Next" , flag );
+		
+		
+		Scene ().EntityFlagActive ( "shop_exit" , flag );
+		Scene ().EntityFlagActive ( "shop_next" , flag );
+
+		Scene ().EntityFlagActive ( "Total_amt" , flag );
+		Scene ().EntityFlagActive ( "Wallet_amt" , flag );
+
 		if ( hawker_scene_day == DAY::ONE )
 		{
 			Scene ().EntityFlagActive ( "BeginShop" , flag );
@@ -586,7 +604,6 @@ void FlagShopActive ( bool flag )
 			Scene ().EntityFlagActive ( "Seaweedchicken_amt" , flag );
 			Scene ().EntityFlagActive ( "Dumpling_amt" , flag );
 			Scene ().EntityFlagActive ( "Carrotcake_amt" , flag );
-			Scene ().EntityFlagActive ( "Total_amt" , flag );
 			Scene().EntityFlagActive("ScrollDay1_mouse", flag);
 			Scene().EntityFlagActive("ScrollDay1", flag);
 
@@ -672,6 +689,8 @@ void FlagShopActive ( bool flag )
 			Scene ().EntityFlagActive ( "Shop3_amt_prawnccf" , flag );
 			Scene ().EntityFlagActive ( "Shop3_amt_hargao" , flag );
 			Scene ().EntityFlagActive ( "Shop3_amt_chickenfeet" , flag );
+			Scene().EntityFlagActive("ScrollDay3_mouse", flag);
+			Scene().EntityFlagActive("ScrollDay3", flag);
 		}
 	}
 	else
@@ -695,10 +714,12 @@ void FlagShopActive ( bool flag )
 		Scene ().EntityFlagActive ( "Dumpling_amt" , flag );
 		Scene ().EntityFlagActive ( "Carrotcake_amt" , flag );
 		Scene ().EntityFlagActive ( "Total_amt" , flag );
+		Scene ().EntityFlagActive ( "Wallet_amt" , flag );
 		Scene().EntityFlagActive("ScrollDay1_mouse", flag);
 		Scene().EntityFlagActive("ScrollDay1", flag);
 
-
+		Scene ().EntityFlagActive ( "shop_exit" , flag );
+		Scene ().EntityFlagActive ( "shop_next" , flag );
 
 		// day 2
 		Scene ().EntityFlagActive ( "BeginShop2" , flag );
@@ -736,8 +757,6 @@ void FlagShopActive ( bool flag )
 		Scene().EntityFlagActive("ScrollDay2_mouse", flag);
 		Scene().EntityFlagActive("ScrollDay2", flag);
 
-
-
 		// day 3
 		Scene ().EntityFlagActive ( "BeginShop3" , flag );
 		Scene ().EntityFlagActive ( "Shop3_a_plainccf" , flag );
@@ -753,6 +772,12 @@ void FlagShopActive ( bool flag )
 		Scene ().EntityFlagActive ( "Shop3_amt_prawnccf" , flag );
 		Scene ().EntityFlagActive ( "Shop3_amt_hargao" , flag );
 		Scene ().EntityFlagActive ( "Shop3_amt_chickenfeet" , flag );
+
+		Scene ().EntityFlagActive ( "no_money" , flag );
+		Scene ().GetComponent<JZEngine::Transform> ( "no_money" )->scale_ = { 0.01f,0.01f };
+		
+		Scene().EntityFlagActive("ScrollDay3_mouse", flag);
+		Scene().EntityFlagActive("ScrollDay3", flag);
 	}
 }
 
@@ -764,6 +789,10 @@ void ProcessShopItem (const char* addEvent, const char* subEvent, const char* na
 		{
 			if ( count < maxCount )
 				++count;
+			else
+			{
+				count = minCount;
+			}
 			std::stringstream ss;
 			ss << count;
 			Scene ().GetComponent<JZEngine::TextData> ( name )->color_ = { 1.0f,1.0f,1.0f };
@@ -776,6 +805,10 @@ void ProcessShopItem (const char* addEvent, const char* subEvent, const char* na
 		{
 			if ( count > minCount )
 				--count;
+			else
+			{
+				count = maxCount;
+			}
 			std::stringstream ss;
 			ss << count;
 			Scene ().GetComponent<JZEngine::TextData> ( name )->color_ = { 1.0f,1.0f,1.0f };
@@ -837,48 +870,146 @@ unsigned int summary_fd_count { 0 };
 unsigned int summary_cc_count { 0 };
 
 unsigned int min_count { 1 };
-unsigned int max_count { 10 };
+unsigned int max_count { 9 };
 
-void UpdateShop ()
+// price of food
+float springroll_cost { 0.40f };
+float seaweedchicken_cost { 0.20f };
+float frieddumpling_cost { 0.30f };
+float friedcarrotcake_cost { 0.50f };
+float chickendumpling_cost { 0.50f };
+float prawndumpling_cost { 0.60f };
+float chickenfeet_cost { 0.60f };
+float charsiewbun_cost { 0.30f };
+float redbeanbun_cost { 0.20f };
+float coffeebun_cost { 0.20f };
+float ricenoodleroll_cost { 0.30f };
+float prawnroll_cost { 0.60f };
+
+float total_amt { 0.0f };
+float wallet_amt { 12.50f };
+
+bool no_money { false };
+float no_money_display_time { 2.0f };
+float no_money_display_timer { 0.0f };
+
+void UpdateShop (float dt)
 {
 	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "BeginShop_Next" ) )
 	{
+		if ( total_amt <= wallet_amt )
+		{
+			if ( e->on_released_ )
+			{
+				std::stringstream springroll_name;
+				springroll_name << "DryFoodSpringRoll(" << springroll_count << ")_Equipment_hawker";
+				Scene ().GetComponent<JZEngine::Texture> ( "SpringRoll" )->texture_id_ = Scene ().GetTexture ( springroll_name.str () );
+
+				std::stringstream wanton_name;
+				wanton_name << "DryFoodFriedDumplings(" << wanton_count << ")_Equipment_hawker";
+				Scene ().GetComponent<JZEngine::Texture> ( "Dumpling" )->texture_id_ = Scene ().GetTexture ( wanton_name.str () );
+
+				std::stringstream seaweedchicken_name;
+				seaweedchicken_name << "DryFoodSeaweedChicken(" << seaweedchicken_count << ")_Equipment_hawker";
+				Scene ().GetComponent<JZEngine::Texture> ( "SeaweedChick" )->texture_id_ = Scene ().GetTexture ( seaweedchicken_name.str () );
+
+				std::stringstream carrotcake_name;
+				carrotcake_name << "DryFoodCarrotCake(" << carrotcake_count << ")_Equipment_hawker";
+				Scene ().GetComponent<JZEngine::Texture> ( "CarrotCake" )->texture_id_ = Scene ().GetTexture ( carrotcake_name.str () );
+
+				SetUIntTexture ( "CharSiewBao" , "CharSiewBao(" , ")_Equipment_hawker" , charsiewbao_count );
+				SetUIntTexture ( "DouShaBao" , "DouBao(" , ")_Equipment_hawker" , doushabao_count );
+				SetUIntTexture ( "CofeeBao" , "CoffeeBao(" , ")_Equipment_hawker" , coffeebao_count );
+				SetUIntTexture ( "ChickenFeet" , "RoundSteamerFeet" , "_Equipment_hawker" , chickenfeet_count );
+				SetUIntTexture ( "HarGow" , "RoundSteamerDumpling" , "_Equipment_hawker" , hargao_count );
+				SetUIntTexture ( "SiewMai" , "RoundSteamerSiuMai" , "_Equipment_hawker" , siewmai_count );
+				SetUIntTexture ( "PlainCCF" , "PlainCCF(" , ")_Equipment_hawker" , plainccf_count );
+				SetUIntTexture ( "PrawnCCF" , "PrawnCCF(" , ")_Equipment_hawker" , prawnccf_count );
+
+				FlagShopActive ( false );
+				current_hawker_scene_state = HawkerSceneState::Main;
+
+				init_springroll_count = springroll_count;
+				init_carrotcake_count = carrotcake_count;
+				init_wanton_count = wanton_count;
+				init_seaweedchicken_count = seaweedchicken_count;
+
+				wallet_amt -= total_amt;
+
+				day_begin = true;
+			}
+		}
+		else
+		{
+			// say cant purchase
+			if ( e->on_released_ )
+			{
+				Scene ().EntityFlagActive ( "no_money" , true );
+				no_money = true;
+			}
+		}
+		if ( e->on_held_ )
+		{
+			ToggleButton ( "shop_next" , ButtonState::Clicked );
+		}
+		else if ( e->on_hover_ )
+		{
+			ToggleButton ( "shop_next" , ButtonState::Hover );
+		}
+		else
+		{
+			ToggleButton ( "shop_next" , ButtonState::Normal );
+		}
+	}
+	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "BeginShop_Exit" ) )
+	{
 		if ( e->on_released_ )
 		{
-			std::stringstream springroll_name;
-			springroll_name << "DryFoodSpringRoll(" << springroll_count << ")_Equipment_hawker";
-			Scene ().GetComponent<JZEngine::Texture> ( "SpringRoll" )->texture_id_ = Scene ().GetTexture ( springroll_name.str () );
+			Scene ().ChangeScene ( "MainMenu" );
+		}
+		if ( e->on_held_ )
+		{
+			ToggleButton ( "shop_exit" , ButtonState::Clicked );
+		}
+		else if ( e->on_hover_ )
+		{
+			ToggleButton ( "shop_exit" , ButtonState::Hover );
+		}
+		else
+		{
+			ToggleButton ( "shop_exit" , ButtonState::Normal );
+		}
+	}
+	if ( no_money )
+	{
+		if ( no_money_display_timer < no_money_display_time )
+		{
+			no_money_display_timer += dt;
+		}
+		else
+		{
+			no_money = false;
+			no_money_display_timer = 0.0f;
+		}
 
-			std::stringstream wanton_name;
-			wanton_name << "DryFoodFriedDumplings(" << wanton_count << ")_Equipment_hawker";
-			Scene ().GetComponent<JZEngine::Texture> ( "Dumpling" )->texture_id_ = Scene ().GetTexture ( wanton_name.str () );
-
-			std::stringstream seaweedchicken_name;
-			seaweedchicken_name << "DryFoodSeaweedChicken(" << seaweedchicken_count << ")_Equipment_hawker";
-			Scene ().GetComponent<JZEngine::Texture> ( "SeaweedChick" )->texture_id_ = Scene ().GetTexture ( seaweedchicken_name.str () );
-
-			std::stringstream carrotcake_name;
-			carrotcake_name << "DryFoodCarrotCake(" << carrotcake_count << ")_Equipment_hawker";
-			Scene ().GetComponent<JZEngine::Texture> ( "CarrotCake" )->texture_id_ = Scene ().GetTexture ( carrotcake_name.str () );
-
-			SetUIntTexture ( "CharSiewBao" , "CharSiewBao(" , ")_Equipment_hawker" , charsiewbao_count );
-			SetUIntTexture ( "DouShaBao" , "DouBao(" , ")_Equipment_hawker" , doushabao_count );
-			SetUIntTexture ( "CofeeBao" , "CoffeeBao(" , ")_Equipment_hawker" , coffeebao_count );
-			SetUIntTexture ( "ChickenFeet" , "RoundSteamerFeet" , "_Equipment_hawker" , chickenfeet_count );
-			SetUIntTexture ( "HarGow" , "RoundSteamerDumpling" , "_Equipment_hawker" , hargao_count );
-			SetUIntTexture ( "SiewMai" , "RoundSteamerSiuMai" , "_Equipment_hawker" , siewmai_count );
-			SetUIntTexture ( "PlainCCF" , "PlainCCF(" , ")_Equipment_hawker" , plainccf_count );
-			SetUIntTexture ( "PrawnCCF" , "PrawnCCF(" , ")_Equipment_hawker" , prawnccf_count );
-
-			FlagShopActive ( false );
-			current_hawker_scene_state = HawkerSceneState::Main;
-
-			init_springroll_count = springroll_count;
-			init_carrotcake_count = carrotcake_count;
-			init_wanton_count = wanton_count;
-			init_seaweedchicken_count = seaweedchicken_count;
-
-			day_begin = true;
+		JZEngine::Vec2f& scale = Scene ().GetComponent<JZEngine::Transform> ( "no_money" )->scale_;
+		if ( scale.x < 1.0f )
+		{
+			scale.x += dt * 3.0f;
+			scale.y = scale.x;
+		}
+	}
+	else
+	{
+		JZEngine::Vec2f& scale = Scene ().GetComponent<JZEngine::Transform> ( "no_money" )->scale_;
+		if ( scale.x > 0.01f )
+		{
+			scale.x -= dt * 3.0f;
+			scale.y = scale.x;	
+		}
+		else
+		{
+			Scene ().EntityFlagActive ( "no_money" , false );
 		}
 	}
 
@@ -890,6 +1021,10 @@ void UpdateShop ()
 		{
 			if ( springroll_count < max_count )
 				++springroll_count;
+			else
+			{
+				springroll_count = min_count;
+			}
 			std::stringstream ss;
 			ss << springroll_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "Springroll_amt" )->color_ = { 1.0f,1.0f,1.0f };
@@ -902,6 +1037,10 @@ void UpdateShop ()
 		{
 			if ( springroll_count > min_count )
 				--springroll_count;
+			else
+			{
+				springroll_count = max_count;
+			}
 			std::stringstream ss;
 			ss << springroll_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "Springroll_amt" )->color_ = { 1.0f,1.0f,1.0f };
@@ -915,6 +1054,10 @@ void UpdateShop ()
 		{
 			if ( seaweedchicken_count < max_count )
 				++seaweedchicken_count;
+			else
+			{
+				seaweedchicken_count = min_count;
+			}
 			std::stringstream ss;
 			ss << seaweedchicken_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "Seaweedchicken_amt" )->color_ = { 1.0f,1.0f,1.0f };
@@ -927,6 +1070,10 @@ void UpdateShop ()
 		{
 			if ( seaweedchicken_count > min_count )
 				--seaweedchicken_count;
+			else
+			{
+				seaweedchicken_count = max_count;
+			}
 			std::stringstream ss;
 			ss << seaweedchicken_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "Seaweedchicken_amt" )->color_ = { 1.0f,1.0f,1.0f };
@@ -940,6 +1087,10 @@ void UpdateShop ()
 		{
 			if ( wanton_count < max_count )
 				++wanton_count;
+			else
+			{
+				wanton_count = min_count;
+			}
 			std::stringstream ss;
 			ss << wanton_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "Dumpling_amt" )->color_ = { 1.0f,1.0f,1.0f };
@@ -952,6 +1103,10 @@ void UpdateShop ()
 		{
 			if ( wanton_count > min_count )
 				--wanton_count;
+			else
+			{
+				wanton_count = max_count;
+			}
 			std::stringstream ss;
 			ss << wanton_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "Dumpling_amt" )->color_ = { 1.0f,1.0f,1.0f };
@@ -965,6 +1120,10 @@ void UpdateShop ()
 		{
 			if ( carrotcake_count < max_count )
 				++carrotcake_count;
+			else
+			{
+				carrotcake_count = min_count;
+			}
 			std::stringstream ss;
 			ss << carrotcake_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->color_ = { 1.0f,1.0f,1.0f };
@@ -977,6 +1136,10 @@ void UpdateShop ()
 		{
 			if ( carrotcake_count > min_count )
 				--carrotcake_count;
+			else
+			{
+				carrotcake_count = max_count;
+			}
 			std::stringstream ss;
 			ss << carrotcake_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "Carrotcake_amt" )->color_ = { 1.0f,1.0f,1.0f };
@@ -989,14 +1152,25 @@ void UpdateShop ()
 		if (e->on_hover_)
 		{
 			scroll->pause_ = false;
-			if (scroll->frame_ == 7)
+			scroll->reverse_ = false;
+			if (scroll->frame_ == 9)
 				scroll->pause_ = true;
 		}
+
 		else
 		{
-			scroll->frame_ = 0;
-			scroll->pause_ = true;
+			if (scroll->frame_ >0)
+			{
+				scroll->reverse_ = true;
+				scroll->pause_ = false;
+			}
+			else
+			{
+				scroll->frame_ = 0;
+				scroll->pause_ = true;
+			}
 		}
+
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("ScrollDay2_mouse"))
 	{
@@ -1004,16 +1178,50 @@ void UpdateShop ()
 		if (e->on_hover_)
 		{
 			scroll->pause_ = false;
-			if (scroll->frame_ == 7)
+			scroll->reverse_ = false;
+			if (scroll->frame_ == 9)
 				scroll->pause_ = true;
 		}
 		else
 		{
-			scroll->frame_ = 0;
-			scroll->pause_ = true;
+			if (scroll->frame_ > 0)
+			{
+				scroll->reverse_ = true;
+				scroll->pause_ = false;
+			}
+			else
+			{
+				scroll->frame_ = 0;
+				scroll->pause_ = true;
+			}
 		}
 	}
-
+	
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("ScrollDay3_mouse"))
+	{
+		JZEngine::Animation2D* scroll = Scene().GetComponent<JZEngine::Animation2D>("ScrollDay3");
+		if (e->on_hover_)
+		{
+			scroll->pause_ = false;
+			scroll->reverse_ = false;
+			if (scroll->frame_ == 9)
+				scroll->pause_ = true;
+		}
+		else
+		{
+			if (scroll->frame_ > 0)
+			{
+				scroll->reverse_ = true;
+				scroll->pause_ = false;
+			}
+			else
+			{
+				scroll->frame_ = 0;
+				scroll->pause_ = true;
+			}
+		}
+	}
+	
 	// day 2 shop
 	ProcessShopItem ( "Shop2_a_springroll" , "Shop2_s_springroll" , "Shop2_amt_springroll" , springroll_count , max_count , min_count );
 	ProcessShopItem ( "Shop2_a_seaweedchicken" , "Shop2_s_seaweedchicken" , "Shop2_amt_seaweedchicken" , seaweedchicken_count , max_count , min_count );
@@ -1029,14 +1237,30 @@ void UpdateShop ()
 	// day 3 shop
 	ProcessShopItem ( "Shop3_a_hargao" , "Shop3_s_hargao" , "Shop3_amt_hargao" , hargao_count , 3 , min_count );
 	ProcessShopItem ( "Shop3_a_chickenfeet" , "Shop3_s_chickenfeet" , "Shop3_amt_chickenfeet" , chickenfeet_count , 3 , min_count );
-	ProcessShopItem ( "Shop3_a_plainccf" , "Shop3_s_plainccf" , "Shop3_amt_plainccf" , plainccf_count , 10 , min_count );
-	ProcessShopItem ( "Shop3_a_prawnccf" , "Shop3_s_prawnccf" , "Shop3_amt_prawnccf" , prawnccf_count , 10 , min_count );
+	ProcessShopItem ( "Shop3_a_plainccf" , "Shop3_s_plainccf" , "Shop3_amt_plainccf" , plainccf_count , max_count , min_count );
+	ProcessShopItem ( "Shop3_a_prawnccf" , "Shop3_s_prawnccf" , "Shop3_amt_prawnccf" , prawnccf_count , max_count , min_count );
 
-	float total_amt = 0.4f * springroll_count + 0.2f * seaweedchicken_count + 0.3f * wanton_count + 0.5f * carrotcake_count;
+	total_amt = springroll_cost * springroll_count + seaweedchicken_cost * seaweedchicken_count + frieddumpling_cost * wanton_count + friedcarrotcake_cost * carrotcake_count;
+
+	if ( hawker_scene_day == DAY::TWO || hawker_scene_day == DAY::THREE )
+	{
+		total_amt += chickendumpling_cost * siewmai_count + prawndumpling_cost * hargao_count + chickenfeet_cost * chickenfeet_count;
+	}
+	if ( hawker_scene_day == DAY::THREE )
+	{
+		total_amt += charsiewbun_cost * charsiewbao_count + redbeanbun_cost * doushabao_count + coffeebun_cost * coffeebao_count +
+			ricenoodleroll_cost * plainccf_count + prawnroll_cost * prawnccf_count;
+	}
+
 	std::stringstream ss;
 	ss << "$" << std::setprecision (2) << std::fixed << total_amt;
 	Scene ().GetComponent<JZEngine::TextData> ( "Total_amt" )->color_ = { 0.0f,0.0f,0.0f };
 	Scene ().GetComponent<JZEngine::TextData> ( "Total_amt" )->text = JZEngine::String ( ss.str ().c_str () );
+
+	ss.str ( "" );
+	ss << "$" << std::setprecision ( 2 ) << std::fixed << wallet_amt;
+	Scene ().GetComponent<JZEngine::TextData> ( "Wallet_amt" )->color_ = { 0.0f,0.0f,0.0f };
+	Scene ().GetComponent<JZEngine::TextData> ( "Wallet_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 }
 
 /*!
@@ -1265,6 +1489,7 @@ void UpdateCoinProgressBar()
 bool won_bar_ { false };
 float won_bar_counter_ { 0.0f };
 bool coin_last_update { false };
+bool win_shortcut { false };
 
 void ShowWonBar ();
 void AnimateCoinProgreeBar (float dt)
@@ -1274,7 +1499,7 @@ void AnimateCoinProgreeBar (float dt)
 	{
 		x += dt;
 	}
-	if ( coin_last_update && x > initial_progress_scale )
+	if ( coin_last_update && x > initial_progress_scale || win_shortcut )
 	{
 		if ( won_bar_ == false )
 		{
@@ -1606,6 +1831,7 @@ void UpdateLoseBar (float dt)
 		ToggleSummary ( true );
 		SummaryInit ();
 		current_hawker_scene_state = HawkerSceneState::Win;
+		FlagLoseBar ( false );
 	}
 }
 
@@ -1639,6 +1865,29 @@ void ToggleSummary ( bool toggle )
 	Scene ().EntityFlagActive ( "sum_fd_amt" , toggle );
 	Scene ().EntityFlagActive ( "sum_cc_amt" , toggle );
 	Scene ().EntityFlagActive ( "sum_total_amt" , toggle );
+
+	
+	Scene().EntityFlagActive("Summary_Next", toggle);
+	Scene().EntityFlagActive("Summary_Restart", toggle);
+	Scene().EntityFlagActive("Summary_Exit", toggle);
+
+	
+}
+void ToggleConfirm(bool toggle, Confirmstate confirm_state = Confirmstate::None)
+{
+	if(confirm_state ==Confirmstate::Restart)
+		Scene().EntityFlagActive("Summary_Restart_Confirm", toggle);
+	else if(confirm_state == Confirmstate::Exit)
+		Scene().EntityFlagActive("Summary_Exit_Confirm", toggle);
+	else
+	{
+		Scene().EntityFlagActive("Summary_Restart_Confirm", toggle);
+		Scene().EntityFlagActive("Summary_Exit_Confirm", toggle);
+	}
+
+	Scene().EntityFlagActive("Summary_Yes", toggle);
+	Scene().EntityFlagActive("Summary_No", toggle);
+
 }
 
 bool summary_ready { false };
@@ -1646,10 +1895,15 @@ float summary_counter { 0.0f };
 void SummaryInit ()
 {
 	summary_ready = false;
+	confirm_state = Confirmstate::None;
 	Scene ().EntityFlagActive ( "BeginBlack" , true );
 	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "BeginBlack" )->tint.w = 0.0f;
 	Scene ().GetComponent<JZEngine::Transform> ( "Summary_screen" )->position_.y = 2048.0f;
+	Scene().GetComponent<JZEngine::Transform>("Summary_Restart")->position_.y = 1612.f;
+	Scene().GetComponent<JZEngine::Transform>("Summary_Next")->position_.y = 1612.f;
+	Scene().GetComponent<JZEngine::Transform>("Summary_Exit")->position_.y = 1612.f;
 
+	ToggleConfirm(false);
 	summary_sr_count = 0;
 	summary_sc_count = 0;
 	summary_fd_count = 0;
@@ -1675,9 +1929,39 @@ void SummaryInit ()
 	Scene ().GetComponent<JZEngine::TextData> ( "sum_total_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 }
 
+float springroll_price { 2.70f };
+float seaweedchicken_price { 1.20f };
+float frieddumplings_price { 2.10f };
+float friedcarrotcake_price { 3.00f };
+float chickendumplings_price { 2.50f };
+float prawndumplings_price { 2.70f };
+float chickenfeet_price { 3.50f };
+float charsiewbun_price { 0.60f };
+float redbeanbun_price { 0.50f };
+float coffeebun_price { 0.50f };
+float ricenoodleroll_price { 1.20f };
+float prawnroll_price { 1.50f };
+
+float summary_wallet_amt { 0.0f };
+
 void UpdateWinScreen(float dt)
 {
 	UNREFERENCED_PARAMETER(dt);
+	
+	if (win)
+	{
+		Scene().EntityFlagActive("Summary_Restart", false);
+		
+	}
+	else//lose
+	{
+		Scene().EntityFlagActive("Summary_Next", false);
+	}
+	float& exitbutton_y = Scene().GetComponent<JZEngine::Transform>("Summary_Exit")->position_.y;
+	float& rsbutton_y = Scene().GetComponent<JZEngine::Transform>("Summary_Restart")->position_.y;
+	float& sumbutton_y = Scene().GetComponent<JZEngine::Transform>("Summary_Next")->position_.y;
+
+
 	float& black_alpha = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "BeginBlack" )->tint.w;
 	float& summary_y = Scene ().GetComponent<JZEngine::Transform> ( "Summary_screen" )->position_.y;
 	bool ready { true };
@@ -1686,8 +1970,12 @@ void UpdateWinScreen(float dt)
 		black_alpha += dt;
 		ready = false;
 	}
-	if ( summary_y > 0.0f )
+	if ( summary_y > 11.0f )
 	{
+		exitbutton_y -= 1024.0f * dt;
+		rsbutton_y -= 1024.0f * dt;
+		sumbutton_y -= 1024.0f * dt;
+
 		summary_y -= 1024.0f * dt;
 		ready = false;
 	}
@@ -1731,25 +2019,26 @@ void UpdateWinScreen(float dt)
 			}
 
 			std::stringstream ss;
-			ss << summary_sr_count << " pcs";
+			ss << summary_sr_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sr_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sr_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 			ss.str ("");
-			ss << summary_sc_count << " pcs";
+			ss << summary_sc_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sc_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sc_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 			ss.str ( "" );
-			ss << summary_fd_count << " pcs";
+			ss << summary_fd_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_fd_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_fd_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 			ss.str ( "" );
-			ss << summary_cc_count << " pcs";
+			ss << summary_cc_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 
-			float total_amt = 2.7f * summary_sr_count + 1.2f * summary_sc_count + 2.1f * summary_fd_count + 3.0f * summary_cc_count;
+			float summary_price_amt = springroll_price * summary_sr_count + seaweedchicken_price * summary_sc_count + frieddumplings_price * summary_fd_count + friedcarrotcake_price * summary_cc_count;
+			summary_wallet_amt = wallet_amt + summary_price_amt;
 			ss.str ( "" );
-			ss << "$" << std::setprecision(2) << std::fixed << total_amt;
+			ss << "$" << std::setprecision(2) << std::fixed << summary_wallet_amt;
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_total_amt" )->color_ = { 0.0f,0.0f,0.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_total_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 
@@ -1761,33 +2050,174 @@ void UpdateWinScreen(float dt)
 	}
 
 
-	if ( summary_ready )
-	{
-		Scene().EntityFlagActive("BeginShop_Next", true);
 
-		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Win_restart_bb" ) )
+	if ( summary_ready && confirm_state== Confirmstate::None)
+	{
+		ToggleConfirm(false);
+		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Summary_Exit" ) )
 		{
 			if ( e->on_released_ )
 			{
-				//Scene().ChangeScene("MainMenu");
+				//Scene ().ChangeScene ( "MainMenu" );
+				confirm_state = Confirmstate::Exit;
+				ToggleConfirm(true, confirm_state);
+				
 			}
-		}
-		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Win_exit_bb" ) )
-		{
-			if ( e->on_released_ )
+			if (e->on_held_)
 			{
-				Scene ().ChangeScene ( "MainMenu" );
+				ToggleButton("Summary_Exit", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_Exit", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_Exit", ButtonState::Normal);
+			}
+
+		}
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_Restart"))
+		{
+			if (e->on_released_)
+			{
+				confirm_state = Confirmstate::Restart;
+				ToggleConfirm(true, confirm_state);
+			}
+			if (e->on_held_)
+			{
+				ToggleButton("Summary_Restart", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_Restart", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_Restart", ButtonState::Normal);
 			}
 		}
-		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("BeginShop_Next"))
+		//next
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_Next"))
 		{
 			if (e->on_click_)
 			{
+				wallet_amt = summary_wallet_amt;
 				Cutscene::day = Days::Two;
 				Scene().ChangeScene("CutScene");
 			}
+			if (e->on_held_)
+			{
+				ToggleButton("Summary_Next", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_Next", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_Next", ButtonState::Normal);
+			}
 		}
 	}
+
+
+	if (confirm_state == Confirmstate::Exit)
+	{
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_Yes"))
+		{
+			if (e->on_released_)
+			{
+				confirm_state = Confirmstate::None;
+				Scene().ChangeScene("MainMenu");
+
+			}
+			if (e->on_held_)
+			{
+				ToggleButton("Summary_Yes", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_Yes", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_Yes", ButtonState::Normal);
+			}
+
+		}
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_No"))
+		{
+			if (e->on_released_)
+			{
+				
+				confirm_state = Confirmstate::None;
+				
+			}
+			if (e->on_held_)
+			{
+				ToggleButton("Summary_No", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_No", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_No", ButtonState::Normal);
+			}
+
+		}
+	}
+	if (confirm_state == Confirmstate::Restart)
+	{
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_Yes"))
+		{
+			if (e->on_released_)
+			{		
+				Cutscene::day = Days::One;
+				Scene().ChangeScene("CutScene");
+			}
+			if (e->on_held_)
+			{
+				ToggleButton("Summary_Yes", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_Yes", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_Yes", ButtonState::Normal);
+			}
+
+		}
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_No"))
+		{
+			if (e->on_released_)
+			{
+			
+				confirm_state = Confirmstate::None;
+				
+			}
+			if (e->on_held_)
+			{
+				ToggleButton("Summary_No", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_No", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_No", ButtonState::Normal);
+			}
+
+		}
+
+	}
+
+
 }
 
 /*!
@@ -2250,22 +2680,22 @@ void UpdateMainScene(float dt)
 						current_coins += 2.1f;
 						break;
 					case ( CustomerOrder::ChickenFeet ):
-						current_coins += 1.0f;
+						current_coins += 3.50f;
 						break;
 					case ( CustomerOrder::HarGao ):
-						current_coins += 1.0f;
+						current_coins += 2.7f;
 						break;
 					case ( CustomerOrder::SiewMai ):
-						current_coins += 1.0f;
+						current_coins += 2.5f;
 						break;
 					case ( CustomerOrder::CharSiewBao ):
-						current_coins += 1.0f;
+						current_coins += 0.6f;
 						break;
 					case ( CustomerOrder::DouShaBao ):
-						current_coins += 1.0f;
+						current_coins += 0.5f;
 						break;
 					case ( CustomerOrder::CoffeeBao ):
-						current_coins += 1.0f;
+						current_coins += 0.5f;
 						break;
 					}
 					plate_on_hand = false;
@@ -2285,13 +2715,14 @@ void UpdateMainScene(float dt)
 					DisplayTick ();
 					//Scene ().EntityFlagActive ( "CoinSparkles" , true );
 					Scene ().EntityFlagActive ( "CoinOnTable" , true );
-					if (current_coins >= target_coins)
-					{
-						coin_last_update = true;
-					}
+					//if (current_coins >= target_coins)
+					//{
+					//	//coin_last_update = true;
+					//}
 					ToggleGuidedCircle ( "gtc_platecustomer" , false );
 					TurnOffNotification ();
 					//JZEngine::Log::Info ( "Main" , "test" );
+					
 				}
 			}
 			else
@@ -2312,6 +2743,7 @@ void UpdateMainScene(float dt)
 		}
 		else
 		{
+			HideWonBar ();
 			win = true;
 			JZEngine::Log::Info ( "Main" , "You have won the game!" );
 			//Scene().ChangeScene("MainMenu");
@@ -2342,6 +2774,11 @@ void HawkerSceneInit()
 	scroll->pause_ = true;
 	scroll->frame_ = 0;
 
+	scroll = Scene().GetComponent<JZEngine::Animation2D>("ScrollDay3");
+	scroll->pause_ = true;
+	scroll->frame_ = 0;
+
+
 	Scene ().EntityFlagActive ( "CoinSparkles" , false );
 	og_coin_position = Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_;
 	og_coin_distance_from_bar = (Scene ().GetComponent<JZEngine::Transform> ( "CoinBar" )->position_ 
@@ -2357,7 +2794,7 @@ void HawkerSceneInit()
 
 	ToggleWin(false);
 	ToggleSummary ( false );
-
+	ToggleConfirm(false);
 	InitHawkerQueue();
 	InitPhoneScreen();
 	cursor_state = CursorState::Nothing;
@@ -2370,7 +2807,18 @@ void HawkerSceneInit()
 	display_up_ = false;
 	greenbar_original_scale_y = Scene().GetComponent<JZEngine::Transform>("GreenBar")->scale_.y;
 
-	target_coins = 10.0f;
+	if ( hawker_scene_day == DAY::ONE )
+	{
+		target_coins = 28.0f;
+	}
+	else if ( hawker_scene_day == DAY::TWO )
+	{
+		target_coins = 35.0f;
+	}
+	else if ( hawker_scene_day == DAY::THREE )
+	{
+		target_coins = 46.0f;
+	}
 	current_coins = 0;
 	current_coin_scale = 0.0f;
 	total_time = 60.0f;
@@ -2383,6 +2831,7 @@ void HawkerSceneInit()
 	//FlagLoseBar ( false );
 	won_bar_ = false;
 	won_bar_counter_ = 0.0f;
+	win_shortcut = false;
 
 	// set scale of coin bar and angry customer bar to 0
 	//initial_progress_scale = 7.537f;
@@ -2518,19 +2967,66 @@ void HawkerSceneInit()
 	{
 		Scene ().EntityFlagActive ( "Scizzors" , false );
 		Scene ().EntityFlagActive ( "bb_scizzors" , false );
-		
+
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_one" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay01_UI_hawker_01" );
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_two" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay01_UI_hawker_02" );
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_three" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay01_UI_hawker_03" );
+
+		wallet_amt = 12.50f;
+
+		num_springroll = 5;
+		num_seaweedchicken = 7;
+		num_dumpling = 5;
+		num_carrotcake = 6;
 	}
-	else if (hawker_scene_day == DAY::TWO || hawker_scene_day == DAY::THREE)
+	else if (hawker_scene_day == DAY::TWO)
 	{
 		Scene ().GetComponent<JZEngine::Transform> ( "Plate" )->position_.x -= 200.0f;
 		Scene ().GetComponent<JZEngine::Transform> ( "bb_plate" )->position_.x -= 200.0f;
 		Scene ().GetComponent<JZEngine::Transform> ( "Tongs" )->position_.x += 200.0f;
 		Scene ().GetComponent<JZEngine::Transform> ( "bb_tongs" )->position_.x += 200.0f;
+
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_one" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay02_UI_hawker_01" );
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_two" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay02_UI_hawker_02" );
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_three" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay02_UI_hawker_03" );
+
+		num_springroll = 5;
+		num_seaweedchicken = 5;
+		num_dumpling = 4;
+		num_carrotcake = 4;
+		num_chickenfeet = 1;
+		num_siewmai = 1;
+		num_hargao = 1;
+		num_charsiewbao = 2;
+		num_doushabao = 2;
+		num_coffeebao = 2;
 	}
 	else if (hawker_scene_day == DAY::THREE)
 	{
+		Scene ().GetComponent<JZEngine::Transform> ( "Plate" )->position_.x -= 200.0f;
+		Scene ().GetComponent<JZEngine::Transform> ( "bb_plate" )->position_.x -= 200.0f;
+		Scene ().GetComponent<JZEngine::Transform> ( "Tongs" )->position_.x += 200.0f;
+		Scene ().GetComponent<JZEngine::Transform> ( "bb_tongs" )->position_.x += 200.0f;
+
 		Scene().EntityFlagActive("SpringOnion", true);
 		Scene().EntityFlagActive("SoySauce", true);
+
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_one" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay03_UI_hawker_01" );
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_two" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay03_UI_hawker_02" );
+		Scene ().GetComponent<JZEngine::Texture> ( "Goal_three" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay03_UI_hawker_03" );
+
+		num_springroll = 3;
+		num_seaweedchicken = 3;
+		num_dumpling = 6;
+		num_carrotcake = 6;
+		num_chickenfeet = 2;
+		num_siewmai = 1;
+		num_hargao = 2;
+		num_charsiewbao = 1;
+		num_doushabao = 2;
+		num_coffeebao = 2;
+		num_plainccf = 4;
+		num_prawnccf = 4;
 	}
 }
 
@@ -2543,10 +3039,45 @@ void HawkerSceneUpdate(float dt)
 		return;
 	}
 
+	bool food_count = springroll_count <= 0 && carrotcake_count <= 0 && wanton_count <= 0 && seaweedchicken_count <= 0;
+	if ( hawker_scene_day == DAY::TWO )
+	{
+		food_count = food_count && ( chickenfeet_count <= 0 && hargao_count <= 0 && siewmai_count <= 0 && charsiewbao_count <= 0 && doushabao_count <= 0 && coffeebao_count );
+	}
+	if ( hawker_scene_day == DAY::THREE )
+	{
+		food_count = food_count && ( plainccf_count <= 0 && prawnccf_count <= 0 );
+	}
+
 	if (( num_customers <= 0 ||
-		(springroll_count <= 0 && carrotcake_count <= 0 && wanton_count <= 0 && seaweedchicken_count <= 0)) &&
+		food_count) &&
 		current_hawker_scene_state != HawkerSceneState::Win)
 	{
+		/*FlagLoseBar ( true );
+		current_hawker_scene_state = HawkerSceneState::Lose;*/
+		// check if win or lose
+
+		if ( current_coins >= target_coins )
+		{
+			// win
+			coin_last_update = true;
+		}
+		else
+		{
+			// lose
+			FlagLoseBar ( true );
+			current_hawker_scene_state = HawkerSceneState::Lose;
+		}
+	}
+
+	// win lose shortcut
+	if ( JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_W ) )
+	{
+		win_shortcut = true;
+	}
+	if ( JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_L ) )
+	{
+		// lose
 		FlagLoseBar ( true );
 		current_hawker_scene_state = HawkerSceneState::Lose;
 	}
@@ -2596,7 +3127,7 @@ void HawkerSceneUpdate(float dt)
 		}
 		break;
 	case HawkerSceneState::Shop:
-		UpdateShop ();
+		UpdateShop (dt);
 		break;
 	case HawkerSceneState::Goal:
 		UpdateGoal (dt);

@@ -29,10 +29,21 @@ namespace JZEngine
 			}
 			else
 			{
-				++anim2d.frame_;
-				if ( anim2d.frame_ >= anim2d.max_frames_ )
+				if ( anim2d.reverse_ )
 				{
-					anim2d.frame_ = 0;
+					--anim2d.frame_;
+					if ( anim2d.frame_ < 0 )
+					{
+						anim2d.frame_ = anim2d.max_frames_;
+					}
+				}
+				else
+				{
+					++anim2d.frame_;
+					if ( anim2d.frame_ >= anim2d.max_frames_ )
+					{
+						anim2d.frame_ = 0;
+					}
 				}
 				anim2d.animation_counter_ = 0.0f;
 			}
