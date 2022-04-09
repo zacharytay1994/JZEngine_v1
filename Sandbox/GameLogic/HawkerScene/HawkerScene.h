@@ -207,6 +207,16 @@ std::string cursor_object_names[] = {
 
 CursorState cursor_state = CursorState::Nothing;
 
+
+enum class Confirmstate
+{
+	Exit,
+	Restart,
+	None
+};
+Confirmstate confirm_state = Confirmstate::None;
+
+
 void FlagAllCursorsFalse()
 {
 	Scene().EntityFlagActive("EmptyTongs", false);
@@ -1799,13 +1809,26 @@ void ToggleSummary ( bool toggle )
 
 	
 	Scene().EntityFlagActive("Summary_Next", toggle);
-	
 	Scene().EntityFlagActive("Summary_Restart", toggle);
-
 	Scene().EntityFlagActive("Summary_Exit", toggle);
-	
 
 	
+}
+void ToggleConfirm(bool toggle, Confirmstate confirm_state = Confirmstate::None)
+{
+	if(confirm_state ==Confirmstate::Restart)
+		Scene().EntityFlagActive("Summary_Restart_Confirm", toggle);
+	if(confirm_state == Confirmstate::Exit)
+		Scene().EntityFlagActive("Summary_Exit_Confirm", toggle);
+	else
+	{
+		Scene().EntityFlagActive("Summary_Restart_Confirm", toggle);
+		Scene().EntityFlagActive("Summary_Exit_Confirm", toggle);
+	}
+
+	Scene().EntityFlagActive("Summary_Yes", toggle);
+	Scene().EntityFlagActive("Summary_No", toggle);
+
 }
 
 bool summary_ready { false };
@@ -1816,7 +1839,11 @@ void SummaryInit ()
 	Scene ().EntityFlagActive ( "BeginBlack" , true );
 	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "BeginBlack" )->tint.w = 0.0f;
 	Scene ().GetComponent<JZEngine::Transform> ( "Summary_screen" )->position_.y = 2048.0f;
+	Scene().GetComponent<JZEngine::Transform>("Summary_Restart")->position_.y = 1612.f;
+	Scene().GetComponent<JZEngine::Transform>("Summary_Next")->position_.y = 1612.f;
+	Scene().GetComponent<JZEngine::Transform>("Summary_Exit")->position_.y = 1612.f;
 
+	ToggleConfirm(false);
 	summary_sr_count = 0;
 	summary_sc_count = 0;
 	summary_fd_count = 0;
@@ -1845,6 +1872,7 @@ void SummaryInit ()
 void UpdateWinScreen(float dt)
 {
 	UNREFERENCED_PARAMETER(dt);
+	
 	if (win)
 	{
 		Scene().EntityFlagActive("Summary_Restart", false);
@@ -1854,6 +1882,11 @@ void UpdateWinScreen(float dt)
 	{
 		Scene().EntityFlagActive("Summary_Next", false);
 	}
+	float& exitbutton_y = Scene().GetComponent<JZEngine::Transform>("Summary_Exit")->position_.y;
+	float& rsbutton_y = Scene().GetComponent<JZEngine::Transform>("Summary_Restart")->position_.y;
+	float& sumbutton_y = Scene().GetComponent<JZEngine::Transform>("Summary_Next")->position_.y;
+
+
 	float& black_alpha = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "BeginBlack" )->tint.w;
 	float& summary_y = Scene ().GetComponent<JZEngine::Transform> ( "Summary_screen" )->position_.y;
 	bool ready { true };
@@ -1864,6 +1897,10 @@ void UpdateWinScreen(float dt)
 	}
 	if ( summary_y > 11.0f )
 	{
+		exitbutton_y -= 1024.0f * dt;
+		rsbutton_y -= 1024.0f * dt;
+		sumbutton_y -= 1024.0f * dt;
+
 		summary_y -= 1024.0f * dt;
 		ready = false;
 	}
@@ -1937,16 +1974,18 @@ void UpdateWinScreen(float dt)
 	}
 
 
-	if ( summary_ready )
+
+	if ( summary_ready && confirm_state== Confirmstate::None)
 	{
-
-		
-
+		ToggleConfirm(false);
 		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Summary_Exit" ) )
 		{
 			if ( e->on_released_ )
 			{
-				Scene ().ChangeScene ( "MainMenu" );
+				//Scene ().ChangeScene ( "MainMenu" );
+				confirm_state = Confirmstate::Exit;
+				ToggleConfirm(true, confirm_state);
+				
 			}
 			if (e->on_held_)
 			{
@@ -1966,8 +2005,8 @@ void UpdateWinScreen(float dt)
 		{
 			if (e->on_click_)
 			{
-				Cutscene::day = Days::One;
-				Scene().ChangeScene("CutScene");
+				confirm_state == Confirmstate::Restart;
+				ToggleConfirm(true, confirm_state);
 			}
 			if (e->on_held_)
 			{
@@ -1982,6 +2021,7 @@ void UpdateWinScreen(float dt)
 				ToggleButton("Summary_Restart", ButtonState::Normal);
 			}
 		}
+		//next
 		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_Next"))
 		{
 			if (e->on_click_)
@@ -2003,6 +2043,104 @@ void UpdateWinScreen(float dt)
 			}
 		}
 	}
+
+
+	if (confirm_state == Confirmstate::Exit)
+	{
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_Yes"))
+		{
+			if (e->on_released_)
+			{
+				confirm_state = Confirmstate::None;
+				Scene().ChangeScene("MainMenu");
+
+			}
+			if (e->on_held_)
+			{
+				ToggleButton("Summary_Yes", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_Yes", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_Yes", ButtonState::Normal);
+			}
+
+		}
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_No"))
+		{
+			if (e->on_released_)
+			{
+				
+				confirm_state = Confirmstate::None;
+				
+			}
+			if (e->on_held_)
+			{
+				ToggleButton("Summary_No", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_No", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_No", ButtonState::Normal);
+			}
+
+		}
+	}
+	if (confirm_state == Confirmstate::Restart)
+	{
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_Yes"))
+		{
+			if (e->on_released_)
+			{		
+				Cutscene::day = Days::One;
+				Scene().ChangeScene("CutScene");
+			}
+			if (e->on_held_)
+			{
+				ToggleButton("Summary_Exit", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_Exit", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_Exit", ButtonState::Normal);
+			}
+
+		}
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_No"))
+		{
+			if (e->on_released_)
+			{
+			
+				confirm_state = Confirmstate::None;
+				
+			}
+			if (e->on_held_)
+			{
+				ToggleButton("Summary_No", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_No", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_No", ButtonState::Normal);
+			}
+
+		}
+
+	}
+
+
 }
 
 /*!
@@ -2577,7 +2715,7 @@ void HawkerSceneInit()
 
 	ToggleWin(false);
 	ToggleSummary ( false );
-
+	ToggleConfirm(false);
 	InitHawkerQueue();
 	InitPhoneScreen();
 	cursor_state = CursorState::Nothing;

@@ -55,11 +55,14 @@ std::unordered_map<std::string, ButtonTextures> button_textures{
 	{ "Album_1960_button2", {"Album_photo_button_normal", "Album_photo_onhover", ""}},
 	{ "shop_exit",	{ "Exit(OG)_Button_MainMenu_Ver2"	, "Exit(Highlight)_Button_MainMenu_Ver2"	, "Exit(Clicked)_Button_MainMenu_Ver2"}},
 	{ "shop_next",	{ "Next(OG)_Button_MainMenu_Ver2"	, "Next(Highlight)_Button_MainMenu_Ver2"	, "Next(Clicked)_Button_MainMenu_Ver2"}},
-			{ "Summary_Restart",	{ "Restart(OG)_Button_MainMenu_Ver2"	, "Restart(Highlight)_Button_MainMenu_Ver2"	, "Restart(Clicked)_Button_MainMenu_Ver2"}},
-			{ "Summary_Exit",	{ "Exit(OG)_Button_MainMenu_Ver2"	, "Exit(Highlight)_Button_MainMenu_Ver2"	, "Exit(Clicked)_Button_MainMenu_Ver2"}},
-			{ "Summary_Next",	{ "Next(OG)_Button_MainMenu_Ver2"	, "Next(Highlight)_Button_MainMenu_Ver2"	, "Next(Clicked)_Button_MainMenu_Ver2"}},
 	{ "Restart_panel_yes",	{ "Yes(OG)_Button_MainMenu"		, "Yes(Highlight)_Button_MainMenu"			, "Yes(Clicked)_Button_MainMenu"}},
-	{ "Restart_panel_no",	{ "No(OG)_Button_MainMenu"		, "No(Highlight)_Button_MainMenu"			, "No(Clicked)_Button_MainMenu"}}
+	{ "Restart_panel_no",	{ "No(OG)_Button_MainMenu"		, "No(Highlight)_Button_MainMenu"			, "No(Clicked)_Button_MainMenu"}},
+
+	{ "Summary_Restart",	{ "Restart(OG)_Button_MainMenu_Ver2"	, "Restart(Highlight)_Button_MainMenu_Ver2"	, "Restart(Clicked)_Button_MainMenu_Ver2"}},
+	{ "Summary_Exit",		{ "Exit(OG)_Button_MainMenu_Ver2"	, "Exit(Highlight)_Button_MainMenu_Ver2"	, "Exit(Clicked)_Button_MainMenu_Ver2"}},
+	{ "Summary_Next",		{ "Next(OG)_Button_MainMenu_Ver2"	, "Next(Highlight)_Button_MainMenu_Ver2"	, "Next(Clicked)_Button_MainMenu_Ver2"}},
+	{ "Summary_Yes",		{ "Yes(OG)_Button_MainMenu", "Yes(Highlight)_Button_MainMenu"     , "Yes(Clicked)_Button_MainMenu"}},
+	{ "Summary_No",			{ "No(OG)_Button_MainMenu" , "No(Highlight)_Button_MainMenu"      , "No(Clicked)_Button_MainMenu"}}
 };
 
 
@@ -67,4 +70,19 @@ void ToggleButton(const std::string& name, ButtonState state)
 {
 	Scene().GetComponent<JZEngine::Texture>(name)->texture_id_
 		= Scene().GetTexture(button_textures[name][static_cast<int>(state)]);
+}
+void AutoToggleButton(JZEngine::MouseEvent* e, const std::string& name)
+{
+	if (e->on_held_)
+	{
+		ToggleButton(name, ButtonState::Clicked);
+	}
+	else if (e->on_hover_)
+	{
+		ToggleButton(name, ButtonState::Hover);
+	}
+	else
+	{
+		ToggleButton(name, ButtonState::Normal);
+	}
 }
