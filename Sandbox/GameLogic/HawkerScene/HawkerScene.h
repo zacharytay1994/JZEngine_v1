@@ -1428,6 +1428,7 @@ void UpdateCoinProgressBar()
 bool won_bar_ { false };
 float won_bar_counter_ { 0.0f };
 bool coin_last_update { false };
+bool win_shortcut { false };
 
 void ShowWonBar ();
 void AnimateCoinProgreeBar (float dt)
@@ -1437,7 +1438,7 @@ void AnimateCoinProgreeBar (float dt)
 	{
 		x += dt;
 	}
-	if ( coin_last_update && x > initial_progress_scale )
+	if ( coin_last_update && x > initial_progress_scale || win_shortcut )
 	{
 		if ( won_bar_ == false )
 		{
@@ -1769,6 +1770,7 @@ void UpdateLoseBar (float dt)
 		ToggleSummary ( true );
 		SummaryInit ();
 		current_hawker_scene_state = HawkerSceneState::Win;
+		FlagLoseBar ( false );
 	}
 }
 
@@ -2493,6 +2495,7 @@ void UpdateMainScene(float dt)
 		}
 		else
 		{
+			HideWonBar ();
 			win = true;
 			JZEngine::Log::Info ( "Main" , "You have won the game!" );
 			//Scene().ChangeScene("MainMenu");
@@ -2564,6 +2567,7 @@ void HawkerSceneInit()
 	//FlagLoseBar ( false );
 	won_bar_ = false;
 	won_bar_counter_ = 0.0f;
+	win_shortcut = false;
 
 	// set scale of coin bar and angry customer bar to 0
 	//initial_progress_scale = 7.537f;
@@ -2800,6 +2804,18 @@ void HawkerSceneUpdate(float dt)
 			FlagLoseBar ( true );
 			current_hawker_scene_state = HawkerSceneState::Lose;
 		}
+	}
+
+	// win lose shortcut
+	if ( JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_W ) )
+	{
+		win_shortcut = true;
+	}
+	if ( JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_L ) )
+	{
+		// lose
+		FlagLoseBar ( true );
+		current_hawker_scene_state = HawkerSceneState::Lose;
 	}
 
 	if ( day_begin )
