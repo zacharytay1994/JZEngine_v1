@@ -399,6 +399,7 @@ bool took_too_long_ { false };
 float customer_spacing_ = { 100.0f };
 
 bool hawker_queue_display_order_toggle { false };
+bool first_customer { true };
 
 struct Customer
 {
@@ -425,6 +426,11 @@ struct Customer
 		scene_object_id_{id},
 		wait_time_{max_wait_time_}
 	{
+		if ( first_customer )
+		{
+			first_customer = false;
+			wait_time_ = 1000.0f;
+		}
 		Scene().EntityFlagActive("Customer", true, scene_object_id_); 
 		// position customer
 		JZEngine::Transform* transform = Scene().GetComponent<JZEngine::Transform>("Customer", scene_object_id_);
@@ -752,6 +758,7 @@ CustomerOrder GetNextCustomerOrder(int dumpling, int seaweed, int carrotcake, in
 void InitHawkerQueue()
 {
 	// initialize all data
+	first_customer = true;
 	customer_ids = std::stack<int>();
 	out_queue_position_ = -800.0f;
 	queue_layer = 0;

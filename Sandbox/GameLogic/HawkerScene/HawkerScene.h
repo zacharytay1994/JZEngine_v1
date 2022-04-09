@@ -27,6 +27,7 @@ std::unordered_map<std::string , bool> guided_circles {
 	{"gtc_platecustomer", false}
 };
 
+
 void HideGuidedCircles ()
 {
 	for ( auto& gc : guided_circles )
@@ -36,9 +37,12 @@ void HideGuidedCircles ()
 	}
 }
 
+bool click_customer_notification { true };
+
 void InitGuidedCircles ()
 {
 	HideGuidedCircles ();
+	click_customer_notification = true;
 }
 
 void ToggleGuidedCircle ( std::string const& name , bool flag)
@@ -2870,7 +2874,7 @@ void HawkerSceneInit()
 
 	InitGuidedCircles ();
 	current_notification = 0;
-	ShowNotification ( 0 );
+	//ShowNotification ( 0 );
 
 	// temporarily remove upgrades
 	Scene ().EntityFlagActive ( "RoundSteamer" , false );
@@ -3096,6 +3100,11 @@ void HawkerSceneUpdate(float dt)
 	// update phone transition
 	UpdatePhoneTransition ( dt );
 
+	if ( customers_in_queue_ > 0 && click_customer_notification )
+	{
+		click_customer_notification = false;
+		ShowNotification ( 0 );
+	}
 	UpdateGuidedCircle ( dt );
 
 	if ( hawker_queue_display_order_toggle )
