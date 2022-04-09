@@ -18,6 +18,7 @@ enum class HawkerAppState
 	Theresapp,
 	Album,
 	HowtoPlay,
+	Options,
 	ShopApp
 };
 
@@ -37,6 +38,13 @@ bool quit_confirmation{ false };
 bool main_menu_confirmation{ false };
 bool restart_confirmation{ false };
 
+//Options
+float master_volume_phone{ 0.33f };
+float music_volume_phone{ 0.33f };
+float sfx_volume_phone{ 0.33f };
+float mute_threshold_phone{ 0.05f };
+float initial_bar_scale_phone{ 1.0f };
+float initial_bar_position_phone{ -215.0f };
 
 // Use in UpdateAlbum()
 bool Photo1960{ false }, Photo1980{ false }, Photo2021{ false }, PhotoSelected{ false };
@@ -142,7 +150,6 @@ void FlagTheresappScreen( bool flag )
 
 void FlagPhoneAlbumScreen( bool flag )
 {
-
 	Scene().EntityFlagActive( "Album_blacker_bg", flag );
 	Scene().EntityFlagActive( "Album_main_screen", flag );
 	Scene().EntityFlagActive( "Album_top", flag );
@@ -210,6 +217,39 @@ void FlagHowtoPlayScreen( bool flag )
 	Scene().EntityFlagActive( "How_to_Play_photo", flag );
 	Scene().EntityFlagActive( "How_to_Play_text", flag );
 	Scene().EntityFlagActive( "How_to_Play_x", flag );
+}
+
+void FlagOptionsScreen(bool flag)
+{
+	Scene().EntityFlagActive("Option_background", flag);
+	Scene().EntityFlagActive("Option_soundline", flag);
+	Scene().EntityFlagActive("Option_master", flag);
+	Scene().EntityFlagActive("Option_music", flag);
+	Scene().EntityFlagActive("Option_sfx", flag);
+	Scene().EntityFlagActive("Option_master_speaker", flag);
+	Scene().EntityFlagActive("Option_music_speaker", flag);
+	Scene().EntityFlagActive("Option_sfx_speaker", flag);
+
+	Scene().EntityFlagActive("Option_master_blackbar", flag);
+	Scene().EntityFlagActive("Option_master_brownbar", flag);
+	Scene().EntityFlagActive("Option_master_pau", flag);
+	Scene().EntityFlagActive("Option_master_blackbar_border", flag);
+
+	Scene().EntityFlagActive("Option_music_blackbar", flag);
+	Scene().EntityFlagActive("Option_music_brownbar", flag);
+	Scene().EntityFlagActive("Option_music_pau", flag);
+	Scene().EntityFlagActive("Option_music_blackbar_border", flag);
+
+	Scene().EntityFlagActive("Option_sfx_blackbar", flag);
+	Scene().EntityFlagActive("Option_sfx_brownbar", flag);
+	Scene().EntityFlagActive("Option_sfx_pau", flag);
+	Scene().EntityFlagActive("Option_sfx_blackbar_border", flag);
+
+	Scene().EntityFlagActive("Option_master_speaker_off", flag);
+	Scene().EntityFlagActive("Option_music_speaker_off", flag);
+	Scene().EntityFlagActive("Option_sfx_speaker_off", flag);
+
+	Scene().EntityFlagActive("Option_x", flag);
 }
 
 void FlagMsg1( bool flag )
@@ -325,6 +365,9 @@ void InitPhoneScreen()
 	FlagAlbumPhoto2021( false );
 
 	FlagHowtoPlayScreen( false );
+	FlagOptionsScreen(false);
+	Scene().EntityFlagActive("Credits", false);
+	Scene().EntityFlagActive("Quit", false);
 	FlagMsg1( false );
 	FlagMsg2( false );
 	FlagMsg3( false );
@@ -534,6 +577,16 @@ void UpdatePhoneScreen( float dt )
 			FlagRestartConfirmation( true );
 		}
 	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Options"))
+	{
+		if (e->on_click_)
+		{
+			FlagOptionsScreen(true);
+			Scene().EntityFlagActive("Credits", true);
+			Scene().EntityFlagActive("Quit", true);
+			current_app_state = HawkerAppState::Options;
+		}
+	}
 	if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Exit" ) )
 	{
 		if ( e->on_click_ )
@@ -673,7 +726,155 @@ void UpdateRestartConfirm()
 	}
 }
 
+void UpdateVolumeIcon(bool flag)
+{
+	if (flag)
+	{
+		bool master_volume = master_volume_phone > 0.0f;
+		bool music_volume = music_volume_phone > 0.0f;
+		bool sfx_volume = sfx_volume_phone > 0.0f;
 
+		Scene().EntityFlagActive("Option_master_speaker", master_volume);
+		Scene().EntityFlagActive("Option_master_speaker_off", !master_volume);
+
+		Scene().EntityFlagActive("Option_music_speaker", music_volume);
+		Scene().EntityFlagActive("Option_music_speaker_off", !music_volume);
+
+		Scene().EntityFlagActive("Option_sfx_speaker", sfx_volume);
+		Scene().EntityFlagActive("Option_sfx_speaker_off", !sfx_volume);
+	}
+}
+
+void UpdateVolSlider()
+{
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Option_master_bb"))
+	{
+		if (e->on_held_)
+		{
+			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_phone) / 670.0f;
+			ratio = std::clamp(ratio, 0.0f, 1.0f);
+			if (ratio < mute_threshold_phone)
+			{
+				ratio = 0.0f;
+			}
+			else if (ratio > 1.0f - mute_threshold_phone)
+			{
+				ratio = 1.0f;
+			}
+			master_volume_phone = ratio;
+
+			Scene().GetSoundSystem()->setMasterVolume(master_volume_phone);
+			Scene().GetComponent<JZEngine::Transform>("Option_master_brownbar")->scale_.x = ratio * initial_bar_scale_phone;
+			Scene().GetComponent<JZEngine::Transform>("Option_master_pau")->position_.x = initial_bar_position_phone + ratio * 670.0f;
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Option_music_bb"))
+	{
+		if (e->on_held_)
+		{
+			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_phone) / 670.0f;
+			ratio = std::clamp(ratio, 0.0f, 1.0f);
+			if (ratio < mute_threshold_phone)
+			{
+				ratio = 0.0f;
+			}
+			else if (ratio > 1.0f - mute_threshold_phone)
+			{
+				ratio = 1.0f;
+			}
+			music_volume_phone = ratio;
+			Scene().GetSoundSystem()->setBGMChannelGroupVolume(music_volume_phone);
+			Scene().GetComponent<JZEngine::Transform>("Option_music_brownbar")->scale_.x = ratio * initial_bar_scale_phone;
+			Scene().GetComponent<JZEngine::Transform>("Option_music_pau")->position_.x = initial_bar_position_phone + ratio * 670.0f;
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Option_sfx_bb"))
+	{
+		if (e->on_held_)
+		{
+			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_phone) / 670.0f;
+			ratio = std::clamp(ratio, 0.0f, 1.0f);
+			if (ratio < mute_threshold_phone)
+			{
+				ratio = 0.0f;
+			}
+			else if (ratio > 1.0f - mute_threshold_phone)
+			{
+				ratio = 1.0f;
+			}
+			sfx_volume_phone = ratio;
+			Scene().GetSoundSystem()->setEffectsChannelGroupVolume(sfx_volume_phone);
+			Scene().GetComponent<JZEngine::Transform>("Option_sfx_brownbar")->scale_.x = ratio * initial_bar_scale_phone;
+			Scene().GetComponent<JZEngine::Transform>("Option_sfx_pau")->position_.x = initial_bar_position_phone + ratio * 670.0f;
+		}
+	}
+	UpdateVolumeIcon(true);
+}
+
+void UpdateOptionMenu(float dt)
+{
+	UNREFERENCED_PARAMETER(dt);
+	UpdateVolSlider();
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Option_x"))
+	{
+		if (e->on_released_)
+		{
+			FlagOptionsScreen(false);
+			Scene().EntityFlagActive("Credits", false);
+			Scene().EntityFlagActive("Quit", false);
+			current_app_state = HawkerAppState::MainScreen;
+		}
+	}
+	/*if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Credits"))
+	{
+		if (e->on_released_)
+		{
+			ToggleCredits(true);
+		}
+		if (e->on_held_)
+		{
+			ToggleButton("Credits", ButtonState::Clicked);
+		}
+		else if (e->on_hover_)
+		{
+			ToggleButton("Credits", ButtonState::Hover);
+		}
+		else
+		{
+			ToggleButton("Credits", ButtonState::Normal);
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Credits_x_bb"))
+	{
+		if (e->on_released_)
+		{
+			ToggleCredits(false);
+		}
+	}*/
+	// JM: comment this out , as "Quit Game" in "Option" no longer needed.
+	/*if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_Quit"))
+	{
+		if (e->on_released_)
+		{
+			ToggleOptions(false);
+			Scene().EntityFlagActive("Credits", false);
+			Scene().EntityFlagActive("Quit", false);
+			current_main_menu_state = MainMenuState::Main;
+		}
+		if (e->on_held_)
+		{
+			ToggleButton("Quit", ButtonState::Clicked);
+		}
+		else if (e->on_hover_)
+		{
+			ToggleButton("Quit", ButtonState::Hover);
+		}
+		else
+		{
+			ToggleButton("Quit", ButtonState::Normal);
+		}
+	}*/
+}
 
 void UpdateTheresapp( float dt )
 {
@@ -1022,6 +1223,9 @@ void UpdateHomeScreen( float dt )
 		break;
 	case HawkerAppState::HowtoPlay:
 		UpdateHowtoPlay( dt );
+		break;
+	case HawkerAppState::Options:
+		UpdateOptionMenu(dt);
 		break;
 	}
 

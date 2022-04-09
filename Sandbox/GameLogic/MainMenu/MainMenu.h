@@ -257,9 +257,6 @@ void UpdateMainScreen(float dt)
 		{
 			ToggleOptions(true);
 			Scene().EntityFlagActive("Credits", true);
-
-			//Scene().EntityFlagActive("Quit", true); // JM : "Quit Game" in "Option" no longer needed.
-
 			current_main_menu_state = MainMenuState::Options;
 		}
 		if (e->on_held_)
