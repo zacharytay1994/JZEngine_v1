@@ -207,6 +207,16 @@ std::string cursor_object_names[] = {
 
 CursorState cursor_state = CursorState::Nothing;
 
+
+enum class Confirmstate
+{
+	Exit,
+	Restart,
+	None
+};
+Confirmstate confirm_state = Confirmstate::None;
+
+
 void FlagAllCursorsFalse()
 {
 	Scene().EntityFlagActive("EmptyTongs", false);
@@ -570,7 +580,8 @@ void FlagShopActive ( bool flag )
 		Scene ().EntityFlagActive ( "BeginBlack" , flag );
 		Scene ().EntityFlagActive ( "BeginShop_Exit" , flag );
 		Scene ().EntityFlagActive ( "BeginShop_Next" , flag );
-
+		
+		
 		Scene ().EntityFlagActive ( "shop_exit" , flag );
 		Scene ().EntityFlagActive ( "shop_next" , flag );
 
@@ -678,6 +689,8 @@ void FlagShopActive ( bool flag )
 			Scene ().EntityFlagActive ( "Shop3_amt_prawnccf" , flag );
 			Scene ().EntityFlagActive ( "Shop3_amt_hargao" , flag );
 			Scene ().EntityFlagActive ( "Shop3_amt_chickenfeet" , flag );
+			Scene().EntityFlagActive("ScrollDay3_mouse", flag);
+			Scene().EntityFlagActive("ScrollDay3", flag);
 		}
 	}
 	else
@@ -762,6 +775,9 @@ void FlagShopActive ( bool flag )
 
 		Scene ().EntityFlagActive ( "no_money" , flag );
 		Scene ().GetComponent<JZEngine::Transform> ( "no_money" )->scale_ = { 0.01f,0.01f };
+		
+		Scene().EntityFlagActive("ScrollDay3_mouse", flag);
+		Scene().EntityFlagActive("ScrollDay3", flag);
 	}
 }
 
@@ -1136,14 +1152,25 @@ void UpdateShop (float dt)
 		if (e->on_hover_)
 		{
 			scroll->pause_ = false;
-			if (scroll->frame_ == 7)
+			scroll->reverse_ = false;
+			if (scroll->frame_ == 9)
 				scroll->pause_ = true;
 		}
+
 		else
 		{
-			scroll->frame_ = 0;
-			scroll->pause_ = true;
+			if (scroll->frame_ >0)
+			{
+				scroll->reverse_ = true;
+				scroll->pause_ = false;
+			}
+			else
+			{
+				scroll->frame_ = 0;
+				scroll->pause_ = true;
+			}
 		}
+
 	}
 	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("ScrollDay2_mouse"))
 	{
@@ -1151,16 +1178,50 @@ void UpdateShop (float dt)
 		if (e->on_hover_)
 		{
 			scroll->pause_ = false;
-			if (scroll->frame_ == 7)
+			scroll->reverse_ = false;
+			if (scroll->frame_ == 9)
 				scroll->pause_ = true;
 		}
 		else
 		{
-			scroll->frame_ = 0;
-			scroll->pause_ = true;
+			if (scroll->frame_ > 0)
+			{
+				scroll->reverse_ = true;
+				scroll->pause_ = false;
+			}
+			else
+			{
+				scroll->frame_ = 0;
+				scroll->pause_ = true;
+			}
 		}
 	}
-
+	
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("ScrollDay3_mouse"))
+	{
+		JZEngine::Animation2D* scroll = Scene().GetComponent<JZEngine::Animation2D>("ScrollDay3");
+		if (e->on_hover_)
+		{
+			scroll->pause_ = false;
+			scroll->reverse_ = false;
+			if (scroll->frame_ == 9)
+				scroll->pause_ = true;
+		}
+		else
+		{
+			if (scroll->frame_ > 0)
+			{
+				scroll->reverse_ = true;
+				scroll->pause_ = false;
+			}
+			else
+			{
+				scroll->frame_ = 0;
+				scroll->pause_ = true;
+			}
+		}
+	}
+	
 	// day 2 shop
 	ProcessShopItem ( "Shop2_a_springroll" , "Shop2_s_springroll" , "Shop2_amt_springroll" , springroll_count , max_count , min_count );
 	ProcessShopItem ( "Shop2_a_seaweedchicken" , "Shop2_s_seaweedchicken" , "Shop2_amt_seaweedchicken" , seaweedchicken_count , max_count , min_count );
@@ -1804,6 +1865,29 @@ void ToggleSummary ( bool toggle )
 	Scene ().EntityFlagActive ( "sum_fd_amt" , toggle );
 	Scene ().EntityFlagActive ( "sum_cc_amt" , toggle );
 	Scene ().EntityFlagActive ( "sum_total_amt" , toggle );
+
+	
+	Scene().EntityFlagActive("Summary_Next", toggle);
+	Scene().EntityFlagActive("Summary_Restart", toggle);
+	Scene().EntityFlagActive("Summary_Exit", toggle);
+
+	
+}
+void ToggleConfirm(bool toggle, Confirmstate confirm_state = Confirmstate::None)
+{
+	if(confirm_state ==Confirmstate::Restart)
+		Scene().EntityFlagActive("Summary_Restart_Confirm", toggle);
+	if(confirm_state == Confirmstate::Exit)
+		Scene().EntityFlagActive("Summary_Exit_Confirm", toggle);
+	else
+	{
+		Scene().EntityFlagActive("Summary_Restart_Confirm", toggle);
+		Scene().EntityFlagActive("Summary_Exit_Confirm", toggle);
+	}
+
+	Scene().EntityFlagActive("Summary_Yes", toggle);
+	Scene().EntityFlagActive("Summary_No", toggle);
+
 }
 
 bool summary_ready { false };
@@ -1814,7 +1898,11 @@ void SummaryInit ()
 	Scene ().EntityFlagActive ( "BeginBlack" , true );
 	Scene ().GetComponent<JZEngine::NonInstanceShader> ( "BeginBlack" )->tint.w = 0.0f;
 	Scene ().GetComponent<JZEngine::Transform> ( "Summary_screen" )->position_.y = 2048.0f;
+	Scene().GetComponent<JZEngine::Transform>("Summary_Restart")->position_.y = 1612.f;
+	Scene().GetComponent<JZEngine::Transform>("Summary_Next")->position_.y = 1612.f;
+	Scene().GetComponent<JZEngine::Transform>("Summary_Exit")->position_.y = 1612.f;
 
+	ToggleConfirm(false);
 	summary_sr_count = 0;
 	summary_sc_count = 0;
 	summary_fd_count = 0;
@@ -1858,6 +1946,21 @@ float summary_wallet_amt { 0.0f };
 void UpdateWinScreen(float dt)
 {
 	UNREFERENCED_PARAMETER(dt);
+	
+	if (win)
+	{
+		Scene().EntityFlagActive("Summary_Restart", false);
+		
+	}
+	else//lose
+	{
+		Scene().EntityFlagActive("Summary_Next", false);
+	}
+	float& exitbutton_y = Scene().GetComponent<JZEngine::Transform>("Summary_Exit")->position_.y;
+	float& rsbutton_y = Scene().GetComponent<JZEngine::Transform>("Summary_Restart")->position_.y;
+	float& sumbutton_y = Scene().GetComponent<JZEngine::Transform>("Summary_Next")->position_.y;
+
+
 	float& black_alpha = Scene ().GetComponent<JZEngine::NonInstanceShader> ( "BeginBlack" )->tint.w;
 	float& summary_y = Scene ().GetComponent<JZEngine::Transform> ( "Summary_screen" )->position_.y;
 	bool ready { true };
@@ -1866,8 +1969,12 @@ void UpdateWinScreen(float dt)
 		black_alpha += dt;
 		ready = false;
 	}
-	if ( summary_y > 0.0f )
+	if ( summary_y > 11.0f )
 	{
+		exitbutton_y -= 1024.0f * dt;
+		rsbutton_y -= 1024.0f * dt;
+		sumbutton_y -= 1024.0f * dt;
+
 		summary_y -= 1024.0f * dt;
 		ready = false;
 	}
@@ -1911,19 +2018,19 @@ void UpdateWinScreen(float dt)
 			}
 
 			std::stringstream ss;
-			ss << summary_sr_count << " pcs";
+			ss << summary_sr_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sr_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sr_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 			ss.str ("");
-			ss << summary_sc_count << " pcs";
+			ss << summary_sc_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sc_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sc_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 			ss.str ( "" );
-			ss << summary_fd_count << " pcs";
+			ss << summary_fd_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_fd_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_fd_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 			ss.str ( "" );
-			ss << summary_cc_count << " pcs";
+			ss << summary_cc_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 
@@ -1942,25 +2049,55 @@ void UpdateWinScreen(float dt)
 	}
 
 
-	if ( summary_ready )
-	{
-		Scene().EntityFlagActive("BeginShop_Next", true);
 
-		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Win_restart_bb" ) )
+	if ( summary_ready && confirm_state== Confirmstate::None)
+	{
+		ToggleConfirm(false);
+		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Summary_Exit" ) )
 		{
 			if ( e->on_released_ )
 			{
-				//Scene().ChangeScene("MainMenu");
+				//Scene ().ChangeScene ( "MainMenu" );
+				confirm_state = Confirmstate::Exit;
+				ToggleConfirm(true, confirm_state);
+				
 			}
-		}
-		if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "Win_exit_bb" ) )
-		{
-			if ( e->on_released_ )
+			if (e->on_held_)
 			{
-				Scene ().ChangeScene ( "MainMenu" );
+				ToggleButton("Summary_Exit", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_Exit", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_Exit", ButtonState::Normal);
+			}
+
+		}
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_Restart"))
+		{
+			if (e->on_click_)
+			{
+				confirm_state == Confirmstate::Restart;
+				ToggleConfirm(true, confirm_state);
+			}
+			if (e->on_held_)
+			{
+				ToggleButton("Summary_Restart", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_Restart", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_Restart", ButtonState::Normal);
 			}
 		}
-		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("BeginShop_Next"))
+		//next
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_Next"))
 		{
 			if (e->on_click_)
 			{
@@ -1968,8 +2105,118 @@ void UpdateWinScreen(float dt)
 				Cutscene::day = Days::Two;
 				Scene().ChangeScene("CutScene");
 			}
+			if (e->on_held_)
+			{
+				ToggleButton("Summary_Next", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_Next", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_Next", ButtonState::Normal);
+			}
 		}
 	}
+
+
+	if (confirm_state == Confirmstate::Exit)
+	{
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_Yes"))
+		{
+			if (e->on_released_)
+			{
+				confirm_state = Confirmstate::None;
+				Scene().ChangeScene("MainMenu");
+
+			}
+			if (e->on_held_)
+			{
+				ToggleButton("Summary_Yes", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_Yes", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_Yes", ButtonState::Normal);
+			}
+
+		}
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_No"))
+		{
+			if (e->on_released_)
+			{
+				
+				confirm_state = Confirmstate::None;
+				
+			}
+			if (e->on_held_)
+			{
+				ToggleButton("Summary_No", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_No", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_No", ButtonState::Normal);
+			}
+
+		}
+	}
+	if (confirm_state == Confirmstate::Restart)
+	{
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_Yes"))
+		{
+			if (e->on_released_)
+			{		
+				Cutscene::day = Days::One;
+				Scene().ChangeScene("CutScene");
+			}
+			if (e->on_held_)
+			{
+				ToggleButton("Summary_Exit", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_Exit", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_Exit", ButtonState::Normal);
+			}
+
+		}
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_No"))
+		{
+			if (e->on_released_)
+			{
+			
+				confirm_state = Confirmstate::None;
+				
+			}
+			if (e->on_held_)
+			{
+				ToggleButton("Summary_No", ButtonState::Clicked);
+			}
+			else if (e->on_hover_)
+			{
+				ToggleButton("Summary_No", ButtonState::Hover);
+			}
+			else
+			{
+				ToggleButton("Summary_No", ButtonState::Normal);
+			}
+
+		}
+
+	}
+
+
 }
 
 /*!
@@ -2432,22 +2679,22 @@ void UpdateMainScene(float dt)
 						current_coins += 2.1f;
 						break;
 					case ( CustomerOrder::ChickenFeet ):
-						current_coins += 1.0f;
+						current_coins += 3.50f;
 						break;
 					case ( CustomerOrder::HarGao ):
-						current_coins += 1.0f;
+						current_coins += 2.7f;
 						break;
 					case ( CustomerOrder::SiewMai ):
-						current_coins += 1.0f;
+						current_coins += 2.5f;
 						break;
 					case ( CustomerOrder::CharSiewBao ):
-						current_coins += 1.0f;
+						current_coins += 0.6f;
 						break;
 					case ( CustomerOrder::DouShaBao ):
-						current_coins += 1.0f;
+						current_coins += 0.5f;
 						break;
 					case ( CustomerOrder::CoffeeBao ):
-						current_coins += 1.0f;
+						current_coins += 0.5f;
 						break;
 					}
 					plate_on_hand = false;
@@ -2526,6 +2773,11 @@ void HawkerSceneInit()
 	scroll->pause_ = true;
 	scroll->frame_ = 0;
 
+	scroll = Scene().GetComponent<JZEngine::Animation2D>("ScrollDay3");
+	scroll->pause_ = true;
+	scroll->frame_ = 0;
+
+
 	Scene ().EntityFlagActive ( "CoinSparkles" , false );
 	og_coin_position = Scene ().GetComponent<JZEngine::Transform> ( "CoinOnTable" )->position_;
 	og_coin_distance_from_bar = (Scene ().GetComponent<JZEngine::Transform> ( "CoinBar" )->position_ 
@@ -2541,7 +2793,7 @@ void HawkerSceneInit()
 
 	ToggleWin(false);
 	ToggleSummary ( false );
-
+	ToggleConfirm(false);
 	InitHawkerQueue();
 	InitPhoneScreen();
 	cursor_state = CursorState::Nothing;
