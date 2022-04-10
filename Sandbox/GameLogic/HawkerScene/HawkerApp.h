@@ -278,91 +278,78 @@ void FlagMsg1( bool flag )
 {
 	Scene().EntityFlagActive( "Last_page_msg_1_bg", flag );
 	Scene().EntityFlagActive( "Last_page_msg_1_emoji", flag );
-	Scene().EntityFlagActive( "Last_page_msg_1_text", flag );
 }
 
 void FlagMsg2( bool flag )
 {
 	Scene().EntityFlagActive( "Last_page_msg_2_bg", flag );
 	Scene().EntityFlagActive( "Last_page_msg_2_emoji", flag );
-	Scene().EntityFlagActive( "Last_page_msg_2_text", flag );
 }
 
 void FlagMsg3( bool flag )
 {
 	Scene().EntityFlagActive( "Last_page_msg_3_bg", flag );
 	Scene().EntityFlagActive( "Last_page_msg_3_emoji", flag );
-	Scene().EntityFlagActive( "Last_page_msg_3_text", flag );
 }
 
 void FlagMsg4( bool flag )
 {
 	Scene().EntityFlagActive( "Last_page_msg_4_bg", flag );
 	Scene().EntityFlagActive( "Last_page_msg_4_emoji", flag );
-	Scene().EntityFlagActive( "Last_page_msg_4_text", flag );
 }
 
 void FlagMsg5( bool flag )
 {
 	Scene().EntityFlagActive( "Last_page_msg_5_bg", flag );
 	Scene().EntityFlagActive( "Last_page_msg_5_emoji", flag );
-	Scene().EntityFlagActive( "Last_page_msg_5_text", flag );
 }
 
 void FlagMsg6( bool flag )
 {
 	Scene().EntityFlagActive( "Last_page_msg_6_bg", flag );
 	Scene().EntityFlagActive( "Last_page_msg_6_emoji", flag );
-	Scene().EntityFlagActive( "Last_page_msg_6_text", flag );
 }
 
 void FlagMsg7( bool flag )
 {
 	Scene().EntityFlagActive( "Last_page_msg_7_bg", flag );
 	Scene().EntityFlagActive( "Last_page_msg_7_emoji", flag );
-	Scene().EntityFlagActive( "Last_page_msg_7_text", flag );
 }
 
 void FlagMsg8( bool flag )
 {
 	Scene().EntityFlagActive( "First_page_msg_8_bg", flag );
 	Scene().EntityFlagActive( "First_page_msg_8_emoji", flag );
-	Scene().EntityFlagActive( "First_page_msg_8_text", flag );
 }
 
 void FlagMsg9( bool flag )
 {
 	Scene().EntityFlagActive( "First_page_msg_9_bg", flag );
 	Scene().EntityFlagActive( "First_page_msg_9_emoji", flag );
-	Scene().EntityFlagActive( "First_page_msg_9_text", flag );
 }
 
 void FlagMsg10( bool flag )
 {
 	Scene().EntityFlagActive( "First_page_msg_10_bg", flag );
 	Scene().EntityFlagActive( "First_page_msg_10_emoji", flag );
-	Scene().EntityFlagActive( "First_page_msg_10_text", flag );
 }
 
 void FlagMsg11( bool flag )
 {
 	Scene().EntityFlagActive( "First_page_msg_11_bg", flag );
 	Scene().EntityFlagActive( "First_page_msg_11_emoji", flag );
-	Scene().EntityFlagActive( "First_page_msg_11_text", flag );
 }
 
 void FlagMsg12( bool flag )
 {
 	Scene().EntityFlagActive( "First_page_msg_12_bg", flag );
 	Scene().EntityFlagActive( "First_page_msg_12_emoji", flag );
-	Scene().EntityFlagActive( "First_page_msg_12_text", flag );
 }
 
 void FlagMsg13( bool flag )
 {
 	Scene().EntityFlagActive( "First_page_msg_13_bg", flag );
 	Scene().EntityFlagActive( "First_page_msg_13_emoji", flag );
-	Scene().EntityFlagActive( "First_page_msg_13_text", flag );
 }
 
 void InitPhoneScreen()
@@ -431,7 +418,7 @@ void InitPhoneScreen()
 	Scene().EntityFlagActive( "Album_1960_hovertext2", false );
 
 	//Text section for messages
-	Scene().GetComponent<JZEngine::TextData>( "Last_page_msg_1_text" )->text =
+	/*Scene().GetComponent<JZEngine::TextData>( "Last_page_msg_1_text" )->text =
 		JZEngine::String( "   Okay okayyy. Let me\nsleep for an hour first." );
 	Scene().GetComponent<JZEngine::TextData>( "Last_page_msg_1_text" )->leading_y_ = hp_text_leading;
 	Scene().GetComponent<JZEngine::TextData>( "Last_page_msg_1_text" )->color_ = JZEngine::Vec3f( 255.0f, 255.0f, 255.0f );
@@ -468,7 +455,7 @@ void InitPhoneScreen()
 	Scene().GetComponent<JZEngine::TextData>( "First_page_msg_11_text" )->text = JZEngine::String( "I'm in the hospital." );
 	Scene().GetComponent<JZEngine::TextData>( "First_page_msg_12_text" )->text = JZEngine::String( "           Yea, what's up?" );
 	Scene().GetComponent<JZEngine::TextData>( "First_page_msg_12_text" )->color_ = JZEngine::Vec3f( 255.0f, 255.0f, 255.0f );
-	Scene().GetComponent<JZEngine::TextData>( "First_page_msg_13_text" )->text = JZEngine::String( "Baozi, are you still up?" );
+	Scene().GetComponent<JZEngine::TextData>( "First_page_msg_13_text" )->text = JZEngine::String( "Baozi, are you still up?" );*/
 
 	//Text section for Album app
 	Scene().GetComponent<JZEngine::TextData>( "Album_text" )->text = JZEngine::String( "My Albums" );
