@@ -40,7 +40,7 @@ Options 0
 	c 1 struct JZEngine::SpriteLayer
 		1 
 	c 2 struct JZEngine::Texture
-		Options(Highlight)_Button_MainMenu 
+		Options(OG)_Button_MainMenu 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
@@ -562,11 +562,11 @@ How_to_play_photo 0
 	c 1 struct JZEngine::SpriteLayer
 		3 
 	c 2 struct JZEngine::Texture
-		HowtoPlay1_UI_MainMenu 
+		HowToPlay_01 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.733335 1 1 0 1 1 
+		0 0.116667 1 1 0 1 1 
 !
 How_to_play_photo2 0 
 	c 0 struct JZEngine::Transform
@@ -574,11 +574,11 @@ How_to_play_photo2 0
 	c 1 struct JZEngine::SpriteLayer
 		3 
 	c 2 struct JZEngine::Texture
-		HowtoPlay2_UI_MainMenu 
+		HowToPlay_02 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.100001 1 1 0 1 1 
+		0 0.583338 1 1 0 1 1 
 !
 How_to_play_text 0 
 	c 0 struct JZEngine::Transform
@@ -590,7 +590,7 @@ How_to_play_text 0
 !
 How_to_play_x 0 
 	c 0 struct JZEngine::Transform
-		631.251 378.91 0 0 0 1 1 128 128 
+		638.759 395 0 0 0 1 1 128 128 
 	c 1 struct JZEngine::SpriteLayer
 		4 
 	c 2 struct JZEngine::Texture
@@ -598,7 +598,7 @@ How_to_play_x 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.733335 1 1 0 1 1 
+		0 0.133334 1 1 0 1 1 
 	c 15 struct JZEngine::MouseEvent
 		50 50 
 !
@@ -608,7 +608,7 @@ how_to_play 0
 	c 1 struct JZEngine::SpriteLayer
 		1 
 	c 2 struct JZEngine::Texture
-		HowToPlay(OG)_Button_MainMenu 
+		HowToPlay(Highlight)_Button_MainMenu 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
@@ -656,11 +656,11 @@ Arrow_left_how_to_play 0
 	c 1 struct JZEngine::SpriteLayer
 		4 
 	c 2 struct JZEngine::Texture
-		Arrowleft_UI_MainMenu 
+		Arrowleft_UI_MainMenu_OG 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 1 1 1 0 1 1 
+		0 0.183334 1 1 0 1 1 
 	c 15 struct JZEngine::MouseEvent
 		64 40 
 !
@@ -670,11 +670,11 @@ Arrow_right_how_to_play 0
 	c 1 struct JZEngine::SpriteLayer
 		4 
 	c 2 struct JZEngine::Texture
-		Arrowright_UI_MainMenu 
+		Arrowright_UI_MainMenu_OG 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 1 1 1 0 1 1 
+		0 0.2 1 1 0 1 1 
 	c 15 struct JZEngine::MouseEvent
 		64 40 
 !
@@ -714,5 +714,53 @@ Load_to_menu 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.0666668 1 1 0 1 1 
+		0 0.483334 1 1 0 1 1 
+!
+How_to_play_photo3 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 1 1 2048 1024 
+	c 1 struct JZEngine::SpriteLayer
+		3 
+	c 2 struct JZEngine::Texture
+		HowToPlay_03 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0.300391 1 1 0 1 1 
+!
+How_to_play_photo4 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 1 1 2048 1024 
+	c 1 struct JZEngine::SpriteLayer
+		3 
+	c 2 struct JZEngine::Texture
+		HowToPlay_04 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0.933336 1 1 0 1 1 
+!
+Arrow_right_how_to_play_fade 0 
+	c 0 struct JZEngine::Transform
+		115 -350 0 0 0 1 1 128 128 
+	c 1 struct JZEngine::SpriteLayer
+		5 
+	c 2 struct JZEngine::Texture
+		Arrowright_UI_MainMenu_Disabled 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0.983336 1 1 0 1 1 
+!
+Arrow_left_how_to_play_fade 0 
+	c 0 struct JZEngine::Transform
+		-115 -350 0 0 0 1 1 128 128 
+	c 1 struct JZEngine::SpriteLayer
+		5 
+	c 2 struct JZEngine::Texture
+		Arrowleft_UI_MainMenu_Disabled 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0.350001 1 1 0 1 1 
 !
