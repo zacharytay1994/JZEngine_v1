@@ -2316,7 +2316,7 @@ void UpdateWinScreen(float dt)
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 			
-			if (Cutscene::day == Days::Two || Cutscene::day == Days::Three)
+			if ( hawker_scene_day == DAY::TWO || hawker_scene_day == DAY::THREE)
 			{
 				ss.str("");
 				ss << summary_csb_count;
@@ -2345,7 +2345,7 @@ void UpdateWinScreen(float dt)
 
 
 			}
-			if (Cutscene::day == Days::Three)
+			if (hawker_scene_day == DAY::THREE)
 			{
 				ss.str("");
 				ss << summary_pr_count;
