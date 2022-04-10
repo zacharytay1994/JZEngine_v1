@@ -3492,12 +3492,12 @@ void HawkerSceneUpdate(float dt)
 	{
 		win_shortcut = true;
 	}
-	if ( JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_L ) )
-	{
-		// lose
-		FlagLoseBar ( true );
-		current_hawker_scene_state = HawkerSceneState::Lose;
-	}
+	//if ( JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_L ) )
+	//{
+	//	// lose
+	//	FlagLoseBar ( true );
+	//	current_hawker_scene_state = HawkerSceneState::Lose;
+	//}
 
 	if ( day_begin )
 	{
