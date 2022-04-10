@@ -201,6 +201,8 @@ void FlagAlbumPhoto1980( bool flag )
 		Scene().GetComponent<JZEngine::MouseEvent>( "Album_1980_big_photo_quit" )->on_released_ = false;
 	}
 	Scene().EntityFlagActive( "Album_1980_big_photo_quit", flag );
+	Scene().EntityFlagActive( "Album_1980_button1", flag );
+	Scene().EntityFlagActive( "Album_1980_button2", flag );
 }
 
 void FlagAlbumPhoto2021( bool flag )
@@ -211,6 +213,8 @@ void FlagAlbumPhoto2021( bool flag )
 		Scene().GetComponent<JZEngine::MouseEvent>( "Album_2021_big_photo_quit" )->on_released_ = false;
 	}
 	Scene().EntityFlagActive( "Album_2021_big_photo_quit", flag );
+	Scene().EntityFlagActive( "Album_2021_button1", flag );
+	Scene().EntityFlagActive( "Album_2021_button2", flag );
 }
 
 void FlagHowtoPlayScreen( bool flag )
@@ -220,57 +224,57 @@ void FlagHowtoPlayScreen( bool flag )
 	Scene().EntityFlagActive( "How_to_Play_x", flag );
 }
 
-void FlagOptionsScreen(bool flag)
+void FlagOptionsScreen( bool flag )
 {
-	Scene().EntityFlagActive("Option_background", flag);
-	Scene().EntityFlagActive("Option_soundline", flag);
-	Scene().EntityFlagActive("Option_master", flag);
-	Scene().EntityFlagActive("Option_music", flag);
-	Scene().EntityFlagActive("Option_sfx", flag);
-	Scene().EntityFlagActive("Option_master_speaker", flag);
-	Scene().EntityFlagActive("Option_music_speaker", flag);
-	Scene().EntityFlagActive("Option_sfx_speaker", flag);
+	Scene().EntityFlagActive( "Option_background", flag );
+	Scene().EntityFlagActive( "Option_soundline", flag );
+	Scene().EntityFlagActive( "Option_master", flag );
+	Scene().EntityFlagActive( "Option_music", flag );
+	Scene().EntityFlagActive( "Option_sfx", flag );
+	Scene().EntityFlagActive( "Option_master_speaker", flag );
+	Scene().EntityFlagActive( "Option_music_speaker", flag );
+	Scene().EntityFlagActive( "Option_sfx_speaker", flag );
 
-	Scene().EntityFlagActive("Option_master_blackbar", flag);
-	Scene().EntityFlagActive("Option_master_brownbar", flag);
-	Scene().EntityFlagActive("Option_master_pau", flag);
-	Scene().EntityFlagActive("Option_master_blackbar_border", flag);
+	Scene().EntityFlagActive( "Option_master_blackbar", flag );
+	Scene().EntityFlagActive( "Option_master_brownbar", flag );
+	Scene().EntityFlagActive( "Option_master_pau", flag );
+	Scene().EntityFlagActive( "Option_master_blackbar_border", flag );
 
-	Scene().EntityFlagActive("Option_music_blackbar", flag);
-	Scene().EntityFlagActive("Option_music_brownbar", flag);
-	Scene().EntityFlagActive("Option_music_pau", flag);
-	Scene().EntityFlagActive("Option_music_blackbar_border", flag);
+	Scene().EntityFlagActive( "Option_music_blackbar", flag );
+	Scene().EntityFlagActive( "Option_music_brownbar", flag );
+	Scene().EntityFlagActive( "Option_music_pau", flag );
+	Scene().EntityFlagActive( "Option_music_blackbar_border", flag );
 
-	Scene().EntityFlagActive("Option_sfx_blackbar", flag);
-	Scene().EntityFlagActive("Option_sfx_brownbar", flag);
-	Scene().EntityFlagActive("Option_sfx_pau", flag);
-	Scene().EntityFlagActive("Option_sfx_blackbar_border", flag);
+	Scene().EntityFlagActive( "Option_sfx_blackbar", flag );
+	Scene().EntityFlagActive( "Option_sfx_brownbar", flag );
+	Scene().EntityFlagActive( "Option_sfx_pau", flag );
+	Scene().EntityFlagActive( "Option_sfx_blackbar_border", flag );
 
-	Scene().EntityFlagActive("Option_master_speaker_off", flag);
-	Scene().EntityFlagActive("Option_music_speaker_off", flag);
-	Scene().EntityFlagActive("Option_sfx_speaker_off", flag);
+	Scene().EntityFlagActive( "Option_master_speaker_off", flag );
+	Scene().EntityFlagActive( "Option_music_speaker_off", flag );
+	Scene().EntityFlagActive( "Option_sfx_speaker_off", flag );
 
-	Scene().EntityFlagActive("Option_x", flag);
+	Scene().EntityFlagActive( "Option_x", flag );
 }
 
-void FlagCreditsScreen(bool flag)
+void FlagCreditsScreen( bool flag )
 {
-	Scene().EntityFlagActive("Credits_background", flag);
-	Scene().EntityFlagActive("Credits_x", flag);
-	if (!flag)
+	Scene().EntityFlagActive( "Credits_background", flag );
+	Scene().EntityFlagActive( "Credits_x", flag );
+	if ( !flag )
 	{
-		Scene().GetComponent<JZEngine::MouseEvent>("Credits_x")->on_released_ = false;
+		Scene().GetComponent<JZEngine::MouseEvent>( "Credits_x" )->on_released_ = false;
 	}
 }
 
-void FlagQuitGameScreen(bool flag)
+void FlagQuitGameScreen( bool flag )
 {
-	Scene().EntityFlagActive("QuitGame_bg", flag);
-	Scene().EntityFlagActive("QuitGame_yes", flag);
-	Scene().EntityFlagActive("QuitGame_no", flag);
-	if (!flag)
+	Scene().EntityFlagActive( "QuitGame_bg", flag );
+	Scene().EntityFlagActive( "QuitGame_yes", flag );
+	Scene().EntityFlagActive( "QuitGame_no", flag );
+	if ( !flag )
 	{
-		Scene().GetComponent<JZEngine::MouseEvent>("QuitGame_no")->on_released_ = false;
+		Scene().GetComponent<JZEngine::MouseEvent>( "QuitGame_no" )->on_released_ = false;
 	}
 }
 
@@ -374,11 +378,11 @@ void InitPhoneScreen()
 	FlagAlbumPhoto2021( false );
 
 	FlagHowtoPlayScreen( false );
-	FlagOptionsScreen(false);
-	FlagCreditsScreen(false);
-	FlagQuitGameScreen(false);
-	Scene().EntityFlagActive("Credits", false);
-	Scene().EntityFlagActive("Quit", false);
+	FlagOptionsScreen( false );
+	FlagCreditsScreen( false );
+	FlagQuitGameScreen( false );
+	Scene().EntityFlagActive( "Credits", false );
+	Scene().EntityFlagActive( "Quit", false );
 	FlagMsg1( false );
 	FlagMsg2( false );
 	FlagMsg3( false );
@@ -411,11 +415,6 @@ void InitPhoneScreen()
 	original_msg12_position = Scene().GetComponent<JZEngine::Transform>( "First_page_msg_12_bg" )->position_;
 	original_msg13_position = Scene().GetComponent<JZEngine::Transform>( "First_page_msg_13_bg" )->position_;
 
-	Scene().EntityFlagActive( "Album_black_layer_3", false );
-	Scene().EntityFlagActive( "Album_1960_hovertext1_bg", false );
-	Scene().EntityFlagActive( "Album_1960_hovertext1", false );
-	Scene().EntityFlagActive( "Album_1960_hovertext2_bg", false );
-	Scene().EntityFlagActive( "Album_1960_hovertext2", false );
 
 	//Text section for messages
 	/*Scene().GetComponent<JZEngine::TextData>( "Last_page_msg_1_text" )->text =
@@ -457,7 +456,27 @@ void InitPhoneScreen()
 	Scene().GetComponent<JZEngine::TextData>( "First_page_msg_12_text" )->color_ = JZEngine::Vec3f( 255.0f, 255.0f, 255.0f );
 	Scene().GetComponent<JZEngine::TextData>( "First_page_msg_13_text" )->text = JZEngine::String( "Baozi, are you still up?" );*/
 
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// -----------------------------------------------------------------------------------------------------------------------------
 	//Text section for Album app
+	Scene().EntityFlagActive( "Album_black_layer_3", false );
+	Scene().EntityFlagActive( "Album_1960_hovertext1_bg", false );
+	Scene().EntityFlagActive( "Album_1960_hovertext1", false );
+	Scene().EntityFlagActive( "Album_1960_hovertext2_bg", false );
+	Scene().EntityFlagActive( "Album_1960_hovertext2", false );
+
+	Scene().EntityFlagActive( "Album_1980_hovertext1_bg", false );
+	Scene().EntityFlagActive( "Album_1980_hovertext1", false );
+	Scene().EntityFlagActive( "Album_1980_hovertext2_bg", false );
+	Scene().EntityFlagActive( "Album_1980_hovertext2", false );
+
+
+	Scene().EntityFlagActive( "Album_2021_hovertext1_bg", false );
+	Scene().EntityFlagActive( "Album_2021_hovertext1", false );
+	Scene().EntityFlagActive( "Album_2021_hovertext2_bg", false );
+	Scene().EntityFlagActive( "Album_2021_hovertext2", false );
+
+
 	Scene().GetComponent<JZEngine::TextData>( "Album_text" )->text = JZEngine::String( "My Albums" );
 	Scene().GetComponent<JZEngine::TextData>( "text_2021s" )->text = JZEngine::String( "2021s" );
 	Scene().GetComponent<JZEngine::TextData>( "text_2021s" )->color_ = JZEngine::Vec3f( 255.0f, 255.0f, 255.0f );
@@ -466,17 +485,39 @@ void InitPhoneScreen()
 	Scene().GetComponent<JZEngine::TextData>( "text_1960s" )->text = JZEngine::String( "1960s" );
 	Scene().GetComponent<JZEngine::TextData>( "text_1960s" )->color_ = JZEngine::Vec3f( 255.0f, 255.0f, 255.0f );
 
-	//Text section for Album app photo hover
+	//Text section for Album1960 app photo hover
 	Scene().GetComponent<JZEngine::TextData>( "Album_1960_hovertext1" )->text = JZEngine::String
-	( "Diners sit on the wooden tools\naround the stall facing a\nhawker owner who would take\n"
-	  "their orders and serve hot food\nfrom the pot at street hawkers." );
+	( "In the past, there were no dedicated\nseating areas, not even a hawker\ncentre.There were only street stalls,\nand patrons will seat around the stall\nto enjoy their meals." );
 	Scene().GetComponent<JZEngine::TextData>( "Album_1960_hovertext1" )->color_ = JZEngine::Vec3f( 255.0f, 255.0f, 255.0f );
 	Scene().GetComponent<JZEngine::TextData>( "Album_1960_hovertext1" )->leading_y_ = hp_text_leading;
+
 	Scene().GetComponent<JZEngine::TextData>( "Album_1960_hovertext2" )->text = JZEngine::String
-	( "During the era, the hawker\nowners does not have pipeline\nacross to water. Their utensils\n"
-	  "not clean cause a lot of\ncontamination by fliesand rats." );
+	( "Without a proper location, hawkers\nwill have to manage the entire stall\non their own.From opening the\nstreet cart for the day, serving orders,\nto washing the used cutleries." );
 	Scene().GetComponent<JZEngine::TextData>( "Album_1960_hovertext2" )->color_ = JZEngine::Vec3f( 255.0f, 255.0f, 255.0f );
 	Scene().GetComponent<JZEngine::TextData>( "Album_1960_hovertext2" )->leading_y_ = hp_text_leading;
+
+	//Text section for Album1980 app photo hover
+	Scene().GetComponent<JZEngine::TextData>( "Album_1980_hovertext1" )->text = JZEngine::String
+	( "Street carts were relocated to hawker\ncentres! Now, seating areas,utility\nservices, even toilets (at certain places)\ncan be found, vastly improving\nboth diners’ and hawkers’ quality of life." );
+	Scene().GetComponent<JZEngine::TextData>( "Album_1980_hovertext1" )->color_ = JZEngine::Vec3f( 255.0f, 255.0f, 255.0f );
+	Scene().GetComponent<JZEngine::TextData>( "Album_1980_hovertext1" )->leading_y_ = hp_text_leading;
+
+	Scene().GetComponent<JZEngine::TextData>( "Album_1980_hovertext2" )->text = JZEngine::String
+	( "Some recipes were even passed down\nfrom generation to generation!\n\nDo go visit a hawker to try out local\ncuisines like chicken rice and dim sum!" );
+	Scene().GetComponent<JZEngine::TextData>( "Album_1980_hovertext2" )->color_ = JZEngine::Vec3f( 255.0f, 255.0f, 255.0f );
+	Scene().GetComponent<JZEngine::TextData>( "Album_1980_hovertext2" )->leading_y_ = hp_text_leading;
+
+
+	//Text section for Album2021 app photo hover
+	Scene().GetComponent<JZEngine::TextData>( "Album_2021_hovertext1" )->text = JZEngine::String
+	( "An automated tray system can be\nfound at certain hawker centres.\n\nTake the initiative to return your\nused cutleries and tray!" );
+	Scene().GetComponent<JZEngine::TextData>( "Album_2021_hovertext1" )->color_ = JZEngine::Vec3f( 255.0f, 255.0f, 255.0f );
+	Scene().GetComponent<JZEngine::TextData>( "Album_2021_hovertext1" )->leading_y_ = hp_text_leading;
+
+	Scene().GetComponent<JZEngine::TextData>( "Album_2021_hovertext2" )->text = JZEngine::String
+	( "With the advancement of technology,\nautomations further improve\nthe quality of life at hawker centres!" );
+	Scene().GetComponent<JZEngine::TextData>( "Album_2021_hovertext2" )->color_ = JZEngine::Vec3f( 255.0f, 255.0f, 255.0f );
+	Scene().GetComponent<JZEngine::TextData>( "Album_2021_hovertext2" )->leading_y_ = hp_text_leading;
 
 	//Text section for how to play
 	Scene().GetComponent<JZEngine::TextData>( "How_to_Play_text" )->text = JZEngine::String( "HOW TO PLAY" );
@@ -588,13 +629,13 @@ void UpdatePhoneScreen( float dt )
 			FlagRestartConfirmation( true );
 		}
 	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Options"))
+	if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Options" ) )
 	{
-		if (e->on_click_)
+		if ( e->on_click_ )
 		{
-			FlagOptionsScreen(true);
-			Scene().EntityFlagActive("Credits", true);
-			Scene().EntityFlagActive("Quit", true);
+			FlagOptionsScreen( true );
+			Scene().EntityFlagActive( "Credits", true );
+			Scene().EntityFlagActive( "Quit", true );
 			current_app_state = HawkerAppState::Options;
 		}
 	}
@@ -737,188 +778,188 @@ void UpdateRestartConfirm()
 	}
 }
 
-void UpdateVolumeIcon(bool flag)
+void UpdateVolumeIcon( bool flag )
 {
-	if (flag)
+	if ( flag )
 	{
 		bool master_volume = master_volume_phone > 0.0f;
 		bool music_volume = music_volume_phone > 0.0f;
 		bool sfx_volume = sfx_volume_phone > 0.0f;
 
-		Scene().EntityFlagActive("Option_master_speaker", master_volume);
-		Scene().EntityFlagActive("Option_master_speaker_off", !master_volume);
+		Scene().EntityFlagActive( "Option_master_speaker", master_volume );
+		Scene().EntityFlagActive( "Option_master_speaker_off", !master_volume );
 
-		Scene().EntityFlagActive("Option_music_speaker", music_volume);
-		Scene().EntityFlagActive("Option_music_speaker_off", !music_volume);
+		Scene().EntityFlagActive( "Option_music_speaker", music_volume );
+		Scene().EntityFlagActive( "Option_music_speaker_off", !music_volume );
 
-		Scene().EntityFlagActive("Option_sfx_speaker", sfx_volume);
-		Scene().EntityFlagActive("Option_sfx_speaker_off", !sfx_volume);
+		Scene().EntityFlagActive( "Option_sfx_speaker", sfx_volume );
+		Scene().EntityFlagActive( "Option_sfx_speaker_off", !sfx_volume );
 	}
 }
 
 void UpdateVolSlider()
 {
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Option_master_bb"))
+	if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Option_master_bb" ) )
 	{
-		if (e->on_held_)
+		if ( e->on_held_ )
 		{
-			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_phone) / 670.0f;
-			ratio = std::clamp(ratio, 0.0f, 1.0f);
-			if (ratio < mute_threshold_phone)
+			float ratio = ( JZEngine::Camera::mouse_world_position_.x - initial_bar_position_phone ) / 670.0f;
+			ratio = std::clamp( ratio, 0.0f, 1.0f );
+			if ( ratio < mute_threshold_phone )
 			{
 				ratio = 0.0f;
 			}
-			else if (ratio > 1.0f - mute_threshold_phone)
+			else if ( ratio > 1.0f - mute_threshold_phone )
 			{
 				ratio = 1.0f;
 			}
 			master_volume_phone = ratio;
 
-			Scene().GetSoundSystem()->setMasterVolume(master_volume_phone);
-			Scene().GetComponent<JZEngine::Transform>("Option_master_brownbar")->scale_.x = ratio * initial_bar_scale_phone;
-			Scene().GetComponent<JZEngine::Transform>("Option_master_pau")->position_.x = initial_bar_position_phone + ratio * 670.0f;
+			Scene().GetSoundSystem()->setMasterVolume( master_volume_phone );
+			Scene().GetComponent<JZEngine::Transform>( "Option_master_brownbar" )->scale_.x = ratio * initial_bar_scale_phone;
+			Scene().GetComponent<JZEngine::Transform>( "Option_master_pau" )->position_.x = initial_bar_position_phone + ratio * 670.0f;
 		}
 	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Option_music_bb"))
+	if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Option_music_bb" ) )
 	{
-		if (e->on_held_)
+		if ( e->on_held_ )
 		{
-			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_phone) / 670.0f;
-			ratio = std::clamp(ratio, 0.0f, 1.0f);
-			if (ratio < mute_threshold_phone)
+			float ratio = ( JZEngine::Camera::mouse_world_position_.x - initial_bar_position_phone ) / 670.0f;
+			ratio = std::clamp( ratio, 0.0f, 1.0f );
+			if ( ratio < mute_threshold_phone )
 			{
 				ratio = 0.0f;
 			}
-			else if (ratio > 1.0f - mute_threshold_phone)
+			else if ( ratio > 1.0f - mute_threshold_phone )
 			{
 				ratio = 1.0f;
 			}
 			music_volume_phone = ratio;
-			Scene().GetSoundSystem()->setBGMChannelGroupVolume(music_volume_phone);
-			Scene().GetComponent<JZEngine::Transform>("Option_music_brownbar")->scale_.x = ratio * initial_bar_scale_phone;
-			Scene().GetComponent<JZEngine::Transform>("Option_music_pau")->position_.x = initial_bar_position_phone + ratio * 670.0f;
+			Scene().GetSoundSystem()->setBGMChannelGroupVolume( music_volume_phone );
+			Scene().GetComponent<JZEngine::Transform>( "Option_music_brownbar" )->scale_.x = ratio * initial_bar_scale_phone;
+			Scene().GetComponent<JZEngine::Transform>( "Option_music_pau" )->position_.x = initial_bar_position_phone + ratio * 670.0f;
 		}
 	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Option_sfx_bb"))
+	if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Option_sfx_bb" ) )
 	{
-		if (e->on_held_)
+		if ( e->on_held_ )
 		{
-			float ratio = (JZEngine::Camera::mouse_world_position_.x - initial_bar_position_phone) / 670.0f;
-			ratio = std::clamp(ratio, 0.0f, 1.0f);
-			if (ratio < mute_threshold_phone)
+			float ratio = ( JZEngine::Camera::mouse_world_position_.x - initial_bar_position_phone ) / 670.0f;
+			ratio = std::clamp( ratio, 0.0f, 1.0f );
+			if ( ratio < mute_threshold_phone )
 			{
 				ratio = 0.0f;
 			}
-			else if (ratio > 1.0f - mute_threshold_phone)
+			else if ( ratio > 1.0f - mute_threshold_phone )
 			{
 				ratio = 1.0f;
 			}
 			sfx_volume_phone = ratio;
-			Scene().GetSoundSystem()->setEffectsChannelGroupVolume(sfx_volume_phone);
-			Scene().GetComponent<JZEngine::Transform>("Option_sfx_brownbar")->scale_.x = ratio * initial_bar_scale_phone;
-			Scene().GetComponent<JZEngine::Transform>("Option_sfx_pau")->position_.x = initial_bar_position_phone + ratio * 670.0f;
+			Scene().GetSoundSystem()->setEffectsChannelGroupVolume( sfx_volume_phone );
+			Scene().GetComponent<JZEngine::Transform>( "Option_sfx_brownbar" )->scale_.x = ratio * initial_bar_scale_phone;
+			Scene().GetComponent<JZEngine::Transform>( "Option_sfx_pau" )->position_.x = initial_bar_position_phone + ratio * 670.0f;
 		}
 	}
-	UpdateVolumeIcon(true);
+	UpdateVolumeIcon( true );
 }
 
-void UpdateOptionMenu(float dt)
+void UpdateOptionMenu( float dt )
 {
-	UNREFERENCED_PARAMETER(dt);
+	UNREFERENCED_PARAMETER( dt );
 	UpdateVolSlider();
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Option_x"))
+	if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Option_x" ) )
 	{
-		if (e->on_released_)
+		if ( e->on_released_ )
 		{
-			FlagOptionsScreen(false);
-			Scene().EntityFlagActive("Credits", false);
-			Scene().EntityFlagActive("Quit", false);
+			FlagOptionsScreen( false );
+			Scene().EntityFlagActive( "Credits", false );
+			Scene().EntityFlagActive( "Quit", false );
 			current_app_state = HawkerAppState::MainScreen;
 		}
 	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Credits"))
+	if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Credits" ) )
 	{
-		if (e->on_released_)
+		if ( e->on_released_ )
 		{
-			FlagCreditsScreen(true);
+			FlagCreditsScreen( true );
 		}
-		if (e->on_held_)
+		if ( e->on_held_ )
 		{
-			ToggleButton("Credits", ButtonState::Clicked);
+			ToggleButton( "Credits", ButtonState::Clicked );
 		}
-		else if (e->on_hover_)
+		else if ( e->on_hover_ )
 		{
-			ToggleButton("Credits", ButtonState::Hover);
+			ToggleButton( "Credits", ButtonState::Hover );
 		}
 		else
 		{
-			ToggleButton("Credits", ButtonState::Normal);
+			ToggleButton( "Credits", ButtonState::Normal );
 		}
 
 	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Credits_x"))
+	if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Credits_x" ) )
 	{
-		if (e->on_released_)
+		if ( e->on_released_ )
 		{
-			FlagCreditsScreen(false);
+			FlagCreditsScreen( false );
 		}
 	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Quit"))
+	if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Quit" ) )
 	{
-		if (e->on_released_)
+		if ( e->on_released_ )
 		{
 			//ToggleOptions(false);
-			FlagQuitGameScreen(true);
+			FlagQuitGameScreen( true );
 		}
-		if (e->on_held_)
+		if ( e->on_held_ )
 		{
-			ToggleButton("Quit", ButtonState::Clicked);
+			ToggleButton( "Quit", ButtonState::Clicked );
 		}
-		else if (e->on_hover_)
+		else if ( e->on_hover_ )
 		{
-			ToggleButton("Quit", ButtonState::Hover);
+			ToggleButton( "Quit", ButtonState::Hover );
 		}
 		else
 		{
-			ToggleButton("Quit", ButtonState::Normal);
+			ToggleButton( "Quit", ButtonState::Normal );
 		}
 	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("QuitGame_yes"))
+	if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "QuitGame_yes" ) )
 	{
-		if (e->on_released_)
+		if ( e->on_released_ )
 		{
 			Scene().CloseApplication();
 		}
-		if (e->on_held_)
+		if ( e->on_held_ )
 		{
-			ToggleButton("QuitGame_yes", ButtonState::Clicked);
+			ToggleButton( "QuitGame_yes", ButtonState::Clicked );
 		}
-		else if (e->on_hover_)
+		else if ( e->on_hover_ )
 		{
-			ToggleButton("QuitGame_yes", ButtonState::Hover);
+			ToggleButton( "QuitGame_yes", ButtonState::Hover );
 		}
 		else
 		{
-			ToggleButton("QuitGame_yes", ButtonState::Normal);
+			ToggleButton( "QuitGame_yes", ButtonState::Normal );
 		}
 	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("QuitGame_no"))
+	if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "QuitGame_no" ) )
 	{
-		if (e->on_released_)
+		if ( e->on_released_ )
 		{
-			FlagQuitGameScreen(false);
+			FlagQuitGameScreen( false );
 		}
-		if (e->on_held_)
+		if ( e->on_held_ )
 		{
-			ToggleButton("QuitGame_no", ButtonState::Clicked);
+			ToggleButton( "QuitGame_no", ButtonState::Clicked );
 		}
-		else if (e->on_hover_)
+		else if ( e->on_hover_ )
 		{
-			ToggleButton("QuitGame_no", ButtonState::Hover);
+			ToggleButton( "QuitGame_no", ButtonState::Hover );
 		}
 		else
 		{
-			ToggleButton("QuitGame_no", ButtonState::Normal);
+			ToggleButton( "QuitGame_no", ButtonState::Normal );
 		}
 	}
 }
@@ -1196,6 +1237,38 @@ void UpdateAlbum( float dt )
 		{
 			FlagAlbumPhoto1980( true );
 			Scene().EntityFlagActive( "Album_black_layer_3", true );
+			// Hover Over #1
+			if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_1980_button1" ) )
+			{
+				if ( e->on_hover_ )
+				{
+					ToggleButton( "Album_1980_button1", ButtonState::Hover );
+					Scene().EntityFlagActive( "Album_1980_hovertext1_bg", true );
+					Scene().EntityFlagActive( "Album_1980_hovertext1", true );
+				}
+				else
+				{
+					ToggleButton( "Album_1980_button1", ButtonState::Normal );
+					Scene().EntityFlagActive( "Album_1980_hovertext1_bg", false );
+					Scene().EntityFlagActive( "Album_1980_hovertext1", false );
+				}
+			}
+			// Hover Over #2
+			if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_1980_button2" ) )
+			{
+				if ( e->on_hover_ )
+				{
+					ToggleButton( "Album_1980_button2", ButtonState::Hover );
+					Scene().EntityFlagActive( "Album_1980_hovertext2_bg", true );
+					Scene().EntityFlagActive( "Album_1980_hovertext2", true );
+				}
+				else
+				{
+					ToggleButton( "Album_1980_button2", ButtonState::Normal );
+					Scene().EntityFlagActive( "Album_1980_hovertext2_bg", false );
+					Scene().EntityFlagActive( "Album_1980_hovertext2", false );
+				}
+			}
 			// Quit button for Photo 1980
 			if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_1980_big_photo_quit" ) )
 			{
@@ -1214,6 +1287,38 @@ void UpdateAlbum( float dt )
 		{
 			FlagAlbumPhoto2021( true );
 			Scene().EntityFlagActive( "Album_black_layer_3", true );
+			// Hover Over #1
+			if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_2021_button1" ) )
+			{
+				if ( e->on_hover_ )
+				{
+					ToggleButton( "Album_2021_button1", ButtonState::Hover );
+					Scene().EntityFlagActive( "Album_2021_hovertext1_bg", true );
+					Scene().EntityFlagActive( "Album_2021_hovertext1", true );
+				}
+				else
+				{
+					ToggleButton( "Album_2021_button1", ButtonState::Normal );
+					Scene().EntityFlagActive( "Album_2021_hovertext1_bg", false );
+					Scene().EntityFlagActive( "Album_2021_hovertext1", false );
+				}
+			}
+			// Hover Over #2
+			if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_2021_button2" ) )
+			{
+				if ( e->on_hover_ )
+				{
+					ToggleButton( "Album_2021_button2", ButtonState::Hover );
+					Scene().EntityFlagActive( "Album_2021_hovertext2_bg", true );
+					Scene().EntityFlagActive( "Album_2021_hovertext2", true );
+				}
+				else
+				{
+					ToggleButton( "Album_2021_button2", ButtonState::Normal );
+					Scene().EntityFlagActive( "Album_2021_hovertext2_bg", false );
+					Scene().EntityFlagActive( "Album_2021_hovertext2", false );
+				}
+			}
 			// Quit button for Photo 2021
 			if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Album_2021_big_photo_quit" ) )
 			{
@@ -1227,6 +1332,12 @@ void UpdateAlbum( float dt )
 			}
 			Photo1960 = false;
 			Photo1980 = false;
+		}
+		if ( !Photo1960 && !Photo1980 && !Photo2021 )
+		{
+			FlagAlbumPhoto1960( false );
+			FlagAlbumPhoto1980( false );
+			FlagAlbumPhoto2021( false );
 		}
 	}
 }
@@ -1272,7 +1383,7 @@ void UpdateHomeScreen( float dt )
 		UpdateHowtoPlay( dt );
 		break;
 	case HawkerAppState::Options:
-		UpdateOptionMenu(dt);
+		UpdateOptionMenu( dt );
 		break;
 	}
 
