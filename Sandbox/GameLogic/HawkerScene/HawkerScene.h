@@ -24,7 +24,8 @@ std::unordered_map<std::string , bool> guided_circles {
 	{"gtc_customer", false},
 	{"gtc_platetray",false},
 	{"gtc_tongsfood", false},
-	{"gtc_platecustomer", false}
+	{"gtc_platecustomer", false},
+	{"gtc_scizzors", false}
 };
 
 
@@ -49,7 +50,10 @@ void ToggleGuidedCircle ( std::string const& name , bool flag)
 {
 	assert ( guided_circles.find ( name ) != guided_circles.end () );
 	guided_circles[ name ] = flag;
-	Scene ().EntityFlagActive ( name , flag );
+	if ( flag )
+	{
+		Scene ().EntityFlagActive ( name , flag );
+	}
 }
 
 void UpdateGuidedCircle (float dt)
@@ -70,6 +74,10 @@ void UpdateGuidedCircle (float dt)
 			if ( alpha > 0.0f )
 			{
 				alpha -= dt;
+			}
+			else
+			{
+				Scene ().EntityFlagActive ( gc.first , false );
 			}
 		}
 	}
@@ -1695,7 +1703,7 @@ std::string notification[ notification_count_ ] =
 	"Put it on the plate and serve it!",
 	"For wrong orders, throw it in the bin.",
 	"Don't take too long! They will get angry.",
-	"Use the scizzors to cut the food!"
+	"Some foods need to be cut before serving!"
 };
 bool notification_shown[ notification_count_ ] { false };
 
@@ -1711,7 +1719,7 @@ void TurnOffNotification ()
 int current_notification { 0 };
 void ShowNotification (int i)
 {
-	if ( i < 6 )
+	if ( i < notification_count_ )
 	{
 		if ( i <= current_notification )
 		{
@@ -1756,6 +1764,7 @@ void ShowNotification (int i)
 
 					case (6 ):
 					{
+						ToggleGuidedCircle ( "gtc_scizzors" , true );
 						break;
 					}
 
@@ -2476,6 +2485,8 @@ void UpdateWinScreen(float dt)
  * **********************************************************************
 */
 
+bool first_time_cut { true };
+
 void UpdateMainScene(float dt)
 {
 	UpdateHawkerQueue(dt);
@@ -2806,14 +2817,26 @@ void UpdateMainScene(float dt)
 				case CursorState::TongsCharSiewBao:
 					SetPlateFood ( CustomerOrder::CharSiewBao );
 					FlagAllCursorsFalse ();
+					if ( first_time_cut )
+					{
+						ShowNotification ( 6 );
+					}
 					break;
 				case CursorState::TongsDouShaBao:
 					SetPlateFood ( CustomerOrder::DouShaBao );
 					FlagAllCursorsFalse ();
+					if ( first_time_cut )
+					{
+						ShowNotification ( 6 );
+					}
 					break;
 				case CursorState::TongsCoffeeBao:
 					SetPlateFood ( CustomerOrder::CoffeeBao );
 					FlagAllCursorsFalse ();
+					if ( first_time_cut )
+					{
+						ShowNotification ( 6 );
+					}
 					break;
 				case CursorState::TongsPlainCCF:
 					SetPlateFood ( CustomerOrder::PlainCCF );
@@ -2834,12 +2857,27 @@ void UpdateMainScene(float dt)
 					{
 					case ( CustomerOrder::CharSiewBao ):
 						Scene ().GetComponent<JZEngine::Texture> ( "tray_charsiewbao" )->texture_id_ = Scene ().GetTexture ( "CharSiewBaoCUT01_Food_Hawker" );
+						if ( first_time_cut )
+						{
+							ToggleGuidedCircle ( "gtc_scizzors" , false );
+							first_time_cut = false;
+						}
 						break;
 					case ( CustomerOrder::DouShaBao ):
 						Scene ().GetComponent<JZEngine::Texture> ( "tray_doushabao" )->texture_id_ = Scene ().GetTexture ( "DouShaBaoCUT01_Food_Hawker" );
+						if ( first_time_cut )
+						{
+							ToggleGuidedCircle ( "gtc_scizzors" , false );
+							first_time_cut = false;
+						}
 						break;
 					case ( CustomerOrder::CoffeeBao ):
 						Scene ().GetComponent<JZEngine::Texture> ( "tray_coffeebao" )->texture_id_ = Scene ().GetTexture ( "CoffeeBaoCUT01_Food_Hawker" );
+						if ( first_time_cut )
+						{
+							ToggleGuidedCircle ( "gtc_scizzors" , false );
+							first_time_cut = false;
+						}
 						break;
 					}
 					FlagAllCursorsFalse ();
@@ -3121,7 +3159,15 @@ void HawkerSceneInit()
 	JZEngine::Log::Info("Main", "Hawker Scene Initialized.");
 
 	InitGuidedCircles ();
-	current_notification = 0;
+	if ( hawker_scene_day == DAY::ONE )
+	{
+		current_notification = 0;
+	}
+	else if ( hawker_scene_day == DAY::TWO )
+	{
+		current_notification = 6;
+	}
+	first_time_cut = true;
 	//ShowNotification ( 0 );
 
 	// temporarily remove upgrades
