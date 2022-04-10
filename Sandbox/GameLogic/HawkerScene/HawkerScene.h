@@ -945,6 +945,10 @@ void UpdateShop (float dt)
 				init_wanton_count = wanton_count;
 				init_seaweedchicken_count = seaweedchicken_count;
 
+
+			
+
+
 				wallet_amt -= total_amt;
 
 				day_begin = true;
@@ -1937,18 +1941,7 @@ void SummaryInit ()
 
 	ToggleConfirm(false);
 
-	summary_sr_count = 0;
-	summary_sc_count = 0;
-	summary_fd_count = 0;
-	summary_cc_count = 0;
-	summary_csb_count = 0;
-	summary_rbb_count = 0;
-	summary_cb_count = 0;
-	summary_pd_count = 0;
-	summary_cf_count = 0;
-	summary_cd_count = 0;
-	summary_pr_count = 0;;
-	summary_rnr_count = 0;
+
 
 	summary_counter = 0.0f;
 
@@ -2043,7 +2036,7 @@ void SummaryInit ()
 
 		Scene().GetComponent<JZEngine::TextData>("sum_fd_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_fd_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_fd_amt")->position_ = { -178.9f,161.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_fd_amt")->position_ = { 178.9f,161.f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_cc_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_cc_amt")->text = JZEngine::String(ss.str().c_str());
@@ -2057,7 +2050,7 @@ void SummaryInit ()
 
 		Scene().GetComponent<JZEngine::TextData>("sum_rbb_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_rbb_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_csb_amt")->position_ = { -135.5f,48.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_rbb_amt")->position_ = { -135.5f,48.f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_cb_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_cb_amt")->text = JZEngine::String(ss.str().c_str());
@@ -2173,32 +2166,32 @@ void UpdateWinScreen(float dt)
 			summary_counter = 0.0f;
 			update = true;
 		}
-
+		bool done_updating{ true };
 		if ( update )
 		{
 			bool done_updating { true };
 			// add display numbers 
 			//day1
-			if ( summary_sc_count < init_seaweedchicken_count - seaweedchicken_count )
-			{
-				++summary_sc_count;
-				done_updating = false;
-			}
-			if ( summary_sr_count < init_springroll_count - springroll_count )
-			{
-				++summary_sr_count;
-				done_updating = false;
-			}
-			if ( summary_fd_count < init_wanton_count - wanton_count )
-			{
-				++summary_fd_count;
-				done_updating = false;
-			}
-			if ( summary_cc_count < init_carrotcake_count - carrotcake_count )
-			{
-				++summary_cc_count;
-				done_updating = false;
-			}
+			//if ( summary_sc_count < init_seaweedchicken_count - seaweedchicken_count )
+			//{
+			//	++summary_sc_count;
+			//	done_updating = false;
+			//}
+			//if ( summary_sr_count < init_springroll_count - springroll_count )
+			//{
+			//	++summary_sr_count;
+			//	done_updating = false;
+			//}
+			//if ( summary_fd_count < init_wanton_count - wanton_count )
+			//{
+			//	++summary_fd_count;
+			//	done_updating = false;
+			//}
+			//if ( summary_cc_count < init_carrotcake_count - carrotcake_count )
+			//{
+			//	++summary_cc_count;
+			//	done_updating = false;
+			//}
 
 			//Add back in after getting the day2 3 food counter working
 			// 
@@ -2902,36 +2895,56 @@ void UpdateMainScene(float dt)
 					switch ( current_order )
 					{
 					case ( CustomerOrder::CarrotCake ):
-						current_coins += 3.0f;
+						current_coins += friedcarrotcake_price;
+						summary_cc_count++;
 						break;
 					case ( CustomerOrder::SeaweedChicken ):
-						current_coins += 1.2f;
+						current_coins += seaweedchicken_price;
+						summary_sc_count++;
 						break;
 					case ( CustomerOrder::SpringRoll ):
-						current_coins += 2.7f;
+						current_coins += springroll_price;
+						summary_sr_count++;
 						break;
 					case ( CustomerOrder::Wanton ):
-						current_coins += 2.1f;
+						current_coins += frieddumplings_price;
+						summary_fd_count++;
 						break;
 					case ( CustomerOrder::ChickenFeet ):
-						current_coins += 3.50f;
+						current_coins += chickenfeet_price;
+						summary_cf_count++;
 						break;
 					case ( CustomerOrder::HarGao ):
-						current_coins += 2.7f;
+						current_coins += prawndumplings_price;
+						summary_pd_count++;
 						break;
 					case ( CustomerOrder::SiewMai ):
-						current_coins += 2.5f;
+						current_coins += chickendumplings_price;
+						summary_cd_count++;
 						break;
 					case ( CustomerOrder::CharSiewBao ):
-						current_coins += 0.6f;
+						current_coins += charsiewbun_price;
+						summary_csb_count++;
 						break;
 					case ( CustomerOrder::DouShaBao ):
-						current_coins += 0.5f;
+						current_coins += redbeanbun_price;
+						summary_rbb_count++;
 						break;
 					case ( CustomerOrder::CoffeeBao ):
-						current_coins += 0.5f;
+						current_coins += coffeebun_price;
+						summary_cb_count++;
+						break;
+					case (CustomerOrder::PlainCCF):
+						current_coins += ricenoodleroll_price;
+						summary_rnr_count++;
+						break;
+					case (CustomerOrder::PrawnCCF):
+						current_coins += prawnroll_price;
+						summary_pr_count++;
 						break;
 					}
+
+					
 					plate_on_hand = false;
 					// make invisible all tray items
 					FlagAllTrayItemsFalse();
@@ -3126,6 +3139,20 @@ void HawkerSceneInit()
 	coffeebao_count = 3;
 	plainccf_count = 5;
 	prawnccf_count = 5;
+
+	summary_sr_count = 0;
+	summary_sc_count = 0;
+	summary_fd_count = 0;
+	summary_cc_count = 0;
+	summary_csb_count = 0;
+	summary_rbb_count = 0;
+	summary_cb_count = 0;
+	summary_pd_count = 0;
+	summary_cf_count = 0;
+	summary_cd_count = 0;
+	summary_pr_count = 0;;
+	summary_rnr_count = 0;
+
 
 	// shop init
 	FlagShopActive ( true );
