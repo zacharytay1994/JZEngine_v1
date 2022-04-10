@@ -37,6 +37,7 @@ bool paused{ false };
 bool quit_confirmation{ false };
 bool main_menu_confirmation{ false };
 bool restart_confirmation{ false };
+float original_wallet_amt { 100.0f };
 
 //Options
 float master_volume_phone{ 0.33f };
