@@ -3007,6 +3007,11 @@ void UpdateMainScene(float dt)
 							if ( food_spring )
 							{
 								Scene ().GetComponent<JZEngine::Texture> ( "tray_plainccf" )->texture_id_ = Scene ().GetTexture ( "PlainCCF_CUT_ONION_SAUCE_Food_Hawker" );
+								if ( first_time_garnish )
+								{
+									ToggleGuidedCircle ( "gtc_springsoy" , false );
+									first_time_garnish = false;
+								}
 							}
 							else
 							{
@@ -3018,6 +3023,11 @@ void UpdateMainScene(float dt)
 							if ( food_spring )
 							{
 								Scene ().GetComponent<JZEngine::Texture> ( "tray_prawnccf" )->texture_id_ = Scene ().GetTexture ( "PrawnCCF_CUT_ONION_SAUCE_Food_Hawker" );
+								if ( first_time_garnish )
+								{
+									ToggleGuidedCircle ( "gtc_springsoy" , false );
+									first_time_garnish = false;
+								}
 							}
 							else
 							{
