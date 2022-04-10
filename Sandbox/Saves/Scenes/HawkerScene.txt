@@ -24,7 +24,7 @@ Sky 0
 !
 Clouds 0 
 	c 0 struct JZEngine::Transform
-		-3143.93 40 0 0 0 1 1 7660 1048 
+		-2589.78 40 0 0 0 1 1 7660 1048 
 	c 1 struct JZEngine::SpriteLayer
 		-30 
 	c 2 struct JZEngine::Texture
@@ -704,7 +704,7 @@ TongsChickenFeet 0
 !
 TongsSteamDumpling 0 
 	c 0 struct JZEngine::Transform
-		-251.865 -70.2745 -2.80981 2.45844 0 6 3 50 50 
+		-251.866 -70.2746 -2.80981 2.45844 0 6 3 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		50 
 	c 2 struct JZEngine::Texture
@@ -716,7 +716,7 @@ TongsSteamDumpling 0
 !
 TongsSiewMai 0 
 	c 0 struct JZEngine::Transform
-		-248.385 -73.7413 0.670876 -1.00836 0 6 3 50 50 
+		-248.385 -73.7414 0.670876 -1.00836 0 6 3 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		50 
 	c 2 struct JZEngine::Texture
@@ -800,7 +800,7 @@ SpringOnionCursor 0
 !
 SoySauceCursor 0 
 	c 0 struct JZEngine::Transform
-		-255.749 -70.9053 -6.69351 1.8277 0 1.5 3 50 50 
+		-255.75 -70.9053 -6.69351 1.8277 0 1.5 3 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		50 
 	c 2 struct JZEngine::Texture
@@ -2826,11 +2826,11 @@ Black_goal 0
 !
 Goal_one 0 
 	c 0 struct JZEngine::Transform
-		0.00610352 0 0 0 0 1 1 2048 1024 
+		-2048 0 0 0 0 1 1 2048 1024 
 	c 1 struct JZEngine::SpriteLayer
 		404 
 	c 2 struct JZEngine::Texture
-		TutorialDadDay02_UI_hawker_01 
+		TutorialDadDay03_UI_hawker_01 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
@@ -2842,7 +2842,7 @@ Goal_two 0
 	c 1 struct JZEngine::SpriteLayer
 		405 
 	c 2 struct JZEngine::Texture
-		TutorialDadDay02_UI_hawker_02 
+		TutorialDadDay03_UI_hawker_02 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
@@ -2850,11 +2850,11 @@ Goal_two 0
 !
 Goal_three 0 
 	c 0 struct JZEngine::Transform
-		4096.03 0 0 0 0 1 1 2048 1024 
+		0 0 0 0 0 1 1 2048 1024 
 	c 1 struct JZEngine::SpriteLayer
 		406 
 	c 2 struct JZEngine::Texture
-		TutorialDadDay02_UI_hawker_03 
+		TutorialDadDay03_UI_hawker_03 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
@@ -3322,7 +3322,7 @@ Shop3_s_chickenfeet 0
 !
 Shop3_amt_plainccf 0 
 	c 0 struct JZEngine::Transform
-		-463 -48 0 0 0 1 1 50 50 
+		-456 -48 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		401 
 	c 9 struct JZEngine::TextData
@@ -3330,7 +3330,7 @@ Shop3_amt_plainccf 0
 !
 Shop3_amt_prawnccf 0 
 	c 0 struct JZEngine::Transform
-		-146 -48 0 0 0 1 1 50 50 
+		-138 -48 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		401 
 	c 9 struct JZEngine::TextData
@@ -3338,7 +3338,7 @@ Shop3_amt_prawnccf 0
 !
 Shop3_amt_hargao 0 
 	c 0 struct JZEngine::Transform
-		171 -48 0 0 0 1 1 50 50 
+		180 -48 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		401 
 	c 9 struct JZEngine::TextData
@@ -3346,7 +3346,7 @@ Shop3_amt_hargao 0
 !
 Shop3_amt_chickenfeet 0 
 	c 0 struct JZEngine::Transform
-		489 -48 0 0 0 1 1 50 50 
+		495 -48 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		401 
 	c 9 struct JZEngine::TextData

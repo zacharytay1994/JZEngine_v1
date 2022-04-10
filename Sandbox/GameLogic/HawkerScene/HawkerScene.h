@@ -2419,6 +2419,7 @@ void UpdateWinScreen(float dt)
 			if (e->on_released_)
 			{
 				wallet_amt = summary_wallet_amt;
+				original_wallet_amt = wallet_amt;
 				if (hawker_scene_day == DAY::ONE)
 				{
 					hawker_scene_day = DAY::TWO;
@@ -2479,8 +2480,7 @@ void UpdateWinScreen(float dt)
 		{
 			AutoToggleButton(e, "Summary_Yes");
 			if (e->on_released_)
-			{		
-				
+			{
 				Scene().ChangeScene("CutScene");
 			}
 			
@@ -3477,6 +3477,8 @@ void HawkerSceneInit()
 	}
 	else if (hawker_scene_day == DAY::TWO)
 	{
+		wallet_amt = original_wallet_amt;
+
 		Scene ().GetComponent<JZEngine::Transform> ( "Plate" )->position_.x -= 200.0f;
 		Scene ().GetComponent<JZEngine::Transform> ( "bb_plate" )->position_.x -= 200.0f;
 		Scene ().GetComponent<JZEngine::Transform> ( "Tongs" )->position_.x += 200.0f;
@@ -3499,8 +3501,7 @@ void HawkerSceneInit()
 	}
 	else if (hawker_scene_day == DAY::THREE)
 	{
-		//temp
-		wallet_amt = 100.0f;
+		wallet_amt = original_wallet_amt;
 
 		Scene ().GetComponent<JZEngine::Transform> ( "Plate" )->position_.x -= 200.0f;
 		Scene ().GetComponent<JZEngine::Transform> ( "bb_plate" )->position_.x -= 200.0f;
@@ -3526,6 +3527,20 @@ void HawkerSceneInit()
 		num_coffeebao = 2;
 		num_plainccf = 4;
 		num_prawnccf = 4;
+
+		Scene ().GetComponent<JZEngine::Transform> ( "Shop2_amt_charsiewbun" )->position_ = JZEngine::Vec2f ( -456.0f , 76.0f );
+		Scene ().GetComponent<JZEngine::Transform> ( "Shop2_amt_redbeanbun" )->position_ = JZEngine::Vec2f ( -138.0f , 76.0f );
+		Scene ().GetComponent<JZEngine::Transform> ( "Shop2_amt_coffeebun" )->position_ = JZEngine::Vec2f ( 180.0f , 76.0f );
+		Scene ().GetComponent<JZEngine::Transform> ( "Shop2_amt_chickendumpling" )->position_ = JZEngine::Vec2f ( 495.0f, 76.0f );
+
+		Scene ().GetComponent<JZEngine::Transform> ( "Shop2_a_charsiewbun" )->position_ = JZEngine::Vec2f ( -365.0f , 76.0f );
+		Scene ().GetComponent<JZEngine::Transform> ( "Shop2_s_charsiewbun" )->position_ = JZEngine::Vec2f ( -491.0f , 76.0f );
+		Scene ().GetComponent<JZEngine::Transform> ( "Shop2_a_redbeanbun" )->position_ = JZEngine::Vec2f ( -39.0f , 76.0f );
+		Scene ().GetComponent<JZEngine::Transform> ( "Shop2_s_redbeanbun" )->position_ = JZEngine::Vec2f ( -175.0f , 76.0f );
+		Scene ().GetComponent<JZEngine::Transform> ( "Shop2_a_coffeebun" )->position_ = JZEngine::Vec2f ( 277.0f , 76.0f );
+		Scene ().GetComponent<JZEngine::Transform> ( "Shop2_s_coffeebun" )->position_ = JZEngine::Vec2f ( 140.0f , 76.0f );
+		Scene ().GetComponent<JZEngine::Transform> ( "Shop2_a_chickendumpling" )->position_ = JZEngine::Vec2f ( 598 , 76.0f );
+		Scene ().GetComponent<JZEngine::Transform> ( "Shop2_s_chickendumpling" )->position_ = JZEngine::Vec2f ( 458 , 76.0f );
 	}
 }
 
