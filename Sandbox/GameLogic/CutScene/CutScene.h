@@ -966,15 +966,6 @@ void CutSceneUpdate(float dt)
 					hawker_scene_day = DAY::THREE;
 				}
 
-
-				/*Scene().GetComponent<JZEngine::Transform>("11th_msg_bg")->position_.y = message_out_of_the_screen;
-				Scene().GetComponent<JZEngine::Transform>("12th_msg_bg")->position_.y = message_out_of_the_screen;
-				Scene().GetComponent<JZEngine::Transform>("13th_msg_bg")->position_.y = message_out_of_the_screen;
-				Flag11thMsg(false);
-				Flag12thMsg(false);
-				Flag13thMsg(false);*/
-				
-
 			}
 			else if (message_state == MessageState::Day2_msg1)
 			{
