@@ -195,7 +195,9 @@ enum class CursorState
 	TongsDouShaBao,
 	TongsCoffeeBao,
 	TongsPlainCCF,
-	TongsPrawnCCF
+	TongsPrawnCCF,
+	SpringOnion,
+	SoySauce
 };
 
 std::string cursor_object_names[] = {
@@ -214,7 +216,9 @@ std::string cursor_object_names[] = {
 	"TongsDouShaBao",
 	"TongsCoffeeBao",
 	"TongsPlainCCF",
-	"TongsPrawnCCF"
+	"TongsPrawnCCF",
+	"SpringOnionCursor",
+	"SoySauceCursor"
 };
 
 CursorState cursor_state = CursorState::Nothing;
@@ -251,6 +255,10 @@ void FlagAllCursorsFalse()
 
 	Scene().EntityFlagActive("ScizzorsCursor", false);
 	Scene().EntityFlagActive("PlateCursor", false);
+
+	Scene ().EntityFlagActive ( "SpringOnionCursor" , false );
+	Scene ().EntityFlagActive ( "SoySauceCursor" , false );
+
 	cursor_state = CursorState::Nothing;
 
 	// set plate and tongs to non shadow
@@ -2492,6 +2500,9 @@ void UpdateWinScreen(float dt)
 */
 
 bool first_time_cut { true };
+bool food_cut { false };
+bool food_soy { false };
+bool food_spring { false };
 
 void UpdateMainScene(float dt)
 {
@@ -2648,6 +2659,22 @@ void UpdateMainScene(float dt)
 		}
 	}
 
+	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "bb_springonion" ) )
+	{
+		if ( e->on_click_ && hawker_scene_day == DAY::THREE && !plate_on_hand )
+		{
+			FlagCursorState ( CursorState::SpringOnion );
+		}
+	}
+
+	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "bb_soysauce" ) )
+	{
+		if ( e->on_click_ && hawker_scene_day == DAY::THREE && !plate_on_hand )
+		{
+			FlagCursorState ( CursorState::SoySauce );
+		}
+	}
+
 	// day 2 foods
 	ProcessDay2Item ( CursorState::TongsChickenFeet , "bb_ChickenFeet" , "ChickenFeet" , chickenfeet_count , "RoundSteamerFeet" , "_Equipment_hawker" );
 	ProcessDay2Item ( CursorState::TongsSteamDumpling , "bb_HarGow" , "HarGow" , hargao_count , "RoundSteamerDumpling" , "_Equipment_hawker" );
@@ -2767,6 +2794,10 @@ void UpdateMainScene(float dt)
 				FlagAllTrayItemsFalse();
 				// place plate back on tray
 				Scene().GetComponent<JZEngine::Transform>("tray_plate")->position_ = original_plate_position_;
+
+				food_cut = false;
+				food_soy = false;
+				food_spring = false;
 			}
 		}
 		if (e->on_hover_)
@@ -2863,6 +2894,7 @@ void UpdateMainScene(float dt)
 					{
 					case ( CustomerOrder::CharSiewBao ):
 						Scene ().GetComponent<JZEngine::Texture> ( "tray_charsiewbao" )->texture_id_ = Scene ().GetTexture ( "CharSiewBaoCUT01_Food_Hawker" );
+						food_cut = true;
 						if ( first_time_cut )
 						{
 							ToggleGuidedCircle ( "gtc_scizzors" , false );
@@ -2871,6 +2903,7 @@ void UpdateMainScene(float dt)
 						break;
 					case ( CustomerOrder::DouShaBao ):
 						Scene ().GetComponent<JZEngine::Texture> ( "tray_doushabao" )->texture_id_ = Scene ().GetTexture ( "DouShaBaoCUT01_Food_Hawker" );
+						food_cut = true;
 						if ( first_time_cut )
 						{
 							ToggleGuidedCircle ( "gtc_scizzors" , false );
@@ -2879,12 +2912,91 @@ void UpdateMainScene(float dt)
 						break;
 					case ( CustomerOrder::CoffeeBao ):
 						Scene ().GetComponent<JZEngine::Texture> ( "tray_coffeebao" )->texture_id_ = Scene ().GetTexture ( "CoffeeBaoCUT01_Food_Hawker" );
+						food_cut = true;
 						if ( first_time_cut )
 						{
 							ToggleGuidedCircle ( "gtc_scizzors" , false );
 							first_time_cut = false;
 						}
 						break;
+					case (	CustomerOrder::PlainCCF ):
+						if ( !food_cut )
+						{
+							Scene ().GetComponent<JZEngine::Texture> ( "tray_plainccf" )->texture_id_ = Scene ().GetTexture ( "PlainCCF_CUT_Food_Hawker" );
+							food_cut = true;
+						}
+						break;
+					case ( CustomerOrder::PrawnCCF ):
+						if ( !food_cut )
+						{
+							Scene ().GetComponent<JZEngine::Texture> ( "tray_prawnccf" )->texture_id_ = Scene ().GetTexture ( "PrawnCCF_CUT_Food_Hawker" );
+							food_cut = true;
+						}
+						break;
+					}
+					FlagAllCursorsFalse ();
+				}
+				else if ( CheckCursorState ( CursorState::SpringOnion ) )
+				{
+					if ( food_cut )
+					{
+						switch ( current_order )
+						{
+						case ( CustomerOrder::PlainCCF ):
+							food_spring = true;
+							if ( food_soy )
+							{
+								Scene ().GetComponent<JZEngine::Texture> ( "tray_plainccf" )->texture_id_ = Scene ().GetTexture ( "PlainCCF_CUT_ONION_SAUCE_Food_Hawker" );
+							}
+							else
+							{
+								Scene ().GetComponent<JZEngine::Texture> ( "tray_plainccf" )->texture_id_ = Scene ().GetTexture ( "PlainCCF_CUT_ONION_Food_Hawker" );
+							}
+							break;
+						case ( CustomerOrder::PrawnCCF ):
+							food_spring = true;
+							if ( food_soy )
+							{
+								Scene ().GetComponent<JZEngine::Texture> ( "tray_prawnccf" )->texture_id_ = Scene ().GetTexture ( "PrawnCCF_CUT_ONION_SAUCE_Food_Hawker" );
+							}
+							else
+							{
+								Scene ().GetComponent<JZEngine::Texture> ( "tray_prawnccf" )->texture_id_ = Scene ().GetTexture ( "PrawnCCF_CUT_ONION_Food_Hawker" );
+							}
+							break;
+						}
+					}
+					FlagAllCursorsFalse ();
+				}
+				else if ( CheckCursorState ( CursorState::SoySauce ) )
+				{
+					if ( food_cut )
+					{
+						switch ( current_order )
+						{
+						case ( CustomerOrder::PlainCCF ):
+							food_soy = true;
+							if ( food_spring )
+							{
+								Scene ().GetComponent<JZEngine::Texture> ( "tray_plainccf" )->texture_id_ = Scene ().GetTexture ( "PlainCCF_CUT_ONION_SAUCE_Food_Hawker" );
+							}
+							else
+							{
+								Scene ().GetComponent<JZEngine::Texture> ( "tray_plainccf" )->texture_id_ = Scene ().GetTexture ( "PlainCCF_CUT_SAUCE_Food_Hawker" );
+							}
+							break;
+						case ( CustomerOrder::PrawnCCF ):
+							food_soy = true;
+							if ( food_spring )
+							{
+								Scene ().GetComponent<JZEngine::Texture> ( "tray_prawnccf" )->texture_id_ = Scene ().GetTexture ( "PrawnCCF_CUT_ONION_SAUCE_Food_Hawker" );
+							}
+							else
+							{
+								Scene ().GetComponent<JZEngine::Texture> ( "tray_prawnccf" )->texture_id_ = Scene ().GetTexture ( "PrawnCCF_CUT_SAUCE_Food_Hawker" );
+							}
+							break;
+						}
 					}
 					FlagAllCursorsFalse ();
 				}
@@ -2956,7 +3068,7 @@ void UpdateMainScene(float dt)
 			{
 				instant_win = true;
 			}
-			if (InteractWithQueue(plate_on_hand || instant_win, current_order, instant_win))
+			if (InteractWithQueue(plate_on_hand || instant_win, current_order, instant_win, food_cut, food_spring, food_soy))
 			{
 				if (plate_on_hand || instant_win)
 				{
@@ -3027,6 +3139,10 @@ void UpdateMainScene(float dt)
 					ShowNotification ( 4 );
 				}
 			}
+
+			food_cut = false;
+			food_soy = false;
+			food_spring = false;
 		}
 	}
 
@@ -3306,6 +3422,9 @@ void HawkerSceneInit()
 	}
 	else if (hawker_scene_day == DAY::THREE)
 	{
+		//temp
+		wallet_amt = 100.0f;
+
 		Scene ().GetComponent<JZEngine::Transform> ( "Plate" )->position_.x -= 200.0f;
 		Scene ().GetComponent<JZEngine::Transform> ( "bb_plate" )->position_.x -= 200.0f;
 		Scene ().GetComponent<JZEngine::Transform> ( "Tongs" )->position_.x += 200.0f;

@@ -20,7 +20,7 @@ enum class DAY
 	TWO ,
 	THREE
 };
-DAY hawker_scene_day = DAY::TWO;
+DAY hawker_scene_day = DAY::THREE;
 
 enum class CustomerState
 {
@@ -431,6 +431,12 @@ struct Customer
 			first_customer = false;
 			wait_time_ = 1000.0f;
 		}
+
+		if ( hawker_scene_day == DAY::THREE )
+		{
+			max_wait_time_ = 45.0f;
+		}
+
 		Scene().EntityFlagActive("Customer", true, scene_object_id_); 
 		// position customer
 		JZEngine::Transform* transform = Scene().GetComponent<JZEngine::Transform>("Customer", scene_object_id_);
@@ -605,7 +611,7 @@ void RemoveCustomer(int id)
 	}
 }
 
-bool InteractWithQueue(bool food, CustomerOrder order, bool giveMeWin)
+bool InteractWithQueue(bool food, CustomerOrder order, bool giveMeWin, bool cut, bool spring, bool soy)
 {
 	// find next customer that has not been successfully served
 	Customer* p_customer{ nullptr };
@@ -624,12 +630,47 @@ bool InteractWithQueue(bool food, CustomerOrder order, bool giveMeWin)
 			Customer& customer = *p_customer;
 			if (order == customer.order_ || giveMeWin)
 			{
-				// success
-				SetCustomerAnimation(customer.animation_pack_, AnimationStates::Success, customer.scene_object_id_);
-				customer.state_ = CustomerState::Success; 
-				Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Customer" , customer.scene_object_id_ )->tint.x = 0.0f;
-				JZEngine::Log::Info("Main", "Order success to customer {}", customer.scene_object_id_);
-				return true;
+				if ( customer.order_ == CustomerOrder::CoffeeBao || customer.order_ == CustomerOrder::CharSiewBao || customer.order_ == CustomerOrder::DouShaBao )
+				{
+					if ( !cut )
+					{
+						SetCustomerAnimation ( customer.animation_pack_ , AnimationStates::Angry , customer.scene_object_id_ );
+					}
+					else
+					{
+						// success
+						SetCustomerAnimation ( customer.animation_pack_ , AnimationStates::Success , customer.scene_object_id_ );
+						customer.state_ = CustomerState::Success;
+						Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Customer" , customer.scene_object_id_ )->tint.x = 0.0f;
+						JZEngine::Log::Info ( "Main" , "Order success to customer {}" , customer.scene_object_id_ );
+						return true;
+					}
+				}
+				else if ( customer.order_ == CustomerOrder::PlainCCF || customer.order_ == CustomerOrder::PrawnCCF )
+				{
+					if ( !cut || !spring || !soy )
+					{
+						SetCustomerAnimation ( customer.animation_pack_ , AnimationStates::Angry , customer.scene_object_id_ );
+					}
+					else
+					{
+						// success
+						SetCustomerAnimation ( customer.animation_pack_ , AnimationStates::Success , customer.scene_object_id_ );
+						customer.state_ = CustomerState::Success;
+						Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Customer" , customer.scene_object_id_ )->tint.x = 0.0f;
+						JZEngine::Log::Info ( "Main" , "Order success to customer {}" , customer.scene_object_id_ );
+						return true;
+					}
+				}
+				else
+				{
+					// success
+					SetCustomerAnimation ( customer.animation_pack_ , AnimationStates::Success , customer.scene_object_id_ );
+					customer.state_ = CustomerState::Success;
+					Scene ().GetComponent<JZEngine::NonInstanceShader> ( "Customer" , customer.scene_object_id_ )->tint.x = 0.0f;
+					JZEngine::Log::Info ( "Main" , "Order success to customer {}" , customer.scene_object_id_ );
+					return true;
+				}
 			}
 			else
 			{
@@ -764,7 +805,7 @@ void InitHawkerQueue()
 	queue_layer = 0;
 	number_of_customers = 5;
 	customers = std::vector<Customer>();
-	customer_delay_ = 2.5f;
+	customer_delay_ = 5.0f;
 	queue_timer_ = customer_delay_;
 
 	queue_layer = Scene().GetComponent<JZEngine::SpriteLayer>("Queue")->layer_;
