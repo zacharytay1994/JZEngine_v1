@@ -1280,11 +1280,11 @@ void UpdateShop (float dt)
 
 	if ( hawker_scene_day == DAY::TWO || hawker_scene_day == DAY::THREE )
 	{
-		total_amt += chickendumpling_cost * siewmai_count + prawndumpling_cost * hargao_count + chickenfeet_cost * chickenfeet_count;
+		total_amt += charsiewbun_cost * charsiewbao_count + redbeanbun_cost * doushabao_count + coffeebun_cost * coffeebao_count + chickendumpling_cost * siewmai_count + prawndumpling_cost * hargao_count + chickenfeet_cost * chickenfeet_count;
 	}
 	if ( hawker_scene_day == DAY::THREE )
 	{
-		total_amt += charsiewbun_cost * charsiewbao_count + redbeanbun_cost * doushabao_count + coffeebun_cost * coffeebao_count +
+		total_amt += 
 			ricenoodleroll_cost * plainccf_count + prawnroll_cost * prawnccf_count;
 	}
 
