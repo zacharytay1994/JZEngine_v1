@@ -2024,110 +2024,110 @@ void SummaryInit ()
 	{
 		Scene().GetComponent<JZEngine::TextData>("sum_sr_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_sr_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_sr_amt")->position_ = { -450.5f,175.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_sr_amt")->position_ = { -450.5f,173.f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_sc_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_sc_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_sc_amt")->position_ = { -139.6f,175.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_sc_amt")->position_ = { -139.6f,173.f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_fd_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_fd_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_fd_amt")->position_ = { 180.f,175.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_fd_amt")->position_ = { 180.f,173.f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_cc_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_cc_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_cc_amt")->position_ = { 500.f,175.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_cc_amt")->position_ = { 500.f,173.f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_csb_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_csb_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_csb_amt")->position_ = { -289.1f,61.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_csb_amt")->position_ = { -289.1f,59.f };
 
 
 
 		Scene().GetComponent<JZEngine::TextData>("sum_rbb_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_rbb_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_rbb_amt")->position_ = { 21.1f,61.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_rbb_amt")->position_ = { 21.1f,59.f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_cb_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_cb_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_cb_amt")->position_ = { 335.f,61.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_cb_amt")->position_ = { 335.f,59.f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_pd_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_pd_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_pd_amt")->position_ = { -293.1f,-51.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_pd_amt")->position_ = { -293.1f,-54.f };
 
 
 
 		Scene().GetComponent<JZEngine::TextData>("sum_cf_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_cf_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_cf_amt")->position_ = { 25.f,-51.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_cf_amt")->position_ = { 25.f,-54.f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_cd_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_cd_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_cd_amt")->position_ = { 340.1f,-51.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_cd_amt")->position_ = { 340.1f,-54.f };
 
 
 		Scene().GetComponent<JZEngine::Texture>("Summary_screen")->texture_id_ = Scene().GetTexture("SummaryBackgroundDay2_LOSE_UI_hawker");
 	
 		Scene().GetComponent<JZEngine::TextData>("sum_total_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_total_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_total_amt")->position_ = { -30.f,-185.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_total_amt")->position_ = { -30.f,-188.f };
 	}
 	if (hawker_scene_day == DAY::THREE)
 	{
 		Scene().GetComponent<JZEngine::TextData>("sum_sr_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_sr_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_sr_amt")->position_ = { -450.5f,161.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_sr_amt")->position_ = { -450.5f,172.f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_sc_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_sc_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_sc_amt")->position_ = { -139.6f,161.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_sc_amt")->position_ = { -139.6f,172.f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_fd_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_fd_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_fd_amt")->position_ = { 178.9f,161.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_fd_amt")->position_ = { 178.9f,172.f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_cc_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_cc_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_cc_amt")->position_ = { 500.f,161.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_cc_amt")->position_ = { 500.f,172.f };
 
 
 		Scene().GetComponent<JZEngine::TextData>("sum_csb_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_csb_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_csb_amt")->position_ = { -450.5f,48.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_csb_amt")->position_ = { -450.5f,59.f };
 
 
 		Scene().GetComponent<JZEngine::TextData>("sum_rbb_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_rbb_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_rbb_amt")->position_ = { -135.5f,48.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_rbb_amt")->position_ = { -135.5f,59.f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_cb_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_cb_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_cb_amt")->position_ = {180.f,48.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_cb_amt")->position_ = {180.f,59.f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_cd_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_cd_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_cd_amt")->position_ = { 500.f,48.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_cd_amt")->position_ = { 500.f,59.f };
 
 
 
 
 		Scene().GetComponent<JZEngine::TextData>("sum_pd_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_pd_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_pd_amt")->position_ = { 180.f,-64.4f };
+		Scene().GetComponent<JZEngine::Transform>("sum_pd_amt")->position_ = { 180.f,-53.4f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_cf_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_cf_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_cf_amt")->position_ = { 500.f,-64.4f };
+		Scene().GetComponent<JZEngine::Transform>("sum_cf_amt")->position_ = { 500.f,-53.4f };
 
 
 		Scene().GetComponent<JZEngine::TextData>("sum_pr_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_pr_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_pr_amt")->position_ = { -135.f,-64.4f };
+		Scene().GetComponent<JZEngine::Transform>("sum_pr_amt")->position_ = { -135.f,-53.4f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_rnr_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_rnr_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_rnr_amt")->position_ = { -447.f,-64.4f };
+		Scene().GetComponent<JZEngine::Transform>("sum_rnr_amt")->position_ = { -447.f,-53.4f };
 
 		if(win)
 			Scene().GetComponent<JZEngine::Texture>("Summary_screen")->texture_id_ = Scene().GetTexture("SummaryBackgroundDay3_WIN_UI_hawker");
@@ -2137,7 +2137,7 @@ void SummaryInit ()
 
 		Scene().GetComponent<JZEngine::TextData>("sum_total_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_total_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_total_amt")->position_ = { -30.f,-200.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_total_amt")->position_ = { -30.f,-189.f };
 	}
 
 
@@ -2205,8 +2205,9 @@ void UpdateWinScreen(float dt)
 	else
 	{
 		summary_y = 0.0f;
-		exitbutton_y = -436.0f;
-		rsbutton_y = -436.0f;
+		exitbutton_y = -433.0f;
+		rsbutton_y = -433.0f;
+		sumbutton_y = -433.f;
 	}
 
 	if ( ready )
@@ -2225,80 +2226,7 @@ void UpdateWinScreen(float dt)
 		if ( update )
 		{
 			bool done_updating { true };
-			// add display numbers 
-			//day1
-			//if ( summary_sc_count < init_seaweedchicken_count - seaweedchicken_count )
-			//{
-			//	++summary_sc_count;
-			//	done_updating = false;
-			//}
-			//if ( summary_sr_count < init_springroll_count - springroll_count )
-			//{
-			//	++summary_sr_count;
-			//	done_updating = false;
-			//}
-			//if ( summary_fd_count < init_wanton_count - wanton_count )
-			//{
-			//	++summary_fd_count;
-			//	done_updating = false;
-			//}
-			//if ( summary_cc_count < init_carrotcake_count - carrotcake_count )
-			//{
-			//	++summary_cc_count;
-			//	done_updating = false;
-			//}
 
-			//Add back in after getting the day2 3 food counter working
-			// 
-			//day2
-			/*
-			if (Cutscene::day == Days::Two || Cutscene::day == Days::Three)
-			{
-				if (summary_csb_count < init_charsiewbao_count - charsiewbao_count)
-				{
-					++summary_csb_count;
-					done_updating = false;
-				}
-				if (summary_rbb_count < init_doushabao_count - doushabao_count)
-				{
-					++summary_rbb_count;
-					done_updating = false;
-				}
-				if (summary_cb_count < init_coffeebao_count - coffeebao_count)
-				{
-					++summary_cb_count;
-					done_updating = false;
-				}
-				if (summary_pd_count < init_hargao_count - hargao_count)
-				{
-					++summary_pd_count;
-					done_updating = false;
-				}
-				if (summary_cf_count < init_chickenfeet_count - chickenfeet_count)
-				{
-					++summary_cf_count;
-					done_updating = false;
-				}
-				if (summary_cd_count < init_siewmai_count - siewmai_count)
-				{
-					++summary_cd_count;
-					done_updating = false;
-				}
-			}
-			if (Cutscene::day == Days::Three)
-			{
-				if (summary_pr_count < init_prawnccf_count - prawnccf_count)
-				{
-					++summary_pr_count;
-					done_updating = false;
-				}
-				if (summary_rnr_count < init_plainccf_count - plainccf_count)
-				{
-					++summary_rnr_count;
-					done_updating = false;
-				}
-			}
-			*/
 			std::stringstream ss;
 			ss << summary_sr_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sr_amt" )->color_ = { 1.0f,1.0f,1.0f };
@@ -2360,12 +2288,12 @@ void UpdateWinScreen(float dt)
 
 
 			float summary_price_amt = springroll_price * summary_sr_count + seaweedchicken_price * summary_sc_count + frieddumplings_price * summary_fd_count + friedcarrotcake_price * summary_cc_count;
-			if (Cutscene::day == Days::Two || Cutscene::day == Days::Three)
+			if (hawker_scene_day == DAY::TWO || hawker_scene_day == DAY::THREE)
 			{
 				summary_price_amt += charsiewbun_price * summary_csb_count + chickendumplings_price * summary_cd_count + prawndumplings_price * summary_pd_count + chickenfeet_price * summary_cf_count
 					+ redbeanbun_price * summary_rbb_count + coffeebun_price * summary_cb_count;
 			}
-			if (Cutscene::day == Days::Three)
+			if (hawker_scene_day == DAY::THREE)
 			{
 				summary_price_amt += prawnroll_cost * summary_pr_count + ricenoodleroll_cost * summary_rnr_count;
 			}
