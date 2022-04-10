@@ -24,7 +24,7 @@ Sky 0
 !
 Clouds 0 
 	c 0 struct JZEngine::Transform
-		3950.17 40 0 0 0 1 1 7660 1048 
+		-4218.17 40 0 0 0 1 1 7660 1048 
 	c 1 struct JZEngine::SpriteLayer
 		-30 
 	c 2 struct JZEngine::Texture
@@ -800,7 +800,7 @@ SpringOnionCursor 0
 !
 SoySauceCursor 0 
 	c 0 struct JZEngine::Transform
-		-252.531 -110.885 -6.69351 1.8277 0 3 3 50 50 
+		-252.531 -110.885 -6.69351 1.8277 0 1.5 3 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		50 
 	c 2 struct JZEngine::Texture
@@ -1132,7 +1132,7 @@ OrderCharsiewbao 0
 	c 1 struct JZEngine::SpriteLayer
 		51 
 	c 2 struct JZEngine::Texture
-		CharSiewBao_Food_Hawker 
+		CharSiewBaoCUT01_Food_Hawker 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
@@ -1144,7 +1144,7 @@ OrderDoushabao 0
 	c 1 struct JZEngine::SpriteLayer
 		51 
 	c 2 struct JZEngine::Texture
-		DouBao_Food_Hawker 
+		DouShaBaoCUT01_Food_Hawker 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
@@ -1156,7 +1156,7 @@ OrderCoffeebao 0
 	c 1 struct JZEngine::SpriteLayer
 		51 
 	c 2 struct JZEngine::Texture
-		CoffeeBao_Food_Hawker 
+		CoffeeBaoCUT01_Food_Hawker 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
@@ -1168,7 +1168,7 @@ OrderPlainccf 0
 	c 1 struct JZEngine::SpriteLayer
 		51 
 	c 2 struct JZEngine::Texture
-		PlainCCF_Food_Hawker 
+		PlainCCF_CUT_ONION_SAUCE_Food_Hawker 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
@@ -1180,7 +1180,7 @@ OrderPrawnccf 0
 	c 1 struct JZEngine::SpriteLayer
 		51 
 	c 2 struct JZEngine::Texture
-		PrawnCCF_Food_Hawker 
+		PrawnCCF_CUT_ONION_SAUCE_Food_Hawker 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
@@ -3726,5 +3726,17 @@ bb_soysauce 0
 	c 0 struct JZEngine::Transform
 		-81 7 0 0 0 1 1 50 50 
 	c 15 struct JZEngine::MouseEvent
-		20 50 
+		25 50 
+!
+gtc_springsoy 0 
+	c 0 struct JZEngine::Transform
+		0 0 0 0 0 44.9077 24.3732 50 50 
+	c 1 struct JZEngine::SpriteLayer
+		45 
+	c 2 struct JZEngine::Texture
+		springsoy_circle 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
 !

@@ -25,7 +25,8 @@ std::unordered_map<std::string , bool> guided_circles {
 	{"gtc_platetray",false},
 	{"gtc_tongsfood", false},
 	{"gtc_platecustomer", false},
-	{"gtc_scizzors", false}
+	{"gtc_scizzors", false},
+	{"gtc_springsoy", false}
 };
 
 
@@ -1702,7 +1703,7 @@ bool notification_display_ { false };
 int notification_current_ { -1 };
 float notification_time_ { 30.0f };
 float notification_time_counter_ { 0.0f };
-constexpr int notification_count_ { 7 };
+constexpr int notification_count_ { 8 };
 std::string notification[ notification_count_ ] =
 {
 	"Baozi! Click the customer for orders.",
@@ -1711,7 +1712,8 @@ std::string notification[ notification_count_ ] =
 	"Put it on the plate and serve it!",
 	"For wrong orders, throw it in the bin.",
 	"Don't take too long! They will get angry.",
-	"Some foods need to be cut before serving!"
+	"Some foods need to be cut before serving!",
+	"Add Spring Onions and Soy Sauce to the food!"
 };
 bool notification_shown[ notification_count_ ] { false };
 
@@ -1770,9 +1772,22 @@ void ShowNotification (int i)
 					switch ( i )
 					{
 
-					case (6 ):
+					case ( 6 ):
 					{
 						ToggleGuidedCircle ( "gtc_scizzors" , true );
+						break;
+					}
+
+					}
+				}
+				if ( hawker_scene_day == DAY::THREE )
+				{
+					switch ( i )
+					{
+
+					case ( 7 ):
+					{
+						ToggleGuidedCircle ( "gtc_springsoy" , true );
 						break;
 					}
 
@@ -2504,6 +2519,8 @@ bool food_cut { false };
 bool food_soy { false };
 bool food_spring { false };
 
+bool first_time_garnish { true };
+
 void UpdateMainScene(float dt)
 {
 	UpdateHawkerQueue(dt);
@@ -2924,6 +2941,10 @@ void UpdateMainScene(float dt)
 						{
 							Scene ().GetComponent<JZEngine::Texture> ( "tray_plainccf" )->texture_id_ = Scene ().GetTexture ( "PlainCCF_CUT_Food_Hawker" );
 							food_cut = true;
+							if ( first_time_garnish )
+							{
+								ShowNotification ( 7 );
+							}
 						}
 						break;
 					case ( CustomerOrder::PrawnCCF ):
@@ -2931,6 +2952,10 @@ void UpdateMainScene(float dt)
 						{
 							Scene ().GetComponent<JZEngine::Texture> ( "tray_prawnccf" )->texture_id_ = Scene ().GetTexture ( "PrawnCCF_CUT_Food_Hawker" );
 							food_cut = true;
+							if ( first_time_garnish )
+							{
+								ShowNotification ( 7 );
+							}
 						}
 						break;
 					}
@@ -2947,6 +2972,11 @@ void UpdateMainScene(float dt)
 							if ( food_soy )
 							{
 								Scene ().GetComponent<JZEngine::Texture> ( "tray_plainccf" )->texture_id_ = Scene ().GetTexture ( "PlainCCF_CUT_ONION_SAUCE_Food_Hawker" );
+								if ( first_time_garnish )
+								{
+									ToggleGuidedCircle ( "gtc_springsoy" , false );
+									first_time_garnish = false;
+								}
 							}
 							else
 							{
@@ -2958,6 +2988,11 @@ void UpdateMainScene(float dt)
 							if ( food_soy )
 							{
 								Scene ().GetComponent<JZEngine::Texture> ( "tray_prawnccf" )->texture_id_ = Scene ().GetTexture ( "PrawnCCF_CUT_ONION_SAUCE_Food_Hawker" );
+								if ( first_time_garnish )
+								{
+									ToggleGuidedCircle ( "gtc_springsoy" , false );
+									first_time_garnish = false;
+								}
 							}
 							else
 							{
@@ -3061,7 +3096,8 @@ void UpdateMainScene(float dt)
 			if (!plate_on_hand)
 			{
 				DisplayOrder(GetNextCustomerOrder(wanton_count, seaweedchicken_count, carrotcake_count, springroll_count,
-					charsiewbao_count, doushabao_count, coffeebao_count, siewmai_count, hargao_count, chickenfeet_count));
+					charsiewbao_count, doushabao_count, coffeebao_count, siewmai_count, hargao_count, chickenfeet_count,
+					plainccf_count, prawnccf_count));
 			}
 			bool instant_win = false;
 			if ( JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_LEFT_CONTROL ) )
@@ -3289,6 +3325,10 @@ void HawkerSceneInit()
 	{
 		current_notification = 6;
 	}
+	else if ( hawker_scene_day == DAY::THREE )
+	{
+		current_notification = 7;
+	}
 	first_time_cut = true;
 	//ShowNotification ( 0 );
 
@@ -3464,7 +3504,7 @@ void HawkerSceneUpdate(float dt)
 	bool food_count = springroll_count <= 0 && carrotcake_count <= 0 && wanton_count <= 0 && seaweedchicken_count <= 0;
 	if ( hawker_scene_day == DAY::TWO )
 	{
-		food_count = food_count && ( chickenfeet_count <= 0 && hargao_count <= 0 && siewmai_count <= 0 && charsiewbao_count <= 0 && doushabao_count <= 0 && coffeebao_count );
+		food_count = food_count && ( chickenfeet_count <= 0 && hargao_count <= 0 && siewmai_count <= 0 && charsiewbao_count <= 0 && doushabao_count <= 0 && coffeebao_count <= 0 );
 	}
 	if ( hawker_scene_day == DAY::THREE )
 	{

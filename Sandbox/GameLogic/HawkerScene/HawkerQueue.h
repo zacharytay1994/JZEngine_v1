@@ -714,7 +714,8 @@ bool InteractWithQueue(bool food, CustomerOrder order, bool giveMeWin, bool cut,
 }
 
 CustomerOrder GetNextCustomerOrder(int dumpling, int seaweed, int carrotcake, int popiah,
-	int charsiewbao, int doushabao, int coffeebao, int siewmai, int hargow, int chickenfeet)
+	int charsiewbao, int doushabao, int coffeebao, int siewmai, int hargow, int chickenfeet,
+	int plainccf, int prawnccf)
 {
 	Customer* p_customer{ nullptr };
 	for (int i = 0; i < customers.size(); ++i)
@@ -786,6 +787,18 @@ CustomerOrder GetNextCustomerOrder(int dumpling, int seaweed, int carrotcake, in
 			break;
 		case CustomerOrder::ChickenFeet:
 			if ( chickenfeet <= 0 )
+			{
+				p_customer->no_food_ = true;
+			}
+			break;
+		case CustomerOrder::PlainCCF:
+			if ( plainccf <= 0 )
+			{
+				p_customer->no_food_ = true;
+			}
+			break;
+		case CustomerOrder::PrawnCCF:
+			if ( prawnccf <= 0 )
 			{
 				p_customer->no_food_ = true;
 			}
