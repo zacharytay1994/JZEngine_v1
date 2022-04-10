@@ -1675,7 +1675,7 @@ bool notification_display_ { false };
 int notification_current_ { -1 };
 float notification_time_ { 30.0f };
 float notification_time_counter_ { 0.0f };
-constexpr int notification_count_ { 6 };
+constexpr int notification_count_ { 7 };
 std::string notification[ notification_count_ ] =
 {
 	"Baozi! Click the customer for orders.",
@@ -1684,6 +1684,7 @@ std::string notification[ notification_count_ ] =
 	"Put it on the plate and serve it!",
 	"For wrong orders, throw it in the bin.",
 	"Don't take too long! They will get angry.",
+	"Use the scizzors to cut the food!"
 };
 bool notification_shown[ notification_count_ ] { false };
 
@@ -1735,6 +1736,18 @@ void ShowNotification (int i)
 					case ( 4 ):
 						ToggleGuidedCircle ( "gtc_platecustomer" , false );
 						break;
+					}
+				}
+				if ( hawker_scene_day == DAY::TWO )
+				{
+					switch ( i )
+					{
+
+					case (6 ):
+					{
+						break;
+					}
+
 					}
 				}
 				++current_notification;
