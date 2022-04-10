@@ -20,7 +20,7 @@ enum class DAY
 	TWO ,
 	THREE
 };
-DAY hawker_scene_day = DAY::ONE;
+DAY hawker_scene_day = DAY::TWO;
 
 enum class CustomerState
 {

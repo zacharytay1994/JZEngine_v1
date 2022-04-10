@@ -1984,25 +1984,25 @@ void SummaryInit ()
 	{
 		Scene().GetComponent<JZEngine::TextData>("sum_sr_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_sr_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_sr_amt")->position_ = { -195.5f,175.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_sr_amt")->position_ = { -215,169.f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_sc_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_sc_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_sc_amt")->position_ = { 239.f,175.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_sc_amt")->position_ = { 227.f,169.f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_fd_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_fd_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_fd_amt")->position_ = { -205.f,4.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_fd_amt")->position_ = { -215.f,-4.0f };
 
 		Scene().GetComponent<JZEngine::TextData>("sum_cc_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_cc_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_cc_amt")->position_ = { 247.f,5.5f };
+		Scene().GetComponent<JZEngine::Transform>("sum_cc_amt")->position_ = { 227.0f,-4.0f };
 
 		Scene().GetComponent<JZEngine::Texture>("Summary_screen")->texture_id_ = Scene().GetTexture("SummaryBackgroundDay1_WIN_UI_hawker");
 
 		Scene().GetComponent<JZEngine::TextData>("sum_total_amt")->color_ = { 1.0f,1.0f,1.0f };
 		Scene().GetComponent<JZEngine::TextData>("sum_total_amt")->text = JZEngine::String(ss.str().c_str());
-		Scene().GetComponent<JZEngine::Transform>("sum_total_amt")->position_ = { -50.f,-180.f };
+		Scene().GetComponent<JZEngine::Transform>("sum_total_amt")->position_ = { -48.0f,-188.f };
 	}
 	if (hawker_scene_day == DAY::TWO)
 	{
@@ -2177,7 +2177,7 @@ void UpdateWinScreen(float dt)
 		black_alpha += dt;
 		ready = false;
 	}
-	if ( summary_y > 11.0f )
+	if ( summary_y > 0.0f )
 	{
 		exitbutton_y -= 1024.0f * dt;
 		rsbutton_y -= 1024.0f * dt;
@@ -2185,6 +2185,12 @@ void UpdateWinScreen(float dt)
 
 		summary_y -= 1024.0f * dt;
 		ready = false;
+	}
+	else
+	{
+		summary_y = 0.0f;
+		exitbutton_y = -436.0f;
+		rsbutton_y = -436.0f;
 	}
 
 	if ( ready )
