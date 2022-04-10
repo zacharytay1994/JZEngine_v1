@@ -265,6 +265,7 @@ void FlagAllCursorsFalse()
 	// set plate and tongs to non shadow
 	Scene ().GetComponent<JZEngine::Texture> ( "Plate" )->texture_id_ = Scene ().GetTexture ( "Plate_Equipment_Hawker" );
 	Scene ().GetComponent<JZEngine::Texture> ( "Tongs" )->texture_id_ = Scene ().GetTexture ( "Tongs_Equipment_hawker" );
+	Scene ().GetComponent<JZEngine::Texture> ( "Scizzors" )->texture_id_ = Scene ().GetTexture ( "Scissors_Equipment_hawker" );
 }
 
 void FlagCursorState(CursorState state)
@@ -293,6 +294,10 @@ void FlagCursorState(CursorState state)
 		state == CursorState::TongsPrawnCCF )
 	{
 		Scene ().GetComponent<JZEngine::Texture> ( "Tongs" )->texture_id_ = Scene ().GetTexture ( "Tongs(Shaded)_Equipment_hawker" );
+	}
+	if ( state == CursorState::Scizzors )
+	{
+		Scene ().GetComponent<JZEngine::Texture> ( "Scizzors" )->texture_id_ = Scene ().GetTexture ( "Scissors(Shaded)_Equipment_hawker" );
 	}
 }
 
@@ -1280,12 +1285,12 @@ void UpdateShop (float dt)
 
 	if ( hawker_scene_day == DAY::TWO || hawker_scene_day == DAY::THREE )
 	{
-		total_amt += chickendumpling_cost * siewmai_count + prawndumpling_cost * hargao_count + chickenfeet_cost * chickenfeet_count;
+		total_amt += chickendumpling_cost * siewmai_count + prawndumpling_cost * hargao_count + chickenfeet_cost * chickenfeet_count
+			+ charsiewbun_cost * charsiewbao_count + redbeanbun_cost * doushabao_count + coffeebun_cost * coffeebao_count;
 	}
 	if ( hawker_scene_day == DAY::THREE )
 	{
-		total_amt += charsiewbun_cost * charsiewbao_count + redbeanbun_cost * doushabao_count + coffeebun_cost * coffeebao_count +
-			ricenoodleroll_cost * plainccf_count + prawnroll_cost * prawnccf_count;
+		total_amt += ricenoodleroll_cost * plainccf_count + prawnroll_cost * prawnccf_count;
 	}
 
 	std::stringstream ss;
@@ -3135,9 +3140,23 @@ void UpdateMainScene(float dt)
 
 	if ( won_bar_ )
 	{
-		if ( won_bar_counter_ < 1.0f )
+		if ( won_bar_counter_ < 2.0f )
 		{
 			won_bar_counter_ += dt;
+
+			if ( Scene ().GetComponent<JZEngine::Animation2D> ( "WinBar" )->frame_ == Scene ().GetComponent<JZEngine::Animation2D> ( "WinBar" )->max_frames_ - 1)
+			{
+				Scene ().GetComponent<JZEngine::Animation2D> ( "WinBar" )->animation_speed_ = 10.0f;
+			}
+
+			float& scale = Scene ().GetComponent<JZEngine::Transform> ( "WinBar" )->scale_.x;
+			if ( scale < 2.0f )
+			{
+				scale += dt * 5.0f;
+				Scene ().GetComponent<JZEngine::Transform> ( "WinBar" )->scale_.y = scale;
+				Scene ().GetComponent<JZEngine::Transform> ( "WinBarBG" )->scale_.x = scale;
+				Scene ().GetComponent<JZEngine::Transform> ( "WinBarBG" )->scale_.y = scale;
+			}
 		}
 		else
 		{
@@ -3189,6 +3208,9 @@ void HawkerSceneInit()
 	{
 		notification_shown[ i ] = false;
 	}
+
+	Scene ().GetComponent<JZEngine::Transform> ( "WinBar" )->scale_ = JZEngine::Vec2f ( 0.01f , 0.01f );
+	Scene ().GetComponent<JZEngine::Transform> ( "WinBarBG" )->scale_ = JZEngine::Vec2f ( 0.01f , 0.01f );
 
 	ToggleWin(false);
 	ToggleSummary ( false );

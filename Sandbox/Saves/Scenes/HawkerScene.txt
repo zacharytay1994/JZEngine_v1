@@ -24,7 +24,7 @@ Sky 0
 !
 Clouds 0 
 	c 0 struct JZEngine::Transform
-		-1875.94 40 0 0 0 1 1 7660 1048 
+		-294.681 40 0 0 0 1 1 7660 1048 
 	c 1 struct JZEngine::SpriteLayer
 		-30 
 	c 2 struct JZEngine::Texture
@@ -428,11 +428,11 @@ Tongs 0
 !
 Scizzors 0 
 	c 0 struct JZEngine::Transform
-		24.6265 -415.968 0 0 12.3532 0.59 0.59 512 512 
+		24.6265 -415.968 0 0 12.3532 0.59 0.59 512 256 
 	c 1 struct JZEngine::SpriteLayer
 		25 
 	c 2 struct JZEngine::Texture
-		Scissors_Equipment_Hawker 
+		Scissors_Equipment_hawker 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
@@ -2538,7 +2538,7 @@ NotificationText 0
 !
 WinBar 0 
 	c 0 struct JZEngine::Transform
-		0 0 0 0 0 1 1 1024 256 
+		0 0 0 0 0 0.01 0.01 1024 256 
 	c 1 struct JZEngine::SpriteLayer
 		90 
 	c 2 struct JZEngine::Texture
@@ -2546,19 +2546,19 @@ WinBar 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0172697 0.1 2 2 7 4 
+		1 0.0172697 2 2 6 7 4 
 !
 WinBarBG 0 
 	c 0 struct JZEngine::Transform
-		-3.75492 -43.6548 0 0 0 1 1 1024 1024 
+		-3.75492 -43.6548 0 0 0 0.01 0.01 1024 1024 
 	c 1 struct JZEngine::SpriteLayer
 		88 
 	c 2 struct JZEngine::Texture
-		WinStarbust_Spritesheet_Hawker 
+		WinStarbust(Loop)_Spritesheet_Hawker 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0172697 0.1 4 9 16 4 
+		1 0.0172697 0.1 4 0 10 3 
 !
 WinFireworks1 0 
 	c 0 struct JZEngine::Transform
