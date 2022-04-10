@@ -510,7 +510,7 @@ void InitPhoneScreen()
 
 	//Text section for Album1980 app photo hover
 	Scene().GetComponent<JZEngine::TextData>( "Album_1980_hovertext1" )->text = JZEngine::String
-	( "Relocating from Street Hawkers to\nHawker Centres, it is now furnished with\nseating areas, proper utility services,\nventilation, and in some places, even\na toilet.This vastly improved both the\ndiners’ and hawkers‘ quality of life." );
+	( "Street carts were relocated to hawker\ncentres! Now, seating areas,utility\nservices, even toilets (at certain places)\ncan be found, vastly improving\nboth diners’ and hawkers’ quality of life." );
 	Scene().GetComponent<JZEngine::TextData>( "Album_1980_hovertext1" )->color_ = JZEngine::Vec3f( 255.0f, 255.0f, 255.0f );
 	Scene().GetComponent<JZEngine::TextData>( "Album_1980_hovertext1" )->leading_y_ = hp_text_leading;
 
