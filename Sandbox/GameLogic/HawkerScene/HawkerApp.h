@@ -252,6 +252,27 @@ void FlagOptionsScreen(bool flag)
 	Scene().EntityFlagActive("Option_x", flag);
 }
 
+void FlagCreditsScreen(bool flag)
+{
+	Scene().EntityFlagActive("Credits_background", flag);
+	Scene().EntityFlagActive("Credits_x", flag);
+	if (!flag)
+	{
+		Scene().GetComponent<JZEngine::MouseEvent>("Credits_x")->on_released_ = false;
+	}
+}
+
+void FlagQuitGameScreen(bool flag)
+{
+	Scene().EntityFlagActive("QuitGame_bg", flag);
+	Scene().EntityFlagActive("QuitGame_yes", flag);
+	Scene().EntityFlagActive("QuitGame_no", flag);
+	if (!flag)
+	{
+		Scene().GetComponent<JZEngine::MouseEvent>("QuitGame_no")->on_released_ = false;
+	}
+}
+
 void FlagMsg1( bool flag )
 {
 	Scene().EntityFlagActive( "Last_page_msg_1_bg", flag );
@@ -366,6 +387,8 @@ void InitPhoneScreen()
 
 	FlagHowtoPlayScreen( false );
 	FlagOptionsScreen(false);
+	FlagCreditsScreen(false);
+	FlagQuitGameScreen(false);
 	Scene().EntityFlagActive("Credits", false);
 	Scene().EntityFlagActive("Quit", false);
 	FlagMsg1( false );
@@ -825,11 +848,11 @@ void UpdateOptionMenu(float dt)
 			current_app_state = HawkerAppState::MainScreen;
 		}
 	}
-	/*if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Credits"))
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Credits"))
 	{
 		if (e->on_released_)
 		{
-			ToggleCredits(true);
+			FlagCreditsScreen(true);
 		}
 		if (e->on_held_)
 		{
@@ -843,23 +866,21 @@ void UpdateOptionMenu(float dt)
 		{
 			ToggleButton("Credits", ButtonState::Normal);
 		}
+
 	}
-	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Credits_x_bb"))
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Credits_x"))
 	{
 		if (e->on_released_)
 		{
-			ToggleCredits(false);
+			FlagCreditsScreen(false);
 		}
-	}*/
-	// JM: comment this out , as "Quit Game" in "Option" no longer needed.
-	/*if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("bb_Quit"))
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Quit"))
 	{
 		if (e->on_released_)
 		{
-			ToggleOptions(false);
-			Scene().EntityFlagActive("Credits", false);
-			Scene().EntityFlagActive("Quit", false);
-			current_main_menu_state = MainMenuState::Main;
+			//ToggleOptions(false);
+			FlagQuitGameScreen(true);
 		}
 		if (e->on_held_)
 		{
@@ -873,7 +894,45 @@ void UpdateOptionMenu(float dt)
 		{
 			ToggleButton("Quit", ButtonState::Normal);
 		}
-	}*/
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("QuitGame_yes"))
+	{
+		if (e->on_released_)
+		{
+			Scene().CloseApplication();
+		}
+		if (e->on_held_)
+		{
+			ToggleButton("QuitGame_yes", ButtonState::Clicked);
+		}
+		else if (e->on_hover_)
+		{
+			ToggleButton("QuitGame_yes", ButtonState::Hover);
+		}
+		else
+		{
+			ToggleButton("QuitGame_yes", ButtonState::Normal);
+		}
+	}
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("QuitGame_no"))
+	{
+		if (e->on_released_)
+		{
+			FlagQuitGameScreen(false);
+		}
+		if (e->on_held_)
+		{
+			ToggleButton("QuitGame_no", ButtonState::Clicked);
+		}
+		else if (e->on_hover_)
+		{
+			ToggleButton("QuitGame_no", ButtonState::Hover);
+		}
+		else
+		{
+			ToggleButton("QuitGame_no", ButtonState::Normal);
+		}
+	}
 }
 
 void UpdateTheresapp( float dt )
