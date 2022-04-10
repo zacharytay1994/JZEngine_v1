@@ -2170,80 +2170,7 @@ void UpdateWinScreen(float dt)
 		if ( update )
 		{
 			bool done_updating { true };
-			// add display numbers 
-			//day1
-			//if ( summary_sc_count < init_seaweedchicken_count - seaweedchicken_count )
-			//{
-			//	++summary_sc_count;
-			//	done_updating = false;
-			//}
-			//if ( summary_sr_count < init_springroll_count - springroll_count )
-			//{
-			//	++summary_sr_count;
-			//	done_updating = false;
-			//}
-			//if ( summary_fd_count < init_wanton_count - wanton_count )
-			//{
-			//	++summary_fd_count;
-			//	done_updating = false;
-			//}
-			//if ( summary_cc_count < init_carrotcake_count - carrotcake_count )
-			//{
-			//	++summary_cc_count;
-			//	done_updating = false;
-			//}
-
-			//Add back in after getting the day2 3 food counter working
-			// 
-			//day2
-			/*
-			if (Cutscene::day == Days::Two || Cutscene::day == Days::Three)
-			{
-				if (summary_csb_count < init_charsiewbao_count - charsiewbao_count)
-				{
-					++summary_csb_count;
-					done_updating = false;
-				}
-				if (summary_rbb_count < init_doushabao_count - doushabao_count)
-				{
-					++summary_rbb_count;
-					done_updating = false;
-				}
-				if (summary_cb_count < init_coffeebao_count - coffeebao_count)
-				{
-					++summary_cb_count;
-					done_updating = false;
-				}
-				if (summary_pd_count < init_hargao_count - hargao_count)
-				{
-					++summary_pd_count;
-					done_updating = false;
-				}
-				if (summary_cf_count < init_chickenfeet_count - chickenfeet_count)
-				{
-					++summary_cf_count;
-					done_updating = false;
-				}
-				if (summary_cd_count < init_siewmai_count - siewmai_count)
-				{
-					++summary_cd_count;
-					done_updating = false;
-				}
-			}
-			if (Cutscene::day == Days::Three)
-			{
-				if (summary_pr_count < init_prawnccf_count - prawnccf_count)
-				{
-					++summary_pr_count;
-					done_updating = false;
-				}
-				if (summary_rnr_count < init_plainccf_count - plainccf_count)
-				{
-					++summary_rnr_count;
-					done_updating = false;
-				}
-			}
-			*/
+			
 			std::stringstream ss;
 			ss << summary_sr_count;
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_sr_amt" )->color_ = { 1.0f,1.0f,1.0f };
@@ -2261,7 +2188,7 @@ void UpdateWinScreen(float dt)
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->color_ = { 1.0f,1.0f,1.0f };
 			Scene ().GetComponent<JZEngine::TextData> ( "sum_cc_amt" )->text = JZEngine::String ( ss.str ().c_str () );
 			
-			if (Cutscene::day == Days::Two || Cutscene::day == Days::Three)
+			if (hawker_scene_day == DAY::TWO || hawker_scene_day == DAY::THREE)
 			{
 				ss.str("");
 				ss << summary_csb_count;
@@ -2290,7 +2217,7 @@ void UpdateWinScreen(float dt)
 
 
 			}
-			if (Cutscene::day == Days::Three)
+			if (hawker_scene_day == DAY::THREE)
 			{
 				ss.str("");
 				ss << summary_pr_count;
@@ -2305,12 +2232,12 @@ void UpdateWinScreen(float dt)
 
 
 			float summary_price_amt = springroll_price * summary_sr_count + seaweedchicken_price * summary_sc_count + frieddumplings_price * summary_fd_count + friedcarrotcake_price * summary_cc_count;
-			if (Cutscene::day == Days::Two || Cutscene::day == Days::Three)
+			if (hawker_scene_day == DAY::TWO || hawker_scene_day == DAY::THREE)
 			{
 				summary_price_amt += charsiewbun_price * summary_csb_count + chickendumplings_price * summary_cd_count + prawndumplings_price * summary_pd_count + chickenfeet_price * summary_cf_count
 					+ redbeanbun_price * summary_rbb_count + coffeebun_price * summary_cb_count;
 			}
-			if (Cutscene::day == Days::Three)
+			if (hawker_scene_day == DAY::THREE)
 			{
 				summary_price_amt += prawnroll_cost * summary_pr_count + ricenoodleroll_cost * summary_rnr_count;
 			}
