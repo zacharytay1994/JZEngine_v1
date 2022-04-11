@@ -232,7 +232,7 @@ enum class Confirmstate
 	None
 };
 Confirmstate confirm_state = Confirmstate::None;
-
+void ToggleConfirm(bool toggle, Confirmstate confirm_state = Confirmstate::None);
 
 void FlagAllCursorsFalse()
 {
@@ -932,6 +932,35 @@ float no_money_display_timer { 0.0f };
 
 void UpdateShop (float dt)
 {
+	if (confirm_state == Confirmstate::None)
+	{
+		ToggleConfirm(false);
+	}
+	if (confirm_state == Confirmstate::Exit)
+	{
+
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_Yes"))
+		{
+			AutoToggleButton(e, "Summary_Yes");
+			if (e->on_released_)
+			{
+				confirm_state = Confirmstate::None;
+				Scene().ChangeScene("MainMenu");
+			}
+		}
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_No"))
+		{
+			AutoToggleButton(e, "Summary_No");
+			if (e->on_released_)
+			{
+				confirm_state = Confirmstate::None;
+				
+			}
+		}
+
+		return;
+	}
+
 	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "BeginShop_Next" ) )
 	{
 		if ( total_amt <= wallet_amt )
@@ -1006,7 +1035,9 @@ void UpdateShop (float dt)
 	{
 		if ( e->on_released_ )
 		{
-			Scene ().ChangeScene ( "MainMenu" );
+			//Scene ().ChangeScene ( "MainMenu" );
+			confirm_state = Confirmstate::Exit;
+			ToggleConfirm(true, confirm_state);
 		}
 		if ( e->on_held_ )
 		{
@@ -1963,13 +1994,13 @@ void ToggleSummary ( bool toggle )
 	}
 	
 }
-void ToggleConfirm(bool toggle, Confirmstate confirm_state = Confirmstate::None)
+void ToggleConfirm(bool toggle, Confirmstate confirm_state)
 {
 	if(confirm_state ==Confirmstate::Restart)
 		Scene().EntityFlagActive("Summary_Restart_Confirm", toggle);
 	else if(confirm_state == Confirmstate::Exit)
 		Scene().EntityFlagActive("Summary_Exit_Confirm", toggle);
-	else
+	else//none
 	{
 		Scene().EntityFlagActive("Summary_Restart_Confirm", toggle);
 		Scene().EntityFlagActive("Summary_Exit_Confirm", toggle);
