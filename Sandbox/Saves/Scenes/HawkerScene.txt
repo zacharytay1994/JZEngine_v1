@@ -24,13 +24,13 @@ Sky 0
 !
 Clouds 0 
 	c 0 struct JZEngine::Transform
-		369.167 40 0 0 0 1 1 7660 1048 
+		2015.18 40 0 0 0 1 1 7660 1048 
 	c 1 struct JZEngine::SpriteLayer
 		-30 
 	c 2 struct JZEngine::Texture
 		bg_hawker_clouds 
 	c 3 struct JZEngine::NonInstanceShader
-		0 -0.800007 -0.500017 2.70002 
+		0 1 1 1 
 	c 7 struct JZEngine::Parallax
 		0 10 0 
 	c 10 struct JZEngine::Animation2D
@@ -728,7 +728,7 @@ TongsSiewMai 0
 !
 TongsCharSiewBao 0 
 	c 0 struct JZEngine::Transform
-		76.8072 555.358 -0.499901 -0.642029 0 3 3 50 50 
+		-77.7202 -48.5183 -0.499901 -0.642029 0 3 3 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		50 
 	c 2 struct JZEngine::Texture
@@ -740,7 +740,7 @@ TongsCharSiewBao 0
 !
 TongsDouShaBao 0 
 	c 0 struct JZEngine::Transform
-		76.8072 555.358 -0.499901 -0.642029 0 3 3 50 50 
+		-77.7202 -48.5183 -0.499901 -0.642029 0 3 3 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		50 
 	c 2 struct JZEngine::Texture
@@ -752,7 +752,7 @@ TongsDouShaBao 0
 !
 TongsCoffeeBao 0 
 	c 0 struct JZEngine::Transform
-		76.8072 555.358 -0.499901 -0.642029 0 3 3 50 50 
+		-77.7202 -48.5183 -0.499901 -0.642029 0 3 3 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		50 
 	c 2 struct JZEngine::Texture
@@ -788,7 +788,7 @@ TongsPrawnCCF 0
 !
 SpringOnionCursor 0 
 	c 0 struct JZEngine::Transform
-		83.3559 553.255 6.04886 -2.74489 0 3 3 50 50 
+		-71.1714 -50.6212 6.04886 -2.74489 0 3 3 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		50 
 	c 2 struct JZEngine::Texture
@@ -1188,7 +1188,7 @@ OrderPrawnccf 0
 !
 PhoneOptions 0 
 	c 0 struct JZEngine::Transform
-		-854.249 470 0 0 0 0.285 0.285 512 512 
+		-854.249 470 0 0 0 0.254 0.254 512 512 
 	c 1 struct JZEngine::SpriteLayer
 		50 
 	c 2 struct JZEngine::Texture
@@ -2442,11 +2442,11 @@ WinBarBG 0
 	c 1 struct JZEngine::SpriteLayer
 		88 
 	c 2 struct JZEngine::Texture
-		WinStarbust_Spritesheet_Hawker 
+		WinStarbust(Loop)_Spritesheet_Hawker 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0172697 0.1 4 9 16 4 
+		1 0.0172697 0.1 4 0 10 3 
 !
 WinFireworks1 0 
 	c 0 struct JZEngine::Transform
@@ -2458,7 +2458,7 @@ WinFireworks1 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0172697 0.1 2 1 4 2 
+		1 0.0696903 0.1 2 1 4 2 
 !
 WinFireworks2 0 
 	c 0 struct JZEngine::Transform
@@ -2470,7 +2470,7 @@ WinFireworks2 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0172697 0.1 2 3 6 3 
+		1 0.0696903 0.1 2 5 6 3 
 !
 WinFireworks3 0 
 	c 0 struct JZEngine::Transform
@@ -2482,7 +2482,7 @@ WinFireworks3 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0172697 0.1 2 1 4 2 
+		1 0.0696903 0.1 2 1 4 2 
 !
 WinFireworks4 0 
 	c 0 struct JZEngine::Transform
@@ -2494,7 +2494,7 @@ WinFireworks4 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		1 0.0172697 0.1 2 3 6 3 
+		1 0.0696903 0.1 2 5 6 3 
 !
 WinBlackCover 0 
 	c 0 struct JZEngine::Transform
@@ -2506,7 +2506,7 @@ WinBlackCover 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0 1 1 0 1 1 
+		0 1.01374 1 1 0 1 1 
 !
 MouseCursor 0 
 	c 0 struct JZEngine::Transform
@@ -2714,7 +2714,7 @@ Black_goal 0
 !
 Goal_one 0 
 	c 0 struct JZEngine::Transform
-		0.0726547 0 0 0 0 1 1 2048 1024 
+		-2048 0 0 0 0 1 1 2048 1024 
 	c 1 struct JZEngine::SpriteLayer
 		404 
 	c 2 struct JZEngine::Texture
@@ -2738,7 +2738,7 @@ Goal_two 0
 !
 Goal_three 0 
 	c 0 struct JZEngine::Transform
-		4096.06 0 0 0 0 1 1 2048 1024 
+		0 0 0 0 0 1 1 2048 1024 
 	c 1 struct JZEngine::SpriteLayer
 		406 
 	c 2 struct JZEngine::Texture
@@ -2750,19 +2750,19 @@ Goal_three 0
 !
 Summary_screen 0 
 	c 0 struct JZEngine::Transform
-		0 -1.41176 0 0 0 1 1 2048 1024 
+		0 0 0 0 0 1 1 2048 1024 
 	c 1 struct JZEngine::SpriteLayer
 		408 
 	c 2 struct JZEngine::Texture
-		SummaryBackgroundDay2_LOSE_UI_hawker 
+		SummaryBackgroundDay1_WIN_UI_hawker 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.383334 1 1 0 1 1 
+		0 0.933861 1 1 0 1 1 
 !
 sum_sr_amt 0 
 	c 0 struct JZEngine::Transform
-		-450.475 171.59 0 0 0 1 1 50 50 
+		-215 169 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		409 
 	c 9 struct JZEngine::TextData
@@ -2770,7 +2770,7 @@ sum_sr_amt 0
 !
 sum_sc_amt 0 
 	c 0 struct JZEngine::Transform
-		-139.628 173.103 0 0 0 1 1 50 50 
+		227 169 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		409 
 	c 9 struct JZEngine::TextData
@@ -2778,7 +2778,7 @@ sum_sc_amt 0
 !
 sum_fd_amt 0 
 	c 0 struct JZEngine::Transform
-		178.897 170.551 0 0 0 1 1 50 50 
+		-215 -4 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		409 
 	c 9 struct JZEngine::TextData
@@ -2786,7 +2786,7 @@ sum_fd_amt 0
 !
 sum_cc_amt 0 
 	c 0 struct JZEngine::Transform
-		500.473 169.036 0 0 0 1 1 50 50 
+		227 -4 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		409 
 	c 9 struct JZEngine::TextData
@@ -2794,7 +2794,7 @@ sum_cc_amt 0
 !
 sum_total_amt 0 
 	c 0 struct JZEngine::Transform
-		-50 -192 0 0 0 1 1 50 50 
+		-48 -188 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		409 
 	c 9 struct JZEngine::TextData
@@ -3334,7 +3334,7 @@ shop_exit 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.283334 1 1 0 1 1 
+		0 0.300001 1 1 0 1 1 
 !
 shop_next 0 
 	c 0 struct JZEngine::Transform
@@ -3346,7 +3346,7 @@ shop_next 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.283334 1 1 0 1 1 
+		0 0.300001 1 1 0 1 1 
 !
 Wallet_amt 0 
 	c 0 struct JZEngine::Transform
@@ -3436,7 +3436,7 @@ ScrollDay3_mouse 0
 !
 Summary_Restart 0 
 	c 0 struct JZEngine::Transform
-		260 -437.413 0 0 0 11 6 50 50 
+		260 -433 0 0 0 11 6 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		410 
 	c 2 struct JZEngine::Texture
@@ -3444,13 +3444,13 @@ Summary_Restart 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.250118 1 1 0 1 1 
+		0 0.267538 1 1 0 1 1 
 	c 15 struct JZEngine::MouseEvent
 		230 65 
 !
 Summary_Next 0 
 	c 0 struct JZEngine::Transform
-		260 -437.413 0 0 0 11 6 50 50 
+		260 -433 0 0 0 11 6 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		410 
 	c 2 struct JZEngine::Texture
@@ -3458,21 +3458,21 @@ Summary_Next 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.216667 1 1 0 1 1 
+		0 0.750367 1 1 0 1 1 
 	c 15 struct JZEngine::MouseEvent
 		230 65 
 !
 Summary_Exit 0 
 	c 0 struct JZEngine::Transform
-		-287 -437.413 0 0 0 11 6 50 50 
+		-287 -433 0 0 0 11 6 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		410 
 	c 2 struct JZEngine::Texture
-		Exit(OG)_Button_MainMenu_Ver2 
+		Exit(Highlight)_Button_MainMenu_Ver2 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.383334 1 1 0 1 1 
+		0 0.933861 1 1 0 1 1 
 	c 15 struct JZEngine::MouseEvent
 		230 60 
 !
@@ -3486,7 +3486,7 @@ Summary_Exit_Confirm 0
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.686624 1 1 0 1 1 
+		0 0 1 1 0 1 1 
 !
 Summary_Restart_Confirm 0 
 	c 0 struct JZEngine::Transform
@@ -3502,29 +3502,29 @@ Summary_Restart_Confirm 0
 !
 Summary_Yes 0 
 	c 0 struct JZEngine::Transform
-		-282 -132 0 0 0 1 1 512 256 
+		282.65 -132 0 0 0 1 1 512 256 
 	c 1 struct JZEngine::SpriteLayer
 		421 
 	c 2 struct JZEngine::Texture
-		Yes(Clicked)_Button_MainMenu 
+		Yes(OG)_Button_MainMenu 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.929916 1 1 0 1 1 
+		0 0.300236 1 1 0 1 1 
 	c 15 struct JZEngine::MouseEvent
 		200 60 
 !
 Summary_No 0 
 	c 0 struct JZEngine::Transform
-		282.65 -132.753 0 0 0 1 1 512 256 
+		-282 -132.753 0 0 0 1 1 512 256 
 	c 1 struct JZEngine::SpriteLayer
 		421 
 	c 2 struct JZEngine::Texture
-		No(OG)_Button_MainMenu 
+		No(Clicked)_Button_MainMenu 
 	c 3 struct JZEngine::NonInstanceShader
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
-		0 0.798554 1 1 0 1 1 
+		0 0.116667 1 1 0 1 1 
 	c 15 struct JZEngine::MouseEvent
 		200 60 
 !
@@ -4781,4 +4781,24 @@ Arrow_right_how_to_play_fade 0
 		0 0 0 0 
 	c 10 struct JZEngine::Animation2D
 		0 0.866678 1 1 0 1 1 
+!
+customers_left 0 
+	c 0 struct JZEngine::Transform
+		780.5 404 0 0 0 1 1 50 50 
+	c 1 struct JZEngine::SpriteLayer
+		100 
+	c 9 struct JZEngine::TextData
+		1 
+!
+customers_left_bg 0 
+	c 0 struct JZEngine::Transform
+		809 402 0 0 0 0.64 0.69 512 128 
+	c 1 struct JZEngine::SpriteLayer
+		49 
+	c 2 struct JZEngine::Texture
+		CustomerBar_UI_Hawker 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
 !
