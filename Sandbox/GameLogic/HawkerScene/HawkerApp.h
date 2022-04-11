@@ -30,6 +30,7 @@ float top_boundary{ 267.0f };
 float bottom_boundary{ -348.0f };
 float top_line{ 220.0f };
 float bottom_line{ -340.0f };
+float bottom_line_day2{ -333.0f };
 float upper_bound{ 270.0f };
 bool scroll_up{ false };
 bool scroll_down{ false };
@@ -38,6 +39,7 @@ bool quit_confirmation{ false };
 bool main_menu_confirmation{ false };
 bool restart_confirmation{ false };
 float original_wallet_amt { 100.0f };
+JZEngine::Vec2f shiftup{ 0.0,1000.0 };
 
 //Options
 float master_volume_phone{ 0.33f };
@@ -51,19 +53,48 @@ float initial_bar_position_phone{ -215.0f };
 bool Photo1960{ false }, Photo1980{ false }, Photo2021{ false }, PhotoSelected{ false };
 
 //Original position of messages variables
-JZEngine::Vec2f original_msg1_position{ 0.0,0.0 };
-JZEngine::Vec2f original_msg2_position{ 0.0,0.0 };
-JZEngine::Vec2f original_msg3_position{ 0.0,0.0 };
-JZEngine::Vec2f original_msg4_position{ 0.0,0.0 };
-JZEngine::Vec2f original_msg5_position{ 0.0,0.0 };
-JZEngine::Vec2f original_msg6_position{ 0.0,0.0 };
-JZEngine::Vec2f original_msg7_position{ 0.0,0.0 };
-JZEngine::Vec2f original_msg8_position{ 0.0,0.0 };
-JZEngine::Vec2f original_msg9_position{ 0.0,0.0 };
-JZEngine::Vec2f original_msg10_position{ 0.0,0.0 };
-JZEngine::Vec2f original_msg11_position{ 0.0,0.0 };
-JZEngine::Vec2f original_msg12_position{ 0.0,0.0 };
-JZEngine::Vec2f original_msg13_position{ 0.0,0.0 };
+//Day1
+JZEngine::Vec2f original_day1msg1_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg2_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg3_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg4_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg5_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg6_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg7_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg8_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg9_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg10_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg11_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg12_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg13_position{ 0.0,0.0 };
+
+JZEngine::Vec2f original_day1msg1_position_dup{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg2_position_dup{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg3_position_dup{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg4_position_dup{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg5_position_dup{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg6_position_dup{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg7_position_dup{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg8_position_dup{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg9_position_dup{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg10_position_dup{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg11_position_dup{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg12_position_dup{ 0.0,0.0 };
+JZEngine::Vec2f original_day1msg13_position_dup{ 0.0,0.0 };
+
+
+//Day2
+JZEngine::Vec2f original_day2msg1_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day2msg2_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day2msg3_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day2msg4_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day2msg5_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day2msg6_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day2msg7_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day2msg8_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day2msg9_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day2msg10_position{ 0.0,0.0 };
+
 
 enum class SHOPAPP_STATE
 {
@@ -356,6 +387,30 @@ void FlagMsg13( bool flag )
 	Scene().EntityFlagActive( "First_page_msg_13_emoji", flag );
 }
 
+void FlagDay2Msgs(bool flag)
+{
+	Scene().EntityFlagActive("Day2_msg1_bg", flag);
+	Scene().EntityFlagActive("Day2_msg2_bg", flag);
+	Scene().EntityFlagActive("Day2_msg3_bg", flag);
+	Scene().EntityFlagActive("Day2_msg4_bg", flag);
+	Scene().EntityFlagActive("Day2_msg5_bg", flag);
+	Scene().EntityFlagActive("Day2_msg6_bg", flag);
+	Scene().EntityFlagActive("Day2_msg7_bg", flag);
+	Scene().EntityFlagActive("Day2_msg8_bg", flag);
+	Scene().EntityFlagActive("Day2_msg9_bg", flag);
+	Scene().EntityFlagActive("Day2_msg10_bg", flag);
+	Scene().EntityFlagActive("Day2_msg1_emoji", flag);
+	Scene().EntityFlagActive("Day2_msg2_emoji", flag);
+	Scene().EntityFlagActive("Day2_msg3_emoji", flag);
+	Scene().EntityFlagActive("Day2_msg4_emoji", flag);
+	Scene().EntityFlagActive("Day2_msg5_emoji", flag);
+	Scene().EntityFlagActive("Day2_msg6_emoji", flag);
+	Scene().EntityFlagActive("Day2_msg7_emoji", flag);
+	Scene().EntityFlagActive("Day2_msg8_emoji", flag);
+	Scene().EntityFlagActive("Day2_msg9_emoji", flag);
+	Scene().EntityFlagActive("Day2_msg10_emoji", flag);
+}
+
 void InitPhoneScreen()
 {
 	current_app_state = HawkerAppState::MainScreen;
@@ -397,23 +452,36 @@ void InitPhoneScreen()
 	FlagMsg12( false );
 	FlagMsg13( false );
 
+	FlagDay2Msgs(false);
+
 	Scene().EntityFlagActive( "Phone_black_bg", false );
 	Scene().GetComponent<JZEngine::NonInstanceShader>( "Phone_black_bg" )->tint.w = 0.0f;
 
 	//Get the original position of all messages
-	original_msg1_position = Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_1_bg" )->position_;
-	original_msg2_position = Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_2_bg" )->position_;
-	original_msg3_position = Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_3_bg" )->position_;
-	original_msg4_position = Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_4_bg" )->position_;
-	original_msg5_position = Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_5_bg" )->position_;
-	original_msg6_position = Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_6_bg" )->position_;
-	original_msg7_position = Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_7_bg" )->position_;
-	original_msg8_position = Scene().GetComponent<JZEngine::Transform>( "First_page_msg_8_bg" )->position_;
-	original_msg9_position = Scene().GetComponent<JZEngine::Transform>( "First_page_msg_9_bg" )->position_;
-	original_msg10_position = Scene().GetComponent<JZEngine::Transform>( "First_page_msg_10_bg" )->position_;
-	original_msg11_position = Scene().GetComponent<JZEngine::Transform>( "First_page_msg_11_bg" )->position_;
-	original_msg12_position = Scene().GetComponent<JZEngine::Transform>( "First_page_msg_12_bg" )->position_;
-	original_msg13_position = Scene().GetComponent<JZEngine::Transform>( "First_page_msg_13_bg" )->position_;
+	original_day1msg1_position_dup = Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_1_bg" )->position_;
+	original_day1msg2_position_dup = Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_2_bg" )->position_;
+	original_day1msg3_position_dup = Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_3_bg" )->position_;
+	original_day1msg4_position_dup = Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_4_bg" )->position_;
+	original_day1msg5_position_dup = Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_5_bg" )->position_;
+	original_day1msg6_position_dup = Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_6_bg" )->position_;
+	original_day1msg7_position_dup = Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_7_bg" )->position_;
+	original_day1msg8_position_dup = Scene().GetComponent<JZEngine::Transform>( "First_page_msg_8_bg" )->position_;
+	original_day1msg9_position_dup = Scene().GetComponent<JZEngine::Transform>( "First_page_msg_9_bg" )->position_;
+	original_day1msg10_position_dup = Scene().GetComponent<JZEngine::Transform>( "First_page_msg_10_bg" )->position_;
+	original_day1msg11_position_dup = Scene().GetComponent<JZEngine::Transform>( "First_page_msg_11_bg" )->position_;
+	original_day1msg12_position_dup = Scene().GetComponent<JZEngine::Transform>( "First_page_msg_12_bg" )->position_;
+	original_day1msg13_position_dup = Scene().GetComponent<JZEngine::Transform>( "First_page_msg_13_bg" )->position_;
+
+	original_day2msg1_position = Scene().GetComponent<JZEngine::Transform>("Day2_msg1_bg")->position_;
+	original_day2msg2_position = Scene().GetComponent<JZEngine::Transform>("Day2_msg2_bg")->position_;
+	original_day2msg3_position = Scene().GetComponent<JZEngine::Transform>("Day2_msg3_bg")->position_;
+	original_day2msg4_position = Scene().GetComponent<JZEngine::Transform>("Day2_msg4_bg")->position_;
+	original_day2msg5_position = Scene().GetComponent<JZEngine::Transform>("Day2_msg5_bg")->position_;
+	original_day2msg6_position = Scene().GetComponent<JZEngine::Transform>("Day2_msg6_bg")->position_;
+	original_day2msg7_position = Scene().GetComponent<JZEngine::Transform>("Day2_msg7_bg")->position_;
+	original_day2msg8_position = Scene().GetComponent<JZEngine::Transform>("Day2_msg8_bg")->position_;
+	original_day2msg9_position = Scene().GetComponent<JZEngine::Transform>("Day2_msg9_bg")->position_;
+	original_day2msg10_position = Scene().GetComponent<JZEngine::Transform>("Day2_msg10_bg")->position_;
 
 
 	//Text section for messages
@@ -525,21 +593,52 @@ void InitPhoneScreen()
 
 }
 
-void ResetAllMsgPosition()
+void ResetDay1MsgPosition()
 {
-	Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_1_bg" )->position_ = original_msg1_position;
-	Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_2_bg" )->position_ = original_msg2_position;
-	Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_3_bg" )->position_ = original_msg3_position;
-	Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_4_bg" )->position_ = original_msg4_position;
-	Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_5_bg" )->position_ = original_msg5_position;
-	Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_6_bg" )->position_ = original_msg6_position;
-	Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_7_bg" )->position_ = original_msg7_position;
-	Scene().GetComponent<JZEngine::Transform>( "First_page_msg_8_bg" )->position_ = original_msg8_position;
-	Scene().GetComponent<JZEngine::Transform>( "First_page_msg_9_bg" )->position_ = original_msg9_position;
-	Scene().GetComponent<JZEngine::Transform>( "First_page_msg_10_bg" )->position_ = original_msg10_position;
-	Scene().GetComponent<JZEngine::Transform>( "First_page_msg_11_bg" )->position_ = original_msg11_position;
-	Scene().GetComponent<JZEngine::Transform>( "First_page_msg_12_bg" )->position_ = original_msg12_position;
-	Scene().GetComponent<JZEngine::Transform>( "First_page_msg_13_bg" )->position_ = original_msg13_position;
+	Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_1_bg" )->position_ = original_day1msg1_position_dup;
+	Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_2_bg" )->position_ = original_day1msg2_position_dup;
+	Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_3_bg" )->position_ = original_day1msg3_position_dup;
+	Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_4_bg" )->position_ = original_day1msg4_position_dup;
+	Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_5_bg" )->position_ = original_day1msg5_position_dup;
+	Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_6_bg" )->position_ = original_day1msg6_position_dup;
+	Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_7_bg" )->position_ = original_day1msg7_position_dup;
+	Scene().GetComponent<JZEngine::Transform>( "First_page_msg_8_bg" )->position_ = original_day1msg8_position_dup;
+	Scene().GetComponent<JZEngine::Transform>( "First_page_msg_9_bg" )->position_ = original_day1msg9_position_dup;
+	Scene().GetComponent<JZEngine::Transform>( "First_page_msg_10_bg" )->position_ = original_day1msg10_position_dup;
+	Scene().GetComponent<JZEngine::Transform>( "First_page_msg_11_bg" )->position_ = original_day1msg11_position_dup;
+	Scene().GetComponent<JZEngine::Transform>( "First_page_msg_12_bg" )->position_ = original_day1msg12_position_dup;
+	Scene().GetComponent<JZEngine::Transform>( "First_page_msg_13_bg" )->position_ = original_day1msg13_position_dup;
+}
+
+void ResetDay1ShiftpPosition()
+{
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_ = original_day1msg1_position_dup + shiftup;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_2_bg")->position_ = original_day1msg2_position_dup + shiftup;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_3_bg")->position_ = original_day1msg3_position_dup + shiftup;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_4_bg")->position_ = original_day1msg4_position_dup + shiftup;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_5_bg")->position_ = original_day1msg5_position_dup + shiftup;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_6_bg")->position_ = original_day1msg6_position_dup + shiftup;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_7_bg")->position_ = original_day1msg7_position_dup + shiftup;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_8_bg")->position_ = original_day1msg8_position_dup + shiftup;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_9_bg")->position_ = original_day1msg9_position_dup + shiftup;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_10_bg")->position_ = original_day1msg10_position_dup + shiftup;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_11_bg")->position_ = original_day1msg11_position_dup + shiftup;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_12_bg")->position_ = original_day1msg12_position_dup + shiftup;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_ = original_day1msg13_position_dup + shiftup;
+}
+
+void ResetDay2MsgPosition()
+{
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg1_bg")->position_ = original_day2msg1_position;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg2_bg")->position_ = original_day2msg2_position;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg3_bg")->position_ = original_day2msg3_position;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg4_bg")->position_ = original_day2msg4_position;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg5_bg")->position_ = original_day2msg5_position;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg6_bg")->position_ = original_day2msg6_position;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg7_bg")->position_ = original_day2msg7_position;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg8_bg")->position_ = original_day2msg8_position;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg9_bg")->position_ = original_day2msg9_position;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg10_bg")->position_ = original_day2msg10_position;
 }
 
 void UpdatePhoneScreen( float dt )
@@ -554,23 +653,51 @@ void UpdatePhoneScreen( float dt )
 	{
 		if ( e->on_click_ )
 		{
-			FlagPhoneHomeScreen( false );
-			FlagTheresappScreen( true );
-			FlagMsg1( true );
-			FlagMsg2( true );
-			FlagMsg3( true );
-			FlagMsg4( true );
-			FlagMsg5( true );
-			FlagMsg6( true );
-			FlagMsg7( true );
-			FlagMsg8( true );
-			FlagMsg9( true );
-			FlagMsg10( true );
-			FlagMsg11( true );
-			FlagMsg12( true );
-			FlagMsg13( true );
+			if (hawker_scene_day == DAY::ONE)
+			{
+				FlagPhoneHomeScreen(false);
+				FlagTheresappScreen(true);
+				FlagMsg1(true);
+				FlagMsg2(true);
+				FlagMsg3(true);
+				FlagMsg4(true);
+				FlagMsg5(true);
+				FlagMsg6(true);
+				FlagMsg7(true);
+				FlagMsg8(true);
+				FlagMsg9(true);
+				FlagMsg10(true);
+				FlagMsg11(true);
+				FlagMsg12(true);
+				FlagMsg13(true);
 
-			ResetAllMsgPosition();
+				ResetDay1MsgPosition();
+			}
+			else if (hawker_scene_day == DAY::TWO)
+			{
+				FlagPhoneHomeScreen(false);
+				FlagTheresappScreen(true);
+				FlagMsg1(true);
+				FlagMsg2(true);
+				FlagMsg3(true);
+				FlagMsg4(true);
+				FlagMsg5(true);
+				FlagMsg6(true);
+				FlagMsg7(true);
+				FlagMsg8(true);
+				FlagMsg9(true);
+				FlagMsg10(true);
+				FlagMsg11(true);
+				FlagMsg12(true);
+				FlagMsg13(true);
+
+
+				FlagDay2Msgs(true);
+
+				ResetDay1ShiftpPosition();
+				ResetDay2MsgPosition();
+			}
+			
 			current_app_state = HawkerAppState::Theresapp;
 		}
 	}
@@ -967,42 +1094,89 @@ void UpdateOptionMenu( float dt )
 void UpdateTheresapp( float dt )
 {
 	UNREFERENCED_PARAMETER( dt );
-	FlagPhoneHomeScreen( false );
-	FlagTheresappScreen( true );
-	FlagMsg1( true );
-	FlagMsg2( true );
-	FlagMsg3( true );
-	FlagMsg4( true );
-	FlagMsg5( true );
-	FlagMsg6( true );
-	FlagMsg7( true );
-	FlagMsg8( true );
-	FlagMsg9( true );
-	FlagMsg10( true );
-	FlagMsg11( true );
-	FlagMsg12( true );
-	FlagMsg13( true );
 
-	//Set control for scrolling down
-	if ( Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_1_bg" )->position_.y > bottom_line ||
-		 Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_7_bg" )->position_.y < top_line )
+	if (hawker_scene_day == DAY::ONE)
 	{
-		scroll_up = true;
-	}
-	else
-	{
-		scroll_up = false;
-	}
+		FlagPhoneHomeScreen(false);
+		FlagTheresappScreen(true);
+		FlagMsg1(true);
+		FlagMsg2(true);
+		FlagMsg3(true);
+		FlagMsg4(true);
+		FlagMsg5(true);
+		FlagMsg6(true);
+		FlagMsg7(true);
+		FlagMsg8(true);
+		FlagMsg9(true);
+		FlagMsg10(true);
+		FlagMsg11(true);
+		FlagMsg12(true);
+		FlagMsg13(true);
 
-	//Set control for scrolling up
-	if ( Scene().GetComponent<JZEngine::Transform>( "First_page_msg_13_bg" )->position_.y > upper_bound )
-	{
-		scroll_down = true;
+		//Set control for scrolling down
+		if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_.y > bottom_line ||
+			Scene().GetComponent<JZEngine::Transform>("Last_page_msg_7_bg")->position_.y < top_line)
+		{
+			scroll_up = true;
+		}
+		else
+		{
+			scroll_up = false;
+		}
+
+		//Set control for scrolling up
+		if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_.y > upper_bound)
+		{
+			scroll_down = true;
+		}
+		else
+		{
+			scroll_down = false;
+		}
 	}
-	else
+	else if (hawker_scene_day == DAY::TWO)
 	{
-		scroll_down = false;
+		FlagPhoneHomeScreen(false);
+		FlagTheresappScreen(true);
+		FlagMsg1(true);
+		FlagMsg2(true);
+		FlagMsg3(true);
+		FlagMsg4(true);
+		FlagMsg5(true);
+		FlagMsg6(true);
+		FlagMsg7(true);
+		FlagMsg8(true);
+		FlagMsg9(true);
+		FlagMsg10(true);
+		FlagMsg11(true);
+		FlagMsg12(true);
+		FlagMsg13(true);
+		FlagDay2Msgs(true);
+
+
+		//Set control for scrolling down
+		if (Scene().GetComponent<JZEngine::Transform>("Day2_msg10_bg")->position_.y > bottom_line_day2 ||
+			Scene().GetComponent<JZEngine::Transform>("Day2_msg4_bg")->position_.y < top_line)
+		{
+			scroll_up = true;
+		}
+		else
+		{
+			scroll_up = false;
+		}
+
+		//Set control for scrolling up
+		//First_page_msg_13_bg
+		if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_.y > upper_bound)
+		{
+			scroll_down = true;
+		}
+		else
+		{
+			scroll_down = false;
+		}
 	}
+	
 
 	//Scrolling
 	if ( scroll_up == true && JZEngine::InputHandler::mouse_scrolled_ == -1 )
@@ -1020,6 +1194,17 @@ void UpdateTheresapp( float dt )
 		Scene().GetComponent<JZEngine::Transform>( "First_page_msg_11_bg" )->position_.y += scrolling_speed;
 		Scene().GetComponent<JZEngine::Transform>( "First_page_msg_12_bg" )->position_.y += scrolling_speed;
 		Scene().GetComponent<JZEngine::Transform>( "First_page_msg_13_bg" )->position_.y += scrolling_speed;
+
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg1_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg2_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg3_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg4_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg5_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg6_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg7_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg8_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg9_bg")->position_.y += scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg10_bg")->position_.y += scrolling_speed;
 	}
 	else if ( scroll_down == true && JZEngine::InputHandler::mouse_scrolled_ == 1 )
 	{
@@ -1036,9 +1221,21 @@ void UpdateTheresapp( float dt )
 		Scene().GetComponent<JZEngine::Transform>( "First_page_msg_11_bg" )->position_.y -= scrolling_speed;
 		Scene().GetComponent<JZEngine::Transform>( "First_page_msg_12_bg" )->position_.y -= scrolling_speed;
 		Scene().GetComponent<JZEngine::Transform>( "First_page_msg_13_bg" )->position_.y -= scrolling_speed;
+
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg1_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg2_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg3_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg4_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg5_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg6_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg7_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg8_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg9_bg")->position_.y -= scrolling_speed;
+		Scene().GetComponent<JZEngine::Transform>("Day2_msg10_bg")->position_.y -= scrolling_speed;
 	}
 
 	//If the message is out of the phone it will disappear
+	//Day1
 	if ( Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_1_bg" )->position_.y < bottom_boundary )
 	{
 		FlagMsg1( false );
@@ -1062,6 +1259,34 @@ void UpdateTheresapp( float dt )
 	if ( Scene().GetComponent<JZEngine::Transform>( "Last_page_msg_6_bg" )->position_.y < bottom_boundary )
 	{
 		FlagMsg6( false );
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_.y > top_boundary)
+	{
+		FlagMsg1(false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_2_bg")->position_.y > top_boundary)
+	{
+		FlagMsg2(false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_3_bg")->position_.y > top_boundary)
+	{
+		FlagMsg3(false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_4_bg")->position_.y > top_boundary)
+	{
+		FlagMsg4(false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_5_bg")->position_.y > top_boundary)
+	{
+		FlagMsg5(false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_6_bg")->position_.y > top_boundary)
+	{
+		FlagMsg6(false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Last_page_msg_7_bg")->position_.y > top_boundary)
+	{
+		FlagMsg7(false);
 	}
 	if ( Scene().GetComponent<JZEngine::Transform>( "First_page_msg_8_bg" )->position_.y > top_boundary )
 	{
@@ -1088,25 +1313,116 @@ void UpdateTheresapp( float dt )
 		FlagMsg13( false );
 	}
 
+
+	//Day2
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg10_bg")->position_.y < bottom_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg10_bg", false);
+		Scene().EntityFlagActive("Day2_msg10_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg9_bg")->position_.y < bottom_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg9_bg", false);
+		Scene().EntityFlagActive("Day2_msg9_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg8_bg")->position_.y < bottom_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg8_bg", false);
+		Scene().EntityFlagActive("Day2_msg8_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg7_bg")->position_.y < bottom_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg7_bg", false);
+		Scene().EntityFlagActive("Day2_msg7_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg6_bg")->position_.y < bottom_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg6_bg", false);
+		Scene().EntityFlagActive("Day2_msg6_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg5_bg")->position_.y < bottom_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg5_bg", false);
+		Scene().EntityFlagActive("Day2_msg5_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg4_bg")->position_.y < bottom_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg4_bg", false);
+		Scene().EntityFlagActive("Day2_msg4_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg3_bg")->position_.y < bottom_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg3_bg", false);
+		Scene().EntityFlagActive("Day2_msg3_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg2_bg")->position_.y < bottom_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg2_bg", false);
+		Scene().EntityFlagActive("Day2_msg2_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg1_bg")->position_.y < bottom_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg1_bg", false);
+		Scene().EntityFlagActive("Day2_msg1_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg3_bg")->position_.y > top_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg3_bg", false);
+		Scene().EntityFlagActive("Day2_msg3_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg2_bg")->position_.y > top_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg2_bg", false);
+		Scene().EntityFlagActive("Day2_msg2_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg1_bg")->position_.y > top_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg1_bg", false);
+		Scene().EntityFlagActive("Day2_msg1_emoji", false);
+	}
+
 	if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "Theresapp_back_arrow" ) )
 	{
 		if ( e->on_click_ )
 		{
-			FlagPhoneHomeScreen( true );
-			FlagTheresappScreen( false );
-			FlagMsg1( false );
-			FlagMsg2( false );
-			FlagMsg3( false );
-			FlagMsg4( false );
-			FlagMsg5( false );
-			FlagMsg6( false );
-			FlagMsg7( false );
-			FlagMsg8( false );
-			FlagMsg9( false );
-			FlagMsg10( false );
-			FlagMsg11( false );
-			FlagMsg12( false );
-			FlagMsg13( false );
+			if (hawker_scene_day == DAY::ONE)
+			{
+				FlagPhoneHomeScreen(true);
+				FlagTheresappScreen(false);
+				FlagMsg1(false);
+				FlagMsg2(false);
+				FlagMsg3(false);
+				FlagMsg4(false);
+				FlagMsg5(false);
+				FlagMsg6(false);
+				FlagMsg7(false);
+				FlagMsg8(false);
+				FlagMsg9(false);
+				FlagMsg10(false);
+				FlagMsg11(false);
+				FlagMsg12(false);
+				FlagMsg13(false);
+			}
+			else if (hawker_scene_day == DAY::TWO)
+			{
+				FlagPhoneHomeScreen(true);
+				FlagTheresappScreen(false);
+				FlagMsg1(false);
+				FlagMsg2(false);
+				FlagMsg3(false);
+				FlagMsg4(false);
+				FlagMsg5(false);
+				FlagMsg6(false);
+				FlagMsg7(false);
+				FlagMsg8(false);
+				FlagMsg9(false);
+				FlagMsg10(false);
+				FlagMsg11(false);
+				FlagMsg12(false);
+				FlagMsg13(false);
+
+				FlagDay2Msgs(false);
+			}
 
 			current_app_state = HawkerAppState::MainScreen;
 		}
