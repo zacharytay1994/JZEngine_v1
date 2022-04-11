@@ -22,7 +22,16 @@ enum class HawkerAppState
 	ShopApp
 };
 
+enum class htpState
+{
+	Photo1,
+	Photo2,
+	Photo3,
+	Photo4
+};
+
 HawkerAppState current_app_state = HawkerAppState::MainScreen;
+htpState htp_state = htpState::Photo1;
 
 float hp_text_leading{ 3.0f };
 float scrolling_speed{ 40.0f };
@@ -44,6 +53,7 @@ float original_wallet_amt { 100.0f };
 JZEngine::Vec2f shiftup_day1inday2{ 0.0,1000.0 };
 JZEngine::Vec2f shiftup_day1inday3{ 0.0,1100.0 };
 JZEngine::Vec2f shiftup_day2{ 0.0,1200.0 };
+unsigned int Count{ 1 };
 
 //Options
 float master_volume_phone{ 0.33f };
@@ -267,9 +277,15 @@ void FlagAlbumPhoto2021( bool flag )
 
 void FlagHowtoPlayScreen( bool flag )
 {
-	Scene().EntityFlagActive( "How_to_Play_photo", flag );
-	Scene().EntityFlagActive( "How_to_Play_text", flag );
+	Scene().EntityFlagActive("How_to_play_photo1", flag);
+	Scene().EntityFlagActive("How_to_play_photo2", flag);
+	Scene().EntityFlagActive("How_to_play_photo3", flag);
+	Scene().EntityFlagActive("How_to_play_photo4", flag);
 	Scene().EntityFlagActive( "How_to_Play_x", flag );
+	Scene().EntityFlagActive("Arrow_left_how_to_play", flag);
+	Scene().EntityFlagActive("Arrow_right_how_to_play", flag);
+	Scene().EntityFlagActive("Arrow_right_how_to_play_fade", flag);
+	Scene().EntityFlagActive("Arrow_left_how_to_play_fade", flag);
 }
 
 void FlagOptionsScreen( bool flag )
@@ -645,10 +661,6 @@ void InitPhoneScreen()
 	( "With the advancement of technology,\nautomations further improve\nthe quality of life at hawker centres!" );
 	Scene().GetComponent<JZEngine::TextData>( "Album_2021_hovertext2" )->color_ = JZEngine::Vec3f( 255.0f, 255.0f, 255.0f );
 	Scene().GetComponent<JZEngine::TextData>( "Album_2021_hovertext2" )->leading_y_ = hp_text_leading;
-
-	//Text section for how to play
-	Scene().GetComponent<JZEngine::TextData>( "How_to_Play_text" )->text = JZEngine::String( "HOW TO PLAY" );
-	Scene().GetComponent<JZEngine::TextData>( "How_to_Play_text" )->color_ = JZEngine::Vec3f( 255.0f, 255.0f, 255.0f );
 
 }
 
@@ -2011,6 +2023,137 @@ void UpdateHowtoPlay( float dt )
 	Scene().EntityFlagActive( "Phone_time", false );
 	FlagPhoneHomeScreen( false );
 	FlagHowtoPlayScreen( true );
+
+	unsigned int max{ 4 };
+	unsigned int min{ 1 };
+	bool first{ false }, last{ false };
+
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Arrow_left_how_to_play"))
+	{
+		if (e->on_released_)
+		{
+			if (Count > min)
+			{
+				--Count;
+			}
+
+		}
+		if (e->on_held_)
+		{
+			ToggleButton("Arrow_left_how_to_play", ButtonState::Clicked);
+		}
+		else if (e->on_hover_)
+		{
+			ToggleButton("Arrow_left_how_to_play", ButtonState::Hover);
+		}
+		else
+		{
+			ToggleButton("Arrow_left_how_to_play", ButtonState::Normal);
+		}
+	}
+
+	if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Arrow_right_how_to_play"))
+	{
+		if (e->on_released_)
+		{
+			if (Count < max)
+			{
+				++Count;
+			}
+
+			if (Count == 4)
+			{
+				Scene().GetComponent<JZEngine::MouseEvent>("Arrow_right_how_to_play")->on_released_ = false;
+			}
+			//std::cout << "count is " << count << "\n";
+		}
+		if (e->on_held_)
+		{
+			ToggleButton("Arrow_right_how_to_play", ButtonState::Clicked);
+		}
+		else if (e->on_hover_)
+		{
+			ToggleButton("Arrow_right_how_to_play", ButtonState::Hover);
+		}
+		else
+		{
+			ToggleButton("Arrow_right_how_to_play", ButtonState::Normal);
+		}
+
+	}
+
+	if (Count == 1)
+	{
+		htp_state = htpState::Photo1;
+		first = true;
+	}
+	if (Count == 2)
+	{
+		htp_state = htpState::Photo2;
+		first = false;
+	}
+	if (Count == 3)
+	{
+		htp_state = htpState::Photo3;
+		first = false;
+		last = false;
+	}
+	if (Count == 4)
+	{
+		htp_state = htpState::Photo4;
+		first = false;
+		last = true;
+	}
+
+	if (htp_state == htpState::Photo1)
+	{
+		Scene().EntityFlagActive("How_to_play_photo1", true);
+		Scene().EntityFlagActive("How_to_play_photo2", false);
+		Scene().EntityFlagActive("How_to_play_photo3", false);
+		Scene().EntityFlagActive("How_to_play_photo4", false);
+	}
+	if (htp_state == htpState::Photo2)
+	{
+		Scene().EntityFlagActive("How_to_play_photo1", false);
+		Scene().EntityFlagActive("How_to_play_photo2", true);
+		Scene().EntityFlagActive("How_to_play_photo3", false);
+		Scene().EntityFlagActive("How_to_play_photo4", false);
+	}
+	if (htp_state == htpState::Photo3)
+	{
+		Scene().EntityFlagActive("How_to_play_photo1", false);
+		Scene().EntityFlagActive("How_to_play_photo2", false);
+		Scene().EntityFlagActive("How_to_play_photo3", true);
+		Scene().EntityFlagActive("How_to_play_photo4", false);
+	}
+	if (htp_state == htpState::Photo4)
+	{
+		Scene().EntityFlagActive("How_to_play_photo1", false);
+		Scene().EntityFlagActive("How_to_play_photo2", false);
+		Scene().EntityFlagActive("How_to_play_photo3", false);
+		Scene().EntityFlagActive("How_to_play_photo4", true);
+	}
+
+	if (first == true)
+	{
+		Scene().EntityFlagActive("Arrow_left_how_to_play", false);
+		Scene().EntityFlagActive("Arrow_left_how_to_play_fade", true);
+	}
+	if (!first)
+	{
+		Scene().EntityFlagActive("Arrow_left_how_to_play", true);
+		Scene().EntityFlagActive("Arrow_left_how_to_play_fade", false);
+	}
+	if (last == true)
+	{
+		Scene().EntityFlagActive("Arrow_right_how_to_play", false);
+		Scene().EntityFlagActive("Arrow_right_how_to_play_fade", true);
+	}
+	if (!last)
+	{
+		Scene().EntityFlagActive("Arrow_right_how_to_play", true);
+		Scene().EntityFlagActive("Arrow_right_how_to_play_fade", false);
+	}
 
 	if ( JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>( "How_to_Play_x" ) )
 	{
