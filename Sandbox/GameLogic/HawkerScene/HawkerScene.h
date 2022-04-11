@@ -16,6 +16,7 @@
 
 #include "../ButtonLogic.h"
 #include "../CutScene/CutScene.h"
+#include "../CutScene/FinalCreditCutScene.h"
 
 /*
 	GUIDED TUTORIAL - START
@@ -2211,7 +2212,7 @@ void UpdateWinScreen(float dt)
 	{
 		summary_y = 0.0f;
 		exitbutton_y = -433.0f;
-		rsbutton_y = -433.0f;
+		rsbutton_y = -442.0f;
 		sumbutton_y = -433.f;
 	}
 
@@ -2367,6 +2368,7 @@ void UpdateWinScreen(float dt)
 				}
 				else if (hawker_scene_day == DAY::THREE)
 				{
+					from_main_menu = false;
 					Scene().ChangeScene("FinalCreditScene");
 				}
 			}

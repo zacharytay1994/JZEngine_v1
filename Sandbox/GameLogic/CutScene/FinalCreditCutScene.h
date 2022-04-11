@@ -7,6 +7,7 @@
 bool clicked_{ false };
 bool roll_{ false };
 int current_scene_{ 0 };
+bool from_main_menu { false };
 
 std::vector < std::pair<std::string, bool>> final_cut_scenes_ =
 {
@@ -39,10 +40,22 @@ void DrawScene()
 
 void FinalCutSceneInit()
 {
-	clicked_ = false;
-	roll_ = false;
-	current_scene_ = 0;
-	ResetScene();
+	if ( !from_main_menu )
+	{
+		clicked_ = false;
+		roll_ = false;
+		current_scene_ = 0;
+		ResetScene ();
+	}
+	else
+	{
+		roll_ = true;
+		current_scene_ = 4;
+		for ( int i = 0; i < 4; ++i )
+		{
+			final_cut_scenes_[ i ].second = false;
+		}
+	}
 }
 
 void FinalCutSceneUpdate( float dt )
@@ -83,7 +96,11 @@ void FinalCutSceneUpdate( float dt )
 		if ( position < 2500.0f )
 			position += 50.0f * dt;
 		else
+		{
 			position = 2500.0f;
+			Scene ().ChangeScene ( "MainMenu" );
+		}
+			
 	}
 	DrawScene();
 }

@@ -13,6 +13,7 @@
 #include "../ButtonLogic.h"
 #include "../MainMenu/MainMenu.h"
 #include "../CutScene/CutScene.h"
+#include "../CutScene/FinalCreditCutScene.h"
 
 
 enum class MainMenuState
@@ -332,7 +333,9 @@ void UpdateOptionsMenu(float dt)
 	{
 		if (e->on_released_)
 		{
-			ToggleCredits(true);
+			//ToggleCredits(true);
+			from_main_menu = true;
+			Scene ().ChangeScene ( "FinalCreditScene" );
 		}
 		if (e->on_held_)
 		{
