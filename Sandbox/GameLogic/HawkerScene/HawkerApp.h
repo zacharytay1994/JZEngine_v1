@@ -41,7 +41,9 @@ bool quit_confirmation{ false };
 bool main_menu_confirmation{ false };
 bool restart_confirmation{ false };
 float original_wallet_amt { 100.0f };
-JZEngine::Vec2f shiftup{ 0.0,1000.0 };
+JZEngine::Vec2f shiftup_day1inday2{ 0.0,1000.0 };
+JZEngine::Vec2f shiftup_day1inday3{ 0.0,1100.0 };
+JZEngine::Vec2f shiftup_day2{ 0.0,1200.0 };
 
 //Options
 float master_volume_phone{ 0.33f };
@@ -84,7 +86,6 @@ JZEngine::Vec2f original_day1msg11_position_dup{ 0.0,0.0 };
 JZEngine::Vec2f original_day1msg12_position_dup{ 0.0,0.0 };
 JZEngine::Vec2f original_day1msg13_position_dup{ 0.0,0.0 };
 
-
 //Day2
 JZEngine::Vec2f original_day2msg1_position{ 0.0,0.0 };
 JZEngine::Vec2f original_day2msg2_position{ 0.0,0.0 };
@@ -96,6 +97,20 @@ JZEngine::Vec2f original_day2msg7_position{ 0.0,0.0 };
 JZEngine::Vec2f original_day2msg8_position{ 0.0,0.0 };
 JZEngine::Vec2f original_day2msg9_position{ 0.0,0.0 };
 JZEngine::Vec2f original_day2msg10_position{ 0.0,0.0 };
+
+//Day3
+JZEngine::Vec2f original_day3msg1_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day3msg2_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day3msg3_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day3msg4_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day3msg5_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day3msg6_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day3msg7_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day3msg8_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day3msg9_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day3msg10_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day3msg11_position{ 0.0,0.0 };
+JZEngine::Vec2f original_day3msg12_position{ 0.0,0.0 };
 
 
 enum class SHOPAPP_STATE
@@ -514,6 +529,19 @@ void InitPhoneScreen()
 	original_day2msg9_position = Scene().GetComponent<JZEngine::Transform>("Day2_msg9_bg")->position_;
 	original_day2msg10_position = Scene().GetComponent<JZEngine::Transform>("Day2_msg10_bg")->position_;
 
+	original_day3msg1_position = Scene().GetComponent<JZEngine::Transform>("Day3_msg1_bg")->position_;
+	original_day3msg2_position = Scene().GetComponent<JZEngine::Transform>("Day3_msg2_bg")->position_;
+	original_day3msg3_position = Scene().GetComponent<JZEngine::Transform>("Day3_msg3_bg")->position_;
+	original_day3msg4_position = Scene().GetComponent<JZEngine::Transform>("Day3_msg4_bg")->position_;
+	original_day3msg5_position = Scene().GetComponent<JZEngine::Transform>("Day3_msg5_bg")->position_;
+	original_day3msg6_position = Scene().GetComponent<JZEngine::Transform>("Day3_msg6_bg")->position_;
+	original_day3msg7_position = Scene().GetComponent<JZEngine::Transform>("Day3_msg7_bg")->position_;
+	original_day3msg8_position = Scene().GetComponent<JZEngine::Transform>("Day3_msg8_bg")->position_;
+	original_day3msg9_position = Scene().GetComponent<JZEngine::Transform>("Day3_msg9_bg")->position_;
+	original_day3msg10_position = Scene().GetComponent<JZEngine::Transform>("Day3_msg10_bg")->position_;
+	original_day3msg11_position = Scene().GetComponent<JZEngine::Transform>("Day3_msg11_bg")->position_;
+	original_day3msg12_position = Scene().GetComponent<JZEngine::Transform>("Day3_msg12_bg")->position_;
+
 
 	//Text section for messages
 	/*Scene().GetComponent<JZEngine::TextData>( "Last_page_msg_1_text" )->text =
@@ -641,21 +669,38 @@ void ResetDay1MsgPosition()
 	Scene().GetComponent<JZEngine::Transform>( "First_page_msg_13_bg" )->position_ = original_day1msg13_position_dup;
 }
 
-void ResetDay1ShiftpPosition()
+void ResetDay1MsginDay2Position()
 {
-	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_ = original_day1msg1_position_dup + shiftup;
-	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_2_bg")->position_ = original_day1msg2_position_dup + shiftup;
-	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_3_bg")->position_ = original_day1msg3_position_dup + shiftup;
-	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_4_bg")->position_ = original_day1msg4_position_dup + shiftup;
-	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_5_bg")->position_ = original_day1msg5_position_dup + shiftup;
-	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_6_bg")->position_ = original_day1msg6_position_dup + shiftup;
-	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_7_bg")->position_ = original_day1msg7_position_dup + shiftup;
-	Scene().GetComponent<JZEngine::Transform>("First_page_msg_8_bg")->position_ = original_day1msg8_position_dup + shiftup;
-	Scene().GetComponent<JZEngine::Transform>("First_page_msg_9_bg")->position_ = original_day1msg9_position_dup + shiftup;
-	Scene().GetComponent<JZEngine::Transform>("First_page_msg_10_bg")->position_ = original_day1msg10_position_dup + shiftup;
-	Scene().GetComponent<JZEngine::Transform>("First_page_msg_11_bg")->position_ = original_day1msg11_position_dup + shiftup;
-	Scene().GetComponent<JZEngine::Transform>("First_page_msg_12_bg")->position_ = original_day1msg12_position_dup + shiftup;
-	Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_ = original_day1msg13_position_dup + shiftup;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_ = original_day1msg1_position_dup + shiftup_day1inday2;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_2_bg")->position_ = original_day1msg2_position_dup + shiftup_day1inday2;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_3_bg")->position_ = original_day1msg3_position_dup + shiftup_day1inday2;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_4_bg")->position_ = original_day1msg4_position_dup + shiftup_day1inday2;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_5_bg")->position_ = original_day1msg5_position_dup + shiftup_day1inday2;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_6_bg")->position_ = original_day1msg6_position_dup + shiftup_day1inday2;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_7_bg")->position_ = original_day1msg7_position_dup + shiftup_day1inday2;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_8_bg")->position_ = original_day1msg8_position_dup + shiftup_day1inday2;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_9_bg")->position_ = original_day1msg9_position_dup + shiftup_day1inday2;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_10_bg")->position_ = original_day1msg10_position_dup + shiftup_day1inday2;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_11_bg")->position_ = original_day1msg11_position_dup + shiftup_day1inday2;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_12_bg")->position_ = original_day1msg12_position_dup + shiftup_day1inday2;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_ = original_day1msg13_position_dup + shiftup_day1inday2;
+}
+
+void ResetDay1MsginDay3Position()
+{
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_1_bg")->position_ = original_day1msg1_position_dup + shiftup_day1inday3 + shiftup_day1inday3;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_2_bg")->position_ = original_day1msg2_position_dup + shiftup_day1inday3 + shiftup_day1inday3;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_3_bg")->position_ = original_day1msg3_position_dup + shiftup_day1inday3 + shiftup_day1inday3;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_4_bg")->position_ = original_day1msg4_position_dup + shiftup_day1inday3 + shiftup_day1inday3;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_5_bg")->position_ = original_day1msg5_position_dup + shiftup_day1inday3 + shiftup_day1inday3;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_6_bg")->position_ = original_day1msg6_position_dup + shiftup_day1inday3 + shiftup_day1inday3;
+	Scene().GetComponent<JZEngine::Transform>("Last_page_msg_7_bg")->position_ = original_day1msg7_position_dup + shiftup_day1inday3 + shiftup_day1inday3;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_8_bg")->position_ = original_day1msg8_position_dup + shiftup_day1inday3 + shiftup_day1inday3;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_9_bg")->position_ = original_day1msg9_position_dup + shiftup_day1inday3 + shiftup_day1inday3;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_10_bg")->position_ = original_day1msg10_position_dup + shiftup_day1inday3 + shiftup_day1inday3;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_11_bg")->position_ = original_day1msg11_position_dup + shiftup_day1inday3 + shiftup_day1inday3;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_12_bg")->position_ = original_day1msg12_position_dup + shiftup_day1inday3 + shiftup_day1inday3;
+	Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_ = original_day1msg13_position_dup + shiftup_day1inday3 + shiftup_day1inday3;
 }
 
 void ResetDay2MsgPosition()
@@ -670,6 +715,36 @@ void ResetDay2MsgPosition()
 	Scene().GetComponent<JZEngine::Transform>("Day2_msg8_bg")->position_ = original_day2msg8_position;
 	Scene().GetComponent<JZEngine::Transform>("Day2_msg9_bg")->position_ = original_day2msg9_position;
 	Scene().GetComponent<JZEngine::Transform>("Day2_msg10_bg")->position_ = original_day2msg10_position;
+}
+
+void ResetDay2MsginDay3Position()
+{
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg1_bg")->position_ = original_day2msg1_position + shiftup_day2;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg2_bg")->position_ = original_day2msg2_position + shiftup_day2;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg3_bg")->position_ = original_day2msg3_position + shiftup_day2;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg4_bg")->position_ = original_day2msg4_position + shiftup_day2;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg5_bg")->position_ = original_day2msg5_position + shiftup_day2;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg6_bg")->position_ = original_day2msg6_position + shiftup_day2;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg7_bg")->position_ = original_day2msg7_position + shiftup_day2;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg8_bg")->position_ = original_day2msg8_position + shiftup_day2;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg9_bg")->position_ = original_day2msg9_position + shiftup_day2;
+	Scene().GetComponent<JZEngine::Transform>("Day2_msg10_bg")->position_ = original_day2msg10_position + shiftup_day2;
+}
+
+void ResetDay3MsgPosition()
+{
+	Scene().GetComponent<JZEngine::Transform>("Day3_msg1_bg")->position_ = original_day3msg1_position;
+	Scene().GetComponent<JZEngine::Transform>("Day3_msg2_bg")->position_ = original_day3msg2_position;
+	Scene().GetComponent<JZEngine::Transform>("Day3_msg3_bg")->position_ = original_day3msg3_position;
+	Scene().GetComponent<JZEngine::Transform>("Day3_msg4_bg")->position_ = original_day3msg4_position;
+	Scene().GetComponent<JZEngine::Transform>("Day3_msg5_bg")->position_ = original_day3msg5_position;
+	Scene().GetComponent<JZEngine::Transform>("Day3_msg6_bg")->position_ = original_day3msg6_position;
+	Scene().GetComponent<JZEngine::Transform>("Day3_msg7_bg")->position_ = original_day3msg7_position;
+	Scene().GetComponent<JZEngine::Transform>("Day3_msg8_bg")->position_ = original_day3msg8_position;
+	Scene().GetComponent<JZEngine::Transform>("Day3_msg9_bg")->position_ = original_day3msg9_position;
+	Scene().GetComponent<JZEngine::Transform>("Day3_msg10_bg")->position_ = original_day3msg10_position;
+	Scene().GetComponent<JZEngine::Transform>("Day3_msg11_bg")->position_ = original_day3msg11_position;
+	Scene().GetComponent<JZEngine::Transform>("Day3_msg12_bg")->position_ = original_day3msg12_position;
 }
 
 void UpdatePhoneScreen( float dt )
@@ -722,18 +797,35 @@ void UpdatePhoneScreen( float dt )
 				FlagMsg12(true);
 				FlagMsg13(true);
 
-
 				FlagDay2Msgs(true);
 
-				ResetDay1ShiftpPosition();
+				ResetDay1MsginDay2Position();
 				ResetDay2MsgPosition();
 			}
 			else if (hawker_scene_day == DAY::THREE)
 			{
 				FlagPhoneHomeScreen(false);
 				FlagTheresappScreen(true);
+				FlagMsg1(true);
+				FlagMsg2(true);
+				FlagMsg3(true);
+				FlagMsg4(true);
+				FlagMsg5(true);
+				FlagMsg6(true);
+				FlagMsg7(true);
+				FlagMsg8(true);
+				FlagMsg9(true);
+				FlagMsg10(true);
+				FlagMsg11(true);
+				FlagMsg12(true);
+				FlagMsg13(true);
 
+				FlagDay2Msgs(true);
 				FlagDay3Msgs(true);
+
+				ResetDay1MsginDay3Position();
+				ResetDay2MsginDay3Position();
+				ResetDay3MsgPosition();
 			}
 			
 			current_app_state = HawkerAppState::Theresapp;
@@ -1217,7 +1309,20 @@ void UpdateTheresapp( float dt )
 	{
 		FlagPhoneHomeScreen(false);
 		FlagTheresappScreen(true);
-
+		FlagMsg1(true);
+		FlagMsg2(true);
+		FlagMsg3(true);
+		FlagMsg4(true);
+		FlagMsg5(true);
+		FlagMsg6(true);
+		FlagMsg7(true);
+		FlagMsg8(true);
+		FlagMsg9(true);
+		FlagMsg10(true);
+		FlagMsg11(true);
+		FlagMsg12(true);
+		FlagMsg13(true);
+		FlagDay2Msgs(true);
 		FlagDay3Msgs(true);
 
 		//Set control for scrolling down
@@ -1232,7 +1337,7 @@ void UpdateTheresapp( float dt )
 		}
 
 		//Set control for scrolling up
-		if (Scene().GetComponent<JZEngine::Transform>("Day3_msg1_bg")->position_.y > upper_bound)
+		if (Scene().GetComponent<JZEngine::Transform>("First_page_msg_13_bg")->position_.y > upper_bound)
 		{
 			scroll_down = true;
 		}
@@ -1456,6 +1561,41 @@ void UpdateTheresapp( float dt )
 		Scene().EntityFlagActive("Day2_msg1_bg", false);
 		Scene().EntityFlagActive("Day2_msg1_emoji", false);
 	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg10_bg")->position_.y > top_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg10_bg", false);
+		Scene().EntityFlagActive("Day2_msg10_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg9_bg")->position_.y > top_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg9_bg", false);
+		Scene().EntityFlagActive("Day2_msg9_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg8_bg")->position_.y > top_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg8_bg", false);
+		Scene().EntityFlagActive("Day2_msg8_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg7_bg")->position_.y > top_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg7_bg", false);
+		Scene().EntityFlagActive("Day2_msg7_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg6_bg")->position_.y > top_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg6_bg", false);
+		Scene().EntityFlagActive("Day2_msg6_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg5_bg")->position_.y > top_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg5_bg", false);
+		Scene().EntityFlagActive("Day2_msg5_emoji", false);
+	}
+	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg4_bg")->position_.y > top_boundary)
+	{
+		Scene().EntityFlagActive("Day2_msg4_bg", false);
+		Scene().EntityFlagActive("Day2_msg4_emoji", false);
+	}
 	if (Scene().GetComponent<JZEngine::Transform>("Day2_msg3_bg")->position_.y > top_boundary)
 	{
 		Scene().EntityFlagActive("Day2_msg3_bg", false);
@@ -1611,7 +1751,21 @@ void UpdateTheresapp( float dt )
 			{
 				FlagPhoneHomeScreen(true);
 				FlagTheresappScreen(false);
+				FlagMsg1(false);
+				FlagMsg2(false);
+				FlagMsg3(false);
+				FlagMsg4(false);
+				FlagMsg5(false);
+				FlagMsg6(false);
+				FlagMsg7(false);
+				FlagMsg8(false);
+				FlagMsg9(false);
+				FlagMsg10(false);
+				FlagMsg11(false);
+				FlagMsg12(false);
+				FlagMsg13(false);
 
+				FlagDay2Msgs(false);
 				FlagDay3Msgs(false);
 			}
 
