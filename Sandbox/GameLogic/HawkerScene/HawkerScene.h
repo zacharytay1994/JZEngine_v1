@@ -265,6 +265,7 @@ void FlagAllCursorsFalse()
 	// set plate and tongs to non shadow
 	Scene ().GetComponent<JZEngine::Texture> ( "Plate" )->texture_id_ = Scene ().GetTexture ( "Plate_Equipment_Hawker" );
 	Scene ().GetComponent<JZEngine::Texture> ( "Tongs" )->texture_id_ = Scene ().GetTexture ( "Tongs_Equipment_hawker" );
+	Scene ().GetComponent<JZEngine::Texture> ( "Scizzors" )->texture_id_ = Scene ().GetTexture ( "Scissors_Equipment_Hawker" );
 }
 
 void FlagCursorState(CursorState state)
@@ -293,6 +294,10 @@ void FlagCursorState(CursorState state)
 		state == CursorState::TongsPrawnCCF )
 	{
 		Scene ().GetComponent<JZEngine::Texture> ( "Tongs" )->texture_id_ = Scene ().GetTexture ( "Tongs(Shaded)_Equipment_hawker" );
+	}
+	if ( state == CursorState::Scizzors )
+	{
+		Scene ().GetComponent<JZEngine::Texture> ( "Scizzors" )->texture_id_ = Scene ().GetTexture ( "Scissors(Shaded)_Equipment_hawker" );
 	}
 }
 
@@ -2362,7 +2367,7 @@ void UpdateWinScreen(float dt)
 				}
 				else if (hawker_scene_day == DAY::THREE)
 				{
-					Scene().ChangeScene("MainMenu");
+					Scene().ChangeScene("FinalCreditScene");
 				}
 			}
 			
@@ -3135,9 +3140,18 @@ void UpdateMainScene(float dt)
 
 	if ( won_bar_ )
 	{
-		if ( won_bar_counter_ < 1.0f )
+		if ( won_bar_counter_ < 2.0f )
 		{
 			won_bar_counter_ += dt;
+
+			float& scale = Scene ().GetComponent<JZEngine::Transform> ( "WinBar" )->scale_.x;
+			if ( scale < 2.0f )
+			{
+				scale += dt * 5.0f;
+				Scene ().GetComponent<JZEngine::Transform> ( "WinBar" )->scale_.y = scale;
+				Scene ().GetComponent<JZEngine::Transform> ( "WinBarBG" )->scale_.x = scale;
+				Scene ().GetComponent<JZEngine::Transform> ( "WinBarBG" )->scale_.y = scale;
+			}
 		}
 		else
 		{
@@ -3189,6 +3203,9 @@ void HawkerSceneInit()
 	{
 		notification_shown[ i ] = false;
 	}
+
+	Scene ().GetComponent<JZEngine::Transform> ( "WinBar" )->scale_ = JZEngine::Vec2f ( 0.01f , 0.01f );
+	Scene ().GetComponent<JZEngine::Transform> ( "WinBarBG" )->scale_ = JZEngine::Vec2f ( 0.01f , 0.01f );
 
 	ToggleWin(false);
 	ToggleSummary ( false );
@@ -3396,7 +3413,8 @@ void HawkerSceneInit()
 		Scene ().GetComponent<JZEngine::Texture> ( "Goal_two" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay01_UI_hawker_02" );
 		Scene ().GetComponent<JZEngine::Texture> ( "Goal_three" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay01_UI_hawker_03" );
 
-		wallet_amt = 12.50f;
+		//wallet_amt = 12.50f;
+		wallet_amt = 100.0f;
 
 		num_springroll = 5;
 		num_seaweedchicken = 7;
