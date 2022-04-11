@@ -24,7 +24,7 @@ Sky 0
 !
 Clouds 0 
 	c 0 struct JZEngine::Transform
-		486.127 40 0 0 0 1 1 7660 1048 
+		2015.18 40 0 0 0 1 1 7660 1048 
 	c 1 struct JZEngine::SpriteLayer
 		-30 
 	c 2 struct JZEngine::Texture
@@ -4280,9 +4280,21 @@ Album_2021_button2 0
 !
 customers_left 0 
 	c 0 struct JZEngine::Transform
-		770.334 299.504 0 0 0 1 1 50 50 
+		780.5 404 0 0 0 1 1 50 50 
 	c 1 struct JZEngine::SpriteLayer
 		100 
 	c 9 struct JZEngine::TextData
 		1 
+!
+customers_left_bg 0 
+	c 0 struct JZEngine::Transform
+		809 402 0 0 0 0.64 0.69 512 128 
+	c 1 struct JZEngine::SpriteLayer
+		49 
+	c 2 struct JZEngine::Texture
+		CustomerBar_UI_Hawker 
+	c 3 struct JZEngine::NonInstanceShader
+		0 0 0 0 
+	c 10 struct JZEngine::Animation2D
+		0 0 1 1 0 1 1 
 !
