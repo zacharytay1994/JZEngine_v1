@@ -2510,6 +2510,22 @@ void UpdateMainScene(float dt)
 		ShowNotification ( 5 );
 	}
 
+	// customers left update
+	unsigned int customers_left = rnum_carrotcake + rnum_dumpling + rnum_seaweedchicken + rnum_springroll;
+
+	if ( hawker_scene_day == DAY::TWO || hawker_scene_day == DAY::THREE )
+	{
+		customers_left += rnum_coffeebao + rnum_doushabao + rnum_charsiewbao + rnum_chickenfeet + rnum_siewmai + rnum_hargao;
+	}
+	if ( hawker_scene_day == DAY::THREE )
+	{
+		customers_left += rnum_prawnccf + rnum_plainccf;
+	}
+
+	std::string customers_left_s = std::to_string ( customers_left ) + " left";
+
+	Scene ().GetComponent<JZEngine::TextData> ( "customers_left" )->text = customers_left_s.c_str();
+
 	if ( order_success )
 	{
 		JZEngine::Animation2D* order_success_anim = Scene ().GetComponent<JZEngine::Animation2D> ( "OrderSuccess" );
