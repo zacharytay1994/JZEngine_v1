@@ -16,6 +16,7 @@
 
 #include "../ButtonLogic.h"
 #include "../CutScene/CutScene.h"
+#include "../CutScene/FinalCreditCutScene.h"
 
 /*
 	GUIDED TUTORIAL - START
@@ -232,7 +233,7 @@ enum class Confirmstate
 	None
 };
 Confirmstate confirm_state = Confirmstate::None;
-
+void ToggleConfirm(bool toggle, Confirmstate confirm_state = Confirmstate::None);
 
 void FlagAllCursorsFalse()
 {
@@ -932,6 +933,35 @@ float no_money_display_timer { 0.0f };
 
 void UpdateShop (float dt)
 {
+	if (confirm_state == Confirmstate::None)
+	{
+		ToggleConfirm(false);
+	}
+	if (confirm_state == Confirmstate::Exit)
+	{
+
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_Yes"))
+		{
+			AutoToggleButton(e, "Summary_Yes");
+			if (e->on_released_)
+			{
+				confirm_state = Confirmstate::None;
+				Scene().ChangeScene("MainMenu");
+			}
+		}
+		if (JZEngine::MouseEvent* e = Scene().GetComponent<JZEngine::MouseEvent>("Summary_No"))
+		{
+			AutoToggleButton(e, "Summary_No");
+			if (e->on_released_)
+			{
+				confirm_state = Confirmstate::None;
+				
+			}
+		}
+
+		return;
+	}
+
 	if ( JZEngine::MouseEvent* e = Scene ().GetComponent<JZEngine::MouseEvent> ( "BeginShop_Next" ) )
 	{
 		if ( total_amt <= wallet_amt )
@@ -1006,7 +1036,9 @@ void UpdateShop (float dt)
 	{
 		if ( e->on_released_ )
 		{
-			Scene ().ChangeScene ( "MainMenu" );
+			//Scene ().ChangeScene ( "MainMenu" );
+			confirm_state = Confirmstate::Exit;
+			ToggleConfirm(true, confirm_state);
 		}
 		if ( e->on_held_ )
 		{
@@ -1963,13 +1995,13 @@ void ToggleSummary ( bool toggle )
 	}
 	
 }
-void ToggleConfirm(bool toggle, Confirmstate confirm_state = Confirmstate::None)
+void ToggleConfirm(bool toggle, Confirmstate confirm_state)
 {
 	if(confirm_state ==Confirmstate::Restart)
 		Scene().EntityFlagActive("Summary_Restart_Confirm", toggle);
 	else if(confirm_state == Confirmstate::Exit)
 		Scene().EntityFlagActive("Summary_Exit_Confirm", toggle);
-	else
+	else//none
 	{
 		Scene().EntityFlagActive("Summary_Restart_Confirm", toggle);
 		Scene().EntityFlagActive("Summary_Exit_Confirm", toggle);
@@ -2211,7 +2243,7 @@ void UpdateWinScreen(float dt)
 	{
 		summary_y = 0.0f;
 		exitbutton_y = -433.0f;
-		rsbutton_y = -433.0f;
+		rsbutton_y = -442.0f;
 		sumbutton_y = -433.f;
 	}
 
@@ -2367,6 +2399,7 @@ void UpdateWinScreen(float dt)
 				}
 				else if (hawker_scene_day == DAY::THREE)
 				{
+					from_main_menu = false;
 					Scene().ChangeScene("FinalCreditScene");
 				}
 			}
@@ -2476,6 +2509,22 @@ void UpdateMainScene(float dt)
 		took_too_long_ = false;
 		ShowNotification ( 5 );
 	}
+
+	// customers left update
+	unsigned int customers_left = rnum_carrotcake + rnum_dumpling + rnum_seaweedchicken + rnum_springroll;
+
+	if ( hawker_scene_day == DAY::TWO || hawker_scene_day == DAY::THREE )
+	{
+		customers_left += rnum_coffeebao + rnum_doushabao + rnum_charsiewbao + rnum_chickenfeet + rnum_siewmai + rnum_hargao;
+	}
+	if ( hawker_scene_day == DAY::THREE )
+	{
+		customers_left += rnum_prawnccf + rnum_plainccf;
+	}
+
+	std::string customers_left_s = std::to_string ( customers_left ) + " left";
+
+	Scene ().GetComponent<JZEngine::TextData> ( "customers_left" )->text = customers_left_s.c_str();
 
 	if ( order_success )
 	{
