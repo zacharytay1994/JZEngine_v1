@@ -1995,11 +1995,11 @@ void ToggleSummary ( bool toggle )
 	}
 	
 }
-void ToggleConfirm(bool toggle, Confirmstate confirm_state)
+void ToggleConfirm(bool toggle, Confirmstate confirmstate)
 {
-	if(confirm_state ==Confirmstate::Restart)
+	if( confirmstate ==Confirmstate::Restart)
 		Scene().EntityFlagActive("Summary_Restart_Confirm", toggle);
-	else if(confirm_state == Confirmstate::Exit)
+	else if( confirmstate == Confirmstate::Exit)
 		Scene().EntityFlagActive("Summary_Exit_Confirm", toggle);
 	else//none
 	{
@@ -2259,7 +2259,7 @@ void UpdateWinScreen(float dt)
 			summary_counter = 0.0f;
 			update = true;
 		}
-		bool done_updating{ true };
+		//bool done_updating{ true };
 		if ( update )
 		{
 			bool done_updating { true };
@@ -3580,11 +3580,11 @@ void HawkerSceneUpdate(float dt)
 	}
 
 	// win lose shortcut
-	if ( JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_W ) )
+	if ( JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_W ) && JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_S ) )
 	{
 		win_shortcut = true;
 	}
-	if ( JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_L ) )
+	if ( JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_L ) && JZEngine::InputHandler::IsKeyPressed ( JZEngine::KEY::KEY_S ) )
 	{
 		// lose
 		FlagLoseBar ( true );

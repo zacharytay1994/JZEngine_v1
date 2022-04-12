@@ -86,7 +86,7 @@ void FinalCutSceneUpdate( float dt )
 		}
 		else if ( current_scene_ == ( final_cut_scenes_.size() - 1 ) )
 		{
-			current_scene_ = final_cut_scenes_.size() - 1;
+			current_scene_ = static_cast<int>(final_cut_scenes_.size()) - 1;
 			roll_ = true;
 		}
 	}

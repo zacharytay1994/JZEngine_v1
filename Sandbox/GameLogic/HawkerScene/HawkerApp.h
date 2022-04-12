@@ -630,7 +630,7 @@ void InitPhoneScreen()
 
 	//Text section for Album1960 app photo hover
 	Scene().GetComponent<JZEngine::TextData>( "Album_1960_hovertext1" )->text = JZEngine::String
-	( "In the past, there were no dedicated\nseating areas, not even a hawker\ncentre.There were only street stalls,\nand patrons will seat around the stall\nto enjoy their meals." );
+	( "In the past, there were no dedicated\nseating areas, not even a hawker\ncentre.There were only street stalls,\nand patrons would sit around the stall\nto enjoy their meals." );
 	Scene().GetComponent<JZEngine::TextData>( "Album_1960_hovertext1" )->color_ = JZEngine::Vec3f( 255.0f, 255.0f, 255.0f );
 	Scene().GetComponent<JZEngine::TextData>( "Album_1960_hovertext1" )->leading_y_ = hp_text_leading;
 

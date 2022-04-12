@@ -379,24 +379,24 @@ namespace JZEngine
 		double x, y;
 		glfwGetCursorPos(window, &x, &y);
 		Vec2f screen_position_ = { static_cast<float>(x), static_cast<float>(y) };
-		if (InputHandler::IsMouseTriggered(MOUSE::MOUSE_BUTTON_2))
-		{
-			camera_record_world_ = Camera::camera_position_;
-			camera_record_screen_ = screen_position_;
-			camera_locked = true;
-		}
-		if (InputHandler::IsMousePressed(MOUSE::MOUSE_BUTTON_2))
-		{
-			Vec2f offset = screen_position_ - camera_record_screen_;
-			offset.x = (offset.x / Settings::window_width) * Settings::camera_width * 1.5f;
-			//offset.y = (offset.y / Settings::window_height) * Settings::camera_height * 1.5f;
-			offset.y = -(((offset.y / Settings::window_height)) / (0.375f * (1.0f - (MenuBar::height_ / Settings::window_height)))) * 0.5f * Settings::camera_height;
-			Camera::camera_position_ = camera_record_world_ - offset;
-		}
-		if (InputHandler::IsMouseReleased(MOUSE::MOUSE_BUTTON_2))
-		{
-			camera_locked = false;
-		}
+		//if (InputHandler::IsMouseTriggered(MOUSE::MOUSE_BUTTON_2))
+		//{
+		//	camera_record_world_ = Camera::camera_position_;
+		//	camera_record_screen_ = screen_position_;
+		//	camera_locked = true;
+		//}
+		//if (InputHandler::IsMousePressed(MOUSE::MOUSE_BUTTON_2))
+		//{
+		//	Vec2f offset = screen_position_ - camera_record_screen_;
+		//	offset.x = (offset.x / Settings::window_width) * Settings::camera_width * 1.5f;
+		//	//offset.y = (offset.y / Settings::window_height) * Settings::camera_height * 1.5f;
+		//	offset.y = -(((offset.y / Settings::window_height)) / (0.375f * (1.0f - (MenuBar::height_ / Settings::window_height)))) * 0.5f * Settings::camera_height;
+		//	Camera::camera_position_ = camera_record_world_ - offset;
+		//}
+		//if (InputHandler::IsMouseReleased(MOUSE::MOUSE_BUTTON_2))
+		//{
+		//	camera_locked = false;
+		//}
 
 		// convert mouse into world coordinates
 		//Settings::mouse_world_position_.x = ((screen_position_.x / Settings::window_width) - 0.5f) * Settings::camera_width * 1.5f;
