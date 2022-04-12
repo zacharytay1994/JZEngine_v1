@@ -3462,8 +3462,8 @@ void HawkerSceneInit()
 		Scene ().GetComponent<JZEngine::Texture> ( "Goal_two" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay01_UI_hawker_02" );
 		Scene ().GetComponent<JZEngine::Texture> ( "Goal_three" )->texture_id_ = Scene ().GetTexture ( "TutorialDadDay01_UI_hawker_03" );
 
-		//wallet_amt = 12.50f;
-		wallet_amt = 100.0f;
+		wallet_amt = 12.50f;
+		//wallet_amt = 100.0f;
 
 		num_springroll = 5;
 		num_seaweedchicken = 7;
